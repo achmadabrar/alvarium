@@ -1,11 +1,9 @@
 package com.bs.ecommerce.utils
 
-import com.binjar.prefsdroid.Preference
+
 import com.pixplicity.easyprefs.library.Prefs
 
-/**
- * Created by bs206 on 3/15/18.
- */
+
 object PrefSingleton
 {
 
@@ -52,23 +50,5 @@ object PrefSingleton
     var CURRENT_LANGUAGE_ID = "current_language_id"
     var NST = "nst"
     var DeviceID = "DEVICE_UNIQUE_ID"
-
-
-/*        lateinit var service: PrefSingleton
-
-
-        val instance: PrefSingleton
-            get()
-            {
-                if (service == null)
-                {
-                    service = PrefSingleton()
-
-                    println("isInitialized before assignment:  $this::service.isInitialized")
-                }
-                return service
-            }*/
-
-
 
 }

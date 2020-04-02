@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="36dp"
+    android:layout_height="match_parent"
+    android:layout_marginEnd="8dp"
+    android:layout_gravity="center_vertical"
+    android:background="?attr/selectableItemBackgroundBorderless"
+    android:gravity="center_vertical"
+    android:minHeight="?attr/actionBarSize"
+    android:minWidth="0dp">
+
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/hotlist_bell"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:contentDescription="Cart"
+        app:srcCompat="@drawable/app_icon_cart"
+        android:layout_alignParentStart="true"
+        android:tint="@android:color/white" />
+
+    <TextView
+        android:id="@+id/hotlist_hot"
+        android:layout_width="wrap_content"
+        android:layout_height="16dp"
+        android:background="@drawable/rounded_square"
+        android:layout_alignParentEnd="true"
+        android:minWidth="17sp"
+        android:text="11"
+        android:gravity="center"
+        android:textColor="@android:color/white"
+        android:textSize="12sp"
+        tools:ignore="MissingPrefix" />
+</RelativeLayout>

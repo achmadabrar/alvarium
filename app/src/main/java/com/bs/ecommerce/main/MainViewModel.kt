@@ -5,6 +5,7 @@ import com.bs.ecommerce.common.RequestCompleteListener
 import com.bs.ecommerce.networking.BaseResponse
 import com.bs.ecommerce.ui.base.BaseViewModel
 import com.bs.ecommerce.main.model.MainModel
+import com.bs.ecommerce.utils.toast
 
 
 class MainViewModel  : BaseViewModel()
@@ -51,6 +52,8 @@ class MainViewModel  : BaseViewModel()
                     sunrise = data.sys.sunrise.unixTimestampToTimeString(),
                     sunset = data.sys.sunset.unixTimestampToTimeString()
                 )*/
+
+                //toast("Category API called")
 
                 isLoadingLD.postValue(false)
 

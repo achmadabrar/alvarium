@@ -46,8 +46,8 @@ object RetroClient
                             .loggable(BuildConfig.DEBUG)
                             .setLevel(Level.BASIC)
                             .log(Platform.INFO)
-                            .request("LOG")
-                            .response("LOG")
+                            .request("LOG_REQUEST")
+                            .response("LOG_RESPONSE")
                             .executor(Executors.newSingleThreadExecutor())
                             .build())
 
@@ -57,7 +57,7 @@ object RetroClient
                     .baseUrl(Constants.BASE_URL)
                     .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                     .addConverterFactory(GsonConverterFactory.create(gson))
-                    .client(fullLogger)
+                    .client(okHttpLogger)                                       //TODO or fullLogger
                     .build()
         }
 
