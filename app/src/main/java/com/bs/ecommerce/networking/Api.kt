@@ -1,6 +1,7 @@
 package com.bs.ecommerce.networking
 
 
+import com.bs.ecommerce.main.model.data.CategoryTreeResponse
 import com.google.gson.annotations.SerializedName
 import io.reactivex.Observable
 import retrofit2.Call
@@ -13,12 +14,10 @@ import retrofit2.http.GET
 
 interface Api {
 
-    @GET("v1/categories")
-    fun getCategoryList(): Call<BaseResponse>
+    @GET("home/categorytree")
+    fun getHomeCategoryTree(): Call<CategoryTreeResponse>
 
 
-    @get:GET("customer/info")
-    val customerInfo: Observable<CustomerInfo>
 
 /*    @POST("setcurrency/{id}")
     fun setCurrency(@Path("id") id: Long): Call<LanguageResponse>

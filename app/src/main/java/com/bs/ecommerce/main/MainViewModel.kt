@@ -3,61 +3,32 @@ package com.bs.ecommerce.main
 import androidx.lifecycle.MutableLiveData
 import com.bs.ecommerce.common.RequestCompleteListener
 import com.bs.ecommerce.networking.BaseResponse
-import com.bs.ecommerce.ui.base.BaseViewModel
+import com.bs.ecommerce.base.BaseViewModel
 import com.bs.ecommerce.main.model.MainModel
+import com.bs.ecommerce.main.model.data.Category
+import com.bs.ecommerce.main.model.data.CategoryTreeResponse
 import com.bs.ecommerce.utils.toast
 
 
 class MainViewModel  : BaseViewModel()
 {
 
-    var allCategoriesLD = MutableLiveData<List<String>>()
+    var allCategoriesLD = MutableLiveData<List<Category>>()
     var allCategoriesFailureLD = MutableLiveData<List<String>>()
 
-    fun getCityList(model: MainModel)
-    {
 
-       /* model.getCityList(object : RequestCompleteListener<MutableList<City>>
-        {
-            override fun onRequestSuccess(data: MutableList<City>) {
-                cityListLiveData.postValue(data)
-            }
-
-            override fun onRequestFailed(errorMessage: String) {
-                cityListFailureLiveData.postValue(errorMessage)
-            }
-        })*/
-    }
-
-
-    fun getCategoryList(cityId: Int, model: MainModel)
+    fun getCategoryList(model: MainModel)
     {
 
         isLoadingLD.postValue(true)
 
-        model.getCategories(cityId, object : RequestCompleteListener<BaseResponse>
+        model.getLeftCategories(object : RequestCompleteListener<CategoryTreeResponse>
         {
-            override fun onRequestSuccess(data: BaseResponse)
+            override fun onRequestSuccess(data: CategoryTreeResponse)
             {
-
-              /*  val weatherData = WeatherData(
-                    dateTime = data.dt.unixTimestampToDateTimeString(),
-                    temperature = data.main.temp.kelvinToCelsius().toString(),
-                    cityAndCountry = "${data.name}, ${data.sys.country}",
-                    weatherConditionIconUrl = "http://openweathermap.org/img/w/${data.weather[0].icon}.png",
-                    weatherConditionIconDescription = data.weather[0].description,
-                    humidity = "${data.main.humidity}%",
-                    pressure = "${data.main.pressure} mBar",
-                    visibility = "${data.visibility/1000.0} KM",
-                    sunrise = data.sys.sunrise.unixTimestampToTimeString(),
-                    sunset = data.sys.sunset.unixTimestampToTimeString()
-                )*/
-
-                //toast("Category API called")
-
                 isLoadingLD.postValue(false)
 
-                allCategoriesLD.postValue(listOf())
+                allCategoriesLD.postValue(data.categoryList)
             }
 
             override fun onRequestFailed(errorMessage: String)

@@ -1,4 +1,4 @@
-package com.bs.ecommerce.ui.base
+package com.bs.ecommerce.base
 
 import android.app.AlertDialog
 import androidx.lifecycle.Observer

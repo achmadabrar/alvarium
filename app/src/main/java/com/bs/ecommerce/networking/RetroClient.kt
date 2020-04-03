@@ -3,19 +3,14 @@ package com.bs.ecommerce.networking
 import android.util.Log
 
 import com.bs.ecommerce.BuildConfig
-import com.bs.ecommerce.utils.Constants
-import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import com.ihsanbal.logging.Level
 import com.ihsanbal.logging.LoggingInterceptor
 
-import java.io.IOException
 import java.util.concurrent.TimeUnit
 
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
-import okhttp3.Request
-import okhttp3.Response
 import okhttp3.internal.platform.Platform
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit

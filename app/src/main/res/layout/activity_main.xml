@@ -19,7 +19,7 @@
 
 
             <FrameLayout
-                android:id="@+id/layout_frame"
+                android:id="@+id/layoutFrame"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="1"
@@ -40,14 +40,13 @@
 
         <com.google.android.material.navigation.NavigationView
             android:id="@+id/nav_view"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_gravity="start"
-            android:fitsSystemWindows="true"
-            android:layout_marginBottom="?attr/actionBarSize">
+            android:fitsSystemWindows="true">
 
             <FrameLayout
-                android:id="@+id/layout_drawer_container"
+                android:id="@+id/layoutDrawer"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent" />
         </com.google.android.material.navigation.NavigationView>

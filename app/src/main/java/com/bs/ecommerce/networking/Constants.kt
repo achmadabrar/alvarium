@@ -1,4 +1,4 @@
-package com.bs.ecommerce.utils
+package com.bs.ecommerce.networking
 
 /**
  * Created by bs-110 on 1/19/2016.
@@ -14,8 +14,11 @@ object Constants
 /*    @JvmStatic val DEFAULT_URL = "https://plugin.nop-station.com/api/"
     @JvmStatic var BASE_URL = "https://plugin.nop-station.com/api/"*/
 
-    @JvmStatic val DEFAULT_URL = "https://apps.nop-station.com/api/"
-    @JvmStatic var BASE_URL = "https://apps.nop-station.com/api/"
+/*    @JvmStatic val DEFAULT_URL = "https://apps.nop-station.com/api/"
+    @JvmStatic var BASE_URL = "https://apps.nop-station.com/api/"*/
+
+    @JvmStatic val DEFAULT_URL = "http://13.72.65.213:8092/api/"
+    @JvmStatic var BASE_URL = "http://13.72.65.213:8092/api/"
 
 /*    @JvmStatic val DEFAULT_URL = "https://www.softstation-23.com/api/"
     @JvmStatic var BASE_URL = "https://www.softstation-23.com/api/"*/

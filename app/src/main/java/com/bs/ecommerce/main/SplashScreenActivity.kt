@@ -1,16 +1,13 @@
-package com.bs.ecommerce.ui
+package com.bs.ecommerce.main
 
 import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
-import androidx.appcompat.app.AppCompatActivity
 import com.bs.ecommerce.R
-import com.bs.ecommerce.main.MainActivity
 import com.bs.ecommerce.networking.NetworkUtil
-import com.bs.ecommerce.ui.base.BaseActivity
-import com.bs.ecommerce.ui.base.BaseViewModel
+import com.bs.ecommerce.base.BaseActivity
+import com.bs.ecommerce.base.BaseViewModel
 import com.bs.ecommerce.utils.PrefSingleton
-import com.squareup.picasso.Picasso
 import io.jsonwebtoken.Jwts
 import io.jsonwebtoken.SignatureAlgorithm
 import java.io.UnsupportedEncodingException

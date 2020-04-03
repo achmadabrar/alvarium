@@ -9,8 +9,9 @@ import androidx.lifecycle.ViewModelProvider
 import com.bs.ecommerce.R
 import com.bs.ecommerce.main.model.MainModel
 import com.bs.ecommerce.main.model.MainModelImpl
-import com.bs.ecommerce.ui.base.BaseActivity
-import com.bs.ecommerce.ui.home.HomeFragment
+import com.bs.ecommerce.base.BaseActivity
+import com.bs.ecommerce.home.CategoryFragment
+import com.bs.ecommerce.home.HomeFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import kotlinx.android.synthetic.main.activity_main.*
 
@@ -31,8 +32,6 @@ class MainActivity : BaseActivity()
         mainModel = MainModelImpl(applicationContext)
 
         mainViewModel = ViewModelProvider(this).get(MainViewModel::class.java)
-
-        mainViewModel.getCategoryList(1212, mainModel)
 
 
 
@@ -77,6 +76,11 @@ class MainActivity : BaseActivity()
 
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         (toggle as ActionBarDrawerToggle).syncState()
+
+        val navFragment = CategoryFragment()
+        supportFragmentManager.beginTransaction()
+            .add(R.id.layoutDrawer, navFragment)
+            .commit()
 
     }
 
@@ -133,7 +137,7 @@ class MainActivity : BaseActivity()
     {
         val homeFragment = HomeFragment()
         supportFragmentManager.beginTransaction()
-            .add(R.id.layout_frame, homeFragment)
+            .add(R.id.layoutFrame, homeFragment)
             .commit()
     }
 }
