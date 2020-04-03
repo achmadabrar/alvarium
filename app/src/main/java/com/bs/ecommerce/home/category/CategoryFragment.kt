@@ -1,25 +1,20 @@
-package com.bs.ecommerce.home
+package com.bs.ecommerce.home.category
 
 import android.os.Bundle
-import androidx.recyclerview.widget.LinearLayoutManager
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import android.widget.RelativeLayout
-import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.bs.ecommerce.R
 import com.bs.ecommerce.main.MainViewModel
 import com.bs.ecommerce.base.BaseFragment
-import com.bs.ecommerce.base.BaseViewModel
 import com.bs.ecommerce.main.model.MainModel
 import com.bs.ecommerce.main.model.MainModelImpl
+import com.bs.ecommerce.main.model.data.Category
 import com.bs.ecommerce.utils.toast
-import com.pnikosis.materialishprogress.ProgressWheel
 import kotlinx.android.synthetic.main.category_left.*
 import kotlinx.android.synthetic.main.category_left.categoryRootLayout
-import kotlinx.android.synthetic.main.fragment_home.*
 
 
 class CategoryFragment : BaseFragment()
@@ -56,6 +51,7 @@ class CategoryFragment : BaseFragment()
         mainViewModel.allCategoriesLD.observe(activity!!, Observer { categoryList ->
 
             toast(categoryList[0].name)
+            showList(categoryList)
         })
 
 
@@ -67,9 +63,12 @@ class CategoryFragment : BaseFragment()
                 progressBarCategory.visibility = View.GONE
         })
 
+    }
 
-
-
+    private fun showList(categoryList: List<Category>)
+    {
+        expandList.layoutManager = LinearLayoutManager(activity)
+        expandList.adapter = CategoryListAdapter(activity!!, categoryList, this)
     }
 
 

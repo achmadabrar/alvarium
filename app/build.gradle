@@ -84,7 +84,7 @@ dependencies {
     implementation "android.arch.lifecycle:common-java8:1.1.1"
 
     // Picasso
-    implementation 'com.squareup.picasso:picasso:2.71828'
+    implementation 'com.squareup.picasso:picasso:2.5.0'
 
     // Jjwt
     implementation 'io.jsonwebtoken:jjwt:0.9.1'

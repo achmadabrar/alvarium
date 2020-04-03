@@ -19,5 +19,12 @@ data class Subcategory(
     @SerializedName("CategoryId") var categoryId: Int = 0,
     @SerializedName("IconUrl") var iconUrl: String = "",
     @SerializedName("Name") var name: String = "",
+    @SerializedName("Subcategories") var subcategories: List<SecondSubcategory> = listOf()
+)
+
+data class SecondSubcategory(
+    @SerializedName("CategoryId") var categoryId: Int = 0,
+    @SerializedName("IconUrl") var iconUrl: String = "",
+    @SerializedName("Name") var name: String = "",
     @SerializedName("Subcategories") var subcategories: List<Any> = listOf()
 )

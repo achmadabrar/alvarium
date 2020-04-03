@@ -10,7 +10,7 @@ import com.bs.ecommerce.R
 import com.bs.ecommerce.main.model.MainModel
 import com.bs.ecommerce.main.model.MainModelImpl
 import com.bs.ecommerce.base.BaseActivity
-import com.bs.ecommerce.home.CategoryFragment
+import com.bs.ecommerce.home.category.CategoryFragment
 import com.bs.ecommerce.home.HomeFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import kotlinx.android.synthetic.main.activity_main.*
