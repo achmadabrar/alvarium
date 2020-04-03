@@ -58,9 +58,9 @@ class CategoryFragment : BaseFragment()
         mainViewModel.isLoadingLD.observe(activity!!, Observer { isShowLoader ->
 
             if (isShowLoader)
-                progressBarCategory.visibility = View.VISIBLE
+                progressBarCategory?.visibility = View.VISIBLE
             else
-                progressBarCategory.visibility = View.GONE
+                progressBarCategory?.visibility = View.GONE
         })
 
     }

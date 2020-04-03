@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/login_root_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <androidx.constraintlayout.widget.ConstraintLayout android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".LoginFragment">
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline_h_top"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.2" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline_v_start"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.1" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline_v_end"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.9" />
+
+        <ImageView
+            android:id="@+id/backgroundImageView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:contentDescription="@string/placeholder"
+            android:scaleType="fitXY"
+            android:src="@drawable/app_splash_background" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/login_username_layout"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:textColorHint="@android:color/darker_gray"
+            app:hintEnabled="false"
+            app:layout_constraintEnd_toStartOf="@id/guideline_v_end"
+            app:layout_constraintStart_toEndOf="@id/guideline_v_start"
+            app:layout_constraintTop_toBottomOf="@id/guideline_h_top">
+
+            <EditText
+                android:id="@+id/login_username"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/rounded_background"
+                android:backgroundTint="@color/login_et_background"
+                android:drawableEnd="@drawable/ic_user"
+                android:hint="@string/login_usrname"
+                android:imeOptions="actionNext"
+                android:inputType="textEmailAddress|text"
+                android:paddingStart="15dp"
+                android:paddingTop="10dp"
+                android:paddingEnd="15dp"
+                android:paddingBottom="10dp"
+                android:textColor="@color/black"
+                android:textColorHint="@color/login_tv_text"
+                android:textSize="@dimen/et_text_size" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/login_password_layout"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:textColorHint="@android:color/darker_gray"
+            app:hintEnabled="false"
+            app:layout_constraintEnd_toStartOf="@id/guideline_v_end"
+            app:layout_constraintStart_toEndOf="@id/guideline_v_start"
+            app:layout_constraintTop_toBottomOf="@+id/login_username_layout"
+            app:passwordToggleDrawable="@drawable/password_toggle_drawable"
+            app:passwordToggleEnabled="true"
+            app:passwordToggleTint="#A5A5A5">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/login_password"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/rounded_background"
+                android:backgroundTint="@color/login_et_background"
+                android:hint="@string/login_password"
+                android:imeOptions="actionDone"
+                android:inputType="textPassword"
+                android:paddingStart="15dp"
+                android:paddingTop="10dp"
+                android:paddingEnd="15dp"
+                android:paddingBottom="10dp"
+                android:textColor="@color/black"
+                android:textColorHint="@color/login_tv_text"
+                android:textSize="@dimen/et_text_size" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/loginButton"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/rounded_background"
+            android:backgroundTint="@color/login_btn_bg"
+            android:nextFocusLeft="@+id/login_remember_password"
+            android:nextFocusUp="@+id/login_remember_password"
+            android:text="@string/login_button"
+            android:textColor="@color/login_et_background"
+            android:textSize="@dimen/button_text_size"
+            app:layout_constraintEnd_toStartOf="@id/guideline_v_end"
+            app:layout_constraintStart_toEndOf="@id/guideline_v_start"
+            app:layout_constraintTop_toBottomOf="@id/login_password_layout" />
+
+        <TextView
+            android:id="@+id/tvNewCustomer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
+            android:text="@string/login_new_customer"
+            android:textColor="@color/login_et_background"
+            android:textSize="14sp"
+            app:layout_constraintStart_toEndOf="@id/guideline_v_start"
+            app:layout_constraintTop_toBottomOf="@id/loginButton" />
+
+        <TextView
+            android:id="@+id/tvForgotPassword"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="10dp"
+            android:text="@string/login_forgot_password"
+            android:textColor="@color/login_et_background"
+            android:textSize="14sp"
+            app:layout_constraintEnd_toStartOf="@id/guideline_v_end"
+            app:layout_constraintTop_toBottomOf="@id/loginButton" />
+
+        <TextView
+            android:id="@+id/tvLoginOr"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:text="@string/login_tv_or"
+            android:textColor="@color/login_et_background"
+            android:textSize="15sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toStartOf="@id/guideline_v_end"
+            app:layout_constraintStart_toEndOf="@id/guideline_v_start"
+            app:layout_constraintTop_toBottomOf="@id/tvForgotPassword" />
+
+        <!-- TODO Replace with com.facebook.login.widget.LoginButton   -->
+        <Button
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/rounded_background"
+            android:backgroundTint="#4080FF"
+            android:nextFocusLeft="@+id/login_remember_password"
+            android:nextFocusUp="@+id/login_remember_password"
+            android:text="Continue with Facebook"
+            android:textAllCaps="false"
+            android:textColor="@color/white"
+            android:textSize="@dimen/button_text_size"
+            app:layout_constraintEnd_toStartOf="@id/guideline_v_end"
+            app:layout_constraintStart_toEndOf="@id/guideline_v_start"
+            app:layout_constraintTop_toBottomOf="@id/tvLoginOr" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</RelativeLayout>

@@ -57,9 +57,9 @@ class HomeFragment : BaseFragment()
         mainViewModel.isLoadingLD.observe(activity!!, Observer { isShowLoader ->
 
             if (isShowLoader)
-                progressBarHome.visibility = View.VISIBLE
+                progressBarHome?.visibility = View.VISIBLE
             else
-                progressBarHome.visibility = View.GONE
+                progressBarHome?.visibility = View.GONE
         })
 
 

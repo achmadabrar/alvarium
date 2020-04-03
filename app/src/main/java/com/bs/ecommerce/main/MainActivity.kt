@@ -12,6 +12,7 @@ import com.bs.ecommerce.main.model.MainModelImpl
 import com.bs.ecommerce.base.BaseActivity
 import com.bs.ecommerce.home.category.CategoryFragment
 import com.bs.ecommerce.home.HomeFragment
+import com.bs.ecommerce.ui.home.LoginFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import kotlinx.android.synthetic.main.activity_main.*
 
@@ -109,11 +110,12 @@ class MainActivity : BaseActivity()
         when (item.itemId) {
             R.id.bottom_nav_home -> {
 
-                //supportFragmentManager.beginTransaction().replace(R.id.layout_frame, HomeFragment()).addToBackStack(NopHomeFragment::class.java.simpleName).commit()
+                supportFragmentManager.beginTransaction().replace(R.id.layoutFrame, HomeFragment()).addToBackStack(null).commit()
                 return@OnNavigationItemSelectedListener true
             }
             R.id.bottom_nav_categories -> {
 
+                supportFragmentManager.beginTransaction().replace(R.id.layoutFrame, LoginFragment()).addToBackStack(HomeFragment::class.java.simpleName).commit()
                 return@OnNavigationItemSelectedListener true
             }
             R.id.bottom_nav_search -> {
