@@ -51,21 +51,16 @@
 
             <EditText
                 android:id="@+id/login_username"
+                style="@style/RoundedEditText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/rounded_background"
                 android:backgroundTint="@color/login_et_background"
                 android:drawableEnd="@drawable/ic_user"
                 android:hint="@string/login_usrname"
                 android:imeOptions="actionNext"
                 android:inputType="textEmailAddress|text"
-                android:paddingStart="15dp"
-                android:paddingTop="10dp"
-                android:paddingEnd="15dp"
-                android:paddingBottom="10dp"
                 android:textColor="@color/black"
-                android:textColorHint="@color/login_tv_text"
-                android:textSize="@dimen/et_text_size" />
+                android:autofillHints="Username" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -86,20 +81,14 @@
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/login_password"
+                style="@style/RoundedEditText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/rounded_background"
                 android:backgroundTint="@color/login_et_background"
                 android:hint="@string/login_password"
                 android:imeOptions="actionDone"
                 android:inputType="textPassword"
-                android:paddingStart="15dp"
-                android:paddingTop="10dp"
-                android:paddingEnd="15dp"
-                android:paddingBottom="10dp"
-                android:textColor="@color/black"
-                android:textColorHint="@color/login_tv_text"
-                android:textSize="@dimen/et_text_size" />
+                android:textColor="@color/black"/>
         </com.google.android.material.textfield.TextInputLayout>
 
         <androidx.appcompat.widget.AppCompatButton

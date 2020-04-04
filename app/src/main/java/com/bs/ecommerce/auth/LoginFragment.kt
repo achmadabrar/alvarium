@@ -1,9 +1,10 @@
-package com.bs.ecommerce.ui.home
+package com.bs.ecommerce.auth
 
 import android.os.Bundle
 import android.view.View
 import android.widget.RelativeLayout
 import com.bs.ecommerce.R
+import com.bs.ecommerce.auth.RegistrationFragment
 import com.bs.ecommerce.base.BaseFragment
 import com.bs.ecommerce.base.BaseViewModel
 import com.bs.ecommerce.main.MainViewModel
@@ -36,7 +37,7 @@ class LoginFragment : BaseFragment() {
             requireActivity().supportFragmentManager
                 .beginTransaction()
                 .replace(R.id.layoutFrame, RegistrationFragment())
-                .addToBackStack(null)
+                .addToBackStack(RegistrationFragment::class.java.simpleName)
                 .commit()
         }
     }

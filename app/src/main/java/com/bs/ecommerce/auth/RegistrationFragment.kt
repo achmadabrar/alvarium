@@ -1,4 +1,4 @@
-package com.bs.ecommerce.ui.home
+package com.bs.ecommerce.auth
 
 import android.widget.RelativeLayout
 import com.bs.ecommerce.R

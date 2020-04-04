@@ -12,7 +12,7 @@ import com.bs.ecommerce.main.model.MainModelImpl
 import com.bs.ecommerce.base.BaseActivity
 import com.bs.ecommerce.home.category.CategoryFragment
 import com.bs.ecommerce.home.HomeFragment
-import com.bs.ecommerce.ui.home.LoginFragment
+import com.bs.ecommerce.auth.LoginFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import kotlinx.android.synthetic.main.activity_main.*
 
