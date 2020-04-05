@@ -7,25 +7,66 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.RelativeLayout
 import android.widget.Toast
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import com.bs.ecommerce.R
 import com.bs.ecommerce.auth.data.CustomerRegistrationInfo
 import com.bs.ecommerce.base.BaseFragment
 import com.bs.ecommerce.base.BaseViewModel
 import com.bs.ecommerce.customViews.CustomerAttributeViews
 import com.bs.ecommerce.main.MainViewModel
+import com.bs.ecommerce.main.model.AuthModel
+import com.bs.ecommerce.main.model.AuthModelImpl
+import com.bs.ecommerce.main.model.MainModel
+import com.bs.ecommerce.main.model.MainModelImpl
 import com.bs.ecommerce.networking.NetworkUtil
 import com.bs.ecommerce.networking.RetroClient
 import com.bs.ecommerce.utils.*
+import kotlinx.android.synthetic.main.category_left.*
 import kotlinx.android.synthetic.main.fragment_registration.*
 import java.util.*
 
 class RegistrationFragment : BaseFragment()
 {
+
+    private lateinit var model: AuthModel
+
     override fun getLayoutId(): Int = R.layout.fragment_registration
 
     override fun getRootLayout(): RelativeLayout = register_root_layout
 
-    override fun createViewModel(): BaseViewModel = MainViewModel()
+    override fun createViewModel(): RegistrationViewModel = RegistrationViewModel()
+
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?)
+    {
+        model = AuthModelImpl(activity?.applicationContext!!)
+
+        viewModel = ViewModelProvider(this).get(RegistrationViewModel::class.java)
+
+        (viewModel as RegistrationViewModel).getRegistrationData(model)
+
+
+        setLiveDataListeners()
+
+    }
+
+    private fun setLiveDataListeners() {
+
+        (viewModel as RegistrationViewModel).getRegistrationResponseLD.observe(activity!!, Observer { response -> toast(response.data.toString()) })
+
+        (viewModel as RegistrationViewModel).isLoadingLD.observe(activity!!, Observer { isShowLoader ->
+
+            if (isShowLoader)
+                progressBarRegister?.visibility = View.VISIBLE
+            else
+                progressBarRegister?.visibility = View.GONE
+        })
+
+    }
+
+
+
 
 
    /* private var isValidInfo = false

@@ -1,4 +1,4 @@
-package com.bs.ecommerce.ui.views
+package com.bs.ecommerce.customViews
 
 import android.content.Context
 import android.util.AttributeSet

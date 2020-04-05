@@ -36,12 +36,12 @@ class CategoryListAdapter(private val context: Context, private val categoryList
 
         val categoryModel = categoryList[position]
         val holder = bindViewHolder as ProductSummaryHolder
-        holder.subName.text = categoryModel.name.toUpperCase()
+        holder.topCategoryName.text = categoryModel.name.toUpperCase()
 
-        holder.customList.setAdapter(SubCategoryListAdapter(context, categoryModel.subcategories, fragment))
+        holder.categoryChildList.setAdapter(SubCategoryListAdapter(context, categoryModel.subcategories, fragment))
 
-        holder.subName.setOnClickListener(CategoryonClicklistener(categoryModel))
-        holder.customList.setGroupIndicator(null)
+        holder.topCategoryName.setOnClickListener(CategoryOnClicklistener(categoryModel))
+        holder.categoryChildList.setGroupIndicator(null)
     }
 
     override fun getItemViewType(position: Int): Int {
@@ -55,12 +55,12 @@ class CategoryListAdapter(private val context: Context, private val categoryList
 
 
     private inner class ProductSummaryHolder internal constructor(itemView: View) : androidx.recyclerview.widget.RecyclerView.ViewHolder(itemView), View.OnClickListener {
-        internal var subName: TextView
-        internal var customList: ExpandableListView
+        internal var topCategoryName: TextView
+        internal var categoryChildList: ExpandableListView
 
         init {
-            subName = itemView.findViewById<View>(R.id.subName) as TextView
-            customList = itemView.findViewById<View>(R.id.customList) as ExpandableListView
+            topCategoryName = itemView.findViewById<View>(R.id.topCategoryName) as TextView
+            categoryChildList = itemView.findViewById<View>(R.id.categoryChildList) as ExpandableListView
             itemView.setOnClickListener(this)
         }
 
@@ -70,7 +70,7 @@ class CategoryListAdapter(private val context: Context, private val categoryList
 
     }
 
-    private inner class CategoryonClicklistener(internal var category: Category) : View.OnClickListener {
+    private inner class CategoryOnClicklistener(internal var category: Category) : View.OnClickListener {
         override fun onClick(v: View) {
 
 /*            ProductService.productId = category.id.toLong()

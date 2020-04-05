@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.bs.ecommerce.R
 import com.bs.ecommerce.main.MainViewModel
 import com.bs.ecommerce.base.BaseFragment
+import com.bs.ecommerce.main.model.AuthModel
 import com.bs.ecommerce.main.model.MainModel
 import com.bs.ecommerce.main.model.MainModelImpl
 import com.bs.ecommerce.main.model.data.Category

@@ -2,10 +2,11 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical">
 
     <TextView
-        android:id="@+id/subName"
+        android:id="@+id/topCategoryName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:paddingBottom="8dp"
@@ -14,12 +15,12 @@
         android:paddingRight="10dp"
         android:paddingStart="20dp"
         android:paddingTop="8dp"
-        android:text="Title"
+        tools:text="Title"
         android:textColor="@android:color/black"
         android:textStyle="bold" />
 
-    <com.bs.ecommerce.home.category.CustomList
-        android:id="@+id/customList"
+    <com.bs.ecommerce.customViews.CustomList
+        android:id="@+id/categoryChildList"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 

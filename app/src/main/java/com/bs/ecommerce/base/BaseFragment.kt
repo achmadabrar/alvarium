@@ -19,7 +19,7 @@ import kotlin.properties.Delegates
 abstract class BaseFragment : Fragment()
 {
     protected var progressWheel: ProgressWheel? = null
-    protected lateinit var viewModel: BaseViewModel
+    protected open lateinit var viewModel: BaseViewModel
 
     @LayoutRes
     abstract fun getLayoutId(): Int

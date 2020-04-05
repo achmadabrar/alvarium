@@ -1,6 +1,7 @@
 package com.bs.ecommerce.networking
 
 
+import com.bs.ecommerce.auth.data.GetRegistrationResponse
 import com.bs.ecommerce.main.model.data.AppLandingSettingResponse
 import com.bs.ecommerce.main.model.data.CategoryTreeResponse
 import com.google.gson.annotations.SerializedName
@@ -20,6 +21,9 @@ interface Api {
 
     @GET("home/applandingsetting")
     fun getAppLandingSettings(): Call<AppLandingSettingResponse>
+
+    @GET("customer/register")
+    fun getRegisterData(): Call<GetRegistrationResponse>
 
 /*    @POST("setcurrency/{id}")
     fun setCurrency(@Path("id") id: Long): Call<LanguageResponse>
