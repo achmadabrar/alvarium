@@ -55,98 +55,58 @@
 
                 <EditText
                     android:id="@+id/tvRegFirstName"
+                    style="@style/RoundedEditTextDark"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="20dp"
-                    android:background="@drawable/rounded_background"
-                    android:backgroundTint="@color/register_et_background"
                     android:drawableEnd="@drawable/ic_user"
                     android:hint="@string/reg_hint_first_name"
                     android:imeOptions="actionNext"
-                    android:inputType="textPersonName"
-                    android:paddingStart="15dp"
-                    android:paddingTop="10dp"
-                    android:paddingEnd="15dp"
-                    android:paddingBottom="10dp"
-                    android:textColor="@android:color/white"
-                    android:textColorHint="@color/login_tv_text"
-                    android:textSize="@dimen/et_text_size" />
+                    android:inputType="textPersonName" />
 
                 <EditText
                     android:id="@+id/tvRegLastName"
+                    style="@style/RoundedEditTextDark"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="15dp"
-                    android:background="@drawable/rounded_background"
-                    android:backgroundTint="@color/register_et_background"
                     android:drawableEnd="@drawable/ic_user"
                     android:hint="@string/reg_hint_last_name"
                     android:imeOptions="actionNext"
-                    android:inputType="textPersonName"
-                    android:paddingStart="15dp"
-                    android:paddingTop="10dp"
-                    android:paddingEnd="15dp"
-                    android:paddingBottom="10dp"
-                    android:textColor="@android:color/white"
-                    android:textColorHint="@color/login_tv_text"
-                    android:textSize="@dimen/et_text_size" />
+                    android:inputType="textPersonName"/>
 
                 <EditText
                     android:id="@+id/tvRegDob"
+                    style="@style/RoundedEditTextDark"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="15dp"
-                    android:background="@drawable/rounded_background"
-                    android:backgroundTint="@color/register_et_background"
                     android:drawableEnd="@drawable/ic_calendar"
                     android:hint="@string/reg_hint_dd_mm_yy"
                     android:imeOptions="actionNext"
-                    android:inputType="date"
-                    android:paddingStart="15dp"
-                    android:paddingTop="10dp"
-                    android:paddingEnd="15dp"
-                    android:paddingBottom="10dp"
-                    android:textColor="@android:color/white"
-                    android:textColorHint="@color/login_tv_text"
-                    android:textSize="@dimen/et_text_size" />
+                    android:inputType="date"/>
 
                 <EditText
                     android:id="@+id/tvRegEmail"
+                    style="@style/RoundedEditTextDark"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="15dp"
-                    android:background="@drawable/rounded_background"
-                    android:backgroundTint="@color/register_et_background"
                     android:drawableEnd="@drawable/ic_email"
                     android:hint="@string/reg_hint_email"
                     android:imeOptions="actionNext"
-                    android:inputType="textEmailAddress"
-                    android:paddingStart="15dp"
-                    android:paddingTop="10dp"
-                    android:paddingEnd="15dp"
-                    android:paddingBottom="10dp"
-                    android:textColor="@android:color/white"
-                    android:textColorHint="@color/login_tv_text"
-                    android:textSize="@dimen/et_text_size" />
+                    android:inputType="textEmailAddress"/>
 
                 <EditText
                     android:id="@+id/tvRegPhone"
+                    style="@style/RoundedEditTextDark"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="15dp"
-                    android:background="@drawable/rounded_background"
-                    android:backgroundTint="@color/register_et_background"
                     android:drawableEnd="@drawable/ic_mobile"
                     android:hint="@string/reg_hint_phone"
                     android:imeOptions="actionNext"
-                    android:inputType="phone"
-                    android:paddingStart="15dp"
-                    android:paddingTop="10dp"
-                    android:paddingEnd="15dp"
-                    android:paddingBottom="10dp"
-                    android:textColor="@android:color/white"
-                    android:textColorHint="@color/login_tv_text"
-                    android:textSize="@dimen/et_text_size" />
+                    android:inputType="phone" />
 
                 <RadioGroup
                     android:layout_width="match_parent"
@@ -201,21 +161,13 @@
 
                 <EditText
                     android:id="@+id/tvRegCompanyName"
+                    style="@style/RoundedEditTextDark"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="20dp"
-                    android:background="@drawable/rounded_background"
-                    android:backgroundTint="@color/register_et_background"
                     android:hint="@string/reg_hint_company_name"
                     android:imeOptions="actionNext"
-                    android:inputType="textCapWords"
-                    android:paddingStart="15dp"
-                    android:paddingTop="10dp"
-                    android:paddingEnd="15dp"
-                    android:paddingBottom="10dp"
-                    android:textColor="@android:color/white"
-                    android:textColorHint="@color/login_tv_text"
-                    android:textSize="@dimen/et_text_size" />
+                    android:inputType="textCapWords" />
 
                 <TextView
                     android:layout_width="match_parent"
@@ -269,20 +221,12 @@
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/register_password"
+                        style="@style/RoundedEditTextDark"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:background="@drawable/rounded_background"
-                        android:backgroundTint="@color/register_et_background"
                         android:hint="@string/reg_hint_password"
                         android:imeOptions="actionNext"
-                        android:inputType="textPassword"
-                        android:paddingStart="15dp"
-                        android:paddingTop="10dp"
-                        android:paddingEnd="15dp"
-                        android:paddingBottom="10dp"
-                        android:textColor="@android:color/white"
-                        android:textColorHint="@color/login_tv_text"
-                        android:textSize="@dimen/et_text_size" />
+                        android:inputType="textPassword" />
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
@@ -295,20 +239,12 @@
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/tvConfirmPassword"
+                        style="@style/RoundedEditTextDark"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:background="@drawable/rounded_background"
-                        android:backgroundTint="@color/register_et_background"
                         android:hint="@string/reg_hint_confirm_password"
                         android:imeOptions="actionDone"
-                        android:inputType="textPassword"
-                        android:paddingStart="15dp"
-                        android:paddingTop="10dp"
-                        android:paddingEnd="15dp"
-                        android:paddingBottom="10dp"
-                        android:textColor="@android:color/white"
-                        android:textColorHint="@color/login_tv_text"
-                        android:textSize="@dimen/et_text_size" />
+                        android:inputType="textPassword" />
                 </com.google.android.material.textfield.TextInputLayout>
 
             </LinearLayout>
@@ -318,7 +254,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
-                android:background="@color/login_btn_bg"
+                android:background="@color/pink"
                 android:nextFocusLeft="@+id/login_remember_password"
                 android:nextFocusUp="@+id/login_remember_password"
                 android:text="@string/reg_btn_register"
@@ -329,6 +265,3 @@
     </ScrollView>
 
 </RelativeLayout>
-
-
-

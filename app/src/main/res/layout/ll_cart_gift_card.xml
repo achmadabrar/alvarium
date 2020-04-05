@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout android:id="@+id/ll_cart_gift_card"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:weightSum="1"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <EditText
+        android:id="@+id/etGiftCode"
+        style="@style/RoundedEditTextLight"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="3dp"
+        android:layout_weight=".60"
+        android:autofillHints="Username"
+        android:hint="@string/cart_enter_gift_card_code"
+        android:imeOptions="actionDone"
+        android:textSize="16sp"
+        android:inputType="text" />
+
+    <Button
+        android:id="@+id/btnAddGiftCode"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="3dp"
+        android:layout_weight=".40"
+        android:background="@drawable/rounded_background"
+        android:backgroundTint="@color/pink"
+        android:text="@string/cart_add_gift_card"
+        android:textAllCaps="false"
+        android:textColor="@color/login_et_background"
+        android:textSize="16sp" />
+
+</LinearLayout>

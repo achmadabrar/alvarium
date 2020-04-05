@@ -8,13 +8,12 @@ import androidx.core.view.GravityCompat
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.bs.ecommerce.R
-import com.bs.ecommerce.main.model.AuthModel
+import com.bs.ecommerce.main.model.MainModel
 import com.bs.ecommerce.main.model.MainModelImpl
 import com.bs.ecommerce.base.BaseActivity
 import com.bs.ecommerce.home.category.CategoryFragment
 import com.bs.ecommerce.home.HomeFragment
 import com.bs.ecommerce.auth.LoginFragment
-import com.bs.ecommerce.main.model.MainModel
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import kotlinx.android.synthetic.main.activity_main.*
 

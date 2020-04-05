@@ -51,21 +51,14 @@
 
             <EditText
                 android:id="@+id/login_username"
+                style="@style/RoundedEditTextLight"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/rounded_background"
-                android:backgroundTint="@color/login_et_background"
                 android:drawableEnd="@drawable/ic_user"
                 android:hint="@string/login_usrname"
                 android:imeOptions="actionNext"
                 android:inputType="textEmailAddress|text"
-                android:paddingStart="15dp"
-                android:paddingTop="10dp"
-                android:paddingEnd="15dp"
-                android:paddingBottom="10dp"
-                android:textColor="@color/black"
-                android:textColorHint="@color/login_tv_text"
-                android:textSize="@dimen/et_text_size" />
+                android:autofillHints="Username" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -86,20 +79,12 @@
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/login_password"
+                style="@style/RoundedEditTextLight"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/rounded_background"
-                android:backgroundTint="@color/login_et_background"
                 android:hint="@string/login_password"
                 android:imeOptions="actionDone"
-                android:inputType="textPassword"
-                android:paddingStart="15dp"
-                android:paddingTop="10dp"
-                android:paddingEnd="15dp"
-                android:paddingBottom="10dp"
-                android:textColor="@color/black"
-                android:textColorHint="@color/login_tv_text"
-                android:textSize="@dimen/et_text_size" />
+                android:inputType="textPassword"/>
         </com.google.android.material.textfield.TextInputLayout>
 
         <androidx.appcompat.widget.AppCompatButton
@@ -108,10 +93,8 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
             android:background="@drawable/rounded_background"
-            android:backgroundTint="@color/login_btn_bg"
-            android:nextFocusLeft="@+id/login_remember_password"
-            android:nextFocusUp="@+id/login_remember_password"
-            android:text="@string/login_button"
+            android:backgroundTint="@color/pink"
+            android:text="@string/login"
             android:textColor="@color/login_et_background"
             android:textSize="@dimen/button_text_size"
             app:layout_constraintEnd_toStartOf="@id/guideline_v_end"
@@ -162,8 +145,6 @@
             android:layout_marginTop="20dp"
             android:background="@drawable/rounded_background"
             android:backgroundTint="#4080FF"
-            android:nextFocusLeft="@+id/login_remember_password"
-            android:nextFocusUp="@+id/login_remember_password"
             android:text="Continue with Facebook"
             android:textAllCaps="false"
             android:textColor="@color/white"

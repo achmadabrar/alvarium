@@ -2,11 +2,12 @@
     <string name="app_name">NopStation</string>
 
     <string name="placeholder">Placeholder</string>
+    <string name="placeholder_price">$12,345.00</string>
 
     <!-- Login Fragment  -->
     <string name="login_password">Password</string>
     <string name="login_usrname">Username or Email</string>
-    <string name="login_button">Login</string>
+    <string name="login">Login</string>
     <string name="login_new_customer">New Customer?</string>
     <string name="login_forgot_password">Forgot Password</string>
     <string name="login_tv_or">Or</string>
@@ -29,4 +30,24 @@
     <string name="reg_hint_company_name">Company name:</string>
     <string name="reg_hint_password">Password</string>
     <string name="reg_hint_confirm_password">Confirm password</string>
+
+
+    <!-- Cart Fragment  -->
+    <string name="cart_total_item">%s item</string>
+    <string name="cart_entre_your_coupon_here">Entre your Coupon here</string>
+    <string name="cart_apply_coupon">Apply Coupon</string>
+    <string name="cart_enter_gift_card_code">Enter Gift Card code</string>
+    <string name="cart_add_gift_card">Add Gift Card</string>
+    <string name="cart_proceed_to_checkout">Proceed to checkout</string>
+    <string name="sub_total">Sub-Total</string>
+    <string name="shipping">Shipping</string>
+    <string name="total">Total</string>
+
+    <!-- Checkout Dialog  -->
+    <string name="checkout_msg_long">By creating an account on our website, you will be able to shop faster, be up to date on an orders status, and keep track of the orders you have previously made.</string>
+    <string name="checkout_msg_short">Register and save time</string>
+    <string name="returning_customer">Returning Customer?</string>
+    <string name="checkout_title">Checkout as a guest or Register</string>
+    <string name="checkout_as_guest">Checkout as Guest</string>
+    <string name="register">Register</string>
 </resources>
