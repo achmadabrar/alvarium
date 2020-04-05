@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginBottom="2dp"
+    android:layout_marginBottom="5dp"
     app:cardBackgroundColor="@color/cart_item_bg"
     app:cardCornerRadius="10dp">
 
@@ -30,6 +30,7 @@
         android:weightSum="10">
 
         <ImageView
+            android:id="@+id/ivProductThumb"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="3.5"
@@ -39,7 +40,7 @@
         <RelativeLayout
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_marginStart="5dp"
+            android:layout_marginStart="10dp"
             android:layout_weight="6.5">
 
             <TextView
@@ -90,14 +91,13 @@
                 android:layout_below="@id/tvAttribute1"
                 android:orientation="horizontal">
 
-                <ImageView
+                <Button
                     android:id="@+id/btnMinus"
                     android:layout_width="35dp"
                     android:layout_height="match_parent"
-                    android:background="#E8E9F2"
-                    android:contentDescription="@string/placeholder"
-                    android:padding="13dp"
-                    android:src="@drawable/ic_minus" />
+                    android:text="-"
+                    android:textColor="#656567"
+                    android:background="#E8E9F2" />
 
                 <TextView
                     android:id="@+id/tvItemQuantity"
@@ -108,15 +108,14 @@
                     android:textColor="#656567"
                     tools:text="2"/>
 
-                <ImageView
+                <Button
                     android:id="@+id/btnPlus"
                     android:layout_width="35dp"
                     android:layout_height="match_parent"
                     android:background="#E8E9F2"
+                    android:textColor="#656567"
                     android:contentDescription="@string/placeholder"
-                    android:padding="13dp"
-                    android:scaleType="center"
-                    android:src="@drawable/ic_plus" />
+                    android:text="+" />
             </LinearLayout>
 
             <TextView
