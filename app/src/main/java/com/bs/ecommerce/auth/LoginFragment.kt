@@ -35,8 +35,8 @@ class LoginFragment : BaseFragment() {
 
             requireActivity().supportFragmentManager
                 .beginTransaction()
-                .replace(R.id.layoutFrame, RegisterFragment())
-                .addToBackStack(RegisterFragment::class.java.simpleName)
+                .replace(R.id.layoutFrame, RegistrationFragment())
+                .addToBackStack(RegistrationFragment::class.java.simpleName)
                 .commit()
         }
     }
