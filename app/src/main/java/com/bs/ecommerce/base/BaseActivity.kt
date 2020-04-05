@@ -1,21 +1,18 @@
 package com.bs.ecommerce.base
 
-import android.app.Activity
-import android.app.AlertDialog
-import android.app.ProgressDialog
 import android.content.Context
 import android.os.Build
-import androidx.lifecycle.Observer
 import android.os.Bundle
 import android.text.TextUtils
 import android.view.View
 import androidx.annotation.LayoutRes
 import androidx.appcompat.app.AppCompatActivity
-import android.view.inputmethod.InputMethodManager
+import com.bs.ecommerce.main.model.data.AppLandingData
 import com.bs.ecommerce.utils.Language
 import com.bs.ecommerce.utils.PrefSingleton
+import com.bs.ecommerce.utils.showLog
+import com.bs.ecommerce.utils.toast
 import java.util.*
-import kotlin.properties.Delegates
 
 
 abstract class BaseActivity : AppCompatActivity()
@@ -51,6 +48,64 @@ abstract class BaseActivity : AppCompatActivity()
 
     }
 
+    protected fun setAppSettings(settings: AppLandingData)
+    {
+        setAppLanguageFromLanding(settings)
+        setAppCurrencyFromLanding(settings)
+    }
+
+    private fun setAppLanguageFromLanding(settings: AppLandingData)
+    {
+        val languageList = settings.languageNavSelector.availableLanguages
+        val currentLanguageId = settings.languageNavSelector.currentLanguageId
+
+        var languageToLoad = ""
+
+        for (availableLanguage in languageList)
+        {
+            if (availableLanguage.id == currentLanguageId)
+            {
+                "languageSet".showLog("Language got in CategoryNew :: ${currentLanguageId}")
+
+                languageToLoad = when(availableLanguage.name)
+                {
+                    Language.ENGLISH_AVAILABLE ->  Language.ENGLISH
+
+                    Language.ITALIAN_AVAILABLE ->  Language.ITALIAN
+
+                    Language.ARABIC_AVAILABLE_IN_ENGLISH -> Language.ARABIC
+
+                    Language.ARABIC_AVAILABLE_IN_ARABIC ->  Language.ARABIC
+
+                    else -> ""
+                }
+            }
+        }
+        if(languageToLoad.isNotEmpty())
+        {
+            prefObject.setPrefs(PrefSingleton.CURRENT_LANGUAGE, languageToLoad)
+
+            "languageSet".showLog("Language got in ApplandingSettings :: $languageToLoad")
+
+            setLocale(true)
+        }
+        else
+            toast("Error Changing Language")
+    }
+
+    private fun setAppCurrencyFromLanding(settings: AppLandingData)
+    {
+        val currencyList = settings.currencyNavSelector.availableCurrencies
+        val currentCurrencyId = settings.currencyNavSelector.currentCurrencyId
+
+        for(currency in currencyList)
+        {
+            if(currency.id == currentCurrencyId)
+                prefObject.setPrefs(PrefSingleton.CURRENT_CURRENCY, currency.name); break
+
+        }
+        setLocale(true)
+    }
 
     override fun attachBaseContext(newBase: Context)
     {
