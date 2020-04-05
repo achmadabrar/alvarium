@@ -5,6 +5,7 @@ import android.view.Menu
 import android.view.View
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.core.view.GravityCompat
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.bs.ecommerce.R
 import com.bs.ecommerce.main.model.MainModel
@@ -35,13 +36,22 @@ class MainActivity : BaseActivity()
         mainViewModel = ViewModelProvider(this).get(MainViewModel::class.java)
 
 
+        mainViewModel.getAppSettings(mainModel)
+        setLiveDataListeners()
 
         initNavigationDrawer()
         setBottomNavigation()
         initHomeFragment()
 
     }
+    private fun setLiveDataListeners()
+    {
+        mainViewModel.appSettingsLD.observe(this, Observer { settings ->
 
+            setAppSettings(settings)
+        })
+
+    }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean
     {
@@ -115,7 +125,6 @@ class MainActivity : BaseActivity()
             }
             R.id.bottom_nav_categories -> {
 
-                supportFragmentManager.beginTransaction().replace(R.id.layoutFrame, LoginFragment()).addToBackStack(HomeFragment::class.java.simpleName).commit()
                 return@OnNavigationItemSelectedListener true
             }
             R.id.bottom_nav_search -> {
@@ -124,6 +133,7 @@ class MainActivity : BaseActivity()
             }
             R.id.bottom_nav_account -> {
 
+                supportFragmentManager.beginTransaction().replace(R.id.layoutFrame, LoginFragment()).addToBackStack(HomeFragment::class.java.simpleName).commit()
                 return@OnNavigationItemSelectedListener true
             }
             R.id.bottom_nav_more -> {

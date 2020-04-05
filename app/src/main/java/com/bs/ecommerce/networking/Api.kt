@@ -1,6 +1,7 @@
 package com.bs.ecommerce.networking
 
 
+import com.bs.ecommerce.main.model.data.AppLandingSettingResponse
 import com.bs.ecommerce.main.model.data.CategoryTreeResponse
 import com.google.gson.annotations.SerializedName
 import io.reactivex.Observable
@@ -17,7 +18,8 @@ interface Api {
     @GET("home/categorytree")
     fun getHomeCategoryTree(): Call<CategoryTreeResponse>
 
-
+    @GET("home/applandingsetting")
+    fun getAppLandingSettings(): Call<AppLandingSettingResponse>
 
 /*    @POST("setcurrency/{id}")
     fun setCurrency(@Path("id") id: Long): Call<LanguageResponse>
