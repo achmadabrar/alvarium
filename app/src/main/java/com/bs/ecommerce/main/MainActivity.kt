@@ -14,6 +14,7 @@ import com.bs.ecommerce.base.BaseActivity
 import com.bs.ecommerce.home.category.CategoryFragment
 import com.bs.ecommerce.home.HomeFragment
 import com.bs.ecommerce.auth.LoginFragment
+import com.bs.ecommerce.checkout.CartFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import kotlinx.android.synthetic.main.activity_main.*
 
@@ -133,7 +134,7 @@ class MainActivity : BaseActivity()
             }
             R.id.bottom_nav_account -> {
 
-                supportFragmentManager.beginTransaction().replace(R.id.layoutFrame, LoginFragment()).addToBackStack(HomeFragment::class.java.simpleName).commit()
+                supportFragmentManager.beginTransaction().replace(R.id.layoutFrame, CartFragment()).addToBackStack(CartFragment::class.java.simpleName).commit()
                 return@OnNavigationItemSelectedListener true
             }
             R.id.bottom_nav_more -> {

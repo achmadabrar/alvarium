@@ -1,25 +1,13 @@
 package com.bs.ecommerce.auth
 
-import android.app.DatePickerDialog
-import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import android.widget.RelativeLayout
-import android.widget.Toast
 import com.bs.ecommerce.R
-import com.bs.ecommerce.auth.data.CustomerRegistrationInfo
 import com.bs.ecommerce.base.BaseFragment
 import com.bs.ecommerce.base.BaseViewModel
-import com.bs.ecommerce.customViews.CustomerAttributeViews
 import com.bs.ecommerce.main.MainViewModel
-import com.bs.ecommerce.networking.NetworkUtil
-import com.bs.ecommerce.networking.RetroClient
-import com.bs.ecommerce.utils.*
 import kotlinx.android.synthetic.main.fragment_registration.*
-import java.util.*
 
-class RegistrationFragment : BaseFragment()
+class RegisterFragment: BaseFragment()
 {
     override fun getLayoutId(): Int = R.layout.fragment_registration
 

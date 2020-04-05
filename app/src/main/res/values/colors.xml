@@ -14,15 +14,18 @@
 
     <color name="black">#000</color>
     <color name="white">#FFF</color>
+    <color name="pink">#FF476E</color>
 
     <color name="fragment_background">#222222</color>
 
     <color name="login_et_background">#F2F2F2</color>
     <color name="login_tv_text">#A5A5A5</color>
-    <color name="login_btn_bg">#FF476E</color>
 
     <color name="register_et_background">#333333</color>
     <color name="register_title_text">#F2F2F2</color>
     <color name="register_horizontal_line">#444444</color>
     <color name="radiobutton_text">#A5A5A5</color>
+
+    <color name="cart_title_bg">#2A2A2A</color>
+    <color name="cart_item_bg">#444444</color>
 </resources>
