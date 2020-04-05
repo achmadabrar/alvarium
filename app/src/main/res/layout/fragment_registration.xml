@@ -81,45 +81,6 @@
                     android:textSize="@dimen/et_text_size" />
 
                 <EditText
-                    android:id="@+id/tvRegLastName32"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="15dp"
-                    android:background="@drawable/rounded_background"
-                    android:backgroundTint="@color/register_et_background"
-                    android:drawableEnd="@drawable/ic_user"
-                    android:hint="@string/reg_hint_last_name"
-                    android:imeOptions="actionNext"
-                    android:inputType="textPersonName"
-                    android:paddingStart="15dp"
-                    android:paddingTop="10dp"
-                    android:paddingEnd="15dp"
-                    android:paddingBottom="10dp"
-                    android:textColor="@android:color/white"
-                    android:textColorHint="@color/login_tv_text"
-                    android:textSize="@dimen/et_text_size" />
-
-
-                <EditText
-                    android:id="@+id/tvRegLastName5768"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="15dp"
-                    android:background="@drawable/rounded_background"
-                    android:backgroundTint="@color/register_et_background"
-                    android:drawableEnd="@drawable/ic_user"
-                    android:hint="@string/reg_hint_last_name"
-                    android:imeOptions="actionNext"
-                    android:inputType="textPersonName"
-                    android:paddingStart="15dp"
-                    android:paddingTop="10dp"
-                    android:paddingEnd="15dp"
-                    android:paddingBottom="10dp"
-                    android:textColor="@android:color/white"
-                    android:textColorHint="@color/login_tv_text"
-                    android:textSize="@dimen/et_text_size" />
-
-                <EditText
                     android:id="@+id/tvRegDob"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
