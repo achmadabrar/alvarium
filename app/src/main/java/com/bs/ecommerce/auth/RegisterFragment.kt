@@ -19,7 +19,7 @@ import com.bs.ecommerce.utils.*
 import kotlinx.android.synthetic.main.fragment_registration.*
 import java.util.*
 
-class RegistrationFragment : BaseFragment()
+class RegisterFragment : BaseFragment()
 {
     override fun getLayoutId(): Int = R.layout.fragment_registration
 
