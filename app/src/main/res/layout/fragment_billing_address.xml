@@ -47,14 +47,11 @@
 
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/btnContinue"
+                style="@style/RoundedButtonPink"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:background="@drawable/rounded_background"
-                android:backgroundTint="@color/pink"
-                android:text="@string/text_continue"
-                android:textColor="@color/login_et_background"
-                android:textSize="@dimen/button_text_size" />
+                android:text="@string/text_continue" />
         </LinearLayout>
 
     </ScrollView>

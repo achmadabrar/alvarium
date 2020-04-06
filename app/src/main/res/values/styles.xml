@@ -49,6 +49,13 @@
         <item name="android:maxLines">1</item>
     </style>
 
+    <style name="RoundedButtonPink">
+        <item name="android:background">@drawable/rounded_background</item>
+        <item name="android:backgroundTint">@color/pink</item>
+        <item name="android:textColor">@color/login_et_background</item>
+        <item name="android:textSize">@dimen/button_text_size</item>
+    </style>
+
     <style name="CustomTextAppearanceTab" parent="TextAppearance.Design.Tab">
         <item name="textAllCaps">false</item>
         <item name="android:textAllCaps">false</item>
