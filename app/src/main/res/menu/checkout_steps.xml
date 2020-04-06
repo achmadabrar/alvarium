@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/menu_address"
+        android:title="@string/address"
+        android:icon="@drawable/ic_address"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/menu_shipping"
+        android:title="@string/step_shipping"
+        android:icon="@drawable/ic_truck"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/menu_payment"
+        android:title="@string/payment"
+        android:icon="@drawable/ic_payment"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/menu_confirm"
+        android:title="@string/confirm_order"
+        android:icon="@drawable/ic_check_circle"
+        app:showAsAction="never" />
+</menu>

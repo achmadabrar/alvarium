@@ -7,4 +7,7 @@
     <dimen name="button_text_size">16sp</dimen>
     <dimen name="registration_title_text_size">17sp</dimen>
     <dimen name="slim_btn_height">35dp</dimen>
+    <dimen name="fragment_margin">5dp</dimen>
+    <dimen name="form_margin">15dp</dimen>
+    <dimen name="cardCornerRadius">3dp</dimen>
 </resources>

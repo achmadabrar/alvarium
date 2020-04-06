@@ -15,8 +15,12 @@
     <color name="black">#000</color>
     <color name="white">#FFF</color>
     <color name="pink">#FF476E</color>
+    <color name="gray">#C8C8C8</color>
 
+    <!-- will be different on day/night theme   -->
     <color name="fragment_background">#222222</color>
+    <color name="light_black_background">#333333</color>
+    <color name="list_item_bg">#444444</color>
 
     <color name="login_et_background">#F2F2F2</color>
     <color name="login_tv_text">#A5A5A5</color>
@@ -27,5 +31,7 @@
     <color name="radiobutton_text">#A5A5A5</color>
 
     <color name="cart_title_bg">#2A2A2A</color>
-    <color name="cart_item_bg">#444444</color>
+    <color name="tab_background_selected">#333333</color>
+    <color name="tab_background_unselected">#000000</color>
+    <color name="tab_indicator_color">#B8B6B6</color>
 </resources>

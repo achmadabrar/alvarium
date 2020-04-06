@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/checkoutStepRootLayout"
+    android:background="@color/fragment_background"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/checkoutBottomNav"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_gravity="bottom"
+        app:itemBackground="@drawable/checkout_bottom_nav_bg"
+        app:itemIconTint="@drawable/checkout_bottom_nav_text"
+        app:itemTextColor="@drawable/checkout_bottom_nav_text"
+        app:labelVisibilityMode="labeled"
+        app:menu="@menu/checkout_steps" />
+
+    <FrameLayout
+        android:id="@+id/checkoutFragmentHolder"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/checkoutBottomNav" />
+
+</RelativeLayout>

@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginBottom="5dp"
-    app:cardBackgroundColor="@color/cart_item_bg"
+    app:cardBackgroundColor="@color/list_item_bg"
     app:cardCornerRadius="10dp">
 
     <ImageView

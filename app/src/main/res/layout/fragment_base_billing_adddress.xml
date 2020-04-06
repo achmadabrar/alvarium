@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/baseBillingRootLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/billingTabLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:tabBackground="@drawable/tab_color_selector"
+        app:tabTextAppearance="@style/CustomTextAppearanceTab"
+        app:tabIndicatorColor="@color/tab_indicator_color"
+        app:tabIndicatorHeight="2dp"
+        app:tabSelectedTextColor="#019CD8"
+        app:tabTextColor="@color/radiobutton_text">
+
+        <com.google.android.material.tabs.TabItem
+            android:id="@+id/tabBillingAdrs"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/billing_address" />
+
+        <com.google.android.material.tabs.TabItem
+            android:id="@+id/tabShippingAdrs"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/shipping_address" />
+
+    </com.google.android.material.tabs.TabLayout>
+
+    <include
+        android:id="@+id/layoutBillingAddress"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/billingTabLayout"
+        layout="@layout/fragment_billing_address"/>
+
+    <include
+        android:id="@+id/layoutShippingAddress"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/billingTabLayout"
+        layout="@layout/fragment_shipping_address"
+        android:visibility="gone"/>
+
+</RelativeLayout>

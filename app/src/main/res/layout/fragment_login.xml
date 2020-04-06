@@ -89,14 +89,11 @@
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/loginButton"
+            style="@style/RoundedButtonPink"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
-            android:background="@drawable/rounded_background"
-            android:backgroundTint="@color/pink"
             android:text="@string/login"
-            android:textColor="@color/login_et_background"
-            android:textSize="@dimen/button_text_size"
             app:layout_constraintEnd_toStartOf="@id/guideline_v_end"
             app:layout_constraintStart_toEndOf="@id/guideline_v_start"
             app:layout_constraintTop_toBottomOf="@id/login_password_layout" />
