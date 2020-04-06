@@ -24,9 +24,9 @@
     <string name="reg_hint_email">Email</string>
     <string name="reg_hint_phone">Phone</string>
     <string name="reg_gender">Gender:</string>
-    <string name="male">"  Male"</string>
-    <string name="female">"  Female"</string>
-    <string name="newsletter">"  Newsletter"</string>
+    <string name="male">"Male"</string>
+    <string name="female">"Female"</string>
+    <string name="newsletter">"Newsletter"</string>
     <string name="reg_hint_company_name">Company name:</string>
     <string name="reg_hint_password">Password</string>
     <string name="reg_hint_confirm_password">Confirm password</string>
@@ -50,4 +50,26 @@
     <string name="checkout_title">Checkout as a guest or Register</string>
     <string name="checkout_as_guest">Checkout as Guest</string>
     <string name="register">Register</string>
+    <string name="address">Address</string>
+    <string name="step_shipping">Shipping</string>
+    <string name="payment">Payment</string>
+    <string name="confirm_order">Confirm Order</string>
+    <string name="text_continue">Continue</string>
+    <string name="city">City</string>
+    <string name="address_1">Address 1</string>
+    <string name="address_2">Address 2</string>
+    <string name="zip_code">Zip Code</string>
+    <string name="fax">Fax</string>
+    <string name="billing_address">Billing Address</string>
+    <string name="shipping_address">Shipping Address</string>
+    <string name="store">Store</string>
+    <string name="confirm">Confirm</string>
+    <string name="products">Products</string>
+    <string name="pickup_point_address">Picup point address</string>
+
+    <string-array name="spinner_dummy_data">
+        <item>Dummy Spinner Item</item>
+        <item>Item 2</item>
+        <item>Item 3</item>
+    </string-array>
 </resources>

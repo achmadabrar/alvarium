@@ -34,9 +34,9 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="30dp"
+                android:layout_marginStart="@dimen/form_margin"
                 android:layout_marginTop="20dp"
-                android:layout_marginEnd="30dp"
+                android:layout_marginEnd="@dimen/form_margin"
                 android:orientation="vertical">
 
                 <TextView

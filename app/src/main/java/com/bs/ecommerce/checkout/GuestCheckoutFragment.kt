@@ -54,7 +54,7 @@ class GuestCheckoutFragment : DialogFragment(), View.OnClickListener {
         when (v.id) {
             R.id.btnLogin -> fragment = LoginFragment()
             R.id.btnRegister -> fragment = RegistrationFragment()
-            // fixme R.id.btnGuestCheckout -> fragment = CheckoutStepFragment()
+            R.id.btnGuestCheckout -> fragment = CheckoutStepFragment()
         }
 
         fragment?.let {

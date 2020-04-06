@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="@color/fragment_background"
+    android:orientation="vertical">
+
+    <EditText
+        android:id="@+id/tvFirstName"
+        style="@style/RoundedEditTextDark"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:autofillHints=""
+        android:drawableEnd="@drawable/ic_star_formular"
+        android:hint="@string/reg_hint_first_name"
+        android:imeOptions="actionNext"
+        android:inputType="textPersonName" />
+
+    <EditText
+        android:id="@+id/tvLastName"
+        style="@style/RoundedEditTextDark"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:autofillHints=""
+        android:drawableEnd="@drawable/ic_star_formular"
+        android:hint="@string/reg_hint_last_name"
+        android:imeOptions="actionNext"
+        android:inputType="textPersonName" />
+
+    <EditText
+        android:id="@+id/tvEmail"
+        style="@style/RoundedEditTextDark"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:autofillHints=""
+        android:drawableEnd="@drawable/ic_star_formular"
+        android:hint="@string/reg_hint_email"
+        android:imeOptions="actionNext"
+        android:inputType="textEmailAddress" />
+
+    <EditText
+        android:id="@+id/tvCompanyName"
+        style="@style/RoundedEditTextDark"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:autofillHints=""
+        android:hint="@string/reg_hint_company_name"
+        android:imeOptions="actionNext"
+        android:inputType="textCapWords" />
+
+    <LinearLayout
+        style="@style/RoundedEditTextDark"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp">
+
+        <androidx.appcompat.widget.AppCompatSpinner
+            android:id="@+id/spCountry"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:entries="@array/spinner_dummy_data"
+            tools:listitem="@layout/simple_spinner_item"
+            android:textColor="@color/white" />
+    </LinearLayout>
+
+    <LinearLayout
+        style="@style/RoundedEditTextDark"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp">
+
+        <androidx.appcompat.widget.AppCompatSpinner
+            android:id="@+id/spState"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:entries="@array/spinner_dummy_data"
+            tools:listitem="@layout/simple_spinner_item"
+            android:textColor="@color/white" />
+    </LinearLayout>
+
+    <EditText
+        android:id="@+id/tvCity"
+        style="@style/RoundedEditTextDark"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:autofillHints=""
+        android:drawableEnd="@drawable/ic_star_formular"
+        android:hint="@string/city"
+        android:imeOptions="actionNext"
+        android:inputType="text" />
+
+    <EditText
+        android:id="@+id/tvAddress1"
+        style="@style/RoundedEditTextDark"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:autofillHints=""
+        android:drawableEnd="@drawable/ic_star_formular"
+        android:hint="@string/address_1"
+        android:imeOptions="actionNext"
+        android:inputType="text" />
+
+    <EditText
+        android:id="@+id/tvAddress2"
+        style="@style/RoundedEditTextDark"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:autofillHints=""
+        android:hint="@string/address_2"
+        android:imeOptions="actionNext"
+        android:inputType="text" />
+
+    <EditText
+        android:id="@+id/tvZipCode"
+        style="@style/RoundedEditTextDark"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:autofillHints=""
+        android:drawableEnd="@drawable/ic_star_formular"
+        android:hint="@string/zip_code"
+        android:imeOptions="actionNext"
+        android:inputType="number" />
+
+    <EditText
+        android:id="@+id/tvPhone"
+        style="@style/RoundedEditTextDark"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:autofillHints=""
+        android:drawableEnd="@drawable/ic_star_formular"
+        android:hint="@string/reg_hint_phone"
+        android:imeOptions="actionNext"
+        android:inputType="phone" />
+
+    <EditText
+        android:id="@+id/tvFax"
+        style="@style/RoundedEditTextDark"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:autofillHints=""
+        android:hint="@string/fax"
+        android:imeOptions="actionDone"
+        android:inputType="phone" />
+
+</LinearLayout>
