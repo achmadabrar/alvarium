@@ -7,4 +7,5 @@
     android:singleLine="true"
     android:text="@string/placeholder"
     android:textAlignment="inherit"
+    android:textSize="@dimen/et_text_size"
     android:textColor="@color/login_tv_text" />

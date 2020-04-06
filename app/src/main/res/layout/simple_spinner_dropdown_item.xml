@@ -7,7 +7,7 @@
     android:background="@color/gray"
     android:padding="6dp"
     android:singleLine="true"
-    android:textSize="16sp"
+    android:textSize="@dimen/et_text_size"
     android:text="@string/placeholder"
     android:textAlignment="inherit"
     android:textColor="@color/black" />
