@@ -8,6 +8,7 @@ import com.bs.ecommerce.R
 import com.bs.ecommerce.auth.LoginFragment
 import com.bs.ecommerce.auth.RegisterFragment
 import com.bs.ecommerce.base.BaseFragment
+import com.bs.ecommerce.checkout.CheckoutStepFragment
 import com.bs.ecommerce.utils.replaceFragmentSafely
 import kotlinx.android.synthetic.main.guest_checkout_dialog_fragment.*
 
