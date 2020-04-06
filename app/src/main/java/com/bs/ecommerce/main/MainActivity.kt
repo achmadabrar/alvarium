@@ -14,7 +14,7 @@ import com.bs.ecommerce.base.BaseActivity
 import com.bs.ecommerce.home.category.CategoryFragment
 import com.bs.ecommerce.home.HomeFragment
 import com.bs.ecommerce.auth.LoginFragment
-import com.bs.ecommerce.checkout.CartFragment
+import com.bs.ecommerce.cart.CartFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import kotlinx.android.synthetic.main.activity_main.*
 
@@ -54,11 +54,6 @@ class MainActivity : BaseActivity()
 
     }
 
-    override fun onCreateOptionsMenu(menu: Menu): Boolean
-    {
-        menuInflater.inflate(R.menu.menu_main, menu)
-        return true
-    }
 
     private fun initNavigationDrawer()
     {

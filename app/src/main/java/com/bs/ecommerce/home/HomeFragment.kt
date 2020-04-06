@@ -8,6 +8,8 @@ import androidx.lifecycle.ViewModelProvider
 import com.bs.ecommerce.R
 import com.bs.ecommerce.main.MainViewModel
 import com.bs.ecommerce.base.BaseFragment
+import com.bs.ecommerce.base.BaseViewModel
+import com.bs.ecommerce.cart.CartViewModel
 import com.bs.ecommerce.main.model.AuthModel
 import com.bs.ecommerce.main.model.MainModel
 import com.bs.ecommerce.main.model.MainModelImpl
@@ -19,26 +21,24 @@ import kotlinx.android.synthetic.main.fragment_home.*
 class HomeFragment : BaseFragment()
 {
 
-    private lateinit var mainModel: MainModel
-    private lateinit var mainViewModel: MainViewModel
-
+    private lateinit var model: MainModel
 
     override fun getLayoutId(): Int = R.layout.fragment_home
 
-    override fun getRootLayout(): RelativeLayout = categoryRootLayout
+    override fun getRootLayout(): RelativeLayout? = categoryRootLayout
 
-    override fun createViewModel(): MainViewModel = MainViewModel()
+    override fun createViewModel(): BaseViewModel = MainViewModel()
 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?)
     {
         super.onViewCreated(view, savedInstanceState)
 
-        mainModel = MainModelImpl(activity?.applicationContext!!)
+        model = MainModelImpl(activity?.applicationContext!!)
 
-        mainViewModel = ViewModelProvider(this).get(MainViewModel::class.java)
+        viewModel = ViewModelProvider(this).get(MainViewModel::class.java)
 
-        mainViewModel.getCategoryList(mainModel)
+        (viewModel as MainViewModel).getCategoryList(model)
 
 
         setLiveDataListeners()
@@ -47,18 +47,18 @@ class HomeFragment : BaseFragment()
 
     private fun setLiveDataListeners() {
 
-        mainViewModel.allCategoriesLD.observe(activity!!, Observer { categoryList ->
+        (viewModel as MainViewModel).allCategoriesLD.observe(activity!!, Observer { categoryList ->
 
             toast(categoryList[0].name)
         })
 
 
-        mainViewModel.isLoadingLD.observe(activity!!, Observer { isShowLoader ->
+        (viewModel as MainViewModel).isLoadingLD.observe(activity!!, Observer { isShowLoader ->
 
             if (isShowLoader)
-                progressBarHome?.visibility = View.VISIBLE
+                showLoading()
             else
-                progressBarHome?.visibility = View.GONE
+                hideLoading()
         })
 
 

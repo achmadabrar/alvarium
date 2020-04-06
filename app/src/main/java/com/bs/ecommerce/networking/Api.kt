@@ -2,12 +2,16 @@ package com.bs.ecommerce.networking
 
 
 import com.bs.ecommerce.auth.data.GetRegistrationResponse
+import com.bs.ecommerce.auth.data.KeyValuePair
+import com.bs.ecommerce.cart.model.data.CartResponse
 import com.bs.ecommerce.main.model.data.AppLandingSettingResponse
 import com.bs.ecommerce.main.model.data.CategoryTreeResponse
 import com.google.gson.annotations.SerializedName
 import io.reactivex.Observable
 import retrofit2.Call
+import retrofit2.http.Body
 import retrofit2.http.GET
+import retrofit2.http.POST
 
 
 /**
@@ -19,11 +23,40 @@ interface Api {
     @GET("home/categorytree")
     fun getHomeCategoryTree(): Call<CategoryTreeResponse>
 
-    @GET("home/applandingsetting")
-    fun getAppLandingSettings(): Call<AppLandingSettingResponse>
 
     @GET("customer/register")
     fun getRegisterData(): Call<GetRegistrationResponse>
+
+    @GET("shoppingcart/cart")
+    fun getCartData(): Call<CartResponse>
+
+    @POST("shoppingcart/updatecart")
+    fun updateCartData(@Body list: List<KeyValuePair>): Call<CartResponse>
+
+
+
+
+
+    //homepage
+
+    @GET("home/applandingsetting")
+    fun getAppLandingSettings(): Call<AppLandingSettingResponse>
+
+   /* @GET("slider/homepageslider")
+    fun getHomeSlider(): Call<CartResponse>
+
+    @GET("home/manufacturers")
+    fun getHomeManufacturer(): Call<CartResponse>
+
+    @GET("home/featureproducts")
+    fun getHomeFeaturedProducts(): Call<CartResponse>
+
+    @GET("home/bestsellerproducts")
+    fun getHomeBestSellerProducts(): Call<CartResponse>
+
+    @GET("home/homepagecategorieswithproducts")
+    fun getHomePageCategoriesWithProducts(): Call<CartResponse>*/
+
 
 /*    @POST("setcurrency/{id}")
     fun setCurrency(@Path("id") id: Long): Call<LanguageResponse>

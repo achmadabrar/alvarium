@@ -27,7 +27,7 @@ class CategoryFragment : BaseFragment()
 
     override fun getLayoutId(): Int = R.layout.category_left
 
-    override fun getRootLayout(): RelativeLayout = categoryRootLayout
+    override fun getRootLayout(): RelativeLayout? = categoryRootLayout
 
     override fun createViewModel(): MainViewModel = MainViewModel()
 
@@ -59,9 +59,9 @@ class CategoryFragment : BaseFragment()
         mainViewModel.isLoadingLD.observe(activity!!, Observer { isShowLoader ->
 
             if (isShowLoader)
-                progressBarCategory?.visibility = View.VISIBLE
+                showLoading()
             else
-                progressBarCategory?.visibility = View.GONE
+                hideLoading()
         })
 
     }

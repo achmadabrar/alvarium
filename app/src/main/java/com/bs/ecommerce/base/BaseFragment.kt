@@ -11,6 +11,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.RelativeLayout
 import com.bs.ecommerce.R
+import com.bs.ecommerce.utils.showLog
 import com.pnikosis.materialishprogress.ProgressWheel
 import kotlin.properties.Delegates
 
@@ -24,7 +25,7 @@ abstract class BaseFragment : Fragment()
     @LayoutRes
     abstract fun getLayoutId(): Int
 
-    abstract fun getRootLayout(): RelativeLayout
+    abstract fun getRootLayout(): RelativeLayout?
 
     abstract fun createViewModel(): BaseViewModel
 
@@ -48,7 +49,7 @@ abstract class BaseFragment : Fragment()
                 if (it)
                 {
                     if(getRootLayout() != null )
-                        showLoading(getRootLayout())
+                        showLoading()
 
                     else hideLoading()
                 }
@@ -57,17 +58,26 @@ abstract class BaseFragment : Fragment()
     }
 
 
-    protected fun showLoading(rootLayout: RelativeLayout)
+    protected fun showLoading()
     {
+
+        if(progressWheel != null)
+            getRootLayout()?.removeAllViews()
+
         val params = RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT)
         params.addRule(RelativeLayout.CENTER_IN_PARENT, RelativeLayout.TRUE)
 
         if(progressWheel == null)
-            progressWheel = activity?.layoutInflater?.inflate(R.layout.materialish_progressbar, null) as ProgressWheel
+            progressWheel = activity?.layoutInflater?.inflate(R.layout.materialish_progressbar, null) as ProgressWheel?
 
         progressWheel?.spin()
 
-        rootLayout.addView(progressWheel, params)
+        try {
+            getRootLayout()?.addView(progressWheel, params)
+        } catch (e: Exception)
+        {
+            "exception".showLog(e.toString())
+        }
     }
 
     protected fun hideLoading() = progressWheel?.stopSpinning()

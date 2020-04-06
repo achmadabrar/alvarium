@@ -5,6 +5,7 @@ import android.content.ContextWrapper
 import androidx.multidex.MultiDex
 import androidx.multidex.MultiDexApplication
 import com.binjar.prefsdroid.Preference
+import com.bs.ecommerce.base.BaseActivity
 import com.pixplicity.easyprefs.library.Prefs
 
 
@@ -20,8 +21,6 @@ class MyApplication : MultiDexApplication()
     override fun onCreate() {
         super.onCreate()
 
-/*        FacebookSdk.sdkInitialize(applicationContext)
-        AppEventsLogger.activateApp(this)*/
 
         Prefs.Builder()
             .setContext(this)
@@ -30,13 +29,24 @@ class MyApplication : MultiDexApplication()
             .setUseDefaultSharedPreference(true)
             .build()
 
-        //Preference.load().using(this).with(PrefSingleton.SHARED_PREF_KEY).prepare()
+
     }
 
 
     companion object {
 
         var fcm_token : String? = null
+
+        var searchQuery = ""
+        var paypalKey = "payPalKey"
+        var myCartCounter: Int = 0
+        val orderIdKey = "orderIdKey"
+
+        fun setCartCounter(counter: Int)
+        {
+            myCartCounter = counter
+            //BaseActivity.updateHotCount(counter)
+        }
     }
 
 }

@@ -80,6 +80,8 @@ object RetroClient
             val builder = original.newBuilder()
             if (NetworkUtil.token.isNotEmpty())
                 builder.addHeader("Token", NetworkUtil.token)
+            else
+                builder.addHeader("Token", "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJDdXN0b21lcklkIjoxMzksImV4cCI6MTYwMTQ2NTY3MC4wfQ.yh8noqDY9DIqsQdd3iiKlZOrua9wO1gVsB-UT30NciQ")
 
             val request = builder
                     .addHeader("Content-Type", "application/json")

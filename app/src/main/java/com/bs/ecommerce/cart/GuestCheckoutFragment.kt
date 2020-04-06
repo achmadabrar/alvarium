@@ -1,4 +1,4 @@
-package com.bs.ecommerce.checkout
+package com.bs.ecommerce.cart
 
 import android.os.Bundle
 import android.view.*

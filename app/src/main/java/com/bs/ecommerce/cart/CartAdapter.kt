@@ -1,33 +1,33 @@
-package com.bs.ecommerce.checkout
+package com.bs.ecommerce.cart
 
 import android.graphics.Paint
 import android.view.*
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
 import com.bs.ecommerce.R
 import com.bs.ecommerce.auth.data.KeyValuePair
-import com.bs.ecommerce.checkout.model.CartProduct
-import com.bs.ecommerce.home.category.ViewType
-import com.bs.ecommerce.utils.Language
-import com.bs.ecommerce.utils.PrefSingleton
+import com.bs.ecommerce.base.BaseViewModel
+import com.bs.ecommerce.cart.model.CartModel
+import com.bs.ecommerce.cart.model.CartProduct
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.cart_list_item.view.*
 import java.util.*
 
 open class CartAdapter(
-    productsList: List<CartProduct>, fragment: androidx.fragment.app.Fragment,
-    prefObject: PrefSingleton
+    productsList: List<CartProduct>,
+    fragment: Fragment,
+    val viewModel: BaseViewModel,
+    val model: CartModel
 )
 
     : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     lateinit var products: List<CartProduct>
-    var ViewFormat = ViewType.LIST
     protected var mItemClickListener: OnItemClickListener? = null
     lateinit var fragment: androidx.fragment.app.Fragment
-    private lateinit var prefObject: PrefSingleton
 
     var holder: ProductSummaryHolder? = null// = (ProductSummaryHolder) bindViewHolder;
     lateinit var productModel: CartProduct
@@ -37,7 +37,6 @@ open class CartAdapter(
             this.products = ArrayList()
             (this.products as ArrayList<CartProduct>).addAll(productsList)
             this.fragment = fragment
-            this.prefObject = prefObject
 
         } catch (ex: Exception) {
             ex.printStackTrace()
@@ -98,6 +97,8 @@ open class CartAdapter(
             keyValuePairs.add(this)
         }
 
+        (viewModel as CartViewModel).updateCartData(keyValuePairs, model)
+
         /*fixme RetroClient.api.updateCartProductList(keyValuePairs)
             .enqueue(CustomCB(fragment.view!!))*/
 
@@ -129,13 +130,6 @@ open class CartAdapter(
                 OntrashClicked(holder!!.removeItem, position)
 
                 setTouchListener(holder!!, productModel)
-
-                if (prefObject.getPrefs(PrefSingleton.CURRENT_LANGUAGE) == Language.ARABIC) {
-                    holder?.productName!!.rotationY = 180f
-                    holder?.productPrice!!.rotationY = 180f
-                    holder?.productQuantity!!.rotationY = 180f
-                    holder?.productName!!.gravity = Gravity.RIGHT
-                }
             }
 
 

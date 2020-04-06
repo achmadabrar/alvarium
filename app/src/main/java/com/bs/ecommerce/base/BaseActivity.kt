@@ -4,14 +4,17 @@ import android.content.Context
 import android.os.Build
 import android.os.Bundle
 import android.text.TextUtils
+import android.view.Menu
+import android.view.MenuItem
 import android.view.View
+import android.widget.TextView
 import androidx.annotation.LayoutRes
 import androidx.appcompat.app.AppCompatActivity
+import com.bs.ecommerce.R
+import com.bs.ecommerce.auth.LoginFragment
+import com.bs.ecommerce.cart.CartFragment
 import com.bs.ecommerce.main.model.data.AppLandingData
-import com.bs.ecommerce.utils.Language
-import com.bs.ecommerce.utils.PrefSingleton
-import com.bs.ecommerce.utils.showLog
-import com.bs.ecommerce.utils.toast
+import com.bs.ecommerce.utils.*
 import java.util.*
 
 
@@ -25,6 +28,8 @@ abstract class BaseActivity : AppCompatActivity()
 
 
     protected var viewModel: BaseViewModel? = null
+
+    var ui_hot: TextView? = null
 
     @LayoutRes
     abstract fun getLayoutId(): Int
@@ -45,6 +50,71 @@ abstract class BaseActivity : AppCompatActivity()
             window.decorView.layoutDirection = View.LAYOUT_DIRECTION_LTR
 
         setLocale(false)
+
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu): Boolean
+    {
+        menuInflater.inflate(R.menu.menu_main, menu)
+        //changeMenuItemLoginAction(menu)
+        setOrRefreshCurtMenuItem(menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem)
+
+        = when(item.itemId)
+        {
+            R.id.menu_cart -> consume { goMenuItemFragment(CartFragment())
+        }
+
+        else -> super.onOptionsItemSelected(item)
+
+    }
+
+
+    fun setOrRefreshCurtMenuItem(menu: Menu)
+    {
+        val menu_hotlist = menu.findItem(R.id.menu_cart).actionView
+        ui_hot = menu_hotlist.findViewById<View>(R.id.hotlist_hot) as TextView
+        menu_hotlist.setOnClickListener {
+
+            //closeLeftDrawer()
+
+            if (supportFragmentManager.findFragmentById(R.id.container) !is CartFragment)
+                goMenuItemFragment(CartFragment())
+        }
+        updateHotCount(MyApplication.myCartCounter)
+    }
+
+    fun updateHotCount(badgeCount: Int)
+    {
+        if (ui_hot == null) return
+        runOnUiThread {
+            if (badgeCount == 0)
+                ui_hot?.visibility = View.INVISIBLE
+            else
+            {
+                ui_hot?.visibility = View.VISIBLE
+                ui_hot?.text = java.lang.Long.toString(badgeCount.toLong())
+            }
+        }
+    }
+
+    fun goMenuItemFragment(fragment: androidx.fragment.app.Fragment)
+    {
+        supportFragmentManager.popBackStack(null, androidx.fragment.app.FragmentManager.POP_BACK_STACK_INCLUSIVE)
+        supportFragmentManager.beginTransaction().replace(R.id.layoutFrame, fragment).addToBackStack(null).commit()
+
+    }
+
+    fun goMenuItemFragmentifloggedIn(fragment: androidx.fragment.app.Fragment)
+    {
+        var fragment = fragment
+        if (!isLoggedIn)
+            fragment = LoginFragment()
+
+        goMenuItemFragment(fragment)
 
     }
 

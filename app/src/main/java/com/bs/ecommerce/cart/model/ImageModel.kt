@@ -1,4 +1,4 @@
-package com.bs.ecommerce.checkout.model
+package com.bs.ecommerce.cart.model
 
 import com.google.gson.annotations.SerializedName
 
