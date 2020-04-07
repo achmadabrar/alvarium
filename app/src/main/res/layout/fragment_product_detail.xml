@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/productDetailsRootLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/fragment_background">
+
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/detailsScrollview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/addtoCartLayout">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/fragment_margin"
+            android:layout_marginEnd="@dimen/fragment_margin"
+            android:orientation="vertical">
+
+            <include
+                layout="@layout/slider"
+                android:layout_width="match_parent"
+                android:layout_height="300dp" />
+
+            <include
+                android:id="@+id/productNameLayout"
+                layout="@layout/product_name_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp" />
+
+            <include layout="@layout/horizontal_divider" />
+
+            <include
+                android:id="@+id/productPriceLayout"
+                layout="@layout/product_price_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp" />
+
+            <include layout="@layout/horizontal_divider" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="4"
+                    android:gravity="start"
+                    android:text="@string/availability"
+                    android:textColor="@color/whiteOrBlack"
+                    android:textSize="15sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/tvAvailability"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="6"
+                    android:gravity="start"
+                    android:maxLines="1"
+                    android:textColor="@color/green"
+                    android:textSize="14sp"
+                    tools:text="@string/placeholder" />
+            </LinearLayout>
+
+            <include layout="@layout/horizontal_divider" />
+
+            <include
+                android:id="@+id/productQuantityLayout"
+                layout="@layout/product_quantity"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp" />
+
+            <include layout="@layout/horizontal_divider" />
+
+            <include
+                android:id="@+id/productDescLayout"
+                layout="@layout/product_name_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp" />
+
+            <include layout="@layout/horizontal_divider" />
+
+            <include
+                android:id="@+id/similarProductList"
+                layout="@layout/featured_product_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="5dp" />
+
+        </LinearLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+    <LinearLayout
+        android:id="@+id/addtoCartLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/btnAddToCart"
+            style="?android:attr/buttonBarButtonStyle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@color/darkOrGray"
+            android:gravity="center"
+            android:singleLine="true"
+            android:text="@string/add_to_cart"
+            android:textColor="@color/whiteOrBlack"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+
+        <Button
+            android:id="@+id/btnBuyNow"
+            style="?android:attr/buttonBarButtonStyle"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:background="@color/pink"
+            android:drawableStart="@drawable/app_icon_cart"
+            android:gravity="center"
+            android:paddingStart="50dp"
+            android:paddingEnd="50dp"
+            android:singleLine="true"
+            android:text="@string/buy_now"
+            android:textColor="@color/white"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+    </LinearLayout>
+
+</RelativeLayout>
