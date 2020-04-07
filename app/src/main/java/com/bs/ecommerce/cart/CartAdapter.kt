@@ -2,8 +2,10 @@ package com.bs.ecommerce.cart
 
 import android.graphics.Paint
 import android.view.*
+import android.webkit.WebView
 import android.widget.Button
 import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
@@ -12,15 +14,18 @@ import com.bs.ecommerce.auth.data.KeyValuePair
 import com.bs.ecommerce.base.BaseViewModel
 import com.bs.ecommerce.cart.model.CartModel
 import com.bs.ecommerce.cart.model.CartProduct
+import com.bs.ecommerce.utils.Language
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.cart_list_item.view.*
 import java.util.*
+
 
 open class CartAdapter(
     productsList: List<CartProduct>,
     fragment: Fragment,
     val viewModel: BaseViewModel,
-    val model: CartModel
+    val model: CartModel,
+    var isCheckout: Boolean = false
 )
 
     : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
@@ -98,11 +103,6 @@ open class CartAdapter(
         }
 
         (viewModel as CartViewModel).updateCartData(keyValuePairs, model)
-
-        /*fixme RetroClient.api.updateCartProductList(keyValuePairs)
-            .enqueue(CustomCB(fragment.view!!))*/
-
-
     }
 
     override fun onBindViewHolder(
@@ -125,6 +125,32 @@ open class CartAdapter(
                     .fit().centerInside().into(holder?.productImage)
 
                 //holder?.fav!!.tag = position
+
+                if(isCheckout)
+                {
+                    holder?.removeItem?.visibility = View.GONE
+                    holder?.quantityLayout?.visibility = View.GONE
+
+                    holder?.quantityForCheckout?.visibility = View.VISIBLE
+                    holder?.quantityForCheckout?.text = "Quantity:  ${productModel.quantity}"
+                }
+
+                if(productModel.attributeInfo.isNotEmpty())
+                {
+                    holder?.tvAttribute1?.visibility =View.VISIBLE
+
+                    val htmlHeader = ("<head>"
+                            + "<style type=\"text/css\">body{color: #fff; background-color: #444444;}"
+                            + "</style></head>")
+
+                    if (Locale.getDefault().language == Language.ARABIC)
+                        holder?.tvAttribute1?.loadDataWithBaseURL("", "<html dir=\"rtl\" lang=\"\">" + htmlHeader + "<body>" + productModel.attributeInfo + "</body></html>", "text/html", "UTF-8", "")
+                    else
+                        holder?.tvAttribute1?.loadDataWithBaseURL("", "<html>" + htmlHeader + "<body>" + productModel.attributeInfo + "</body></html>", "text/html", "UTF-8", "")
+                }
+                else
+                    holder?.tvAttribute1?.visibility =View.GONE
+
 
 
                 OntrashClicked(holder!!.removeItem, position)
@@ -175,32 +201,39 @@ open class CartAdapter(
         var productPrice: TextView
         var productName: TextView
 
-        //var productShortdescription: TextView
-        var productQuantity: TextView
+        var quantityLayout : LinearLayout
 
-        //protected SwipeLayout swipeLayout;
+        var productQuantity: TextView
+        var quantityForCheckout: TextView
+
+
         var removeItem: ImageView
 
-        //var trash: ImageView?
+
         var qunatityUpImageView: Button
         var qunatityDownImageView: Button
 
+        var tvAttribute1: WebView
 
-        //var fav: CheckBox
 
         init {
+
+            quantityLayout = itemView.findViewById<View>(R.id.ll_quantity) as LinearLayout
             productImage = itemView.findViewById<View>(R.id.ivProductThumb) as ImageView
             productPrice = itemView.findViewById<View>(R.id.tvDiscountPrice) as TextView
             productName = itemView.findViewById<View>(R.id.tvProductName) as TextView
             // productShortdescription = itemView.findViewById<View>(R.id.tv_product_short_descrption) as TextView
             productQuantity = itemView.findViewById<View>(R.id.tvItemQuantity) as TextView
+            quantityForCheckout = itemView.findViewById<View>(R.id.quantityForCheckout) as TextView
             // fav = itemView.findViewById<View>(R.id.fav) as CheckBox
             removeItem = itemView.findViewById<View>(R.id.icRemoveItem) as ImageView
             //swipeLayout=(SwipeLayout)itemView.findViewById(R.id.swipe);
             //trash = (itemView.findViewById<View>(R.id.trash) as ImageView?)
             qunatityUpImageView = itemView.findViewById<View>(R.id.btnPlus) as Button
             qunatityDownImageView = itemView.findViewById<View>(R.id.btnMinus) as Button
-            itemView.tvAttribute1.text = "Color: Black"
+
+            tvAttribute1 = itemView.findViewById<View>(R.id.tvAttribute1) as WebView
+            //itemView.tvAttribute1.text = "Color: Black"
             itemView.tvAttribute2.text = "Size: XL"
             itemView.tvOriginalPrice.text = "$100"
             itemView.tvOriginalPrice.paintFlags = itemView.tvOriginalPrice.paintFlags or Paint.STRIKE_THRU_TEXT_FLAG

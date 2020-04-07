@@ -2,7 +2,6 @@ package com.bs.ecommerce.cart
 
 import android.os.Bundle
 import android.view.View
-import android.view.ViewGroup
 import android.widget.RelativeLayout
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -15,12 +14,12 @@ import com.bs.ecommerce.base.BaseViewModel
 import com.bs.ecommerce.cart.model.CartModel
 import com.bs.ecommerce.cart.model.CartModelImpl
 import com.bs.ecommerce.cart.model.CartProduct
-import com.bs.ecommerce.cart.model.PictureModel
 import com.bs.ecommerce.cart.model.data.CartData
 import com.bs.ecommerce.utils.MyApplication
 import com.bs.ecommerce.utils.toast
-import com.pnikosis.materialishprogress.ProgressWheel
 import kotlinx.android.synthetic.main.fragment_cart.*
+import kotlinx.android.synthetic.main.ll_cart_coupon.*
+import kotlinx.android.synthetic.main.ll_cart_gift_card.*
 import kotlinx.android.synthetic.main.ll_cart_title.*
 
 
@@ -100,12 +99,11 @@ class CartFragment : BaseFragment() {
 
         populateProductList(cartData.items)
 
-       /* populatedDatainAdapter(it)
-        populateViewOfDynamicAttributeLayout(cartProductListResponse)
+        populateDiscountAndGiftCard(cartData)
 
-        populateDiscountAndGiftcard(cartProductListResponse)
+        //TODO populateViewOfDynamicAttributeLayout
+        //TODO populateDataInOrderTotalLayout(cartProductListResponse.orderTotalResponseModel)
 
-        populateDataInOrderTotalLayout(cartProductListResponse.orderTotalResponseModel)*/
 
         cartPageView?.visibility = View.VISIBLE
         btnCheckOut?.visibility = View.VISIBLE
@@ -123,6 +121,19 @@ class CartFragment : BaseFragment() {
 
         cartproductRecyclerList?.adapter = cartAdapter
             //makeActionOnCartItemClick(cartAdapter)
+    }
+
+    private fun populateDiscountAndGiftCard(cartData: CartData)
+    {
+        if (cartData.discountBox.display)
+            ll_cart_coupon?.visibility = View.VISIBLE
+        else
+            ll_cart_coupon?.visibility = View.GONE
+
+        if (cartData.giftCardBox.display)
+            ll_cart_gift_card?.visibility = View.VISIBLE
+        else
+            ll_cart_gift_card?.visibility = View.GONE
     }
 
     private fun initView()

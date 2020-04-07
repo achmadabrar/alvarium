@@ -23,7 +23,7 @@ class CartProduct
 
     @SerializedName("AllowedQuantities") var allowedQuantities: List<Any> = ArrayList()
 
-    @SerializedName("AttributeInfo") var attributeInfo: String? = null
+    @SerializedName("AttributeInfo") var attributeInfo: String = "null"
 
     @SerializedName("IsAllowItemEditing") var isAllowItemEditing: Boolean? = null
 

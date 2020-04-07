@@ -90,9 +90,9 @@ class ConfirmOrderFragment : BaseFragment() {
     }
 
     private fun setData(cartData: CartData?) {
-        val cartAdapter = CartAdapter(cartData?.items ?: mutableListOf(), this, viewModel, model)
+        val cartAdapter = CartAdapter(cartData?.items ?: mutableListOf(), this, viewModel, model, isCheckout = true)
 
-        checkoutProductList.apply {
+        checkoutProductList?.apply {
             setHasFixedSize(true)
             layoutManager =
                 LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
