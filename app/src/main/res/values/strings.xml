@@ -66,6 +66,7 @@
     <string name="confirm">Confirm</string>
     <string name="products">Products</string>
     <string name="pickup_point_address">Picup point address</string>
+    <string name="invoice">Invoice</string>
 
     <string-array name="spinner_dummy_data">
         <item>Dummy Spinner Item</item>

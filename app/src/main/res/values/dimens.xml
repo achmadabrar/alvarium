@@ -3,7 +3,7 @@
 
     <dimen name="navigation_drawer_width">240dp</dimen>
 
-    <dimen name="et_text_size">18sp</dimen>
+    <dimen name="et_text_size">17sp</dimen>
     <dimen name="button_text_size">16sp</dimen>
     <dimen name="registration_title_text_size">17sp</dimen>
     <dimen name="slim_btn_height">35dp</dimen>

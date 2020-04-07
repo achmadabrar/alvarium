@@ -54,7 +54,7 @@
         android:inputType="textCapWords" />
 
     <LinearLayout
-        style="@style/RoundedEditTextDark"
+        style="@style/RoundedSpinner"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="15dp">
@@ -69,7 +69,7 @@
     </LinearLayout>
 
     <LinearLayout
-        style="@style/RoundedEditTextDark"
+        style="@style/RoundedSpinner"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="15dp">

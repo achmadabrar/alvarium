@@ -21,6 +21,7 @@
     <color name="fragment_background">#222222</color>
     <color name="light_black_background">#333333</color>
     <color name="list_item_bg">#444444</color>
+    <color name="blackOrWhite">#000</color>
 
     <color name="login_et_background">#F2F2F2</color>
     <color name="login_tv_text">#A5A5A5</color>

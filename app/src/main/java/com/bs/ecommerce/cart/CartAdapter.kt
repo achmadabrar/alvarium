@@ -117,7 +117,7 @@ open class CartAdapter(
 
 
                 holder?.productName!!.text = productModel.productName
-                holder?.productPrice!!.text = "$${productModel.unitPrice}"
+                holder?.productPrice!!.text = productModel.unitPrice
                 //holder?.productShortdescription!!.visibility = View.GONE
                 holder?.productQuantity!!.text = productModel.quantity.toString()
 
