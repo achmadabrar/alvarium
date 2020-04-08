@@ -4,9 +4,11 @@ import android.content.Context
 import android.content.ContextWrapper
 import androidx.multidex.MultiDex
 import androidx.multidex.MultiDexApplication
-import com.binjar.prefsdroid.Preference
-import com.bs.ecommerce.base.BaseActivity
+import com.bs.ecommerce.R
 import com.pixplicity.easyprefs.library.Prefs
+import io.github.inflationx.calligraphy3.CalligraphyConfig
+import io.github.inflationx.calligraphy3.CalligraphyInterceptor
+import io.github.inflationx.viewpump.ViewPump
 
 
 class MyApplication : MultiDexApplication()
@@ -29,7 +31,18 @@ class MyApplication : MultiDexApplication()
             .setUseDefaultSharedPreference(true)
             .build()
 
-
+        ViewPump.init(
+            ViewPump.builder()
+                .addInterceptor(
+                    CalligraphyInterceptor(
+                        CalligraphyConfig.Builder()
+                            .setDefaultFontPath("montserrat_regular.ttf")
+                            .setFontAttrId(R.attr.fontPath)
+                            .build()
+                    )
+                )
+                .build()
+        )
     }
 
 

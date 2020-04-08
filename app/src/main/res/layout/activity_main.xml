@@ -35,7 +35,9 @@
                 app:itemBackground="@drawable/item_bg"
                 app:itemIconTint="@color/color_change_bottom"
                 app:itemTextColor="@color/color_change_bottom"
-                app:menu="@menu/navigation" />
+                app:menu="@menu/navigation"
+                app:itemTextAppearanceActive="@style/BottomNavigationViewTextStyle"
+                app:itemTextAppearanceInactive="@style/BottomNavigationViewTextStyle"/>
         </LinearLayout>
 
         <com.google.android.material.navigation.NavigationView

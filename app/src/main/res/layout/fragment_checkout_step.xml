@@ -16,7 +16,9 @@
         app:itemIconTint="@drawable/checkout_bottom_nav_text"
         app:itemTextColor="@drawable/checkout_bottom_nav_text"
         app:labelVisibilityMode="labeled"
-        app:menu="@menu/checkout_steps" />
+        app:menu="@menu/checkout_steps"
+        app:itemTextAppearanceActive="@style/BottomNavigationViewTextStyle"
+        app:itemTextAppearanceInactive="@style/BottomNavigationViewTextStyle"/>
 
     <FrameLayout
         android:id="@+id/checkoutFragmentHolder"
