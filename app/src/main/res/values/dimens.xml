@@ -10,4 +10,5 @@
     <dimen name="fragment_margin">5dp</dimen>
     <dimen name="form_margin">15dp</dimen>
     <dimen name="cardCornerRadius">3dp</dimen>
+    <dimen name="product_thumbnail_size">150dp</dimen>
 </resources>
