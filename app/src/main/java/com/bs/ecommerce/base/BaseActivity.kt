@@ -10,6 +10,7 @@ import android.view.View
 import android.widget.TextView
 import androidx.annotation.LayoutRes
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatDelegate
 import com.bs.ecommerce.R
 import com.bs.ecommerce.auth.LoginFragment
 import com.bs.ecommerce.cart.CartFragment
@@ -41,6 +42,9 @@ abstract class BaseActivity : AppCompatActivity()
     {
         super.onCreate(savedInstanceState)
         setContentView(getLayoutId())
+
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+//        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
 
         viewModel = createViewModel()
 
