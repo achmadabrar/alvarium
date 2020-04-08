@@ -15,6 +15,7 @@ import com.bs.ecommerce.auth.LoginFragment
 import com.bs.ecommerce.cart.CartFragment
 import com.bs.ecommerce.main.model.data.AppLandingData
 import com.bs.ecommerce.utils.*
+import io.github.inflationx.viewpump.ViewPumpContextWrapper
 import java.util.*
 
 
@@ -179,7 +180,11 @@ abstract class BaseActivity : AppCompatActivity()
 
     override fun attachBaseContext(newBase: Context)
     {
-        super.attachBaseContext(updateBaseContextLocale(newBase))
+        val ctx1 = updateBaseContextLocale(newBase)
+        val ctx2 = ViewPumpContextWrapper.wrap(ctx1)
+        //super.attachBaseContext(updateBaseContextLocale(newBase))
+        super.attachBaseContext(ctx2)
+
     }
 
     private fun updateBaseContextLocale(context : Context) : Context

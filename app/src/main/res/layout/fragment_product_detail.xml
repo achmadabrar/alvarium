@@ -51,7 +51,7 @@
                 <TextView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="4"
+                    android:layout_weight="1"
                     android:gravity="start"
                     android:text="@string/availability"
                     android:textColor="@color/whiteOrBlack"
@@ -62,7 +62,7 @@
                     android:id="@+id/tvAvailability"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="6"
+                    android:layout_weight="2"
                     android:gravity="start"
                     android:maxLines="1"
                     android:textColor="@color/green"
@@ -121,7 +121,7 @@
             android:singleLine="true"
             android:text="@string/add_to_cart"
             android:textColor="@color/whiteOrBlack"
-            android:textSize="16sp"
+            android:textSize="14sp"
             android:textStyle="bold" />
 
         <Button
@@ -134,12 +134,12 @@
             android:background="@color/pink"
             android:drawableStart="@drawable/app_icon_cart"
             android:gravity="center"
-            android:paddingStart="50dp"
-            android:paddingEnd="50dp"
+            android:paddingStart="25dp"
+            android:paddingEnd="25dp"
             android:singleLine="true"
             android:text="@string/buy_now"
             android:textColor="@color/white"
-            android:textSize="16sp"
+            android:textSize="14sp"
             android:textStyle="bold" />
     </LinearLayout>
 
