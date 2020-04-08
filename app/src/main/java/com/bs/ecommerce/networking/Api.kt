@@ -4,6 +4,7 @@ package com.bs.ecommerce.networking
 import com.bs.ecommerce.auth.data.GetRegistrationResponse
 import com.bs.ecommerce.auth.data.KeyValuePair
 import com.bs.ecommerce.cart.model.data.CartResponse
+import com.bs.ecommerce.home.homepage.model.data.HomePageProductResponse
 import com.bs.ecommerce.main.model.data.AppLandingSettingResponse
 import com.bs.ecommerce.main.model.data.CategoryTreeResponse
 import com.google.gson.annotations.SerializedName
@@ -12,6 +13,7 @@ import retrofit2.Call
 import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.POST
+import retrofit2.http.Path
 
 
 /**
@@ -33,6 +35,9 @@ interface Api {
     @POST("shoppingcart/updatecart")
     fun updateCartData(@Body list: List<KeyValuePair>): Call<CartResponse>
 
+/*    @GET("productdetails/{id}")
+    fun getProductDetails(@Path("id") id: Long): Call<ProductDetailResponse>*/
+
 
 
 
@@ -41,6 +46,9 @@ interface Api {
 
     @GET("home/applandingsetting")
     fun getAppLandingSettings(): Call<AppLandingSettingResponse>
+
+    @GET("home/featureproducts")
+    fun getHomeFeaturedProducts(): Call<HomePageProductResponse>
 
    /* @GET("slider/homepageslider")
     fun getHomeSlider(): Call<CartResponse>

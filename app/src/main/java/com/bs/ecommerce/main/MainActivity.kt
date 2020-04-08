@@ -1,7 +1,6 @@
 package com.bs.ecommerce.main
 
 import android.os.Bundle
-import android.view.Menu
 import android.view.View
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.core.view.GravityCompat
@@ -12,8 +11,7 @@ import com.bs.ecommerce.main.model.MainModel
 import com.bs.ecommerce.main.model.MainModelImpl
 import com.bs.ecommerce.base.BaseActivity
 import com.bs.ecommerce.home.category.CategoryFragment
-import com.bs.ecommerce.home.HomeFragment
-import com.bs.ecommerce.auth.LoginFragment
+import com.bs.ecommerce.home.homepage.HomeFragment
 import com.bs.ecommerce.cart.CartFragment
 import com.bs.ecommerce.product.ProductDetailFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
@@ -117,7 +115,9 @@ class MainActivity : BaseActivity()
         when (item.itemId) {
             R.id.bottom_nav_home -> {
 
-                supportFragmentManager.beginTransaction().replace(R.id.layoutFrame, HomeFragment()).addToBackStack(null).commit()
+                supportFragmentManager.beginTransaction().replace(R.id.layoutFrame,
+                    HomeFragment()
+                ).addToBackStack(null).commit()
                 return@OnNavigationItemSelectedListener true
             }
             R.id.bottom_nav_categories -> {
