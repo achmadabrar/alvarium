@@ -3,6 +3,7 @@
 
     <string name="placeholder">Placeholder</string>
     <string name="placeholder_price">$12,345.00</string>
+    <string name="placeholder_long">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown</string>
 
     <!-- Login Fragment  -->
     <string name="login_password">Password</string>
@@ -67,7 +68,8 @@
     <string name="products">Products</string>
     <string name="pickup_point_address">Picup point address</string>
     <string name="invoice">Invoice</string>
-    <string name="placeholder_long">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown</string>
+
+    <!-- ProductDetails Fragment -->
     <string name="quantity">Quantity</string>
     <string name="select_quantity">Select Quantity</string>
     <string name="text_minus">-</string>
@@ -81,6 +83,7 @@
     <string name="select_size">Select your size</string>
     <string name="color">Color</string>
     <string name="select_color">Select your color</string>
+    <string name="done">Done</string>
 
     <string-array name="spinner_dummy_data">
         <item>Dummy Spinner Item</item>

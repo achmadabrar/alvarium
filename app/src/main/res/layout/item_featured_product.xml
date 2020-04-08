@@ -20,7 +20,7 @@
         android:ellipsize="end"
         android:maxLines="2"
         android:textColor="@color/whiteOrBlack"
-        android:textSize="12sp"
+        android:textSize="@dimen/tv_text_size_tiny"
         android:textStyle="bold"
         tools:text="@string/placeholder" />
 

@@ -1,166 +1,190 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/productDetailsRootLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/fragment_background">
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <androidx.core.widget.NestedScrollView
-        android:id="@+id/detailsScrollview"
+    <RelativeLayout
+        android:id="@+id/productDetailsRootLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@+id/addtoCartLayout">
+        android:background="@color/fragment_background">
 
-        <LinearLayout
+        <androidx.core.widget.NestedScrollView
+            android:id="@+id/detailsScrollview"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/fragment_margin"
-            android:layout_marginEnd="@dimen/fragment_margin"
-            android:orientation="vertical">
-
-            <include
-                layout="@layout/slider"
-                android:layout_width="match_parent"
-                android:layout_height="300dp" />
-
-            <include
-                android:id="@+id/productNameLayout"
-                layout="@layout/product_name_layout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="5dp" />
-
-            <include layout="@layout/horizontal_divider" />
-
-            <include
-                android:id="@+id/productPriceLayout"
-                layout="@layout/product_price_layout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="5dp" />
-
-            <include layout="@layout/horizontal_divider" />
+            android:layout_height="match_parent"
+            android:layout_above="@+id/addtoCartLayout">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="5dp"
-                android:orientation="horizontal">
+                android:layout_marginStart="@dimen/fragment_margin"
+                android:layout_marginEnd="@dimen/fragment_margin"
+                android:orientation="vertical">
 
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="start"
-                    android:text="@string/availability"
-                    android:textColor="@color/whiteOrBlack"
-                    android:textSize="15sp"
-                    android:textStyle="bold" />
+                <include
+                    layout="@layout/slider"
+                    android:layout_width="match_parent"
+                    android:layout_height="300dp" />
 
-                <TextView
-                    android:id="@+id/tvAvailability"
-                    android:layout_width="0dp"
+                <include
+                    android:id="@+id/productNameLayout"
+                    layout="@layout/product_name_layout"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="2"
-                    android:gravity="start"
-                    android:maxLines="1"
-                    android:textColor="@color/green"
-                    android:textSize="14sp"
-                    tools:text="@string/placeholder" />
+                    android:layout_margin="5dp" />
+
+                <include layout="@layout/horizontal_divider" />
+
+                <include
+                    android:id="@+id/productPriceLayout"
+                    layout="@layout/product_price_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp" />
+
+                <include layout="@layout/horizontal_divider" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="start"
+                        android:text="@string/availability"
+                        android:textColor="@color/whiteOrBlack"
+                        android:textSize="@dimen/tv_text_size_regular"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/tvAvailability"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="2"
+                        android:gravity="start"
+                        android:maxLines="1"
+                        android:textColor="@color/green"
+                        android:textSize="@dimen/tv_text_size_regular"
+                        tools:text="@string/placeholder" />
+                </LinearLayout>
+
+                <include layout="@layout/horizontal_divider" />
+
+                <include
+                    android:id="@+id/productQuantityLayout"
+                    layout="@layout/product_quantity"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp" />
+
+                <include layout="@layout/horizontal_divider" />
+
+                <include
+                    android:id="@+id/colorSelectionLayout"
+                    layout="@layout/color_selection_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:visibility="visible" />
+
+                <include layout="@layout/horizontal_divider" />
+
+                <include
+                    android:id="@+id/sizeSelectionLayout"
+                    layout="@layout/color_selection_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:visibility="visible" />
+
+                <include layout="@layout/horizontal_divider" />
+
+                <include
+                    android:id="@+id/otherAttributeLayout"
+                    layout="@layout/other_attr_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp" />
+
+                <include layout="@layout/horizontal_divider" />
+
+                <include
+                    android:id="@+id/productDescLayout"
+                    layout="@layout/product_name_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp" />
+
+                <include layout="@layout/horizontal_divider" />
+
+                <include
+                    android:id="@+id/similarProductList"
+                    layout="@layout/featured_product_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="5dp" />
+
             </LinearLayout>
 
-            <include layout="@layout/horizontal_divider" />
+        </androidx.core.widget.NestedScrollView>
 
-            <include
-                android:id="@+id/productQuantityLayout"
-                layout="@layout/product_quantity"
-                android:layout_width="match_parent"
+        <LinearLayout
+            android:id="@+id/addtoCartLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/btnAddToCart"
+                style="?android:attr/buttonBarButtonStyle"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_margin="5dp" />
+                android:layout_weight="1"
+                android:background="@color/darkOrGray"
+                android:gravity="center"
+                android:singleLine="true"
+                android:text="@string/add_to_cart"
+                android:textColor="@color/whiteOrBlack"
+                android:textSize="14sp"
+                android:textStyle="bold" />
 
-            <include layout="@layout/horizontal_divider" />
-
-            <include
-                android:id="@+id/colorSelectionLayout"
-                android:visibility="visible"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="5dp"
-                layout="@layout/color_selection_layout"/>
-
-            <include layout="@layout/horizontal_divider" />
-
-            <include
-                android:id="@+id/sizeSelectionLayout"
-                android:visibility="visible"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="5dp"
-                layout="@layout/color_selection_layout"/>
-
-            <include layout="@layout/horizontal_divider" />
-
-            <include
-                android:id="@+id/productDescLayout"
-                layout="@layout/product_name_layout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="5dp" />
-
-            <include layout="@layout/horizontal_divider" />
-
-            <include
-                android:id="@+id/similarProductList"
-                layout="@layout/featured_product_layout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="5dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginEnd="5dp" />
-
+            <Button
+                android:id="@+id/btnBuyNow"
+                style="?android:attr/buttonBarButtonStyle"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:background="@color/pink"
+                android:drawableStart="@drawable/app_icon_cart"
+                android:gravity="center"
+                android:paddingStart="25dp"
+                android:paddingEnd="25dp"
+                android:singleLine="true"
+                android:text="@string/buy_now"
+                android:textColor="@color/white"
+                android:textSize="14sp"
+                android:textStyle="bold" />
         </LinearLayout>
+    </RelativeLayout>
 
-    </androidx.core.widget.NestedScrollView>
-
-    <LinearLayout
-        android:id="@+id/addtoCartLayout"
+    <include
+        android:id="@+id/bottomSheetLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:orientation="horizontal">
+        layout="@layout/other_attr_bottom_sheet"
+        app:behavior_hideable="true"
+        app:behavior_peekHeight="0dp"
+        app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior"/>
 
-        <Button
-            android:id="@+id/btnAddToCart"
-            style="?android:attr/buttonBarButtonStyle"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:background="@color/darkOrGray"
-            android:gravity="center"
-            android:singleLine="true"
-            android:text="@string/add_to_cart"
-            android:textColor="@color/whiteOrBlack"
-            android:textSize="14sp"
-            android:textStyle="bold" />
-
-        <Button
-            android:id="@+id/btnBuyNow"
-            style="?android:attr/buttonBarButtonStyle"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_gravity="center"
-            android:layout_weight="1"
-            android:background="@color/pink"
-            android:drawableStart="@drawable/app_icon_cart"
-            android:gravity="center"
-            android:paddingStart="25dp"
-            android:paddingEnd="25dp"
-            android:singleLine="true"
-            android:text="@string/buy_now"
-            android:textColor="@color/white"
-            android:textSize="14sp"
-            android:textStyle="bold" />
-    </LinearLayout>
-
-</RelativeLayout>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

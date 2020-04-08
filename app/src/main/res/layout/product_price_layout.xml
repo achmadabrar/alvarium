@@ -11,7 +11,7 @@
         android:layout_weight="1"
         android:layout_height="wrap_content"
         android:textColor="@color/pink"
-        android:textSize="15sp"
+        android:textSize="@dimen/tv_text_size_regular"
         android:textStyle="bold"
         tools:text="@string/placeholder_price" />
 
@@ -21,7 +21,7 @@
         android:layout_weight="1"
         android:layout_height="wrap_content"
         android:textColor="@color/gray"
-        android:textSize="15sp"
+        android:textSize="@dimen/tv_text_size_regular"
         android:textStyle="bold"
         tools:text="@string/placeholder_price" />
 
@@ -31,7 +31,7 @@
         android:layout_weight="1"
         android:layout_height="wrap_content"
         android:textColor="@color/green"
-        android:textSize="15sp"
+        android:textSize="@dimen/tv_text_size_regular"
         android:textStyle="bold"
         tools:text="50% off" />
 

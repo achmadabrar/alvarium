@@ -9,6 +9,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.CheckBox
 import android.widget.RelativeLayout
 import androidx.appcompat.widget.AppCompatRadioButton
 import androidx.core.view.ViewCompat
@@ -20,11 +21,17 @@ import com.bs.ecommerce.base.BaseViewModel
 import com.bs.ecommerce.main.MainViewModel
 import com.bs.ecommerce.utils.ColorSelectionProcess
 import com.bs.ecommerce.utils.RecyclerViewMargin
+import com.google.android.material.bottomsheet.BottomSheetBehavior
+import com.google.android.material.bottomsheet.BottomSheetBehavior.BottomSheetCallback
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.color_selection_layout.view.*
+import kotlinx.android.synthetic.main.color_selection_layout.view.tvLayoutSubTitle
+import kotlinx.android.synthetic.main.color_selection_layout.view.tvLayoutTitle
 import kotlinx.android.synthetic.main.featured_product_layout.view.*
 import kotlinx.android.synthetic.main.fragment_product_detail.*
 import kotlinx.android.synthetic.main.item_featured_product.view.*
+import kotlinx.android.synthetic.main.other_attr_bottom_sheet.view.*
+import kotlinx.android.synthetic.main.other_attr_layout.view.*
 import kotlinx.android.synthetic.main.product_name_layout.view.*
 import kotlinx.android.synthetic.main.product_name_layout.view.tvProductName
 import kotlinx.android.synthetic.main.product_price_layout.view.*
@@ -35,6 +42,7 @@ class ProductDetailFragment : BaseFragment() {
     private lateinit var colorSelectionProcess: ColorSelectionProcess
     lateinit var sizeSelectionProcess: ColorSelectionProcess
     var dynamicViewId = id
+    lateinit var bsBehavior: BottomSheetBehavior<*>
 
     override fun getLayoutId(): Int = R.layout.fragment_product_detail
 
@@ -93,6 +101,7 @@ class ProductDetailFragment : BaseFragment() {
         generateColorSelectionRB(FeaturedProduct("", "#A9AABF"))
         generateColorSelectionRB(FeaturedProduct("", "#42F3DB"))
 
+        // Attribute - size selection
         sizeSelectionLayout.tvLayoutTitle.text = getString(R.string.size)
         sizeSelectionLayout.tvLayoutSubTitle.text = getString(R.string.select_size)
         sizeSelectionProcess = ColorSelectionProcess(sizeSelectionLayout.radioGridGroup)
@@ -102,6 +111,53 @@ class ProductDetailFragment : BaseFragment() {
         generateSizeSelectionRB(FeaturedProduct("L", "#73BFF1"))
         generateSizeSelectionRB(FeaturedProduct("XL", "#F3C442"))
         generateSizeSelectionRB(FeaturedProduct("XXL", "#A9AABF"))
+
+        // Attribute - other
+        otherAttributeLayout.tvLayoutTitle.text = "Other Attribute"
+        otherAttributeLayout.tvLayoutSubTitle.text = "Select other attribute"
+        otherAttributeLayout.tvSelectedAttr.text = "XIAOMI"
+
+        bsBehavior = BottomSheetBehavior.from(bottomSheetLayout)
+
+        otherAttributeLayout.llSelectedAttr.setOnClickListener {
+            if (bsBehavior.state != BottomSheetBehavior.STATE_EXPANDED) {
+                bsBehavior.setState(BottomSheetBehavior.STATE_EXPANDED)
+            } else {
+                bsBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED)
+            }
+        }
+
+        for (i in 1..7) {
+            val cb = layoutInflater.inflate(R.layout.other_attr_checkbox, null) as CheckBox
+            cb.text = "Attribute $i"
+
+            bottomSheetLayout.llOtherAttr.addView(cb)
+        }
+
+
+        bsBehavior.addBottomSheetCallback(object : BottomSheetCallback() {
+            override fun onStateChanged(bottomSheet: View, newState: Int) {
+                when (newState) {
+                    BottomSheetBehavior.STATE_HIDDEN -> {
+                    }
+                    BottomSheetBehavior.STATE_EXPANDED -> {
+                    }
+                    BottomSheetBehavior.STATE_COLLAPSED -> {
+                    }
+                    BottomSheetBehavior.STATE_DRAGGING -> {
+                    }
+                    BottomSheetBehavior.STATE_SETTLING -> {
+                    }
+                }
+            }
+
+            override fun onSlide(bottomSheet: View, slideOffset: Float) {
+            }
+        })
+
+        bottomSheetLayout.tvDone.setOnClickListener {
+            bsBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED)
+        }
     }
 
     private fun generateColorSelectionRB(method: FeaturedProduct) {

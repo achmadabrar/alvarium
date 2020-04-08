@@ -11,4 +11,9 @@
     <dimen name="form_margin">15dp</dimen>
     <dimen name="cardCornerRadius">3dp</dimen>
     <dimen name="product_thumbnail_size">150dp</dimen>
+
+    <dimen name="tv_text_size_large">18sp</dimen>
+    <dimen name="tv_text_size_regular">15sp</dimen>
+    <dimen name="tv_text_size_small">13p</dimen>
+    <dimen name="tv_text_size_tiny">12p</dimen>
 </resources>

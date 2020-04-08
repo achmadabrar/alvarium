@@ -19,6 +19,7 @@
     <color name="green">#10CB3C</color>
     <color name="red">#E91E2F</color>
     <color name="golden">#FFBA49</color>
+    <color name="blue">#3D5AFE</color>
 
     <!-- will be different on day/night theme   -->
     <color name="fragment_background">#222222</color>
