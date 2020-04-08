@@ -3,6 +3,9 @@ package com.bs.ecommerce.main
 import androidx.lifecycle.MutableLiveData
 import com.bs.ecommerce.common.RequestCompleteListener
 import com.bs.ecommerce.base.BaseViewModel
+import com.bs.ecommerce.home.homepage.model.HomePageModel
+import com.bs.ecommerce.home.homepage.model.data.HomePageProduct
+import com.bs.ecommerce.home.homepage.model.data.HomePageProductResponse
 import com.bs.ecommerce.main.model.AuthModel
 import com.bs.ecommerce.main.model.MainModel
 import com.bs.ecommerce.main.model.data.AppLandingData
@@ -15,12 +18,37 @@ class MainViewModel  : BaseViewModel()
 {
 
     var allCategoriesLD = MutableLiveData<List<Category>>()
-    var allCategoriesFailureLD = MutableLiveData<List<String>>()
 
+    var homePageProductListLD = MutableLiveData<List<HomePageProduct>>()
+
+    var allCategoriesFailureLD = MutableLiveData<List<String>>()
 
     var appSettingsLD = MutableLiveData<AppLandingData>()
 
 
+
+
+    fun getFeaturedProducts(model: HomePageModel)
+    {
+
+        isLoadingLD.postValue(true)
+
+        model.getFeaturedProducts(object : RequestCompleteListener<HomePageProductResponse>
+        {
+            override fun onRequestSuccess(data: HomePageProductResponse)
+            {
+                isLoadingLD.postValue(false)
+
+                homePageProductListLD.postValue(data.homePageProductList)
+            }
+
+            override fun onRequestFailed(errorMessage: String)
+            {
+                isLoadingLD.postValue(false)
+                allCategoriesFailureLD.postValue(listOf())
+            }
+        })
+    }
     fun getCategoryList(model: MainModel)
     {
 

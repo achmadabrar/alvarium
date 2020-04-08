@@ -1,4 +1,4 @@
-package com.bs.ecommerce.home
+package com.bs.ecommerce.home.homepage
 
 import android.os.Bundle
 import android.view.View
@@ -9,19 +9,18 @@ import com.bs.ecommerce.R
 import com.bs.ecommerce.main.MainViewModel
 import com.bs.ecommerce.base.BaseFragment
 import com.bs.ecommerce.base.BaseViewModel
-import com.bs.ecommerce.cart.CartViewModel
-import com.bs.ecommerce.main.model.AuthModel
+import com.bs.ecommerce.home.homepage.model.HomePageModel
+import com.bs.ecommerce.home.homepage.model.HomePageModelImpl
 import com.bs.ecommerce.main.model.MainModel
 import com.bs.ecommerce.main.model.MainModelImpl
 import com.bs.ecommerce.utils.toast
 import kotlinx.android.synthetic.main.category_left.categoryRootLayout
-import kotlinx.android.synthetic.main.fragment_home.*
 
 
 class HomeFragment : BaseFragment()
 {
 
-    private lateinit var model: MainModel
+    private lateinit var model: HomePageModel
 
     override fun getLayoutId(): Int = R.layout.fragment_home
 
@@ -34,11 +33,11 @@ class HomeFragment : BaseFragment()
     {
         super.onViewCreated(view, savedInstanceState)
 
-        model = MainModelImpl(activity?.applicationContext!!)
+        model = HomePageModelImpl(activity?.applicationContext!!)
 
         viewModel = ViewModelProvider(this).get(MainViewModel::class.java)
 
-        (viewModel as MainViewModel).getCategoryList(model)
+        (viewModel as MainViewModel).getFeaturedProducts(model)
 
 
         setLiveDataListeners()
@@ -47,9 +46,9 @@ class HomeFragment : BaseFragment()
 
     private fun setLiveDataListeners() {
 
-        (viewModel as MainViewModel).allCategoriesLD.observe(activity!!, Observer { categoryList ->
+        (viewModel as MainViewModel).homePageProductListLD.observe(activity!!, Observer { homePageProductList ->
 
-            toast(categoryList[0].name)
+            toast(homePageProductList[1].name)
         })
 
 
