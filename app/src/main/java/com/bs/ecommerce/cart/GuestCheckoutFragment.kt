@@ -5,8 +5,8 @@ import android.view.*
 import android.widget.LinearLayout
 import androidx.fragment.app.DialogFragment
 import com.bs.ecommerce.R
-import com.bs.ecommerce.auth.LoginFragment
-import com.bs.ecommerce.auth.RegisterFragment
+import com.bs.ecommerce.auth.login.LoginFragment
+import com.bs.ecommerce.auth.register.RegisterFragment
 import com.bs.ecommerce.base.BaseFragment
 import com.bs.ecommerce.checkout.CheckoutStepFragment
 import com.bs.ecommerce.utils.replaceFragmentSafely
@@ -53,8 +53,10 @@ class GuestCheckoutFragment : DialogFragment(), View.OnClickListener {
         var fragment: BaseFragment? = null
 
         when (v.id) {
-            R.id.btnLogin -> fragment = LoginFragment()
-            R.id.btnRegister -> fragment = RegisterFragment()
+            R.id.btnLogin -> fragment =
+                LoginFragment()
+            R.id.btnRegister -> fragment =
+                RegisterFragment()
             R.id.btnGuestCheckout -> fragment = CheckoutStepFragment()
         }
 

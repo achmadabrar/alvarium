@@ -4,7 +4,7 @@ import android.content.Context
 import android.widget.LinearLayout
 import androidx.fragment.app.Fragment
 
-import com.bs.ecommerce.auth.data.ProductAttribute
+import com.bs.ecommerce.auth.register.data.ProductAttribute
 
 /**
  * Created by Ashraful on 11/26/2015.

@@ -1,7 +1,7 @@
 package com.bs.ecommerce.cart
 
 import androidx.lifecycle.MutableLiveData
-import com.bs.ecommerce.auth.data.KeyValuePair
+import com.bs.ecommerce.auth.register.data.KeyValuePair
 import com.bs.ecommerce.base.BaseViewModel
 import com.bs.ecommerce.cart.model.CartModel
 import com.bs.ecommerce.cart.model.data.CartData

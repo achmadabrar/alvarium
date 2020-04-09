@@ -1,10 +1,11 @@
 package com.bs.ecommerce.main.model
 
 import android.content.Context
-import com.bs.ecommerce.auth.data.GetRegistrationResponse
+import com.bs.ecommerce.auth.register.data.GetRegistrationResponse
+import com.bs.ecommerce.auth.login.data.LoginPostData
+import com.bs.ecommerce.auth.login.data.LoginResponse
 import com.bs.ecommerce.networking.RetroClient
 import com.bs.ecommerce.common.RequestCompleteListener
-import com.bs.ecommerce.main.model.data.AppLandingSettingResponse
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -32,13 +33,12 @@ class AuthModelImpl(private val context: Context): AuthModel
         })
     }
 
-
-    override fun getAppLandingSettings(callback: RequestCompleteListener<AppLandingSettingResponse>)
+    override fun postLoginInfo(loginPostData : LoginPostData, callback: RequestCompleteListener<LoginResponse>)
     {
 
-        RetroClient.api.getAppLandingSettings().enqueue(object : Callback<AppLandingSettingResponse>
+        RetroClient.api.performLogin(loginPostData).enqueue(object : Callback<LoginResponse>
         {
-            override fun onResponse(call: Call<AppLandingSettingResponse>, response: Response<AppLandingSettingResponse>)
+            override fun onResponse(call: Call<LoginResponse>, response: Response<LoginResponse>)
             {
                 if (response.body() != null)
                     callback.onRequestSuccess(response.body()!!)
@@ -47,10 +47,11 @@ class AuthModelImpl(private val context: Context): AuthModel
             }
 
 
-            override fun onFailure(call: Call<AppLandingSettingResponse>, t: Throwable) {
+            override fun onFailure(call: Call<LoginResponse>, t: Throwable) {
                 callback.onRequestFailed(t.localizedMessage!!)
             }
         })
     }
+
 
 }

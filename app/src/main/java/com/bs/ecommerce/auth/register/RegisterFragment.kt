@@ -1,4 +1,4 @@
-package com.bs.ecommerce.auth
+package com.bs.ecommerce.auth.register
 
 import android.app.DatePickerDialog
 import android.os.Bundle
@@ -8,7 +8,7 @@ import android.view.ViewGroup
 import android.widget.RelativeLayout
 import android.widget.Toast
 import com.bs.ecommerce.R
-import com.bs.ecommerce.auth.data.CustomerRegistrationInfo
+import com.bs.ecommerce.auth.register.data.CustomerRegistrationInfo
 import com.bs.ecommerce.base.BaseFragment
 import com.bs.ecommerce.base.BaseViewModel
 import com.bs.ecommerce.customViews.CustomerAttributeViews

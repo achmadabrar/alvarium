@@ -12,9 +12,9 @@ import android.widget.*
 import androidx.appcompat.widget.AppCompatSpinner
 import androidx.fragment.app.Fragment
 import com.bs.ecommerce.R
-import com.bs.ecommerce.auth.data.AttributeControlValue
-import com.bs.ecommerce.auth.data.KeyValuePair
-import com.bs.ecommerce.auth.data.ProductAttribute
+import com.bs.ecommerce.auth.register.data.AttributeControlValue
+import com.bs.ecommerce.auth.register.data.KeyValuePair
+import com.bs.ecommerce.auth.register.data.ProductAttribute
 import com.bs.ecommerce.utils.AttributeControlType
 import com.google.android.material.appbar.AppBarLayout
 import java.util.*
@@ -45,7 +45,8 @@ open class ProductAttributeViews : LinearLayout {
         get() {
             val keyValuePairs = ArrayList<KeyValuePair>()
             for (value in valueTextPairMap.keys) {
-                val keyValuePair = KeyValuePair()
+                val keyValuePair =
+                    KeyValuePair()
                 keyValuePair.key = valueTextPairMap[value].toString()
                 keyValuePair.value = value
                 keyValuePairs.add(keyValuePair)
@@ -56,7 +57,7 @@ open class ProductAttributeViews : LinearLayout {
 
     constructor(context: Context) : super(context) {}
 
-    constructor(context: Context, attributes: List<ProductAttribute>, layout: LinearLayout,  currentFragment: Fragment) : super(context) {
+    constructor(context: Context, attributes: List<ProductAttribute>, layout: LinearLayout, currentFragment: Fragment) : super(context) {
         this.attributes = attributes
         this.layout = layout
         this.thisContext = context

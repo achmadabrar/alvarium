@@ -1,4 +1,4 @@
-package com.bs.ecommerce.auth.data
+package com.bs.ecommerce.auth.register.data
 
 import com.bs.ecommerce.networking.BaseResponse
 import com.google.gson.annotations.SerializedName

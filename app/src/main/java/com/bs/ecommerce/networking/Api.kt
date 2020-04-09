@@ -1,19 +1,17 @@
 package com.bs.ecommerce.networking
 
-
-import com.bs.ecommerce.auth.data.GetRegistrationResponse
-import com.bs.ecommerce.auth.data.KeyValuePair
+import com.bs.ecommerce.auth.login.data.LoginPostData
+import com.bs.ecommerce.auth.login.data.LoginResponse
+import com.bs.ecommerce.auth.register.data.GetRegistrationResponse
+import com.bs.ecommerce.auth.register.data.KeyValuePair
 import com.bs.ecommerce.cart.model.data.CartResponse
 import com.bs.ecommerce.home.homepage.model.data.HomePageProductResponse
 import com.bs.ecommerce.main.model.data.AppLandingSettingResponse
 import com.bs.ecommerce.main.model.data.CategoryTreeResponse
-import com.google.gson.annotations.SerializedName
-import io.reactivex.Observable
 import retrofit2.Call
 import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.POST
-import retrofit2.http.Path
 
 
 /**
@@ -34,6 +32,9 @@ interface Api {
 
     @POST("shoppingcart/updatecart")
     fun updateCartData(@Body list: List<KeyValuePair>): Call<CartResponse>
+
+
+    @POST("customer/login") fun performLogin(@Body loginPostData: LoginPostData): Call<LoginResponse>
 
 /*    @GET("productdetails/{id}")
     fun getProductDetails(@Path("id") id: Long): Call<ProductDetailResponse>*/

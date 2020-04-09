@@ -1,7 +1,7 @@
-package com.bs.ecommerce.auth
+package com.bs.ecommerce.auth.register
 
 import androidx.lifecycle.MutableLiveData
-import com.bs.ecommerce.auth.data.GetRegistrationResponse
+import com.bs.ecommerce.auth.register.data.GetRegistrationResponse
 import com.bs.ecommerce.common.RequestCompleteListener
 import com.bs.ecommerce.base.BaseViewModel
 import com.bs.ecommerce.main.model.AuthModel
