@@ -25,26 +25,11 @@
         android:layout_height="match_parent">
 
         <LinearLayout
-            android:id="@+id/llOtherAttr"
+            android:id="@+id/attributeValueHolder"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
-            android:orientation="vertical">
-
-            <RadioGroup
-                android:id="@+id/otherAttrRadioGroup"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:visibility="gone">
-
-                <!--                    <include layout="@layout/other_attr_radiobutton" />-->
-
-            </RadioGroup>
-
-            <!--                <include layout="@layout/other_attr_checkbox"/>-->
-
-            <!--                <include layout="@layout/other_attr_item"/>-->
-        </LinearLayout>
+            android:orientation="vertical"/>
 
     </androidx.core.widget.NestedScrollView>
 </LinearLayout>

@@ -5,7 +5,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
     android:background="@color/fragment_background"
+    android:layout_margin="5dp"
     xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <include layout="@layout/horizontal_divider" />
 
     <TextView
         android:id="@+id/tvLayoutTitle"
@@ -14,6 +17,7 @@
         android:gravity="start"
         tools:text="@string/placeholder"
         android:textColor="@color/whiteOrBlack"
+        android:layout_marginTop="5dp"
         android:textSize="@dimen/tv_text_size_regular"
         android:textStyle="bold" />
 
@@ -33,9 +37,14 @@
         android:layout_height="wrap_content"
         app:alignmentMode="alignBounds"
         android:layout_marginTop="3dp"
+        android:layout_marginBottom="5dp"
         app:columnCount="7"
         app:columnOrderPreserved="false"
         app:useDefaultMargins="true"
         android:addStatesFromChildren="true"/>
+
+    <include
+        android:visibility="invisible"
+        layout="@layout/horizontal_divider"/>
 
 </LinearLayout>

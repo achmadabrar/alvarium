@@ -1,77 +1,129 @@
 package com.bs.ecommerce.product
 
 import android.R.attr.numColumns
-import android.content.res.ColorStateList
-import android.graphics.Color
 import android.graphics.Paint
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.CheckBox
 import android.widget.RelativeLayout
-import androidx.appcompat.widget.AppCompatRadioButton
-import androidx.core.view.ViewCompat
+import androidx.core.content.ContextCompat
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bs.ecommerce.R
 import com.bs.ecommerce.base.BaseFragment
 import com.bs.ecommerce.base.BaseViewModel
-import com.bs.ecommerce.main.MainViewModel
-import com.bs.ecommerce.utils.ColorSelectionProcess
 import com.bs.ecommerce.utils.RecyclerViewMargin
+import com.bs.ecommerce.utils.TextUtils
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetBehavior.BottomSheetCallback
 import com.squareup.picasso.Picasso
-import kotlinx.android.synthetic.main.color_selection_layout.view.*
-import kotlinx.android.synthetic.main.color_selection_layout.view.tvLayoutSubTitle
-import kotlinx.android.synthetic.main.color_selection_layout.view.tvLayoutTitle
 import kotlinx.android.synthetic.main.featured_product_layout.view.*
 import kotlinx.android.synthetic.main.fragment_product_detail.*
 import kotlinx.android.synthetic.main.item_featured_product.view.*
 import kotlinx.android.synthetic.main.other_attr_bottom_sheet.view.*
-import kotlinx.android.synthetic.main.other_attr_layout.view.*
 import kotlinx.android.synthetic.main.product_name_layout.view.*
 import kotlinx.android.synthetic.main.product_name_layout.view.tvProductName
 import kotlinx.android.synthetic.main.product_price_layout.view.*
 import kotlinx.android.synthetic.main.product_quantity.view.*
+import kotlinx.android.synthetic.main.slider.view.*
 
 
 class ProductDetailFragment : BaseFragment() {
-    private lateinit var colorSelectionProcess: ColorSelectionProcess
-    lateinit var sizeSelectionProcess: ColorSelectionProcess
-    var dynamicViewId = id
-    lateinit var bsBehavior: BottomSheetBehavior<*>
+
+    private lateinit var bsBehavior: BottomSheetBehavior<*>
+    private lateinit var model: ProductDetailModel
 
     override fun getLayoutId(): Int = R.layout.fragment_product_detail
 
     override fun getRootLayout(): RelativeLayout = productDetailsRootLayout
 
-    override fun createViewModel(): BaseViewModel = MainViewModel()
+    override fun createViewModel(): BaseViewModel = ProductDetailViewModel()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         initView()
+
+        model = ProductDetailModelImpl()
+        viewModel = ViewModelProvider(this).get(ProductDetailViewModel::class.java)
+
+        (viewModel as ProductDetailViewModel).getProductDetail(model)
+
+        setLiveDataListeners()
+    }
+
+    private fun setLiveDataListeners() {
+        (viewModel as ProductDetailViewModel).productLiveData.observe(
+            requireActivity(),
+            Observer { product ->
+                productDetailsRootLayout.visibility = View.VISIBLE
+
+                // slider image
+                val detailsSliderAdapter =
+                    DetailsSliderAdapter(requireContext(), product.pictureModels)
+                imageSlider.view_pager_slider?.adapter = detailsSliderAdapter
+                imageSlider.view_pager_slider?.currentItem = 0
+                imageSlider.circle_indicator?.setViewPager(imageSlider.view_pager_slider)
+
+                imageSlider.circle_indicator?.pageColor =
+                    ContextCompat.getColor(activity!!, R.color.white)
+                imageSlider.circle_indicator?.fillColor =
+                    ContextCompat.getColor(activity!!, R.color.darkOrGray)
+
+                detailsSliderAdapter.setOnSliderClickListener(object :
+                    DetailsSliderAdapter.OnSliderClickListener {
+                    override fun onSliderClick(view: View, sliderPosition: Int) {
+                        // TODO
+                        /*FullScreenImageActivity.sliderPosition = sliderPosition
+                        FullScreenImageActivity.pictureModels = detail.pictureModels
+                        val intent = Intent(activity, FullScreenImageActivity::class.java)
+                        startActivity(intent)*/
+                    }
+                })
+
+                // short description
+                productNameLayout.tvProductName.text = product.name
+                productNameLayout.tvProductDescription.text = product.shortDescription
+
+                productPriceLayout.tvDiscountPrice.text = product.productPrice?.price ?: "$0"
+                productPriceLayout.tvOriginalPrice.text = product.productPrice?.oldPrice ?: "$0"
+                productPriceLayout.tvOriginalPrice.paintFlags =
+                    productPriceLayout.tvOriginalPrice.paintFlags or Paint.STRIKE_THRU_TEXT_FLAG
+                productPriceLayout.tvDiscountPercent.text = "40% Off"
+
+                tvAvailability.text = product.stockAvailability
+
+                productQuantityLayout.tvQuantity.text = "1"
+
+                // long description
+                productDescLayout.tvProductName.text = "Description"
+                productDescLayout.tvProductDescription.text =
+                    TextUtils().getHtmlFormattedText(product.fullDescription)
+
+                // setup product attributes
+                val productAttributeView =
+                    ProductAttributeView(requireContext(), product, bottomSheetLayout, bsBehavior)
+                for (i in productAttributeView.getAttrViews()) {
+                    attrViewHolder.addView(i)
+                }
+
+            })
+
+        (viewModel as ProductDetailViewModel).isLoadingLD.observe(
+            requireActivity(),
+            Observer { isShowLoader ->
+
+                if (isShowLoader)
+                    showLoading()
+                else
+                    hideLoading()
+            })
     }
 
     private fun initView() {
-        productNameLayout.tvProductName.text = "Xiaomi Redmi 8A"
-        productNameLayout.tvProductDescription.text = getString(R.string.placeholder_long)
-
-        productPriceLayout.tvDiscountPrice.text = "$200"
-        productPriceLayout.tvOriginalPrice.text = "$500"
-        productPriceLayout.tvOriginalPrice.paintFlags =
-            productPriceLayout.tvOriginalPrice.paintFlags or Paint.STRIKE_THRU_TEXT_FLAG
-        productPriceLayout.tvDiscountPercent.text = "40% Off"
-
-        tvAvailability.text = "In Stock"
-
-        productQuantityLayout.tvQuantity.text = "2"
-
-        productDescLayout.tvProductName.text = "Description"
-        productDescLayout.tvProductDescription.text = getString(R.string.placeholder_long)
 
         //
         val items: MutableList<FeaturedProduct> = mutableListOf()
@@ -89,52 +141,8 @@ class ProductDetailFragment : BaseFragment() {
 
         similarProductList.rvFeaturedProduct?.adapter = TempAdapter(items)
 
-        // Attribute - color selection
-        colorSelectionLayout.tvLayoutTitle.text = getString(R.string.color)
-        colorSelectionLayout.tvLayoutSubTitle.text = getString(R.string.select_color)
-        colorSelectionProcess = ColorSelectionProcess(colorSelectionLayout.radioGridGroup)
-
-        generateColorSelectionRB(FeaturedProduct("", "#10CB3C"))
-        generateColorSelectionRB(FeaturedProduct("", "#E46CA6"))
-        generateColorSelectionRB(FeaturedProduct("", "#73BFF1"))
-        generateColorSelectionRB(FeaturedProduct("", "#F3C442"))
-        generateColorSelectionRB(FeaturedProduct("", "#A9AABF"))
-        generateColorSelectionRB(FeaturedProduct("", "#42F3DB"))
-
-        // Attribute - size selection
-        sizeSelectionLayout.tvLayoutTitle.text = getString(R.string.size)
-        sizeSelectionLayout.tvLayoutSubTitle.text = getString(R.string.select_size)
-        sizeSelectionProcess = ColorSelectionProcess(sizeSelectionLayout.radioGridGroup)
-
-        generateSizeSelectionRB(FeaturedProduct("S", "#10CB3C"))
-        generateSizeSelectionRB(FeaturedProduct("M", "#E46CA6"))
-        generateSizeSelectionRB(FeaturedProduct("L", "#73BFF1"))
-        generateSizeSelectionRB(FeaturedProduct("XL", "#F3C442"))
-        generateSizeSelectionRB(FeaturedProduct("XXL", "#A9AABF"))
-
-        // Attribute - other
-        otherAttributeLayout.tvLayoutTitle.text = "Other Attribute"
-        otherAttributeLayout.tvLayoutSubTitle.text = "Select other attribute"
-        otherAttributeLayout.tvSelectedAttr.text = "XIAOMI"
 
         bsBehavior = BottomSheetBehavior.from(bottomSheetLayout)
-
-        otherAttributeLayout.llSelectedAttr.setOnClickListener {
-            if (bsBehavior.state != BottomSheetBehavior.STATE_EXPANDED) {
-                bsBehavior.setState(BottomSheetBehavior.STATE_EXPANDED)
-            } else {
-                bsBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED)
-            }
-        }
-
-        for (i in 1..7) {
-            val cb = layoutInflater.inflate(R.layout.other_attr_checkbox, null) as CheckBox
-            cb.text = "Attribute $i"
-
-            bottomSheetLayout.llOtherAttr.addView(cb)
-        }
-
-
         bsBehavior.addBottomSheetCallback(object : BottomSheetCallback() {
             override fun onStateChanged(bottomSheet: View, newState: Int) {
                 when (newState) {
@@ -157,68 +165,6 @@ class ProductDetailFragment : BaseFragment() {
 
         bottomSheetLayout.tvDone.setOnClickListener {
             bsBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED)
-        }
-    }
-
-    private fun generateColorSelectionRB(method: FeaturedProduct) {
-        val radioButton = layoutInflater.inflate(
-            R.layout.radiobutton_product_color, colorSelectionLayout.radioGridGroup, false
-        ) as AppCompatRadioButton
-
-
-        radioButton.text = method.name
-        radioButton.id = ++dynamicViewId
-        ViewCompat.setBackgroundTintList(
-            radioButton,
-            ColorStateList.valueOf(Color.parseColor(method.price))
-        )
-
-        /*if (isPreselected(method)) {
-            radioButton.isChecked = true
-            paymentMethodValue = method.paymentMethodSystemName
-        }*/
-
-        colorSelectionLayout.radioGridGroup.addView(radioButton)
-
-        radioButton.setOnCheckedChangeListener { buttonView, isChecked ->
-            if (isChecked) {
-                colorSelectionProcess.resetRadioButton(buttonView.id)
-                // paymentMethodValue = method.paymentMethodSystemName
-            }
-            Log.d("as", isChecked.toString())
-        }
-
-        radioButton.setOnClickListener {
-            radioButton.isChecked = true
-        }
-    }
-
-    private fun generateSizeSelectionRB(method: FeaturedProduct) {
-        val radioButton = layoutInflater.inflate(
-            R.layout.radiobutton_product_size, sizeSelectionLayout.radioGridGroup, false
-        ) as AppCompatRadioButton
-
-
-        radioButton.text = method.name
-        radioButton.id = ++dynamicViewId
-
-        /*if (isPreselected(method)) {
-            radioButton.isChecked = true
-            paymentMethodValue = method.paymentMethodSystemName
-        }*/
-
-        sizeSelectionLayout.radioGridGroup.addView(radioButton)
-
-        radioButton.setOnCheckedChangeListener { buttonView, isChecked ->
-            if (isChecked) {
-                sizeSelectionProcess.resetRadioButton(buttonView.id)
-                // paymentMethodValue = method.paymentMethodSystemName
-            }
-            Log.d("as", isChecked.toString())
-        }
-
-        radioButton.setOnClickListener {
-            radioButton.isChecked = true
         }
     }
 

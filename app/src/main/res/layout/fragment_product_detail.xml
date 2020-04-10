@@ -25,6 +25,7 @@
                 android:orientation="vertical">
 
                 <include
+                    android:id="@+id/imageSlider"
                     layout="@layout/slider"
                     android:layout_width="match_parent"
                     android:layout_height="300dp" />
@@ -84,34 +85,12 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="5dp" />
 
-                <include layout="@layout/horizontal_divider" />
-
-                <include
-                    android:id="@+id/colorSelectionLayout"
-                    layout="@layout/color_selection_layout"
+                <LinearLayout
+                    android:id="@+id/attrViewHolder"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="5dp"
-                    android:visibility="visible" />
-
-                <include layout="@layout/horizontal_divider" />
-
-                <include
-                    android:id="@+id/sizeSelectionLayout"
-                    layout="@layout/color_selection_layout"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="5dp"
-                    android:visibility="visible" />
-
-                <include layout="@layout/horizontal_divider" />
-
-                <include
-                    android:id="@+id/otherAttributeLayout"
-                    layout="@layout/other_attr_layout"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="5dp" />
+                    android:orientation="vertical"
+                    android:layout_margin="5dp"/>
 
                 <include layout="@layout/horizontal_divider" />
 

@@ -8,10 +8,12 @@ import com.bs.ecommerce.cart.model.data.CartResponse
 import com.bs.ecommerce.home.homepage.model.data.HomePageProductResponse
 import com.bs.ecommerce.main.model.data.AppLandingSettingResponse
 import com.bs.ecommerce.main.model.data.CategoryTreeResponse
+import com.bs.ecommerce.product.data.ProductDetailResponse
 import retrofit2.Call
 import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.POST
+import retrofit2.http.Path
 
 
 /**
@@ -65,6 +67,10 @@ interface Api {
 
     @GET("home/homepagecategorieswithproducts")
     fun getHomePageCategoriesWithProducts(): Call<CartResponse>*/
+
+    // Product Details
+    @GET("product/productdetails/{id}/0")
+    fun getProductDetails(@Path("id") id: Long): Call<ProductDetailResponse>
 
 
 /*    @POST("setcurrency/{id}")
