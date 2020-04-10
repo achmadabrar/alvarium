@@ -8,7 +8,7 @@
 
     <EditText
         android:id="@+id/tvFirstName"
-        style="@style/RoundedEditTextDark"
+        style="@style/RoundedEditText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
@@ -20,7 +20,7 @@
 
     <EditText
         android:id="@+id/tvLastName"
-        style="@style/RoundedEditTextDark"
+        style="@style/RoundedEditText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="15dp"
@@ -32,7 +32,7 @@
 
     <EditText
         android:id="@+id/tvEmail"
-        style="@style/RoundedEditTextDark"
+        style="@style/RoundedEditText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="15dp"
@@ -44,7 +44,7 @@
 
     <EditText
         android:id="@+id/tvCompanyName"
-        style="@style/RoundedEditTextDark"
+        style="@style/RoundedEditText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="15dp"
@@ -85,7 +85,7 @@
 
     <EditText
         android:id="@+id/tvCity"
-        style="@style/RoundedEditTextDark"
+        style="@style/RoundedEditText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="15dp"
@@ -97,7 +97,7 @@
 
     <EditText
         android:id="@+id/tvAddress1"
-        style="@style/RoundedEditTextDark"
+        style="@style/RoundedEditText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="15dp"
@@ -109,7 +109,7 @@
 
     <EditText
         android:id="@+id/tvAddress2"
-        style="@style/RoundedEditTextDark"
+        style="@style/RoundedEditText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="15dp"
@@ -120,7 +120,7 @@
 
     <EditText
         android:id="@+id/tvZipCode"
-        style="@style/RoundedEditTextDark"
+        style="@style/RoundedEditText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="15dp"
@@ -132,7 +132,7 @@
 
     <EditText
         android:id="@+id/tvPhone"
-        style="@style/RoundedEditTextDark"
+        style="@style/RoundedEditText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="15dp"
@@ -144,7 +144,7 @@
 
     <EditText
         android:id="@+id/tvFax"
-        style="@style/RoundedEditTextDark"
+        style="@style/RoundedEditText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="15dp"

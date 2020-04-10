@@ -10,4 +10,4 @@
     android:textSize="@dimen/et_text_size"
     android:text="@string/placeholder"
     android:textAlignment="inherit"
-    android:textColor="@color/black" />
+    android:textColor="@color/blackOrWhite" />

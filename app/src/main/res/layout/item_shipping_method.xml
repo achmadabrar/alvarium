@@ -22,7 +22,7 @@
         android:button="@drawable/custom_radio_button"
         android:textStyle="bold"
         tools:text="@string/placeholder"
-        android:textColor="@color/white" />
+        android:textColor="@color/whiteOrBlack" />
 
     <TextView
         android:id="@+id/tv_shippingMethodAmount"
@@ -32,7 +32,7 @@
         android:layout_marginStart="8dp"
         android:layout_marginEnd="4dp"
         android:textStyle="bold"
-        android:textColor="@color/white"
+        android:textColor="@color/whiteOrBlack"
         tools:text="@string/placeholder" />
 
 
@@ -43,7 +43,7 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="5dp"
         android:layout_marginEnd="4dp"
-        android:textColor="@color/white"
+        android:textColor="@color/whiteOrBlack"
         tools:text="@string/placeholder" />
 
 </com.bs.ecommerce.customViews.CheckableLinearLayout>

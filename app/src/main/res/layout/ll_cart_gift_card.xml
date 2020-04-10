@@ -8,7 +8,7 @@
 
     <EditText
         android:id="@+id/etGiftCode"
-        style="@style/RoundedEditTextLight"
+        style="@style/RoundedEditText"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="3dp"
@@ -16,7 +16,7 @@
         android:autofillHints="Username"
         android:hint="@string/cart_enter_gift_card_code"
         android:imeOptions="actionDone"
-        android:textSize="16sp"
+        android:textSize="@dimen/tv_text_size_regular"
         android:inputType="text" />
 
     <Button
@@ -26,6 +26,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="3dp"
         android:layout_weight=".40"
+        android:textSize="@dimen/tv_text_size_regular"
         android:text="@string/cart_add_gift_card"
         android:textAllCaps="false"/>
 
