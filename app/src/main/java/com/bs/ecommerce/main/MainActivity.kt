@@ -123,7 +123,6 @@ class MainActivity : BaseActivity()
             }
             R.id.bottom_nav_categories -> {
 
-                supportFragmentManager.beginTransaction().replace(R.id.layoutFrame, LoginFragment()).addToBackStack(null).commit()
                 return@OnNavigationItemSelectedListener true
             }
             R.id.bottom_nav_search -> {
@@ -138,6 +137,7 @@ class MainActivity : BaseActivity()
             }
             R.id.bottom_nav_more -> {
 
+                supportFragmentManager.beginTransaction().replace(R.id.layoutFrame, LoginFragment()).addToBackStack(null).commit()
                 return@OnNavigationItemSelectedListener true
             }
         }
