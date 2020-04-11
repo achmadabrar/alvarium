@@ -2,7 +2,6 @@ package com.bs.ecommerce.auth.login
 
 import androidx.lifecycle.MutableLiveData
 import com.bs.ecommerce.auth.login.data.LoginResponse
-import com.bs.ecommerce.auth.login.data.LoginResponseData
 import com.bs.ecommerce.auth.login.data.LoginPostData
 import com.bs.ecommerce.common.RequestCompleteListener
 import com.bs.ecommerce.base.BaseViewModel
@@ -12,7 +11,7 @@ import com.bs.ecommerce.main.model.AuthModel
 class LoginViewModel  : BaseViewModel()
 {
 
-    var loginResponseLD = MutableLiveData<LoginResponseData>()
+    var loginResponseLD = MutableLiveData<LoginResponse>()
 
 
     fun postLoginInfo(loginPostData : LoginPostData, model: AuthModel)
@@ -26,7 +25,7 @@ class LoginViewModel  : BaseViewModel()
             {
                 isLoadingLD.postValue(false)
 
-                loginResponseLD.postValue(data.loginData)
+                loginResponseLD.postValue(data)
             }
 
             override fun onRequestFailed(errorMessage: String)

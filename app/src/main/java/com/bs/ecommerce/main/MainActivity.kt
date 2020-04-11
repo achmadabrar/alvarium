@@ -7,6 +7,7 @@ import androidx.core.view.GravityCompat
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.bs.ecommerce.R
+import com.bs.ecommerce.auth.login.LoginFragment
 import com.bs.ecommerce.main.model.MainModel
 import com.bs.ecommerce.main.model.MainModelImpl
 import com.bs.ecommerce.base.BaseActivity
@@ -122,7 +123,7 @@ class MainActivity : BaseActivity()
             }
             R.id.bottom_nav_categories -> {
 
-                supportFragmentManager.beginTransaction().replace(R.id.layoutFrame, CartFragment()).addToBackStack(null).commit()
+                supportFragmentManager.beginTransaction().replace(R.id.layoutFrame, LoginFragment()).addToBackStack(null).commit()
                 return@OnNavigationItemSelectedListener true
             }
             R.id.bottom_nav_search -> {
@@ -136,7 +137,6 @@ class MainActivity : BaseActivity()
                 return@OnNavigationItemSelectedListener true
             }
             R.id.bottom_nav_more -> {
-
 
                 return@OnNavigationItemSelectedListener true
             }

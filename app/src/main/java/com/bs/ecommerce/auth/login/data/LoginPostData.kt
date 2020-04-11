@@ -4,7 +4,7 @@ import com.google.gson.annotations.SerializedName
 
 data class LoginPostData(
     @SerializedName("Data") var data: LoginData = LoginData(),
-    @SerializedName("FormValues") var formValues: Any = Any(),
+    @SerializedName("FormValues") var formValues: Any? = null,
     @SerializedName("UploadPicture") var uploadPicture: Any = Any()
 )
 
