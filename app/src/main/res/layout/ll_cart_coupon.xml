@@ -8,15 +8,15 @@
 
     <EditText
         android:id="@+id/etCartCoupon"
-        style="@style/RoundedEditTextLight"
+        style="@style/RoundedEditText"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="3dp"
         android:layout_weight=".60"
         android:autofillHints="Username"
-        android:hint="@string/cart_entre_your_coupon_here"
+        android:hint="@string/cart_enter_your_coupon_here"
         android:imeOptions="actionDone"
-        android:textSize="16sp"
+        android:textSize="@dimen/tv_text_size_regular"
         android:inputType="text" />
 
     <Button
@@ -26,6 +26,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="3dp"
         android:layout_weight=".40"
+        android:textSize="@dimen/tv_text_size_regular"
         android:text="@string/cart_apply_coupon"
         android:textAllCaps="false" />
 

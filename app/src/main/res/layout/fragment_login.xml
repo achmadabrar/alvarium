@@ -50,8 +50,8 @@
             app:layout_constraintTop_toBottomOf="@id/guideline_h_top">
 
             <EditText
-                android:id="@+id/loginUsernameEditText"
-                style="@style/RoundedEditTextLight"
+                android:id="@+id/login_username"
+                style="@style/RoundedEditText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:drawableEnd="@drawable/ic_user"
@@ -78,8 +78,8 @@
             app:passwordToggleTint="#A5A5A5">
 
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/loginPasswordEditText"
-                style="@style/RoundedEditTextLight"
+                android:id="@+id/login_password"
+                style="@style/RoundedEditText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/login_password"
@@ -93,6 +93,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
+            android:textColor="@color/login_tv_color"
             android:text="@string/login"
             app:layout_constraintEnd_toStartOf="@id/guideline_v_end"
             app:layout_constraintStart_toEndOf="@id/guideline_v_start"
@@ -105,7 +106,7 @@
             android:layout_marginStart="10dp"
             android:layout_marginTop="10dp"
             android:text="@string/login_new_customer"
-            android:textColor="@color/login_et_background"
+            android:textColor="@color/login_tv_color"
             android:textSize="14sp"
             app:layout_constraintStart_toEndOf="@id/guideline_v_start"
             app:layout_constraintTop_toBottomOf="@id/loginButton" />
@@ -117,7 +118,7 @@
             android:layout_marginTop="10dp"
             android:layout_marginEnd="10dp"
             android:text="@string/login_forgot_password"
-            android:textColor="@color/login_et_background"
+            android:textColor="@color/login_tv_color"
             android:textSize="14sp"
             app:layout_constraintEnd_toStartOf="@id/guideline_v_end"
             app:layout_constraintTop_toBottomOf="@id/loginButton" />
@@ -128,16 +129,15 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="30dp"
             android:text="@string/login_tv_or"
-            android:textColor="@color/login_et_background"
+            android:textColor="@color/login_tv_color"
             android:textSize="15sp"
             android:textStyle="bold"
             app:layout_constraintEnd_toStartOf="@id/guideline_v_end"
             app:layout_constraintStart_toEndOf="@id/guideline_v_start"
             app:layout_constraintTop_toBottomOf="@id/tvForgotPassword" />
 
-
-        <com.facebook.login.widget.LoginButton
-            android:id="@+id/fbLoginButton"
+        <!-- TODO Replace with com.facebook.login.widget.LoginButton   -->
+        <Button
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
@@ -145,23 +145,10 @@
             android:backgroundTint="#4080FF"
             android:text="Continue with Facebook"
             android:textAllCaps="false"
-            android:textColor="@color/white"
+            android:textColor="@color/login_tv_color"
             android:textSize="@dimen/button_text_size"
             app:layout_constraintEnd_toStartOf="@id/guideline_v_end"
             app:layout_constraintStart_toEndOf="@id/guideline_v_start"
-            app:layout_constraintTop_toBottomOf="@id/tvLoginOr"/>
-<!--        <Button
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:background="@drawable/rounded_background"
-            android:backgroundTint="#4080FF"
-            android:text="Continue with Facebook"
-            android:textAllCaps="false"
-            android:textColor="@color/white"
-            android:textSize="@dimen/button_text_size"
-            app:layout_constraintEnd_toStartOf="@id/guideline_v_end"
-            app:layout_constraintStart_toEndOf="@id/guideline_v_start"
-            app:layout_constraintTop_toBottomOf="@id/tvLoginOr" />-->
+            app:layout_constraintTop_toBottomOf="@id/tvLoginOr" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </RelativeLayout>

@@ -19,10 +19,10 @@
     <string name="email_permission_require">Email permission is required.</string>
 
     <!-- Register Fragment  -->
-    <string name="reg_title_your_personal_details">Your Personal Details</string>
+    <string name="reg_title_your_personal_details">Personal Details</string>
     <string name="reg_title_company_details">Company Details</string>
     <string name="reg_title_options">Options</string>
-    <string name="reg_title_your_password">Your Password</string>
+    <string name="reg_title_your_password">Password</string>
     <string name="reg_btn_register">Register</string>
     <string name="reg_hint_first_name">First name:</string>
     <string name="reg_hint_last_name">Last name:</string>
@@ -40,7 +40,7 @@
 
     <!-- Cart Fragment  -->
     <string name="cart_total_item">%s item</string>
-    <string name="cart_entre_your_coupon_here">Entre your Coupon here</string>
+    <string name="cart_enter_your_coupon_here">Enter your coupon</string>
     <string name="cart_apply_coupon">Apply Coupon</string>
     <string name="cart_enter_gift_card_code">Enter Gift Card code</string>
     <string name="cart_add_gift_card">Add Gift Card</string>

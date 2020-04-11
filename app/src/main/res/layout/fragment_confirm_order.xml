@@ -55,11 +55,11 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:background="@color/black"
+                        android:background="@color/confirm_order_card_title_bg"
                         android:padding="10dp"
                         android:textStyle="bold"
                         android:text="@string/products"
-                        android:textColor="@color/white" />
+                        android:textColor="@color/whiteOrBlack" />
 
 
                     <androidx.recyclerview.widget.RecyclerView
@@ -90,11 +90,11 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:background="@color/black"
+                        android:background="@color/confirm_order_card_title_bg"
                         android:padding="10dp"
                         android:textStyle="bold"
                         android:text="@string/invoice"
-                        android:textColor="@color/white" />
+                        android:textColor="@color/whiteOrBlack" />
 
                     <include
                         layout="@layout/table_order_total"
@@ -117,7 +117,7 @@
         android:layout_marginTop="5dp"
         android:background="@color/pink"
         android:text="@string/confirm"
-        android:textColor="@color/login_et_background"
+        android:textColor="@color/login_tv_color"
         android:textSize="@dimen/button_text_size"
         android:visibility="gone"
         tools:visibility="visible" />

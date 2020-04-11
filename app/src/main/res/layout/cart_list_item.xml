@@ -47,8 +47,8 @@
                 android:id="@+id/tvProductName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="@color/white"
-                android:textSize="15sp"
+                android:textColor="@color/whiteOrBlack"
+                android:textSize="@dimen/tv_text_size_regular"
                 android:textStyle="bold"
                 android:maxLines="2"
                 android:ellipsize="end"
@@ -61,7 +61,7 @@
                 android:layout_below="@id/tvProductName"
                 android:layout_marginTop="5dp"
                 android:textColor="@color/pink"
-                android:textSize="15sp"
+                android:textSize="@dimen/tv_text_size_regular"
                 tools:text="@string/placeholder_price" />
 
             <TextView
@@ -71,8 +71,8 @@
                 android:layout_alignBaseline="@id/tvDiscountPrice"
                 android:layout_marginStart="5dp"
                 android:layout_toEndOf="@id/tvDiscountPrice"
-                android:textColor="@color/white"
-                android:textSize="15sp"
+                android:textColor="@color/whiteOrBlack"
+                android:textSize="@dimen/tv_text_size_regular"
                 tools:text="@string/placeholder_price" />
 
             <WebView
@@ -92,7 +92,7 @@
                 android:layout_marginTop="5dp"
                 android:textColor="@color/white"
                 android:textStyle="bold"
-                android:textSize="15sp"
+                android:textSize="@dimen/tv_text_size_regular"
                 tools:text="@string/placeholder"
                 android:visibility="gone"/>
 
@@ -139,7 +139,7 @@
                 android:layout_below="@id/ll_quantity"
                 android:layout_marginTop="5dp"
                 android:textColor="@color/white"
-                android:textSize="15sp"
+                android:textSize="@dimen/tv_text_size_regular"
                 tools:text="@string/placeholder" />
 
         </RelativeLayout>

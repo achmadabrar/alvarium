@@ -25,7 +25,7 @@
 
     <style name="RoundedSpinner">
         <item name="android:background">@drawable/rounded_background</item>
-        <item name="android:backgroundTint">@color/register_et_background</item>
+        <item name="android:backgroundTint">@color/edittext_background</item>
         <item name="android:paddingStart">8dp</item>
         <item name="android:paddingTop">10dp</item>
         <item name="android:paddingEnd">8dp</item>
@@ -35,22 +35,22 @@
         <item name="android:maxLines">1</item>
     </style>
 
-    <style name="RoundedEditTextDark">
+    <style name="RoundedEditText">
         <item name="android:background">@drawable/rounded_background</item>
-        <item name="android:backgroundTint">@color/register_et_background</item>
+        <item name="android:backgroundTint">@color/edittext_background</item>
         <item name="android:paddingStart">15dp</item>
         <item name="android:paddingTop">10dp</item>
         <item name="android:paddingEnd">15dp</item>
         <item name="android:paddingBottom">10dp</item>
-        <item name="android:textColor">@color/white</item>
+        <item name="android:textColor">@color/whiteOrBlack</item>
         <item name="android:textColorHint">@color/login_tv_text</item>
         <item name="android:textSize">@dimen/et_text_size</item>
         <item name="android:maxLines">1</item>
     </style>
 
-    <style name="RoundedEditTextLight" parent="Widget.AppCompat.EditText">
+    <!--<style name="RoundedEditTextLight" parent="Widget.AppCompat.EditText">
         <item name="android:background">@drawable/rounded_background</item>
-        <item name="android:backgroundTint">@color/login_et_background</item>
+        <item name="android:backgroundTint">@color/login_tv_color</item>
         <item name="android:paddingStart">15dp</item>
         <item name="android:paddingTop">10dp</item>
         <item name="android:paddingEnd">15dp</item>
@@ -59,12 +59,12 @@
         <item name="android:textColorHint">@color/login_tv_text</item>
         <item name="android:textSize">@dimen/et_text_size</item>
         <item name="android:maxLines">1</item>
-    </style>
+    </style>-->
 
     <style name="RoundedButtonPink">
         <item name="android:background">@drawable/rounded_background</item>
         <item name="android:backgroundTint">@color/pink</item>
-        <item name="android:textColor">@color/login_et_background</item>
+        <item name="android:textColor">@color/login_tv_color</item>
         <item name="android:textSize">@dimen/button_text_size</item>
     </style>
 

@@ -1,6 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!--<color name="theme_background">#FFF</color>
+    <color name="frame_background">#A5A5A5</color>-->
+
     <color name="fragment_background">#FFF</color>
+
+    <color name="register_title_text">#000000</color>
+    <color name="radiobutton_text">#000000</color>
+    <color name="edittext_background">#F2F2F2</color>
+
+    <color name="cart_title_bg">#DFDFDF</color>
+
+    <color name="tab_background_selected">#989898</color>
+    <color name="tab_background_unselected">#A5A5A5</color>
+    <color name="tab_indicator_color">#000</color>
+    <color name="tab_text_selected">#000</color>
+    <color name="tab_text_unselected">#F2F2F2</color>
 
     <color name="blackOrWhite">#FFF</color>
     <color name="whiteOrBlack">#000000</color>
@@ -8,4 +23,7 @@
     <color name="grayOrDark">#313437</color>
     <color name="darkOrGray">#C5C5C5</color>
     <color name="list_item_bg">#DFDFDF</color>
+    <color name="checkbox_bg">#F2F2F2</color>
+    <color name="confirm_order_card_title_bg">#A5A5A5</color>
+    <color name="confirm_order_card_desc_bg">#333333</color>
 </resources>
