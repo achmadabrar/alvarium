@@ -1,15 +1,17 @@
 package com.bs.ecommerce.home.category
 
-import android.app.FragmentManager
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ExpandableListView
 import android.widget.TextView
+import androidx.fragment.app.FragmentManager
 
 import com.bs.ecommerce.R
+import com.bs.ecommerce.main.MainActivity
 import com.bs.ecommerce.main.model.data.Category
+import com.bs.ecommerce.product.ProductByCategoryFragment
 
 /**
  * Created by Arif Islam on 23-Feb-17.
@@ -73,22 +75,29 @@ class CategoryListAdapter(private val context: Context, private val categoryList
     private inner class CategoryOnClicklistener(internal var category: Category) : View.OnClickListener {
         override fun onClick(v: View) {
 
-/*            ProductService.productId = category.id.toLong()
+            // ProductService.productId = category.id.toLong()
 
-            gotocategoryListPage(category)*/
+            gotocategoryListPage(category)
         }
     }
 
     private fun gotocategoryListPage(category: Category)
     {
-/*        Utility.closeLeftDrawer()
+        val activity = fragment.requireActivity()
 
-        fragment.fragmentManager!!.popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE)
+        if(activity is MainActivity) {
+            activity.closeDrawer()
 
-        fragment.fragmentManager!!.beginTransaction()
-                .replace(R.id.container, categoryListFragmentFor3_8.newInstance(category.name, category.id))
+            activity.supportFragmentManager.popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE)
+
+            activity.supportFragmentManager.beginTransaction()
+                .replace(
+                    R.id.layoutFrame,
+                    ProductByCategoryFragment.newInstance(category.name, category.categoryId)
+                )
                 .addToBackStack(null)
-                .commit()*/
+                .commit()
+        }
     }
 
 

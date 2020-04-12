@@ -144,6 +144,8 @@ class MainActivity : BaseActivity()
         false
     }
 
+    fun closeDrawer() =  drawerLayout.closeDrawers()
+
     private fun initHomeFragment()
     {
         val homeFragment = HomeFragment()
