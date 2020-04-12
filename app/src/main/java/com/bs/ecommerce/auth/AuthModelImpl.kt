@@ -10,7 +10,7 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class AuthModelImpl(private val context: Context): AuthModel
+class AuthModelImpl: AuthModel
 {
 
     override fun getRegisterInfo(callback: RequestCompleteListener<GetRegistrationResponse>)
@@ -21,14 +21,14 @@ class AuthModelImpl(private val context: Context): AuthModel
             override fun onResponse(call: Call<GetRegistrationResponse>, response: Response<GetRegistrationResponse>)
             {
                 if (response.body() != null)
-                    callback.onRequestSuccess(response.body()!!)
+                    callback.onRequestSuccess(response.body() as GetRegistrationResponse)
                 else
                     callback.onRequestFailed(response.message())
             }
 
 
             override fun onFailure(call: Call<GetRegistrationResponse>, t: Throwable) {
-                callback.onRequestFailed(t.localizedMessage!!)
+                callback.onRequestFailed(t.localizedMessage ?: "Unknown")
             }
         })
     }
@@ -41,14 +41,14 @@ class AuthModelImpl(private val context: Context): AuthModel
             override fun onResponse(call: Call<LoginResponse>, response: Response<LoginResponse>)
             {
                 if (response.body() != null)
-                    callback.onRequestSuccess(response.body()!!)
+                    callback.onRequestSuccess(response.body() as LoginResponse)
                 else
                     callback.onRequestFailed(response.message())
             }
 
 
             override fun onFailure(call: Call<LoginResponse>, t: Throwable) {
-                callback.onRequestFailed(t.localizedMessage!!)
+                callback.onRequestFailed(t.localizedMessage ?: "Unknown")
             }
         })
     }

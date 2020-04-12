@@ -1,0 +1,220 @@
+<resources>
+    <string name="app_name">NopStation</string>
+    <string name="login">Login</string>
+    <string name="username_or_email">Username o  email</string>
+    <string name="password">passWord</string>
+    <string name="login_btn">LOGIN</string>
+    <string name="new_customer">Nuovo Cliente?</string>
+    <string name="forgot_password">Richiedi la passWord?</string>
+    <string name="register">Registrati</string>
+    <string name="have_a_facebook_acc">Hai un Account Facebook?</string>
+    <string name="your_personal_details">I tuoi dettagli personali</string>
+    <string name="name">Nome</string>
+    <string name="first_name">Nome</string>
+    <string name="last_name">Cognome</string>
+    <string name="date_of_birth">Data di Nascita</string>
+    <string name="gender">Sesso</string>
+    <string name="male">Maschio</string>
+    <string name="female">Femmina</string>
+    <string name="email">E-mail</string>
+    <string name="phone">Telefono</string>
+    <string name="userName">Username</string>
+    <string name="company_details">Dettagli Aziendali</string>
+    <string name="company_name">Nome azienda</string>
+    <string name="options">Opzioni</string>
+    <string name="news_letter">Newsletter</string>
+    <string name="confirm_password">Conferma Password</string>
+    <string name="register_new">Registra</string>
+    <string name="feature_product">Prodotti in Vetrina</string>
+    <string name="feature_menufecture">Produttori</string>
+    <string name="view_all_items">Visualizza tutti i prodotti</string>
+    <string name="sign_in">Accedi</string>
+
+
+    <!--Billing address-->
+    <string name="billing_address">Indirizzo di Fatturazione</string>
+    <string name="shipping_address">Indirizzo di Spedizione</string>
+    <string name="lastName">Cognome</string>
+    <string name="company">Azienda</string>
+    <string name="city">Città</string>
+    <string name="zipCode">Cap</string>
+    <string name="phoneNumber">Telefono / Cellulare</string>
+    <string name="faxNumber">Fax</string>
+    <string name="addressOne">Indirizzo 1</string>
+    <string name="addressTwo">Indirizzo 2</string>
+    <string name="continiue">Continua</string>
+
+    <!--cart-->
+    <string name="discount">SCONTO</string>
+    <string name="discountTwo">Sconto</string>
+    <string name="applyCoupon">Applica Coupon</string>
+    <string name="enteryourCouponhere">Inserisci qui il tuo Coupon</string>
+    <string name="subTotal">Totale Parziale</string>
+    <string name="shipping">Spedizione</string>
+    <string name="tax">Tasse/Iva</string>
+    <string name="total">Totale</string>
+    <!--confirm order-->
+    <string name="neme">Nome:</string>
+    <string name="emailCon">Email:</string>
+    <string name="phoneCon">Telefono:</string>
+    <string name="adress">Indirizzo:</string>
+    <string name="cityCon">Città:</string>
+    <string name="confirm">Conferma</string>
+    <string name="products">Prodotti</string>
+
+    <!--contact us-->
+    <string name="enquiry">Richiesta</string>
+    <string name="emailUs">La Tua Email</string>
+    <string name="sMSUs">TuoSms</string>
+
+    <!--customer address-->
+    <string name="emailaddress">Email</string>
+    <string name="country">Nazione</string>
+    <string name="zipPostalCode">Cap</string>
+    <string name="save">Salva</string>
+    <string name="aDDNEW">Aggiunginuovo</string>
+
+    <!--customer order-->
+
+    <string name="order">Ordini #</string>
+    <string name="orderDST">Data dell’ordine: \nStato dell’ordine: \nTotale dell’ordine:</string>
+    <string name="payment">Pagamenti</string>
+    <string name="price">Prezzo:</string>
+
+    <!--password change .............. NB translate not found-->
+    <string name="changePassword">Cambia la password</string>
+    <string name="currentPassword">Password attuale</string>
+    <string name="newPassword">nuova password</string>
+    <string name="confirmNewpassword">Conferma la nuova password</string>
+
+    <!--product detail-->
+    <string name="addToWishList">Aggiungi alla lista dei desideri</string>
+    <string name="addToCart">Aggiungi al Carrello</string>
+    <string name="productName">prodotto Nome</string>
+    <string name="description">Descrizione</string>
+    <string name="Specification">Specifiche</string>
+
+    <string name="advancedsearch">Ricerca Avanzata</string>
+    <string name="addAllItemstoCart">Add All Items to Cart</string>
+    <string name="state">Provincia</string>
+    <string name="my_account">Mio Account</string>
+    <string name="order_date">Data dell\’ordine:</string>
+    <string name="order_status">Stato dell\’ordine:</string>
+    <string name="order_total">Totale dell\’ordine:</string>
+    <string name="confirm_order">Conferma ordine</string>
+    <string name="signin">Accedi</string>
+    <string name="menu_item_customer_Info">My Account</string>
+    <string name="menu_item_change_base_url">Usa le tue Api</string>
+    <string name="category">Categoria</string>
+    <string name="automatically_search_sub_categories">Ricerca automatica di sotto categorie</string>
+    <string name="manufacturer">Fabbricante</string>
+    <string name="price_range">Fascia di prezzo</string>
+    <string name="to">a</string>
+    <string name="search_in_product_descriptions">Cerca nelle descrizioni dei prodotti</string>
+    <string name="search">Ricerca</string>
+    <string name="proceed_to_checkout">Procedi con il  Checkout</string>
+    <string name="checkout_as_guests">CHECKOUT COME OSPITE</string>
+    <string name="returning_customer">VECCHIO CLIENTE?</string>
+    <string name="welcome_please_sign_in">BENVENUTO, SI ACCOGLIENZA!</string>
+    <string name="by_creating_an_account_on_our_website_you_will_be_able_to_shop_faster_be_up_to_date_on_an_orders_status_and_keep_track_of_the_orders_you_have_previously_made">Creando un account sul nostro sito potrai acquistare più velocemente, essere aggiornato su uno stato di ordini e tenere traccia degli ordini precedentemente effettuati.</string>
+    <string name="checkout_as_a_guest_or_register">PROVA COME UNA GUEST O REGISTRO</string>
+    <string name="register_and_save_time">Registrati e risparmia tempo!</string>
+    <string name="register_with_us_for_future_convenience_fast_and_easy_check_out_easy_access_to_your_order_history_and_status">Registrati con noi per una futura convenienza: facile e veloce check out Accesso facile alla tua storia e allo stato dell\'ordine</string>
+
+    <!--    Login-->
+    <string name="login_successful">Loggato con successo</string>
+    <string name="username_password_not_match">Nome utente e PassWord non inseriti</string>
+    <string name="username_password_require">Nome Utente e PassWord necessarie</string>
+    <string name="email_permission_require"> È necessaria l\'autorizzazione via posta elettronica.</string>
+
+    <string name="customer_succes_msg">Cliente registrato con successostring</string>
+    <string name="please_give_email">Per favore insire la sua email</string>
+    <string name="send">Invia</string>
+    <string name="enter_email">Inserisci Email</string>
+    <string name="enter_valid_email">Inserisci email valida</string>
+    <string name="order_number_is">numero ordine è</string>
+    <string name="log_out">Esci</string>
+    <string name="are_you_logout">Sei sicuro di voler uscire?</string>
+    <string name="yes">Sì</string>
+    <string name="no">No</string>
+    <string name="change_base_url">Modifica base url</string>
+    <string name="url_is_require">Url è recessariastring</string>
+    <string name="cyber_source_payment"> Pagamento per Cyber Source </string>
+    <string name="barcode_success">Barcode letto con successo</string>
+    <string name="barcode_failure">Barcode non letto</string>
+    <string name="barcode_error">"Errore nella lettura del barcode: %1$s"</string>
+    <string name="menu_item_barcode_read">Lettura Barcode</string>
+    <string name="new_address">Nuovo Indirizzo</string>
+    <string name="street_address">Viastring</string>
+    <string name="select_a_country">Seleziona Nazione</string>
+    <string name="please_complete_previous_step"> Per favore completare i passaggi precedenti per primo </string>
+    <string name="shopping_cart">Carrello</string>
+    <string name="cart_is_empty">Carrello è vuoto</string>
+    <string name="calculated_during_checkout"> Calcolato durante il acquisto</string>
+    <string name="discount_success_msg">Sconto applicato con successo</string>
+    <string name="update_cart_item">ARTICOLI AGGIORNATI</string>
+    <string name="not_item_to_process"> Nessun elemento da elaborare </string>
+    <string name="contact_us">Contatti</string>
+    <string name="send_emil">Invia Email</string>
+    <string name="contact">Contatti</string>
+    <string name="add_address">Aggiungi indirizzo</string>
+    <string name="edit_address">modifica Indirizzo</string>
+    <string name="address_update_succss">Indirizzo modificato con successo</string>
+    <string name="error_adding_address"> Errore aggiungere l\'indirizzo:</string>
+    <string name="address_added_success">Indirizzo aggiunto con successo</string>
+    <string name="addresses">Indirizzo</string>
+    <string name="no_address_found">Indirizzo non trovatostring</string>
+    <string name="address_remove_succssfully">Indirizzo Cancellato</string>
+    <string name="error_removing_address">Errore nella rimozione dell’indirizzo, riprova</string>
+    <string name="are_you_sure_delete_address">Sei sicuro di voler cancellare l’indirizzo?</string>
+    <string name="delete_address">Elimina Indirizzo</string>
+    <string name="customer_info_updated">Cliente Aggiornato.</string>
+    <string name="error_saving_data">Errore nel salvataggio dei dati:</string>
+    <string name="payment_method">Metodo di pagamento:</string>
+    <string name="payment_status">Stato del pagamento:</string>
+    <string name="shipping_method">Metodo di spedizione:</string>
+    <string name="shipping_status">Status della spedizione:</string>
+    <string name="orders">ordini</string>
+    <string name="no_orders_found">Nessun ordine trovato</string>
+    <string name="customer_info">Info del cliente</string>
+    <string name="downloadable_product">Prodotto scaricabile</string>
+    <string name="password_change_success">PassWord cambiata con successo</string>
+    <string name="all_field_are_require">Tutti I campi sono richiesti</string>
+    <string name="new_password_not_match">Nuova PassWord non trovata</string>
+    <string name="new_password_same_as"> Le nuove password sono identiche alla password corrente </string>
+    <string name="product_add_to_wishlist">Prodotto aggiunto alla lista dei desideri</string>
+    <string name="product_added_to_cart">Prodotto aggiunto al carrello</string>
+    <string name="no_product_found">nessun prodotto trovato</string>
+    <string name="error_register_customer">Errore nella registrazione del cliente:</string>
+    <string name="search_product">Trova I prodottu</string>
+    <string name="all">Tutti</string>
+    <string name="search_limit">La parola di ricerca deve avere più di tre caratteri</string>
+    <string name="wishlist">Lista dei desideri</string>
+    <string name="error_removing_item">Errore nella rimozione dell’articolo. Controllare la connessione telefonica</string>
+    <string name="wishlist_empty">Lista dei desideri è vuota</string>
+
+
+    <string name="quantity">Quantità:</string>
+    <string name="order_number">Numero Ordine:</string>
+    <string name="top_to_capture"> Tocca per catturare e per zoomare </string>
+    <string name="reOrder">Riordino</string>
+    <string name="address">Indirizzo</string>
+    <string name="no_specification_found">Nessuna specifica trovata</string>
+    <string name="sort_by">Ordina per</string>
+    <string name="add_new">Aggiungi nuovo</string>
+    <string name="add_to_cart">Aggiungi al Carrello</string>
+    <string name="add_all_items_to_cart">Aggiungi tutti gli elementi al carrello</string>
+    <string name="barcode_header">Fai click per leggere un codice a barre</string>
+    <string name="read_barcode">Leggi  Barcode</string>
+    <string name="store">Ritira al negozio</string>
+    <string name="pickup_point_address">Indirizzo del punto di prelievo</string>
+    <string name="select_store_or_shipping_address">Seleziona Indirizzo di negozio o spedizione</string>
+    <string name="test_your_api">Prova la tua api</string>
+    <string name="use_existing_api">Utilizza Api esistente</string>
+    <string name="example_http_yourstore_com">Esempio: http://yourstore.com</string>
+    <string name="back_button_click_msg">Per uscire, fai nuovamente clic su INDIETRO</string>
+
+    <string name="availability">Disponibilità:</string>
+    <string name="related_products">Prodotti correlati</string>
+</resources>
+

@@ -5,6 +5,8 @@ import android.content.ContextWrapper
 import androidx.multidex.MultiDex
 import androidx.multidex.MultiDexApplication
 import com.bs.ecommerce.R
+import com.facebook.FacebookSdk
+import com.facebook.appevents.AppEventsLogger
 import com.pixplicity.easyprefs.library.Prefs
 import io.github.inflationx.calligraphy3.CalligraphyConfig
 import io.github.inflationx.calligraphy3.CalligraphyInterceptor
@@ -22,6 +24,9 @@ class MyApplication : MultiDexApplication()
 
     override fun onCreate() {
         super.onCreate()
+
+        FacebookSdk.sdkInitialize(applicationContext)
+        AppEventsLogger.activateApp(this)
 
 
         Prefs.Builder()

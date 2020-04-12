@@ -11,6 +11,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.RelativeLayout
 import com.bs.ecommerce.R
+import com.bs.ecommerce.utils.PrefSingleton
 import com.bs.ecommerce.utils.showLog
 import com.pnikosis.materialishprogress.ProgressWheel
 import kotlin.properties.Delegates
@@ -21,6 +22,8 @@ abstract class BaseFragment : Fragment()
 {
     protected var progressWheel: ProgressWheel? = null
     protected open lateinit var viewModel: BaseViewModel
+
+    protected var prefObject = PrefSingleton
 
     @LayoutRes
     abstract fun getLayoutId(): Int

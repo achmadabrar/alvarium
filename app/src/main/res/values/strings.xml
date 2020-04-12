@@ -13,6 +13,11 @@
     <string name="login_forgot_password">Forgot Password</string>
     <string name="login_tv_or">Or</string>
 
+    <string name="username_password_not_match">Username and password didn\'t match</string>
+    <string name="username_password_require">Username and password are required</string>
+    <string name="login_successful">Login successful</string>
+    <string name="email_permission_require">Email permission is required.</string>
+
     <!-- Register Fragment  -->
     <string name="reg_title_your_personal_details">Personal Details</string>
     <string name="reg_title_company_details">Company Details</string>
@@ -91,4 +96,8 @@
         <item>Item 2</item>
         <item>Item 3</item>
     </string-array>
+
+
+    <string name="facebook_app_id">207124103908002</string>
+    <string name="fb_login_protocol_scheme">207124103908002</string>
 </resources>

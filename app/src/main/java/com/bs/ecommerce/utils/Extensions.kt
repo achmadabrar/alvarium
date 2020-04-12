@@ -3,6 +3,7 @@
 package com.bs.ecommerce.utils
 
 import android.app.Activity
+import android.content.Context
 import android.os.Build
 import androidx.annotation.AnimRes
 import androidx.annotation.IdRes
@@ -13,6 +14,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.InputMethodManager
 import android.widget.ImageView
 import android.widget.Toast
 import com.bs.ecommerce.R
@@ -114,3 +116,15 @@ inline fun consume(f: () -> Unit): Boolean
     return true
 }
 fun String.showLog(msg : String) = Log.v(toString(), msg)
+
+fun Activity.hideKeyboard(): Boolean
+{
+    val view = currentFocus
+
+    view?.let {
+        val inputMethodManager = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+
+        return inputMethodManager.hideSoftInputFromWindow(it.windowToken, InputMethodManager.HIDE_NOT_ALWAYS)
+    }
+    return false
+}
