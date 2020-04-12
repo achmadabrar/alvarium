@@ -6,7 +6,7 @@
     android:id="@+id/categoryRootLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@android:color/white"
+    android:background="@color/fragment_background"
     android:orientation="vertical"
     android:descendantFocusability="blocksDescendants">
 
@@ -15,6 +15,8 @@
         android:id="@+id/expandList"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        tools:listitem="@layout/item_category"
+        tools:itemCount="10"
         android:nestedScrollingEnabled="false"/>
 
 </RelativeLayout>
