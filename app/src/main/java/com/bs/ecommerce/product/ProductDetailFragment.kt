@@ -3,10 +3,13 @@ package com.bs.ecommerce.product
 import android.R.attr.numColumns
 import android.graphics.Paint
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.RelativeLayout
+import android.widget.TextView
+import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -29,12 +32,14 @@ import kotlinx.android.synthetic.main.product_name_layout.view.tvProductName
 import kotlinx.android.synthetic.main.product_price_layout.view.*
 import kotlinx.android.synthetic.main.product_quantity.view.*
 import kotlinx.android.synthetic.main.slider.view.*
+import okhttp3.internal.proxy.NullProxySelector.select
 
 
-class ProductDetailFragment : BaseFragment() {
+class ProductDetailFragment : BaseFragment(), View.OnClickListener {
 
     private lateinit var bsBehavior: BottomSheetBehavior<*>
     private lateinit var model: ProductDetailModel
+    private var productAttributeView: ProductAttributeView? = null
 
     override fun getLayoutId(): Int = R.layout.fragment_product_detail
 
@@ -88,7 +93,6 @@ class ProductDetailFragment : BaseFragment() {
                 productNameLayout.tvProductName.text = product.name
                 productNameLayout.tvProductDescription.text = product.shortDescription
 
-                productPriceLayout.tvDiscountPrice.text = product.productPrice?.price ?: "$0"
                 productPriceLayout.tvOriginalPrice.text = product.productPrice?.oldPrice ?: "$0"
                 productPriceLayout.tvOriginalPrice.paintFlags =
                     productPriceLayout.tvOriginalPrice.paintFlags or Paint.STRIKE_THRU_TEXT_FLAG
@@ -104,9 +108,10 @@ class ProductDetailFragment : BaseFragment() {
                     TextUtils().getHtmlFormattedText(product.fullDescription)
 
                 // setup product attributes
-                val productAttributeView =
-                    ProductAttributeView(requireContext(), product, bottomSheetLayout, bsBehavior)
-                for (i in productAttributeView.getAttrViews()) {
+                productAttributeView =
+                    ProductAttributeView(requireContext(), viewModel as ProductDetailViewModel,
+                        bottomSheetLayout, bsBehavior)
+                for (i in productAttributeView!!.getAttrViews()) {
                     attrViewHolder.addView(i)
                 }
 
@@ -120,6 +125,44 @@ class ProductDetailFragment : BaseFragment() {
                     showLoading()
                 else
                     hideLoading()
+            })
+
+        (viewModel as ProductDetailViewModel).quantityLiveData.observe(
+            requireActivity(),
+            Observer { quantity ->
+                productQuantityLayout.tvQuantity.text = quantity.toString()
+            })
+
+        (viewModel as ProductDetailViewModel).toastMessageLD.observe(
+            requireActivity(),
+            Observer { message ->
+                if(message.isNotEmpty())
+                    Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
+            })
+
+        (viewModel as ProductDetailViewModel).productPriceLD.observe(
+            requireActivity(),
+            Observer { price ->
+                productPriceLayout.tvDiscountPrice.text = "$%.2f".format(price)
+            })
+
+        (viewModel as ProductDetailViewModel).selectedAttrLD.observe(
+            requireActivity(),
+            Observer { attrMap ->
+                Log.d("xyz", "Fired")
+
+                for(i in attrMap.keys) {
+                    val view = attrViewHolder.findViewWithTag<View>(i)
+                    val textView = view.findViewById<TextView>(R.id.tvSelectedAttr)
+
+                    val selectedAttr = attrMap[i]
+
+                    if(selectedAttr.isNullOrEmpty()) {
+                        textView?.text = getString(R.string.select)
+                    } else {
+                        textView?.text = attrMap[i]?.get(0)?.name
+                    }
+                }
             })
     }
 
@@ -163,9 +206,9 @@ class ProductDetailFragment : BaseFragment() {
             }
         })
 
-        bottomSheetLayout.tvDone.setOnClickListener {
-            bsBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED)
-        }
+        bottomSheetLayout.tvDone.setOnClickListener(this)
+        productQuantityLayout.btnMinus.setOnClickListener(this)
+        productQuantityLayout.btnPlus.setOnClickListener(this)
     }
 
     inner class TempAdapter(
@@ -201,4 +244,15 @@ class ProductDetailFragment : BaseFragment() {
         val name: String,
         val price: String
     )
+
+    override fun onClick(v: View) {
+        when(v.id) {
+            R.id.btnPlus -> (viewModel as ProductDetailViewModel).incrementQuantity()
+            R.id.btnMinus -> (viewModel as ProductDetailViewModel).decrementQuantity()
+            R.id.tvDone -> {
+                bsBehavior.state = BottomSheetBehavior.STATE_COLLAPSED
+                productAttributeView?.onBottomSheetClose()
+            }
+        }
+    }
 }
