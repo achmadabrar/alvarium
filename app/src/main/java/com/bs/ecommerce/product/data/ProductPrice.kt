@@ -3,20 +3,27 @@ package com.bs.ecommerce.product.data
 
 import com.google.gson.annotations.SerializedName
 
-/**
- * Created by Ashraful on 11/9/2015.
- */
-
 data class ProductPrice(
-        @SerializedName("OldPrice") val oldPrice: String,
-        @SerializedName("OldPriceValue") val oldPriceValue: Float? = null,
-
-        @SerializedName("Price") val price: String,
-        @SerializedName("PriceValue") val priceValue: Float? = null
+        @SerializedName("AvailableForPreOrder")
+        val availableForPreOrder: Boolean?,
+        @SerializedName("CustomProperties")
+        val customProperties: CustomProperties?,
+        @SerializedName("DisableAddToCompareListButton")
+        val disableAddToCompareListButton: Boolean?,
+        @SerializedName("DisableBuyButton")
+        val disableBuyButton: Boolean?,
+        @SerializedName("DisableWishlistButton")
+        val disableWishlistButton: Boolean?,
+        @SerializedName("DisplayTaxShippingInfo")
+        val displayTaxShippingInfo: Boolean?,
+        @SerializedName("ForceRedirectionAfterAddingToCart")
+        val forceRedirectionAfterAddingToCart: Boolean?,
+        @SerializedName("IsRental")
+        val isRental: Boolean?,
+        @SerializedName("OldPrice")
+        val oldPrice: String?,
+        @SerializedName("Price")
+        val price: String?,
+        @SerializedName("PriceValue")
+        val priceValue: Int?
 )
-
-/*class ProductPrice() {
-    var oldPrice: String? = null
-
-    var price: String? = null
-}*/

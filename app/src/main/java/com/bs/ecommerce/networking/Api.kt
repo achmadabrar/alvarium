@@ -9,11 +9,9 @@ import com.bs.ecommerce.home.homepage.model.data.HomePageProductResponse
 import com.bs.ecommerce.main.model.data.AppLandingSettingResponse
 import com.bs.ecommerce.main.model.data.CategoryTreeResponse
 import com.bs.ecommerce.product.data.ProductDetailResponse
+import com.bs.ecommerce.product.data.ProductResponse
 import retrofit2.Call
-import retrofit2.http.Body
-import retrofit2.http.GET
-import retrofit2.http.POST
-import retrofit2.http.Path
+import retrofit2.http.*
 
 
 /**
@@ -72,6 +70,11 @@ interface Api {
     @GET("product/productdetails/{id}/0")
     fun getProductDetails(@Path("id") id: Long): Call<ProductDetailResponse>
 
+    @GET("catalog/category/{id}")
+    fun getProductList(@Path("id") id: Long, @QueryMap options: Map<String, String>): Call<ProductResponse>
+
+    @GET("Manufacturer/{manufacturerId}")
+    fun getProductListByManufacturer(@Path("manufacturerId") id: Long, @QueryMap options: Map<String, String>): Call<ProductResponse>
 
 /*    @POST("setcurrency/{id}")
     fun setCurrency(@Path("id") id: Long): Call<LanguageResponse>
@@ -156,12 +159,6 @@ interface Api {
 
     @GET("homepagemanufacture")
     fun getHomePageManufacturer(@Query(queryString) query: String): Call<HomePageManufacturerResponse>
-
-    @GET("Category/{id}")
-    fun getProductList(@Path("id") id: Long, @QueryMap options: Map<String, String>): Call<ProductsResponse>
-
-    @GET("Manufacturer/{manufacturerId}")
-    fun getProductListByManufacturer(@Path("manufacturerId") id: Long, @QueryMap options: Map<String, String>): Call<ProductsResponse>
 
     @GET("categoryfeaturedproductandsubcategory/{id}")
     fun getCategoryFeaturedProductAndSubcategory(@Path("id") id: Long): Call<CategoryFeaturedProductAndSubcategoryResponse>
@@ -279,7 +276,7 @@ interface Api {
     fun checkAuthorizePayment(@Body authorizePayment: AuthorizePayment): Call<ConfirmAutorizeDotNetCheckoutResponse>
 
     @POST("catalog/search")
-    fun searchProduct(@Body q: Search, @QueryMap options : Map<String, String>): Call<ProductsResponse>
+    fun searchProduct(@Body q: Search, @QueryMap options : Map<String, String>): Call<ProductsResponse>*/
 
 
     companion object
@@ -288,10 +285,11 @@ interface Api {
         val manufactureImageSize = "800"
         const val queryString = "thumbPictureSize"
         val qs_price = "price"
-        val qs_page_number = "pagenumber"
+        val qs_page_number = "PageNumber"
+        val qs_page_size = "PageSize"
         val qs_spec = "specs"
         val shoppingCartTypeCart = 1
         val shoppingCartTypeWishlist = 2
         val cartProductId: Long = 0
-    }*/
+    }
 }

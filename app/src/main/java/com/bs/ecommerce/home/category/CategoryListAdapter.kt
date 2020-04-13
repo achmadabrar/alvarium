@@ -11,7 +11,7 @@ import androidx.fragment.app.FragmentManager
 import com.bs.ecommerce.R
 import com.bs.ecommerce.main.MainActivity
 import com.bs.ecommerce.main.model.data.Category
-import com.bs.ecommerce.product.ProductByCategoryFragment
+import com.bs.ecommerce.product.ui.ProductListFragment
 
 /**
  * Created by Arif Islam on 23-Feb-17.
@@ -93,7 +93,7 @@ class CategoryListAdapter(private val context: Context, private val categoryList
             activity.supportFragmentManager.beginTransaction()
                 .replace(
                     R.id.layoutFrame,
-                    ProductByCategoryFragment.newInstance(category.name, category.categoryId)
+                    ProductListFragment.newInstance(category.name, category.categoryId)
                 )
                 .addToBackStack(null)
                 .commit()

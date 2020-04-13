@@ -47,7 +47,7 @@ class ProductDetailViewModel : BaseViewModel() {
 
                 productLiveData.postValue(data.data)
 
-                val priceInFloat = data.data?.productPrice?.priceValue ?: 0f
+                val priceInFloat = data.data?.productPrice?.priceValue ?: 0
                 productPriceLD.postValue(priceInFloat.toDouble())
                 selectedAttrLD.postValue(attrMap)
             }
