@@ -18,6 +18,7 @@
             android:layout_height="match_parent">
 
             <com.google.android.material.appbar.AppBarLayout
+                android:id="@+id/appBarLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
@@ -39,14 +40,83 @@
 
             </com.google.android.material.appbar.AppBarLayout>
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rvProductList"
+            <RelativeLayout
+                android:id="@+id/productListRootLayout"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                app:spanCount="2"
-                tools:itemCount="7"
-                tools:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
-                tools:listitem="@layout/item_featured_product" />
+                android:layout_height="match_parent">
+
+                <LinearLayout
+                    android:id="@+id/llButtonHolder"
+                    android:layout_alignParentTop="true"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/btn_height"
+                    android:orientation="horizontal"
+                    android:visibility="gone"
+                    tools:visibility="visible">
+
+                    <LinearLayout
+                        android:id="@+id/btnBrand"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:layout_weight="1">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="BRAND"
+                            android:textSize="@dimen/button_text_size"
+                            android:textColor="@color/whiteOrBlack"
+                            android:layout_marginEnd="10dp"/>
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/ic_arrow_down"
+                            android:tint="@color/whiteOrBlack"/>
+                    </LinearLayout>
+
+                    <View
+                        android:layout_width="0.5dp"
+                        android:layout_height="match_parent"
+                        android:background="#444444"/>
+
+                    <LinearLayout
+                        android:id="@+id/btnFilter"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:layout_weight="1">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="FILTER"
+                            android:textSize="@dimen/button_text_size"
+                            android:textColor="@color/whiteOrBlack"
+                            android:layout_marginEnd="10dp"/>
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/ic_filter"
+                            android:tint="@color/whiteOrBlack"/>
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rvProductList"
+                    android:layout_below="@id/llButtonHolder"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    app:spanCount="2"
+                    tools:itemCount="7"
+                    tools:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+                    tools:listitem="@layout/item_featured_product" />
+            </RelativeLayout>
 
             <RelativeLayout
                 android:id="@+id/rl_rootLayout_custom"

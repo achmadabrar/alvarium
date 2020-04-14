@@ -19,6 +19,7 @@ import com.bs.ecommerce.base.BaseFragment
 import com.bs.ecommerce.base.BaseViewModel
 import com.bs.ecommerce.product.*
 import com.bs.ecommerce.product.data.ProductSummary
+import com.bs.ecommerce.product.data.SubCategory
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.fragment_product_list.*
 import kotlinx.android.synthetic.main.item_featured_product.view.*
@@ -27,14 +28,14 @@ import kotlin.math.floor
 class ProductListFragment : BaseFragment() {
 
     private lateinit var model: ProductListModel
-    lateinit var categoryName: String
-    var categoryId: Int = 0
-    lateinit var layoutManager: GridLayoutManager
-    lateinit var subcategoryPopupWindow: ListPopupWindow
+    private lateinit var categoryName: String
+    private var categoryId: Int = 0
+    private lateinit var layoutManager: GridLayoutManager
+    private lateinit var subcategoryPopupWindow: ListPopupWindow
 
     override fun getLayoutId(): Int = R.layout.fragment_product_list
 
-    override fun getRootLayout(): RelativeLayout = rl_rootLayout_custom
+    override fun getRootLayout(): RelativeLayout = productListRootLayout
 
     override fun createViewModel(): BaseViewModel = ProductListViewModel()
 
@@ -64,15 +65,10 @@ class ProductListFragment : BaseFragment() {
 
                 rvProductList.adapter = TempAdapter(data.products!!)
 
-                if(!data.subCategories.isNullOrEmpty()) {
-                    categoryNameTextView.visibility = View.VISIBLE
-                    categoryNameTextView.text = data.name
+                initSubcategoryPopupWindow(data.subCategories)
 
-                    initSubcategoryPopupWindow()
-                    subcategoryPopupWindow.setAdapter(SubCategoryAdapter(data.subCategories))
-                } else {
-                    categoryNameTextView.visibility = View.GONE
-                }
+                llButtonHolder.visibility =
+                    if (data.subCategories.isNullOrEmpty()) View.VISIBLE else View.GONE
             })
 
         (viewModel as ProductListViewModel).isLoadingLD.observe(
@@ -93,12 +89,23 @@ class ProductListFragment : BaseFragment() {
             })
     }
 
-    private fun initSubcategoryPopupWindow() {
+    private fun initSubcategoryPopupWindow(subCatList: List<SubCategory>?) {
+
+        if(subCatList.isNullOrEmpty()) {
+            categoryNameTextView.visibility = View.GONE
+            return
+        }
+
+        categoryNameTextView.visibility = View.VISIBLE
+        categoryNameTextView.text = categoryName
+
         subcategoryPopupWindow = ListPopupWindow(requireContext())
 
         subcategoryPopupWindow.anchorView = categoryNameTextView
         subcategoryPopupWindow.isModal = true
         subcategoryPopupWindow.setBackgroundDrawable(ColorDrawable(0))
+
+        subcategoryPopupWindow.setAdapter(SubCategoryAdapter(subCatList))
 
         categoryNameTextView?.setOnClickListener {
             if (subcategoryPopupWindow.isShowing) {
@@ -167,30 +174,24 @@ class ProductListFragment : BaseFragment() {
             val itemView =
                 LayoutInflater.from(parent.context)
                     .inflate(R.layout.item_featured_product, parent, false)
-            return MyViewHolder(itemView)
+            return object : RecyclerView.ViewHolder(itemView) {}
         }
 
         override fun getItemCount(): Int = productsList.size
 
         override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-            if (holder is MyViewHolder) {
-                holder.itemView.tvProductName.text = productsList[position].name
-                holder.itemView.tvProductPrice.text = productsList[position].productPrice?.price
+            holder.itemView.tvProductName.text = productsList[position].name
+            holder.itemView.tvProductPrice.text = productsList[position].productPrice?.price
 
-                holder.itemView.ratingBar.rating =
-                    (productsList[position].reviewOverviewModel?.ratingSum ?: 0).toFloat()
+            holder.itemView.ratingBar.rating =
+                (productsList[position].reviewOverviewModel?.ratingSum ?: 0).toFloat()
 
-                Picasso.with(holder.itemView.context).load(
-                    productsList[position].defaultPictureModel?.imageUrl
-                        ?: "https://picsum.photos/300/300"
-                ).fit().centerInside().into(holder.itemView.ivProductThumb)
-            }
+            Picasso.with(holder.itemView.context).load(
+                productsList[position].defaultPictureModel?.imageUrl
+                    ?: "https://picsum.photos/300/300"
+            ).fit().centerInside().into(holder.itemView.ivProductThumb)
         }
 
-    }
-
-    inner class MyViewHolder(itemView: View) :
-        RecyclerView.ViewHolder(itemView) {
     }
 
     companion object {
