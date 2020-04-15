@@ -131,7 +131,7 @@ class MainActivity : BaseActivity()
             }
             R.id.bottom_nav_account -> {
 
-                supportFragmentManager.beginTransaction().replace(R.id.layoutFrame, ProductDetailFragment()).addToBackStack(
+                supportFragmentManager.beginTransaction().replace(R.id.layoutFrame, ProductDetailFragment.newInstance(1)).addToBackStack(
                     ProductDetailFragment::class.java.simpleName).commit()
                 return@OnNavigationItemSelectedListener true
             }

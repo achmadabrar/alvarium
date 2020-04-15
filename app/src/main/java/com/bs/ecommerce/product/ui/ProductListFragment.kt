@@ -116,10 +116,16 @@ class ProductListFragment : BaseFragment() {
         }
 
         subcategoryPopupWindow.setOnItemClickListener { parent, view, position, id ->
-//            ProductService.productId = response.subCategories!![position].id.toLong()
-//            gotoSubCategory(response.subCategories!![position])
-//            subcategoryPopupWindow.dismiss()
-//            categoryNameTextView?.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.ic_chevron_down_light, 0)
+            subcategoryPopupWindow.dismiss()
+
+            requireActivity().supportFragmentManager.beginTransaction()
+                .add(
+                    R.id.layoutFrame,
+                    newInstance(subCatList[position].name!!, subCatList[position].id!!)
+                )
+                .hide(this)
+                .addToBackStack(null)
+                .commit()
         }
 
     }
@@ -190,6 +196,14 @@ class ProductListFragment : BaseFragment() {
                 productsList[position].defaultPictureModel?.imageUrl
                     ?: "https://picsum.photos/300/300"
             ).fit().centerInside().into(holder.itemView.ivProductThumb)
+
+            holder.itemView.setOnClickListener {
+                requireActivity().supportFragmentManager.beginTransaction()
+                    .add(R.id.layoutFrame, ProductDetailFragment.newInstance(productsList[position].id?.toLong() ?: 1))
+                    .hide(this@ProductListFragment)
+                    .addToBackStack(ProductDetailFragment::class.java.simpleName
+                    ).commit()
+            }
         }
 
     }

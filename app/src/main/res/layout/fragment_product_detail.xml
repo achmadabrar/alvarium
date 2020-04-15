@@ -28,7 +28,7 @@
                     android:id="@+id/imageSlider"
                     layout="@layout/slider"
                     android:layout_width="match_parent"
-                    android:layout_height="300dp" />
+                    android:layout_height="@dimen/product_preview" />
 
                 <include
                     android:id="@+id/productNameLayout"

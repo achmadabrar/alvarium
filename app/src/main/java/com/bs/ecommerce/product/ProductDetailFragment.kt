@@ -50,12 +50,14 @@ class ProductDetailFragment : BaseFragment(), View.OnClickListener {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        val productId = arguments?.getLong(PRODUCT_ID) ?: 1
+
         initView()
 
         model = ProductDetailModelImpl()
         viewModel = ViewModelProvider(this).get(ProductDetailViewModel::class.java)
 
-        (viewModel as ProductDetailViewModel).getProductDetail(model)
+        (viewModel as ProductDetailViewModel).getProductDetail(productId, model)
 
         setLiveDataListeners()
     }
@@ -253,6 +255,20 @@ class ProductDetailFragment : BaseFragment(), View.OnClickListener {
                 bsBehavior.state = BottomSheetBehavior.STATE_COLLAPSED
                 productAttributeView?.onBottomSheetClose()
             }
+        }
+    }
+
+    companion object {
+        @JvmStatic
+        private val PRODUCT_ID = "productId"
+
+        @JvmStatic
+        fun newInstance(productId: Long): ProductDetailFragment {
+            val fragment = ProductDetailFragment()
+            val args = Bundle()
+            args.putLong(PRODUCT_ID, productId)
+            fragment.arguments = args
+            return fragment
         }
     }
 }

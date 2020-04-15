@@ -17,10 +17,10 @@ class ProductDetailViewModel : BaseViewModel() {
     var toastMessageLD = MutableLiveData("")
     var selectedAttrLD = MutableLiveData<MutableMap<Long, MutableList<AttributeControlValue>>>()
 
-    fun getProductDetail(model: ProductDetailModel) {
+    fun getProductDetail(prodId: Long, model: ProductDetailModel) {
         isLoadingLD.postValue(true)
 
-        model.getProductDetail(1, object : RequestCompleteListener<ProductDetailResponse> {
+        model.getProductDetail(prodId, object : RequestCompleteListener<ProductDetailResponse> {
             override fun onRequestSuccess(data: ProductDetailResponse) {
                 val attrMap = HashMap<Long, MutableList<AttributeControlValue>>()
 
@@ -47,8 +47,8 @@ class ProductDetailViewModel : BaseViewModel() {
 
                 productLiveData.postValue(data.data)
 
-                val priceInFloat = data.data?.productPrice?.priceValue ?: 0
-                productPriceLD.postValue(priceInFloat.toDouble())
+                val price = data.data?.productPrice?.priceValue ?: 0.toDouble()
+                productPriceLD.postValue(price)
                 selectedAttrLD.postValue(attrMap)
             }
 
@@ -72,7 +72,7 @@ class ProductDetailViewModel : BaseViewModel() {
     }
 
     private fun adjustProductPrice() {
-        var price: Double = productLiveData.value?.productPrice?.priceValue?.toDouble() ?: 0.toDouble()
+        var price: Double = productLiveData.value?.productPrice?.priceValue ?: 0.toDouble()
         val attrMap = selectedAttrLD.value!!
 
         for(valueList in attrMap.values) {

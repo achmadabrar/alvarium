@@ -25,5 +25,5 @@ data class ProductPrice(
         @SerializedName("Price")
         val price: String?,
         @SerializedName("PriceValue")
-        val priceValue: Int?
+        val priceValue: Double?
 )
