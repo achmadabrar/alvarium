@@ -15,11 +15,9 @@ import com.bs.ecommerce.auth.register.RegisterFragment
 import com.bs.ecommerce.auth.login.data.LoginPostData
 import com.bs.ecommerce.base.BaseFragment
 import com.bs.ecommerce.base.BaseViewModel
-import com.bs.ecommerce.main.MainViewModel
 import com.bs.ecommerce.main.model.AuthModel
-import com.bs.ecommerce.main.model.AuthModelImpl
+import com.bs.ecommerce.auth.AuthModelImpl
 import com.bs.ecommerce.networking.NetworkUtil
-import com.bs.ecommerce.networking.RetroClient
 import com.bs.ecommerce.utils.PrefSingleton
 import com.bs.ecommerce.utils.hideKeyboard
 import com.bs.ecommerce.utils.showLog
@@ -27,7 +25,6 @@ import com.bs.ecommerce.utils.toast
 import com.facebook.*
 import com.facebook.login.LoginManager
 import com.facebook.login.LoginResult
-import com.facebook.login.widget.LoginButton
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.fragment_login.*
 import org.json.JSONException

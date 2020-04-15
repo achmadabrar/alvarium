@@ -3,12 +3,12 @@ import com.google.gson.annotations.SerializedName
 
 
 data class GetRegistrationResponse(
-    @SerializedName("Data") var data: Data = Data(),
+    @SerializedName("Data") var data: GetRegisterData = GetRegisterData(),
     @SerializedName("ErrorList") var errorList: List<Any> = listOf(),
     @SerializedName("Message") var message: String = ""
 )
 
-data class Data(
+data class GetRegisterData(
     @SerializedName("AcceptPrivacyPolicyEnabled") var acceptPrivacyPolicyEnabled: Boolean = false,
     @SerializedName("AcceptPrivacyPolicyPopup") var acceptPrivacyPolicyPopup: Boolean = false,
     @SerializedName("AllowCustomersToSetTimeZone") var allowCustomersToSetTimeZone: Boolean = false,
