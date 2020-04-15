@@ -47,6 +47,12 @@ abstract class BaseFragment : Fragment()
     {
         super.onViewCreated(view, savedInstanceState)
 
+        requireActivity().supportFragmentManager.findFragmentById(R.id.layoutFrame)?.let {
+
+            if (it is BaseFragment)
+                "currentFragment".showLog(it.toString())
+        }
+
         viewModel.isLoadingLD.observe(viewLifecycleOwner, Observer {
             it?.let {
                 if (it)

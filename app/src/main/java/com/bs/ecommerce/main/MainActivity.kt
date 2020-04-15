@@ -15,6 +15,7 @@ import com.bs.ecommerce.home.category.CategoryFragment
 import com.bs.ecommerce.home.homepage.HomeFragment
 import com.bs.ecommerce.cart.CartFragment
 import com.bs.ecommerce.product.ProductDetailFragment
+import com.bs.ecommerce.utils.showLog
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import kotlinx.android.synthetic.main.activity_main.*
 
