@@ -16,5 +16,9 @@ class AttributeControlValue
     @SerializedName("PictureModel") var pictureModel: PictureModel? = null
     @SerializedName("DefaultValue") var defaultValue: String? = null
 
+    override fun equals(other: Any?): Boolean {
+        if(other !is AttributeControlValue) return false
 
+        return this.id == other.id
+    }
 }

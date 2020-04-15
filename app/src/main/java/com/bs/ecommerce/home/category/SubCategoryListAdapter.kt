@@ -73,10 +73,10 @@ class SubCategoryListAdapter(private val context: Context, private val categorie
         else
         {
             expandableIcon.visibility = View.VISIBLE
-           /* if (isExpanded)
-                expandableIcon.setImageResource(R.drawable.ic_chevron_up)
+            if (isExpanded)
+                expandableIcon.setImageResource(R.drawable.ic_list_collapse)
             else
-                expandableIcon.setImageResource(R.drawable.ic_chevron_down)*/
+                expandableIcon.setImageResource(R.drawable.ic_list_expand)
         }
 
         text.setOnClickListener( CategoryonClicklistener(subCategory.categoryId, subCategory.name))

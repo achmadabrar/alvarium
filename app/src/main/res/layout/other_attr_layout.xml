@@ -52,6 +52,8 @@
         android:gravity="center"
         android:textColor="@color/green"
         android:textSize="@dimen/tv_text_size_regular"
+        android:maxLines="2"
+        android:ellipsize="end"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/guideline_v_half"

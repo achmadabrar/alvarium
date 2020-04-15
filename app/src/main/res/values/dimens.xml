@@ -7,13 +7,16 @@
     <dimen name="button_text_size">16sp</dimen>
     <dimen name="registration_title_text_size">17sp</dimen>
     <dimen name="slim_btn_height">35dp</dimen>
+    <dimen name="btn_height">42dp</dimen>
     <dimen name="fragment_margin">5dp</dimen>
     <dimen name="form_margin">15dp</dimen>
     <dimen name="cardCornerRadius">3dp</dimen>
-    <dimen name="product_thumbnail_size">150dp</dimen>
+    <dimen name="product_thumbnail_cart">120dp</dimen>
+    <dimen name="product_item_size">165dp</dimen>
 
     <dimen name="tv_text_size_large">18sp</dimen>
     <dimen name="tv_text_size_regular">15sp</dimen>
     <dimen name="tv_text_size_small">13sp</dimen>
     <dimen name="tv_text_size_tiny">12sp</dimen>
+    <dimen name="product_preview">300dp</dimen>
 </resources>
