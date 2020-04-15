@@ -1,10 +1,11 @@
 package com.bs.ecommerce.home.homepage.model.data
 
+import com.bs.ecommerce.product.data.ProductSummary
 import com.google.gson.annotations.SerializedName
 
 
 data class HomePageProductResponse(
-    @SerializedName("Data") var homePageProductList: List<HomePageProduct> = listOf(),
+    @SerializedName("Data") var homePageProductList: List<ProductSummary> = listOf(),
     @SerializedName("ErrorList") var errorList: List<Any> = listOf(),
     @SerializedName("Message") var message: Any = Any()
 )

@@ -2,13 +2,10 @@ package com.bs.ecommerce.home.homepage
 
 import android.os.Bundle
 import android.view.View
-import android.widget.LinearLayout
 import android.widget.RelativeLayout
-import android.widget.TextView
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.bs.ecommerce.R
 import com.bs.ecommerce.base.BaseFragment
 import com.bs.ecommerce.base.BaseViewModel
@@ -16,15 +13,15 @@ import com.bs.ecommerce.home.FeaturedProductAdapter
 import com.bs.ecommerce.home.ManufacturerListAdapter
 import com.bs.ecommerce.home.homepage.model.HomePageModel
 import com.bs.ecommerce.home.homepage.model.HomePageModelImpl
-import com.bs.ecommerce.home.homepage.model.data.HomePageProduct
 import com.bs.ecommerce.main.MainViewModel
 import com.bs.ecommerce.product.data.CategoryModel
 import com.bs.ecommerce.product.data.Manufacturer
+import com.bs.ecommerce.product.data.ProductSummary
 import com.bs.ecommerce.utils.ItemClickListener
 import com.bs.ecommerce.utils.RecyclerViewMargin
 import com.bs.ecommerce.utils.toast
 import kotlinx.android.synthetic.main.fragment_home.*
-import kotlinx.android.synthetic.main.merge_product_list_with_header.view.*
+import kotlinx.android.synthetic.main.featured_list_layout.view.*
 
 
 class HomeFragment : BaseFragment() {
@@ -88,7 +85,7 @@ class HomeFragment : BaseFragment() {
     }
 
     private fun populateFeaturedCategoryList(list: List<CategoryModel>) {
-        /*if (list.isNullOrEmpty()) {
+        if (list.isNullOrEmpty()) {
             featuredCategoryContainerLayout.visibility = View.GONE
             return
         }
@@ -98,47 +95,47 @@ class HomeFragment : BaseFragment() {
 
 
         for (featuredCategory in list) {
+            if (featuredCategory.products.isNullOrEmpty()) continue
 
             val linearLayout = layoutInflater.inflate(
-                R.layout.merge_product_list_with_header,
-                featureCategoriesLinearLayout as LinearLayout?, false
+                R.layout.featured_list_layout,
+                homePageRootView as RelativeLayout, false
             )
 
             linearLayout.visibility = View.VISIBLE
-
-            val title = linearLayout.findViewById<View>(R.id.tvTitle) as TextView
-            val viewAllBtn = linearLayout.findViewById<View>(R.id.btnSeeAll) as TextView
-            val rvProduct = linearLayout.findViewById<View>(R.id.rvList) as RecyclerView
-            rvProduct.setHasFixedSize(true)
-
-            title.text = featuredCategory.name!!.toUpperCase()
-
-            rvProduct.layoutManager = LinearLayoutManager(
-                requireContext(), LinearLayoutManager.HORIZONTAL, false)
-
-            val productAdapter = ProductAdapter(
-                featuredCategory.featuredProducts),
-                ViewType.HOMEPAGE_VIEW
-            )
-
-            rvProduct.adapter = productAdapter
-
-            viewAllBtn.setOnClickListener {
-                //
+            linearLayout.tvTitle.text = featuredCategory.name
+            linearLayout.btnSeeAll.setOnClickListener {
+                toast(featuredCategory.name!!)
             }
 
-            featuredCategoryContainerLayout?.addView(linearLayout)
-        }*/
+            linearLayout.rvList.apply {
+                setHasFixedSize(true)
+                addItemDecoration(RecyclerViewMargin(15, 1, false))
+                layoutManager = LinearLayoutManager(
+                    requireContext(), LinearLayoutManager.HORIZONTAL, false
+                )
+
+                adapter = FeaturedProductAdapter(
+                    featuredCategory.products,
+                    object : ItemClickListener<ProductSummary> {
+                        override fun onClick(view: View, position: Int, data: ProductSummary) {
+                            toast(data.name!!)
+                        }
+                    })
+            }
+
+            featuredCategoryContainerLayout.addView(linearLayout)
+        }
     }
 
-    private fun populateFeaturedProductList(list: List<HomePageProduct>) {
+    private fun populateFeaturedProductList(list: List<ProductSummary>) {
         if (list.isNullOrEmpty()) {
             featuredProductLayout.visibility = View.GONE
             return
         }
 
         featuredProductLayout.visibility = View.VISIBLE
-        featuredProductLayout.tvTitle.text = "Featured Products"
+        featuredProductLayout.tvTitle.text = getString(R.string.featured_products)
         featuredProductLayout.btnSeeAll.setOnClickListener {
             toast("Sell All")
         }
@@ -150,9 +147,9 @@ class HomeFragment : BaseFragment() {
             addItemDecoration(RecyclerViewMargin(15, 1, false))
             setHasFixedSize(true)
 
-            adapter = FeaturedProductAdapter(list, object : ItemClickListener<HomePageProduct> {
-                override fun onClick(view: View, position: Int, data: HomePageProduct) {
-                    toast(data.name)
+            adapter = FeaturedProductAdapter(list, object : ItemClickListener<ProductSummary> {
+                override fun onClick(view: View, position: Int, data: ProductSummary) {
+                    toast(data.name!!)
                 }
             })
         }
@@ -165,7 +162,8 @@ class HomeFragment : BaseFragment() {
         }
 
         featuredManufacturerLayout.visibility = View.VISIBLE
-        featuredManufacturerLayout.tvTitle.text = "Manufacturers"
+        featuredManufacturerLayout.divider.visibility = View.INVISIBLE
+        featuredManufacturerLayout.tvTitle.text = getString(R.string.featured_manufacturer)
         featuredManufacturerLayout.btnSeeAll.setOnClickListener {
             toast("Sell All")
         }

@@ -22,45 +22,43 @@
                 android:id="@+id/banner"
                 layout="@layout/slider"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/banner_height" />
-
-            <include
-                android:id="@+id/featuredProductLayout"
-                layout="@layout/merge_product_list_with_header"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/banner"
-                android:layout_marginStart="5dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginEnd="5dp"
+                android:layout_height="@dimen/banner_height"
                 android:visibility="gone"
                 tools:visibility="visible" />
 
             <include
-                android:id="@+id/featureCategoriesLinearLayout"
-                layout="@layout/merge_product_list_with_header"
+                android:id="@+id/featuredProductLayout"
+                layout="@layout/featured_list_layout"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/FeaturedProductContainerSize"
-                android:layout_below="@+id/featuredProductLayout"
-                android:visibility="gone" />
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/banner"
+                android:layout_marginStart="@dimen/fragment_margin"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="@dimen/fragment_margin"
+                android:visibility="gone"
+                tools:visibility="visible" />
+
 
             <LinearLayout
                 android:id="@+id/featuredCategoryContainerLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/featuredProductLayout"
-                android:visibility="gone"
-                android:orientation="vertical" />
+                android:layout_marginStart="@dimen/fragment_margin"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="@dimen/fragment_margin"
+                android:orientation="vertical"
+                android:visibility="gone" />
 
             <include
                 android:id="@+id/featuredManufacturerLayout"
-                layout="@layout/merge_product_list_with_header"
+                layout="@layout/featured_list_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/featuredCategoryContainerLayout"
-                android:layout_marginStart="5dp"
+                android:layout_marginStart="@dimen/fragment_margin"
                 android:layout_marginTop="10dp"
-                android:layout_marginEnd="5dp"
+                android:layout_marginEnd="@dimen/fragment_margin"
                 android:visibility="gone"
                 tools:visibility="visible" />
 

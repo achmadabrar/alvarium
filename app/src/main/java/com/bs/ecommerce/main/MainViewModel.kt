@@ -4,7 +4,6 @@ import androidx.lifecycle.MutableLiveData
 import com.bs.ecommerce.base.BaseViewModel
 import com.bs.ecommerce.common.RequestCompleteListener
 import com.bs.ecommerce.home.homepage.model.HomePageModel
-import com.bs.ecommerce.home.homepage.model.data.HomePageProduct
 import com.bs.ecommerce.home.homepage.model.data.HomePageProductResponse
 import com.bs.ecommerce.main.model.MainModel
 import com.bs.ecommerce.main.model.data.AppLandingData
@@ -13,6 +12,7 @@ import com.bs.ecommerce.main.model.data.Category
 import com.bs.ecommerce.main.model.data.CategoryTreeResponse
 import com.bs.ecommerce.product.data.CategoryModel
 import com.bs.ecommerce.product.data.Manufacturer
+import com.bs.ecommerce.product.data.ProductSummary
 import com.google.gson.JsonObject
 
 
@@ -21,7 +21,7 @@ class MainViewModel : BaseViewModel() {
     var navDrawerCategoriesLD = MutableLiveData<List<Category>>()
     var allCategoriesFailureLD = MutableLiveData<List<String>>()
 
-    var featuredProductListLD = MutableLiveData<List<HomePageProduct>>()
+    var featuredProductListLD = MutableLiveData<List<ProductSummary>>()
     var manufacturerListLD = MutableLiveData<List<Manufacturer>>()
     var featuredCategoryLD = MutableLiveData<List<CategoryModel>>()
 

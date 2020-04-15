@@ -90,6 +90,7 @@
     <string name="select_color">Select your color</string>
     <string name="done">Done</string>
     <string name="select">Select</string>
+    <string name="featured_manufacturer">Featured Manufacturers</string>
 
     <string-array name="spinner_dummy_data">
         <item>Dummy Spinner Item</item>
