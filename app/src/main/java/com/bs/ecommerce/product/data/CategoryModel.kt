@@ -3,7 +3,7 @@ package com.bs.ecommerce.product.data
 
 import com.google.gson.annotations.SerializedName
 
-data class ProductResponseData(
+data class CategoryModel(
     @SerializedName("CategoryBreadcrumb")
     val categoryBreadcrumb: List<CategoryBreadcrumb>? = listOf(),
     @SerializedName("CustomProperties")

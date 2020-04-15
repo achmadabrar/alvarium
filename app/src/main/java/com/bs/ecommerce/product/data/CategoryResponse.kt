@@ -3,9 +3,9 @@ package com.bs.ecommerce.product.data
 
 import com.google.gson.annotations.SerializedName
 
-data class ProductResponse(
+data class CategoryResponse(
     @SerializedName("Data")
-    val `data`: ProductResponseData? = ProductResponseData(),
+    val `data`: CategoryModel? = CategoryModel(),
     @SerializedName("ErrorList")
     val errorList: List<Any>? = listOf()
 )

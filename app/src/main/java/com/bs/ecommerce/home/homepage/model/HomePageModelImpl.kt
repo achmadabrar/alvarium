@@ -1,38 +1,104 @@
 package com.bs.ecommerce.home.homepage.model
 
 import android.content.Context
-import com.bs.ecommerce.auth.register.data.KeyValuePair
 import com.bs.ecommerce.networking.RetroClient
 import com.bs.ecommerce.common.RequestCompleteListener
 import com.bs.ecommerce.home.homepage.model.data.HomePageProductResponse
+import com.bs.ecommerce.product.data.CategoryModel
+import com.bs.ecommerce.product.data.HomePageCategoryResponse
+import com.bs.ecommerce.product.data.Manufacturer
+import com.bs.ecommerce.product.data.ManufacturerResponse
+import com.google.gson.JsonObject
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class HomePageModelImpl(private val context: Context): HomePageModel
-{
+class HomePageModelImpl(private val context: Context) : HomePageModel {
 
-    override fun getFeaturedProducts(callback: RequestCompleteListener<HomePageProductResponse>)
-    {
+    override fun getFeaturedProducts(callback: RequestCompleteListener<HomePageProductResponse>) {
 
-        RetroClient.api.getHomeFeaturedProducts().enqueue(object : Callback<HomePageProductResponse>
-        {
-            override fun onResponse(call: Call<HomePageProductResponse>, response: Response<HomePageProductResponse>)
-            {
-                if (response.body() != null)
-                    callback.onRequestSuccess(response.body()!!)
-                else
-                    callback.onRequestFailed(response.message())
+        RetroClient.api.getHomeFeaturedProducts()
+            .enqueue(object : Callback<HomePageProductResponse> {
+                override fun onResponse(
+                    call: Call<HomePageProductResponse>,
+                    response: Response<HomePageProductResponse>
+                ) {
+                    if (response.body() != null)
+                        callback.onRequestSuccess(response.body()!!)
+                    else
+                        callback.onRequestFailed(response.message())
+                }
+
+
+                override fun onFailure(call: Call<HomePageProductResponse>, t: Throwable) {
+                    callback.onRequestFailed(t.localizedMessage!!)
+                }
+            })
+
+
+    }
+
+    override fun fetchBestSellingProducts(callback: RequestCompleteListener<HomePageProductResponse>) {
+        RetroClient.api.getHomeBestSellerProducts()
+            .enqueue(object : Callback<HomePageProductResponse> {
+                override fun onResponse(
+                    call: Call<HomePageProductResponse>,
+                    response: Response<HomePageProductResponse>
+                ) {
+                    if (response.body() != null)
+                        callback.onRequestSuccess(response.body()!!)
+                    else
+                        callback.onRequestFailed(response.message())
+                }
+
+
+                override fun onFailure(call: Call<HomePageProductResponse>, t: Throwable) {
+                    callback.onRequestFailed(t.localizedMessage!!)
+                }
+            })
+    }
+
+    override fun fetchHomePageCategoryList(callback: RequestCompleteListener<List<CategoryModel>>) {
+        RetroClient.api.getHomePageCategoriesWithProducts()
+            .enqueue(object : Callback<HomePageCategoryResponse> {
+                override fun onFailure(call: Call<HomePageCategoryResponse>, t: Throwable) {
+                    callback.onRequestFailed(t.localizedMessage ?: "Something went wrong")
+                }
+
+                override fun onResponse(call: Call<HomePageCategoryResponse>, response: Response<HomePageCategoryResponse>) {
+                    callback.onRequestSuccess(response.body()?.categoryList ?: listOf())
+                }
+
+            })
+    }
+
+    override fun fetchManufacturers(callback: RequestCompleteListener<List<Manufacturer>>) {
+
+        RetroClient.api.getHomeManufacturer().enqueue(object : Callback<ManufacturerResponse> {
+            override fun onFailure(call: Call<ManufacturerResponse>, t: Throwable) {
+                callback.onRequestFailed(t.localizedMessage ?: "Something went wrong")
             }
 
-
-            override fun onFailure(call: Call<HomePageProductResponse>, t: Throwable) {
-                callback.onRequestFailed(t.localizedMessage!!)
+            override fun onResponse(call: Call<ManufacturerResponse>, response: Response<ManufacturerResponse>) {
+                callback.onRequestSuccess(response.body()?.manufacturerList ?: listOf())
             }
+
         })
     }
 
+    override fun fetchBannerImages(callback: RequestCompleteListener<JsonObject>) {
 
+        RetroClient.api.getHomeSlider().enqueue(object : Callback<JsonObject> {
+            override fun onFailure(call: Call<JsonObject>, t: Throwable) {
+                callback.onRequestFailed(t.localizedMessage ?: "Something went wrong")
+            }
+
+            override fun onResponse(call: Call<JsonObject>, response: Response<JsonObject>) {
+                val v = response.body()
+            }
+
+        })
+    }
 
 
 }

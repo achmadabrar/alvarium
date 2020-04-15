@@ -8,8 +8,8 @@ import com.bs.ecommerce.cart.model.data.CartResponse
 import com.bs.ecommerce.home.homepage.model.data.HomePageProductResponse
 import com.bs.ecommerce.main.model.data.AppLandingSettingResponse
 import com.bs.ecommerce.main.model.data.CategoryTreeResponse
-import com.bs.ecommerce.product.data.ProductDetailResponse
-import com.bs.ecommerce.product.data.ProductResponse
+import com.bs.ecommerce.product.data.*
+import com.google.gson.JsonObject
 import retrofit2.Call
 import retrofit2.http.*
 
@@ -51,30 +51,27 @@ interface Api {
     @GET("home/featureproducts")
     fun getHomeFeaturedProducts(): Call<HomePageProductResponse>
 
-   /* @GET("slider/homepageslider")
-    fun getHomeSlider(): Call<CartResponse>
-
-    @GET("home/manufacturers")
-    fun getHomeManufacturer(): Call<CartResponse>
-
-    @GET("home/featureproducts")
-    fun getHomeFeaturedProducts(): Call<CartResponse>
+    @GET("home/homepagecategorieswithproducts")
+    fun getHomePageCategoriesWithProducts(): Call<HomePageCategoryResponse>
 
     @GET("home/bestsellerproducts")
-    fun getHomeBestSellerProducts(): Call<CartResponse>
+    fun getHomeBestSellerProducts(): Call<HomePageProductResponse>
 
-    @GET("home/homepagecategorieswithproducts")
-    fun getHomePageCategoriesWithProducts(): Call<CartResponse>*/
+    @GET("home/manufacturers")
+    fun getHomeManufacturer(): Call<ManufacturerResponse>
+
+    @GET("slider/homepageslider")
+    fun getHomeSlider(): Call<JsonObject>
 
     // Product Details
     @GET("product/productdetails/{id}/0")
     fun getProductDetails(@Path("id") id: Long): Call<ProductDetailResponse>
 
     @GET("catalog/category/{id}")
-    fun getProductList(@Path("id") id: Long, @QueryMap options: Map<String, String>): Call<ProductResponse>
+    fun getProductList(@Path("id") id: Long, @QueryMap options: Map<String, String>): Call<CategoryResponse>
 
     @GET("Manufacturer/{manufacturerId}")
-    fun getProductListByManufacturer(@Path("manufacturerId") id: Long, @QueryMap options: Map<String, String>): Call<ProductResponse>
+    fun getProductListByManufacturer(@Path("manufacturerId") id: Long, @QueryMap options: Map<String, String>): Call<CategoryResponse>
 
 /*    @POST("setcurrency/{id}")
     fun setCurrency(@Path("id") id: Long): Call<LanguageResponse>

@@ -9,7 +9,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.bs.ecommerce.R
 import com.bs.ecommerce.main.MainViewModel
 import com.bs.ecommerce.base.BaseFragment
-import com.bs.ecommerce.main.model.AuthModel
 import com.bs.ecommerce.main.model.MainModel
 import com.bs.ecommerce.main.model.MainModelImpl
 import com.bs.ecommerce.main.model.data.Category
@@ -40,7 +39,7 @@ class CategoryFragment : BaseFragment()
 
         mainViewModel = ViewModelProvider(this).get(MainViewModel::class.java)
 
-        mainViewModel.getCategoryList(mainModel)
+        mainViewModel.getNavDrawerCategoryList(mainModel)
 
 
         setLiveDataListeners()
@@ -49,7 +48,7 @@ class CategoryFragment : BaseFragment()
 
     private fun setLiveDataListeners() {
 
-        mainViewModel.allCategoriesLD.observe(activity!!, Observer { categoryList ->
+        mainViewModel.navDrawerCategoriesLD.observe(activity!!, Observer { categoryList ->
 
             toast(categoryList[0].name)
             showList(categoryList)

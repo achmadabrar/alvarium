@@ -19,4 +19,6 @@
     <dimen name="tv_text_size_small">13sp</dimen>
     <dimen name="tv_text_size_tiny">12sp</dimen>
     <dimen name="product_preview">300dp</dimen>
+    <dimen name="banner_height">180dp</dimen>
+    <dimen name="FeaturedProductContainerSize">200dp</dimen>
 </resources>

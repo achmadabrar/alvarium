@@ -4,13 +4,11 @@ import androidx.lifecycle.MutableLiveData
 import com.bs.ecommerce.base.BaseViewModel
 import com.bs.ecommerce.common.RequestCompleteListener
 import com.bs.ecommerce.networking.Api
-import com.bs.ecommerce.product.data.ProductResponse
-import com.bs.ecommerce.product.data.ProductResponseData
-import com.google.gson.JsonObject
+import com.bs.ecommerce.product.data.CategoryModel
 import java.util.HashMap
 
 class ProductListViewModel : BaseViewModel() {
-    var productLiveData = MutableLiveData<ProductResponseData>()
+    var productLiveData = MutableLiveData<CategoryModel>()
     var toastMessageLD = MutableLiveData("")
     var pageNumberLD = MutableLiveData(1)
     var queryMapLD = MutableLiveData<MutableMap<String, String>>()
@@ -18,8 +16,8 @@ class ProductListViewModel : BaseViewModel() {
     fun getProductDetail(catId: Long, model: ProductListModel) {
         isLoadingLD.postValue(true)
 
-        model.fetchProducts(catId, getQueryMap(), object : RequestCompleteListener<ProductResponseData> {
-            override fun onRequestSuccess(data: ProductResponseData) {
+        model.fetchProducts(catId, getQueryMap(), object : RequestCompleteListener<CategoryModel> {
+            override fun onRequestSuccess(data: CategoryModel) {
                 isLoadingLD.postValue(false)
 
                 productLiveData.postValue(data)

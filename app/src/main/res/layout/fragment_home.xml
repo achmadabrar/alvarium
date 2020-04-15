@@ -1,19 +1,69 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.swiperefreshlayout.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/categoryRootLayout"
+    android:id="@+id/swipeRefreshLayout"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/fragment_background"
-    android:orientation="vertical"
-    android:descendantFocusability="blocksDescendants">
+    android:layout_height="match_parent">
 
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/expandList"
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:nestedScrollingEnabled="false"/>
+        android:background="@color/fragment_background"
+        android:fillViewport="true"
+        android:scrollbars="none">
 
-</RelativeLayout>
+        <RelativeLayout
+            android:id="@+id/homePageRootView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fillViewport="true">
+
+            <include
+                android:id="@+id/banner"
+                layout="@layout/slider"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/banner_height" />
+
+            <include
+                android:id="@+id/featuredProductLayout"
+                layout="@layout/merge_product_list_with_header"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/banner"
+                android:layout_marginStart="5dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="5dp"
+                android:visibility="gone"
+                tools:visibility="visible" />
+
+            <include
+                android:id="@+id/featureCategoriesLinearLayout"
+                layout="@layout/merge_product_list_with_header"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/FeaturedProductContainerSize"
+                android:layout_below="@+id/featuredProductLayout"
+                android:visibility="gone" />
+
+            <LinearLayout
+                android:id="@+id/featuredCategoryContainerLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/featuredProductLayout"
+                android:visibility="gone"
+                android:orientation="vertical" />
+
+            <include
+                android:id="@+id/featuredManufacturerLayout"
+                layout="@layout/merge_product_list_with_header"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/featuredCategoryContainerLayout"
+                android:layout_marginStart="5dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="5dp"
+                android:visibility="gone"
+                tools:visibility="visible" />
+
+        </RelativeLayout>
+    </androidx.core.widget.NestedScrollView>
+</androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
