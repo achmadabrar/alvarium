@@ -93,7 +93,8 @@ class CategoryListAdapter(private val context: Context, private val categoryList
             activity.supportFragmentManager.beginTransaction()
                 .replace(
                     R.id.layoutFrame,
-                    ProductListFragment.newInstance(category.name, category.categoryId)
+                    ProductListFragment.newInstance(category.name, category.categoryId,
+                        ProductListFragment.GetBy.CATEGORY)
                 )
                 .addToBackStack(null)
                 .commit()

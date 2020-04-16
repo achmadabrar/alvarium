@@ -5,15 +5,19 @@ import com.bs.ecommerce.base.BaseViewModel
 import com.bs.ecommerce.common.RequestCompleteListener
 import com.bs.ecommerce.networking.Api
 import com.bs.ecommerce.product.data.CategoryModel
+import com.bs.ecommerce.product.data.Manufacturer
 import java.util.HashMap
 
 class ProductListViewModel : BaseViewModel() {
     var productLiveData = MutableLiveData<CategoryModel>()
+    var manufacturerLD = MutableLiveData<Manufacturer>()
+
     var toastMessageLD = MutableLiveData("")
     var pageNumberLD = MutableLiveData(1)
-    var queryMapLD = MutableLiveData<MutableMap<String, String>>()
 
-    fun getProductDetail(catId: Long, model: ProductListModel) {
+    private var queryMapLD = MutableLiveData<MutableMap<String, String>>()
+
+    fun getProductByCategory(catId: Long, model: ProductListModel) {
         isLoadingLD.postValue(true)
 
         model.fetchProducts(catId, getQueryMap(), object : RequestCompleteListener<CategoryModel> {
@@ -29,6 +33,25 @@ class ProductListViewModel : BaseViewModel() {
             }
 
         })
+    }
+
+    fun getProductByManufacturer(manufacturerId: Long, model: ProductListModel) {
+        isLoadingLD.postValue(true)
+
+        model.fetchProductsByManufacturer(
+            manufacturerId,
+            mapOf(),
+            object : RequestCompleteListener<Manufacturer> {
+                override fun onRequestSuccess(data: Manufacturer) {
+                    isLoadingLD.postValue(false)
+                    manufacturerLD.postValue(data)
+                }
+
+                override fun onRequestFailed(errorMessage: String) {
+                    isLoadingLD.postValue(false)
+                    toastMessageLD.postValue(errorMessage)
+                }
+            })
     }
 
     private fun getQueryMap(): MutableMap<String, String> {

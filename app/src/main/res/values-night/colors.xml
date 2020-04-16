@@ -26,4 +26,5 @@
     <color name="checkbox_bg">#F2F2F2</color>
     <color name="confirm_order_card_title_bg">#A5A5A5</color>
     <color name="confirm_order_card_desc_bg">#333333</color>
+    <color name="product_list_btn_bg">#EEEEEE</color>
 </resources>

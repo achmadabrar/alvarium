@@ -52,7 +52,7 @@
                     android:layout_height="@dimen/btn_height"
                     android:orientation="horizontal"
                     android:visibility="gone"
-                    android:background="@color/fragment_background"
+                    android:background="@color/product_list_btn_bg"
                     tools:visibility="visible">
 
                     <LinearLayout

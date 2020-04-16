@@ -8,22 +8,23 @@
     <ImageView
         android:id="@+id/ivLogo"
         android:layout_width="@dimen/product_item_size"
-        android:layout_height="@dimen/product_thumbnail_cart"
+        android:layout_height="@dimen/product_item_size"
         android:scaleType="centerCrop"
+        android:adjustViewBounds="true"
         tools:src="@tools:sample/avatars" />
 
     <TextView
         android:id="@+id/tvCompanyName"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/ivLogo"
+        android:gravity="center"
         android:layout_marginStart="3dp"
         android:ellipsize="end"
         android:maxLines="2"
         android:textColor="@color/whiteOrBlack"
         android:textSize="@dimen/tv_text_size_tiny"
         android:textStyle="bold"
-
         tools:text="@string/placeholder" />
 
 </RelativeLayout>

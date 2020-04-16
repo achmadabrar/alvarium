@@ -20,6 +20,7 @@ import com.bs.ecommerce.product.ProductDetailFragment
 import com.bs.ecommerce.product.data.CategoryModel
 import com.bs.ecommerce.product.data.Manufacturer
 import com.bs.ecommerce.product.data.ProductSummary
+import com.bs.ecommerce.product.ui.ProductListFragment
 import com.bs.ecommerce.utils.ItemClickListener
 import com.bs.ecommerce.utils.RecyclerViewMargin
 import com.bs.ecommerce.utils.toast
@@ -45,7 +46,7 @@ class HomeFragment : BaseFragment() {
 
         model = HomePageModelImpl(activity?.applicationContext!!)
 
-        viewModel = ViewModelProvider(this).get(MainViewModel::class.java)
+        viewModel = ViewModelProvider(requireActivity()).get(MainViewModel::class.java)
 
         (viewModel as MainViewModel).apply {
             getFeaturedProducts(model)
@@ -167,7 +168,21 @@ class HomeFragment : BaseFragment() {
             linearLayout.visibility = View.VISIBLE
             linearLayout.tvTitle.text = featuredCategory.name
             linearLayout.btnSeeAll.setOnClickListener {
-                toast(featuredCategory.name!!)
+
+                if (featuredCategory.id == null) return@setOnClickListener
+
+                requireActivity().supportFragmentManager.beginTransaction()
+                    .add(
+                        R.id.layoutFrame,
+                        ProductListFragment.newInstance(
+                            featuredCategory.name ?: "",
+                            featuredCategory.id,
+                            ProductListFragment.GetBy.CATEGORY
+                        )
+                    )
+                    .hide(this@HomeFragment)
+                    .addToBackStack(ProductDetailFragment::class.java.simpleName)
+                    .commit()
             }
 
             linearLayout.rvList.apply {
@@ -256,7 +271,20 @@ class HomeFragment : BaseFragment() {
 
             adapter = ManufacturerListAdapter(list, object : ItemClickListener<Manufacturer> {
                 override fun onClick(view: View, position: Int, data: Manufacturer) {
-                    toast(data.name!!)
+                    if (data.id == null) return
+
+                    requireActivity().supportFragmentManager.beginTransaction()
+                        .add(
+                            R.id.layoutFrame,
+                            ProductListFragment.newInstance(
+                                data.name ?: "",
+                                data.id,
+                                ProductListFragment.GetBy.MANUFACTURER
+                            )
+                        )
+                        .hide(this@HomeFragment)
+                        .addToBackStack(ProductDetailFragment::class.java.simpleName)
+                        .commit()
                 }
             })
         }

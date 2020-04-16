@@ -22,13 +22,14 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/fragment_margin"
                 android:layout_marginEnd="@dimen/fragment_margin"
+                android:descendantFocusability="blocksDescendants"
                 android:orientation="vertical">
 
                 <include
                     android:id="@+id/imageSlider"
                     layout="@layout/slider"
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/product_preview" />
+                    android:layout_height="wrap_content" />
 
                 <include
                     android:id="@+id/productNameLayout"
@@ -104,13 +105,15 @@
                 <include layout="@layout/horizontal_divider" />
 
                 <include
-                    android:id="@+id/similarProductList"
+                    android:id="@+id/featuredProductLayout"
                     layout="@layout/featured_product_layout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="5dp"
                     android:layout_marginTop="10dp"
-                    android:layout_marginEnd="5dp" />
+                    android:layout_marginEnd="5dp"
+                    android:visibility="gone"
+                    tools:visibility="visible"/>
 
             </LinearLayout>
 

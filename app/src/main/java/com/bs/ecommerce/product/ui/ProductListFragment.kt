@@ -3,9 +3,7 @@ package com.bs.ecommerce.product.ui
 import android.graphics.Rect
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import android.view.ViewTreeObserver
 import android.widget.ListPopupWindow
 import android.widget.RelativeLayout
@@ -20,18 +18,19 @@ import com.bs.ecommerce.base.BaseViewModel
 import com.bs.ecommerce.product.*
 import com.bs.ecommerce.product.data.ProductSummary
 import com.bs.ecommerce.product.data.SubCategory
-import com.squareup.picasso.Picasso
+import com.bs.ecommerce.utils.ItemClickListener
 import kotlinx.android.synthetic.main.fragment_product_list.*
-import kotlinx.android.synthetic.main.item_featured_product.view.*
 import kotlin.math.floor
 
 class ProductListFragment : BaseFragment() {
 
     private lateinit var model: ProductListModel
     private lateinit var categoryName: String
+    private lateinit var getBy: String
     private var categoryId: Int = 0
     private lateinit var layoutManager: GridLayoutManager
     private lateinit var subcategoryPopupWindow: ListPopupWindow
+    private lateinit var productClickListener: ItemClickListener<ProductSummary>
 
     override fun getLayoutId(): Int = R.layout.fragment_product_list
 
@@ -46,6 +45,7 @@ class ProductListFragment : BaseFragment() {
         if (bundle != null) {
             categoryId = bundle.getInt(CATEGORY_ID, categoryId)
             categoryName = bundle.getString(CATEGORY_NAME, "")
+            getBy = bundle.getString(GET_PRODUCT_BY, "")
         }
 
         calculateAutomaticGridColumn()
@@ -53,45 +53,67 @@ class ProductListFragment : BaseFragment() {
         model = ProductListModelImpl()
         viewModel = ViewModelProvider(this).get(ProductListViewModel::class.java)
 
-        (viewModel as ProductListViewModel).getProductDetail(categoryId.toLong(), model)
+        if(getBy == GetBy.CATEGORY.name)
+            (viewModel as ProductListViewModel).getProductByCategory(categoryId.toLong(), model)
+        if(getBy == GetBy.MANUFACTURER.name)
+            (viewModel as ProductListViewModel).getProductByManufacturer(categoryId.toLong(), model)
 
         setLiveDataListeners()
+
+        productClickListener = object : ItemClickListener<ProductSummary>{
+            override fun onClick(view: View, position: Int, data: ProductSummary) {
+
+                if(data.id == null) return
+
+                requireActivity().supportFragmentManager.beginTransaction()
+                    .add(
+                        R.id.layoutFrame,
+                        ProductDetailFragment.newInstance(data.id.toLong())
+                    )
+                    .hide(this@ProductListFragment)
+                    .addToBackStack(
+                        ProductDetailFragment::class.java.simpleName
+                    ).commit()
+            }
+        }
     }
 
     private fun setLiveDataListeners() {
-        (viewModel as ProductListViewModel).productLiveData.observe(
-            requireActivity(),
-            Observer { data ->
+        val viewModel = viewModel as ProductListViewModel
 
-                rvProductList.adapter = TempAdapter(data.products!!)
+        viewModel.productLiveData.observe(viewLifecycleOwner, Observer { data ->
 
-                initSubcategoryPopupWindow(data.subCategories)
+            rvProductList.adapter = ProductListAdapter(data.products!!, productClickListener)
 
-                llButtonHolder.visibility =
-                    if (data.subCategories.isNullOrEmpty()) View.VISIBLE else View.GONE
-            })
+            initSubcategoryPopupWindow(data.subCategories)
 
-        (viewModel as ProductListViewModel).isLoadingLD.observe(
-            requireActivity(),
-            Observer { isShowLoader ->
+            llButtonHolder.visibility =
+                if (data.subCategories.isNullOrEmpty()) View.VISIBLE else View.GONE
+        })
 
-                if (isShowLoader)
-                    showLoading()
-                else
-                    hideLoading()
-            })
+        viewModel.manufacturerLD.observe(viewLifecycleOwner, Observer { manufacturer ->
+            rvProductList.adapter = ProductListAdapter(manufacturer.products!!, productClickListener)
 
-        (viewModel as ProductListViewModel).toastMessageLD.observe(
-            requireActivity(),
-            Observer { message ->
-                if (message.isNotEmpty())
-                    Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
-            })
+            llButtonHolder.visibility = View.VISIBLE
+            btnBrand.visibility = View.GONE
+        })
+
+        viewModel.isLoadingLD.observe(viewLifecycleOwner, Observer { isShowLoader ->
+            if (isShowLoader)
+                showLoading()
+            else
+                hideLoading()
+        })
+
+        viewModel.toastMessageLD.observe(viewLifecycleOwner, Observer { message ->
+            if (message.isNotEmpty())
+                Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
+        })
     }
 
     private fun initSubcategoryPopupWindow(subCatList: List<SubCategory>?) {
 
-        if(subCatList.isNullOrEmpty()) {
+        if (subCatList.isNullOrEmpty()) {
             categoryNameTextView.visibility = View.GONE
             return
         }
@@ -121,7 +143,11 @@ class ProductListFragment : BaseFragment() {
             requireActivity().supportFragmentManager.beginTransaction()
                 .add(
                     R.id.layoutFrame,
-                    newInstance(subCatList[position].name!!, subCatList[position].id!!)
+                    newInstance(
+                        subCatList[position].name!!,
+                        subCatList[position].id!!,
+                        GetBy.CATEGORY
+                    )
                 )
                 .hide(this)
                 .addToBackStack(null)
@@ -170,42 +196,9 @@ class ProductListFragment : BaseFragment() {
         layoutManager.requestLayout()
     }
 
-    //---------------------------------------
 
-    inner class TempAdapter(
-        private val productsList: List<ProductSummary>
-    ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
-
-        override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-            val itemView =
-                LayoutInflater.from(parent.context)
-                    .inflate(R.layout.item_featured_product, parent, false)
-            return object : RecyclerView.ViewHolder(itemView) {}
-        }
-
-        override fun getItemCount(): Int = productsList.size
-
-        override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-            holder.itemView.tvProductName.text = productsList[position].name
-            holder.itemView.tvProductPrice.text = productsList[position].productPrice?.price
-
-            holder.itemView.ratingBar.rating =
-                (productsList[position].reviewOverviewModel?.ratingSum ?: 0).toFloat()
-
-            Picasso.with(holder.itemView.context).load(
-                productsList[position].defaultPictureModel?.imageUrl
-                    ?: "https://picsum.photos/300/300"
-            ).fit().centerInside().into(holder.itemView.ivProductThumb)
-
-            holder.itemView.setOnClickListener {
-                requireActivity().supportFragmentManager.beginTransaction()
-                    .add(R.id.layoutFrame, ProductDetailFragment.newInstance(productsList[position].id?.toLong() ?: 1))
-                    .hide(this@ProductListFragment)
-                    .addToBackStack(ProductDetailFragment::class.java.simpleName
-                    ).commit()
-            }
-        }
-
+    enum class GetBy {
+        CATEGORY, MANUFACTURER
     }
 
     companion object {
@@ -216,11 +209,15 @@ class ProductListFragment : BaseFragment() {
         private val CATEGORY_ID = "categoryId"
 
         @JvmStatic
-        fun newInstance(categoryName: String, categoryId: Int): ProductListFragment {
+        private val GET_PRODUCT_BY = "getProductBy"
+
+        @JvmStatic
+        fun newInstance(categoryName: String, categoryId: Int, getBy: GetBy): ProductListFragment {
             val fragment = ProductListFragment()
             val args = Bundle()
             args.putString(CATEGORY_NAME, categoryName)
             args.putInt(CATEGORY_ID, categoryId)
+            args.putString(GET_PRODUCT_BY, getBy.name)
             fragment.arguments = args
             return fragment
         }

@@ -1,31 +1,31 @@
 package com.bs.ecommerce.product
 
-import android.R.attr.numColumns
 import android.graphics.Paint
 import android.os.Bundle
 import android.util.Log
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import android.widget.RelativeLayout
 import android.widget.TextView
 import android.widget.Toast
 import androidx.core.content.ContextCompat
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.bs.ecommerce.R
 import com.bs.ecommerce.base.BaseFragment
 import com.bs.ecommerce.base.BaseViewModel
+import com.bs.ecommerce.home.FeaturedProductAdapter
+import com.bs.ecommerce.main.MainViewModel
+import com.bs.ecommerce.product.data.ProductSummary
+import com.bs.ecommerce.utils.ItemClickListener
 import com.bs.ecommerce.utils.RecyclerViewMargin
 import com.bs.ecommerce.utils.TextUtils
+import com.bs.ecommerce.utils.toast
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetBehavior.BottomSheetCallback
-import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.featured_product_layout.view.*
 import kotlinx.android.synthetic.main.fragment_product_detail.*
-import kotlinx.android.synthetic.main.item_featured_product.view.*
 import kotlinx.android.synthetic.main.other_attr_bottom_sheet.view.*
 import kotlinx.android.synthetic.main.product_name_layout.view.*
 import kotlinx.android.synthetic.main.product_name_layout.view.tvProductName
@@ -39,6 +39,7 @@ class ProductDetailFragment : BaseFragment(), View.OnClickListener {
     private lateinit var bsBehavior: BottomSheetBehavior<*>
     private lateinit var model: ProductDetailModel
     private var productAttributeView: ProductAttributeView? = null
+    private lateinit var mainViewModel: MainViewModel
 
     override fun getLayoutId(): Int = R.layout.fragment_product_detail
 
@@ -55,6 +56,7 @@ class ProductDetailFragment : BaseFragment(), View.OnClickListener {
 
         model = ProductDetailModelImpl()
         viewModel = ViewModelProvider(this).get(ProductDetailViewModel::class.java)
+        mainViewModel = ViewModelProvider(requireActivity()).get(MainViewModel::class.java)
 
         (viewModel as ProductDetailViewModel).getProductDetail(productId, model)
 
@@ -151,7 +153,6 @@ class ProductDetailFragment : BaseFragment(), View.OnClickListener {
         (viewModel as ProductDetailViewModel).selectedAttrLD.observe(
             viewLifecycleOwner,
             Observer { attrMap ->
-                Log.d("xyz", "Fired")
 
                 for(i in attrMap.keys) {
                     val view = attrViewHolder.findViewWithTag<View>(i)
@@ -166,26 +167,41 @@ class ProductDetailFragment : BaseFragment(), View.OnClickListener {
                     }
                 }
             })
+
+        mainViewModel.featuredProductListLD.observe(viewLifecycleOwner,
+            Observer { list ->
+                populateFeaturedProductList(list)
+            })
+    }
+
+    private fun populateFeaturedProductList(list: List<ProductSummary>) {
+        if (list.isNullOrEmpty()) {
+            featuredProductLayout.visibility = View.GONE
+            return
+        }
+
+        featuredProductLayout.visibility = View.VISIBLE
+        featuredProductLayout.tvProductName.text = getString(R.string.featured_products)
+        featuredProductLayout.tvSeeAll.setOnClickListener {
+            toast("Sell All")
+        }
+
+        featuredProductLayout.rvFeaturedProduct.apply {
+            layoutManager =
+                LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+
+            addItemDecoration(RecyclerViewMargin(15, 1, false))
+            setHasFixedSize(true)
+
+            adapter = FeaturedProductAdapter(list, object : ItemClickListener<ProductSummary> {
+                override fun onClick(view: View, position: Int, data: ProductSummary) {
+                    toast("Not yet implemented")
+                }
+            })
+        }
     }
 
     private fun initView() {
-
-        //
-        val items: MutableList<FeaturedProduct> = mutableListOf()
-
-        for (i in 1..5) {
-            items.add(FeaturedProduct("Product $i", "$${i * 167}"))
-        }
-
-        val layoutManager = LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
-        similarProductList.rvFeaturedProduct?.setHasFixedSize(true)
-        similarProductList.rvFeaturedProduct?.layoutManager = layoutManager
-
-        val decoration = RecyclerViewMargin(15, numColumns, false)
-        similarProductList.rvFeaturedProduct?.addItemDecoration(decoration)
-
-        similarProductList.rvFeaturedProduct?.adapter = TempAdapter(items)
-
 
         bsBehavior = BottomSheetBehavior.from(bottomSheetLayout)
         bsBehavior.addBottomSheetCallback(object : BottomSheetCallback() {
@@ -213,39 +229,6 @@ class ProductDetailFragment : BaseFragment(), View.OnClickListener {
         productQuantityLayout.btnPlus.setOnClickListener(this)
     }
 
-    inner class TempAdapter(
-        private val productsList: List<FeaturedProduct>
-    ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
-
-        override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-            val itemView =
-                LayoutInflater.from(parent.context)
-                    .inflate(R.layout.item_featured_product, parent, false)
-            return MyViewHolder(itemView)
-        }
-
-        override fun getItemCount(): Int = productsList.size
-
-        override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-            if (holder is MyViewHolder) {
-                holder.itemView.tvProductName.text = productsList[position].name
-                holder.itemView.tvProductPrice.text = productsList[position].price
-
-                Picasso.with(holder.itemView.context).load("https://picsum.photos/300/300")
-                    .fit().centerInside().into(holder.itemView.ivProductThumb)
-            }
-        }
-
-    }
-
-    inner class MyViewHolder(itemView: View) :
-        RecyclerView.ViewHolder(itemView) {
-    }
-
-    inner class FeaturedProduct(
-        val name: String,
-        val price: String
-    )
 
     override fun onClick(v: View) {
         when(v.id) {

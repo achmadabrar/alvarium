@@ -52,5 +52,6 @@
     <color name="checkbox_bg">#FFF</color>
     <color name="confirm_order_card_title_bg">#000</color>
     <color name="confirm_order_card_desc_bg">@color/edit_text_background</color>
+    <color name="product_list_btn_bg">#111111</color>
 
 </resources>

@@ -71,8 +71,11 @@ interface Api {
     @GET("catalog/category/{id}")
     fun getProductList(@Path("id") id: Long, @QueryMap options: Map<String, String>): Call<CategoryResponse>
 
-    @GET("Manufacturer/{manufacturerId}")
-    fun getProductListByManufacturer(@Path("manufacturerId") id: Long, @QueryMap options: Map<String, String>): Call<CategoryResponse>
+    @GET("catalog/manufacturer/{manufacturerId}")
+    fun getProductListByManufacturer(@Path("manufacturerId") id: Long, @QueryMap options: Map<String, String>): Call<ProductByManufacturerResponse>
+
+    @GET("catalog/manufacturer/all")
+    fun getAllManufacturers(): Call<ManufacturerResponse>
 
 /*    @POST("setcurrency/{id}")
     fun setCurrency(@Path("id") id: Long): Call<LanguageResponse>

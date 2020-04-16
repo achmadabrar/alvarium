@@ -4,7 +4,7 @@
     android:id="@+id/slider"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    custom:aspectRatio="1.2">
+    custom:aspectRatio="1">
 
     <RelativeLayout
         android:layout_width="wrap_content"
