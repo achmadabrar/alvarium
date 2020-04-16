@@ -6,6 +6,7 @@ import com.bs.ecommerce.auth.register.data.GetRegistrationResponse
 import com.bs.ecommerce.auth.register.data.KeyValuePair
 import com.bs.ecommerce.cart.model.data.CartResponse
 import com.bs.ecommerce.home.homepage.model.data.HomePageProductResponse
+import com.bs.ecommerce.home.homepage.model.data.SliderResponse
 import com.bs.ecommerce.main.model.data.AppLandingSettingResponse
 import com.bs.ecommerce.main.model.data.CategoryTreeResponse
 import com.bs.ecommerce.product.data.*
@@ -61,7 +62,7 @@ interface Api {
     fun getHomeManufacturer(): Call<ManufacturerResponse>
 
     @GET("slider/homepageslider")
-    fun getHomeSlider(): Call<JsonObject>
+    fun getHomeSlider(): Call<SliderResponse>
 
     // Product Details
     @GET("product/productdetails/{id}/0")

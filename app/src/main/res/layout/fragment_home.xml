@@ -20,9 +20,21 @@
 
             <include
                 android:id="@+id/banner"
-                layout="@layout/slider"
+                layout="@layout/home_page_banner"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/banner_height"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                tools:visibility="visible" />
+
+            <include
+                android:id="@+id/bestSellingLayout"
+                layout="@layout/featured_list_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/banner"
+                android:layout_marginStart="@dimen/fragment_margin"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="@dimen/fragment_margin"
                 android:visibility="gone"
                 tools:visibility="visible" />
 
@@ -31,7 +43,7 @@
                 layout="@layout/featured_list_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/banner"
+                android:layout_below="@+id/bestSellingLayout"
                 android:layout_marginStart="@dimen/fragment_margin"
                 android:layout_marginTop="10dp"
                 android:layout_marginEnd="@dimen/fragment_margin"

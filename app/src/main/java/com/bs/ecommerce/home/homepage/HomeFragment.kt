@@ -3,6 +3,7 @@ package com.bs.ecommerce.home.homepage
 import android.os.Bundle
 import android.view.View
 import android.widget.RelativeLayout
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -13,20 +14,24 @@ import com.bs.ecommerce.home.FeaturedProductAdapter
 import com.bs.ecommerce.home.ManufacturerListAdapter
 import com.bs.ecommerce.home.homepage.model.HomePageModel
 import com.bs.ecommerce.home.homepage.model.HomePageModelImpl
+import com.bs.ecommerce.home.homepage.model.data.SliderData
 import com.bs.ecommerce.main.MainViewModel
+import com.bs.ecommerce.product.ProductDetailFragment
 import com.bs.ecommerce.product.data.CategoryModel
 import com.bs.ecommerce.product.data.Manufacturer
 import com.bs.ecommerce.product.data.ProductSummary
 import com.bs.ecommerce.utils.ItemClickListener
 import com.bs.ecommerce.utils.RecyclerViewMargin
 import com.bs.ecommerce.utils.toast
-import kotlinx.android.synthetic.main.fragment_home.*
 import kotlinx.android.synthetic.main.featured_list_layout.view.*
+import kotlinx.android.synthetic.main.fragment_home.*
+import kotlinx.android.synthetic.main.slider.view.*
 
 
 class HomeFragment : BaseFragment() {
 
     private lateinit var model: HomePageModel
+    private lateinit var productClickListener: ItemClickListener<ProductSummary>
 
     override fun getLayoutId(): Int = R.layout.fragment_home
 
@@ -47,41 +52,98 @@ class HomeFragment : BaseFragment() {
             getCategoryListWithProducts(model)
             getManufactures(model)
             getBannerImages(model)
+            getBestSellingProducts(model)
         }
 
-
+        initComponents()
         setLiveDataListeners()
 
+    }
+
+    private fun initComponents() {
+
+        productClickListener = object : ItemClickListener<ProductSummary> {
+            override fun onClick(view: View, position: Int, data: ProductSummary) {
+
+                if (data.id != null)
+                    requireActivity().supportFragmentManager.beginTransaction()
+                        .add(R.id.layoutFrame, ProductDetailFragment.newInstance(data.id.toLong()))
+                        .hide(this@HomeFragment)
+                        .addToBackStack(ProductDetailFragment::class.java.simpleName)
+                        .commit()
+            }
+        }
     }
 
     private fun setLiveDataListeners() {
         val viewModel = (viewModel as MainViewModel)
 
-        viewModel.featuredProductListLD.observe(requireActivity(),
+        viewModel.featuredProductListLD.observe(viewLifecycleOwner,
             Observer { list ->
                 populateFeaturedProductList(list)
             })
 
-        viewModel.manufacturerListLD.observe(requireActivity(), Observer { list ->
+        viewModel.manufacturerListLD.observe(viewLifecycleOwner, Observer { list ->
             populateManufacturerList(list)
         })
 
 
-        viewModel.featuredCategoryLD.observe(requireActivity(), Observer { list ->
+        viewModel.featuredCategoryLD.observe(viewLifecycleOwner, Observer { list ->
             populateFeaturedCategoryList(list)
         })
 
 
-        viewModel.toastMessageLD.observe(requireActivity(), Observer { msg ->
+        viewModel.bestSellingProductLD.observe(viewLifecycleOwner, Observer { list ->
+            populateBestSellingProductList(list)
+        })
+
+
+        viewModel.imageBannerLD.observe(viewLifecycleOwner, Observer { sliderData ->
+            populateBanner(sliderData)
+        })
+
+
+        viewModel.toastMessageLD.observe(viewLifecycleOwner, Observer { msg ->
             if (msg.isNotEmpty()) toast(msg)
         })
 
-        viewModel.isLoadingLD.observe(requireActivity(), Observer { isShowLoader ->
+        viewModel.isLoadingLD.observe(viewLifecycleOwner, Observer { isShowLoader ->
             if (isShowLoader)
                 showLoading()
             else
                 hideLoading()
         })
+    }
+
+    private fun populateBanner(sliderData: SliderData) {
+        banner
+        if(sliderData.isEnabled == false || sliderData.sliders.isNullOrEmpty()) {
+            banner.visibility = View.GONE
+            return
+        }
+
+        banner.visibility = View.VISIBLE
+        val detailsSliderAdapter = BannerSliderAdapter(sliderData.sliders)
+
+        banner.view_pager_slider.adapter = detailsSliderAdapter
+        banner.view_pager_slider.currentItem = 0
+
+        banner.circle_indicator.apply {
+            setViewPager(banner.view_pager_slider)
+            pageColor = ContextCompat.getColor(activity!!, R.color.white)
+            fillColor = ContextCompat.getColor(activity!!, R.color.darkOrGray)
+        }
+
+        // TODO Enable auto scrolling for the slider
+        /*var currentPage = 0
+
+        Timer("SettingUp", false).schedule(object: TimerTask() {
+            override fun run() {
+                banner.view_pager_slider.currentItem = currentPage % sliderData.sliders.size
+                currentPage++
+            }
+
+        }, 5000, 2000)*/
     }
 
     private fun populateFeaturedCategoryList(list: List<CategoryModel>) {
@@ -116,12 +178,8 @@ class HomeFragment : BaseFragment() {
                 )
 
                 adapter = FeaturedProductAdapter(
-                    featuredCategory.products,
-                    object : ItemClickListener<ProductSummary> {
-                        override fun onClick(view: View, position: Int, data: ProductSummary) {
-                            toast(data.name!!)
-                        }
-                    })
+                    featuredCategory.products, productClickListener
+                )
             }
 
             featuredCategoryContainerLayout.addView(linearLayout)
@@ -147,11 +205,30 @@ class HomeFragment : BaseFragment() {
             addItemDecoration(RecyclerViewMargin(15, 1, false))
             setHasFixedSize(true)
 
-            adapter = FeaturedProductAdapter(list, object : ItemClickListener<ProductSummary> {
-                override fun onClick(view: View, position: Int, data: ProductSummary) {
-                    toast(data.name!!)
-                }
-            })
+            adapter = FeaturedProductAdapter(list, productClickListener)
+        }
+    }
+
+    private fun populateBestSellingProductList(list: List<ProductSummary>) {
+        if (list.isNullOrEmpty()) {
+            bestSellingLayout.visibility = View.GONE
+            return
+        }
+
+        bestSellingLayout.visibility = View.VISIBLE
+        bestSellingLayout.tvTitle.text = getString(R.string.best_selling)
+        bestSellingLayout.btnSeeAll.setOnClickListener {
+            toast("Sell All")
+        }
+
+        bestSellingLayout.rvList.apply {
+            layoutManager =
+                LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+
+            addItemDecoration(RecyclerViewMargin(15, 1, false))
+            setHasFixedSize(true)
+
+            adapter = FeaturedProductAdapter(list, productClickListener)
         }
     }
 

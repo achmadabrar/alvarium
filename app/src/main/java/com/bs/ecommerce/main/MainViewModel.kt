@@ -5,6 +5,7 @@ import com.bs.ecommerce.base.BaseViewModel
 import com.bs.ecommerce.common.RequestCompleteListener
 import com.bs.ecommerce.home.homepage.model.HomePageModel
 import com.bs.ecommerce.home.homepage.model.data.HomePageProductResponse
+import com.bs.ecommerce.home.homepage.model.data.SliderData
 import com.bs.ecommerce.main.model.MainModel
 import com.bs.ecommerce.main.model.data.AppLandingData
 import com.bs.ecommerce.main.model.data.AppLandingSettingResponse
@@ -21,9 +22,11 @@ class MainViewModel : BaseViewModel() {
     var navDrawerCategoriesLD = MutableLiveData<List<Category>>()
     var allCategoriesFailureLD = MutableLiveData<List<String>>()
 
+    var bestSellingProductLD = MutableLiveData<List<ProductSummary>>()
     var featuredProductListLD = MutableLiveData<List<ProductSummary>>()
     var manufacturerListLD = MutableLiveData<List<Manufacturer>>()
     var featuredCategoryLD = MutableLiveData<List<CategoryModel>>()
+    var imageBannerLD = MutableLiveData<SliderData>()
 
     var appSettingsLD = MutableLiveData<AppLandingData>()
     var toastMessageLD = MutableLiveData<String>()
@@ -61,7 +64,17 @@ class MainViewModel : BaseViewModel() {
     }
 
     fun getBestSellingProducts(model: HomePageModel) {
-        // TODO implement
+        model.fetchBestSellingProducts(object : RequestCompleteListener<HomePageProductResponse> {
+            override fun onRequestSuccess(data: HomePageProductResponse) {
+                bestSellingProductLD.postValue(data.homePageProductList)
+            }
+
+            override fun onRequestFailed(errorMessage: String) {
+                bestSellingProductLD.postValue(listOf())
+                toastMessageLD.postValue(errorMessage)
+            }
+
+        })
     }
 
     fun getManufactures(model: HomePageModel) {
@@ -78,9 +91,9 @@ class MainViewModel : BaseViewModel() {
     }
 
     fun getBannerImages(model: HomePageModel) {
-        model.fetchBannerImages(object : RequestCompleteListener<JsonObject> {
-            override fun onRequestSuccess(data: JsonObject) {
-
+        model.fetchBannerImages(object : RequestCompleteListener<SliderData> {
+            override fun onRequestSuccess(data: SliderData) {
+                imageBannerLD.postValue(data)
             }
 
             override fun onRequestFailed(errorMessage: String) {

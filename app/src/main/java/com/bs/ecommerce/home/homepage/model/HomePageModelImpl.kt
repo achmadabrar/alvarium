@@ -4,6 +4,8 @@ import android.content.Context
 import com.bs.ecommerce.networking.RetroClient
 import com.bs.ecommerce.common.RequestCompleteListener
 import com.bs.ecommerce.home.homepage.model.data.HomePageProductResponse
+import com.bs.ecommerce.home.homepage.model.data.SliderData
+import com.bs.ecommerce.home.homepage.model.data.SliderResponse
 import com.bs.ecommerce.product.data.CategoryModel
 import com.bs.ecommerce.product.data.HomePageCategoryResponse
 import com.bs.ecommerce.product.data.Manufacturer
@@ -53,7 +55,7 @@ class HomePageModelImpl(private val context: Context) : HomePageModel {
 
 
                 override fun onFailure(call: Call<HomePageProductResponse>, t: Throwable) {
-                    callback.onRequestFailed(t.localizedMessage!!)
+                    callback.onRequestFailed(t.localizedMessage ?: "Something went wrong")
                 }
             })
     }
@@ -86,15 +88,15 @@ class HomePageModelImpl(private val context: Context) : HomePageModel {
         })
     }
 
-    override fun fetchBannerImages(callback: RequestCompleteListener<JsonObject>) {
+    override fun fetchBannerImages(callback: RequestCompleteListener<SliderData>) {
 
-        RetroClient.api.getHomeSlider().enqueue(object : Callback<JsonObject> {
-            override fun onFailure(call: Call<JsonObject>, t: Throwable) {
+        RetroClient.api.getHomeSlider().enqueue(object : Callback<SliderResponse> {
+            override fun onFailure(call: Call<SliderResponse>, t: Throwable) {
                 callback.onRequestFailed(t.localizedMessage ?: "Something went wrong")
             }
 
-            override fun onResponse(call: Call<JsonObject>, response: Response<JsonObject>) {
-                val v = response.body()
+            override fun onResponse(call: Call<SliderResponse>, response: Response<SliderResponse>) {
+                callback.onRequestSuccess(response.body()?.data ?: SliderData())
             }
 
         })

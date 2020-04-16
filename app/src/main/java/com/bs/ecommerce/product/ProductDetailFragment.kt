@@ -32,7 +32,6 @@ import kotlinx.android.synthetic.main.product_name_layout.view.tvProductName
 import kotlinx.android.synthetic.main.product_price_layout.view.*
 import kotlinx.android.synthetic.main.product_quantity.view.*
 import kotlinx.android.synthetic.main.slider.view.*
-import okhttp3.internal.proxy.NullProxySelector.select
 
 
 class ProductDetailFragment : BaseFragment(), View.OnClickListener {
@@ -64,7 +63,7 @@ class ProductDetailFragment : BaseFragment(), View.OnClickListener {
 
     private fun setLiveDataListeners() {
         (viewModel as ProductDetailViewModel).productLiveData.observe(
-            requireActivity(),
+            viewLifecycleOwner,
             Observer { product ->
                 productDetailsRootLayout.visibility = View.VISIBLE
 
@@ -93,7 +92,8 @@ class ProductDetailFragment : BaseFragment(), View.OnClickListener {
 
                 // short description
                 productNameLayout.tvProductName.text = product.name
-                productNameLayout.tvProductDescription.text = product.shortDescription
+                productNameLayout.tvProductDescription.text =
+                    TextUtils().getHtmlFormattedText(product.shortDescription)
 
                 productPriceLayout.tvOriginalPrice.text = product.productPrice?.oldPrice ?: "$0"
                 productPriceLayout.tvOriginalPrice.paintFlags =
@@ -120,7 +120,7 @@ class ProductDetailFragment : BaseFragment(), View.OnClickListener {
             })
 
         (viewModel as ProductDetailViewModel).isLoadingLD.observe(
-            requireActivity(),
+            viewLifecycleOwner,
             Observer { isShowLoader ->
 
                 if (isShowLoader)
@@ -130,26 +130,26 @@ class ProductDetailFragment : BaseFragment(), View.OnClickListener {
             })
 
         (viewModel as ProductDetailViewModel).quantityLiveData.observe(
-            requireActivity(),
+            viewLifecycleOwner,
             Observer { quantity ->
                 productQuantityLayout.tvQuantity.text = quantity.toString()
             })
 
         (viewModel as ProductDetailViewModel).toastMessageLD.observe(
-            requireActivity(),
+            viewLifecycleOwner,
             Observer { message ->
                 if(message.isNotEmpty())
                     Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
             })
 
         (viewModel as ProductDetailViewModel).productPriceLD.observe(
-            requireActivity(),
+            viewLifecycleOwner,
             Observer { price ->
                 productPriceLayout.tvDiscountPrice.text = "$%.2f".format(price)
             })
 
         (viewModel as ProductDetailViewModel).selectedAttrLD.observe(
-            requireActivity(),
+            viewLifecycleOwner,
             Observer { attrMap ->
                 Log.d("xyz", "Fired")
 
