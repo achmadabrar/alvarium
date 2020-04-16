@@ -80,7 +80,7 @@ class LoginFragment : BaseFragment()
     {
         if (loginUsernameEditText?.text?.isNotEmpty()!! && loginPasswordEditText?.text?.isNotEmpty()!!)
         {
-            (viewModel as LoginViewModel).postLoginInfo(
+            (viewModel as LoginViewModel).postLoginVM(
                 LoginPostData(LoginData(
                     email = loginUsernameEditText?.text.toString(),
                     password = loginPasswordEditText?.text?.toString().toString())), model)

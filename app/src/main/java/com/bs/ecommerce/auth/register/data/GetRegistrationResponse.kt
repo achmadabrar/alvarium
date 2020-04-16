@@ -1,12 +1,13 @@
 package com.bs.ecommerce.auth.register.data
+import com.bs.ecommerce.auth.login.data.BaseResponse
 import com.google.gson.annotations.SerializedName
 
 
 data class GetRegistrationResponse(
-    @SerializedName("Data") var data: GetRegisterData = GetRegisterData(),
-    @SerializedName("ErrorList") var errorList: List<Any> = listOf(),
-    @SerializedName("Message") var message: String = ""
-)
+    @SerializedName("Data") var data: GetRegisterData = GetRegisterData()
+    //@SerializedName("ErrorList") var errorList: List<Any> = listOf(),
+    //@SerializedName("Message") var message: String = ""
+) : BaseResponse()
 
 data class GetRegisterData(
     @SerializedName("AcceptPrivacyPolicyEnabled") var acceptPrivacyPolicyEnabled: Boolean = false,

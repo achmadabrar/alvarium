@@ -2,6 +2,7 @@ package com.bs.ecommerce.auth.register
 
 import android.app.DatePickerDialog
 import android.os.Bundle
+import android.util.Patterns
 import android.view.View
 import android.widget.EditText
 import android.widget.LinearLayout
@@ -11,11 +12,13 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.bs.ecommerce.R
 import com.bs.ecommerce.auth.AuthModelImpl
-import com.bs.ecommerce.auth.register.data.CustomerRegistrationInfo
+import com.bs.ecommerce.utils.hideKeyboard
+import com.bs.ecommerce.utils.toast
+
 import com.bs.ecommerce.auth.register.data.GetRegisterData
+import com.bs.ecommerce.auth.register.data.GetRegistrationResponse
 import com.bs.ecommerce.base.BaseFragment
 import com.bs.ecommerce.base.BaseViewModel
-import com.bs.ecommerce.customViews.CustomerAttributeViews
 import com.bs.ecommerce.main.model.AuthModel
 import com.bs.ecommerce.utils.*
 import kotlinx.android.synthetic.main.fragment_registration.*
@@ -30,11 +33,12 @@ class RegisterFragment : BaseFragment()
     override fun createViewModel(): BaseViewModel = RegistrationViewModel()
 
 
-    private var isValidInfo = false
+    private var isValidInfo = true
 
     internal var myCalendar: Calendar? = null
 
-    private var customerInfo: CustomerRegistrationInfo? = null
+
+    private var customerInfo: GetRegistrationResponse  = GetRegistrationResponse()
 
     internal var dateSetListener: DatePickerDialog.OnDateSetListener = DatePickerDialog.OnDateSetListener {
 
@@ -66,7 +70,7 @@ class RegisterFragment : BaseFragment()
 
         viewModel  = ViewModelProvider(this).get(RegistrationViewModel::class.java)
 
-        (viewModel as RegistrationViewModel).getRegistrationData(model)
+        (viewModel as RegistrationViewModel).getRegistrationVM(model)
 
 
         setLiveDataListeners()
@@ -79,35 +83,11 @@ class RegisterFragment : BaseFragment()
         (viewModel as RegistrationViewModel).getRegistrationResponseLD.observe(requireActivity(), Observer { getRegistrationResponse ->
 
 
-
-            setViewsInitially(getRegistrationResponse.data)
-
-            /* if (getRegistrationResponse?.statusCode == 400)
-            {
-                saveBtn.isEnabled = true
-
-                var errors = getString(R.string.error_register_customer) + "\n"
-
-                if (response.errorList.isNotEmpty())
-                {
-                    for (i in 0 until response.errorList.size)
-                    {
-                        errors += "  " + (i + 1) + ": " + response.errorList[i] + " \n"
-                    }
-                    Toast.makeText(activity, errors, Toast.LENGTH_LONG).show()
-                }
-            }
+            if(getRegistrationResponse.errorList.isNotEmpty())
+                toast(getRegistrationResponse?.errorsAsFormattedString.toString())
             else
-            {
-                Toast.makeText(activity, response?.successMessage!!, Toast.LENGTH_LONG).show()
+                setViewsInitially(getRegistrationResponse.data)
 
-                callLoginWebservice(LoginData(customerInfo?.email.toString(), customerInfo?.password.toString()))
-            }*/
-
-
-            //TODO set customer attributes
-/*            dynamicAttributeLayoutParent.visibility = View.VISIBLE
-            customerAttributeViews = CustomerAttributeViews(activity!!, response.data, dynamicAttributeLayout_customer_info!!, this)*/
         })
 
         (viewModel as RegistrationViewModel).isLoadingLD.observe(requireActivity(), Observer { isShowLoader ->
@@ -120,7 +100,7 @@ class RegisterFragment : BaseFragment()
 
     }
 
-    private fun showOrHide(isEnabledParam: Boolean, editText: EditText?)
+    private fun showOrHide(isEnabledParam: Boolean = false, editText: EditText?)
     {
         if (isEnabledParam)
             editText?.visibility = View.VISIBLE
@@ -142,21 +122,32 @@ class RegisterFragment : BaseFragment()
         with(data)
         {
 
-            showOrHide(dateOfBirthEnabled, dateOfBirthTextView)
+            showOrHide(dateOfBirthEnabled, dateOfBirthTextView as EditText)
 
-            showOrHide(genderEnabled, genderLayout)
+            showOrHide(genderEnabled,  genderLayout)
 
-            showOrHide(usernamesEnabled, usernameEditText)
-            showOrHide(companyEnabled, companyInfoEditText)
+            showOrHide(usernamesEnabled,  usernameEditText)
+
+            showOrHide(companyEnabled,  companyInfoEditText)
+
             showOrHide(streetAddressEnabled, streetAddressEditText)
+
             showOrHide(streetAddress2Enabled, streetAddress2EditText)
+
             showOrHide(zipPostalCodeEnabled, zipOrPostalCodeEditText)
-            showOrHide(cityEnabled, cityEditText)
-            showOrHide(countryEnabled, countryEditText)
-            showOrHide(stateProvinceEnabled, stateProvinceEditText)
-            showOrHide(phoneEnabled, phoneEditText)
-            showOrHide(faxEnabled, faxEditText)
+
+            showOrHide(cityEnabled,  cityEditText)
+
+            showOrHide(countryEnabled,  countryEditText)
+
+            showOrHide(stateProvinceEnabled,  stateProvinceEditText)
+
+            showOrHide(phoneEnabled,  phoneEditText)
+
+            showOrHide(faxEnabled,  faxEditText)
+
             showOrHide(newsletterEnabled, newsletterLayout)
+
             showOrHide(acceptPrivacyPolicyEnabled, privacyPolicyLayout)
 
         }
@@ -166,8 +157,8 @@ class RegisterFragment : BaseFragment()
     private fun hideTextPanels()
     {
         saveBtn?.text = getString(R.string.register_new)
-        saveBtn.isEnabled = false
-        saveBtn?.setBackgroundColor(ContextCompat.getColor(activity!!, R.color.browser_actions_bg_grey))
+/*        saveBtn.isEnabled = false
+        saveBtn?.setBackgroundColor(ContextCompat.getColor(activity!!, R.color.browser_actions_bg_grey))*/
     }
 
 
@@ -187,9 +178,9 @@ class RegisterFragment : BaseFragment()
         }
 
         saveBtn?.setOnClickListener {
+
+            requireActivity().hideKeyboard()
             performRegistration()
-            //saveBtn?.isEnabled = false
-            activity?.hideKeyboard()
         }
 
 
@@ -197,65 +188,112 @@ class RegisterFragment : BaseFragment()
 
     private fun performRegistration()
     {
-        performValidation()
+        getCustomerInfoWithValidation()
 
-        /*if (isValidInfo)
-            callRegisterWebService(getCustomerInfo())
-        else
-            toast(R.string.fill_required_fields)*/
-
+        if(isValidInfo)
+            (viewModel as RegistrationViewModel).postRegisterVM(customerInfo, model)
     }
 
-    private fun performValidation()
+    fun CharSequence?.isEmailValid() = !isNullOrEmpty() && Patterns.EMAIL_ADDRESS.matcher(this!!).matches()
+
+    private fun showValidation( editText: EditText, isRequired: Boolean)
     {
-        getCustomerInfo()
-
-        customerInfo?.let {
-
-            if (it.firstName!!.isNotEmpty() &&
-                it.lastName!!.isNotEmpty() &&
-                it.email!!.isNotEmpty() &&
-                it.password!!.isNotEmpty() &&
-                it.confirmPassword!!.isNotEmpty())
-                isValidInfo = true
-
-        }
-    }
-
-    private fun getCustomerInfo() : CustomerRegistrationInfo
-    {
-        customerInfo = CustomerRegistrationInfo()
-        customerInfo?.firstName = customerFirstNameEditText?.text?.trim().toString()
-        customerInfo?.lastName = customerLastNameEditText?.text?.trim().toString()
-        customerInfo?.email = emailEditText?.text?.trim().toString()
-        customerInfo?.phone = phoneEditText?.text?.trim().toString()
-        customerInfo?.company = companyInfoEditText?.text.toString()
-
-        if (myCalendar != null)
+        if(isRequired)
         {
-            customerInfo?.dateOfBirthYear = myCalendar!!.get(Calendar.YEAR)
-            customerInfo?.dateOfBirthMonth = myCalendar!!.get(Calendar.MONTH) + 1
-            customerInfo?.dateOfBirthDay = myCalendar!!.get(Calendar.DAY_OF_MONTH)
+            isValidInfo = false
+            toast("${editText.hint} is required" )
         }
-        if (genderMaleRadioButton.isChecked)
-            customerInfo?.gender = "M"
-        else if (genderFemaleRadioButton.isChecked)
-            customerInfo?.gender = "F"
+        else
+            isValidInfo = true
 
-        customerInfo?.isNewsletter = cbNewsletter?.isChecked!!
-        customerInfo?.password = enterPasswordEditText?.text?.toString()
-        customerInfo?.confirmPassword = confirmPasswordEditText?.text?.toString()
+    }
 
-        customerInfo?.username = usernameEditText?.text?.toString()
+    
+    private fun getCustomerInfoWithValidation()
+    {
 
+        with(customerInfo.data)
+        {
+
+            confirmPasswordEditText?.let {
+                val input = it.text?.trim().toString(); if(input.isNotEmpty()) confirmPassword = input else { showValidation(it, true) }
+            }
+
+            enterPasswordEditText?.let {
+                val input = it.text?.trim().toString(); if(input.isNotEmpty()) password = input else { showValidation(it, true) }
+            }
+
+            companyInfoEditText?.let {
+                val input = it.text?.trim().toString(); if(input.isNotEmpty()) company = input else { showValidation(it, companyRequired)}
+            }
+
+            usernameEditText?.let {
+                val input = it.text?.trim().toString(); if(input.isNotEmpty()) username = input else { showValidation(it, false)}
+            }
+
+            streetAddressEditText?.let {
+                val input = it.text?.trim().toString(); if(input.isNotEmpty()) streetAddress = input else { showValidation(it, streetAddressRequired) }
+            }
+
+            streetAddress2EditText?.let {
+                val input = it.text?.trim().toString(); if(input.isNotEmpty()) streetAddress2 = input else { showValidation(it, streetAddress2Required) }
+            }
+
+            zipOrPostalCodeEditText?.let {
+                val input = it.text?.trim().toString(); if(input.isNotEmpty()) zipPostalCode = input else { showValidation(it, zipPostalCodeRequired)}
+            }
+
+            cityEditText?.let {
+                val input = it.text?.trim().toString(); if(input.isNotEmpty()) city = input else { showValidation(it, cityRequired) }
+            }
+
+            countryEditText?.let {
+                val input = it.text?.trim().toString(); if(input.isNotEmpty()) county = input else { showValidation(it, countryRequired)}
+            }
+
+            stateProvinceEditText?.let {
+                val input = it.text?.trim().toString(); if(input.isNotEmpty()) stateProvinceId = input.toInt() else { showValidation(it, stateProvinceRequired)}
+            }
+
+
+            phoneEditText?.let {
+                val input = it.text?.trim().toString(); if(input.isNotEmpty()) phone = input else { showValidation(it, phoneRequired)}
+            }
+
+            emailEditText?.let {
+                val input = it.text?.trim().toString(); if(input.isNotEmpty()  && input.isEmailValid()) email = input else {showValidation(it, true)}
+            }
+
+
+            if (myCalendar != null)
+            {
+                dateOfBirthYear = myCalendar!!.get(Calendar.YEAR).toString()
+                dateOfBirthMonth = myCalendar!!.get(Calendar.MONTH).toString() + 1
+                dateOfBirthDay = myCalendar!!.get(Calendar.DAY_OF_MONTH).toString()
+            }
+            if (genderMaleRadioButton.isChecked)
+                gender = "M"
+            else if (genderFemaleRadioButton.isChecked)
+                gender = "F"
+
+            customerLastNameEditText?.let {
+                val input = it.text?.trim().toString(); if(input.isNotEmpty()) lastName = input else { showValidation(it, true) }
+            }
+
+            customerFirstNameEditText?.let {
+
+                val input = it.text?.trim().toString(); if(input.isNotEmpty()) firstName = input else { showValidation(it, true) }
+            }
+
+            
+            newsletter = cbNewsletter?.isChecked!!
+
+        }
 
         //customerAttributeViews?.putEdittextValueInMap()
 
         //customerInfo?.formValue = customerAttributeViews?.productAttribute
         //"attributestTest".showLog(customerAttributeViews?.productAttribute.toString())
-
-
-        return customerInfo as CustomerRegistrationInfo
     }
 
 

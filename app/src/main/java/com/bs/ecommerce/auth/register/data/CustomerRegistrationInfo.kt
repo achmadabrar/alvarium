@@ -31,6 +31,15 @@ open class CustomerInfo : BaseResponse() {
     @SerializedName("UsernamesEnabled") var UsernamesEnabled: Boolean = false
     @SerializedName("Phone") var phone: String? = null
 
+    @SerializedName("StreetAddress") var streetAddress: String = ""
+    @SerializedName("StreetAddress2") var streetAddress2: String = ""
+    @SerializedName("ZipPostalCode") var zipPostalCode: String = ""
+
+    @SerializedName("City") var city: String = ""
+    @SerializedName("CountryId") var countryId: Int = 0
+    @SerializedName("County") var county: String = ""
+    @SerializedName("StateProvinceId") var stateProvinceId: Int = 0
+
     @SerializedName("CompanyEnabled") var companyEnabled: Boolean = false
 
     @SerializedName("GenderEnabled") var genderEnabled: Boolean = false

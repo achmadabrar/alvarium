@@ -153,8 +153,8 @@ class HomeFragment : BaseFragment() {
             return
         }
 
-        featuredCategoryContainerLayout.visibility = View.VISIBLE
-        featuredCategoryContainerLayout.removeAllViews()
+        featuredCategoryContainerLayout?.visibility = View.VISIBLE
+        featuredCategoryContainerLayout?.removeAllViews()
 
 
         for (featuredCategory in list) {
@@ -203,13 +203,13 @@ class HomeFragment : BaseFragment() {
 
     private fun populateFeaturedProductList(list: List<ProductSummary>) {
         if (list.isNullOrEmpty()) {
-            featuredProductLayout.visibility = View.GONE
+            featuredProductLayout?.visibility = View.GONE
             return
         }
 
-        featuredProductLayout.visibility = View.VISIBLE
-        featuredProductLayout.tvTitle.text = getString(R.string.featured_products)
-        featuredProductLayout.btnSeeAll.setOnClickListener {
+        featuredProductLayout?.visibility = View.VISIBLE
+        featuredProductLayout?.tvTitle?.text = getString(R.string.featured_products)
+        featuredProductLayout?.btnSeeAll?.setOnClickListener {
             toast("Sell All")
         }
 
@@ -249,14 +249,14 @@ class HomeFragment : BaseFragment() {
 
     private fun populateManufacturerList(list: List<Manufacturer>) {
         if (list.isNullOrEmpty()) {
-            featuredManufacturerLayout.visibility = View.GONE
+            featuredManufacturerLayout?.visibility = View.GONE
             return
         }
 
-        featuredManufacturerLayout.visibility = View.VISIBLE
-        featuredManufacturerLayout.divider.visibility = View.INVISIBLE
-        featuredManufacturerLayout.tvTitle.text = getString(R.string.featured_manufacturer)
-        featuredManufacturerLayout.btnSeeAll.setOnClickListener {
+        featuredManufacturerLayout?.visibility = View.VISIBLE
+        featuredManufacturerLayout?.divider?.visibility = View.INVISIBLE
+        featuredManufacturerLayout?.tvTitle?.text = getString(R.string.featured_manufacturer)
+        featuredManufacturerLayout?.btnSeeAll?.setOnClickListener {
             toast("Sell All")
         }
 
