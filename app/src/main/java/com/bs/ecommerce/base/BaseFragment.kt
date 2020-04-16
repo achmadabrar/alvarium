@@ -70,8 +70,8 @@ abstract class BaseFragment : Fragment()
     protected fun showLoading()
     {
 
-        if(progressWheel != null)
-            getRootLayout()?.removeAllViews()
+/*        if(progressWheel != null)
+            getRootLayout()?.removeAllViews()*/
 
         val params = RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT)
         params.addRule(RelativeLayout.CENTER_IN_PARENT, RelativeLayout.TRUE)

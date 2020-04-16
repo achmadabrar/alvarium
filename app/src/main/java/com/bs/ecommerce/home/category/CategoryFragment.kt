@@ -50,7 +50,6 @@ class CategoryFragment : BaseFragment()
 
         mainViewModel.navDrawerCategoriesLD.observe(activity!!, Observer { categoryList ->
 
-            toast(categoryList[0].name)
             showList(categoryList)
         })
 
@@ -67,8 +66,8 @@ class CategoryFragment : BaseFragment()
 
     private fun showList(categoryList: List<Category>)
     {
-        expandList.layoutManager = LinearLayoutManager(activity)
-        expandList.adapter = CategoryListAdapter(activity!!, categoryList, this)
+        expandList?.layoutManager = LinearLayoutManager(activity)
+        expandList?.adapter = CategoryListAdapter(activity!!, categoryList, this)
     }
 
 

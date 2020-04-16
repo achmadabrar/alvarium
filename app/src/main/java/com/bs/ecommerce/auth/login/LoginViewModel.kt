@@ -14,12 +14,12 @@ class LoginViewModel  : BaseViewModel()
     var loginResponseLD = MutableLiveData<LoginResponse>()
 
 
-    fun postLoginInfo(loginPostData : LoginPostData, model: AuthModel)
+    fun postLoginVM(loginPostData : LoginPostData, model: AuthModel)
     {
 
         isLoadingLD.postValue(true)
 
-        model.postLoginInfo(loginPostData, object : RequestCompleteListener<LoginResponse>
+        model.postLoginModel(loginPostData, object : RequestCompleteListener<LoginResponse>
         {
             override fun onRequestSuccess(data: LoginResponse)
             {

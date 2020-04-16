@@ -2,6 +2,7 @@ package com.bs.ecommerce.networking
 
 import com.bs.ecommerce.auth.login.data.LoginPostData
 import com.bs.ecommerce.auth.login.data.LoginResponse
+import com.bs.ecommerce.auth.register.data.GetRegisterData
 import com.bs.ecommerce.auth.register.data.GetRegistrationResponse
 import com.bs.ecommerce.auth.register.data.KeyValuePair
 import com.bs.ecommerce.cart.model.data.CartResponse
@@ -25,7 +26,10 @@ interface Api {
 
 
     @GET("customer/register")
-    fun getRegisterData(): Call<GetRegistrationResponse>
+    fun getRegisterAPI(): Call<GetRegistrationResponse>
+
+    @POST("customer/register")
+    fun postRegisterAPI(@Body registerPostData: GetRegistrationResponse): Call<GetRegistrationResponse>
 
     @GET("shoppingcart/cart")
     fun getCartData(): Call<CartResponse>
@@ -34,7 +38,7 @@ interface Api {
     fun updateCartData(@Body list: List<KeyValuePair>): Call<CartResponse>
 
 
-    @POST("customer/login") fun performLogin(@Body loginPostData: LoginPostData): Call<LoginResponse>
+    @POST("customer/login") fun postLoginAPI(@Body loginPostData: LoginPostData): Call<LoginResponse>
 
 /*    @GET("productdetails/{id}")
     fun getProductDetails(@Path("id") id: Long): Call<ProductDetailResponse>*/
