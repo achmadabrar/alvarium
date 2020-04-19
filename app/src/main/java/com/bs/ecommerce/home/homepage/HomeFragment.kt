@@ -1,7 +1,9 @@
 package com.bs.ecommerce.home.homepage
 
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import android.widget.RelativeLayout
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
@@ -21,9 +23,7 @@ import com.bs.ecommerce.product.data.CategoryModel
 import com.bs.ecommerce.product.data.Manufacturer
 import com.bs.ecommerce.product.data.ProductSummary
 import com.bs.ecommerce.product.ui.ProductListFragment
-import com.bs.ecommerce.utils.ItemClickListener
-import com.bs.ecommerce.utils.RecyclerViewMargin
-import com.bs.ecommerce.utils.toast
+import com.bs.ecommerce.utils.*
 import kotlinx.android.synthetic.main.featured_list_layout.view.*
 import kotlinx.android.synthetic.main.fragment_home.*
 import kotlinx.android.synthetic.main.slider.view.*
@@ -33,6 +33,8 @@ class HomeFragment : BaseFragment() {
 
     private lateinit var model: HomePageModel
     private lateinit var productClickListener: ItemClickListener<ProductSummary>
+    private var viewCreated = false
+    private var rootView: View? = null
 
     override fun getLayoutId(): Int = R.layout.fragment_home
 
@@ -40,23 +42,42 @@ class HomeFragment : BaseFragment() {
 
     override fun createViewModel(): BaseViewModel = MainViewModel()
 
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+
+        if (rootView == null) {
+            rootView = container?.inflate(R.layout.fragment_home)
+        } else {
+            val parent = rootView?.parent as ViewGroup?
+            parent?.removeView(rootView)
+        }
+        return rootView
+    }
+
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        model = HomePageModelImpl(activity?.applicationContext!!)
+        if (!viewCreated) {
+            model = HomePageModelImpl(requireContext())
 
-        viewModel = ViewModelProvider(requireActivity()).get(MainViewModel::class.java)
+            viewModel = ViewModelProvider(requireActivity()).get(MainViewModel::class.java)
 
-        (viewModel as MainViewModel).apply {
-            getFeaturedProducts(model)
-            getCategoryListWithProducts(model)
-            getManufactures(model)
-            getBannerImages(model)
-            getBestSellingProducts(model)
+            (viewModel as MainViewModel).apply {
+                getFeaturedProducts(model)
+                getCategoryListWithProducts(model)
+                getManufactures(model)
+                getBannerImages(model)
+                getBestSellingProducts(model)
+            }
+
+            initComponents()
+            viewCreated = true
         }
 
-        initComponents()
         setLiveDataListeners()
 
     }
@@ -67,11 +88,7 @@ class HomeFragment : BaseFragment() {
             override fun onClick(view: View, position: Int, data: ProductSummary) {
 
                 if (data.id != null)
-                    requireActivity().supportFragmentManager.beginTransaction()
-                        .add(R.id.layoutFrame, ProductDetailFragment.newInstance(data.id.toLong()))
-                        .hide(this@HomeFragment)
-                        .addToBackStack(ProductDetailFragment::class.java.simpleName)
-                        .commit()
+                    replaceFragmentSafely(ProductDetailFragment.newInstance(data.id.toLong()))
             }
         }
     }
@@ -118,7 +135,7 @@ class HomeFragment : BaseFragment() {
 
     private fun populateBanner(sliderData: SliderData) {
         banner
-        if(sliderData.isEnabled == false || sliderData.sliders.isNullOrEmpty()) {
+        if (sliderData.isEnabled == false || sliderData.sliders.isNullOrEmpty()) {
             banner.visibility = View.GONE
             return
         }
@@ -171,18 +188,13 @@ class HomeFragment : BaseFragment() {
 
                 if (featuredCategory.id == null) return@setOnClickListener
 
-                requireActivity().supportFragmentManager.beginTransaction()
-                    .add(
-                        R.id.layoutFrame,
-                        ProductListFragment.newInstance(
-                            featuredCategory.name ?: "",
-                            featuredCategory.id,
-                            ProductListFragment.GetBy.CATEGORY
-                        )
+                replaceFragmentSafely(
+                    ProductListFragment.newInstance(
+                        featuredCategory.name ?: "",
+                        featuredCategory.id,
+                        ProductListFragment.GetBy.CATEGORY
                     )
-                    .hide(this@HomeFragment)
-                    .addToBackStack(ProductDetailFragment::class.java.simpleName)
-                    .commit()
+                )
             }
 
             linearLayout.rvList.apply {
@@ -273,18 +285,13 @@ class HomeFragment : BaseFragment() {
                 override fun onClick(view: View, position: Int, data: Manufacturer) {
                     if (data.id == null) return
 
-                    requireActivity().supportFragmentManager.beginTransaction()
-                        .add(
-                            R.id.layoutFrame,
-                            ProductListFragment.newInstance(
-                                data.name ?: "",
-                                data.id,
-                                ProductListFragment.GetBy.MANUFACTURER
-                            )
+                    replaceFragmentSafely(
+                        ProductListFragment.newInstance(
+                            data.name ?: "",
+                            data.id,
+                            ProductListFragment.GetBy.MANUFACTURER
                         )
-                        .hide(this@HomeFragment)
-                        .addToBackStack(ProductDetailFragment::class.java.simpleName)
-                        .commit()
+                    )
                 }
             })
         }

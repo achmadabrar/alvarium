@@ -105,6 +105,10 @@
     <string name="select">Select</string>
     <string name="featured_manufacturer">Featured Manufacturers</string>
 
+    <string name="email_address">Email Address</string>
+    <string name="send">Send</string>
+    <string name="back_button_click_msg">Press again to exit</string>
+
     <string-array name="spinner_dummy_data">
         <item>Dummy Spinner Item</item>
         <item>Item 2</item>

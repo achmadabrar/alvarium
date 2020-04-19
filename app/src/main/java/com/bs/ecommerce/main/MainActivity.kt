@@ -1,6 +1,7 @@
 package com.bs.ecommerce.main
 
 import android.os.Bundle
+import android.os.Handler
 import android.view.View
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.core.view.GravityCompat
@@ -16,6 +17,7 @@ import com.bs.ecommerce.home.homepage.HomeFragment
 import com.bs.ecommerce.cart.CartFragment
 import com.bs.ecommerce.product.ProductDetailFragment
 import com.bs.ecommerce.utils.showLog
+import com.bs.ecommerce.utils.toast
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import kotlinx.android.synthetic.main.activity_main.*
 
@@ -24,6 +26,10 @@ class MainActivity : BaseActivity()
 
     private lateinit var mainModel: MainModel
     private lateinit var mainViewModel: MainViewModel
+
+    private var mBackPressed: Long = 0
+    private val TIME_INTERVAL: Long = 2000
+    private var doubleBackToExitPressedOnce = false
 
     override fun getLayoutId(): Int = R.layout.activity_main
 
@@ -92,15 +98,38 @@ class MainActivity : BaseActivity()
 
     }
 
-    override fun onBackPressed()
-    {
-        when
-        {
-            drawerLayout.isDrawerOpen(GravityCompat.START) -> drawerLayout.closeDrawer(
-                GravityCompat.START)
+    override fun onBackPressed() {
 
-            else -> super.onBackPressed()
+        when {
+            drawerLayout.isDrawerOpen(GravityCompat.START) ->
+                drawerLayout.closeDrawer(GravityCompat.START)
+
+            supportFragmentManager.backStackEntryCount > 0 ->
+                super.onBackPressed()
+
+            else -> handleAppExit()
         }
+    }
+
+    private fun handleAppExit() {
+        if (mBackPressed + TIME_INTERVAL > System.currentTimeMillis()) {
+            super.onBackPressed()
+            return
+        } else {
+            toast(R.string.back_button_click_msg)
+        }
+
+
+        mBackPressed = System.currentTimeMillis()
+
+        if (doubleBackToExitPressedOnce) {
+            super.onBackPressed()
+            return
+        }
+
+        this.doubleBackToExitPressedOnce = true
+
+        Handler().postDelayed({ doubleBackToExitPressedOnce = false }, 2000)
     }
 
     private fun setBottomNavigation()

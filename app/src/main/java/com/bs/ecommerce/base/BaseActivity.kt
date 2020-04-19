@@ -86,7 +86,7 @@ abstract class BaseActivity : AppCompatActivity()
 
             //closeLeftDrawer()
 
-            if (supportFragmentManager.findFragmentById(R.id.container) !is CartFragment)
+            if (supportFragmentManager.findFragmentById(R.id.layoutFrame) !is CartFragment)
                 goMenuItemFragment(CartFragment())
         }
         updateHotCount(MyApplication.myCartCounter)

@@ -9,23 +9,20 @@ import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.bs.ecommerce.R
+import com.bs.ecommerce.auth.AuthModelImpl
+import com.bs.ecommerce.auth.forgotpass.ForgotPasswordFragment
 import com.bs.ecommerce.auth.login.data.FacebookLogin
 import com.bs.ecommerce.auth.login.data.LoginData
-import com.bs.ecommerce.auth.register.RegisterFragment
 import com.bs.ecommerce.auth.login.data.LoginPostData
+import com.bs.ecommerce.auth.register.RegisterFragment
 import com.bs.ecommerce.base.BaseFragment
 import com.bs.ecommerce.base.BaseViewModel
 import com.bs.ecommerce.main.model.AuthModel
-import com.bs.ecommerce.auth.AuthModelImpl
 import com.bs.ecommerce.networking.NetworkUtil
-import com.bs.ecommerce.utils.PrefSingleton
-import com.bs.ecommerce.utils.hideKeyboard
-import com.bs.ecommerce.utils.showLog
-import com.bs.ecommerce.utils.toast
+import com.bs.ecommerce.utils.*
 import com.facebook.*
 import com.facebook.login.LoginManager
 import com.facebook.login.LoginResult
-import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.fragment_login.*
 import org.json.JSONException
 
@@ -51,7 +48,7 @@ class LoginFragment : BaseFragment()
 
         viewModel  = ViewModelProvider(this).get(LoginViewModel::class.java)
 
-        initView()
+        //initView()
 
         initFacebookSdk()
 
@@ -73,6 +70,10 @@ class LoginFragment : BaseFragment()
                 )
                 .addToBackStack(RegisterFragment::class.java.simpleName)
                 .commit()
+        }
+
+        tvForgotPassword?.setOnClickListener {
+            replaceFragmentSafely(ForgotPasswordFragment())
         }
     }
 
@@ -189,7 +190,7 @@ class LoginFragment : BaseFragment()
 
     }
 
-    private fun initView() {
+    /*private fun initView() {
 
         Picasso.with(activity)
             .load(R.drawable.app_splash_background)
@@ -197,6 +198,6 @@ class LoginFragment : BaseFragment()
             .into(backgroundImageView)
 
 
-    }
+    }*/
 
 }

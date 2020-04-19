@@ -3,7 +3,9 @@ package com.bs.ecommerce.product.ui
 import android.graphics.Rect
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import android.view.ViewTreeObserver
 import android.widget.ListPopupWindow
 import android.widget.RelativeLayout
@@ -19,6 +21,7 @@ import com.bs.ecommerce.product.*
 import com.bs.ecommerce.product.data.ProductSummary
 import com.bs.ecommerce.product.data.SubCategory
 import com.bs.ecommerce.utils.ItemClickListener
+import com.bs.ecommerce.utils.inflate
 import kotlinx.android.synthetic.main.fragment_product_list.*
 import kotlin.math.floor
 
@@ -32,50 +35,74 @@ class ProductListFragment : BaseFragment() {
     private lateinit var subcategoryPopupWindow: ListPopupWindow
     private lateinit var productClickListener: ItemClickListener<ProductSummary>
 
+    private var viewCreated = false
+    private var rootView: View? = null
+
     override fun getLayoutId(): Int = R.layout.fragment_product_list
 
     override fun getRootLayout(): RelativeLayout = productListRootLayout
 
     override fun createViewModel(): BaseViewModel = ProductListViewModel()
 
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+
+        if (rootView == null)
+            rootView = container?.inflate(R.layout.fragment_product_list)
+
+        return rootView
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val bundle = this.arguments
-        if (bundle != null) {
-            categoryId = bundle.getInt(CATEGORY_ID, categoryId)
-            categoryName = bundle.getString(CATEGORY_NAME, "")
-            getBy = bundle.getString(GET_PRODUCT_BY, "")
+        if(!viewCreated) {
+
+            val bundle = this.arguments
+            if (bundle != null) {
+                categoryId = bundle.getInt(CATEGORY_ID, categoryId)
+                categoryName = bundle.getString(CATEGORY_NAME, "")
+                getBy = bundle.getString(GET_PRODUCT_BY, "")
+            }
+
+            calculateAutomaticGridColumn()
+
+            model = ProductListModelImpl()
+            viewModel = ViewModelProvider(this).get(ProductListViewModel::class.java)
+
+            if (getBy == GetBy.CATEGORY.name)
+                (viewModel as ProductListViewModel).getProductByCategory(categoryId.toLong(), model)
+            if (getBy == GetBy.MANUFACTURER.name)
+                (viewModel as ProductListViewModel).getProductByManufacturer(
+                    categoryId.toLong(),
+                    model
+                )
+
+
+            productClickListener = object : ItemClickListener<ProductSummary> {
+                override fun onClick(view: View, position: Int, data: ProductSummary) {
+
+                    if (data.id == null) return
+
+                    requireActivity().supportFragmentManager.beginTransaction()
+                        .replace(
+                            R.id.layoutFrame,
+                            ProductDetailFragment.newInstance(data.id.toLong())
+                        )
+                        .addToBackStack(
+                            ProductDetailFragment::class.java.simpleName
+                        ).commit()
+                }
+            }
+
+            viewCreated = true
         }
-
-        calculateAutomaticGridColumn()
-
-        model = ProductListModelImpl()
-        viewModel = ViewModelProvider(this).get(ProductListViewModel::class.java)
-
-        if(getBy == GetBy.CATEGORY.name)
-            (viewModel as ProductListViewModel).getProductByCategory(categoryId.toLong(), model)
-        if(getBy == GetBy.MANUFACTURER.name)
-            (viewModel as ProductListViewModel).getProductByManufacturer(categoryId.toLong(), model)
 
         setLiveDataListeners()
 
-        productClickListener = object : ItemClickListener<ProductSummary>{
-            override fun onClick(view: View, position: Int, data: ProductSummary) {
-
-                if(data.id == null) return
-
-                requireActivity().supportFragmentManager.beginTransaction()
-                    .add(
-                        R.id.layoutFrame,
-                        ProductDetailFragment.newInstance(data.id.toLong())
-                    )
-                    .hide(this@ProductListFragment)
-                    .addToBackStack(
-                        ProductDetailFragment::class.java.simpleName
-                    ).commit()
-            }
-        }
     }
 
     private fun setLiveDataListeners() {
@@ -141,7 +168,7 @@ class ProductListFragment : BaseFragment() {
             subcategoryPopupWindow.dismiss()
 
             requireActivity().supportFragmentManager.beginTransaction()
-                .add(
+                .replace(
                     R.id.layoutFrame,
                     newInstance(
                         subCatList[position].name!!,
@@ -149,7 +176,6 @@ class ProductListFragment : BaseFragment() {
                         GetBy.CATEGORY
                     )
                 )
-                .hide(this)
                 .addToBackStack(null)
                 .commit()
         }
