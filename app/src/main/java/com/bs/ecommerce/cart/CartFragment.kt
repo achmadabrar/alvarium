@@ -40,6 +40,8 @@ class CartFragment : BaseFragment() {
     {
         super.onViewCreated(view, savedInstanceState)
 
+        activity?.title = getString(R.string.title_shopping_cart)
+
         model = CartModelImpl(activity?.applicationContext!!)
 
         viewModel  = ViewModelProvider(this).get(CartViewModel::class.java)

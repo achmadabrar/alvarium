@@ -44,12 +44,13 @@ class LoginFragment : BaseFragment()
     {
         super.onViewCreated(view, savedInstanceState)
 
+        activity?.title = getString(R.string.title_login)
+
         model = AuthModelImpl()
 
         viewModel  = ViewModelProvider(this).get(LoginViewModel::class.java)
 
         //initView()
-
         initFacebookSdk()
 
         setButtonClickListeners()

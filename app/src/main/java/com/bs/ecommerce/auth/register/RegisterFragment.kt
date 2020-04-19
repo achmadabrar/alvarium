@@ -61,7 +61,7 @@ class RegisterFragment : BaseFragment()
     {
         super.onViewCreated(view, savedInstanceState)
 
-        activity?.title = getString(R.string.register)
+        activity?.title = getString(R.string.title_register)
 
         hideTextPanels()
         initEditButtonsAction()

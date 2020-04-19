@@ -35,6 +35,8 @@ class CategoryFragment : BaseFragment()
     {
         super.onViewCreated(view, savedInstanceState)
 
+        activity?.title = getString(R.string.title_category)
+
         mainModel = MainModelImpl(activity?.applicationContext!!)
 
         mainViewModel = ViewModelProvider(this).get(MainViewModel::class.java)
