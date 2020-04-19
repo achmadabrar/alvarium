@@ -36,7 +36,7 @@ class LoginFragment : BaseFragment()
 
     override fun getLayoutId(): Int = R.layout.fragment_login
 
-    override fun getRootLayout(): RelativeLayout = login_root_layout
+    override fun getRootLayout(): RelativeLayout? = login_root_layout
 
     override fun createViewModel(): BaseViewModel = LoginViewModel()
 
@@ -95,35 +95,36 @@ class LoginFragment : BaseFragment()
     private fun setLiveDataListeners()
     {
 
-        (viewModel as LoginViewModel).loginResponseLD.observe(requireActivity(), Observer { loginResponse ->
+        (viewModel as LoginViewModel).apply {
+
+            loginResponseLD.observe(viewLifecycleOwner, Observer { loginResponse ->
 
 
-            val token = loginResponse.loginData.token
+                loginResponse?.loginData?.token?.let {
 
-            if(token.isNotEmpty())
-            {
-                prefObject.setPrefs(PrefSingleton.TOKEN_KEY, token)
-                prefObject.setPrefs(PrefSingleton.LOGGED_PREFER_KEY, true)
+                    prefObject.setPrefs(PrefSingleton.TOKEN_KEY, it)
+                    prefObject.setPrefs(PrefSingleton.LOGGED_PREFER_KEY, true)
 
-                NetworkUtil.token = token
+                    NetworkUtil.token = it
 
-                "token".showLog("token: " + NetworkUtil.token)
+                    "token".showLog("token: " + NetworkUtil.token)
 
-                toast(getString(R.string.login_successful))
+                    toast(getString(R.string.login_successful))
+                }
+                    ?:    toast(loginResponse?.errorsAsFormattedString.toString())
+            })
 
-                //requireActivity().supportFragmentManager.popBackStack()
-            }
-            else
-                toast(loginResponse?.errorsAsFormattedString.toString())
-        })
+            isLoadingLD.observe(viewLifecycleOwner, Observer { isShowLoader ->
 
-        (viewModel as LoginViewModel).isLoadingLD.observe(requireActivity(), Observer { isShowLoader ->
+                if (getRootLayout() != null && isShowLoader)
+                    showLoading()
+                else
+                    hideLoading()
+            })
 
-            if (isShowLoader)
-                showLoading()
-            else
-                hideLoading()
-        })
+        }
+
+
 
     }
 

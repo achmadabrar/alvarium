@@ -11,6 +11,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.RelativeLayout
 import com.bs.ecommerce.R
+import com.bs.ecommerce.auth.login.LoginViewModel
 import com.bs.ecommerce.utils.PrefSingleton
 import com.bs.ecommerce.utils.showLog
 import com.pnikosis.materialishprogress.ProgressWheel
@@ -53,7 +54,7 @@ abstract class BaseFragment : Fragment()
                 "currentFragment".showLog(it.toString())
         }
 
-        viewModel.isLoadingLD.observe(viewLifecycleOwner, Observer {
+      /*  viewModel.isLoadingLD.observe(viewLifecycleOwner, Observer {
             it?.let {
                 if (it)
                 {
@@ -64,6 +65,7 @@ abstract class BaseFragment : Fragment()
                 }
             }
         })
+*/
     }
 
 

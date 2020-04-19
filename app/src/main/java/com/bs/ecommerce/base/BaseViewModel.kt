@@ -7,7 +7,7 @@ import androidx.lifecycle.ViewModel
 
 open class BaseViewModel : ViewModel()
 {
-    val isLoadingLD = MutableLiveData<Boolean>()
+    var isLoadingLD = MutableLiveData<Boolean>()
 
     override fun onCleared()
     {

@@ -15,7 +15,7 @@ data class LoginResponse(@SerializedName("Data") var loginData: LoginResponseDat
 
 data class LoginResponseData(
     @SerializedName("CustomerInfo") var customerInfo: CustomerInfo = CustomerInfo(),
-    @SerializedName("Token") var token: String = ""
+    @SerializedName("Token") var token: String? = null
 )
 
 open class BaseResponse

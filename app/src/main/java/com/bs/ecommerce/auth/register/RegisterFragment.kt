@@ -79,24 +79,26 @@ class RegisterFragment : BaseFragment()
 
     private fun setLiveDataListeners()
     {
+        (viewModel as RegistrationViewModel).apply {
 
-        (viewModel as RegistrationViewModel).getRegistrationResponseLD.observe(requireActivity(), Observer { getRegistrationResponse ->
+            getRegistrationResponseLD.observe(requireActivity(), Observer { getRegistrationResponse ->
 
+                if(getRegistrationResponse.errorList.isNotEmpty())
+                    toast(getRegistrationResponse?.errorsAsFormattedString.toString())
+                else
+                    setViewsInitially(getRegistrationResponse.data)
 
-            if(getRegistrationResponse.errorList.isNotEmpty())
-                toast(getRegistrationResponse?.errorsAsFormattedString.toString())
-            else
-                setViewsInitially(getRegistrationResponse.data)
+            })
 
-        })
+            isLoadingLD.observe(requireActivity(), Observer { isShowLoader ->
 
-        (viewModel as RegistrationViewModel).isLoadingLD.observe(requireActivity(), Observer { isShowLoader ->
+                if (getRootLayout() != null && isShowLoader)
+                    showLoading()
+                else
+                    hideLoading()
+            })
+        }
 
-            if (isShowLoader)
-                showLoading()
-            else
-                hideLoading()
-        })
 
     }
 
@@ -201,7 +203,7 @@ class RegisterFragment : BaseFragment()
         if(isRequired)
         {
             isValidInfo = false
-            toast("${editText.hint} is required" )
+            toast("${editText.hint} ${getString(R.string.reg_hint_is_required)}" )
         }
         else
             isValidInfo = true

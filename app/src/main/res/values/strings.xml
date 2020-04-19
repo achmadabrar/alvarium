@@ -36,6 +36,7 @@
     <string name="reg_hint_company_name">Company name:</string>
     <string name="reg_hint_password">Password</string>
     <string name="reg_hint_confirm_password">Confirm password</string>
+    <string name="reg_hint_is_required"> Is Required</string>
 
 
     <string name="reg_hint_username">Username:</string>
