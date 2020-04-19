@@ -54,4 +54,9 @@
     <color name="confirm_order_card_desc_bg">@color/edit_text_background</color>
     <color name="product_list_btn_bg">#111111</color>
 
+    <!-- Settings -->
+    <color name="settings_btn_bg">#ffaa66cc</color>
+    <color name="settings_fragment_bg">#222222</color> //#989898
+    <color name="settings_card_bg">#313437</color> //#FFFFFF
+
 </resources>

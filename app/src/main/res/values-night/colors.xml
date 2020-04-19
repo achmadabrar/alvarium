@@ -27,4 +27,9 @@
     <color name="confirm_order_card_title_bg">#A5A5A5</color>
     <color name="confirm_order_card_desc_bg">#333333</color>
     <color name="product_list_btn_bg">#EEEEEE</color>
+
+    <!-- Settings -->
+    <color name="settings_btn_bg">#ffaa66cc</color>
+    <color name="settings_fragment_bg">#989898</color>
+    <color name="settings_card_bg">#FFFFFF</color>
 </resources>

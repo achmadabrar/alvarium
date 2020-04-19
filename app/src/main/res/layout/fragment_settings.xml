@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/settingsFragmentRootLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/settings_fragment_bg"
+    android:paddingStart="10dp"
+    android:paddingEnd="10dp">
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/use_your_api"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        app:cardBackgroundColor="@color/settings_card_bg"
+        app:cardCornerRadius="5dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="15dp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/test_your_api"
+                android:textColor="@color/whiteOrBlack"
+                android:textSize="@dimen/tv_text_size_large"
+                android:textStyle="bold" />
+
+
+            <EditText
+                android:id="@+id/newBaseUrlEditTextFromSettings"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:backgroundTint="@color/gray"
+                android:gravity="start"
+                android:hint="@string/sample_base_url"
+                android:textColor="@color/whiteOrBlack"
+                android:textColorHint="@color/grayOrDark"
+                android:textSize="@dimen/tv_text_size_regular" />
+
+
+            <Button
+                android:id="@+id/testUrlBtnFromSettings"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@color/settings_btn_bg"
+                android:text="@string/test"
+                android:textColor="@color/white" />
+
+
+            <Button
+                android:id="@+id/mainUrlBtnFromSettings"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@color/settings_btn_bg"
+                android:text="@string/set_default"
+                android:textAllCaps="true"
+                android:textColor="@color/white" />
+
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/ll"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/use_your_api"
+        android:layout_marginTop="15dp"
+        app:cardBackgroundColor="@color/settings_card_bg"
+        app:cardCornerRadius="5dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="15dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/select_language"
+                android:textColor="@color/whiteOrBlack"
+                android:textSize="@dimen/tv_text_size_large"
+                android:textStyle="bold" />
+
+
+            <androidx.appcompat.widget.AppCompatSpinner
+                android:id="@+id/languageSpinner_settings"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:padding="5dp"
+                android:background="@drawable/settings_spinner_bg"
+                android:entries="@array/spinner_dummy_data"
+                android:tag="CountryId"
+                tools:listitem="@layout/simple_spinner_item" />
+
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/ll1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/ll"
+        android:layout_marginTop="15dp"
+        app:cardBackgroundColor="@color/settings_card_bg"
+        app:cardCornerRadius="5dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="15dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/select_currency"
+                android:textColor="@color/whiteOrBlack"
+                android:textSize="@dimen/tv_text_size_large"
+                android:textStyle="bold" />
+
+
+            <androidx.appcompat.widget.AppCompatSpinner
+                android:id="@+id/currencySpinner_settings"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:entries="@array/spinner_dummy_data"
+                android:padding="5dp"
+                android:background="@drawable/settings_spinner_bg"
+                tools:listitem="@layout/simple_spinner_item" />
+
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+
+</RelativeLayout>

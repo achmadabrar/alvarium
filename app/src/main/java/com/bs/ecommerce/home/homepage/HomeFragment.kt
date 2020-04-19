@@ -50,10 +50,10 @@ class HomeFragment : BaseFragment() {
 
         if (rootView == null) {
             rootView = container?.inflate(R.layout.fragment_home)
-        } else {
+        } /*else {
             val parent = rootView?.parent as ViewGroup?
             parent?.removeView(rootView)
-        }
+        }*/
         return rootView
     }
 
