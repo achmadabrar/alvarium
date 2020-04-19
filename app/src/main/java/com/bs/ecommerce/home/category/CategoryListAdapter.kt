@@ -5,7 +5,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ExpandableListView
+import android.widget.ImageView
 import android.widget.TextView
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.FragmentManager
 
 import com.bs.ecommerce.R
@@ -43,7 +45,30 @@ class CategoryListAdapter(private val context: Context, private val categoryList
         holder.categoryChildList.setAdapter(SubCategoryListAdapter(context, categoryModel.subcategories, fragment))
 
         holder.topCategoryName.setOnClickListener(CategoryOnClicklistener(categoryModel))
-        holder.categoryChildList.setGroupIndicator(null)
+
+
+        if(categoryModel.subcategories.isNotEmpty())
+            holder.topCategoryExpandableButton.visibility = View.VISIBLE
+        else
+            holder.topCategoryExpandableButton.visibility = View.GONE
+
+        holder.topCategoryExpandableButton.setOnClickListener {
+
+            if(categoryList[position].childVisible)
+            {
+                holder.topCategoryExpandableButton.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.ic_plus_left_category))
+                categoryList[position].childVisible = false
+                holder.categoryChildList.visibility = View.GONE
+
+            }
+            else
+            {
+                holder.topCategoryExpandableButton.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.ic_minus_left_category))
+                categoryList[position].childVisible = true
+                holder.categoryChildList.visibility = View.VISIBLE
+            }
+
+        }
     }
 
     override fun getItemViewType(position: Int): Int {
@@ -58,10 +83,12 @@ class CategoryListAdapter(private val context: Context, private val categoryList
 
     private inner class ProductSummaryHolder internal constructor(itemView: View) : androidx.recyclerview.widget.RecyclerView.ViewHolder(itemView), View.OnClickListener {
         internal var topCategoryName: TextView
+        internal var topCategoryExpandableButton : ImageView
         internal var categoryChildList: ExpandableListView
 
         init {
             topCategoryName = itemView.findViewById<View>(R.id.topCategoryName) as TextView
+            topCategoryExpandableButton = itemView.findViewById<View>(R.id.topCategoryExpandableButton) as ImageView
             categoryChildList = itemView.findViewById<View>(R.id.categoryChildList) as ExpandableListView
             itemView.setOnClickListener(this)
         }
@@ -74,9 +101,6 @@ class CategoryListAdapter(private val context: Context, private val categoryList
 
     private inner class CategoryOnClicklistener(internal var category: Category) : View.OnClickListener {
         override fun onClick(v: View) {
-
-            // ProductService.productId = category.id.toLong()
-
             gotocategoryListPage(category)
         }
     }
