@@ -2,14 +2,10 @@
 
 package com.bs.ecommerce.utils
 
+import android.R.attr.fragment
 import android.app.Activity
 import android.content.Context
 import android.os.Build
-import androidx.annotation.AnimRes
-import androidx.annotation.IdRes
-import androidx.fragment.app.Fragment
-import androidx.appcompat.app.AppCompatActivity
-import android.text.TextUtils
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -17,8 +13,16 @@ import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import android.widget.ImageView
 import android.widget.Toast
+import androidx.annotation.AnimRes
+import androidx.annotation.IdRes
+import androidx.fragment.app.Fragment
 import com.bs.ecommerce.R
+import com.bs.ecommerce.base.BaseFragment
+import com.bs.ecommerce.main.MainActivity
+import com.bs.ecommerce.more.OptionsFragment
+import com.fasterxml.jackson.databind.ser.Serializers
 import com.squareup.picasso.Picasso
+
 
 /**
  * Created by bs206 on 4/10/18.
@@ -52,6 +56,24 @@ fun Fragment.replaceFragmentSafely(
     {
         ft?.commitAllowingStateLoss()
     }*/
+}
+
+inline fun <reified T> MainActivity.createIfNotInBackStack(fragment: BaseFragment) {
+    //val fragment = Class.forName(fragmentName).newInstance() as BaseFragment
+
+    if(supportFragmentManager.findFragmentById(R.id.layoutFrame) !is T) {
+
+        val backStateName: String = fragment::class.java.simpleName
+
+        val fragmentPopped = supportFragmentManager.popBackStackImmediate(backStateName, 0)
+
+        if (!fragmentPopped) {
+            supportFragmentManager.beginTransaction().replace(
+                R.id.layoutFrame,
+                fragment
+            ).addToBackStack(backStateName).commit()
+        }
+    }
 }
 
 
