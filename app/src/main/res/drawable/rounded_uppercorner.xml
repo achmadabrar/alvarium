@@ -11,7 +11,7 @@
         </shape>
     </item>
 
-    <item android:top="@dimen/cardCornerRadius">
+    <item android:top="3dp">
         <shape android:shape="rectangle">
 
             <solid android:color="@color/blackOrWhite" />

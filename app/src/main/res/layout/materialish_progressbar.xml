@@ -7,5 +7,5 @@
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
-        wheel:matProg_barColor="@android:color/white"
+        wheel:matProg_barColor="@color/whiteOrBlack"
         wheel:matProg_progressIndeterminate="true" />

@@ -66,6 +66,9 @@ class OptionsFragment : BaseFragment() {
 
                             R.string.privacy_policy ->
                                 replaceFragmentSafely(PrivacyPolicyFragment())
+
+                            R.string.my_orders ->
+                                replaceFragmentSafely(CustomerOrdersFragment())
                         }
                     }
 

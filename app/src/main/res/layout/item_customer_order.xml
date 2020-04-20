@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/customer_order_item_bg"
+    android:padding="10dp">
+
+    <ImageView
+        android:id="@+id/ivOptionIcon"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_alignParentStart="true"
+        android:layout_centerVertical="true"
+        android:src="@drawable/ic_payment" />
+
+    <TextView
+        android:id="@+id/tvOrderNumber"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="15dp"
+        android:layout_toEndOf="@id/ivOptionIcon"
+        android:textColor="@color/whiteOrBlack"
+        android:textSize="@dimen/tv_text_size_large"
+        android:textStyle="bold"
+        tools:text="@string/placeholder" />
+
+    <TextView
+        android:id="@+id/tvOrderStatus"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tvOrderNumber"
+        android:layout_marginStart="15dp"
+        android:layout_toEndOf="@id/ivOptionIcon"
+        android:textColor="@color/whiteOrBlack"
+        android:textSize="@dimen/tv_text_size_regular"
+        tools:text="@string/placeholder" />
+
+    <TextView
+        android:id="@+id/tvOrderDate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tvOrderStatus"
+        android:layout_marginStart="15dp"
+        android:layout_toEndOf="@id/ivOptionIcon"
+        android:textColor="@color/whiteOrBlack"
+        android:textSize="@dimen/tv_text_size_regular"
+        tools:text="@string/placeholder" />
+
+    <TextView
+        android:id="@+id/tvOrderTotal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tvOrderDate"
+        android:layout_marginStart="15dp"
+        android:layout_toEndOf="@id/ivOptionIcon"
+        android:textColor="@color/whiteOrBlack"
+        android:textSize="@dimen/tv_text_size_regular"
+        tools:text="@string/placeholder" />
+
+    <ImageView
+        android:id="@+id/imageView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_centerVertical="true"
+        android:tint="@color/whiteOrGray"
+        app:srcCompat="@drawable/ic_chevron_right" />
+
+</RelativeLayout>
