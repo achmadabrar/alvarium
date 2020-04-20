@@ -8,7 +8,7 @@ import android.widget.BaseAdapter
 import android.widget.TextView
 
 import com.bs.ecommerce.R
-import com.bs.ecommerce.product.data.SubCategory
+import com.bs.ecommerce.product.model.data.SubCategory
 
 
 class SubCategoryAdapter(

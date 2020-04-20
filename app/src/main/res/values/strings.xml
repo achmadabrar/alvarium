@@ -135,6 +135,8 @@
         <item>Item 3</item>
     </string-array>
 
+    <string name="url_is_required">Url is Required</string>
+
 
     <string name="facebook_app_id">207124103908002</string>
     <string name="fb_login_protocol_scheme">207124103908002</string>

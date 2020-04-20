@@ -3,8 +3,8 @@ package com.bs.ecommerce.home.homepage.model
 import com.bs.ecommerce.common.RequestCompleteListener
 import com.bs.ecommerce.home.homepage.model.data.HomePageProductResponse
 import com.bs.ecommerce.home.homepage.model.data.SliderData
-import com.bs.ecommerce.product.data.CategoryModel
-import com.bs.ecommerce.product.data.Manufacturer
+import com.bs.ecommerce.product.model.data.CategoryModel
+import com.bs.ecommerce.product.model.data.Manufacturer
 import com.google.gson.JsonObject
 
 interface HomePageModel

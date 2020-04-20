@@ -11,13 +11,15 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bs.ecommerce.R
-import com.bs.ecommerce.auth.register.data.KeyValuePair
 import com.bs.ecommerce.base.BaseFragment
 import com.bs.ecommerce.base.BaseViewModel
 import com.bs.ecommerce.home.FeaturedProductAdapter
 import com.bs.ecommerce.main.MainViewModel
-import com.bs.ecommerce.product.data.AttributeControlValue
-import com.bs.ecommerce.product.data.ProductSummary
+import com.bs.ecommerce.product.model.data.AttributeControlValue
+import com.bs.ecommerce.product.model.data.ProductSummary
+import com.bs.ecommerce.product.model.ProductDetailModel
+import com.bs.ecommerce.product.model.ProductDetailModelImpl
+import com.bs.ecommerce.product.viewModel.ProductDetailViewModel
 import com.bs.ecommerce.utils.*
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetBehavior.BottomSheetCallback
@@ -29,10 +31,7 @@ import kotlinx.android.synthetic.main.product_name_layout.view.tvProductName
 import kotlinx.android.synthetic.main.product_price_layout.view.*
 import kotlinx.android.synthetic.main.product_quantity.view.*
 import kotlinx.android.synthetic.main.slider.view.*
-import java.util.*
 import kotlin.collections.HashMap
-import kotlin.collections.component1
-import kotlin.collections.component2
 
 
 class ProductDetailFragment : BaseFragment(), View.OnClickListener {
@@ -49,7 +48,8 @@ class ProductDetailFragment : BaseFragment(), View.OnClickListener {
 
     override fun getRootLayout(): RelativeLayout = productDetailsRootLayout
 
-    override fun createViewModel(): BaseViewModel = ProductDetailViewModel()
+    override fun createViewModel(): BaseViewModel =
+        ProductDetailViewModel()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

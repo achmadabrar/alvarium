@@ -13,7 +13,7 @@ import androidx.fragment.app.FragmentManager
 import com.bs.ecommerce.R
 import com.bs.ecommerce.main.MainActivity
 import com.bs.ecommerce.main.model.data.Category
-import com.bs.ecommerce.product.ui.ProductListFragment
+import com.bs.ecommerce.product.ProductListFragment
 
 /**
  * Created by Arif Islam on 23-Feb-17.

@@ -1,9 +1,7 @@
 package com.bs.ecommerce.home.category
 
-import android.app.FragmentManager
 import android.content.Context
 import androidx.appcompat.widget.AppCompatImageView
-import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,7 +11,7 @@ import com.bs.ecommerce.R
 import com.bs.ecommerce.main.MainActivity
 import com.bs.ecommerce.main.model.data.SecondSubcategory
 import com.bs.ecommerce.main.model.data.Subcategory
-import com.bs.ecommerce.product.ui.ProductListFragment
+import com.bs.ecommerce.product.ProductListFragment
 import com.squareup.picasso.Picasso
 
 /**

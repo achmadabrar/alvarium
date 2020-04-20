@@ -10,7 +10,7 @@ import com.bs.ecommerce.home.homepage.model.data.HomePageProductResponse
 import com.bs.ecommerce.home.homepage.model.data.SliderResponse
 import com.bs.ecommerce.main.model.data.AppLandingSettingResponse
 import com.bs.ecommerce.main.model.data.CategoryTreeResponse
-import com.bs.ecommerce.product.data.*
+import com.bs.ecommerce.product.model.data.*
 import com.google.gson.JsonObject
 import retrofit2.Call
 import retrofit2.http.*

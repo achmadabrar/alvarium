@@ -4,7 +4,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bs.ecommerce.R
-import com.bs.ecommerce.product.data.Manufacturer
+import com.bs.ecommerce.product.model.data.Manufacturer
 import com.bs.ecommerce.utils.ItemClickListener
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.item_manufacturer.view.*
