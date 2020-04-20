@@ -138,7 +138,7 @@
     <string name="yes">Sì</string>
     <string name="no">No</string>
     <string name="change_base_url">Modifica base url</string>
-    <string name="url_is_require">Url è recessariastring</string>
+    <string name="url_is_required">Url è recessariastring</string>
     <string name="cyber_source_payment"> Pagamento per Cyber Source </string>
     <string name="barcode_success">Barcode letto con successo</string>
     <string name="barcode_failure">Barcode non letto</string>

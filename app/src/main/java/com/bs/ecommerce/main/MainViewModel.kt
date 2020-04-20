@@ -11,9 +11,9 @@ import com.bs.ecommerce.main.model.data.AppLandingData
 import com.bs.ecommerce.main.model.data.AppLandingSettingResponse
 import com.bs.ecommerce.main.model.data.Category
 import com.bs.ecommerce.main.model.data.CategoryTreeResponse
-import com.bs.ecommerce.product.data.CategoryModel
-import com.bs.ecommerce.product.data.Manufacturer
-import com.bs.ecommerce.product.data.ProductSummary
+import com.bs.ecommerce.product.model.data.CategoryModel
+import com.bs.ecommerce.product.model.data.Manufacturer
+import com.bs.ecommerce.product.model.data.ProductSummary
 import com.bs.ecommerce.utils.toast
 import com.google.gson.JsonObject
 
@@ -32,6 +32,7 @@ class MainViewModel : BaseViewModel() {
     var appSettingsLD = MutableLiveData<AppLandingData>()
     var toastMessageLD = MutableLiveData<String>()
 
+    var testUrlSuccessLD = MutableLiveData<Boolean>()
 
     fun getFeaturedProducts(model: HomePageModel) {
 
@@ -112,11 +113,16 @@ class MainViewModel : BaseViewModel() {
                 isLoadingLD.postValue(false)
 
                 navDrawerCategoriesLD.postValue(data.categoryList)
+
+                testUrlSuccessLD.postValue(true)
             }
 
             override fun onRequestFailed(errorMessage: String) {
                 isLoadingLD.postValue(false)
+
                 allCategoriesFailureLD.postValue(listOf())
+
+                testUrlSuccessLD.postValue(false)
             }
         })
     }

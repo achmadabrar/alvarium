@@ -13,7 +13,7 @@ object PrefSingleton
     fun getPrefsIntValue(key: String): Int = Prefs.getInt(key, -1)
 
 
-    fun getPrefsBoolValue(key: String): Boolean? = Prefs.getBoolean(key, false)
+    fun getPrefsBoolValue(key: String): Boolean = Prefs.getBoolean(key, false)
 
     fun setPrefs(key: String, value: String)
     {
@@ -36,10 +36,10 @@ object PrefSingleton
     val FIRST_RUN = "firstRun"
     var SHARED_PREF_KEY = "PREFER_KEY"
     var loggedInText = "isLoggedIn"
-    var LOGGED_PREFER_KEY = "isLoggedIn"
+    var IS_LOGGED_IN = "isLoggedIn"
     var TOKEN_KEY = "token"
-    var URL_PREFER_KEY = "URL_CHANGE_KEY"
-    var DO_USE_NEW_URL = "URL_CHANGE_KEY_BOOLEAN"
+    var NEW_URL = "URL_CHANGE_KEY"
+    var SHOULD_USE_NEW_URL = "URL_CHANGE_KEY_BOOLEAN"
     var APP_VERSION_CODE_KEY = "VERSION_CODE"
     var SENT_TOKEN_TO_SERVER = "SENT_TOKEN_TO_SERVER_KEY"
     var REGISTRATION_COMPLETE = "REGISTRATION_COMPLETE_KEY"

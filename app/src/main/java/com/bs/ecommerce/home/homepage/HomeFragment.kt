@@ -19,10 +19,10 @@ import com.bs.ecommerce.home.homepage.model.HomePageModelImpl
 import com.bs.ecommerce.home.homepage.model.data.SliderData
 import com.bs.ecommerce.main.MainViewModel
 import com.bs.ecommerce.product.ProductDetailFragment
-import com.bs.ecommerce.product.data.CategoryModel
-import com.bs.ecommerce.product.data.Manufacturer
-import com.bs.ecommerce.product.data.ProductSummary
-import com.bs.ecommerce.product.ui.ProductListFragment
+import com.bs.ecommerce.product.model.data.CategoryModel
+import com.bs.ecommerce.product.model.data.Manufacturer
+import com.bs.ecommerce.product.model.data.ProductSummary
+import com.bs.ecommerce.product.ProductListFragment
 import com.bs.ecommerce.utils.*
 import kotlinx.android.synthetic.main.featured_list_layout.view.*
 import kotlinx.android.synthetic.main.fragment_home.*
@@ -60,6 +60,8 @@ class HomeFragment : BaseFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        activity?.title = getString(R.string.title_home_page)
 
         if (!viewCreated) {
             model = HomePageModelImpl(requireContext())

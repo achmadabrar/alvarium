@@ -44,12 +44,13 @@ class LoginFragment : BaseFragment()
     {
         super.onViewCreated(view, savedInstanceState)
 
+        activity?.title = getString(R.string.title_login)
+
         model = AuthModelImpl()
 
         viewModel  = ViewModelProvider(this).get(LoginViewModel::class.java)
 
         //initView()
-
         initFacebookSdk()
 
         setButtonClickListeners()
@@ -103,7 +104,7 @@ class LoginFragment : BaseFragment()
                 loginResponse?.loginData?.token?.let {
 
                     prefObject.setPrefs(PrefSingleton.TOKEN_KEY, it)
-                    prefObject.setPrefs(PrefSingleton.LOGGED_PREFER_KEY, true)
+                    prefObject.setPrefs(PrefSingleton.IS_LOGGED_IN, true)
 
                     NetworkUtil.token = it
 

@@ -43,6 +43,8 @@ class OptionsFragment : BaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        activity?.title = getString(R.string.title_more)
+
         if(!viewCreated) {
 
             (viewModel as OptionViewModel).optionsLD.observe(viewLifecycleOwner, Observer { options ->

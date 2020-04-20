@@ -9,12 +9,16 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.bs.ecommerce.R
 import com.bs.ecommerce.base.BaseActivity
+import com.bs.ecommerce.base.BaseFragment
+import com.bs.ecommerce.cart.CartFragment
 import com.bs.ecommerce.home.category.CategoryFragment
 import com.bs.ecommerce.home.homepage.HomeFragment
 import com.bs.ecommerce.main.model.MainModel
 import com.bs.ecommerce.main.model.MainModelImpl
 import com.bs.ecommerce.more.OptionsFragment
+import com.bs.ecommerce.utils.PrefSingleton
 import com.bs.ecommerce.utils.createIfNotInBackStack
+import com.bs.ecommerce.utils.showLog
 import com.bs.ecommerce.utils.toast
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import kotlinx.android.synthetic.main.activity_main.*
@@ -98,6 +102,17 @@ class MainActivity : BaseActivity()
             override fun onDrawerClosed(drawerView: View)
             {
                 super.onDrawerClosed(drawerView)
+
+                supportFragmentManager.findFragmentById(R.id.layoutFrame)?.let {
+
+                    when(it)
+                    {
+                        is HomeFragment -> title = getString(R.string.title_home_page)
+                        is CartFragment -> title = getString(R.string.title_shopping_cart)
+                        is OptionsFragment -> title = getString(R.string.title_more)
+                    }
+                }
+
                 invalidateOptionsMenu()
                 syncState()
             }
@@ -105,6 +120,9 @@ class MainActivity : BaseActivity()
             override fun onDrawerOpened(drawerView: View)
             {
                 super.onDrawerOpened(drawerView)
+
+                title = getString(R.string.title_category)
+
                 invalidateOptionsMenu()
                 syncState()
             }
@@ -184,6 +202,10 @@ class MainActivity : BaseActivity()
                 return@OnNavigationItemSelectedListener true
             }
             R.id.bottom_nav_account -> {
+
+                if(prefObject.getPrefsBoolValue(PrefSingleton.IS_LOGGED_IN))
+                    createIfNotInBackStack<LoginFragment>(LoginFragment())
+
                 return@OnNavigationItemSelectedListener true
             }
             R.id.bottom_nav_more -> {

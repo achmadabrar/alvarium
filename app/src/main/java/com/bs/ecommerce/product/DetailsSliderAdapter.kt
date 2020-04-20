@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.LinearLayout
 import com.bs.ecommerce.R
-import com.bs.ecommerce.product.data.PictureModel
+import com.bs.ecommerce.product.model.data.PictureModel
 import com.squareup.picasso.Picasso
 
 /**

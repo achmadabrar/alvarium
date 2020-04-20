@@ -1,17 +1,17 @@
 package com.bs.ecommerce.home.category
 
-import android.app.FragmentManager
 import android.content.Context
 import androidx.appcompat.widget.AppCompatImageView
-import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.BaseExpandableListAdapter
 import android.widget.TextView
 import com.bs.ecommerce.R
+import com.bs.ecommerce.main.MainActivity
 import com.bs.ecommerce.main.model.data.SecondSubcategory
 import com.bs.ecommerce.main.model.data.Subcategory
+import com.bs.ecommerce.product.ProductListFragment
 import com.squareup.picasso.Picasso
 
 /**
@@ -96,13 +96,22 @@ class SubCategoryListAdapter(private val context: Context, private val categorie
 
         override fun onClick(v: View)
         {
-           /* ProductService.productId = id.toLong()
-            Utility.closeLeftDrawer()
-            fragment.fragmentManager!!.popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE)
-            fragment.fragmentManager!!.beginTransaction()
-                    .replace(R.id.container, ProductListFragmentFor3_8.newInstance(name, id))
+            val activity = fragment.requireActivity()
+
+            if(activity is MainActivity) {
+                activity.closeDrawer()
+
+                activity.supportFragmentManager.popBackStack(null, androidx.fragment.app.FragmentManager.POP_BACK_STACK_INCLUSIVE)
+
+                activity.supportFragmentManager.beginTransaction()
+                    .replace(
+                        R.id.layoutFrame,
+                        ProductListFragment.newInstance(name, id,
+                            ProductListFragment.GetBy.CATEGORY)
+                    )
                     .addToBackStack(null)
-                    .commit()*/
+                    .commit()
+            }
         }
     }
 }

@@ -12,6 +12,7 @@ data class Category(
     @SerializedName("CategoryId") var categoryId: Int = 0,
     @SerializedName("IconUrl") var iconUrl: String = "",
     @SerializedName("Name") var name: String = "",
+    var childVisible: Boolean = false,
     @SerializedName("Subcategories") var subcategories: List<Subcategory> = listOf()
 )
 

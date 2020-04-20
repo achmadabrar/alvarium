@@ -14,9 +14,10 @@ import androidx.appcompat.widget.AppCompatRadioButton
 import androidx.core.view.ViewCompat
 import androidx.core.view.children
 import com.bs.ecommerce.R
-import com.bs.ecommerce.product.data.AttributeControlValue
-import com.bs.ecommerce.product.data.ProductAttribute
-import com.bs.ecommerce.product.data.ProductDetail
+import com.bs.ecommerce.product.model.data.AttributeControlValue
+import com.bs.ecommerce.product.model.data.ProductAttribute
+import com.bs.ecommerce.product.model.data.ProductDetail
+import com.bs.ecommerce.product.viewModel.ProductDetailViewModel
 import com.bs.ecommerce.utils.AttributeControlType
 import com.bs.ecommerce.utils.ColorSelectionProcess
 import com.google.android.material.bottomsheet.BottomSheetBehavior
@@ -183,9 +184,7 @@ class ProductAttributeView(
 
         for (x in attr.values) {
 
-            val radioButton = layoutInflater.inflate(
-                R.layout.radiobutton_product_color, colorSelectionLayout.radioGridGroup, false
-            ) as AppCompatRadioButton
+            val radioButton = layoutInflater.inflate(R.layout.radiobutton_product_color, colorSelectionLayout.radioGridGroup, false) as AppCompatRadioButton
 
             radioButton.id = x.id //++dynamicViewId
             radioButton.isChecked = x.isPreSelected
