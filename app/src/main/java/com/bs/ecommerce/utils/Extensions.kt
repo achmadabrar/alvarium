@@ -47,7 +47,7 @@ fun Fragment.replaceFragmentSafely(
         .beginTransaction()
         .setCustomAnimations(enterAnimation, exitAnimation, popEnterAnimation, popExitAnimation)
         .replace(containerViewId, fragment)
-        .addToBackStack(null)
+        .addToBackStack(fragment::class.java.simpleName)
 
     if (!requireActivity().supportFragmentManager.isStateSaved) {
         ft.commit()
