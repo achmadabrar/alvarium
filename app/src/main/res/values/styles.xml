@@ -19,7 +19,8 @@
 
 
     <style name="Toolbar_Popup" parent="AppTheme">
-        <item name="android:textColorPrimary">@android:color/black</item>
+        <item name="android:textColorPrimary">@color/whiteOrBlack</item>  <!-- Text -->
+        <item name="android:textColorSecondary">@color/whiteOrBlack</item> <!-- Left icon -->
     </style>
 
     <style name="RoundedSpinner">

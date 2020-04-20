@@ -20,7 +20,7 @@
         android:contentDescription="Cart"
         app:srcCompat="@drawable/app_icon_cart"
         android:layout_alignParentStart="true"
-        android:tint="@android:color/white" />
+        android:tint="@color/whiteOrBlack" />
 
     <TextView
         android:id="@+id/hotlist_hot"
@@ -29,7 +29,7 @@
         android:background="@drawable/rounded_square"
         android:layout_alignParentEnd="true"
         android:minWidth="17sp"
-        android:text="11"
+        tools:text="11"
         android:gravity="center"
         android:textColor="@android:color/white"
         android:textSize="12sp"

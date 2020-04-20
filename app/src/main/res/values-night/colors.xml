@@ -3,6 +3,13 @@
     <!--<color name="theme_background">#FFF</color>
     <color name="frame_background">#A5A5A5</color>-->
 
+    <!-- Home Bottom Navigation -->
+    <color name="icon_tint_active">#2196F3</color>
+    <color name="icon_tint_inactive">#969594</color>
+    <color name="nav_item_bg">#f7f6f6</color>
+
+    <color name="toolbar_color">#f7f6f6</color>
+
     <color name="fragment_background">#FFF</color>
 
     <color name="register_title_text">#000000</color>

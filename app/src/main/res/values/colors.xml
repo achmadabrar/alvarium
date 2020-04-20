@@ -4,7 +4,12 @@
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
 
+    <!-- Home Bottom Navigation -->
+    <color name="icon_tint_active">#2196F3</color>
+    <color name="icon_tint_inactive">#969594</color>
+    <color name="nav_item_bg">#121312</color>
 
+    <color name="toolbar_color">#121312</color>
 
     <color name="theme_background">#000000</color>
     <color name="frame_background">#222222</color>
