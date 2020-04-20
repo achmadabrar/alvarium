@@ -5,9 +5,9 @@
     android:id="@+id/appToolbar"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="?attr/colorPrimary"
+    android:background="@color/toolbar_color"
     android:minHeight="?attr/actionBarSize"
     android:fitsSystemWindows="true"
-    app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+    app:theme="@style/Toolbar_Popup"
     app:popupTheme="@style/Toolbar_Popup"
     app:layout_scrollFlags="scroll|enterAlways" />

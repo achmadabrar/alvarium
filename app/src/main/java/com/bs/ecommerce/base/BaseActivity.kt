@@ -188,11 +188,7 @@ abstract class BaseActivity : AppCompatActivity()
 
     override fun attachBaseContext(newBase: Context)
     {
-        val ctx1 = updateBaseContextLocale(newBase)
-        val ctx2 = ViewPumpContextWrapper.wrap(ctx1)
-        //super.attachBaseContext(updateBaseContextLocale(newBase))
-        super.attachBaseContext(ctx2)
-
+        super.attachBaseContext(updateBaseContextLocale(newBase))
     }
 
     private fun updateBaseContextLocale(context : Context) : Context

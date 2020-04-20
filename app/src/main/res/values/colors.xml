@@ -4,7 +4,12 @@
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
 
+    <!-- Home Bottom Navigation -->
+    <color name="icon_tint_active">#2196F3</color>
+    <color name="icon_tint_inactive">#969594</color>
+    <color name="nav_item_bg">#121312</color>
 
+    <color name="toolbar_color">#121312</color>
 
     <color name="theme_background">#000000</color>
     <color name="frame_background">#222222</color>
@@ -48,7 +53,7 @@
     <color name="grayOrDark">#C5C5C5</color>
     <color name="darkOrGray">#313437</color>
 
-    <color name="list_item_bg">#444444</color>
+    <color name="list_item_bg">#2b2b2f</color> // #444444
     <color name="checkbox_bg">#FFF</color>
     <color name="confirm_order_card_title_bg">#000</color>
     <color name="confirm_order_card_desc_bg">@color/edit_text_background</color>
@@ -56,7 +61,11 @@
 
     <!-- Settings -->
     <color name="settings_btn_bg">#ffaa66cc</color>
-    <color name="settings_fragment_bg">#222222</color> //#989898
-    <color name="settings_card_bg">#313437</color> //#FFFFFF
+    <color name="settings_fragment_bg">#222222</color>
+    <color name="settings_card_bg">#313437</color>
+
+    <!-- Customer Order -->
+    <color name="co_list_item_divider">#303033</color>
+    <color name="co_fragment_bg">#222222</color>
 
 </resources>
