@@ -17,6 +17,7 @@ import com.bs.ecommerce.cart.model.CartProduct
 import com.bs.ecommerce.utils.Language
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.cart_list_item.view.*
+import kotlinx.android.synthetic.main.product_price_layout.view.*
 import java.util.*
 
 

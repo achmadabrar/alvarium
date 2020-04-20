@@ -15,6 +15,7 @@ import com.bs.ecommerce.utils.loadImg
 import kotlinx.android.synthetic.main.cart_list_item.view.*
 import kotlinx.android.synthetic.main.confirm_order_card.view.*
 import kotlinx.android.synthetic.main.fragment_customer_order_detail.*
+import kotlinx.android.synthetic.main.product_price_layout.view.*
 
 class CustomerOrderDetailsFragment : BaseFragment() {
     override fun getLayoutId(): Int = R.layout.fragment_customer_order_detail
