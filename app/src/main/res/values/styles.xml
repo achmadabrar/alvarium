@@ -6,6 +6,9 @@
         <item name="colorPrimary">@color/theme_background</item>
         <item name="colorPrimaryDark">@color/theme_background</item>
         <item name="colorAccent">@color/gray</item>
+
+        <item name="fontFamily">@font/montserrat_regular</item>
+        <item name="android:fontFamily">@font/montserrat_regular</item>
     </style>
 
 

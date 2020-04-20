@@ -4,13 +4,9 @@ import android.content.Context
 import android.content.ContextWrapper
 import androidx.multidex.MultiDex
 import androidx.multidex.MultiDexApplication
-import com.bs.ecommerce.R
 import com.facebook.FacebookSdk
 import com.facebook.appevents.AppEventsLogger
 import com.pixplicity.easyprefs.library.Prefs
-import io.github.inflationx.calligraphy3.CalligraphyConfig
-import io.github.inflationx.calligraphy3.CalligraphyInterceptor
-import io.github.inflationx.viewpump.ViewPump
 
 
 class MyApplication : MultiDexApplication()
@@ -35,19 +31,6 @@ class MyApplication : MultiDexApplication()
             .setPrefsName(packageName)
             .setUseDefaultSharedPreference(true)
             .build()
-
-        ViewPump.init(
-            ViewPump.builder()
-                .addInterceptor(
-                    CalligraphyInterceptor(
-                        CalligraphyConfig.Builder()
-                            .setDefaultFontPath("montserrat_regular.ttf")
-                            .setFontAttrId(R.attr.fontPath)
-                            .build()
-                    )
-                )
-                .build()
-        )
     }
 
 
