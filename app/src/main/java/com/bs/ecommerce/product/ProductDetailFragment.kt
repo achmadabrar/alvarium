@@ -2,26 +2,23 @@ package com.bs.ecommerce.product
 
 import android.graphics.Paint
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.widget.RelativeLayout
 import android.widget.TextView
 import android.widget.Toast
 import androidx.core.content.ContextCompat
-import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bs.ecommerce.R
+import com.bs.ecommerce.auth.register.data.KeyValuePair
 import com.bs.ecommerce.base.BaseFragment
 import com.bs.ecommerce.base.BaseViewModel
 import com.bs.ecommerce.home.FeaturedProductAdapter
 import com.bs.ecommerce.main.MainViewModel
+import com.bs.ecommerce.product.data.AttributeControlValue
 import com.bs.ecommerce.product.data.ProductSummary
-import com.bs.ecommerce.utils.ItemClickListener
-import com.bs.ecommerce.utils.RecyclerViewMargin
-import com.bs.ecommerce.utils.TextUtils
-import com.bs.ecommerce.utils.toast
+import com.bs.ecommerce.utils.*
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetBehavior.BottomSheetCallback
 import kotlinx.android.synthetic.main.featured_product_layout.view.*
@@ -32,6 +29,10 @@ import kotlinx.android.synthetic.main.product_name_layout.view.tvProductName
 import kotlinx.android.synthetic.main.product_price_layout.view.*
 import kotlinx.android.synthetic.main.product_quantity.view.*
 import kotlinx.android.synthetic.main.slider.view.*
+import java.util.*
+import kotlin.collections.HashMap
+import kotlin.collections.component1
+import kotlin.collections.component2
 
 
 class ProductDetailFragment : BaseFragment(), View.OnClickListener {
@@ -40,6 +41,9 @@ class ProductDetailFragment : BaseFragment(), View.OnClickListener {
     private lateinit var model: ProductDetailModel
     private var productAttributeView: ProductAttributeView? = null
     private lateinit var mainViewModel: MainViewModel
+
+    var selectedAttributeMap : MutableMap<Long, MutableList<AttributeControlValue>> = HashMap()
+
 
     override fun getLayoutId(): Int = R.layout.fragment_product_detail
 
@@ -61,9 +65,28 @@ class ProductDetailFragment : BaseFragment(), View.OnClickListener {
         (viewModel as ProductDetailViewModel).getProductDetail(productId, model)
 
         setLiveDataListeners()
+
+        btnAddToCart?.setOnClickListener {
+
+            (viewModel as ProductDetailViewModel).addProductToCartModel(selectedAttributeMap, model)
+
+        }
     }
 
     private fun setLiveDataListeners() {
+
+
+        (viewModel as ProductDetailViewModel).selectedAttrLD.observe(
+            viewLifecycleOwner,
+            Observer { selectedAttributeMapLD ->
+
+                selectedAttributeMap.clear()
+                selectedAttributeMap = selectedAttributeMapLD
+            })
+
+
+
+
         (viewModel as ProductDetailViewModel).productLiveData.observe(
             viewLifecycleOwner,
             Observer { product ->

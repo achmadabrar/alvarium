@@ -104,7 +104,7 @@ class LoginFragment : BaseFragment()
                 loginResponse?.loginData?.token?.let {
 
                     prefObject.setPrefs(PrefSingleton.TOKEN_KEY, it)
-                    prefObject.setPrefs(PrefSingleton.LOGGED_PREFER_KEY, true)
+                    prefObject.setPrefs(PrefSingleton.IS_LOGGED_IN, true)
 
                     NetworkUtil.token = it
 

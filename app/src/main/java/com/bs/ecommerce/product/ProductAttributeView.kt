@@ -183,9 +183,7 @@ class ProductAttributeView(
 
         for (x in attr.values) {
 
-            val radioButton = layoutInflater.inflate(
-                R.layout.radiobutton_product_color, colorSelectionLayout.radioGridGroup, false
-            ) as AppCompatRadioButton
+            val radioButton = layoutInflater.inflate(R.layout.radiobutton_product_color, colorSelectionLayout.radioGridGroup, false) as AppCompatRadioButton
 
             radioButton.id = x.id //++dynamicViewId
             radioButton.isChecked = x.isPreSelected

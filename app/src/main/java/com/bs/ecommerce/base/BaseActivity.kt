@@ -25,10 +25,6 @@ abstract class BaseActivity : AppCompatActivity()
 
     val prefObject = PrefSingleton
 
-    protected val isLoggedIn: Boolean
-        get() = prefObject.getPrefsBoolValue(PrefSingleton.LOGGED_PREFER_KEY)!!
-
-
     protected var viewModel: BaseViewModel? = null
 
     var ui_hot: TextView? = null
@@ -113,10 +109,10 @@ abstract class BaseActivity : AppCompatActivity()
 
     }
 
-    fun goMenuItemFragmentifloggedIn(fragment: androidx.fragment.app.Fragment)
+    fun goMenuItemIfLoggedIn(fragment: androidx.fragment.app.Fragment)
     {
         var fragment = fragment
-        if (!isLoggedIn)
+        if (!prefObject.getPrefsBoolValue(PrefSingleton.IS_LOGGED_IN))
             fragment = LoginFragment()
 
         goMenuItemFragment(fragment)

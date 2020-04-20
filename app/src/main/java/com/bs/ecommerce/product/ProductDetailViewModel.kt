@@ -1,12 +1,14 @@
 package com.bs.ecommerce.product
 
 import androidx.lifecycle.MutableLiveData
+import com.bs.ecommerce.auth.register.data.KeyValuePair
 import com.bs.ecommerce.base.BaseViewModel
 import com.bs.ecommerce.common.RequestCompleteListener
 import com.bs.ecommerce.product.data.AttributeControlValue
 import com.bs.ecommerce.product.data.ProductDetail
 import com.bs.ecommerce.product.data.ProductDetailResponse
 import com.bs.ecommerce.utils.AttributeControlType
+import com.bs.ecommerce.utils.showLog
 import java.util.*
 
 class ProductDetailViewModel : BaseViewModel() {
@@ -20,21 +22,25 @@ class ProductDetailViewModel : BaseViewModel() {
     fun getProductDetail(prodId: Long, model: ProductDetailModel) {
         isLoadingLD.postValue(true)
 
-        model.getProductDetail(prodId, object : RequestCompleteListener<ProductDetailResponse> {
-            override fun onRequestSuccess(data: ProductDetailResponse) {
+        model.getProductDetailModel(prodId, object : RequestCompleteListener<ProductDetailResponse>
+        {
+            override fun onRequestSuccess(data: ProductDetailResponse)
+            {
                 val attrMap = HashMap<Long, MutableList<AttributeControlValue>>()
 
                 // sorting attribute values
-                for(attr in data.data?.productAttributes!!) {
+                for(attr in data.data?.productAttributes!!)
+                {
                     attr.values = attr.values.sortedBy { !it.isPreSelected }
 
                     val list = mutableListOf<AttributeControlValue>()
 
-                    for(value in attr.values) {
-                        if(value.isPreSelected) {
+                    for(value in attr.values)
+                    {
+                        if(value.isPreSelected)
+                        {
                             list.add(value)
 
-                            //
                             if(attr.attributeControlType != AttributeControlType.Checkboxes)
                                 break
                         }
@@ -57,6 +63,50 @@ class ProductDetailViewModel : BaseViewModel() {
             }
 
         })
+    }
+
+    fun addProductToCartModel(selectedAttributeMap: MutableMap<Long, MutableList<AttributeControlValue>>, model: ProductDetailModel)
+    {
+
+        val productAttributePrefix = "product_attribute"
+
+        val keyValueList = ArrayList<KeyValuePair>()
+
+        for ((key, valueList) in selectedAttributeMap)
+        {
+            if(valueList.isNotEmpty())
+            {
+                val selectedIdList = valueList.map { it.id }
+
+                for(i in selectedIdList.indices)
+                {
+                    val keyValuePair = KeyValuePair()
+                    keyValuePair.key = "${productAttributePrefix}_${key}"
+                    keyValuePair.value = selectedIdList[i].toString()
+                    keyValueList.add(keyValuePair)
+
+                    "key_value".showLog(" Key : $key    values: ${selectedIdList[i]}")
+                }
+            }
+        }
+
+
+        isLoadingLD.postValue(true)
+
+       /* model.addProductToCartModel(keyValueList, object : RequestCompleteListener<LoginResponse>
+        {
+            override fun onRequestSuccess(data: LoginResponse)
+            {
+                isLoadingLD.postValue(false)
+
+                loginResponseLD.postValue(data)
+            }
+
+            override fun onRequestFailed(errorMessage: String)
+            {
+                isLoadingLD.postValue(false)
+            }
+        })*/
     }
 
     fun incrementQuantity() {
@@ -92,13 +142,15 @@ class ProductDetailViewModel : BaseViewModel() {
                         isSelected: Boolean, multipleSelection: Boolean) {
         val attrMap = selectedAttrLD.value!!
 
-        if(isSelected) {
+        if(isSelected)
+        {
             if (!multipleSelection) attrMap[attrId] = mutableListOf()
 
             attrMap[attrId]?.add(value)
-        } else {
-            attrMap[attrId]?.remove(value)
         }
+        else
+            attrMap[attrId]?.remove(value)
+
 
         adjustProductPrice()
 
