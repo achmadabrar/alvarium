@@ -102,57 +102,54 @@ class RegisterFragment : BaseFragment()
 
     }
 
-    private fun showOrHide(isEnabledParam: Boolean = false, editText: EditText?)
-    {
-        if (isEnabledParam)
-            editText?.visibility = View.VISIBLE
-        else
-            editText?.visibility = View.GONE
-    }
-
-    private fun showOrHide(isEnabledParam: Boolean, layout: LinearLayout?)
-    {
-        if (isEnabledParam)
-            layout?.visibility = View.VISIBLE
-        else
-            layout?.visibility = View.GONE
-    }
-
     private fun setViewsInitially(data: GetRegisterData)
     {
-
         with(data)
         {
 
-            showOrHide(dateOfBirthEnabled, dateOfBirthTextView as EditText)
+            customerFirstNameEditText?.showOrHideOrRequired(isEnabledParam = true, isRequired =   false)
 
-            showOrHide(genderEnabled,  genderLayout)
+            customerLastNameEditText?.showOrHideOrRequired(isEnabledParam = true, isRequired =   false)
 
-            showOrHide(usernamesEnabled,  usernameEditText)
+            emailEditText?.showOrHideOrRequired(isEnabledParam = true, isRequired =   true)
 
-            showOrHide(companyEnabled,  companyInfoEditText)
+            enterPasswordEditText?.showOrHideOrRequired(isEnabledParam = true, isRequired =   true)
 
-            showOrHide(streetAddressEnabled, streetAddressEditText)
+            confirmPasswordEditText?.showOrHideOrRequired(isEnabledParam = true, isRequired =   true)
 
-            showOrHide(streetAddress2Enabled, streetAddress2EditText)
+            dateOfBirthTextView?.showOrHideOrRequired(isEnabledParam = dateOfBirthEnabled, isRequired =   dateOfBirthRequired)
 
-            showOrHide(zipPostalCodeEnabled, zipOrPostalCodeEditText)
+            usernameEditText?.showOrHideOrRequired(isEnabledParam = usernamesEnabled, isRequired =   false)
 
-            showOrHide(cityEnabled,  cityEditText)
+            companyInfoEditText?.showOrHideOrRequired(isEnabledParam = companyEnabled, isRequired =   companyRequired)
 
-            showOrHide(countryEnabled,  countryEditText)
+            streetAddressEditText?.showOrHideOrRequired(isEnabledParam = streetAddressEnabled, isRequired =   streetAddressRequired)
 
-            showOrHide(stateProvinceEnabled,  stateProvinceEditText)
+            streetAddress2EditText?.showOrHideOrRequired(isEnabledParam = streetAddress2Enabled, isRequired =   streetAddress2Required)
 
-            showOrHide(phoneEnabled,  phoneEditText)
+            zipOrPostalCodeEditText?.showOrHideOrRequired(isEnabledParam = zipPostalCodeEnabled, isRequired =   zipPostalCodeRequired)
 
-            showOrHide(faxEnabled,  faxEditText)
+            cityEditText?.showOrHideOrRequired(isEnabledParam = cityEnabled, isRequired =   cityRequired)
 
-            showOrHide(newsletterEnabled, newsletterLayout)
+            countryEditText?.showOrHideOrRequired(isEnabledParam = countryEnabled, isRequired =   countryRequired)
 
-            showOrHide(acceptPrivacyPolicyEnabled, privacyPolicyLayout)
+            stateProvinceEditText?.showOrHideOrRequired(isEnabledParam = stateProvinceEnabled, isRequired =   stateProvinceRequired)
+
+            phoneEditText?.showOrHideOrRequired(isEnabledParam = phoneEnabled, isRequired =   phoneRequired)
+
+            faxEditText?.showOrHideOrRequired(isEnabledParam = faxEnabled, isRequired =   faxRequired)
+
+
+
+            genderLayout?.showOrHide(genderEnabled)
+
+            newsletterLayout?.showOrHide(newsletterEnabled)
+
+            privacyPolicyLayout?.showOrHide(acceptPrivacyPolicyEnabled)
 
         }
+
+        rootScrollView?.visibility = View.VISIBLE
 
     }
 
