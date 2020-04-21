@@ -72,6 +72,11 @@ interface Api {
     @GET("product/productdetails/{id}/0")
     fun getProductDetails(@Path("id") id: Long): Call<ProductDetailResponse>
 
+    @POST("shoppingCart/AddProductToCart/details/{productId}/{shoppingCartTypeId}")
+    fun addProductIntoCartAPI(@Path("productId") id: Long,
+                           @Path("shoppingCartTypeId") shoppingCartTypeId: Long,
+                           @Body addToCartPostData: AddToCartPostData): Call<AddToCartResponse>
+
     @GET("catalog/category/{id}")
     fun getProductList(@Path("id") id: Long, @QueryMap options: Map<String, String>): Call<CategoryResponse>
 

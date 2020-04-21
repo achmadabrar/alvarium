@@ -1,14 +1,13 @@
 package com.bs.ecommerce.product.model
 
-import com.bs.ecommerce.auth.register.data.KeyValuePair
 import com.bs.ecommerce.common.RequestCompleteListener
 import com.bs.ecommerce.networking.RetroClient
 import com.bs.ecommerce.product.model.data.ProductDetailResponse
-import com.bs.ecommerce.product.model.ProductDetailModel
+import com.bs.ecommerce.product.model.data.AddToCartPostData
+import com.bs.ecommerce.product.model.data.AddToCartResponse
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import java.util.ArrayList
 
 class ProductDetailModelImpl :
     ProductDetailModel {
@@ -30,21 +29,26 @@ class ProductDetailModelImpl :
         })
     }
 
-    override fun addProductToCartModel(keyValueList: ArrayList<KeyValuePair>, callback: RequestCompleteListener<ProductDetailResponse>){
+    override fun addProductToCartModel(productId: Long,
+                                       cartTypeId: Long,
+                                       addToCartPostData: AddToCartPostData,
+                                       callback: RequestCompleteListener<AddToCartResponse>)
+    {
 
-        /*RetroClient.api.getProductDetails(productId).enqueue(object : Callback<ProductDetailResponse> {
-            override fun onFailure(call: Call<ProductDetailResponse>, t: Throwable) {
+        RetroClient.api.addProductIntoCartAPI(productId, cartTypeId, addToCartPostData).enqueue(object : Callback<AddToCartResponse>
+        {
+            override fun onFailure(call: Call<AddToCartResponse>, t: Throwable) {
                 callback.onRequestFailed(t.localizedMessage ?: "Unknown")
             }
 
-            override fun onResponse(call: Call<ProductDetailResponse>, response: Response<ProductDetailResponse>) {
+            override fun onResponse(call: Call<AddToCartResponse>, response: Response<AddToCartResponse>) {
                 if (response.body() != null)
-                    callback.onRequestSuccess(response.body() as ProductDetailResponse)
+                    callback.onRequestSuccess(response.body() as AddToCartResponse)
                 else
                     callback.onRequestFailed(response.message())
             }
 
-        })*/
+        })
     }
 
 }
