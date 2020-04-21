@@ -14,8 +14,6 @@ import com.bs.ecommerce.main.model.data.CategoryTreeResponse
 import com.bs.ecommerce.product.model.data.CategoryModel
 import com.bs.ecommerce.product.model.data.Manufacturer
 import com.bs.ecommerce.product.model.data.ProductSummary
-import com.bs.ecommerce.utils.toast
-import com.google.gson.JsonObject
 
 
 class MainViewModel : BaseViewModel() {
@@ -36,18 +34,18 @@ class MainViewModel : BaseViewModel() {
 
     fun getFeaturedProducts(model: HomePageModel) {
 
-        isLoadingLD.postValue(true)
+        isLoadingLD.value = true
 
         model.getFeaturedProducts(object : RequestCompleteListener<HomePageProductResponse> {
             override fun onRequestSuccess(data: HomePageProductResponse) {
-                isLoadingLD.postValue(false)
+                isLoadingLD.value = false
 
-                featuredProductListLD.postValue(data.homePageProductList)
+                featuredProductListLD.value = data.homePageProductList
             }
 
             override fun onRequestFailed(errorMessage: String) {
-                isLoadingLD.postValue(false)
-                allCategoriesFailureLD.postValue(listOf())
+                isLoadingLD.value = false
+                allCategoriesFailureLD.value = listOf()
             }
         })
     }
@@ -55,12 +53,12 @@ class MainViewModel : BaseViewModel() {
     fun getCategoryListWithProducts(model: HomePageModel) {
         model.fetchHomePageCategoryList(object : RequestCompleteListener<List<CategoryModel>> {
             override fun onRequestSuccess(data: List<CategoryModel>) {
-                featuredCategoryLD.postValue(data)
+                featuredCategoryLD.value = data
             }
 
             override fun onRequestFailed(errorMessage: String) {
-                featuredCategoryLD.postValue(listOf())
-                toastMessageLD.postValue(errorMessage)
+                featuredCategoryLD.value = listOf()
+                toastMessageLD.value = errorMessage
             }
         })
     }
@@ -68,12 +66,12 @@ class MainViewModel : BaseViewModel() {
     fun getBestSellingProducts(model: HomePageModel) {
         model.fetchBestSellingProducts(object : RequestCompleteListener<HomePageProductResponse> {
             override fun onRequestSuccess(data: HomePageProductResponse) {
-                bestSellingProductLD.postValue(data.homePageProductList)
+                bestSellingProductLD.value = data.homePageProductList
             }
 
             override fun onRequestFailed(errorMessage: String) {
-                bestSellingProductLD.postValue(listOf())
-                toastMessageLD.postValue(errorMessage)
+                bestSellingProductLD.value = listOf()
+                toastMessageLD.value = errorMessage
             }
 
         })
@@ -82,12 +80,12 @@ class MainViewModel : BaseViewModel() {
     fun getManufactures(model: HomePageModel) {
         model.fetchManufacturers(object : RequestCompleteListener<List<Manufacturer>> {
             override fun onRequestSuccess(data: List<Manufacturer>) {
-                manufacturerListLD.postValue(data)
+                manufacturerListLD.value = data
             }
 
             override fun onRequestFailed(errorMessage: String) {
-                manufacturerListLD.postValue(listOf())
-                toastMessageLD.postValue(errorMessage)
+                manufacturerListLD.value = listOf()
+                toastMessageLD.value = errorMessage
             }
         })
     }
@@ -95,51 +93,51 @@ class MainViewModel : BaseViewModel() {
     fun getBannerImages(model: HomePageModel) {
         model.fetchBannerImages(object : RequestCompleteListener<SliderData> {
             override fun onRequestSuccess(data: SliderData) {
-                imageBannerLD.postValue(data)
+                imageBannerLD.value = data
             }
 
             override fun onRequestFailed(errorMessage: String) {
-                toastMessageLD.postValue(errorMessage)
+                toastMessageLD.value = errorMessage
             }
 
         })
     }
 
     fun getNavDrawerCategoryList(model: MainModel) {
-        isLoadingLD.postValue(true)
+        isLoadingLD.value = true
 
         model.getLeftCategories(object : RequestCompleteListener<CategoryTreeResponse> {
             override fun onRequestSuccess(data: CategoryTreeResponse) {
-                isLoadingLD.postValue(false)
+                isLoadingLD.value = false
 
-                navDrawerCategoriesLD.postValue(data.categoryList)
+                navDrawerCategoriesLD.value = data.categoryList
 
-                testUrlSuccessLD.postValue(true)
+                testUrlSuccessLD.value = true
             }
 
             override fun onRequestFailed(errorMessage: String) {
-                isLoadingLD.postValue(false)
+                isLoadingLD.value = false
 
-                allCategoriesFailureLD.postValue(listOf())
+                allCategoriesFailureLD.value = listOf()
 
-                testUrlSuccessLD.postValue(false)
+                testUrlSuccessLD.value = false
             }
         })
     }
 
     fun getAppSettings(model: MainModel) {
 
-        isLoadingLD.postValue(true)
+        isLoadingLD.value = true
 
         model.getAppLandingSettings(object : RequestCompleteListener<AppLandingSettingResponse> {
             override fun onRequestSuccess(data: AppLandingSettingResponse) {
-                isLoadingLD.postValue(false)
+                isLoadingLD.value = false
 
-                appSettingsLD.postValue(data.data)
+                appSettingsLD.value = data.data
             }
 
             override fun onRequestFailed(errorMessage: String) {
-                isLoadingLD.postValue(false)
+                isLoadingLD.value = false
             }
         })
     }

@@ -1,16 +1,16 @@
 package com.bs.ecommerce.home.homepage.model
 
 import android.content.Context
-import com.bs.ecommerce.networking.RetroClient
 import com.bs.ecommerce.common.RequestCompleteListener
 import com.bs.ecommerce.home.homepage.model.data.HomePageProductResponse
 import com.bs.ecommerce.home.homepage.model.data.SliderData
 import com.bs.ecommerce.home.homepage.model.data.SliderResponse
+import com.bs.ecommerce.networking.RetroClient
 import com.bs.ecommerce.product.model.data.CategoryModel
 import com.bs.ecommerce.product.model.data.HomePageCategoryResponse
 import com.bs.ecommerce.product.model.data.Manufacturer
 import com.bs.ecommerce.product.model.data.ManufacturerResponse
-import com.google.gson.JsonObject
+import com.google.gson.GsonBuilder
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -47,10 +47,24 @@ class HomePageModelImpl(private val context: Context) : HomePageModel {
                     call: Call<HomePageProductResponse>,
                     response: Response<HomePageProductResponse>
                 ) {
-                    if (response.body() != null)
-                        callback.onRequestSuccess(response.body()!!)
-                    else
+                    if (response.body() != null) {
+                        callback.onRequestSuccess(response.body() as HomePageProductResponse)
+                    } else if (response.code() == 404 && !response.errorBody()?.toString()
+                            .isNullOrEmpty()) {
+
+                        val errorBody = GsonBuilder().create().fromJson(
+                            response.errorBody()!!.string(),
+                            HomePageProductResponse::class.java
+                        )
+
+                        if(errorBody==null) {
+                            callback.onRequestFailed(response.message())
+                        } else {
+                            callback.onRequestSuccess(errorBody)
+                        }
+                    } else {
                         callback.onRequestFailed(response.message())
+                    }
                 }
 
 
@@ -67,7 +81,10 @@ class HomePageModelImpl(private val context: Context) : HomePageModel {
                     callback.onRequestFailed(t.localizedMessage ?: "Something went wrong")
                 }
 
-                override fun onResponse(call: Call<HomePageCategoryResponse>, response: Response<HomePageCategoryResponse>) {
+                override fun onResponse(
+                    call: Call<HomePageCategoryResponse>,
+                    response: Response<HomePageCategoryResponse>
+                ) {
                     callback.onRequestSuccess(response.body()?.categoryList ?: listOf())
                 }
 
@@ -81,7 +98,10 @@ class HomePageModelImpl(private val context: Context) : HomePageModel {
                 callback.onRequestFailed(t.localizedMessage ?: "Something went wrong")
             }
 
-            override fun onResponse(call: Call<ManufacturerResponse>, response: Response<ManufacturerResponse>) {
+            override fun onResponse(
+                call: Call<ManufacturerResponse>,
+                response: Response<ManufacturerResponse>
+            ) {
                 callback.onRequestSuccess(response.body()?.manufacturerList ?: listOf())
             }
 
@@ -95,7 +115,10 @@ class HomePageModelImpl(private val context: Context) : HomePageModel {
                 callback.onRequestFailed(t.localizedMessage ?: "Something went wrong")
             }
 
-            override fun onResponse(call: Call<SliderResponse>, response: Response<SliderResponse>) {
+            override fun onResponse(
+                call: Call<SliderResponse>,
+                response: Response<SliderResponse>
+            ) {
                 callback.onRequestSuccess(response.body()?.data ?: SliderData())
             }
 
