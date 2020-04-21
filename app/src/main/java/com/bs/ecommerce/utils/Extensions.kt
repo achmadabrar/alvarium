@@ -11,7 +11,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
+import android.widget.EditText
 import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.Toast
 import androidx.annotation.AnimRes
 import androidx.annotation.IdRes
@@ -138,4 +140,33 @@ fun Activity.hideKeyboard(): Boolean {
         )
     }
     return false
+}
+
+fun EditText?.showOrHideOrRequired(isEnabledParam: Boolean = false, isRequired: Boolean = false)
+{
+    if(this != null)
+    {
+        if (isEnabledParam)
+            this.visibility = View.VISIBLE
+        else
+            this.visibility = View.GONE
+
+        if(isRequired)
+            this.setCompoundDrawablesRelativeWithIntrinsicBounds(0, 0, R.drawable.ic_user, 0)
+    }
+
+
+}
+
+fun LinearLayout?.showOrHide(isEnabledParam: Boolean = false)
+{
+    if(this != null)
+    {
+        if (isEnabledParam)
+            this.visibility = View.VISIBLE
+        else
+            this.visibility = View.GONE
+    }
+
+
 }

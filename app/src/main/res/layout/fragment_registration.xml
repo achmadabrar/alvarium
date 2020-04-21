@@ -2,19 +2,22 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/register_root_layout"
+    android:background="@color/fragment_background"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:tools="http://schemas.android.com/tools">
 
 
     <androidx.core.widget.NestedScrollView
+        android:id="@+id/rootScrollView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
-        android:background="@color/fragment_background"
         android:orientation="vertical"
         android:screenOrientation="nosensor"
-        android:scrollbars="none">
+        android:scrollbars="none"
+        android:visibility="gone"
+        tools:visibility="visible">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -47,7 +50,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="20dp"
-                    android:drawableEnd="@drawable/ic_user"
                     android:hint="@string/reg_hint_first_name"
                     android:imeOptions="actionNext"
                     android:inputType="textPersonName" />
@@ -58,7 +60,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="15dp"
-                    android:drawableEnd="@drawable/ic_user"
                     android:hint="@string/reg_hint_last_name"
                     android:imeOptions="actionNext"
                     android:inputType="textPersonName"/>
@@ -69,7 +70,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="15dp"
-                    android:drawableEnd="@drawable/ic_user"
                     android:hint="@string/reg_hint_username"
                     android:imeOptions="actionNext"
                     android:inputType="textPersonName"/>
@@ -80,10 +80,11 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="15dp"
-                    android:drawableEnd="@drawable/ic_calendar"
                     android:hint="@string/reg_hint_dd_mm_yy"
                     android:imeOptions="actionNext"
-                    android:inputType="date"/>
+                    android:inputType="date"
+                    android:editable="false"
+                    android:focusable="false"/>
 
                 <EditText
                     android:id="@+id/emailEditText"
@@ -91,7 +92,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="15dp"
-                    android:drawableEnd="@drawable/ic_email"
                     android:hint="@string/reg_hint_email"
                     android:imeOptions="actionNext"
                     android:inputType="textEmailAddress"/>
@@ -102,7 +102,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="15dp"
-                    android:drawableEnd="@drawable/ic_mobile"
                     android:hint="@string/reg_hint_phone"
                     android:imeOptions="actionNext"
                     android:inputType="phone" />
@@ -113,7 +112,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="15dp"
-                    android:drawableEnd="@drawable/ic_mobile"
                     android:hint="@string/reg_hint_fax"
                     android:imeOptions="actionNext"
                     android:inputType="phone" />
@@ -123,7 +121,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="15dp"
-                    android:drawableEnd="@drawable/ic_user"
                     android:hint="@string/reg_hint_street_address"
                     android:imeOptions="actionNext"
                     android:inputType="textPersonName"/>
@@ -134,7 +131,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="15dp"
-                    android:drawableEnd="@drawable/ic_user"
                     android:hint="@string/reg_hint_street_address2"
                     android:imeOptions="actionNext"
                     android:inputType="textPersonName"/>
@@ -145,7 +141,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="15dp"
-                    android:drawableEnd="@drawable/ic_user"
                     android:hint="@string/reg_hint_zip_or_postal_code"
                     android:imeOptions="actionNext"
                     android:inputType="textPersonName"/>
@@ -156,7 +151,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="15dp"
-                    android:drawableEnd="@drawable/ic_user"
                     android:hint="@string/reg_hint_country"
                     android:imeOptions="actionNext"
                     android:inputType="textPersonName"/>
@@ -167,7 +161,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="15dp"
-                    android:drawableEnd="@drawable/ic_user"
                     android:hint="@string/reg_hint_city"
                     android:imeOptions="actionNext"
                     android:inputType="textPersonName"/>
@@ -180,7 +173,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="15dp"
-                    android:drawableEnd="@drawable/ic_user"
                     android:hint="@string/reg_hint_state"
                     android:imeOptions="actionNext"
                     android:inputType="textPersonName"/>

@@ -4,10 +4,8 @@ import androidx.lifecycle.MutableLiveData
 import com.bs.ecommerce.auth.register.data.KeyValuePair
 import com.bs.ecommerce.base.BaseViewModel
 import com.bs.ecommerce.common.RequestCompleteListener
-import com.bs.ecommerce.product.model.data.AttributeControlValue
-import com.bs.ecommerce.product.model.data.ProductDetail
-import com.bs.ecommerce.product.model.data.ProductDetailResponse
 import com.bs.ecommerce.product.model.ProductDetailModel
+import com.bs.ecommerce.product.model.data.*
 import com.bs.ecommerce.utils.AttributeControlType
 import com.bs.ecommerce.utils.showLog
 import java.util.*
@@ -66,9 +64,12 @@ class ProductDetailViewModel : BaseViewModel() {
         })
     }
 
-    fun addProductToCartModel(selectedAttributeMap: MutableMap<Long, MutableList<AttributeControlValue>>, model: ProductDetailModel)
-    {
 
+    private fun prepareBodyForAttributes(
+                                productId : Long,
+                                quantity: String,
+                                selectedAttributeMap: MutableMap<Long, MutableList<AttributeControlValue>>): AddToCartPostData
+    {
         val productAttributePrefix = "product_attribute"
 
         val keyValueList = ArrayList<KeyValuePair>()
@@ -90,24 +91,45 @@ class ProductDetailViewModel : BaseViewModel() {
                 }
             }
         }
+        val keyValuePair = KeyValuePair()
 
+        keyValuePair.key = "addtocart_$productId.EnteredQuantity"
+        keyValuePair.value = quantity
+
+
+        val body = AddToCartPostData()
+        body.formValues = keyValueList
+
+        return  body
+    }
+
+
+    fun addProductToCartModel(productId : Long,
+                              quantity: String,
+                              selectedAttributeMap: MutableMap<Long, MutableList<AttributeControlValue>>,
+                              model: ProductDetailModel)
+    {
 
         isLoadingLD.postValue(true)
 
-       /* model.addProductToCartModel(keyValueList, object : RequestCompleteListener<LoginResponse>
+        model.addProductToCartModel(productId,
+                                    1,
+                                    prepareBodyForAttributes(productId, quantity, selectedAttributeMap),
+
+            object : RequestCompleteListener<AddToCartResponse>
         {
-            override fun onRequestSuccess(data: LoginResponse)
+            override fun onRequestSuccess(data: AddToCartResponse)
             {
                 isLoadingLD.postValue(false)
 
-                loginResponseLD.postValue(data)
+                "ewtetert".showLog(data.isSuccess.toString())
             }
 
             override fun onRequestFailed(errorMessage: String)
             {
                 isLoadingLD.postValue(false)
             }
-        })*/
+        })
     }
 
     fun incrementQuantity() {

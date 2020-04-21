@@ -68,133 +68,131 @@ class ProductDetailFragment : BaseFragment(), View.OnClickListener {
 
         btnAddToCart?.setOnClickListener {
 
-            (viewModel as ProductDetailViewModel).addProductToCartModel(selectedAttributeMap, model)
-
+            (viewModel as ProductDetailViewModel).addProductToCartModel(productId,
+                                                                        productQuantityLayout?.tvQuantity?.text.toString(),
+                                                                        selectedAttributeMap, model)
         }
     }
 
     private fun setLiveDataListeners() {
 
+        (viewModel as ProductDetailViewModel).apply {
 
-        (viewModel as ProductDetailViewModel).selectedAttrLD.observe(
-            viewLifecycleOwner,
-            Observer { selectedAttributeMapLD ->
+            productLiveData.observe(
+                viewLifecycleOwner,
+                Observer { product ->
+                    productDetailsRootLayout.visibility = View.VISIBLE
 
-                selectedAttributeMap.clear()
-                selectedAttributeMap = selectedAttributeMapLD
-            })
+                    // slider image
+                    val detailsSliderAdapter =
+                        DetailsSliderAdapter(requireContext(), product.pictureModels)
+                    imageSlider.view_pager_slider?.adapter = detailsSliderAdapter
+                    imageSlider.view_pager_slider?.currentItem = 0
+                    imageSlider.circle_indicator?.setViewPager(imageSlider.view_pager_slider)
 
+                    imageSlider.circle_indicator?.pageColor =
+                        ContextCompat.getColor(activity!!, R.color.white)
+                    imageSlider.circle_indicator?.fillColor =
+                        ContextCompat.getColor(activity!!, R.color.darkOrGray)
 
+                    detailsSliderAdapter.setOnSliderClickListener(object :
+                        DetailsSliderAdapter.OnSliderClickListener {
+                        override fun onSliderClick(view: View, sliderPosition: Int) {
+                            // TODO
+                            /*FullScreenImageActivity.sliderPosition = sliderPosition
+                            FullScreenImageActivity.pictureModels = detail.pictureModels
+                            val intent = Intent(activity, FullScreenImageActivity::class.java)
+                            startActivity(intent)*/
+                        }
+                    })
 
+                    // short description
+                    productNameLayout.tvProductName.text = product.name
+                    productNameLayout.tvProductDescription.text =
+                        TextUtils().getHtmlFormattedText(product.shortDescription)
 
-        (viewModel as ProductDetailViewModel).productLiveData.observe(
-            viewLifecycleOwner,
-            Observer { product ->
-                productDetailsRootLayout.visibility = View.VISIBLE
+                    productPriceLayout.tvOriginalPrice.text = product.productPrice?.oldPrice ?: "$0"
+                    productPriceLayout.tvOriginalPrice.paintFlags =
+                        productPriceLayout.tvOriginalPrice.paintFlags or Paint.STRIKE_THRU_TEXT_FLAG
+                    productPriceLayout.tvDiscountPercent.text = "40% Off"
 
-                // slider image
-                val detailsSliderAdapter =
-                    DetailsSliderAdapter(requireContext(), product.pictureModels)
-                imageSlider.view_pager_slider?.adapter = detailsSliderAdapter
-                imageSlider.view_pager_slider?.currentItem = 0
-                imageSlider.circle_indicator?.setViewPager(imageSlider.view_pager_slider)
+                    tvAvailability.text = product.stockAvailability
 
-                imageSlider.circle_indicator?.pageColor =
-                    ContextCompat.getColor(activity!!, R.color.white)
-                imageSlider.circle_indicator?.fillColor =
-                    ContextCompat.getColor(activity!!, R.color.darkOrGray)
+                    productQuantityLayout.tvQuantity.text = "1"
 
-                detailsSliderAdapter.setOnSliderClickListener(object :
-                    DetailsSliderAdapter.OnSliderClickListener {
-                    override fun onSliderClick(view: View, sliderPosition: Int) {
-                        // TODO
-                        /*FullScreenImageActivity.sliderPosition = sliderPosition
-                        FullScreenImageActivity.pictureModels = detail.pictureModels
-                        val intent = Intent(activity, FullScreenImageActivity::class.java)
-                        startActivity(intent)*/
+                    // long description
+                    productDescLayout.tvProductName.text = "Description"
+                    productDescLayout.tvProductDescription.text =
+                        TextUtils().getHtmlFormattedText(product.fullDescription)
+
+                    // setup product attributes
+                    productAttributeView =
+                        ProductAttributeView(requireContext(), viewModel as ProductDetailViewModel,
+                            bottomSheetLayout, bsBehavior)
+                    for (i in productAttributeView!!.getAttrViews()) {
+                        attrViewHolder.addView(i)
                     }
+
                 })
 
-                // short description
-                productNameLayout.tvProductName.text = product.name
-                productNameLayout.tvProductDescription.text =
-                    TextUtils().getHtmlFormattedText(product.shortDescription)
+            isLoadingLD.observe(
+                viewLifecycleOwner,
+                Observer { isShowLoader ->
 
-                productPriceLayout.tvOriginalPrice.text = product.productPrice?.oldPrice ?: "$0"
-                productPriceLayout.tvOriginalPrice.paintFlags =
-                    productPriceLayout.tvOriginalPrice.paintFlags or Paint.STRIKE_THRU_TEXT_FLAG
-                productPriceLayout.tvDiscountPercent.text = "40% Off"
+                    if (isShowLoader)
+                        showLoading()
+                    else
+                        hideLoading()
+                })
 
-                tvAvailability.text = product.stockAvailability
+            quantityLiveData.observe(
+                viewLifecycleOwner,
+                Observer { quantity ->
+                    productQuantityLayout.tvQuantity.text = quantity.toString()
+                })
 
-                productQuantityLayout.tvQuantity.text = "1"
+            toastMessageLD.observe(
+                viewLifecycleOwner,
+                Observer { message ->
+                    if(message.isNotEmpty())
+                        Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
+                })
 
-                // long description
-                productDescLayout.tvProductName.text = "Description"
-                productDescLayout.tvProductDescription.text =
-                    TextUtils().getHtmlFormattedText(product.fullDescription)
+          productPriceLD.observe(
+                viewLifecycleOwner,
+                Observer { price ->
+                    productPriceLayout.tvDiscountPrice.text = "$%.2f".format(price)
+                })
 
-                // setup product attributes
-                productAttributeView =
-                    ProductAttributeView(requireContext(), viewModel as ProductDetailViewModel,
-                        bottomSheetLayout, bsBehavior)
-                for (i in productAttributeView!!.getAttrViews()) {
-                    attrViewHolder.addView(i)
-                }
+            selectedAttrLD.observe(
+                viewLifecycleOwner,
+                Observer { attrMap ->
 
-            })
+                    for(i in attrMap.keys)
+                    {
+                        val view = attrViewHolder.findViewWithTag<View>(i)
+                        val textView = view.findViewById<TextView>(R.id.tvSelectedAttr)
 
-        (viewModel as ProductDetailViewModel).isLoadingLD.observe(
-            viewLifecycleOwner,
-            Observer { isShowLoader ->
+                        val selectedAttr = attrMap[i]
 
-                if (isShowLoader)
-                    showLoading()
-                else
-                    hideLoading()
-            })
-
-        (viewModel as ProductDetailViewModel).quantityLiveData.observe(
-            viewLifecycleOwner,
-            Observer { quantity ->
-                productQuantityLayout.tvQuantity.text = quantity.toString()
-            })
-
-        (viewModel as ProductDetailViewModel).toastMessageLD.observe(
-            viewLifecycleOwner,
-            Observer { message ->
-                if(message.isNotEmpty())
-                    Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
-            })
-
-        (viewModel as ProductDetailViewModel).productPriceLD.observe(
-            viewLifecycleOwner,
-            Observer { price ->
-                productPriceLayout.tvDiscountPrice.text = "$%.2f".format(price)
-            })
-
-        (viewModel as ProductDetailViewModel).selectedAttrLD.observe(
-            viewLifecycleOwner,
-            Observer { attrMap ->
-
-                for(i in attrMap.keys) {
-                    val view = attrViewHolder.findViewWithTag<View>(i)
-                    val textView = view.findViewById<TextView>(R.id.tvSelectedAttr)
-
-                    val selectedAttr = attrMap[i]
-
-                    if(selectedAttr.isNullOrEmpty()) {
-                        textView?.text = getString(R.string.select)
-                    } else {
-                        textView?.text = attrMap[i]?.get(0)?.name
+                        if(selectedAttr.isNullOrEmpty()) {
+                            textView?.text = getString(R.string.select)
+                        } else {
+                            textView?.text = attrMap[i]?.get(0)?.name
+                        }
                     }
-                }
-            })
 
-        mainViewModel.featuredProductListLD.observe(viewLifecycleOwner,
-            Observer { list ->
-                populateFeaturedProductList(list)
-            })
+                    selectedAttributeMap.clear()
+                    selectedAttributeMap = attrMap
+                })
+
+            mainViewModel.featuredProductListLD.observe(viewLifecycleOwner,
+                Observer { list ->
+                    populateFeaturedProductList(list)
+                })
+
+        }
+
     }
 
     private fun populateFeaturedProductList(list: List<ProductSummary>) {
