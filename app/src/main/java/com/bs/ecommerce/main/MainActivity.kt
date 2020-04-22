@@ -16,6 +16,7 @@ import com.bs.ecommerce.home.homepage.HomeFragment
 import com.bs.ecommerce.main.model.MainModel
 import com.bs.ecommerce.main.model.MainModelImpl
 import com.bs.ecommerce.more.OptionsFragment
+import com.bs.ecommerce.search.SearchFragment
 import com.bs.ecommerce.utils.PrefSingleton
 import com.bs.ecommerce.utils.createIfNotInBackStack
 import com.bs.ecommerce.utils.toast
@@ -80,6 +81,7 @@ class MainActivity : BaseActivity()
 
             when(topFragmentName) {
                 OptionsFragment::class.java.simpleName -> bottomNavPosition = 4
+                SearchFragment::class.java.simpleName -> bottomNavPosition = 3
                 CategoryFragment::class.java.simpleName -> bottomNavPosition = 1
                 HomeFragment::class.java.simpleName -> bottomNavPosition = 0
             }
@@ -198,6 +200,7 @@ class MainActivity : BaseActivity()
             }
             R.id.bottom_nav_search -> {
 
+                createIfNotInBackStack<SearchFragment>(SearchFragment())
                 return@OnNavigationItemSelectedListener true
             }
             R.id.bottom_nav_account -> {

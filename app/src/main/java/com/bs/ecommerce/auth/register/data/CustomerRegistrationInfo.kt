@@ -1,6 +1,8 @@
 package com.bs.ecommerce.auth.register.data
 
 import com.bs.ecommerce.networking.BaseResponse
+import com.bs.ecommerce.product.model.data.AttributeControlValue
+import com.bs.ecommerce.product.model.data.ProductAttribute
 import com.google.gson.annotations.SerializedName
 
 class CustomerRegistrationInfo : CustomerInfo() {
@@ -67,38 +69,6 @@ open class CustomerInfo : BaseResponse() {
                 ", Gender='" + gender + '\'' +
                 '}'
     }
-
-
-}
-
-class ProductAttribute {
-    @SerializedName("ProductId") var productId: Long = 0
-    @SerializedName("Id") var id: Int = 0
-
-
-    @SerializedName("ProductAttributeId") var productAttributeId: Long = 0
-    @SerializedName("Name") var name: String? = null
-    @SerializedName("Description") var description: String? = null
-    @SerializedName("TextPrompt") var textPrompt: String? = null
-    @SerializedName("IsRequired") var isRequired: Boolean = false
-    @SerializedName("DefaultValue") var defaultValue: String? = null
-    @SerializedName("AttributeControlType") var attributeControlType: Int = 0
-    @SerializedName("Values") var values: List<AttributeControlValue> = mutableListOf()
-    @SerializedName("SelectedDay") private val SelectedDay: Any? = null
-    @SerializedName("SelectedMonth") private val SelectedMonth: Any? = null
-    @SerializedName("SelectedYear") private val SelectedYear: Any? = null
-
-
-}
-class AttributeControlValue
-{
-    @SerializedName("Name") var name: String? = null
-    @SerializedName("ColorSquaresRgb") var colorSquaresRgb: String? = null
-    @SerializedName("PriceAdjustment") var priceAdjustment: String? = null
-    @SerializedName("PriceAdjustmentValue") var priceAdjustmentValue: Double = 0.toDouble()
-    @SerializedName("IsPreSelected") var isPreSelected: Boolean = false
-    @SerializedName("Id") var id: Int = 0
-    @SerializedName("DefaultValue") var defaultValue: String? = null
 
 
 }

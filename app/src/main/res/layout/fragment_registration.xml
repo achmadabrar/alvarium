@@ -1,362 +1,375 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/register_root_layout"
-    android:background="@color/fragment_background"
+
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:tools="http://schemas.android.com/tools">
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
-
-    <androidx.core.widget.NestedScrollView
-        android:id="@+id/rootScrollView"
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/register_root_layout"
+        android:background="@color/fragment_background"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:orientation="vertical"
-        android:screenOrientation="nosensor"
-        android:scrollbars="none"
-        android:visibility="gone"
-        tools:visibility="visible">
+        android:layout_height="match_parent"
+        xmlns:tools="http://schemas.android.com/tools">
 
-        <LinearLayout
+
+        <androidx.core.widget.NestedScrollView
+            android:id="@+id/rootScrollView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
-
+            android:layout_alignParentTop="true"
+            android:orientation="vertical"
+            android:screenOrientation="nosensor"
+            android:scrollbars="none"
+            android:visibility="gone"
+            tools:visibility="visible">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/form_margin"
-                android:layout_marginTop="20dp"
-                android:layout_marginEnd="@dimen/form_margin"
                 android:orientation="vertical">
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/reg_title_your_personal_details"
-                    android:textColor="@color/register_title_text"
-                    android:layout_marginBottom="5dp"
-                    android:textSize="@dimen/registration_title_text_size"
-                    android:textStyle="bold" />
-
-                <include layout="@layout/horizontal_divider" />
-
-                <EditText
-                    android:id="@+id/customerFirstNameEditText"
-                    style="@style/RoundedEditText"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="20dp"
-                    android:hint="@string/reg_hint_first_name"
-                    android:imeOptions="actionNext"
-                    android:inputType="textPersonName" />
-
-                <EditText
-                    android:id="@+id/customerLastNameEditText"
-                    style="@style/RoundedEditText"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="15dp"
-                    android:hint="@string/reg_hint_last_name"
-                    android:imeOptions="actionNext"
-                    android:inputType="textPersonName"/>
-
-                <EditText
-                    android:id="@+id/usernameEditText"
-                    style="@style/RoundedEditText"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="15dp"
-                    android:hint="@string/reg_hint_username"
-                    android:imeOptions="actionNext"
-                    android:inputType="textPersonName"/>
-
-                <EditText
-                    android:id="@+id/dateOfBirthTextView"
-                    style="@style/RoundedEditText"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="15dp"
-                    android:hint="@string/reg_hint_dd_mm_yy"
-                    android:imeOptions="actionNext"
-                    android:inputType="date"
-                    android:editable="false"
-                    android:focusable="false"/>
-
-                <EditText
-                    android:id="@+id/emailEditText"
-                    style="@style/RoundedEditText"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="15dp"
-                    android:hint="@string/reg_hint_email"
-                    android:imeOptions="actionNext"
-                    android:inputType="textEmailAddress"/>
-
-                <EditText
-                    android:id="@+id/phoneEditText"
-                    style="@style/RoundedEditText"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="15dp"
-                    android:hint="@string/reg_hint_phone"
-                    android:imeOptions="actionNext"
-                    android:inputType="phone" />
-
-                <EditText
-                    android:id="@+id/faxEditText"
-                    style="@style/RoundedEditText"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="15dp"
-                    android:hint="@string/reg_hint_fax"
-                    android:imeOptions="actionNext"
-                    android:inputType="phone" />
-                <EditText
-                    android:id="@+id/streetAddressEditText"
-                    style="@style/RoundedEditText"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="15dp"
-                    android:hint="@string/reg_hint_street_address"
-                    android:imeOptions="actionNext"
-                    android:inputType="textPersonName"/>
-
-                <EditText
-                    android:id="@+id/streetAddress2EditText"
-                    style="@style/RoundedEditText"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="15dp"
-                    android:hint="@string/reg_hint_street_address2"
-                    android:imeOptions="actionNext"
-                    android:inputType="textPersonName"/>
-
-                <EditText
-                    android:id="@+id/zipOrPostalCodeEditText"
-                    style="@style/RoundedEditText"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="15dp"
-                    android:hint="@string/reg_hint_zip_or_postal_code"
-                    android:imeOptions="actionNext"
-                    android:inputType="textPersonName"/>
-
-                <EditText
-                    android:id="@+id/countryEditText"
-                    style="@style/RoundedEditText"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="15dp"
-                    android:hint="@string/reg_hint_country"
-                    android:imeOptions="actionNext"
-                    android:inputType="textPersonName"/>
-
-                <EditText
-                    android:id="@+id/cityEditText"
-                    style="@style/RoundedEditText"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="15dp"
-                    android:hint="@string/reg_hint_city"
-                    android:imeOptions="actionNext"
-                    android:inputType="textPersonName"/>
-
-
-
-                <EditText
-                    android:id="@+id/stateProvinceEditText"
-                    style="@style/RoundedEditText"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="15dp"
-                    android:hint="@string/reg_hint_state"
-                    android:imeOptions="actionNext"
-                    android:inputType="textPersonName"/>
-
-
-                <RadioGroup
-                    android:id="@+id/genderLayout"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="20dp"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginEnd="15dp"
-                        android:text="@string/reg_gender"
-                        android:textColor="@color/register_title_text"
-                        android:textSize="18sp"
-                        android:textStyle="bold" />
-
-                    <RadioButton
-                        android:id="@+id/genderMaleRadioButton"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginEnd="15dp"
-                        android:button="@drawable/custom_radio_button"
-                        android:checked="true"
-                        android:text="@string/male"
-                        android:textColor="@color/radiobutton_text"
-                        android:textSize="18sp" />
-
-                    <RadioButton
-                        android:id="@+id/genderFemaleRadioButton"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:button="@drawable/custom_radio_button"
-                        android:text="@string/female"
-                        android:textColor="@color/radiobutton_text"
-                        android:textSize="18sp" />
-                </RadioGroup>
-
-<!--                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="20dp"
-                    android:text="@string/reg_title_company_details"
-                    android:layout_marginBottom="5dp"
-                    android:textColor="@color/register_title_text"
-                    android:textSize="@dimen/registration_title_text_size"
-                    android:textStyle="bold" />
-
-                <include layout="@layout/horizontal_divider" />-->
-
-
-                <EditText
-                    android:id="@+id/companyInfoEditText"
-                    style="@style/RoundedEditText"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="20dp"
-                    android:hint="@string/reg_hint_company_name"
-                    android:imeOptions="actionNext"
-                    android:inputType="textCapWords" />
-
 
 
                 <LinearLayout
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:id="@+id/newsletterLayout">
+                    android:layout_marginStart="@dimen/form_margin"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginEnd="@dimen/form_margin"
+                    android:orientation="vertical">
 
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="20dp"
-                        android:text="@string/reg_title_options"
-                        android:layout_marginBottom="5dp"
+                        android:text="@string/reg_title_your_personal_details"
                         android:textColor="@color/register_title_text"
+                        android:layout_marginBottom="5dp"
                         android:textSize="@dimen/registration_title_text_size"
                         android:textStyle="bold" />
 
                     <include layout="@layout/horizontal_divider" />
 
-                    <CheckBox
-                        android:id="@+id/cbNewsletter"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="20dp"
-                        android:layout_marginEnd="15dp"
-                        android:button="@drawable/custom_radio_button"
-                        android:checked="true"
-                        android:text="@string/newsletter"
-                        android:textColor="@color/radiobutton_text"
-                        android:textSize="18sp" />
-
-                </LinearLayout>
-
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:id="@+id/privacyPolicyLayout">
-
-                    <CheckBox
-                        android:id="@+id/privacyPolicyCheckbox"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="20dp"
-                        android:layout_marginEnd="15dp"
-                        android:button="@drawable/custom_radio_button"
-                        android:checked="true"
-                        android:text="@string/newsletter"
-                        android:textColor="@color/radiobutton_text"
-                        android:textSize="18sp" />
-
-                </LinearLayout>
-
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="20dp"
-                    android:text="@string/reg_title_your_password"
-                    android:textColor="@color/register_title_text"
-                    android:layout_marginBottom="5dp"
-                    android:textSize="@dimen/registration_title_text_size"
-                    android:textStyle="bold" />
-
-                <include layout="@layout/horizontal_divider" />
-
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/register_password_layout"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="20dp"
-                    app:hintEnabled="false"
-                    app:passwordToggleEnabled="false">
-
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/enterPasswordEditText"
+                    <EditText
+                        android:id="@+id/customerFirstNameEditText"
                         style="@style/RoundedEditText"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="@string/reg_hint_password"
+                        android:layout_marginTop="20dp"
+                        android:hint="@string/reg_hint_first_name"
                         android:imeOptions="actionNext"
-                        android:inputType="textPassword" />
-                </com.google.android.material.textfield.TextInputLayout>
+                        android:inputType="textPersonName" />
 
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/reg_confirm_password"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="15dp"
-                    app:hintEnabled="false"
-                    app:passwordToggleEnabled="false">
-
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/confirmPasswordEditText"
+                    <EditText
+                        android:id="@+id/customerLastNameEditText"
                         style="@style/RoundedEditText"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="@string/reg_hint_confirm_password"
-                        android:imeOptions="actionDone"
-                        android:inputType="textPassword" />
-                </com.google.android.material.textfield.TextInputLayout>
+                        android:layout_marginTop="15dp"
+                        android:hint="@string/reg_hint_last_name"
+                        android:imeOptions="actionNext"
+                        android:inputType="textPersonName"/>
 
+                    <EditText
+                        android:id="@+id/usernameEditText"
+                        style="@style/RoundedEditText"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="15dp"
+                        android:hint="@string/reg_hint_username"
+                        android:imeOptions="actionNext"
+                        android:inputType="textPersonName"/>
+
+                    <EditText
+                        android:id="@+id/dateOfBirthTextView"
+                        style="@style/RoundedEditText"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="15dp"
+                        android:hint="@string/reg_hint_dd_mm_yy"
+                        android:imeOptions="actionNext"
+                        android:inputType="date"
+                        android:editable="false"
+                        android:focusable="false"/>
+
+                    <EditText
+                        android:id="@+id/emailEditText"
+                        style="@style/RoundedEditText"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="15dp"
+                        android:hint="@string/reg_hint_email"
+                        android:imeOptions="actionNext"
+                        android:inputType="textEmailAddress"/>
+
+                    <EditText
+                        android:id="@+id/phoneEditText"
+                        style="@style/RoundedEditText"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="15dp"
+                        android:hint="@string/reg_hint_phone"
+                        android:imeOptions="actionNext"
+                        android:inputType="phone" />
+
+                    <EditText
+                        android:id="@+id/faxEditText"
+                        style="@style/RoundedEditText"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="15dp"
+                        android:hint="@string/reg_hint_fax"
+                        android:imeOptions="actionNext"
+                        android:inputType="phone" />
+                    <EditText
+                        android:id="@+id/streetAddressEditText"
+                        style="@style/RoundedEditText"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="15dp"
+                        android:hint="@string/reg_hint_street_address"
+                        android:imeOptions="actionNext"
+                        android:inputType="textPersonName"/>
+
+                    <EditText
+                        android:id="@+id/streetAddress2EditText"
+                        style="@style/RoundedEditText"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="15dp"
+                        android:hint="@string/reg_hint_street_address2"
+                        android:imeOptions="actionNext"
+                        android:inputType="textPersonName"/>
+
+                    <EditText
+                        android:id="@+id/zipOrPostalCodeEditText"
+                        style="@style/RoundedEditText"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="15dp"
+                        android:hint="@string/reg_hint_zip_or_postal_code"
+                        android:imeOptions="actionNext"
+                        android:inputType="textPersonName"/>
+
+                    <EditText
+                        android:id="@+id/countryEditText"
+                        style="@style/RoundedEditText"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="15dp"
+                        android:hint="@string/reg_hint_country"
+                        android:imeOptions="actionNext"
+                        android:inputType="textPersonName"/>
+
+                    <EditText
+                        android:id="@+id/cityEditText"
+                        style="@style/RoundedEditText"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="15dp"
+                        android:hint="@string/reg_hint_city"
+                        android:imeOptions="actionNext"
+                        android:inputType="textPersonName"/>
+
+
+
+                    <EditText
+                        android:id="@+id/stateProvinceEditText"
+                        style="@style/RoundedEditText"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="15dp"
+                        android:hint="@string/reg_hint_state"
+                        android:imeOptions="actionNext"
+                        android:inputType="textPersonName"/>
+
+
+                    <RadioGroup
+                        android:id="@+id/genderLayout"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="20dp"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="15dp"
+                            android:text="@string/reg_gender"
+                            android:textColor="@color/register_title_text"
+                            android:textSize="18sp"
+                            android:textStyle="bold" />
+
+                        <RadioButton
+                            android:id="@+id/genderMaleRadioButton"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="15dp"
+                            android:button="@drawable/custom_radio_button"
+                            android:checked="true"
+                            android:text="@string/male"
+                            android:textColor="@color/radiobutton_text"
+                            android:textSize="18sp" />
+
+                        <RadioButton
+                            android:id="@+id/genderFemaleRadioButton"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:button="@drawable/custom_radio_button"
+                            android:text="@string/female"
+                            android:textColor="@color/radiobutton_text"
+                            android:textSize="18sp" />
+                    </RadioGroup>
+
+
+                    <LinearLayout
+                        android:id="@+id/attrViewHolderRegisterPage"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:layout_marginTop="20dp"/>
+
+                    <EditText
+                        android:id="@+id/companyInfoEditText"
+                        style="@style/RoundedEditText"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="20dp"
+                        android:hint="@string/reg_hint_company_name"
+                        android:imeOptions="actionNext"
+                        android:inputType="textCapWords" />
+
+
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:id="@+id/newsletterLayout">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="20dp"
+                            android:text="@string/reg_title_options"
+                            android:layout_marginBottom="5dp"
+                            android:textColor="@color/register_title_text"
+                            android:textSize="@dimen/registration_title_text_size"
+                            android:textStyle="bold" />
+
+                        <include layout="@layout/horizontal_divider" />
+
+                        <CheckBox
+                            android:id="@+id/cbNewsletter"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="20dp"
+                            android:layout_marginEnd="15dp"
+                            android:button="@drawable/custom_radio_button"
+                            android:checked="true"
+                            android:text="@string/newsletter"
+                            android:textColor="@color/radiobutton_text"
+                            android:textSize="18sp" />
+
+                    </LinearLayout>
+
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:id="@+id/privacyPolicyLayout">
+
+                        <CheckBox
+                            android:id="@+id/privacyPolicyCheckbox"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="20dp"
+                            android:layout_marginEnd="15dp"
+                            android:button="@drawable/custom_radio_button"
+                            android:checked="true"
+                            android:text="@string/newsletter"
+                            android:textColor="@color/radiobutton_text"
+                            android:textSize="18sp" />
+
+                    </LinearLayout>
+
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="20dp"
+                        android:text="@string/reg_title_your_password"
+                        android:textColor="@color/register_title_text"
+                        android:layout_marginBottom="5dp"
+                        android:textSize="@dimen/registration_title_text_size"
+                        android:textStyle="bold" />
+
+                    <include layout="@layout/horizontal_divider" />
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/register_password_layout"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="20dp"
+                        app:hintEnabled="false"
+                        app:passwordToggleEnabled="false">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/enterPasswordEditText"
+                            style="@style/RoundedEditText"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:hint="@string/reg_hint_password"
+                            android:imeOptions="actionNext"
+                            android:inputType="textPassword" />
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/reg_confirm_password"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="15dp"
+                        app:hintEnabled="false"
+                        app:passwordToggleEnabled="false">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/confirmPasswordEditText"
+                            style="@style/RoundedEditText"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:hint="@string/reg_hint_confirm_password"
+                            android:imeOptions="actionDone"
+                            android:inputType="textPassword" />
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                </LinearLayout>
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/saveBtn"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:background="@color/pink"
+                    android:nextFocusLeft="@+id/login_remember_password"
+                    android:nextFocusUp="@+id/login_remember_password"
+                    android:text="@string/reg_btn_register"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/button_text_size" />
             </LinearLayout>
 
-            <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/saveBtn"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:background="@color/pink"
-                android:nextFocusLeft="@+id/login_remember_password"
-                android:nextFocusUp="@+id/login_remember_password"
-                android:text="@string/reg_btn_register"
-                android:textColor="@color/white"
-                android:textSize="@dimen/button_text_size" />
-        </LinearLayout>
+        </androidx.core.widget.NestedScrollView>
 
-    </androidx.core.widget.NestedScrollView>
+    </RelativeLayout>
 
-</RelativeLayout>
+    <include
+        android:id="@+id/bottomSheetLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        layout="@layout/other_attr_bottom_sheet"
+        app:behavior_hideable="true"
+        app:behavior_peekHeight="0dp"
+        app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior"/>
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

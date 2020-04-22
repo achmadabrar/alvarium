@@ -11,6 +11,7 @@
     <string name="title_shopping_cart">Shopping Cart</string>
     <string name="title_login">Login</string>
     <string name="title_register">Register</string>
+    <string name="title_search">Search Products</string>
     <string name="title_more">More</string>
 
     <!-- Login Fragment  -->
@@ -143,6 +144,7 @@
         <item>Item 3</item>
     </string-array>
 
+    <string name="search_limit">Search term minimum length is 3 characters</string>
 
 
 

@@ -5,9 +5,7 @@ import android.os.Bundle
 import android.util.Patterns
 import android.view.View
 import android.widget.EditText
-import android.widget.LinearLayout
 import android.widget.RelativeLayout
-import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.bs.ecommerce.R
@@ -20,11 +18,16 @@ import com.bs.ecommerce.auth.register.data.GetRegistrationResponse
 import com.bs.ecommerce.base.BaseFragment
 import com.bs.ecommerce.base.BaseViewModel
 import com.bs.ecommerce.main.model.AuthModel
+import com.bs.ecommerce.product.viewModel.ProductDetailViewModel
 import com.bs.ecommerce.utils.*
+import com.google.android.material.bottomsheet.BottomSheetBehavior
+import kotlinx.android.synthetic.main.fragment_product_detail.*
 import kotlinx.android.synthetic.main.fragment_registration.*
+import kotlinx.android.synthetic.main.fragment_registration.bottomSheetLayout
+import kotlinx.android.synthetic.main.other_attr_bottom_sheet.view.*
 import java.util.*
 
-class RegisterFragment : BaseFragment()
+class RegisterFragment : BaseFragment(), View.OnClickListener
 {
     override fun getLayoutId(): Int = R.layout.fragment_registration
 
@@ -32,6 +35,8 @@ class RegisterFragment : BaseFragment()
 
     override fun createViewModel(): BaseViewModel = RegistrationViewModel()
 
+    private var customerAttributeView: CustomerAttributeView? = null
+    private lateinit var bsBehavior: BottomSheetBehavior<*>
 
     private var isValidInfo = true
 
@@ -62,6 +67,8 @@ class RegisterFragment : BaseFragment()
         super.onViewCreated(view, savedInstanceState)
 
         activity?.title = getString(R.string.title_register)
+
+        initView()
 
         hideTextPanels()
         initEditButtonsAction()
@@ -147,7 +154,18 @@ class RegisterFragment : BaseFragment()
 
             privacyPolicyLayout?.showOrHide(acceptPrivacyPolicyEnabled)
 
+
+            customerAttributeView = CustomerAttributeView(requireContext(), viewModel as RegistrationViewModel, bottomSheetLayout, bsBehavior)
+
+            for (i in customerAttributeView!!.getAttrViews()) {
+                attrViewHolderRegisterPage?.addView(i)
+            }
+
         }
+
+
+
+
 
         rootScrollView?.visibility = View.VISIBLE
 
@@ -288,11 +306,44 @@ class RegisterFragment : BaseFragment()
             newsletter = cbNewsletter?.isChecked!!
 
         }
+    }
 
-        //customerAttributeViews?.putEdittextValueInMap()
+    private fun initView() {
 
-        //customerInfo?.formValue = customerAttributeViews?.productAttribute
-        //"attributestTest".showLog(customerAttributeViews?.productAttribute.toString())
+        bsBehavior = BottomSheetBehavior.from(bottomSheetLayout)
+        bsBehavior.addBottomSheetCallback(object : BottomSheetBehavior.BottomSheetCallback() {
+            override fun onStateChanged(bottomSheet: View, newState: Int) {
+                when (newState) {
+                    BottomSheetBehavior.STATE_HIDDEN -> {
+                    }
+                    BottomSheetBehavior.STATE_EXPANDED -> {
+                    }
+                    BottomSheetBehavior.STATE_COLLAPSED -> {
+                    }
+                    BottomSheetBehavior.STATE_DRAGGING -> {
+                    }
+                    BottomSheetBehavior.STATE_SETTLING -> {
+                    }
+                }
+            }
+
+            override fun onSlide(bottomSheet: View, slideOffset: Float) {
+            }
+        })
+
+        bottomSheetLayout.tvDone.setOnClickListener(this)
+    }
+
+
+    override fun onClick(v: View) {
+        when(v.id) {
+            R.id.btnPlus -> (viewModel as ProductDetailViewModel).incrementQuantity()
+            R.id.btnMinus -> (viewModel as ProductDetailViewModel).decrementQuantity()
+            R.id.tvDone -> {
+                bsBehavior.state = BottomSheetBehavior.STATE_COLLAPSED
+                customerAttributeView?.onBottomSheetClose()
+            }
+        }
     }
 
 

@@ -22,7 +22,7 @@ class CategoryFragment : BaseFragment()
 
     private lateinit var mainModel: MainModel
     private lateinit var mainViewModel: MainViewModel
-
+    private var viewCreated = false
 
     override fun getLayoutId(): Int = R.layout.category_left
 
@@ -37,12 +37,16 @@ class CategoryFragment : BaseFragment()
 
         activity?.title = getString(R.string.title_category)
 
-        mainModel = MainModelImpl(activity?.applicationContext!!)
+        if (!viewCreated)
+        {
+            mainModel = MainModelImpl(activity?.applicationContext!!)
 
-        mainViewModel = ViewModelProvider(this).get(MainViewModel::class.java)
+            mainViewModel = ViewModelProvider(this).get(MainViewModel::class.java)
 
-        mainViewModel.getNavDrawerCategoryList(mainModel)
+            mainViewModel.getNavDrawerCategoryList(mainModel)
+            viewCreated = true
 
+        }
 
         setLiveDataListeners()
 
