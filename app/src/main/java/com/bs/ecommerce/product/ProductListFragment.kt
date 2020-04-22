@@ -45,6 +45,8 @@ class ProductListFragment : BaseFragment() {
     private var viewCreated = false
     private var rootView: View? = null
 
+    override fun getFragmentTitle() = R.string.title_register
+
     override fun getLayoutId(): Int = R.layout.fragment_product_list
 
     override fun getRootLayout(): RelativeLayout = productListRootLayout

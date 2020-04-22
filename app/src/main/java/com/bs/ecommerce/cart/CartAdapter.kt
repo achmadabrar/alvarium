@@ -15,6 +15,7 @@ import com.bs.ecommerce.base.BaseViewModel
 import com.bs.ecommerce.cart.model.CartModel
 import com.bs.ecommerce.cart.model.CartProduct
 import com.bs.ecommerce.utils.Language
+import com.bs.ecommerce.utils.show
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.cart_list_item.view.*
 import kotlinx.android.synthetic.main.product_price_layout.view.*
@@ -138,16 +139,8 @@ open class CartAdapter(
 
                 if(productModel.attributeInfo.isNotEmpty())
                 {
-                    holder?.tvAttribute1?.visibility =View.VISIBLE
-
-                    val htmlHeader = ("<head>"
-                            + "<style type=\"text/css\">body{color: #fff; background-color: #444444;}"
-                            + "</style></head>")
-
-                    if (Locale.getDefault().language == Language.ARABIC)
-                        holder?.tvAttribute1?.loadDataWithBaseURL("", "<html dir=\"rtl\" lang=\"\">" + htmlHeader + "<body>" + productModel.attributeInfo + "</body></html>", "text/html", "UTF-8", "")
-                    else
-                        holder?.tvAttribute1?.loadDataWithBaseURL("", "<html>" + htmlHeader + "<body>" + productModel.attributeInfo + "</body></html>", "text/html", "UTF-8", "")
+                    holder?.tvAttribute1?.visibility = View.VISIBLE
+                    holder?.tvAttribute1?.show(productModel.attributeInfo)
                 }
                 else
                     holder?.tvAttribute1?.visibility =View.GONE

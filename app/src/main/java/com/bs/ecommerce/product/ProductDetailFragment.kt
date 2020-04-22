@@ -41,8 +41,7 @@ class ProductDetailFragment : BaseFragment(), View.OnClickListener {
     private var productAttributeView: ProductAttributeView? = null
     private lateinit var mainViewModel: MainViewModel
 
-    var selectedAttributeMap : MutableMap<Long, MutableList<AttributeControlValue>> = HashMap()
-
+    override fun getFragmentTitle() = R.string.title_product
 
     override fun getLayoutId(): Int = R.layout.fragment_product_detail
 
@@ -69,8 +68,7 @@ class ProductDetailFragment : BaseFragment(), View.OnClickListener {
         btnAddToCart?.setOnClickListener {
 
             (viewModel as ProductDetailViewModel).addProductToCartModel(productId,
-                                                                        productQuantityLayout?.tvQuantity?.text.toString(),
-                                                                        selectedAttributeMap, model)
+                                                                        productQuantityLayout?.tvQuantity?.text.toString(), model)
         }
     }
 
@@ -108,8 +106,8 @@ class ProductDetailFragment : BaseFragment(), View.OnClickListener {
 
                     // short description
                     productNameLayout.tvProductName.text = product.name
-                    productNameLayout.tvProductDescription.text =
-                        TextUtils().getHtmlFormattedText(product.shortDescription)
+                    //productNameLayout.tvProductDescription.text = TextUtils().getHtmlFormattedText(product.shortDescription)
+                    product.shortDescription?.let {   productNameLayout?.tvProductDescription?.show(it)    }
 
                     productPriceLayout.tvOriginalPrice.text = product.productPrice?.oldPrice ?: "$0"
                     productPriceLayout.tvOriginalPrice.paintFlags =
@@ -122,8 +120,7 @@ class ProductDetailFragment : BaseFragment(), View.OnClickListener {
 
                     // long description
                     productDescLayout.tvProductName.text = "Description"
-                    productDescLayout.tvProductDescription.text =
-                        TextUtils().getHtmlFormattedText(product.fullDescription)
+                    product.fullDescription?.let {   productDescLayout?.tvProductDescription?.show(it)    }
 
                     // setup product attributes
                     productAttributeView =
@@ -181,9 +178,6 @@ class ProductDetailFragment : BaseFragment(), View.OnClickListener {
                             textView?.text = attrMap[i]?.get(0)?.name
                         }
                     }
-
-                    selectedAttributeMap.clear()
-                    selectedAttributeMap = attrMap
                 })
 
             mainViewModel.featuredProductListLD.observe(viewLifecycleOwner,

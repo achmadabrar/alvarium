@@ -1,5 +1,8 @@
 package com.bs.ecommerce.auth.register.data
 import com.bs.ecommerce.auth.login.data.BaseResponse
+import com.bs.ecommerce.product.model.data.AttributeControlValue
+import com.bs.ecommerce.product.model.data.CustomerAttribute
+import com.bs.ecommerce.product.model.data.ProductAttribute
 import com.google.gson.annotations.SerializedName
 
 
@@ -71,7 +74,8 @@ data class GetRegisterData(
     @SerializedName("VatNumber") var vatNumber: String = "",
     @SerializedName("ZipPostalCode") var zipPostalCode: String = "",
     @SerializedName("ZipPostalCodeEnabled") var zipPostalCodeEnabled: Boolean = false,
-    @SerializedName("ZipPostalCodeRequired") var zipPostalCodeRequired: Boolean = false
+    @SerializedName("ZipPostalCodeRequired") var zipPostalCodeRequired: Boolean = false,
+    @SerializedName("FormValues") var formValues: List<KeyValuePair> = listOf()
 )
 
 data class AvailableTimeZone(
@@ -82,22 +86,4 @@ data class AvailableTimeZone(
     @SerializedName("Value") var value: String = ""
 )
 
-
-data class CustomerAttribute(
-    @SerializedName("AttributeControlType") var attributeControlType: Int = 0,
-    @SerializedName("DefaultValue") var defaultValue: String = "",
-    @SerializedName("Id") var id: Int = 0,
-    @SerializedName("IsRequired") var isRequired: Boolean = false,
-    @SerializedName("Name") var name: String = "",
-    @SerializedName("Values") var values: List<Value> = listOf()
-)
-
-
-
-data class Value(
-
-    @SerializedName("Id") var id: Int = 0,
-    @SerializedName("IsPreSelected") var isPreSelected: Boolean = false,
-    @SerializedName("Name") var name: String = ""
-)
 

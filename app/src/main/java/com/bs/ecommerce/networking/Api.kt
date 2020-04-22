@@ -26,6 +26,9 @@ interface Api {
     fun getHomeCategoryTree(): Call<CategoryTreeResponse>
 
 
+    @GET("customer/info")
+    fun getCustomerInfoAPI(): Call<GetRegistrationResponse>
+
     @GET("customer/register")
     fun getRegisterAPI(): Call<GetRegistrationResponse>
 

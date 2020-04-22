@@ -26,6 +26,8 @@ class SettingsFragment: BaseUrlChangeFragment() {
     protected var languageCode: String? = ""
     protected var currencyCode: String? = ""
 
+    override fun getFragmentTitle() = R.string.title_settings
+
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?)
     {

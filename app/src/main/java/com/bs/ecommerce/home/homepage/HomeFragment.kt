@@ -36,6 +36,9 @@ class HomeFragment : BaseFragment() {
     private var viewCreated = false
     private var rootView: View? = null
 
+
+    override fun getFragmentTitle() =  R.string.title_home_page
+
     override fun getLayoutId(): Int = R.layout.fragment_home
 
     override fun getRootLayout(): RelativeLayout? = homePageRootView
@@ -60,8 +63,6 @@ class HomeFragment : BaseFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        activity?.title = getString(R.string.title_home_page)
 
         if (!viewCreated) {
             model = HomePageModelImpl(requireContext())

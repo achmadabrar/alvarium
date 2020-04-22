@@ -72,7 +72,7 @@ class ProductDetailViewModel : BaseViewModel() {
     {
         val productAttributePrefix = "product_attribute"
 
-        val keyValueList = ArrayList<KeyValuePair>()
+        val allKeyValueList = ArrayList<KeyValuePair>()
 
         for ((key, valueList) in selectedAttributeMap)
         {
@@ -85,7 +85,7 @@ class ProductDetailViewModel : BaseViewModel() {
                     val keyValuePair = KeyValuePair()
                     keyValuePair.key = "${productAttributePrefix}_${key}"
                     keyValuePair.value = selectedIdList[i].toString()
-                    keyValueList.add(keyValuePair)
+                    allKeyValueList.add(keyValuePair)
 
                     "key_value".showLog(" Key : $key    values: ${selectedIdList[i]}")
                 }
@@ -95,18 +95,19 @@ class ProductDetailViewModel : BaseViewModel() {
 
         keyValuePair.key = "addtocart_$productId.EnteredQuantity"
         keyValuePair.value = quantity
+        allKeyValueList.add(keyValuePair)
 
+        val body = AddToCartPostData(Any(), allKeyValueList, Any())
+        body.formValues = allKeyValueList
 
-        val body = AddToCartPostData()
-        body.formValues = keyValueList
+        "key_value".showLog(body.toString())
 
-        return  body
+        return body
     }
 
 
     fun addProductToCartModel(productId : Long,
                               quantity: String,
-                              selectedAttributeMap: MutableMap<Long, MutableList<AttributeControlValue>>,
                               model: ProductDetailModel)
     {
 
@@ -114,7 +115,7 @@ class ProductDetailViewModel : BaseViewModel() {
 
         model.addProductToCartModel(productId,
                                     1,
-                                    prepareBodyForAttributes(productId, quantity, selectedAttributeMap),
+                                    prepareBodyForAttributes(productId, quantity, selectedAttrLD.value!!),
 
             object : RequestCompleteListener<AddToCartResponse>
         {
