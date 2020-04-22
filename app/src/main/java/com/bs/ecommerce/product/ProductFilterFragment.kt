@@ -32,6 +32,8 @@ class ProductFilterFragment : BaseFragment() {
 
     override fun createViewModel() = ProductListViewModel()
 
+    override fun getFragmentTitle(): Int = R.string.title_product
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
