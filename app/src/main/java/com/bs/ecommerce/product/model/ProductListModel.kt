@@ -17,4 +17,9 @@ interface ProductListModel {
         queryMap: Map<String, String>,
         callback: RequestCompleteListener<Manufacturer>
     )
+
+    fun applyFilter(
+        url: String,
+        callback: RequestCompleteListener<CategoryModel>
+    )
 }

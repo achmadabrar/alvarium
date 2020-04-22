@@ -63,7 +63,7 @@
                         android:padding="10dp"
                         android:textStyle="bold"
                         android:text="@string/products"
-                        android:textColor="@color/whiteOrGray" />
+                        android:textColor="@color/whiteOrBlack" />
 
 
                     <androidx.recyclerview.widget.RecyclerView
@@ -97,7 +97,7 @@
                         android:padding="10dp"
                         android:textStyle="bold"
                         android:text="@string/invoice"
-                        android:textColor="@color/whiteOrGray" />
+                        android:textColor="@color/whiteOrBlack" />
 
                     <include
                         layout="@layout/table_order_total"

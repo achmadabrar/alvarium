@@ -86,6 +86,9 @@ interface Api {
     @GET("catalog/manufacturer/all")
     fun getAllManufacturers(): Call<ManufacturerResponse>
 
+    @GET
+    fun applyFilter(@Url endpoint: String): Call<CategoryResponse>
+
 /*    @POST("setcurrency/{id}")
     fun setCurrency(@Path("id") id: Long): Call<LanguageResponse>
 

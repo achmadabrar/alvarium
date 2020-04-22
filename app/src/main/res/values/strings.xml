@@ -148,4 +148,8 @@
 
     <string name="facebook_app_id">207124103908002</string>
     <string name="fb_login_protocol_scheme">207124103908002</string>
+    <string name="sort_by">Sort By</string>
+    <string name="filter">Filter</string>
+    <string name="filter_by_price">Filter By Price</string>
+    <string name="filter_by_attr">Filter By %s</string>
 </resources>

@@ -68,4 +68,7 @@
     <color name="co_list_item_divider">#303033</color>
     <color name="co_fragment_bg">#222222</color>
 
+    <color name="seekbar_thumb">#D31039</color>
+    <color name="seekbar_range">#666666</color>
+
 </resources>

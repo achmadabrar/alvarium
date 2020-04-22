@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_marginStart="10dp"
+    android:layout_marginEnd="10dp"
+    android:layout_marginBottom="10dp"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/tvTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="8dp"
+        android:paddingBottom="8dp"
+        tools:text="@string/placeholder"
+        android:textColor="@color/whiteOrBlack"
+        android:textSize="@dimen/tv_text_size_regular"
+        android:textStyle="bold" />
+
+    <include layout="@layout/horizontal_divider" />
+
+    <com.bs.ecommerce.customViews.RadioGridGroupforReyMaterial
+        android:id="@+id/radioGridGroup"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:alignmentMode="alignBounds"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="5dp"
+        app:columnCount="5"
+        app:columnOrderPreserved="false"
+        app:useDefaultMargins="true"
+        android:addStatesFromChildren="true"/>
+
+</LinearLayout>
