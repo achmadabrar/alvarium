@@ -93,6 +93,41 @@ class HomeFragment : BaseFragment() {
                     replaceFragmentSafely(ProductDetailFragment.newInstance(data.id.toLong()))
             }
         }
+
+        swipeRefreshLayout.setOnRefreshListener {
+            swipeRefreshLayout.isRefreshing = false
+
+            (viewModel as MainViewModel).apply {
+                getFeaturedProducts(model)
+                getCategoryListWithProducts(model)
+                getManufactures(model)
+                getBestSellingProducts(model)
+            }
+        }
+
+        featuredProductLayout?.rvList?.apply {
+            layoutManager =
+                LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+
+            addItemDecoration(RecyclerViewMargin(15, 1, false))
+            setHasFixedSize(true)
+        }
+
+        featuredManufacturerLayout?.rvList?.apply {
+            layoutManager =
+                LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+            setHasFixedSize(true)
+
+            addItemDecoration(RecyclerViewMargin(15, 1, false))
+        }
+
+        bestSellingLayout?.rvList?.apply {
+            layoutManager =
+                LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+            setHasFixedSize(true)
+
+            addItemDecoration(RecyclerViewMargin(15, 1, false))
+        }
     }
 
     private fun setLiveDataListeners() {
@@ -223,19 +258,10 @@ class HomeFragment : BaseFragment() {
 
         featuredProductLayout?.visibility = View.VISIBLE
         featuredProductLayout?.tvTitle?.text = getString(R.string.featured_products)
-        featuredProductLayout?.btnSeeAll?.setOnClickListener {
-            toast("Sell All")
-        }
+        featuredProductLayout?.btnSeeAll?.visibility = View.GONE
 
-        featuredProductLayout.rvList.apply {
-            layoutManager =
-                LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+        featuredProductLayout?.rvList?.adapter = FeaturedProductAdapter(list, productClickListener)
 
-            addItemDecoration(RecyclerViewMargin(15, 1, false))
-            setHasFixedSize(true)
-
-            adapter = FeaturedProductAdapter(list, productClickListener)
-        }
     }
 
     private fun populateBestSellingProductList(list: List<ProductSummary>) {
@@ -246,19 +272,9 @@ class HomeFragment : BaseFragment() {
 
         bestSellingLayout.visibility = View.VISIBLE
         bestSellingLayout.tvTitle.text = getString(R.string.best_selling)
-        bestSellingLayout.btnSeeAll.setOnClickListener {
-            toast("Sell All")
-        }
+        bestSellingLayout.btnSeeAll.visibility = View.GONE
 
-        bestSellingLayout.rvList.apply {
-            layoutManager =
-                LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
-
-            addItemDecoration(RecyclerViewMargin(15, 1, false))
-            setHasFixedSize(true)
-
-            adapter = FeaturedProductAdapter(list, productClickListener)
-        }
+        bestSellingLayout?.rvList?.adapter = FeaturedProductAdapter(list, productClickListener)
     }
 
     private fun populateManufacturerList(list: List<Manufacturer>) {
@@ -270,33 +286,24 @@ class HomeFragment : BaseFragment() {
         featuredManufacturerLayout?.visibility = View.VISIBLE
         featuredManufacturerLayout?.divider?.visibility = View.INVISIBLE
         featuredManufacturerLayout?.tvTitle?.text = getString(R.string.featured_manufacturer)
-        featuredManufacturerLayout?.btnSeeAll?.setOnClickListener {
-            toast("Sell All")
-        }
+        featuredManufacturerLayout?.btnSeeAll?.visibility = View.GONE
 
-        featuredManufacturerLayout.rvList.apply {
-            val layoutManager11 =
-                LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
-            setHasFixedSize(true)
-            layoutManager = layoutManager11
+        val itemClickListener = object : ItemClickListener<Manufacturer> {
+            override fun onClick(view: View, position: Int, data: Manufacturer) {
+                if (data.id == null) return
 
-            val decoration = RecyclerViewMargin(15, 1, false)
-            addItemDecoration(decoration)
-
-            adapter = ManufacturerListAdapter(list, object : ItemClickListener<Manufacturer> {
-                override fun onClick(view: View, position: Int, data: Manufacturer) {
-                    if (data.id == null) return
-
-                    replaceFragmentSafely(
-                        ProductListFragment.newInstance(
-                            data.name ?: "",
-                            data.id,
-                            ProductListFragment.GetBy.MANUFACTURER
-                        )
+                replaceFragmentSafely(
+                    ProductListFragment.newInstance(
+                        data.name ?: "",
+                        data.id,
+                        ProductListFragment.GetBy.MANUFACTURER
                     )
-                }
-            })
+                )
+            }
         }
+
+        featuredManufacturerLayout?.rvList?.adapter =
+            ManufacturerListAdapter(list, itemClickListener)
     }
 
 
