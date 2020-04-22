@@ -19,11 +19,13 @@ import com.bs.ecommerce.utils.*
 import kotlinx.android.synthetic.main.fragment_settings.*
 
 
-open class BaseUrlChangeFragment : BaseFragment()
+abstract class BaseUrlChangeFragment : BaseFragment()
 {
 
     lateinit var mainModel: MainModel
     lateinit var mainViewModel: MainViewModel
+
+    abstract override fun getFragmentTitle(): Int
 
     override fun getLayoutId(): Int = R.layout.fragment_settings
 

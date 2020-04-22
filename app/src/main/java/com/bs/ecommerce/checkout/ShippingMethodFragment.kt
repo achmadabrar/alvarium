@@ -14,6 +14,9 @@ import com.bs.ecommerce.main.MainViewModel
 import kotlinx.android.synthetic.main.fragment_shipping_method.*
 
 class ShippingMethodFragment : BaseFragment() {
+
+    override fun getFragmentTitle() = R.string.title_shopping_cart
+
     override fun getLayoutId(): Int = R.layout.fragment_shipping_method
 
     override fun getRootLayout(): RelativeLayout = shippingMethodRootLayout

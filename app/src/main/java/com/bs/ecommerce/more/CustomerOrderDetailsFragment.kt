@@ -18,6 +18,10 @@ import kotlinx.android.synthetic.main.fragment_customer_order_detail.*
 import kotlinx.android.synthetic.main.product_price_layout.view.*
 
 class CustomerOrderDetailsFragment : BaseFragment() {
+
+
+    override fun getFragmentTitle() = R.string.title_order_details
+
     override fun getLayoutId(): Int = R.layout.fragment_customer_order_detail
 
     override fun getRootLayout(): RelativeLayout? = customerOrderRootLayout

@@ -25,6 +25,7 @@ import kotlinx.android.synthetic.main.fragment_confirm_order.*
 class ConfirmOrderFragment : BaseFragment() {
     private lateinit var model: CartModel
 
+    override fun getFragmentTitle() = R.string.title_shopping_cart
 
     override fun getLayoutId(): Int = R.layout.fragment_confirm_order
 

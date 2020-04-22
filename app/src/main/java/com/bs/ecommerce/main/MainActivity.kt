@@ -8,6 +8,7 @@ import androidx.core.view.GravityCompat
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.bs.ecommerce.R
+import com.bs.ecommerce.auth.customerInfo.CustomerInfoFragment
 import com.bs.ecommerce.auth.login.LoginFragment
 import com.bs.ecommerce.base.BaseActivity
 import com.bs.ecommerce.cart.CartFragment
@@ -81,7 +82,8 @@ class MainActivity : BaseActivity()
 
             when(topFragmentName) {
                 OptionsFragment::class.java.simpleName -> bottomNavPosition = 4
-                SearchFragment::class.java.simpleName -> bottomNavPosition = 3
+                CustomerInfoFragment::class.java.simpleName -> bottomNavPosition = 3
+                SearchFragment::class.java.simpleName -> bottomNavPosition = 2
                 CategoryFragment::class.java.simpleName -> bottomNavPosition = 1
                 HomeFragment::class.java.simpleName -> bottomNavPosition = 0
             }
@@ -111,6 +113,7 @@ class MainActivity : BaseActivity()
                         is HomeFragment -> title = getString(R.string.title_home_page)
                         is CartFragment -> title = getString(R.string.title_shopping_cart)
                         is OptionsFragment -> title = getString(R.string.title_more)
+                        is CustomerInfoFragment -> title = getString(R.string.title_customer_info)
                     }
                 }
 
@@ -206,6 +209,8 @@ class MainActivity : BaseActivity()
             R.id.bottom_nav_account -> {
 
                 if(prefObject.getPrefsBoolValue(PrefSingleton.IS_LOGGED_IN))
+                    createIfNotInBackStack<LoginFragment>(CustomerInfoFragment())
+                else
                     createIfNotInBackStack<LoginFragment>(LoginFragment())
 
                 return@OnNavigationItemSelectedListener true

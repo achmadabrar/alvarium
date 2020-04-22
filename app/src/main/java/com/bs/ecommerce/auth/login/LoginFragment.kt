@@ -17,6 +17,8 @@ import com.bs.ecommerce.auth.login.data.LoginPostData
 import com.bs.ecommerce.auth.register.RegisterFragment
 import com.bs.ecommerce.base.BaseFragment
 import com.bs.ecommerce.base.BaseViewModel
+import com.bs.ecommerce.home.homepage.HomeFragment
+import com.bs.ecommerce.main.MainActivity
 import com.bs.ecommerce.main.model.AuthModel
 import com.bs.ecommerce.networking.NetworkUtil
 import com.bs.ecommerce.utils.*
@@ -34,6 +36,8 @@ class LoginFragment : BaseFragment()
 
     private lateinit var model: AuthModel
 
+    override fun getFragmentTitle() = R.string.title_login
+
     override fun getLayoutId(): Int = R.layout.fragment_login
 
     override fun getRootLayout(): RelativeLayout? = login_root_layout
@@ -43,8 +47,6 @@ class LoginFragment : BaseFragment()
     override fun onViewCreated(view: View, savedInstanceState: Bundle?)
     {
         super.onViewCreated(view, savedInstanceState)
-
-        activity?.title = getString(R.string.title_login)
 
         model = AuthModelImpl()
 
@@ -82,10 +84,10 @@ class LoginFragment : BaseFragment()
     {
         if (loginUsernameEditText?.text?.isNotEmpty()!! && loginPasswordEditText?.text?.isNotEmpty()!!)
         {
-            (viewModel as LoginViewModel).postLoginVM(
-                LoginPostData(LoginData(
-                    email = loginUsernameEditText?.text.toString(),
-                    password = loginPasswordEditText?.text?.toString().toString())), model)
+            if(loginUsernameEditText?.text.isEmailValid())
+                (viewModel as LoginViewModel).postLoginVM(LoginPostData(LoginData(email = loginUsernameEditText?.text.toString(), password = loginPasswordEditText?.text?.toString().toString())), model)
+            else
+                toast(getString(R.string.enter_valid_email))
         }
         else
         {
@@ -111,6 +113,8 @@ class LoginFragment : BaseFragment()
                     "token".showLog("token: " + NetworkUtil.token)
 
                     toast(getString(R.string.login_successful))
+
+                    replaceFragmentSafely(HomeFragment())
                 }
                     ?:    toast(loginResponse?.errorsAsFormattedString.toString())
             })

@@ -42,6 +42,7 @@ class SearchFragment : BaseFragment() {
 
     private var productAdapter: ProductListAdapter? = null
 
+    override fun getFragmentTitle() = R.string.title_register
 
     override fun getLayoutId(): Int = R.layout.fragment_product_list
 

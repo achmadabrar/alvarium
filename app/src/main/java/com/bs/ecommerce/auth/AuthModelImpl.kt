@@ -98,4 +98,25 @@ class AuthModelImpl: AuthModel
     }
 
 
+    override fun getCustomerInfoModel(callback: RequestCompleteListener<GetRegistrationResponse>)
+    {
+
+        RetroClient.api.getCustomerInfoAPI().enqueue(object : Callback<GetRegistrationResponse>
+        {
+            override fun onResponse(call: Call<GetRegistrationResponse>, response: Response<GetRegistrationResponse>)
+            {
+                if (response.body() != null)
+                    callback.onRequestSuccess(response.body() as GetRegistrationResponse)
+                else
+                    callback.onRequestFailed(response.message())
+            }
+
+
+            override fun onFailure(call: Call<GetRegistrationResponse>, t: Throwable) {
+                callback.onRequestFailed(t.localizedMessage ?: "Unknown")
+            }
+        })
+    }
+
+
 }

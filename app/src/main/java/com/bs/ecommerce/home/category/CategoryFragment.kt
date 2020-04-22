@@ -24,6 +24,8 @@ class CategoryFragment : BaseFragment()
     private lateinit var mainViewModel: MainViewModel
     private var viewCreated = false
 
+    override fun getFragmentTitle() = R.string.title_category
+
     override fun getLayoutId(): Int = R.layout.category_left
 
     override fun getRootLayout(): RelativeLayout? = categoryRootLayout

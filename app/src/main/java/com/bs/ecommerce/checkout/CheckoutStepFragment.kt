@@ -11,6 +11,9 @@ import kotlinx.android.synthetic.main.fragment_checkout_step.*
 
 
 class CheckoutStepFragment : BaseFragment() {
+
+    override fun getFragmentTitle() = R.string.title_shopping_cart
+
     override fun getLayoutId(): Int = R.layout.fragment_checkout_step
 
     override fun getRootLayout(): RelativeLayout = checkoutStepRootLayout

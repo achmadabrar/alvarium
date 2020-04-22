@@ -2,15 +2,16 @@
 
 package com.bs.ecommerce.utils
 
-import android.R.attr.fragment
 import android.app.Activity
 import android.content.Context
 import android.os.Build
 import android.util.Log
+import android.util.Patterns
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
+import android.webkit.WebView
 import android.widget.EditText
 import android.widget.ImageView
 import android.widget.LinearLayout
@@ -21,9 +22,8 @@ import androidx.fragment.app.Fragment
 import com.bs.ecommerce.R
 import com.bs.ecommerce.base.BaseFragment
 import com.bs.ecommerce.main.MainActivity
-import com.bs.ecommerce.more.OptionsFragment
-import com.fasterxml.jackson.databind.ser.Serializers
 import com.squareup.picasso.Picasso
+import java.util.*
 
 
 /**
@@ -168,5 +168,31 @@ fun LinearLayout?.showOrHide(isEnabledParam: Boolean = false)
             this.visibility = View.GONE
     }
 
+
+}
+
+fun CharSequence?.isEmailValid() = !isNullOrEmpty() && Patterns.EMAIL_ADDRESS.matcher(this!!).matches()
+
+fun WebView.show(text : String, nightMode: Boolean = true)
+{
+    val htmlRtlHeader = "dir=\"rtl\" lang=\"\""
+
+    var htmlColorHeader =""
+
+    if(nightMode)
+        htmlColorHeader = "<style type=\"text/css\">body{color: #fff; background-color: #222222;}</style>"
+
+
+    val htmlFontHeader = "<style>@font-face {font-family: 'CustomFont';src: url('font/montserrat_regular.ttf');}#font {font-family: 'montserrat_regular';}</style>"
+
+
+    val htmlFullHeader = ("<head>$htmlColorHeader$htmlFontHeader</head>")
+
+    if (Locale.getDefault().language == Language.ARABIC)
+        this.loadDataWithBaseURL("file:///android_asset/",
+            "<html$htmlRtlHeader>$htmlFullHeader<body>$text</body></html>", "text/html", "UTF-8", "")
+    else
+        this.loadDataWithBaseURL("file:///android_asset/",
+            "<html>$htmlFullHeader<body>$text</body></html>", "text/html", "UTF-8", "")
 
 }

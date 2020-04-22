@@ -28,6 +28,8 @@ class CartFragment : BaseFragment() {
 
     private lateinit var model: CartModel
 
+    override fun getFragmentTitle() = R.string.title_shopping_cart
+
     override fun getLayoutId(): Int = R.layout.fragment_cart
 
     override fun getRootLayout(): RelativeLayout? = cartRootLayout
@@ -39,8 +41,6 @@ class CartFragment : BaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?)
     {
         super.onViewCreated(view, savedInstanceState)
-
-        activity?.title = getString(R.string.title_shopping_cart)
 
         model = CartModelImpl(activity?.applicationContext!!)
 
@@ -58,7 +58,7 @@ class CartFragment : BaseFragment() {
 
     private fun setLiveDataListeners() {
 
-        (viewModel as CartViewModel).cartLD.observe(activity!!, Observer { cartData ->
+        (viewModel as CartViewModel).cartLD.observe(viewLifecycleOwner, Observer { cartData ->
 
             if(cartData.items.isNotEmpty())
             {
@@ -83,7 +83,7 @@ class CartFragment : BaseFragment() {
 
         })
 
-        (viewModel as CartViewModel).isLoadingLD.observe(activity!!, Observer { isShowLoader ->
+        (viewModel as CartViewModel).isLoadingLD.observe(viewLifecycleOwner, Observer { isShowLoader ->
 
             if (isShowLoader)
                 showLoading()

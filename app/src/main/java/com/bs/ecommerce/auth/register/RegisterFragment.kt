@@ -10,6 +10,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.bs.ecommerce.R
 import com.bs.ecommerce.auth.AuthModelImpl
+import com.bs.ecommerce.auth.customerInfo.CustomerInfoFragment
 import com.bs.ecommerce.utils.hideKeyboard
 import com.bs.ecommerce.utils.toast
 
@@ -23,12 +24,13 @@ import com.bs.ecommerce.utils.*
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import kotlinx.android.synthetic.main.fragment_product_detail.*
 import kotlinx.android.synthetic.main.fragment_registration.*
-import kotlinx.android.synthetic.main.fragment_registration.bottomSheetLayout
 import kotlinx.android.synthetic.main.other_attr_bottom_sheet.view.*
 import java.util.*
 
-class RegisterFragment : BaseFragment(), View.OnClickListener
+open class RegisterFragment : BaseFragment(), View.OnClickListener
 {
+    override fun getFragmentTitle() = R.string.title_register
+
     override fun getLayoutId(): Int = R.layout.fragment_registration
 
     override fun getRootLayout(): RelativeLayout? = register_root_layout
@@ -38,12 +40,14 @@ class RegisterFragment : BaseFragment(), View.OnClickListener
     private var customerAttributeView: CustomerAttributeView? = null
     private lateinit var bsBehavior: BottomSheetBehavior<*>
 
-    private var isValidInfo = true
+    var isValidInfo = true
 
     internal var myCalendar: Calendar? = null
 
+    private var viewCreated = false
 
-    private var customerInfo: GetRegistrationResponse  = GetRegistrationResponse()
+
+    var customerInfo: GetRegistrationResponse  = GetRegistrationResponse()
 
     internal var dateSetListener: DatePickerDialog.OnDateSetListener = DatePickerDialog.OnDateSetListener {
 
@@ -60,24 +64,32 @@ class RegisterFragment : BaseFragment(), View.OnClickListener
         saveBtn?.visibility = View.VISIBLE
     }
 
-    private lateinit var model: AuthModel
+    lateinit var model: AuthModel
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?)
     {
         super.onViewCreated(view, savedInstanceState)
 
-        activity?.title = getString(R.string.title_register)
 
-        initView()
+        if (!viewCreated) {
 
-        hideTextPanels()
-        initEditButtonsAction()
+            initView()
 
-        model = AuthModelImpl()
+            hideTextPanels()
+            initEditButtonsAction()
 
-        viewModel  = ViewModelProvider(this).get(RegistrationViewModel::class.java)
+            model = AuthModelImpl()
 
-        (viewModel as RegistrationViewModel).getRegistrationVM(model)
+            viewModel  = ViewModelProvider(this).get(RegistrationViewModel::class.java)
+
+            activity?.supportFragmentManager?.findFragmentById(R.id.layoutFrame)?.let {
+
+                if(it !is CustomerInfoFragment)
+                    (viewModel as RegistrationViewModel).getRegistrationVM(model)
+            }
+
+            viewCreated = true
+        }
 
 
         setLiveDataListeners()
@@ -155,10 +167,15 @@ class RegisterFragment : BaseFragment(), View.OnClickListener
             privacyPolicyLayout?.showOrHide(acceptPrivacyPolicyEnabled)
 
 
-            customerAttributeView = CustomerAttributeView(requireContext(), viewModel as RegistrationViewModel, bottomSheetLayout, bsBehavior)
 
-            for (i in customerAttributeView!!.getAttrViews()) {
-                attrViewHolderRegisterPage?.addView(i)
+            bottomSheetLayoutRegister?.let {
+
+                customerAttributeView = CustomerAttributeView(requireContext(), viewModel as RegistrationViewModel, it, bsBehavior)
+
+                for (i in customerAttributeView!!.getAttrViews()) {
+                    attrViewHolderRegisterPage?.addView(i)
+                }
+
             }
 
         }
@@ -197,21 +214,20 @@ class RegisterFragment : BaseFragment(), View.OnClickListener
         saveBtn?.setOnClickListener {
 
             requireActivity().hideKeyboard()
-            performRegistration()
+
+            getCustomerInfoWithValidation()
+
+            performSubmit()
         }
 
 
     }
 
-    private fun performRegistration()
+    open fun performSubmit()
     {
-        getCustomerInfoWithValidation()
-
         if(isValidInfo)
             (viewModel as RegistrationViewModel).postRegisterVM(customerInfo, model)
     }
-
-    fun CharSequence?.isEmailValid() = !isNullOrEmpty() && Patterns.EMAIL_ADDRESS.matcher(this!!).matches()
 
     private fun showValidation( editText: EditText, isRequired: Boolean)
     {
@@ -308,9 +324,9 @@ class RegisterFragment : BaseFragment(), View.OnClickListener
         }
     }
 
-    private fun initView() {
+    fun initView() {
 
-        bsBehavior = BottomSheetBehavior.from(bottomSheetLayout)
+        bsBehavior = BottomSheetBehavior.from(bottomSheetLayoutRegister)
         bsBehavior.addBottomSheetCallback(object : BottomSheetBehavior.BottomSheetCallback() {
             override fun onStateChanged(bottomSheet: View, newState: Int) {
                 when (newState) {
@@ -331,7 +347,7 @@ class RegisterFragment : BaseFragment(), View.OnClickListener
             }
         })
 
-        bottomSheetLayout.tvDone.setOnClickListener(this)
+        bottomSheetLayoutRegister?.tvDone?.setOnClickListener(this)
     }
 
 

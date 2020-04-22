@@ -14,4 +14,6 @@ interface AuthModel
 
     fun postLoginModel(loginPostData : LoginPostData, callback: RequestCompleteListener<LoginResponse>)
 
+    fun getCustomerInfoModel(callback: RequestCompleteListener<GetRegistrationResponse>)
+
 }

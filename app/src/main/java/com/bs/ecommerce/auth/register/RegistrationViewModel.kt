@@ -33,31 +33,60 @@ class RegistrationViewModel  : BaseViewModel()
 
                 getRegistrationResponseLD.postValue(data)
 
+                setCustomerAttributeValues(data)
+            }
 
-                val attrMap = HashMap<Long, MutableList<AttributeControlValue>>()
+            override fun onRequestFailed(errorMessage: String)
+            {
+                isLoadingLD.postValue(false)
+            }
+        })
+    }
 
-                // sorting attribute values
-                for(attr in data.data.customerAttributes)
+
+
+    private fun setCustomerAttributeValues(data: GetRegistrationResponse)
+    {
+        val attrMap = HashMap<Long, MutableList<AttributeControlValue>>()
+
+        for(attr in data.data.customerAttributes)
+        {
+            attr.values = attr.values.sortedBy { !it.isPreSelected }
+
+            val list = mutableListOf<AttributeControlValue>()
+
+            for(value in attr.values)
+            {
+                if(value.isPreSelected)
                 {
-                    attr.values = attr.values.sortedBy { !it.isPreSelected }
+                    list.add(value)
 
-                    val list = mutableListOf<AttributeControlValue>()
-
-                    for(value in attr.values)
-                    {
-                        if(value.isPreSelected)
-                        {
-                            list.add(value)
-
-                            if(attr.attributeControlType != AttributeControlType.Checkboxes)
-                                break
-                        }
-                    }
-
-                    attrMap[attr.id] = list
+                    if(attr.attributeControlType != AttributeControlType.Checkboxes)
+                        break
                 }
+            }
 
-                selectedAttrLD.postValue(attrMap)
+            attrMap[attr.id] = list
+        }
+
+        selectedAttrLD.postValue(attrMap)
+    }
+
+    fun getCustomerInfoVM(model: AuthModel)
+    {
+
+        isLoadingLD.postValue(true)
+
+        model.getCustomerInfoModel(object : RequestCompleteListener<GetRegistrationResponse>
+        {
+            override fun onRequestSuccess(data: GetRegistrationResponse)
+            {
+                isLoadingLD.postValue(false)
+
+                getRegistrationResponseLD.postValue(data)
+
+                setCustomerAttributeValues(data)
+
             }
 
             override fun onRequestFailed(errorMessage: String)

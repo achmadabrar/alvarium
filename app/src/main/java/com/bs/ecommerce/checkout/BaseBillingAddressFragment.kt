@@ -14,7 +14,11 @@ import kotlinx.android.synthetic.main.fragment_base_billing_adddress.*
 import kotlinx.android.synthetic.main.fragment_billing_address.*
 
 
-class BaseBillingAddressFragment : BaseFragment() {
+class BaseBillingAddressFragment : BaseFragment()
+{
+
+    override fun getFragmentTitle() = R.string.title_shopping_cart
+
     override fun getLayoutId(): Int = R.layout.fragment_base_billing_adddress
 
     override fun getRootLayout(): RelativeLayout = baseBillingRootLayout
