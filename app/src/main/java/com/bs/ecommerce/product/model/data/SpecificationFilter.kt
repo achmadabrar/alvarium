@@ -13,13 +13,16 @@ data class SpecificationFilter(
     @SerializedName("Enabled")
     val enabled: Boolean? = false,
     @SerializedName("NotFilteredItems")
-    val notFilteredItems: List<FilterItems>? = listOf()
+    val notFilteredItems: List<FilterItems>? = listOf(),
+    @SerializedName("RemoveFilterUrl")
+    val removeFilterUrl: String? = null
 ) : Parcelable {
     constructor(parcel: Parcel) : this(
         parcel.createTypedArrayList(FilterItems),
         parcel.readParcelable(CustomProperties::class.java.classLoader),
         parcel.readValue(Boolean::class.java.classLoader) as? Boolean,
-        parcel.createTypedArrayList(FilterItems)
+        parcel.createTypedArrayList(FilterItems),
+        parcel.readString()
     ) {
     }
 
@@ -28,6 +31,7 @@ data class SpecificationFilter(
         parcel.writeParcelable(customProperties, flags)
         parcel.writeValue(enabled)
         parcel.writeTypedList(notFilteredItems)
+        parcel.writeString(removeFilterUrl)
     }
 
     override fun describeContents(): Int {

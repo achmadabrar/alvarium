@@ -15,9 +15,11 @@ import androidx.lifecycle.ViewModelProviders
 import com.bs.ecommerce.R
 import com.bs.ecommerce.base.BaseFragment
 import com.bs.ecommerce.product.model.data.FilterItems
-import com.bs.ecommerce.product.model.data.PriceRange
+import com.bs.ecommerce.product.model.data.PriceRangeFilter
 import com.bs.ecommerce.product.viewModel.ProductListViewModel
 import kotlinx.android.synthetic.main.fragment_product_filter.*
+import kotlinx.android.synthetic.main.price_filter_option.view.*
+import kotlinx.android.synthetic.main.product_applied_filter.view.*
 import kotlinx.android.synthetic.main.product_filter_option.view.tvTitle
 import kotlinx.android.synthetic.main.product_filter_option_for_color.view.*
 
@@ -44,21 +46,29 @@ class ProductFilterFragment : BaseFragment() {
     private fun setLiveDataListener() {
         (viewModel as ProductListViewModel).apply {
 
-            priceRangeLD.observe(viewLifecycleOwner, Observer { priceRange ->
-                Log.d(logTag, "priceRange size ${priceRange.size}")
+            priceRangeLD.observe(viewLifecycleOwner, Observer { priceRangeFilter ->
+                Log.d(logTag, "priceRange size ${priceRangeFilter?.items?.size}")
 
-                populatePriceFilterOptions(priceRange)
+                populatePriceFilter(priceRangeFilter)
             })
 
-            filterAttributeLD.observe(viewLifecycleOwner, Observer { mMap ->
-                Log.d(logTag, "map size ${mMap.size}")
+            applicableFilterLD.observe(viewLifecycleOwner, Observer { mMap ->
+                Log.d(logTag, "applicable filter size ${mMap.size}")
 
-                populateItemSpecificOptions(mMap)
+                populateItemSpecificFilters(mMap)
+            })
+
+            appliedFilterLD.observe(viewLifecycleOwner, Observer { mMap ->
+                Log.d(logTag, "applied filter size ${mMap.size}")
+
+                populateAlreadyAppliedFilters(mMap)
             })
         }
     }
 
-    private fun populatePriceFilterOptions(priceRange: List<PriceRange>) {
+    private fun populatePriceFilter(priceRangeFilter: PriceRangeFilter?) {
+
+        val priceRange = priceRangeFilter?.items ?: listOf()
 
         if (priceRange.isNotEmpty()) {
 
@@ -66,27 +76,33 @@ class ProductFilterFragment : BaseFragment() {
             view.tvTitle.text = getString(R.string.filter_by_price)
 
             for (i in priceRange) {
-                val tv = layoutInflater.inflate(R.layout.generic_attr_item, view, false) as TextView
-                tv.text = i.toString()
-                tv.setCompoundDrawablesWithIntrinsicBounds(
-                    0, 0,
-                    if (i.selected) R.drawable.ic_tic_mark else R.drawable.transparent_tic_mark,
-                    0
-                )
+                val rl = layoutInflater.inflate(
+                    R.layout.price_filter_option,
+                    view,
+                    false
+                ) as RelativeLayout
 
-                tv.setOnClickListener {
-                    if (parentFragment is ProductListFragment)
+                rl.tvName.text = i.toString()
+                rl.btnRemoveFilter.visibility = if (i.selected) View.VISIBLE else View.GONE
+
+                rl.btnRemoveFilter.setOnClickListener {
+                    if (parentFragment is ProductListFragment && i.selected)
+                        (parentFragment as ProductListFragment).applyFilter(priceRangeFilter?.removeFilterUrl)
+                }
+
+                rl.setOnClickListener {
+                    if (parentFragment is ProductListFragment && !i.selected)
                         (parentFragment as ProductListFragment).applyFilter(i.filterUrl)
                 }
 
-                view.addView(tv)
+                view.addView(rl)
             }
 
             attributeLayout.addView(view)
         }
     }
 
-    private fun populateItemSpecificOptions(mMap: MutableMap<String, MutableList<FilterItems>>) {
+    private fun populateItemSpecificFilters(mMap: MutableMap<String, MutableList<FilterItems>>) {
         for (tmp in mMap) {
             if (tmp.key == "Color") {
                 attributeLayout.addView(color(tmp))
@@ -94,6 +110,37 @@ class ProductFilterFragment : BaseFragment() {
                 attributeLayout.addView(allExColor(tmp))
             }
         }
+    }
+
+    private fun populateAlreadyAppliedFilters(mMap: MutableMap<String, MutableList<FilterItems>>) {
+
+        if(mMap.isNullOrEmpty()) return
+
+        val view = layoutInflater.inflate(R.layout.product_applied_filter, null) as LinearLayout
+
+        val title = StringBuilder()
+        var clearFilterUrl: String? = null
+
+        for (i in mMap) {
+
+            title.append(i.key).append(" :\n")
+
+            for(j in i.value) {
+                title.append((j.specificationAttributeOptionName)).append("\n")
+                clearFilterUrl = j.filterUrl
+            }
+
+            title.append("\n")
+        }
+
+        view.tvAppliedAttributes.text = title.toString().trimEnd()
+
+        view.btnClearFilter.setOnClickListener {
+            if (parentFragment is ProductListFragment)
+                (parentFragment as ProductListFragment).applyFilter(clearFilterUrl)
+        }
+
+        attributeLayout.addView(view)
     }
 
     private fun color(tmp: Map.Entry<String, MutableList<FilterItems>>): View {

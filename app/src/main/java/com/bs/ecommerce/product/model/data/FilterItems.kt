@@ -7,7 +7,7 @@ import com.google.gson.annotations.SerializedName
 
 data class FilterItems(
     @SerializedName("FilterUrl")
-    val filterUrl: String?,
+    var filterUrl: String?,
     @SerializedName("SpecificationAttributeName")
     val specificationAttributeName: String? = "",
     @SerializedName("SpecificationAttributeOptionColorRgb")

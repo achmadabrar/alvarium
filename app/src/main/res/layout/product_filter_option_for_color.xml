@@ -17,7 +17,7 @@
         android:paddingBottom="8dp"
         tools:text="@string/placeholder"
         android:textColor="@color/whiteOrBlack"
-        android:textSize="@dimen/tv_text_size_regular"
+        android:textSize="@dimen/tv_text_size_semi_large"
         android:textStyle="bold" />
 
     <include layout="@layout/horizontal_divider" />

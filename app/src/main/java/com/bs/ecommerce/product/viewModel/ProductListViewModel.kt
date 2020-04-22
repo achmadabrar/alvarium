@@ -1,15 +1,13 @@
 package com.bs.ecommerce.product.viewModel
 
-import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.Observer
 import com.bs.ecommerce.base.BaseViewModel
 import com.bs.ecommerce.common.RequestCompleteListener
 import com.bs.ecommerce.networking.Api
 import com.bs.ecommerce.networking.Constants
 import com.bs.ecommerce.product.model.ProductListModel
 import com.bs.ecommerce.product.model.data.*
-import java.util.HashMap
+import java.util.*
 
 class ProductListViewModel : BaseViewModel() {
     var productLiveData = MutableLiveData<CategoryModel>()
@@ -18,8 +16,9 @@ class ProductListViewModel : BaseViewModel() {
     var toastMessageLD = MutableLiveData("")
     var pageNumberLD = MutableLiveData(1)
 
-    var filterAttributeLD = MutableLiveData<MutableMap<String, MutableList<FilterItems>>>()
-    var priceRangeLD = MutableLiveData<List<PriceRange>>()
+    var applicableFilterLD = MutableLiveData<MutableMap<String, MutableList<FilterItems>>>()
+    var appliedFilterLD = MutableLiveData<MutableMap<String, MutableList<FilterItems>>>()
+    var priceRangeLD = MutableLiveData<PriceRangeFilter?>()
 
     var filterVisibilityLD = MutableLiveData<Boolean>()
 
@@ -106,6 +105,7 @@ class ProductListViewModel : BaseViewModel() {
     }
 
     private fun prepareFilterAttribute(filterInfo: PagingFilteringContext?) {
+        // Applicable Filter
         val notFilteredItems = filterInfo?.specificationFilter?.notFilteredItems
 
         val mMap: MutableMap<String, MutableList<FilterItems>> = mutableMapOf()
@@ -124,14 +124,38 @@ class ProductListViewModel : BaseViewModel() {
             }
         }
 
-        filterAttributeLD.value = mMap
+        applicableFilterLD.value = mMap
+
+        // Already applied filter
+        val appliedFilteredItems = filterInfo?.specificationFilter?.alreadyFilteredItems
+
+        mMap.clear()
+
+        if (!appliedFilteredItems.isNullOrEmpty()) {
+
+            for (i in appliedFilteredItems) {
+
+                // Adding URL to clear filter as each items filterUrl - bad practice
+                i.filterUrl = filterInfo.specificationFilter.removeFilterUrl
+
+                if (mMap.containsKey(i.specificationAttributeName)) {
+                    mMap[i.specificationAttributeName]?.add(i)
+                } else {
+                    val tmp = mutableListOf<FilterItems>()
+                    tmp.add(i)
+                    mMap[i.specificationAttributeName ?: ""] = tmp
+                }
+            }
+        }
+
+        appliedFilterLD.value = mMap
     }
 
     private fun preparePriceFilter(filterInfo: PagingFilteringContext?) {
         if (filterInfo?.priceRangeFilter?.enabled == true && filterInfo.priceRangeFilter.items != null) {
-            priceRangeLD.value = filterInfo.priceRangeFilter.items
+            priceRangeLD.value = filterInfo.priceRangeFilter
         } else {
-            priceRangeLD.value = mutableListOf()
+            priceRangeLD.value = null
         }
     }
 

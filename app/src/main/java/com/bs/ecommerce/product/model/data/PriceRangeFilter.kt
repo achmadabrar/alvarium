@@ -11,12 +11,15 @@ data class PriceRangeFilter(
     @SerializedName("Enabled")
     val enabled: Boolean? = false,
     @SerializedName("Items")
-    val items: List<PriceRange>? = listOf()
+    val items: List<PriceRange>? = listOf(),
+    @SerializedName("RemoveFilterUrl")
+    val removeFilterUrl: String? = null
 ) : Parcelable {
     constructor(parcel: Parcel) : this(
         parcel.readParcelable(CustomProperties::class.java.classLoader),
         parcel.readValue(Boolean::class.java.classLoader) as? Boolean,
-        parcel.createTypedArrayList(PriceRange)
+        parcel.createTypedArrayList(PriceRange),
+        parcel.readString()
     ) {
     }
 
@@ -24,6 +27,7 @@ data class PriceRangeFilter(
         parcel.writeParcelable(customProperties, flags)
         parcel.writeValue(enabled)
         parcel.writeTypedList(items)
+        parcel.writeString(removeFilterUrl)
     }
 
     override fun describeContents(): Int {
