@@ -6,8 +6,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bs.ecommerce.R
 import com.bs.ecommerce.product.model.data.ProductSummary
 import com.bs.ecommerce.utils.ItemClickListener
-import com.squareup.picasso.Picasso
-import kotlinx.android.synthetic.main.item_featured_product.view.*
+import com.bs.ecommerce.utils.loadImg
+import kotlinx.android.synthetic.main.item_product_for_linearlayout.view.*
 
 class FeaturedProductAdapter(
     private val productsList: List<ProductSummary>,
@@ -17,7 +17,7 @@ class FeaturedProductAdapter(
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val itemView =
             LayoutInflater.from(parent.context)
-                .inflate(R.layout.item_featured_product, parent, false)
+                .inflate(R.layout.item_product_for_linearlayout, parent, false)
         return object : RecyclerView.ViewHolder(itemView) {}
     }
 
@@ -28,9 +28,7 @@ class FeaturedProductAdapter(
         holder.itemView.tvProductName.text = productsList[position].name
         holder.itemView.tvProductPrice.text = productsList[position].productPrice?.price
 
-        Picasso.with(holder.itemView.context).load(
-            productsList[position].defaultPictureModel?.imageUrl
-        ).fit().centerInside().into(holder.itemView.ivProductThumb)
+        holder.itemView.ivProductThumb.loadImg(productsList[position].defaultPictureModel?.imageUrl)
 
         holder.itemView.setOnClickListener { v ->
             listener.onClick(v, position, productsList[position])

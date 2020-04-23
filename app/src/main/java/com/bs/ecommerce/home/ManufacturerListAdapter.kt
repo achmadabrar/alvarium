@@ -6,7 +6,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bs.ecommerce.R
 import com.bs.ecommerce.product.model.data.Manufacturer
 import com.bs.ecommerce.utils.ItemClickListener
-import com.squareup.picasso.Picasso
+import com.bs.ecommerce.utils.loadImg
 import kotlinx.android.synthetic.main.item_manufacturer.view.*
 
 class ManufacturerListAdapter(
@@ -26,10 +26,7 @@ class ManufacturerListAdapter(
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         holder.itemView.tvCompanyName.text = productsList[position].name
 
-        Picasso.with(holder.itemView.context).load(
-            productsList[position].pictureModel?.imageUrl
-                ?: "https://picsum.photos/300/300"
-        ).fit().centerInside().into(holder.itemView.ivLogo)
+        holder.itemView.ivLogo.loadImg(productsList[position].pictureModel?.imageUrl)
 
         holder.itemView.setOnClickListener { v ->
             listener.onClick(v, position, productsList[position])

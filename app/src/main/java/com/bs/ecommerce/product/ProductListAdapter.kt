@@ -6,18 +6,19 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bs.ecommerce.R
 import com.bs.ecommerce.product.model.data.ProductSummary
 import com.bs.ecommerce.utils.ItemClickListener
-import com.squareup.picasso.Picasso
-import kotlinx.android.synthetic.main.item_featured_product.view.*
+import com.bs.ecommerce.utils.loadImg
+import kotlinx.android.synthetic.main.item_product_for_gridlayout.view.*
 
-class ProductListAdapter (
-    private val productsList: List<ProductSummary>,
+class ProductListAdapter(
     private val listener: ItemClickListener<ProductSummary>
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+
+    private val productsList: MutableList<ProductSummary> = mutableListOf()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val itemView =
             LayoutInflater.from(parent.context)
-                .inflate(R.layout.item_featured_product, parent, false)
+                .inflate(R.layout.item_product_for_gridlayout, parent, false)
         return object : RecyclerView.ViewHolder(itemView) {}
     }
 
@@ -30,13 +31,29 @@ class ProductListAdapter (
         holder.itemView.ratingBar.rating =
             (productsList[position].reviewOverviewModel?.ratingSum ?: 0).toFloat()
 
-        Picasso.with(holder.itemView.context).load(
+        holder.itemView.ivProductThumb.loadImg(
             productsList[position].defaultPictureModel?.imageUrl
-                ?: "https://picsum.photos/300/300"
-        ).fit().centerInside().into(holder.itemView.ivProductThumb)
+        )
 
         holder.itemView.setOnClickListener { v->
             listener.onClick(v, position, productsList[position])
+        }
+    }
+
+    fun addData(list: List<ProductSummary>?, shouldAppend: Boolean) {
+
+        if(list == null) return
+
+        if(shouldAppend) {
+            val previousSize = itemCount
+            productsList.addAll(list)
+
+            notifyItemRangeInserted(previousSize, list.size)
+        } else {
+            productsList.clear()
+            productsList.addAll(list)
+
+            notifyDataSetChanged()
         }
     }
 }

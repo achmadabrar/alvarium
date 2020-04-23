@@ -106,7 +106,12 @@ fun ImageView.loadImg(imageUrl: String?) {
     if (imageUrl.isNullOrEmpty()) {
         Picasso.with(context).load(R.drawable.ic_placeholder).into(this)
     } else {
-        Picasso.with(context).load(imageUrl).into(this)
+        Picasso.with(context)
+            .load(imageUrl)
+            .placeholder(R.drawable.ic_placeholder)
+            .fit()
+            .centerInside()
+            .into(this)
     }
 }
 

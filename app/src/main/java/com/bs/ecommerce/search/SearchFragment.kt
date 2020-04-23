@@ -103,8 +103,9 @@ class SearchFragment : BaseFragment() {
 
         viewModel.productLiveData.observe(viewLifecycleOwner, Observer { data ->
 
-            rvProductList.adapter = ProductListAdapter(data.products!!, productClickListener)
-
+            rvProductList.adapter = ProductListAdapter(productClickListener).also {
+                it.addData(data.products, false)
+            }
 
             llButtonHolder.visibility =
                 if (data.subCategories.isNullOrEmpty()) View.VISIBLE else View.GONE
