@@ -14,7 +14,6 @@ import androidx.drawerlayout.widget.DrawerLayout
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bs.ecommerce.R
 import com.bs.ecommerce.base.BaseFragment
@@ -88,7 +87,7 @@ class ProductListFragment : BaseFragment() {
             // Explicitly used deprecated library to create viewModel with this fragments scope
             viewModel = ViewModelProviders.of(this).get(ProductListViewModel::class.java)
 
-            getProducts()
+            getProducts(resetFilters = true)
 
             viewCreated = true
         }
@@ -96,13 +95,14 @@ class ProductListFragment : BaseFragment() {
         setLiveDataListeners()
     }
 
-    private fun getProducts() {
+    private fun getProducts(resetFilters: Boolean) {
         if (getBy == GetBy.CATEGORY.name)
-            (viewModel as ProductListViewModel).getProductByCategory(categoryId.toLong(), model)
+            (viewModel as ProductListViewModel).getProductByCategory(
+                categoryId.toLong(), resetFilters, model
+            )
         if (getBy == GetBy.MANUFACTURER.name)
             (viewModel as ProductListViewModel).getProductByManufacturer(
-                categoryId.toLong(),
-                model
+                categoryId.toLong(), resetFilters, model
             )
     }
 
@@ -154,7 +154,7 @@ class ProductListFragment : BaseFragment() {
                 val endHasBeenReached = lastVisible == totalItemCount-1
                 if (totalItemCount > 0 && endHasBeenReached) {
                     Log.d("nop_", "last item of Product list is visible")
-                    getProducts()
+                    getProducts(resetFilters = false)
                 }
             }
         })
@@ -269,17 +269,11 @@ class ProductListFragment : BaseFragment() {
         subcategoryPopupWindow.setOnItemClickListener { parent, view, position, id ->
             subcategoryPopupWindow.dismiss()
 
-            requireActivity().supportFragmentManager.beginTransaction()
-                .replace(
-                    R.id.layoutFrame,
-                    newInstance(
-                        subCatList[position].name!!,
-                        subCatList[position].id!!,
-                        GetBy.CATEGORY
-                    )
-                )
-                .addToBackStack(null)
-                .commit()
+            replaceFragmentSafely(newInstance(
+                subCatList[position].name!!,
+                subCatList[position].id!!,
+                GetBy.CATEGORY
+            ))
         }
 
     }
@@ -325,7 +319,7 @@ class ProductListFragment : BaseFragment() {
     }
 
     fun applyFilter(filterUrl: String?) {
-        (viewModel as ProductListViewModel).applyFilter(filterUrl, model)
+        (viewModel as ProductListViewModel).applyFilter(categoryId.toLong(), filterUrl, model)
 
         bsBehavior.state = BottomSheetBehavior.STATE_COLLAPSED
         drawerLayout?.closeDrawers()

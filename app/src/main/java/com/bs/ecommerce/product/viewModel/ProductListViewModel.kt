@@ -6,7 +6,6 @@ import androidx.lifecycle.MutableLiveData
 import com.bs.ecommerce.base.BaseViewModel
 import com.bs.ecommerce.common.RequestCompleteListener
 import com.bs.ecommerce.networking.Api
-import com.bs.ecommerce.networking.Constants
 import com.bs.ecommerce.product.model.ProductListModel
 import com.bs.ecommerce.product.model.data.*
 import java.util.*
@@ -27,18 +26,16 @@ class ProductListViewModel : BaseViewModel() {
 
     private var queryMapLD = MutableLiveData<MutableMap<String, String>>()
 
-    fun getProductByCategory(catId: Long, model: ProductListModel) {
+    fun getProductByCategory(catId: Long, resetFilters: Boolean, model: ProductListModel) {
 
-        if(isLoadingLD.value == true || productLiveData.value?.pagingFilteringContext?.hasNextPage == false ) {
-            Log.d("nop_", "rejected")
+        // don't call if already loading
+        if (isLoadingLD.value == true || productLiveData.value?.pagingFilteringContext?.hasNextPage == false) {
             return
-        } else {
-            Log.d("nop_", "calling")
         }
 
         isLoadingLD.value = true
 
-        model.fetchProducts(catId, getQueryMap(), object : RequestCompleteListener<CategoryModel> {
+        model.fetchProducts(catId, getQueryMap(resetFilters), object : RequestCompleteListener<CategoryModel> {
             override fun onRequestSuccess(data: CategoryModel) {
                 isLoadingLD.value = false
 
@@ -57,12 +54,17 @@ class ProductListViewModel : BaseViewModel() {
         })
     }
 
-    fun getProductByManufacturer(manufacturerId: Long, model: ProductListModel) {
+    fun getProductByManufacturer(manufacturerId: Long, resetFilters: Boolean, model: ProductListModel) {
+        // don't call if already loading
+        if (isLoadingLD.value == true || productLiveData.value?.pagingFilteringContext?.hasNextPage == false) {
+            return
+        }
+
         isLoadingLD.value = true
 
         model.fetchProductsByManufacturer(
             manufacturerId,
-            mapOf(),
+            getQueryMap(resetFilters),
             object : RequestCompleteListener<Manufacturer> {
                 override fun onRequestSuccess(data: Manufacturer) {
                     isLoadingLD.value = false
@@ -80,19 +82,33 @@ class ProductListViewModel : BaseViewModel() {
             })
     }
 
-    fun applyFilter(filterUrl: String?, model: ProductListModel) {
+    fun applyFilter(catId: Long, filterUrl: String?, model: ProductListModel) {
+
         if (filterUrl.isNullOrEmpty()) return
+        if (isLoadingLD.value == true) return
 
-        // Strip base URL from full path
-        var endPoint = filterUrl.replace(Constants.BASE_URL, "")
+        isLoadingLD.value = true
 
-        // reset page number
-        endPoint = endPoint.replace("${Api.qs_page_number}=$pageNumber", "${Api.qs_page_number}=1")
-        pageNumber = 1
+        val map = queryMapLD.value ?: HashMap<String, String>()
+
+
+        val uri = Uri.parse(filterUrl)
+        val paramNames = uri.queryParameterNames
+        for(param in paramNames) {
+            val value = uri.getQueryParameter(param)
+            Log.d("nop_", "$param > $value")
+
+            map[param] = value.toString()
+        }
+
+        map[Api.qs_page_number] = 1.toString()
+        map[Api.qs_page_size] = 9.toString()
+
+        queryMapLD.value = map
 
         shouldAppend = false
 
-        model.applyFilter(endPoint, object : RequestCompleteListener<CategoryModel> {
+        model.fetchProducts(catId, map, object : RequestCompleteListener<CategoryModel> {
             override fun onRequestSuccess(data: CategoryModel) {
                 isLoadingLD.value = false
 
@@ -111,7 +127,7 @@ class ProductListViewModel : BaseViewModel() {
         })
     }
 
-    private fun getQueryMap(): MutableMap<String, String> {
+    private fun getQueryMap(resetFilters: Boolean): MutableMap<String, String> {
         // calculate next page to load
         val currentPage = productLiveData.value?.pagingFilteringContext?.pageNumber ?: 0
         pageNumber = currentPage + 1
@@ -120,6 +136,13 @@ class ProductListViewModel : BaseViewModel() {
         shouldAppend = currentPage>=1
 
         val map = queryMapLD.value ?: HashMap<String, String>()
+
+        // reset filtering by clearing query params
+        if(resetFilters) {
+            map.clear()
+        }
+
+        // applying default query params
         map[Api.qs_page_number] = pageNumber.toString()
         map[Api.qs_page_size] = 9.toString()
 
