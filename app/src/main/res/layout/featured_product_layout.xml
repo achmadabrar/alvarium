@@ -34,7 +34,7 @@
         android:layout_below="@id/tvProductName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        tools:listitem="@layout/item_featured_product"
+        tools:listitem="@layout/item_product_for_linearlayout"
         tools:orientation="horizontal"
         tools:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         tools:itemCount="5"/>

@@ -116,7 +116,7 @@
                 app:spanCount="2"
                 tools:itemCount="5"
                 tools:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
-                tools:listitem="@layout/item_featured_product" />
+                tools:listitem="@layout/item_product_for_gridlayout" />
 
             <FrameLayout
                 android:id="@+id/filterFragmentHolder"
