@@ -1,5 +1,7 @@
 package com.bs.ecommerce.product.viewModel
 
+import android.net.Uri
+import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import com.bs.ecommerce.base.BaseViewModel
 import com.bs.ecommerce.common.RequestCompleteListener
@@ -13,18 +15,27 @@ class ProductListViewModel : BaseViewModel() {
     var productLiveData = MutableLiveData<CategoryModel>()
     var manufacturerLD = MutableLiveData<Manufacturer>()
 
-    var toastMessageLD = MutableLiveData("")
-    var pageNumberLD = MutableLiveData(1)
-
     var applicableFilterLD = MutableLiveData<MutableMap<String, MutableList<FilterItems>>>()
     var appliedFilterLD = MutableLiveData<MutableMap<String, MutableList<FilterItems>>>()
     var priceRangeLD = MutableLiveData<PriceRangeFilter?>()
 
+    var toastMessageLD = MutableLiveData("")
     var filterVisibilityLD = MutableLiveData<Boolean>()
+
+    private var pageNumber = 0
+    var shouldAppend = false
 
     private var queryMapLD = MutableLiveData<MutableMap<String, String>>()
 
     fun getProductByCategory(catId: Long, model: ProductListModel) {
+
+        if(isLoadingLD.value == true || productLiveData.value?.pagingFilteringContext?.hasNextPage == false ) {
+            Log.d("nop_", "rejected")
+            return
+        } else {
+            Log.d("nop_", "calling")
+        }
+
         isLoadingLD.value = true
 
         model.fetchProducts(catId, getQueryMap(), object : RequestCompleteListener<CategoryModel> {
@@ -73,7 +84,13 @@ class ProductListViewModel : BaseViewModel() {
         if (filterUrl.isNullOrEmpty()) return
 
         // Strip base URL from full path
-        val endPoint = filterUrl.replace(Constants.BASE_URL, "")
+        var endPoint = filterUrl.replace(Constants.BASE_URL, "")
+
+        // reset page number
+        endPoint = endPoint.replace("${Api.qs_page_number}=$pageNumber", "${Api.qs_page_number}=1")
+        pageNumber = 1
+
+        shouldAppend = false
 
         model.applyFilter(endPoint, object : RequestCompleteListener<CategoryModel> {
             override fun onRequestSuccess(data: CategoryModel) {
@@ -95,9 +112,16 @@ class ProductListViewModel : BaseViewModel() {
     }
 
     private fun getQueryMap(): MutableMap<String, String> {
+        // calculate next page to load
+        val currentPage = productLiveData.value?.pagingFilteringContext?.pageNumber ?: 0
+        pageNumber = currentPage + 1
+
+        // whether or not the new data should be added with existing data
+        shouldAppend = currentPage>=1
+
         val map = queryMapLD.value ?: HashMap<String, String>()
-        map[Api.qs_page_number] = pageNumberLD.value.toString()
-        map[Api.qs_page_size] = 10.toString()
+        map[Api.qs_page_number] = pageNumber.toString()
+        map[Api.qs_page_size] = 9.toString()
 
         queryMapLD.value = map
 

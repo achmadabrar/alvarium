@@ -3,6 +3,7 @@ package com.bs.ecommerce.product
 import android.graphics.Rect
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,6 +14,7 @@ import androidx.drawerlayout.widget.DrawerLayout
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bs.ecommerce.R
 import com.bs.ecommerce.base.BaseFragment
@@ -31,6 +33,7 @@ import kotlinx.android.synthetic.main.fragment_product_list.*
 import kotlinx.android.synthetic.main.sort_option_bottom_sheet.view.*
 import kotlin.math.floor
 
+
 class ProductListFragment : BaseFragment() {
 
     private lateinit var model: ProductListModel
@@ -40,6 +43,7 @@ class ProductListFragment : BaseFragment() {
     private lateinit var layoutManager: GridLayoutManager
     private lateinit var subcategoryPopupWindow: ListPopupWindow
     private lateinit var productClickListener: ItemClickListener<ProductSummary>
+    private lateinit var productListAdapter: ProductListAdapter
     private lateinit var bsBehavior: BottomSheetBehavior<*>
 
     private var viewCreated = false
@@ -84,18 +88,22 @@ class ProductListFragment : BaseFragment() {
             // Explicitly used deprecated library to create viewModel with this fragments scope
             viewModel = ViewModelProviders.of(this).get(ProductListViewModel::class.java)
 
-            if (getBy == GetBy.CATEGORY.name)
-                (viewModel as ProductListViewModel).getProductByCategory(categoryId.toLong(), model)
-            if (getBy == GetBy.MANUFACTURER.name)
-                (viewModel as ProductListViewModel).getProductByManufacturer(
-                    categoryId.toLong(),
-                    model
-                )
+            getProducts()
 
             viewCreated = true
         }
 
         setLiveDataListeners()
+    }
+
+    private fun getProducts() {
+        if (getBy == GetBy.CATEGORY.name)
+            (viewModel as ProductListViewModel).getProductByCategory(categoryId.toLong(), model)
+        if (getBy == GetBy.MANUFACTURER.name)
+            (viewModel as ProductListViewModel).getProductByManufacturer(
+                categoryId.toLong(),
+                model
+            )
     }
 
     private fun initView() {
@@ -132,6 +140,24 @@ class ProductListFragment : BaseFragment() {
         }
 
         bsBehavior = BottomSheetBehavior.from(bottomSheetLayout)
+
+        productListAdapter = ProductListAdapter(productClickListener)
+
+        rvProductList.adapter = productListAdapter
+
+        rvProductList.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+
+                val totalItemCount = layoutManager.itemCount
+                val lastVisible = layoutManager.findLastVisibleItemPosition()
+
+                val endHasBeenReached = lastVisible == totalItemCount-1
+                if (totalItemCount > 0 && endHasBeenReached) {
+                    Log.d("nop_", "last item of Product list is visible")
+                    getProducts()
+                }
+            }
+        })
 
         // drawer view
         childFragmentManager
@@ -172,7 +198,7 @@ class ProductListFragment : BaseFragment() {
 
         viewModel.productLiveData.observe(viewLifecycleOwner, Observer { data ->
 
-            rvProductList.adapter = ProductListAdapter(data.products!!, productClickListener)
+            productListAdapter.addData(data.products, viewModel.shouldAppend)
 
             initSubcategoryPopupWindow(data.subCategories)
 
@@ -183,7 +209,7 @@ class ProductListFragment : BaseFragment() {
         })
 
         viewModel.manufacturerLD.observe(viewLifecycleOwner, Observer { manufacturer ->
-            rvProductList.adapter = ProductListAdapter(manufacturer.products!!, productClickListener)
+            productListAdapter.addData(manufacturer.products, viewModel.shouldAppend)
 
             llButtonHolder.visibility = View.VISIBLE
             btnBrand.visibility = View.GONE

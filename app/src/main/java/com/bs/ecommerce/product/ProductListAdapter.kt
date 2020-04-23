@@ -9,10 +9,11 @@ import com.bs.ecommerce.utils.ItemClickListener
 import com.bs.ecommerce.utils.loadImg
 import kotlinx.android.synthetic.main.item_product_for_gridlayout.view.*
 
-class ProductListAdapter (
-    private val productsList: List<ProductSummary>,
+class ProductListAdapter(
     private val listener: ItemClickListener<ProductSummary>
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+
+    private val productsList: MutableList<ProductSummary> = mutableListOf()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val itemView =
@@ -36,6 +37,23 @@ class ProductListAdapter (
 
         holder.itemView.setOnClickListener { v->
             listener.onClick(v, position, productsList[position])
+        }
+    }
+
+    fun addData(list: List<ProductSummary>?, shouldAppend: Boolean) {
+
+        if(list == null) return
+
+        if(shouldAppend) {
+            val previousSize = itemCount
+            productsList.addAll(list)
+
+            notifyItemRangeInserted(previousSize, list.size)
+        } else {
+            productsList.clear()
+            productsList.addAll(list)
+
+            notifyDataSetChanged()
         }
     }
 }
