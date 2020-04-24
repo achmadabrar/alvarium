@@ -1,22 +1,24 @@
 package com.bs.ecommerce.more
 
+import android.Manifest
 import android.app.AlertDialog
+import android.content.pm.PackageManager
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.RelativeLayout
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
 import com.bs.ecommerce.R
 import com.bs.ecommerce.auth.login.LoginFragment
 import com.bs.ecommerce.base.BaseFragment
 import com.bs.ecommerce.base.BaseViewModel
+import com.bs.ecommerce.more.barcode.BarCodeCaptureFragment
 import com.bs.ecommerce.more.viewmodel.OptionViewModel
 import com.bs.ecommerce.networking.NetworkUtil
-import com.bs.ecommerce.utils.MyApplication
-import com.bs.ecommerce.utils.PrefSingleton
-import com.bs.ecommerce.utils.inflate
-import com.bs.ecommerce.utils.replaceFragmentSafely
+import com.bs.ecommerce.utils.*
 import com.facebook.login.LoginManager
 import kotlinx.android.synthetic.main.fragment_options.*
 import kotlinx.android.synthetic.main.options_layout.view.*
@@ -66,6 +68,10 @@ class OptionsFragment : BaseFragment() {
                     optionView.setOnClickListener {
 
                         when(i.nameResId) {
+
+                            R.string.title_scan_barcode ->
+                                checkPermissionAndOpenScannerFragment()
+
                             R.string.settings ->
                                 replaceFragmentSafely(SettingsFragment())
 
@@ -96,30 +102,5 @@ class OptionsFragment : BaseFragment() {
 
             viewCreated = true
         }
-    }
-
-    private fun logoutConfirmationDialog()
-    {
-        val builder = AlertDialog.Builder(requireActivity())
-
-        builder.setMessage(R.string.are_you_sure_logout).setTitle(R.string.log_out)
-
-        builder.setPositiveButton(R.string.yes) { _, _ -> performLogout() }
-        builder.setNegativeButton(R.string.no) { dialog, _ -> dialog.dismiss() }
-
-        val dialog = builder.create()
-        dialog.show()
-    }
-
-    private fun performLogout()
-    {
-        NetworkUtil.token = ""
-        MyApplication.myCartCounter = 0
-        prefObject.setPrefs(PrefSingleton.TOKEN_KEY, "")
-        prefObject.setPrefs(PrefSingleton.IS_LOGGED_IN, false)
-        //LoginManager.getInstance().logOut()
-        requireActivity().invalidateOptionsMenu()
-
-        (viewModel as OptionViewModel).changeLogInText()
     }
 }

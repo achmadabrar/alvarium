@@ -132,6 +132,18 @@ class ProductDetailFragment : BaseFragment(), View.OnClickListener {
 
                 })
 
+            isInvalidProductLD.observe(
+                viewLifecycleOwner,
+                Observer { isInvalid ->
+
+                    if (isInvalid)
+                    {
+                        toast(getString(R.string.invalid_barcode))
+                        requireActivity().supportFragmentManager.popBackStackImmediate()
+                    }
+
+                })
+
             isLoadingLD.observe(
                 viewLifecycleOwner,
                 Observer { isShowLoader ->

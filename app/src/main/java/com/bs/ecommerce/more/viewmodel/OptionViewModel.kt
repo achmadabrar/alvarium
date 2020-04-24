@@ -14,6 +14,8 @@ class OptionViewModel : BaseViewModel() {
 
         val data = mutableListOf<AppOptions>()
 
+        data.add(AppOptions(R.string.title_scan_barcode, R.drawable.ic_settings))
+
         data.add(AppOptions(R.string.settings, R.drawable.ic_settings))
 
         data.add(AppOptions(R.string.privacy_policy, R.drawable.ic_privacy))

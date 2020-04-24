@@ -1,8 +1,10 @@
 package com.bs.ecommerce.base
 
+import android.Manifest
 import android.app.AlertDialog
 import androidx.lifecycle.Observer
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.os.Bundle
 import androidx.annotation.LayoutRes
 import androidx.fragment.app.Fragment
@@ -10,10 +12,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.RelativeLayout
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import com.bs.ecommerce.R
 import com.bs.ecommerce.auth.login.LoginViewModel
-import com.bs.ecommerce.utils.PrefSingleton
-import com.bs.ecommerce.utils.showLog
+import com.bs.ecommerce.more.barcode.BarCodeCaptureFragment
+import com.bs.ecommerce.more.viewmodel.OptionViewModel
+import com.bs.ecommerce.networking.NetworkUtil
+import com.bs.ecommerce.utils.*
 import com.pnikosis.materialishprogress.ProgressWheel
 import kotlin.properties.Delegates
 
@@ -96,5 +102,66 @@ abstract class BaseFragment : Fragment()
     }
 
     protected fun hideLoading() = progressWheel?.stopSpinning()
+
+
+
+    fun checkPermissionAndOpenScannerFragment()
+    {
+        if (ContextCompat.checkSelfPermission(requireActivity(), Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED)
+        {
+            ActivityCompat.requestPermissions(requireActivity(),
+                arrayOf(Manifest.permission.CAMERA), BARCODE_CAMERA_PERMISSION)
+        }
+        else
+        {
+            replaceFragmentSafely(BarCodeCaptureFragment())
+        }
+    }
+
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>, grantResults: IntArray)
+    {
+        when (requestCode)
+        {
+            BARCODE_CAMERA_PERMISSION ->
+            {
+                if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED)
+                {
+                    replaceFragmentSafely(BarCodeCaptureFragment())
+                }
+                else
+                    toast("Please grant camera permission to use the Barcode Scanner")
+
+                return
+            }
+        }
+    }
+
+    fun logoutConfirmationDialog()
+    {
+        val builder = AlertDialog.Builder(requireActivity())
+
+        builder.setMessage(R.string.are_you_sure_logout).setTitle(R.string.log_out)
+
+        builder.setPositiveButton(R.string.yes) { _, _ -> performLogout() }
+        builder.setNegativeButton(R.string.no) { dialog, _ -> dialog.dismiss() }
+
+        val dialog = builder.create()
+        dialog.show()
+    }
+
+    private fun performLogout()
+    {
+        NetworkUtil.token = ""
+        MyApplication.myCartCounter = 0
+        prefObject.setPrefs(PrefSingleton.TOKEN_KEY, "")
+        prefObject.setPrefs(PrefSingleton.IS_LOGGED_IN, false)
+        //LoginManager.getInstance().logOut()
+        requireActivity().invalidateOptionsMenu()
+
+        (viewModel as OptionViewModel).changeLogInText()
+    }
+
+
+    private val BARCODE_CAMERA_PERMISSION = 1
 
 }
