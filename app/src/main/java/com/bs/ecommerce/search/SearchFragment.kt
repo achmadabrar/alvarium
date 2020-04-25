@@ -17,26 +17,21 @@ import com.bs.ecommerce.base.BaseViewModel
 import com.bs.ecommerce.main.MainActivity
 import com.bs.ecommerce.product.ProductDetailFragment
 import com.bs.ecommerce.product.ProductListAdapter
-import com.bs.ecommerce.product.model.ProductListModel
-import com.bs.ecommerce.product.model.ProductListModelImpl
 import com.bs.ecommerce.product.model.data.ProductSummary
-import com.bs.ecommerce.utils.ItemClickListener
-import com.bs.ecommerce.utils.MyApplication
-import com.bs.ecommerce.utils.inflate
-import com.bs.ecommerce.utils.toast
+import com.bs.ecommerce.search.model.SearchModel
+import com.bs.ecommerce.search.model.SearchModelImpl
+import com.bs.ecommerce.utils.*
 import kotlinx.android.synthetic.main.fragment_product_list.*
 import kotlin.math.floor
 
 class SearchFragment : BaseFragment() {
 
-    private lateinit var model: ProductListModel
+    private lateinit var model: SearchModel
     private lateinit var layoutManager: GridLayoutManager
     private lateinit var productClickListener: ItemClickListener<ProductSummary>
 
     private var viewCreated = false
     private var rootView: View? = null
-
-
 
     private var searchView: SearchView? = null
 
@@ -71,7 +66,7 @@ class SearchFragment : BaseFragment() {
 
             calculateAutomaticGridColumn()
 
-            model = ProductListModelImpl()
+            model = SearchModelImpl()
             viewModel = ViewModelProvider(this).get(SearchViewModel::class.java)
 
 
@@ -80,14 +75,7 @@ class SearchFragment : BaseFragment() {
 
                     if (data.id == null) return
 
-                    requireActivity().supportFragmentManager.beginTransaction()
-                        .replace(
-                            R.id.layoutFrame,
-                            ProductDetailFragment.newInstance(data.id.toLong())
-                        )
-                        .addToBackStack(
-                            ProductDetailFragment::class.java.simpleName
-                        ).commit()
+                    replaceFragmentSafely(ProductDetailFragment.newInstance(data.id.toLong()))
                 }
             }
 
@@ -101,14 +89,14 @@ class SearchFragment : BaseFragment() {
     private fun setLiveDataListeners() {
         val viewModel = viewModel as SearchViewModel
 
-        viewModel.productLiveData.observe(viewLifecycleOwner, Observer { data ->
+        viewModel.productLiveData.observe(viewLifecycleOwner, Observer { searchResult ->
 
             rvProductList.adapter = ProductListAdapter(productClickListener).also {
-                it.addData(data.products, false)
+                it.addData(searchResult.products, false)
             }
 
             llButtonHolder.visibility =
-                if (data.subCategories.isNullOrEmpty()) View.VISIBLE else View.GONE
+                if (searchResult.noResults == false) View.VISIBLE else View.GONE
         })
 
         viewModel.isLoadingLD.observe(viewLifecycleOwner, Observer { isShowLoader ->
@@ -150,7 +138,8 @@ class SearchFragment : BaseFragment() {
             searchView?.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
                 override fun onQueryTextSubmit(query: String): Boolean {
                     searchProduct()
-                    activity?.title = query
+
+                    requireActivity().title = query
                     MyApplication.searchQuery = query
                     searchView?.clearFocus()
                     return false
@@ -171,7 +160,7 @@ class SearchFragment : BaseFragment() {
                 override fun onMenuItemActionCollapse(menuItem: MenuItem) : Boolean
                 {
                     searchView?.clearFocus()
-                    fragmentManager?.popBackStack()
+                    requireActivity().supportFragmentManager.popBackStack()
                     return true
                 }
             })
@@ -181,19 +170,15 @@ class SearchFragment : BaseFragment() {
 
     }
 
-    fun searchProduct()
-    {
+    fun searchProduct() {
 
         searchView?.let {
 
             val query = it.query.toString()
 
-            if (query.length > 2)
-            {
-                //(viewModel as ProductListViewModel).getProductByCategory(categoryId.toLong(), model)
-                //RetroClient.api.searchProduct(searchObject, queryMapping).enqueue(CustomCB(searchRootLayout))
-            }
-            else
+            if (query.length > 2) {
+                (viewModel as SearchViewModel).searchProduct(query, model)
+            } else
                 toast(R.string.search_limit)
 
         }

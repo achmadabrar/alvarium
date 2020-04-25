@@ -4,24 +4,27 @@ import androidx.lifecycle.MutableLiveData
 import com.bs.ecommerce.base.BaseViewModel
 import com.bs.ecommerce.common.RequestCompleteListener
 import com.bs.ecommerce.networking.Api
-import com.bs.ecommerce.product.model.data.CategoryModel
-import com.bs.ecommerce.product.model.data.Manufacturer
-import com.bs.ecommerce.product.model.ProductListModel
-import java.util.HashMap
+import com.bs.ecommerce.product.model.data.SearchResult
+import com.bs.ecommerce.search.model.SearchModel
+import com.bs.ecommerce.search.model.SearchParam
+import java.util.*
 
 class SearchViewModel : BaseViewModel() {
-    var productLiveData = MutableLiveData<CategoryModel>()
+    var productLiveData = MutableLiveData<SearchResult>()
 
     var toastMessageLD = MutableLiveData("")
     var pageNumberLD = MutableLiveData(1)
 
     private var queryMapLD = MutableLiveData<MutableMap<String, String>>()
 
-    fun getProductByCategory(catId: Long, model: ProductListModel) {
+    fun searchProduct(query: String, model: SearchModel) {
+
+        val searchParam = SearchParam(1)
+
         isLoadingLD.postValue(true)
 
-        model.fetchProducts(catId, getQueryMap(), object : RequestCompleteListener<CategoryModel> {
-            override fun onRequestSuccess(data: CategoryModel) {
+        model.searchProducts(query, searchParam, object : RequestCompleteListener<SearchResult> {
+            override fun onRequestSuccess(data: SearchResult) {
                 isLoadingLD.postValue(false)
 
                 productLiveData.postValue(data)

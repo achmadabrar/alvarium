@@ -92,6 +92,15 @@ interface Api {
     @GET
     fun applyFilter(@Url endpoint: String): Call<CategoryResponse>
 
+    @GET("catalog/search/{pageNumber}/{pageSize}/{orderBy}/{viewMode}")
+    fun searchProduct(
+        @Path("pageNumber") pageNumber: Int,
+        @Path("pageSize") pageSize: Int,
+        @Path("orderBy") orderBy: String,
+        @Path("viewMode") viewMode: String,
+        @Query("q") query: String
+        ): Call<SearchResponse>
+
 /*    @POST("setcurrency/{id}")
     fun setCurrency(@Path("id") id: Long): Call<LanguageResponse>
 
