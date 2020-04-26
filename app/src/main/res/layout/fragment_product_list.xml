@@ -118,6 +118,17 @@
                 tools:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
                 tools:listitem="@layout/item_product_for_gridlayout" />
 
+            <TextView
+                android:id="@+id/tvNoProduct"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:textColor="@color/whiteOrBlack"
+                android:textSize="@dimen/tv_text_size_regular"
+                tools:visibility="visible"
+                android:visibility="gone"
+                android:text="@string/no_product_found"/>
+
             <FrameLayout
                 android:id="@+id/filterFragmentHolder"
                 android:layout_width="300dp"

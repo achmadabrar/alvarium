@@ -177,4 +177,5 @@
     <string name="filter_by_attr">Filter By %s</string>
     <string name="currently_shopping_by">Currently Shopping By</string>
     <string name="remove_filter">Remove Filter</string>
+    <string name="no_product_found">No Product Found</string>
 </resources>

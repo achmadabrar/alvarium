@@ -164,6 +164,8 @@ class SearchFragment : BaseFragment() {
 
             llButtonHolder.visibility =
                 if (searchResult.noResults == false) View.VISIBLE else View.GONE
+            tvNoProduct.visibility =
+                if (searchResult.noResults == true) View.VISIBLE else View.GONE
 
             populateSortOptions(searchResult.pagingFilteringContext)
         })
