@@ -49,11 +49,28 @@ class ProductAttributeView(
 
                 AttributeControlType.ColorSquares -> colorSelectionAttr(attr)
 
-                // AttributeControlType.TextBox -> sizeSelectionAttr(attr)
+                AttributeControlType.TextBox -> textInputAttr(attr)
 
                 else -> genericAttributes(attr)
             }
         }
+    }
+
+    private fun textInputAttr(attr: ProductAttribute) {
+        val layout = layoutInflater.inflate(R.layout.edittext_attribute, null)
+        layout.tag = attr.productAttributeId
+
+        val tvName = layout.findViewById<TextView>(R.id.tvLayoutTitle)
+        tvName.text = attr.textPrompt ?: attr.name
+
+        //val tvDesc = layout.findViewById<TextView>(R.id.tvLayoutSubTitle)
+        //tvDesc.text = attr.description ?: "Select your ${attr.name}"
+
+        tvName.setCompoundDrawablesWithIntrinsicBounds(
+            0, 0, if (attr.isRequired) R.drawable.ic_star_formular else 0, 0
+        )
+
+        inflatedViews[attr.productAttributeId] = layout
     }
 
     private fun genericAttributes(attr: ProductAttribute) {

@@ -15,12 +15,14 @@ import com.bs.ecommerce.base.BaseFragment
 import com.bs.ecommerce.base.BaseViewModel
 import com.bs.ecommerce.home.FeaturedProductAdapter
 import com.bs.ecommerce.main.MainViewModel
-import com.bs.ecommerce.product.model.data.AttributeControlValue
-import com.bs.ecommerce.product.model.data.ProductSummary
 import com.bs.ecommerce.product.model.ProductDetailModel
 import com.bs.ecommerce.product.model.ProductDetailModelImpl
+import com.bs.ecommerce.product.model.data.ProductSummary
 import com.bs.ecommerce.product.viewModel.ProductDetailViewModel
-import com.bs.ecommerce.utils.*
+import com.bs.ecommerce.utils.ItemClickListener
+import com.bs.ecommerce.utils.RecyclerViewMargin
+import com.bs.ecommerce.utils.show
+import com.bs.ecommerce.utils.toast
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetBehavior.BottomSheetCallback
 import kotlinx.android.synthetic.main.featured_product_layout.view.*
@@ -31,7 +33,6 @@ import kotlinx.android.synthetic.main.product_name_layout.view.tvProductName
 import kotlinx.android.synthetic.main.product_price_layout.view.*
 import kotlinx.android.synthetic.main.product_quantity.view.*
 import kotlinx.android.synthetic.main.slider.view.*
-import kotlin.collections.HashMap
 
 
 class ProductDetailFragment : BaseFragment(), View.OnClickListener {
@@ -66,9 +67,10 @@ class ProductDetailFragment : BaseFragment(), View.OnClickListener {
         setLiveDataListeners()
 
         btnAddToCart?.setOnClickListener {
-
-            (viewModel as ProductDetailViewModel).addProductToCartModel(productId,
-                                                                        productQuantityLayout?.tvQuantity?.text.toString(), model)
+            (viewModel as ProductDetailViewModel).addProductToCartModel(
+                productId,
+                productQuantityLayout?.tvQuantity?.text.toString(), model
+            )
         }
     }
 
@@ -229,6 +231,8 @@ class ProductDetailFragment : BaseFragment(), View.OnClickListener {
     }
 
     private fun initView() {
+        // to avoid auto scrolling of scrollview
+        focusStealer.requestFocus()
 
         bsBehavior = BottomSheetBehavior.from(bottomSheetLayout)
         bsBehavior.addBottomSheetCallback(object : BottomSheetCallback() {
