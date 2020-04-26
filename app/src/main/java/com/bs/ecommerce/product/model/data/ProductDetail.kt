@@ -2,36 +2,29 @@ package com.bs.ecommerce.product.model.data
 
 import com.google.gson.annotations.SerializedName
 
+class ProductDetail(
+    @SerializedName("PictureModels") var pictureModels: List<PictureModel>,
+    @SerializedName("FullDescription") var fullDescription: String?,
+    @SerializedName("AssociatedProducts") var associatedProducts: List<ProductDetail>,
 
-/**
- * Created by Ashraful on 11/20/2015.
- */
-/*class ProductDetail : ProductModel()
-{
+    @SerializedName("ProductSpecifications") var productSpecifications: List<ProductSpecification>,
 
-    @SerializedName("PictureModels") var pictureModels: List<PictureModel>? = null
-    @SerializedName("FullDescription")  var fullDescription: String? = null
-    @SerializedName("AssociatedProducts")  var associatedProducts: List<ProductDetail>? = null
+    @SerializedName("Quantity") var quantity: Quantity,
 
-    @SerializedName("ProductSpecifications") var productSpecifications: List<ProductSpecification>? = null
+    @SerializedName("ProductAttributes") var productAttributes: List<ProductAttribute>,
 
-    @SerializedName("Quantity") var quantity = Quantity()
+    @SerializedName("AddToCart") var addToCart: AddToCart,
 
-    @SerializedName("ProductAttributes") lateinit var productAttributes: List<ProductAttribute>
-}*/
+    @SerializedName("ShortDescription") var shortDescription: String? = null,
+    @SerializedName("ProductPrice") var productPrice: ProductPrice? = null,
 
+    @SerializedName("ReviewOverviewModel") var reviewOverviewModel: ReviewModel? = null,
 
-class ProductDetail(@SerializedName("PictureModels") var pictureModels: List<PictureModel>,
-                    @SerializedName("FullDescription")  var fullDescription: String?,
-                    @SerializedName("AssociatedProducts")  var associatedProducts: List<ProductDetail>,
+    @SerializedName("StockAvailability") var stockAvailability: String? = null,
 
-                    @SerializedName("ProductSpecifications") var productSpecifications: List<ProductSpecification>,
+    @SerializedName("DefaultPictureModel") var defaultPictureModel: DefaultPictureModel? = null,
+    @SerializedName("Id") var id: Long = 0,
 
-                    @SerializedName("Quantity") var quantity : Quantity,
+    @SerializedName("Name") var name: String? = null
 
-                    @SerializedName("ProductAttributes") var productAttributes: List<ProductAttribute>,
-
-                    @SerializedName("AddToCart") var addToCart: AddToCart
-
-
-): ProductModel()
+)
