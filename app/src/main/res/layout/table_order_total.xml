@@ -58,6 +58,7 @@
         android:weightSum="1">
 
         <TextView
+            android:id="@+id/discountKey"
             android:text="@string/discount"
             style="@style/orderTotalKeyTextViewStyle"/>
 

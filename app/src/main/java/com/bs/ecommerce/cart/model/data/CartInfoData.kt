@@ -23,11 +23,14 @@ data class CartInfoData(
     @SerializedName("Warnings") var warnings: List<Any> = listOf()
 )
 
+
+data class AppliedDiscountsWithCode(@SerializedName("CouponCode") var couponCode: String = "", @SerializedName("Id") var id: Int = 0)
+
 data class DiscountBox(
-    @SerializedName("AppliedDiscountsWithCodes") var appliedDiscountsWithCodes: List<Any> = listOf(),
+    @SerializedName("AppliedDiscountsWithCodes") var appliedDiscountsWithCodes: List<AppliedDiscountsWithCode> = listOf(),
     @SerializedName("Display") var display: Boolean = false,
     @SerializedName("IsApplied") var isApplied: Boolean = false,
-    @SerializedName("Messages") var messages: List<Any> = listOf()
+    @SerializedName("Messages") var messages: List<String> = listOf()
 )
 
 data class GiftCardBox(

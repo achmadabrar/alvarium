@@ -14,9 +14,11 @@ import com.bs.ecommerce.base.BaseFragment
 import com.bs.ecommerce.base.BaseViewModel
 import com.bs.ecommerce.cart.model.CartModel
 import com.bs.ecommerce.cart.model.CartModelImpl
+import com.bs.ecommerce.cart.model.data.AddDiscountPostData
 import com.bs.ecommerce.cart.model.data.CartProduct
 import com.bs.ecommerce.cart.model.data.CartRootData
 import com.bs.ecommerce.cart.model.data.OrderTotal
+import com.bs.ecommerce.networking.RetroClient
 import com.bs.ecommerce.utils.MyApplication
 import com.bs.ecommerce.utils.toast
 import kotlinx.android.synthetic.main.fragment_cart.*
@@ -55,6 +57,15 @@ class CartFragment : BaseFragment() {
         setLiveDataListeners()
 
         initView()
+
+
+        btnApplyCoupon?.setOnClickListener {
+
+            val couponCode = etCartCoupon.text.toString().trim()
+
+            if(couponCode.isNotEmpty())
+                (viewModel as CartViewModel).applyCouponVM(AddDiscountPostData(data = couponCode), model)
+        }
 
     }
 
@@ -124,15 +135,35 @@ class CartFragment : BaseFragment() {
         val cartAdapter = CartAdapter(items, this, viewModel, model)
 
         cartproductRecyclerList?.adapter = cartAdapter
-            //makeActionOnCartItemClick(cartAdapter)
     }
 
     private fun populateDiscountAndGiftCard(cartRootData: CartRootData)
     {
-        if (cartRootData.cart.discountBox.display)
-            ll_cart_coupon?.visibility = View.VISIBLE
-        else
-            ll_cart_coupon?.visibility = View.GONE
+
+        with(cartRootData.cart.discountBox)
+        {
+            if (display)
+            {
+                ll_cart_coupon?.visibility = View.VISIBLE
+
+                if(appliedDiscountsWithCodes.isNotEmpty())
+                {
+                    discountKey?.text = "${getString(R.string.discount)}: (${appliedDiscountsWithCodes[0].couponCode})"
+                }
+
+
+                if(messages.isNotEmpty())
+                {
+                    etCartCoupon?.setText(messages[0])
+                    toast(messages[0])
+                }
+            }
+            else
+                ll_cart_coupon?.visibility = View.GONE
+        }
+
+
+
 
         if (cartRootData.cart.giftCardBox.display)
             ll_cart_gift_card?.visibility = View.VISIBLE
@@ -165,9 +196,9 @@ class CartFragment : BaseFragment() {
             if (displayTax && tax != null)
             {
                 if (displayTaxRates)
-                     taxRates?.get(0)?.rate?.let { taxKey.text = "${getString(R.string.tax)} $it%" }
+                     taxRates?.get(0)?.rate?.let { taxKey?.text = "${getString(R.string.tax)} $it%" }
 
-                tvTax.text = tax
+                tvTax?.text = tax
             }
             else
                 taxLayout?.visibility = View.GONE
@@ -177,34 +208,34 @@ class CartFragment : BaseFragment() {
 
             if (orderTotalDiscount != null)
             {
-                discountLayout.visibility = View.VISIBLE
-                tvDiscount.text = subTotalDiscount.toString()
-                underDiscountDivider.visibility = View.VISIBLE
+                discountLayout?.visibility = View.VISIBLE
+                tvDiscount?.text = orderTotalDiscount
+                underDiscountDivider?.visibility = View.VISIBLE
             }
             else
-                discountLayout.visibility = View.GONE
+                discountLayout?.visibility = View.GONE
 
             if (giftCards != null && giftCards!!.isNotEmpty())
             {
-                giftCardLayout.visibility = View.VISIBLE
-                giftCardKey.text = orderTotalModel.giftCards.toString()
+                giftCardLayout?.visibility = View.VISIBLE
+                giftCardKey?.text = orderTotalModel.giftCards.toString()
 
-                underGiftCardDivider.visibility = View.VISIBLE
+                underGiftCardDivider?.visibility = View.VISIBLE
 
                 val giftCardAdapter = GiftCardAdapter(activity!!, giftCards!!)
-                giftCardRecyclerList.layoutManager = androidx.recyclerview.widget.LinearLayoutManager(activity)
-                giftCardRecyclerList.adapter = giftCardAdapter
+                giftCardRecyclerList?.layoutManager = androidx.recyclerview.widget.LinearLayoutManager(activity)
+                giftCardRecyclerList?.adapter = giftCardAdapter
             }
             else
-                giftCardLayout.visibility = View.GONE
+                giftCardLayout?.visibility = View.GONE
 
             if (orderTotal.isEmpty()) {
-                tvTotal.setText(R.string.calculated_during_checkout)
-                tvTotal.setTextColor(Color.RED)
+                tvTotal?.setText(R.string.calculated_during_checkout)
+                tvTotal?.setTextColor(Color.RED)
             }
             if (shipping.isEmpty()) {
-                tvTotal.setText(R.string.calculated_during_checkout)
-                tvTotal.setTextColor(Color.RED)
+                tvTotal?.setText(R.string.calculated_during_checkout)
+                tvTotal?.setTextColor(Color.RED)
             }
         }
     }

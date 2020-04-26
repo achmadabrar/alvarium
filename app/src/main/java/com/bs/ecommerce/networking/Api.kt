@@ -5,6 +5,7 @@ import com.bs.ecommerce.auth.login.data.LoginResponse
 import com.bs.ecommerce.auth.register.data.GetRegisterData
 import com.bs.ecommerce.auth.register.data.GetRegistrationResponse
 import com.bs.ecommerce.auth.register.data.KeyValuePair
+import com.bs.ecommerce.cart.model.data.AddDiscountPostData
 import com.bs.ecommerce.cart.model.data.CartResponse
 import com.bs.ecommerce.home.homepage.model.data.HomePageProductResponse
 import com.bs.ecommerce.home.homepage.model.data.SliderResponse
@@ -40,6 +41,10 @@ interface Api {
 
     @POST("shoppingcart/updatecart")
     fun updateCartData(@Body list: List<KeyValuePair>): Call<CartResponse>
+
+
+    @POST("shoppingcart/applydiscountcoupon")
+    fun applyDiscountCoupon(@Body request: AddDiscountPostData): Call<CartResponse>
 
 
     @POST("customer/login") fun postLoginAPI(@Body loginPostData: LoginPostData): Call<LoginResponse>

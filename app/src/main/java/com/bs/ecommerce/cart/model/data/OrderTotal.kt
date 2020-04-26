@@ -10,7 +10,7 @@ data class OrderTotal(
     @SerializedName("HideShippingTotal") var hideShippingTotal: Boolean = false,
     @SerializedName("IsEditable") var isEditable: Boolean = false,
     @SerializedName("OrderTotal") var orderTotal: String = "",
-    @SerializedName("OrderTotalDiscount") var orderTotalDiscount: Any? = Any(),
+    @SerializedName("OrderTotalDiscount") var orderTotalDiscount: String? = null,
     @SerializedName("PaymentMethodAdditionalFee") var paymentMethodAdditionalFee: Any = Any(),
     @SerializedName("RedeemedRewardPoints") var redeemedRewardPoints: Int = 0,
     @SerializedName("RedeemedRewardPointsAmount") var redeemedRewardPointsAmount: Any = Any(),
@@ -18,7 +18,7 @@ data class OrderTotal(
     @SerializedName("SelectedShippingMethod") var selectedShippingMethod: Any = Any(),
     @SerializedName("Shipping") var shipping: String = "",
     @SerializedName("SubTotal") var subTotal: String = "",
-    @SerializedName("SubTotalDiscount") var subTotalDiscount: Any = Any(),
+    @SerializedName("SubTotalDiscount") var subTotalDiscount: String? = null,
     @SerializedName("Tax") var tax: String? = null,
     @SerializedName("TaxRates") var taxRates: List<TaxRate>? = null,
     @SerializedName("WillEarnRewardPoints") var willEarnRewardPoints: Int = 0
