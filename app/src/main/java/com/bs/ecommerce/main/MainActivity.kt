@@ -17,7 +17,7 @@ import com.bs.ecommerce.home.homepage.HomeFragment
 import com.bs.ecommerce.main.model.MainModel
 import com.bs.ecommerce.main.model.MainModelImpl
 import com.bs.ecommerce.more.OptionsFragment
-import com.bs.ecommerce.search.SearchFragment
+import com.bs.ecommerce.product.SearchFragment
 import com.bs.ecommerce.utils.PrefSingleton
 import com.bs.ecommerce.utils.createIfNotInBackStack
 import com.bs.ecommerce.utils.toast
@@ -203,7 +203,9 @@ class MainActivity : BaseActivity()
             }
             R.id.bottom_nav_search -> {
 
-                createIfNotInBackStack<SearchFragment>(SearchFragment())
+                createIfNotInBackStack<SearchFragment>(
+                    SearchFragment()
+                )
                 return@OnNavigationItemSelectedListener true
             }
             R.id.bottom_nav_account -> {

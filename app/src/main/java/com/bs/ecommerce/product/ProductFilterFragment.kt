@@ -90,11 +90,17 @@ class ProductFilterFragment : BaseFragment() {
                 rl.btnRemoveFilter.setOnClickListener {
                     if (parentFragment is ProductListFragment && i.selected)
                         (parentFragment as ProductListFragment).applyFilter(priceRangeFilter?.removeFilterUrl)
+
+                    else if (parentFragment is SearchFragment && i.selected)
+                        (parentFragment as SearchFragment).applyFilter(priceRangeFilter?.removeFilterUrl)
                 }
 
                 rl.setOnClickListener {
-                    if (parentFragment is ProductListFragment && !i.selected)
+                    if (parentFragment is SearchFragment && !i.selected)
                         (parentFragment as ProductListFragment).applyFilter(i.filterUrl)
+
+                    else if (parentFragment is SearchFragment && i.selected)
+                        (parentFragment as SearchFragment).applyFilter(priceRangeFilter?.removeFilterUrl)
                 }
 
                 view.addView(rl)

@@ -1,9 +1,10 @@
-package com.bs.ecommerce.search.model
+package com.bs.ecommerce.product.model
 
 import com.bs.ecommerce.common.RequestCompleteListener
 import com.bs.ecommerce.networking.RetroClient
 import com.bs.ecommerce.product.model.data.SearchResponse
 import com.bs.ecommerce.product.model.data.SearchResult
+import com.bs.ecommerce.product.model.data.SearchParam
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -11,7 +12,6 @@ import retrofit2.Response
 class SearchModelImpl : SearchModel {
 
     override fun searchProducts(
-        query: String,
         searchParam: SearchParam,
         callback: RequestCompleteListener<SearchResult>
     ) {
@@ -20,7 +20,7 @@ class SearchModelImpl : SearchModel {
             searchParam.pageSize,
             searchParam.orderBy.toString(),
             searchParam.viewMode.toString(),
-            query
+            searchParam.queryMap
             ).enqueue(object : Callback<SearchResponse> {
 
             override fun onFailure(call: Call<SearchResponse>, t: Throwable) {

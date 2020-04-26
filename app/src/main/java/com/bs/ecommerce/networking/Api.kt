@@ -98,7 +98,7 @@ interface Api {
         @Path("pageSize") pageSize: Int,
         @Path("orderBy") orderBy: String,
         @Path("viewMode") viewMode: String,
-        @Query("q") query: String
+        @QueryMap query: Map<String, String>
         ): Call<SearchResponse>
 
 /*    @POST("setcurrency/{id}")
@@ -312,9 +312,13 @@ interface Api {
         val qs_price = "price"
         val qs_page_number = "PageNumber"
         val qs_page_size = "PageSize"
+        val qs_order_by = "orderby"
         val qs_spec = "specs"
         val shoppingCartTypeCart = 1
         val shoppingCartTypeWishlist = 2
         val cartProductId: Long = 0
+
+        @JvmStatic
+        val DEFAULT_PAGE_SIZE = 9
     }
 }

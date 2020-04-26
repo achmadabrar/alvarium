@@ -8,10 +8,13 @@ import com.bs.ecommerce.common.RequestCompleteListener
 import com.bs.ecommerce.networking.Api
 import com.bs.ecommerce.product.model.ProductListModel
 import com.bs.ecommerce.product.model.data.*
+import com.bs.ecommerce.product.model.SearchModel
+import com.bs.ecommerce.product.model.data.SearchParam
 import java.util.*
 
 class ProductListViewModel : BaseViewModel() {
     var productLiveData = MutableLiveData<CategoryModel>()
+    var searchResultLD = MutableLiveData<SearchResult>()
     var manufacturerLD = MutableLiveData<Manufacturer>()
 
     var applicableFilterLD = MutableLiveData<MutableMap<String, MutableList<FilterItems>>>()
@@ -25,6 +28,7 @@ class ProductListViewModel : BaseViewModel() {
     var shouldAppend = false
 
     private var queryMapLD = MutableLiveData<MutableMap<String, String>>()
+    private var searchParam = SearchParam()
 
     fun getProductByCategory(catId: Long, resetFilters: Boolean, model: ProductListModel) {
 
@@ -82,6 +86,74 @@ class ProductListViewModel : BaseViewModel() {
             })
     }
 
+    fun searchProduct(query: String, resetFilters: Boolean, model: SearchModel) {
+
+        shouldAppend = !resetFilters
+
+        if (isLoadingLD.value == true) {
+            return
+        }
+
+        if(!resetFilters && searchResultLD.value?.pagingFilteringContext?.hasNextPage == false) {
+            return
+        }
+
+        searchParam.apply {
+            if(resetFilters) clear()
+            incrementPageNumber()
+            queryMap["q"] = query
+        }
+
+        search(model)
+    }
+
+    fun applySearchFilter(filterUrl: String?, model: SearchModel) {
+        if (filterUrl.isNullOrEmpty()) return
+        if (isLoadingLD.value == true) return
+
+        searchParam.apply {
+            clear()
+            incrementPageNumber()
+        }
+
+        shouldAppend = false
+
+        val uri = Uri.parse(filterUrl)
+        val paramNames = uri.queryParameterNames
+        for(param in paramNames) {
+            val value = uri.getQueryParameter(param)
+            Log.d("nop_", "$param > $value")
+
+            searchParam.queryMap[param] = value.toString()
+        }
+
+        if(searchParam.queryMap.containsKey(Api.qs_order_by))
+            searchParam.orderBy = searchParam.queryMap[Api.qs_order_by]?.toInt()
+
+        search(model)
+    }
+
+    private fun search(model: SearchModel) {
+        isLoadingLD.postValue(true)
+
+        model.searchProducts(searchParam, object : RequestCompleteListener<SearchResult> {
+            override fun onRequestSuccess(data: SearchResult) {
+                isLoadingLD.postValue(false)
+                searchResultLD.postValue(data)
+
+                preparePriceFilter(data.pagingFilteringContext)
+                prepareFilterAttribute(data.pagingFilteringContext)
+                setFilterVisibility(data.pagingFilteringContext)
+            }
+
+            override fun onRequestFailed(errorMessage: String) {
+                isLoadingLD.postValue(false)
+                toastMessageLD.postValue(errorMessage)
+            }
+
+        })
+    }
+
     fun applyFilter(catId: Long, filterUrl: String?, model: ProductListModel) {
 
         if (filterUrl.isNullOrEmpty()) return
@@ -102,7 +174,7 @@ class ProductListViewModel : BaseViewModel() {
         }
 
         map[Api.qs_page_number] = 1.toString()
-        map[Api.qs_page_size] = 9.toString()
+        map[Api.qs_page_size] = Api.DEFAULT_PAGE_SIZE.toString()
 
         queryMapLD.value = map
 
@@ -144,7 +216,7 @@ class ProductListViewModel : BaseViewModel() {
 
         // applying default query params
         map[Api.qs_page_number] = pageNumber.toString()
-        map[Api.qs_page_size] = 9.toString()
+        map[Api.qs_page_size] = Api.DEFAULT_PAGE_SIZE.toString()
 
         queryMapLD.value = map
 
