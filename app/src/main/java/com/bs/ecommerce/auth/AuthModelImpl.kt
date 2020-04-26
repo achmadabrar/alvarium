@@ -1,19 +1,15 @@
 package com.bs.ecommerce.auth
 
-import android.widget.Toast
-import com.bs.ecommerce.auth.login.data.BaseResponse
 import com.bs.ecommerce.auth.login.data.LoginPostData
 import com.bs.ecommerce.auth.login.data.LoginResponse
 import com.bs.ecommerce.auth.register.data.GetRegistrationResponse
 import com.bs.ecommerce.common.RequestCompleteListener
 import com.bs.ecommerce.main.model.AuthModel
 import com.bs.ecommerce.networking.RetroClient
-import com.bs.ecommerce.utils.showLog
 import com.google.gson.GsonBuilder
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import java.io.IOException
 
 
 class AuthModelImpl: AuthModel

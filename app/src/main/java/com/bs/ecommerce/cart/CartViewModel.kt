@@ -7,7 +7,6 @@ import com.bs.ecommerce.cart.model.CartModel
 import com.bs.ecommerce.cart.model.data.CartData
 import com.bs.ecommerce.cart.model.data.CartResponse
 import com.bs.ecommerce.common.RequestCompleteListener
-import com.bs.ecommerce.main.model.data.Category
 
 class CartViewModel : BaseViewModel()
 {

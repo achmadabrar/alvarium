@@ -1,6 +1,7 @@
 package com.bs.ecommerce.product.viewModel
 
 import androidx.lifecycle.MutableLiveData
+import com.bs.ecommerce.R
 import com.bs.ecommerce.auth.register.data.KeyValuePair
 import com.bs.ecommerce.base.BaseViewModel
 import com.bs.ecommerce.common.RequestCompleteListener
@@ -8,6 +9,7 @@ import com.bs.ecommerce.product.model.ProductDetailModel
 import com.bs.ecommerce.product.model.data.*
 import com.bs.ecommerce.utils.AttributeControlType
 import com.bs.ecommerce.utils.showLog
+import com.bs.ecommerce.utils.toast
 import java.util.*
 
 class ProductDetailViewModel : BaseViewModel() {
@@ -16,6 +18,7 @@ class ProductDetailViewModel : BaseViewModel() {
     var quantityLiveData = MutableLiveData(1)
     var productPriceLD = MutableLiveData<Double>()
     var toastMessageLD = MutableLiveData("")
+    var isInvalidProductLD = MutableLiveData<Boolean>()
     var selectedAttrLD = MutableLiveData<MutableMap<Long, MutableList<AttributeControlValue>>>()
 
     fun getProductDetail(prodId: Long, model: ProductDetailModel) {
@@ -59,6 +62,7 @@ class ProductDetailViewModel : BaseViewModel() {
 
             override fun onRequestFailed(errorMessage: String) {
                 isLoadingLD.postValue(false)
+                isInvalidProductLD.postValue(true)
             }
 
         })

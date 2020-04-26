@@ -201,3 +201,13 @@ fun WebView.show(text : String, nightMode: Boolean = true)
             "<html>$htmlFullHeader<body>$text</body></html>", "text/html", "UTF-8", "")
 
 }
+
+fun String.isNumeric(): Boolean
+{
+    return try {
+        this.toDouble()
+        true
+    } catch (e: NumberFormatException) {
+        false
+    }
+}
