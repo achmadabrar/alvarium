@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:paddingEnd="5dp">
+
+
+        <TextView
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:id="@+id/gift_card_number"
+            style="@style/orderTotalKeyTextViewStyle"/>
+
+        <TextView
+            android:id="@+id/gift_card_amount"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            style="@style/orderTotalValueTextViewStyle" />
+
+</LinearLayout>
+
+

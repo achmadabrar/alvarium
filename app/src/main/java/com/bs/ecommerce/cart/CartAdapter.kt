@@ -13,8 +13,7 @@ import com.bs.ecommerce.R
 import com.bs.ecommerce.auth.register.data.KeyValuePair
 import com.bs.ecommerce.base.BaseViewModel
 import com.bs.ecommerce.cart.model.CartModel
-import com.bs.ecommerce.cart.model.CartProduct
-import com.bs.ecommerce.utils.Language
+import com.bs.ecommerce.cart.model.data.CartProduct
 import com.bs.ecommerce.utils.show
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.cart_list_item.view.*

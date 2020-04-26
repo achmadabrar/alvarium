@@ -1,5 +1,6 @@
 package com.bs.ecommerce.cart
 
+import android.graphics.Color
 import android.os.Bundle
 import android.view.View
 import android.widget.RelativeLayout
@@ -13,14 +14,16 @@ import com.bs.ecommerce.base.BaseFragment
 import com.bs.ecommerce.base.BaseViewModel
 import com.bs.ecommerce.cart.model.CartModel
 import com.bs.ecommerce.cart.model.CartModelImpl
-import com.bs.ecommerce.cart.model.CartProduct
-import com.bs.ecommerce.cart.model.data.CartData
+import com.bs.ecommerce.cart.model.data.CartProduct
+import com.bs.ecommerce.cart.model.data.CartRootData
+import com.bs.ecommerce.cart.model.data.OrderTotal
 import com.bs.ecommerce.utils.MyApplication
 import com.bs.ecommerce.utils.toast
 import kotlinx.android.synthetic.main.fragment_cart.*
 import kotlinx.android.synthetic.main.ll_cart_coupon.*
 import kotlinx.android.synthetic.main.ll_cart_gift_card.*
 import kotlinx.android.synthetic.main.ll_cart_title.*
+import kotlinx.android.synthetic.main.table_order_total.*
 
 
 class CartFragment : BaseFragment() {
@@ -46,7 +49,7 @@ class CartFragment : BaseFragment() {
 
         viewModel  = ViewModelProvider(this).get(CartViewModel::class.java)
 
-        (viewModel as CartViewModel).getCartData(model)
+        (viewModel as CartViewModel).getCartVM(model)
 
 
         setLiveDataListeners()
@@ -58,19 +61,19 @@ class CartFragment : BaseFragment() {
 
     private fun setLiveDataListeners() {
 
-        (viewModel as CartViewModel).cartLD.observe(viewLifecycleOwner, Observer { cartData ->
+        (viewModel as CartViewModel).cartLD.observe(viewLifecycleOwner, Observer { cartRootData ->
 
-            if(cartData.items.isNotEmpty())
+            if(cartRootData.cart.items.isNotEmpty())
             {
                 cartRootLayout?.visibility = View.VISIBLE
 
-                tvTotalItem?.text = "${cartData.items.size} Items"
-                MyApplication.setCartCounter(cartData.items.size)
+                tvTotalItem?.text = "${cartRootData.cart.items.size} Items"
+                MyApplication.setCartCounter(cartRootData.cart.items.size)
 
                 activity?.let {  (it as BaseActivity).updateHotCount(MyApplication.myCartCounter)    }
 
 
-                setData(cartData)
+                setData(cartRootData)
             }
             else
             {
@@ -94,17 +97,16 @@ class CartFragment : BaseFragment() {
     }
 
 
-    private fun setData(cartData: CartData)
+    private fun setData(cartRootData: CartRootData)
     {
         //MyApplication.setCartCounter(cartProductListResponse.count)
         cartInfoLinearLayout?.visibility = View.VISIBLE
 
-        populateProductList(cartData.items)
+        populateProductList(cartRootData.cart.items)
 
-        populateDiscountAndGiftCard(cartData)
+        populateDiscountAndGiftCard(cartRootData)
 
-        //TODO populateViewOfDynamicAttributeLayout
-        //TODO populateDataInOrderTotalLayout(cartProductListResponse.orderTotalResponseModel)
+        populateOrderTotal(cartRootData.orderTotals)
 
 
         cartPageView?.visibility = View.VISIBLE
@@ -125,14 +127,14 @@ class CartFragment : BaseFragment() {
             //makeActionOnCartItemClick(cartAdapter)
     }
 
-    private fun populateDiscountAndGiftCard(cartData: CartData)
+    private fun populateDiscountAndGiftCard(cartRootData: CartRootData)
     {
-        if (cartData.discountBox.display)
+        if (cartRootData.cart.discountBox.display)
             ll_cart_coupon?.visibility = View.VISIBLE
         else
             ll_cart_coupon?.visibility = View.GONE
 
-        if (cartData.giftCardBox.display)
+        if (cartRootData.cart.giftCardBox.display)
             ll_cart_gift_card?.visibility = View.VISIBLE
         else
             ll_cart_gift_card?.visibility = View.GONE
@@ -148,6 +150,63 @@ class CartFragment : BaseFragment() {
     private fun showCheckOutOptionsDialogFragment() {
         val newFragment = GuestCheckoutFragment()
         newFragment.show(requireActivity().supportFragmentManager, "dialog")
+    }
+
+
+
+    private fun populateOrderTotal(orderTotalModel: OrderTotal)
+    {
+        with(orderTotalModel)
+        {
+            tvSubTotal?.text = subTotal
+            tvShippingCharge?.text = shipping
+
+
+            if (displayTax && tax != null)
+            {
+                if (displayTaxRates)
+                     taxRates?.get(0)?.rate?.let { taxKey.text = "${getString(R.string.tax)} $it%" }
+
+                tvTax.text = tax
+            }
+            else
+                taxLayout?.visibility = View.GONE
+
+            tvTotal?.text = orderTotal
+
+
+            if (orderTotalDiscount != null)
+            {
+                discountLayout.visibility = View.VISIBLE
+                tvDiscount.text = subTotalDiscount.toString()
+                underDiscountDivider.visibility = View.VISIBLE
+            }
+            else
+                discountLayout.visibility = View.GONE
+
+            if (giftCards != null && giftCards!!.isNotEmpty())
+            {
+                giftCardLayout.visibility = View.VISIBLE
+                giftCardKey.text = orderTotalModel.giftCards.toString()
+
+                underGiftCardDivider.visibility = View.VISIBLE
+
+                val giftCardAdapter = GiftCardAdapter(activity!!, giftCards!!)
+                giftCardRecyclerList.layoutManager = androidx.recyclerview.widget.LinearLayoutManager(activity)
+                giftCardRecyclerList.adapter = giftCardAdapter
+            }
+            else
+                giftCardLayout.visibility = View.GONE
+
+            if (orderTotal.isEmpty()) {
+                tvTotal.setText(R.string.calculated_during_checkout)
+                tvTotal.setTextColor(Color.RED)
+            }
+            if (shipping.isEmpty()) {
+                tvTotal.setText(R.string.calculated_during_checkout)
+                tvTotal.setTextColor(Color.RED)
+            }
+        }
     }
 
 }

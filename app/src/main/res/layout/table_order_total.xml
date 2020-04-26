@@ -17,30 +17,16 @@
         android:weightSum="1">
 
         <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
-            android:layout_weight=".7"
             android:text="@string/sub_total"
-            android:textColor="@color/whiteOrBlack"
-            android:textSize="@dimen/tv_text_size_regular"
-            android:textStyle="bold"/>
+            style="@style/orderTotalKeyTextViewStyle"/>
 
         <TextView
             android:id="@+id/tvSubTotal"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
-            android:layout_weight=".3"
-            android:text="@string/placeholder_price"
-            android:maxLines="1"
-            android:textColor="@color/pink"
-            android:textSize="@dimen/tv_text_size_regular"
-            android:textStyle="bold"/>
+            style="@style/orderTotalValueTextViewStyle"/>
 
     </LinearLayout>
 
-    <include layout="@layout/horizontal_divider"/>
+    <include layout="@layout/horizontal_divider" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -51,28 +37,87 @@
         android:weightSum="1">
 
         <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
-            android:layout_weight=".7"
             android:text="@string/shipping"
-            android:textColor="@color/whiteOrBlack"
-            android:textSize="@dimen/tv_text_size_regular"
-            android:textStyle="bold"/>
+            style="@style/orderTotalKeyTextViewStyle"/>
 
         <TextView
-            android:id="@+id/tvShippingChange"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
-            android:layout_weight=".3"
-            android:text="@string/placeholder_price"
-            android:maxLines="1"
-            android:textColor="@color/pink"
-            android:textSize="@dimen/tv_text_size_regular"
-            android:textStyle="bold"/>
+            android:id="@+id/tvShippingCharge"
+            style="@style/orderTotalValueTextViewStyle"/>
 
     </LinearLayout>
+
+    <include layout="@layout/horizontal_divider"/>
+
+    <LinearLayout
+        android:id="@+id/discountLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingTop="8dp"
+        android:paddingBottom="8dp"
+        android:weightSum="1">
+
+        <TextView
+            android:text="@string/discount"
+            style="@style/orderTotalKeyTextViewStyle"/>
+
+        <TextView
+            android:id="@+id/tvDiscount"
+            style="@style/orderTotalValueTextViewStyle"/>
+
+    </LinearLayout>
+
+    <include layout="@layout/horizontal_divider"
+        android:id="@+id/underDiscountDivider"
+        android:visibility="gone"/>
+
+    <LinearLayout
+        android:id="@+id/giftCardLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingTop="8dp"
+        android:paddingBottom="8dp"
+        android:weightSum="1">
+
+        <TextView
+            android:id="@+id/giftCardKey"
+            android:text="@string/gift_card"
+            style="@style/orderTotalKeyTextViewStyle"/>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/giftCardRecyclerList"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone"/>
+
+    </LinearLayout>
+
+    <include layout="@layout/horizontal_divider"
+        android:id="@+id/underGiftCardDivider"
+        android:visibility="gone"/>
+
+
+    <LinearLayout
+        android:id="@+id/taxLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingTop="8dp"
+        android:paddingBottom="8dp"
+        android:weightSum="1">
+
+        <TextView
+            android:id="@+id/taxKey"
+            android:text="@string/tax"
+            style="@style/orderTotalKeyTextViewStyle"/>
+
+        <TextView
+            android:id="@+id/tvTax"
+            style="@style/orderTotalValueTextViewStyle"/>
+
+    </LinearLayout>
+
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -84,26 +129,12 @@
         android:weightSum="1">
 
         <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
-            android:layout_weight=".7"
-            android:text="@string/total"
-            android:textColor="@color/whiteOrBlack"
-            android:textSize="@dimen/tv_text_size_regular"
-            android:textStyle="bold"/>
+            style="@style/orderTotalKeyTextViewStyle"
+            android:text="@string/total"/>
 
         <TextView
             android:id="@+id/tvTotal"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
-            android:layout_weight=".3"
-            android:text="@string/placeholder_price"
-            android:maxLines="1"
-            android:textColor="@color/pink"
-            android:textSize="16sp"
-            android:textStyle="bold"/>
+            style="@style/orderTotalValueTextViewStyle"/>
 
     </LinearLayout>
 

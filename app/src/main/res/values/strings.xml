@@ -91,7 +91,11 @@
     <string name="cart_proceed_to_checkout">Proceed to checkout</string>
     <string name="sub_total">Sub-Total</string>
     <string name="shipping">Shipping</string>
+    <string name="discount">Discount</string>
+    <string name="tax">Tax</string>
+    <string name="gift_card">Gift Card</string>
     <string name="total">Total</string>
+    <string name="calculated_during_checkout">Calculated During Checkout</string>
 
     <!-- Checkout Dialog  -->
     <string name="checkout_msg_long">By creating an account on our website, you will be able to shop faster, be up to date on an orders status, and keep track of the orders you have previously made.</string>
