@@ -95,6 +95,8 @@
     <string name="tax">Tax</string>
     <string name="gift_card">Gift Card</string>
     <string name="total">Total</string>
+    <string name="cart_empty">Cart Is Empty</string>
+    <string name="cart_items_count">%d Items</string>
     <string name="calculated_during_checkout">Calculated During Checkout</string>
 
     <!-- Checkout Dialog  -->
@@ -182,6 +184,4 @@
     <string name="currently_shopping_by">Currently Shopping By</string>
     <string name="remove_filter">Remove Filter</string>
     <string name="no_product_found">No Product Found</string>
-    <string name="cart_empty">Cart Is Empty</string>
-    <string name="cart_items_count">%d Items</string>
 </resources>

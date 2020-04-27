@@ -17,6 +17,7 @@ import com.bs.ecommerce.cart.model.data.*
 import com.bs.ecommerce.utils.MyApplication
 import com.bs.ecommerce.utils.toast
 import kotlinx.android.synthetic.main.fragment_cart.*
+import kotlinx.android.synthetic.main.fragment_product_detail.*
 import kotlinx.android.synthetic.main.ll_cart_coupon.*
 import kotlinx.android.synthetic.main.ll_cart_gift_card.*
 import kotlinx.android.synthetic.main.ll_cart_title.*
@@ -188,7 +189,7 @@ class CartFragment : BaseFragment() {
 
     private fun initView()
     {
-        focusStealer.requestFocus()
+        focusStealerCart?.requestFocus()
 
         btnCheckOut.setOnClickListener{
             showCheckOutOptionsDialogFragment()
