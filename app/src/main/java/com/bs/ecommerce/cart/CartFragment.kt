@@ -97,9 +97,9 @@ class CartFragment : BaseFragment() {
             else
             {
 
-                toast("cart Is Empty")
-                fragmentManager?.popBackStackImmediate()
-               MyApplication.setCartCounter(0)
+                toast(getString(R.string.cart_empty))
+                requireActivity().supportFragmentManager.popBackStackImmediate()
+                MyApplication.setCartCounter(0)
 
             }
 
@@ -189,6 +189,8 @@ class CartFragment : BaseFragment() {
 
     private fun initView()
     {
+        focusStealer.requestFocus()
+
         btnCheckOut.setOnClickListener{
             showCheckOutOptionsDialogFragment()
         }

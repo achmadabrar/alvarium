@@ -18,6 +18,7 @@ import android.widget.LinearLayout
 import android.widget.Toast
 import androidx.annotation.AnimRes
 import androidx.annotation.IdRes
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.bs.ecommerce.R
 import com.bs.ecommerce.base.BaseFragment
@@ -199,6 +200,39 @@ fun WebView.show(text : String, nightMode: Boolean = true)
     else
         this.loadDataWithBaseURL("file:///android_asset/",
             "<html>$htmlFullHeader<body>$text</body></html>", "text/html", "UTF-8", "")
+
+}
+
+fun WebView.show(text: String, backgroundColorRes: Int) {
+
+    val webViewBg = "#" + Integer.toHexString(
+        ContextCompat.getColor(
+            context, backgroundColorRes
+        ) and 0x00ffffff
+    )
+
+    val htmlRtlHeader = "dir=\"rtl\" lang=\"\""
+
+    var htmlColorHeader =
+            "<style type=\"text/css\">body{color: #fff; background-color: $webViewBg;}</style>"
+
+
+    val htmlFontHeader =
+        "<style>@font-face {font-family: 'CustomFont';src: url('font/montserrat_regular.ttf');}#font {font-family: 'montserrat_regular';}</style>"
+
+
+    val htmlFullHeader = ("<head>$htmlColorHeader$htmlFontHeader</head>")
+
+    if (Locale.getDefault().language == Language.ARABIC)
+        this.loadDataWithBaseURL(
+            "file:///android_asset/",
+            "<html$htmlRtlHeader>$htmlFullHeader<body>$text</body></html>", "text/html", "UTF-8", ""
+        )
+    else
+        this.loadDataWithBaseURL(
+            "file:///android_asset/",
+            "<html>$htmlFullHeader<body>$text</body></html>", "text/html", "UTF-8", ""
+        )
 
 }
 

@@ -7,6 +7,7 @@ import android.widget.Button
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
 import com.bs.ecommerce.R
@@ -14,6 +15,7 @@ import com.bs.ecommerce.auth.register.data.KeyValuePair
 import com.bs.ecommerce.base.BaseViewModel
 import com.bs.ecommerce.cart.model.CartModel
 import com.bs.ecommerce.cart.model.data.CartProduct
+import com.bs.ecommerce.utils.loadImg
 import com.bs.ecommerce.utils.show
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.cart_list_item.view.*
@@ -122,8 +124,7 @@ open class CartAdapter(
                 //holder?.productShortdescription!!.visibility = View.GONE
                 holder?.productQuantity!!.text = productModel.quantity.toString()
 
-                Picasso.with(holder?.itemView?.context).load(productModel.picture?.imageUrl)
-                    .fit().centerInside().into(holder?.productImage)
+                holder?.productImage?.loadImg(productModel.picture?.imageUrl)
 
                 //holder?.fav!!.tag = position
 
@@ -139,7 +140,7 @@ open class CartAdapter(
                 if(productModel.attributeInfo.isNotEmpty())
                 {
                     holder?.tvAttribute1?.visibility = View.VISIBLE
-                    holder?.tvAttribute1?.show(productModel.attributeInfo)
+                    holder?.tvAttribute1?.show(productModel.attributeInfo, R.color.list_item_bg)
                 }
                 else
                     holder?.tvAttribute1?.visibility =View.GONE
