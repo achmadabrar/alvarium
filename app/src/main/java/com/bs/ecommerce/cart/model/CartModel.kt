@@ -13,4 +13,6 @@ interface CartModel
 
     fun applyCouponModel(discount: AddDiscountPostData, callback: RequestCompleteListener<CartResponse>)
 
+    fun applyGiftCardModel(discount: AddDiscountPostData, callback: RequestCompleteListener<CartResponse>)
+
 }

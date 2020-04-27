@@ -36,7 +36,7 @@ data class DiscountBox(
 data class GiftCardBox(
     @SerializedName("Display") var display: Boolean = false,
     @SerializedName("IsApplied") var isApplied: Boolean = false,
-    @SerializedName("Message") var message: Any = Any()
+    @SerializedName("Message") var message: String? = null
 )
 
 

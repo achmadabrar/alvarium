@@ -40,7 +40,7 @@ class GiftCardAdapter(context: Context, giftCardList: List<GiftCard>) : androidx
 
     override fun onBindViewHolder(holder: ItemHolder, position: Int) {
         val giftCard = giftCardList!![position]
-        holder.gift_card_number.text = giftCard.remaining + " remaining"
+        holder.gift_card_number.text =  "${context.getString(R.string.gift_card)} (${giftCard.remaining} remaining)"
         holder.gift_card_amount.text = giftCard.amount
 
     }

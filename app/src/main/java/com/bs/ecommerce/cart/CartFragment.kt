@@ -67,6 +67,14 @@ class CartFragment : BaseFragment() {
                 (viewModel as CartViewModel).applyCouponVM(AddDiscountPostData(data = couponCode), model)
         }
 
+        btnAddGiftCode?.setOnClickListener {
+
+            val couponCode = etGiftCode.text.toString().trim()
+
+            if(couponCode.isNotEmpty())
+                (viewModel as CartViewModel).applyGiftCardVM(AddDiscountPostData(data = couponCode), model)
+        }
+
     }
 
 
@@ -148,27 +156,35 @@ class CartFragment : BaseFragment() {
 
                 if(appliedDiscountsWithCodes.isNotEmpty())
                 {
-                    discountKey?.text = "${getString(R.string.discount)}: (${appliedDiscountsWithCodes[0].couponCode})"
+                    discountKey?.text = "${getString(R.string.discount)} (${appliedDiscountsWithCodes[0].couponCode})"
                 }
-
 
                 if(messages.isNotEmpty())
-                {
                     etCartCoupon?.setText(messages[0])
-                    toast(messages[0])
-                }
             }
             else
                 ll_cart_coupon?.visibility = View.GONE
+
+            if(messages.isNotEmpty())
+                toast(messages[0])
         }
 
+        with(cartRootData.cart.giftCardBox)
+        {
+            if (display)
+            {
+                ll_cart_gift_card?.visibility = View.VISIBLE
 
+/*                if(message.isNotEmpty())
+                    etGiftCode?.setText(message)*/
+            }
+            else
+                ll_cart_gift_card?.visibility = View.GONE
 
+            if(message != null)
+                toast(message.toString())
+        }
 
-        if (cartRootData.cart.giftCardBox.display)
-            ll_cart_gift_card?.visibility = View.VISIBLE
-        else
-            ll_cart_gift_card?.visibility = View.GONE
     }
 
     private fun initView()
@@ -218,12 +234,11 @@ class CartFragment : BaseFragment() {
             if (giftCards != null && giftCards!!.isNotEmpty())
             {
                 giftCardLayout?.visibility = View.VISIBLE
-                giftCardKey?.text = orderTotalModel.giftCards.toString()
 
                 underGiftCardDivider?.visibility = View.VISIBLE
 
                 val giftCardAdapter = GiftCardAdapter(activity!!, giftCards!!)
-                giftCardRecyclerList?.layoutManager = androidx.recyclerview.widget.LinearLayoutManager(activity)
+                giftCardRecyclerList?.layoutManager = LinearLayoutManager(activity)
                 giftCardRecyclerList?.adapter = giftCardAdapter
             }
             else

@@ -81,16 +81,10 @@
         android:paddingBottom="8dp"
         android:weightSum="1">
 
-        <TextView
-            android:id="@+id/giftCardKey"
-            android:text="@string/gift_card"
-            style="@style/orderTotalKeyTextViewStyle"/>
-
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/giftCardRecyclerList"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:visibility="gone"/>
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
 
     </LinearLayout>
 

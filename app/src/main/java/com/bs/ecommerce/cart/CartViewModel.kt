@@ -76,4 +76,25 @@ class CartViewModel : BaseViewModel()
             }
         })
     }
+
+    fun applyGiftCardVM(discount : AddDiscountPostData, model: CartModel)
+    {
+
+        isLoadingLD.postValue(true)
+
+        model.applyGiftCardModel(discount, object : RequestCompleteListener<CartResponse>
+        {
+            override fun onRequestSuccess(data: CartResponse)
+            {
+                isLoadingLD.postValue(false)
+
+                cartLD.postValue(data.cartRootData)
+            }
+
+            override fun onRequestFailed(errorMessage: String)
+            {
+                isLoadingLD.postValue(false)
+            }
+        })
+    }
 }
