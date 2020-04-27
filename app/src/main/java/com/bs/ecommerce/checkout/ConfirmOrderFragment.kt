@@ -14,9 +14,7 @@ import com.bs.ecommerce.cart.CartAdapter
 import com.bs.ecommerce.cart.CartViewModel
 import com.bs.ecommerce.cart.model.CartModel
 import com.bs.ecommerce.cart.model.CartModelImpl
-import com.bs.ecommerce.cart.model.CartProduct
-import com.bs.ecommerce.cart.model.PictureModel
-import com.bs.ecommerce.cart.model.data.CartData
+import com.bs.ecommerce.cart.model.data.CartRootData
 import com.bs.ecommerce.utils.MyApplication
 import com.bs.ecommerce.utils.toast
 import kotlinx.android.synthetic.main.confirm_order_card.view.*
@@ -39,7 +37,7 @@ class ConfirmOrderFragment : BaseFragment() {
         model = CartModelImpl(requireContext().applicationContext)
         viewModel  = ViewModelProvider(this).get(CartViewModel::class.java)
 
-        (viewModel as CartViewModel).getCartData(model)
+        (viewModel as CartViewModel).getCartVM(model)
 
         initView()
         setLiveDataListeners()
@@ -72,7 +70,7 @@ class ConfirmOrderFragment : BaseFragment() {
 
         (viewModel as CartViewModel).cartLD.observe(requireActivity(), Observer { cartData ->
 
-            if (cartData.items.isNotEmpty()) {
+            if (cartData.cart.items.isNotEmpty()) {
                 confirmOrderRootLayout?.visibility = View.VISIBLE
 
                 activity?.let { (it as BaseActivity).updateHotCount(MyApplication.myCartCounter) }
@@ -90,8 +88,8 @@ class ConfirmOrderFragment : BaseFragment() {
 
     }
 
-    private fun setData(cartData: CartData?) {
-        val cartAdapter = CartAdapter(cartData?.items ?: mutableListOf(), this, viewModel, model, isCheckout = true)
+    private fun setData(cartData: CartRootData?) {
+        val cartAdapter = CartAdapter(cartData?.cart?.items ?: mutableListOf(), this, viewModel, model, isCheckout = true)
 
         checkoutProductList?.apply {
             setHasFixedSize(true)

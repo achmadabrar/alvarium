@@ -1,4 +1,4 @@
-package com.bs.ecommerce.cart.model
+package com.bs.ecommerce.cart.model.data
 
 import com.google.gson.annotations.SerializedName
 import java.util.ArrayList
