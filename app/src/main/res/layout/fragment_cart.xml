@@ -6,6 +6,14 @@
     android:layout_height="match_parent"
     android:background="@color/fragment_background">
 
+    <!--focusStealer, to avoid NestedScrollingView to scroll due to dynamically created views that take the focus-->
+    <View
+        android:id="@+id/focusStealer"
+        android:layout_width="0px"
+        android:layout_height="0px"
+        android:focusable="true"
+        android:focusableInTouchMode="true" />
+
 
     <androidx.core.widget.NestedScrollView
         android:id="@+id/cartPageView"

@@ -7,18 +7,13 @@ import android.widget.RelativeLayout
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
-
 import com.bs.ecommerce.R
 import com.bs.ecommerce.base.BaseActivity
 import com.bs.ecommerce.base.BaseFragment
 import com.bs.ecommerce.base.BaseViewModel
 import com.bs.ecommerce.cart.model.CartModel
 import com.bs.ecommerce.cart.model.CartModelImpl
-import com.bs.ecommerce.cart.model.data.AddDiscountPostData
-import com.bs.ecommerce.cart.model.data.CartProduct
-import com.bs.ecommerce.cart.model.data.CartRootData
-import com.bs.ecommerce.cart.model.data.OrderTotal
-import com.bs.ecommerce.networking.RetroClient
+import com.bs.ecommerce.cart.model.data.*
 import com.bs.ecommerce.utils.MyApplication
 import com.bs.ecommerce.utils.toast
 import kotlinx.android.synthetic.main.fragment_cart.*
@@ -86,7 +81,7 @@ class CartFragment : BaseFragment() {
             {
                 cartRootLayout?.visibility = View.VISIBLE
 
-                tvTotalItem?.text = "${cartRootData.cart.items.size} Items"
+                tvTotalItem?.text = getString(R.string.cart_items_count, cartRootData.cart.items.size)
                 MyApplication.setCartCounter(cartRootData.cart.items.size)
 
                 activity?.let {  (it as BaseActivity).updateHotCount(MyApplication.myCartCounter)    }
@@ -127,11 +122,15 @@ class CartFragment : BaseFragment() {
 
         populateOrderTotal(cartRootData.orderTotals)
 
+        populateDynamicAttributes(cartRootData.cart.checkoutAttributes)
 
         cartPageView?.visibility = View.VISIBLE
         btnCheckOut?.visibility = View.VISIBLE
     }
 
+    private fun populateDynamicAttributes(checkoutAttributes: List<CheckoutAttribute>) {
+
+    }
 
     private fun populateProductList(items: List<CartProduct>)
     {

@@ -165,7 +165,7 @@ class SearchFragment : BaseFragment() {
             llButtonHolder.visibility =
                 if (searchResult.noResults == false) View.VISIBLE else View.GONE
             tvNoProduct.visibility =
-                if (searchResult.noResults == true) View.VISIBLE else View.GONE
+                if (searchResult.noResults == true && !viewModel.shouldAppend) View.VISIBLE else View.GONE
 
             populateSortOptions(searchResult.pagingFilteringContext)
         })
@@ -213,10 +213,11 @@ class SearchFragment : BaseFragment() {
                 MenuItemCompat.SHOW_AS_ACTION_COLLAPSE_ACTION_VIEW or MenuItemCompat.SHOW_AS_ACTION_ALWAYS)
             MenuItemCompat.setActionView(item, searchView)
 
-            if (productListAdapter == null)
+            searchView?.queryHint = getString(R.string.title_search)
+            /*if (productListAdapter == null)
                 searchView?.queryHint = getString(R.string.title_search)
             else
-                searchView?.queryHint = MyApplication.searchQuery
+                searchView?.queryHint = MyApplication.searchQuery*/
 
             searchView?.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
                 override fun onQueryTextSubmit(query: String): Boolean {

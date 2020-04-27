@@ -182,4 +182,6 @@
     <string name="currently_shopping_by">Currently Shopping By</string>
     <string name="remove_filter">Remove Filter</string>
     <string name="no_product_found">No Product Found</string>
+    <string name="cart_empty">Cart Is Empty</string>
+    <string name="cart_items_count">%d Items</string>
 </resources>
