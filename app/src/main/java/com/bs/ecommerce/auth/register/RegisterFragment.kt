@@ -2,7 +2,6 @@ package com.bs.ecommerce.auth.register
 
 import android.app.DatePickerDialog
 import android.os.Bundle
-import android.util.Patterns
 import android.view.View
 import android.widget.EditText
 import android.widget.RelativeLayout
@@ -11,18 +10,13 @@ import androidx.lifecycle.ViewModelProvider
 import com.bs.ecommerce.R
 import com.bs.ecommerce.auth.AuthModelImpl
 import com.bs.ecommerce.auth.customerInfo.CustomerInfoFragment
-import com.bs.ecommerce.utils.hideKeyboard
-import com.bs.ecommerce.utils.toast
-
 import com.bs.ecommerce.auth.register.data.GetRegisterData
 import com.bs.ecommerce.auth.register.data.GetRegistrationResponse
 import com.bs.ecommerce.base.BaseFragment
 import com.bs.ecommerce.base.BaseViewModel
 import com.bs.ecommerce.main.model.AuthModel
-import com.bs.ecommerce.product.viewModel.ProductDetailViewModel
 import com.bs.ecommerce.utils.*
 import com.google.android.material.bottomsheet.BottomSheetBehavior
-import kotlinx.android.synthetic.main.fragment_product_detail.*
 import kotlinx.android.synthetic.main.fragment_registration.*
 import kotlinx.android.synthetic.main.other_attr_bottom_sheet.view.*
 import java.util.*
@@ -103,7 +97,7 @@ open class RegisterFragment : BaseFragment(), View.OnClickListener
             getRegistrationResponseLD.observe(requireActivity(), Observer { getRegistrationResponse ->
 
                 if(getRegistrationResponse.errorList.isNotEmpty())
-                    toast(getRegistrationResponse?.errorsAsFormattedString.toString())
+                    toast(TextUtils().getHtmlFormattedText(getRegistrationResponse?.errorsAsFormattedString.toString()).toString())
                 else
                     setViewsInitially(getRegistrationResponse.data)
 
@@ -353,8 +347,6 @@ open class RegisterFragment : BaseFragment(), View.OnClickListener
 
     override fun onClick(v: View) {
         when(v.id) {
-            R.id.btnPlus -> (viewModel as ProductDetailViewModel).incrementQuantity()
-            R.id.btnMinus -> (viewModel as ProductDetailViewModel).decrementQuantity()
             R.id.tvDone -> {
                 bsBehavior.state = BottomSheetBehavior.STATE_COLLAPSED
                 customerAttributeView?.onBottomSheetClose()

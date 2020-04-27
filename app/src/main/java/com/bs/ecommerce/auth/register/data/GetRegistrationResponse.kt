@@ -74,8 +74,8 @@ data class GetRegisterData(
     @SerializedName("VatNumber") var vatNumber: String = "",
     @SerializedName("ZipPostalCode") var zipPostalCode: String = "",
     @SerializedName("ZipPostalCodeEnabled") var zipPostalCodeEnabled: Boolean = false,
-    @SerializedName("ZipPostalCodeRequired") var zipPostalCodeRequired: Boolean = false,
-    @SerializedName("FormValues") var formValues: List<KeyValuePair> = listOf()
+    @SerializedName("ZipPostalCodeRequired") var zipPostalCodeRequired: Boolean = false/*,
+    @SerializedName("FormValues") var formValues: List<KeyValuePair> = listOf()*/
 )
 
 data class AvailableTimeZone(

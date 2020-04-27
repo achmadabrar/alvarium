@@ -141,7 +141,7 @@ class RegistrationViewModel  : BaseViewModel()
             }
         }
 
-        registerPostData.data.formValues = allKeyValueList
+        registerPostData.formValues = allKeyValueList
 
         "key_value".showLog(allKeyValueList.toString())
 

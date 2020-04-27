@@ -1,5 +1,6 @@
 package com.bs.ecommerce.auth.login.data
 import com.bs.ecommerce.auth.register.data.CustomerInfo
+import com.bs.ecommerce.auth.register.data.KeyValuePair
 import com.bs.ecommerce.utils.showLog
 import com.google.gson.annotations.SerializedName
 
@@ -20,6 +21,8 @@ data class LoginResponseData(
 
 open class BaseResponse
 {
+    @SerializedName("FormValues") var formValues: List<KeyValuePair>? = null
+
     @SerializedName("Message") var message: Any? = Any()
 
     @SerializedName("ErrorList")  var errorList: Array<String> = arrayOf()
