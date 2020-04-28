@@ -111,11 +111,7 @@ class CartViewModel : BaseViewModel()
                 isLoadingLD.value = false
                 dynamicAttributeUpdated = false
 
-                // only updating the order total section
-                val existingCartData = cartLD.value
-                existingCartData?.orderTotals = data.orderTotals
-
-                cartLD.value = existingCartData
+                cartLD.value = data
             }
 
             override fun onRequestFailed(errorMessage: String)

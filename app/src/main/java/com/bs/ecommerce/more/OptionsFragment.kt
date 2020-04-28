@@ -1,26 +1,18 @@
 package com.bs.ecommerce.more
 
-import android.Manifest
-import android.app.AlertDialog
-import android.content.pm.PackageManager
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.RelativeLayout
-import androidx.core.app.ActivityCompat
-import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
 import com.bs.ecommerce.R
 import com.bs.ecommerce.auth.login.LoginFragment
 import com.bs.ecommerce.base.BaseFragment
 import com.bs.ecommerce.base.BaseViewModel
 import com.bs.ecommerce.checkout.CheckoutStepFragment
-import com.bs.ecommerce.more.barcode.BarCodeCaptureFragment
 import com.bs.ecommerce.more.viewmodel.OptionViewModel
-import com.bs.ecommerce.networking.NetworkUtil
 import com.bs.ecommerce.utils.*
-import com.facebook.login.LoginManager
 import kotlinx.android.synthetic.main.fragment_options.*
 import kotlinx.android.synthetic.main.options_layout.view.*
 
@@ -86,7 +78,7 @@ class OptionsFragment : BaseFragment() {
                                 replaceFragmentSafely(PrivacyPolicyFragment())
 
                             R.string.my_orders ->
-                                replaceFragmentSafely(CustomerOrdersFragment())
+                                replaceFragmentSafely(OrderHistoryFragment())
 
                             R.string.title_checkout ->
                                 replaceFragmentSafely(CheckoutStepFragment())

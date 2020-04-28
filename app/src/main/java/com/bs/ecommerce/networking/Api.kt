@@ -2,7 +2,6 @@ package com.bs.ecommerce.networking
 
 import com.bs.ecommerce.auth.login.data.LoginPostData
 import com.bs.ecommerce.auth.login.data.LoginResponse
-import com.bs.ecommerce.auth.register.data.GetRegisterData
 import com.bs.ecommerce.auth.register.data.GetRegistrationResponse
 import com.bs.ecommerce.auth.register.data.KeyValuePair
 import com.bs.ecommerce.cart.model.data.AddDiscountPostData
@@ -16,7 +15,6 @@ import com.bs.ecommerce.home.homepage.model.data.SliderResponse
 import com.bs.ecommerce.main.model.data.AppLandingSettingResponse
 import com.bs.ecommerce.main.model.data.CategoryTreeResponse
 import com.bs.ecommerce.product.model.data.*
-import com.google.gson.JsonObject
 import retrofit2.Call
 import retrofit2.http.*
 
@@ -135,6 +133,14 @@ interface Api {
         @Path("viewMode") viewMode: String,
         @QueryMap query: Map<String, String>
         ): Call<SearchResponse>
+
+    // Order
+
+    @GET("order/orderdetails/{id}")
+    fun getOrderDetails(@Path("id") id: Int): Call<OrderDetailsResponse>
+
+    @GET("order/history")
+    fun getOrderHistory(): Call<OrderHistoryResponse>
 
 /*    @POST("setcurrency/{id}")
     fun setCurrency(@Path("id") id: Long): Call<LanguageResponse>
@@ -310,9 +316,6 @@ interface Api {
 
     @GET("customer/address/remove/{id}")
     fun removeCustomerAddresses(@Path("id") id: Int): Call<RemoveCustomerAddressResponse>
-
-    @GET("order/details/{id}")
-    fun getOrderDetails(@Path("id") id: Int): Call<OrderDetailsResponse>
 
     @GET("order/reorder/{id}")
     fun getReOrder(@Path("id") id: Int): Call<ReOrderResponse>

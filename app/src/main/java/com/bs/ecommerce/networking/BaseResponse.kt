@@ -1,6 +1,5 @@
 package com.bs.ecommerce.networking
 
-import android.widget.Toast
 import com.google.gson.annotations.SerializedName
 
 /**
@@ -9,7 +8,7 @@ import com.google.gson.annotations.SerializedName
 
 open class BaseResponse
 {
-
+    @SerializedName("Message") val message: String = ""
 
     @SerializedName("StatusCode") var statusCode: Int = 0
 

@@ -1,4 +1,4 @@
-package com.bs.ecommerce.more.data
+package com.bs.ecommerce.more.model.data
 
 import com.bs.ecommerce.R
 

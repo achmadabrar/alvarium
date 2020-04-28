@@ -5,12 +5,16 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.RelativeLayout
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bs.ecommerce.R
 import com.bs.ecommerce.base.BaseFragment
 import com.bs.ecommerce.base.BaseViewModel
 import com.bs.ecommerce.main.MainViewModel
+import com.bs.ecommerce.more.model.OrderModel
+import com.bs.ecommerce.more.model.OrderModelImpl
+import com.bs.ecommerce.more.viewmodel.OrderViewModel
 import com.bs.ecommerce.utils.loadImg
 import kotlinx.android.synthetic.main.cart_list_item.view.*
 import kotlinx.android.synthetic.main.confirm_order_card.view.*
@@ -18,7 +22,7 @@ import kotlinx.android.synthetic.main.fragment_customer_order_detail.*
 import kotlinx.android.synthetic.main.product_price_layout.view.*
 
 class CustomerOrderDetailsFragment : BaseFragment() {
-
+    private lateinit var model: OrderModel
 
     override fun getFragmentTitle() = R.string.title_order_details
 
@@ -26,12 +30,23 @@ class CustomerOrderDetailsFragment : BaseFragment() {
 
     override fun getRootLayout(): RelativeLayout? = customerOrderRootLayout
 
-    override fun createViewModel(): BaseViewModel = MainViewModel()
+    override fun createViewModel(): BaseViewModel = OrderViewModel()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        initView()
+        //initView()
+
+        model = OrderModelImpl()
+        viewModel = ViewModelProvider(this).get(OrderViewModel::class.java)
+
+        setLiveDataObserver()
+
+        //(viewModel as OrderViewModel).get(model)
+    }
+
+    private fun setLiveDataObserver() {
+
     }
 
     private fun initView() {
@@ -94,7 +109,7 @@ class CustomerOrderDetailsFragment : BaseFragment() {
 //            holder.itemView.tvDiscountPercent.text = "Order Status: Delivered"
             holder.itemView.tvDiscountPrice.text = list[position].price
 
-            holder.itemView.ivProductThumb.loadImg("https://picsum.photos/300/300")
+            holder.itemView.ivProductThumb.loadImg("")
         }
 
     }
@@ -103,4 +118,18 @@ class CustomerOrderDetailsFragment : BaseFragment() {
         val date: String,
         val price: String
     )
+
+    companion object {
+        @JvmStatic
+        private val ORDER_ID = "orderId"
+
+        @JvmStatic
+        fun newInstance(orderId: Int): CustomerOrderDetailsFragment {
+            val fragment = CustomerOrderDetailsFragment()
+            val args = Bundle()
+            args.putInt(ORDER_ID, orderId)
+            fragment.arguments = args
+            return fragment
+        }
+    }
 }

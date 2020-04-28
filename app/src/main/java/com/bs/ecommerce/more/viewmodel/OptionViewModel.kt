@@ -3,8 +3,7 @@ package com.bs.ecommerce.more.viewmodel
 import androidx.lifecycle.MutableLiveData
 import com.bs.ecommerce.R
 import com.bs.ecommerce.base.BaseViewModel
-import com.bs.ecommerce.more.data.AppOptions
-import com.bs.ecommerce.utils.PrefSingleton
+import com.bs.ecommerce.more.model.data.AppOptions
 
 class OptionViewModel : BaseViewModel() {
 
