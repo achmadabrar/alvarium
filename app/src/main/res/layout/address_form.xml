@@ -7,7 +7,7 @@
     android:orientation="vertical">
 
     <EditText
-        android:id="@+id/tvFirstName"
+        android:id="@+id/etFirstName"
         style="@style/RoundedEditText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -19,7 +19,7 @@
         android:inputType="textPersonName" />
 
     <EditText
-        android:id="@+id/tvLastName"
+        android:id="@+id/etLastName"
         style="@style/RoundedEditText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -31,7 +31,7 @@
         android:inputType="textPersonName" />
 
     <EditText
-        android:id="@+id/tvEmail"
+        android:id="@+id/etEmail"
         style="@style/RoundedEditText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -43,13 +43,35 @@
         android:inputType="textEmailAddress" />
 
     <EditText
-        android:id="@+id/tvCompanyName"
+        android:id="@+id/etCompanyName"
         style="@style/RoundedEditText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="15dp"
         android:autofillHints=""
         android:hint="@string/reg_hint_company_name"
+        android:imeOptions="actionNext"
+        android:inputType="textCapWords" />
+
+    <EditText
+        android:id="@+id/etStateProvince"
+        style="@style/RoundedEditText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:autofillHints=""
+        android:hint="@string/reg_hint_state"
+        android:imeOptions="actionNext"
+        android:inputType="textCapWords" />
+
+    <EditText
+        android:id="@+id/etCity"
+        style="@style/RoundedEditText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:autofillHints=""
+        android:hint="@string/city"
         android:imeOptions="actionNext"
         android:inputType="textCapWords" />
 
@@ -83,43 +105,32 @@
             android:textColor="@color/white" />
     </LinearLayout>
 
+
     <EditText
-        android:id="@+id/tvCity"
+        android:id="@+id/etStreetAddress"
         style="@style/RoundedEditText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="15dp"
         android:autofillHints=""
         android:drawableEnd="@drawable/ic_star_formular"
-        android:hint="@string/city"
+        android:hint="@string/reg_hint_street_address"
         android:imeOptions="actionNext"
         android:inputType="text" />
 
     <EditText
-        android:id="@+id/tvAddress1"
+        android:id="@+id/etStreetAddress2"
         style="@style/RoundedEditText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="15dp"
         android:autofillHints=""
-        android:drawableEnd="@drawable/ic_star_formular"
-        android:hint="@string/address_1"
+        android:hint="@string/reg_hint_street_address2"
         android:imeOptions="actionNext"
         android:inputType="text" />
 
     <EditText
-        android:id="@+id/tvAddress2"
-        style="@style/RoundedEditText"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="15dp"
-        android:autofillHints=""
-        android:hint="@string/address_2"
-        android:imeOptions="actionNext"
-        android:inputType="text" />
-
-    <EditText
-        android:id="@+id/tvZipCode"
+        android:id="@+id/etZipCode"
         style="@style/RoundedEditText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -131,7 +142,7 @@
         android:inputType="number" />
 
     <EditText
-        android:id="@+id/tvPhone"
+        android:id="@+id/etPhone"
         style="@style/RoundedEditText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -143,7 +154,7 @@
         android:inputType="phone" />
 
     <EditText
-        android:id="@+id/tvFax"
+        android:id="@+id/etFax"
         style="@style/RoundedEditText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

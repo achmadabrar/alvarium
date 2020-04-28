@@ -21,6 +21,7 @@
     <string name="title_more">More</string>
     <string name="title_settings">Settings</string>
     <string name="title_privacy_policy">Privacy Policy</string>
+    <string name="title_checkout">Checkout</string>
 
     <!-- Barcode Fragment  -->
     <string name="place_barcode_in_camera">Put barcode here to Scan instantly</string>

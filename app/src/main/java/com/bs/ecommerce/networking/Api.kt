@@ -7,6 +7,9 @@ import com.bs.ecommerce.auth.register.data.GetRegistrationResponse
 import com.bs.ecommerce.auth.register.data.KeyValuePair
 import com.bs.ecommerce.cart.model.data.AddDiscountPostData
 import com.bs.ecommerce.cart.model.data.CartResponse
+import com.bs.ecommerce.checkout.model.data.BillingAddressResponse
+import com.bs.ecommerce.checkout.model.data.CheckoutPostData
+import com.bs.ecommerce.checkout.model.data.StateListResponse
 import com.bs.ecommerce.home.homepage.model.data.HomePageProductResponse
 import com.bs.ecommerce.home.homepage.model.data.SliderResponse
 import com.bs.ecommerce.main.model.data.AppLandingSettingResponse
@@ -52,9 +55,31 @@ interface Api {
 
     @POST("customer/login") fun postLoginAPI(@Body loginPostData: LoginPostData): Call<LoginResponse>
 
-/*    @GET("productdetails/{id}")
-    fun getProductDetails(@Path("id") id: Long): Call<ProductDetailResponse>*/
 
+
+
+    //checkout
+
+    @GET("checkout/billingform")
+    fun getBillingFormAPI(): Call<BillingAddressResponse>
+
+    @GET("country/getstatesbycountryid/{countryId}")
+    fun getStatesAPI(@Path("countryId") id: String): Call<StateListResponse>
+
+    @GET("checkout/checkoutgetshippingmethods")
+    fun getShippingMethodAPI(): Call<CartResponse>
+
+    @POST("checkout/checkoutsetshippingmethod")
+    fun saveShippingMethodAPI(@Body checkoutPostData: CheckoutPostData): Call<CartResponse>
+
+    @GET("checkout/checkoutgetpaymentmethod")
+    fun getPaymentMethodAPI(): Call<CartResponse>
+
+    @POST("checkout/checkoutsavepaymentmethod")
+    fun savePaymentMethodAPI(@Body checkoutPostData: CheckoutPostData): Call<CartResponse>
+
+    @GET("shoppingcart/checkoutorderinformation ")
+    fun getCheckoutConfirmInformationAPI(): Call<CartResponse>
 
 
 

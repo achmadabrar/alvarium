@@ -158,7 +158,7 @@ fun EditText?.showOrHideOrRequired(isEnabledParam: Boolean = false, isRequired: 
             this.visibility = View.GONE
 
         if(isRequired)
-            this.setCompoundDrawablesRelativeWithIntrinsicBounds(0, 0, R.drawable.ic_user, 0)
+            this.setCompoundDrawablesRelativeWithIntrinsicBounds(0, 0, R.drawable.ic_star_formular, 0)
     }
 
 

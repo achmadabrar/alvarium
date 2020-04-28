@@ -7,6 +7,7 @@
     android:background="@color/fragment_background">
 
     <ScrollView
+        android:id="@+id/rootScrollViewBillingAddress"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
@@ -30,7 +31,7 @@
                 android:layout_height="wrap_content">
 
                 <androidx.appcompat.widget.AppCompatSpinner
-                    android:id="@+id/spSavedAddress"
+                    android:id="@+id/countrySpinner"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     tools:listitem="@layout/simple_spinner_item"
