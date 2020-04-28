@@ -4,6 +4,7 @@ import android.graphics.Color
 import android.os.Bundle
 import android.view.View
 import android.widget.RelativeLayout
+import android.widget.TextView
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -13,19 +14,27 @@ import com.bs.ecommerce.base.BaseFragment
 import com.bs.ecommerce.base.BaseViewModel
 import com.bs.ecommerce.cart.model.CartModel
 import com.bs.ecommerce.cart.model.CartModelImpl
-import com.bs.ecommerce.cart.model.data.*
+import com.bs.ecommerce.cart.model.data.AddDiscountPostData
+import com.bs.ecommerce.cart.model.data.CartProduct
+import com.bs.ecommerce.cart.model.data.CartRootData
+import com.bs.ecommerce.cart.model.data.OrderTotal
 import com.bs.ecommerce.utils.MyApplication
+import com.bs.ecommerce.utils.showLog
 import com.bs.ecommerce.utils.toast
+import com.google.android.material.bottomsheet.BottomSheetBehavior
 import kotlinx.android.synthetic.main.fragment_cart.*
-import kotlinx.android.synthetic.main.fragment_product_detail.*
 import kotlinx.android.synthetic.main.ll_cart_coupon.*
 import kotlinx.android.synthetic.main.ll_cart_gift_card.*
 import kotlinx.android.synthetic.main.ll_cart_title.*
+import kotlinx.android.synthetic.main.other_attr_bottom_sheet.*
 import kotlinx.android.synthetic.main.table_order_total.*
 
 
 class CartFragment : BaseFragment() {
+    private val logTag: String = "nop_" + this::class.java.simpleName
 
+    private var dynamicAttributeView: CartDynamicAttribute? = null
+    private lateinit var bsBehavior: BottomSheetBehavior<*>
 
     private lateinit var model: CartModel
 
@@ -109,6 +118,24 @@ class CartFragment : BaseFragment() {
                 hideLoading()
         })
 
+        (viewModel as CartViewModel).selectedAttrLD.observe(
+            viewLifecycleOwner,
+            Observer { attrMap ->
+
+                for (i in attrMap.keys) {
+                    val view = dynamicAttributeHolderCart.findViewWithTag<View>(i)
+                    val textView = view.findViewById<TextView>(R.id.tvSelectedAttr)
+
+                    val selectedAttr = attrMap[i]
+
+                    if (selectedAttr.isNullOrEmpty()) {
+                        textView?.text = getString(R.string.select)
+                    } else {
+                        textView?.text = attrMap[i]?.get(0)?.name
+                    }
+                }
+            })
+
     }
 
 
@@ -123,14 +150,28 @@ class CartFragment : BaseFragment() {
 
         populateOrderTotal(cartRootData.orderTotals)
 
-        populateDynamicAttributes(cartRootData.cart.checkoutAttributes)
+        populateDynamicAttributes()
 
         cartPageView?.visibility = View.VISIBLE
         btnCheckOut?.visibility = View.VISIBLE
     }
 
-    private fun populateDynamicAttributes(checkoutAttributes: List<CheckoutAttribute>) {
+    private fun populateDynamicAttributes() {
+        dynamicAttributeHolderCart.removeAllViews()
 
+        bottomSheetLayoutCart?.let {
+
+            dynamicAttributeView = CartDynamicAttribute(
+                requireContext(),
+                viewModel as CartViewModel,
+                it,
+                bsBehavior
+            )
+
+            for (i in dynamicAttributeView!!.getAttrViews()) {
+                dynamicAttributeHolderCart?.addView(i)
+            }
+        }
     }
 
     private fun populateProductList(items: List<CartProduct>)
@@ -191,8 +232,26 @@ class CartFragment : BaseFragment() {
     {
         focusStealerCart?.requestFocus()
 
+        bsBehavior = BottomSheetBehavior.from(bottomSheetLayoutCart)
+        bsBehavior.addBottomSheetCallback(object : BottomSheetBehavior.BottomSheetCallback() {
+            override fun onStateChanged(bottomSheet: View, newState: Int) {
+                if (newState == BottomSheetBehavior.STATE_COLLAPSED) {
+                    logTag.showLog("bs collapsed")
+
+                    (viewModel as CartViewModel).calculateCostWithUpdatedAttributes(model)
+                }
+            }
+
+            override fun onSlide(bottomSheet: View, slideOffset: Float) {}
+        })
+
         btnCheckOut.setOnClickListener{
             showCheckOutOptionsDialogFragment()
+        }
+
+        tvDone.setOnClickListener{
+            bsBehavior.state = BottomSheetBehavior.STATE_COLLAPSED
+            dynamicAttributeView?.onBottomSheetClose()
         }
     }
 

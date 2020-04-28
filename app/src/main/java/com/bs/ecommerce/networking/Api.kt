@@ -7,6 +7,7 @@ import com.bs.ecommerce.auth.register.data.GetRegistrationResponse
 import com.bs.ecommerce.auth.register.data.KeyValuePair
 import com.bs.ecommerce.cart.model.data.AddDiscountPostData
 import com.bs.ecommerce.cart.model.data.CartResponse
+import com.bs.ecommerce.cart.model.data.CartRootData
 import com.bs.ecommerce.checkout.model.data.BillingAddressResponse
 import com.bs.ecommerce.checkout.model.data.CheckoutPostData
 import com.bs.ecommerce.checkout.model.data.StateListResponse
@@ -81,7 +82,8 @@ interface Api {
     @GET("shoppingcart/checkoutorderinformation ")
     fun getCheckoutConfirmInformationAPI(): Call<CartResponse>
 
-
+    @POST("shoppingcart/checkoutattributechange")
+    fun updateCheckOutAttribute(@Body list: List<KeyValuePair>): Call<CartRootData>
 
 
     //homepage

@@ -1,87 +1,121 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/cartRootLayout"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/fragment_background">
+    android:layout_height="match_parent">
 
-    <!--focusStealer, to avoid NestedScrollingView to scroll due to dynamically created views that take the focus-->
-    <View
-        android:id="@+id/focusStealerCart"
-        android:layout_width="0px"
-        android:layout_height="0px"
-        android:focusable="true"
-        android:focusableInTouchMode="true" />
-
-
-    <androidx.core.widget.NestedScrollView
-        android:id="@+id/cartPageView"
-        android:layout_alignParentTop="true"
-        android:layout_above="@id/btnCheckOut"
+    <RelativeLayout
+        android:id="@+id/cartRootLayout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:visibility="gone"
-        tools:visibility="visible">
+        android:layout_height="match_parent"
+        android:background="@color/fragment_background">
 
-        <LinearLayout
-            android:id="@+id/cartInfoLinearLayout"
+        <!--focusStealer, to avoid NestedScrollingView to scroll due to dynamically created views that take the focus-->
+        <View
+            android:id="@+id/focusStealerCart"
+            android:layout_width="0px"
+            android:layout_height="0px"
+            android:focusable="true"
+            android:focusableInTouchMode="true" />
+
+
+        <androidx.core.widget.NestedScrollView
+            android:id="@+id/cartPageView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:visibility="visible"
-            android:focusable="true"
-            android:focusableInTouchMode="true">
+            android:layout_above="@id/btnCheckOut"
+            android:layout_alignParentTop="true"
+            android:visibility="gone"
+            tools:visibility="visible">
 
-            <include layout="@layout/ll_cart_title"/>
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/cartproductRecyclerList"
+            <LinearLayout
+                android:id="@+id/cartInfoLinearLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/fragment_margin"
-                android:layout_marginTop="10dp"
-                android:layout_marginEnd="@dimen/fragment_margin"
-                android:nestedScrollingEnabled="false"
-                tools:listitem="@layout/cart_list_item"
-                tools:itemCount="2"/>
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                android:orientation="vertical"
+                android:visibility="visible">
+
+                <include layout="@layout/ll_cart_title" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/cartproductRecyclerList"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/fragment_margin"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="@dimen/fragment_margin"
+                    android:nestedScrollingEnabled="false"
+                    tools:itemCount="2"
+                    tools:listitem="@layout/cart_list_item" />
 
 
-            <include
-                layout="@layout/ll_cart_coupon"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/fragment_margin"
-                android:layout_marginTop="20dp"
-                android:layout_marginEnd="@dimen/fragment_margin" />
+                <LinearLayout
+                    android:id="@+id/dynamicAttributeHolderCart"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginBottom="15dp"
+                    android:layout_marginEnd="@dimen/fragment_margin"/>
 
-            <include
-                layout="@layout/ll_cart_gift_card"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/fragment_margin"
-                android:layout_marginTop="10dp"
-                android:layout_marginEnd="@dimen/fragment_margin" />
+                <include
+                    android:id="@+id/dynamicAttributeHolderBottomDivider"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    layout="@layout/horizontal_divider" />
 
-            <include
-                layout="@layout/table_order_total"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="25dp" />
-        </LinearLayout>
+                <include
+                    layout="@layout/ll_cart_coupon"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/fragment_margin"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="@dimen/fragment_margin" />
 
-    </androidx.core.widget.NestedScrollView>
+                <include
+                    layout="@layout/ll_cart_gift_card"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/fragment_margin"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="@dimen/fragment_margin" />
 
-    <Button
-        android:id="@+id/btnCheckOut"
-        android:visibility="gone"
-        tools:visibility="visible"
-        android:layout_alignParentBottom="true"
+                <include
+                    layout="@layout/table_order_total"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="25dp" />
+            </LinearLayout>
+
+        </androidx.core.widget.NestedScrollView>
+
+        <Button
+            android:id="@+id/btnCheckOut"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:background="@color/pink"
+            android:text="@string/cart_proceed_to_checkout"
+            android:textColor="@color/white"
+            android:textSize="@dimen/button_text_size"
+            android:visibility="gone"
+            tools:visibility="visible" />
+
+    </RelativeLayout>
+
+    <include
+        android:id="@+id/bottomSheetLayoutCart"
+        layout="@layout/other_attr_bottom_sheet"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/pink"
-        android:text="@string/cart_proceed_to_checkout"
-        android:textColor="@color/white"
-        android:textSize="@dimen/button_text_size" />
+        app:behavior_hideable="true"
+        app:behavior_peekHeight="0dp"
+        app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior" />
 
-</RelativeLayout>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

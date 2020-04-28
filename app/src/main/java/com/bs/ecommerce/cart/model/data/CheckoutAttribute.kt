@@ -24,5 +24,11 @@ data class Value(
     @SerializedName("IsPreSelected") var isPreSelected: Boolean = false,
     @SerializedName("Name") var name: String = "",
     @SerializedName("PriceAdjustment") var priceAdjustment: Any = Any()
-)
+) {
+    override fun equals(other: Any?): Boolean {
+        if(other !is Value) return false
+
+        return this.id == other.id
+    }
+}
 

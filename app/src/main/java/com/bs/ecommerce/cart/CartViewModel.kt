@@ -7,30 +7,59 @@ import com.bs.ecommerce.cart.model.CartModel
 import com.bs.ecommerce.cart.model.data.AddDiscountPostData
 import com.bs.ecommerce.cart.model.data.CartResponse
 import com.bs.ecommerce.cart.model.data.CartRootData
+import com.bs.ecommerce.cart.model.data.Value
 import com.bs.ecommerce.common.RequestCompleteListener
+import com.bs.ecommerce.utils.AttributeControlType
+import java.util.ArrayList
+import java.util.HashMap
 
 class CartViewModel : BaseViewModel()
 {
     var cartLD = MutableLiveData<CartRootData>()
+    var selectedAttrLD = MutableLiveData<MutableMap<Int, MutableList<Value>>>()
+
+    private var dynamicAttributeUpdated = false
 
 
     fun getCartVM(model: CartModel)
     {
 
-        isLoadingLD.postValue(true)
+        isLoadingLD.value = true
 
         model.getCartData(object : RequestCompleteListener<CartResponse>
         {
             override fun onRequestSuccess(data: CartResponse)
             {
-                isLoadingLD.postValue(false)
+                isLoadingLD.value = false
 
-                cartLD.postValue(data.cartRootData)
+                cartLD.value = data.cartRootData
+
+                val attrMap = HashMap<Int, MutableList<Value>>()
+
+                // sorting attribute values
+                for (attr in data.cartRootData.cart.checkoutAttributes) {
+                    attr.values = attr.values.sortedBy { !it.isPreSelected }
+
+                    val list = mutableListOf<Value>()
+
+                    for (value in attr.values) {
+                        if (value.isPreSelected) {
+                            list.add(value)
+
+                            if (attr.attributeControlType != AttributeControlType.Checkboxes)
+                                break
+                        }
+                    }
+
+                    attrMap[attr.id] = list
+                }
+
+                selectedAttrLD.value = attrMap
             }
 
             override fun onRequestFailed(errorMessage: String)
             {
-                isLoadingLD.postValue(false)
+                isLoadingLD.value = false
             }
         })
     }
@@ -38,20 +67,61 @@ class CartViewModel : BaseViewModel()
     fun updateCartData(keyValuePairs: List<KeyValuePair>, model: CartModel)
     {
 
-        isLoadingLD.postValue(true)
+        isLoadingLD.value = true
 
         model.updateCartData(keyValuePairs, object : RequestCompleteListener<CartResponse>
         {
             override fun onRequestSuccess(data: CartResponse)
             {
-                isLoadingLD.postValue(false)
+                isLoadingLD.value = false
 
-                cartLD.postValue(data.cartRootData)
+                cartLD.value = data.cartRootData
             }
 
             override fun onRequestFailed(errorMessage: String)
             {
-                isLoadingLD.postValue(false)
+                isLoadingLD.value = false
+            }
+        })
+    }
+
+    fun calculateCostWithUpdatedAttributes(model: CartModel) {
+        if(!dynamicAttributeUpdated) return
+
+        isLoadingLD.value = true
+
+        val keyValuePairs = ArrayList<KeyValuePair>()
+
+        val attrMap = selectedAttrLD.value ?: mutableMapOf()
+
+        for(mapKey in attrMap) {
+            for(i in mapKey.value) {
+                KeyValuePair().apply {
+                    this.key = "checkout_attribute_${mapKey.key}"
+                    this.value = i.id.toString()
+                    keyValuePairs.add(this)
+                }
+            }
+        }
+
+        model.applyCheckoutAttributes(keyValuePairs, object : RequestCompleteListener<CartRootData>
+        {
+            override fun onRequestSuccess(data: CartRootData)
+            {
+                isLoadingLD.value = false
+                dynamicAttributeUpdated = false
+
+                // only updating the order total section
+                val existingCartData = cartLD.value
+                existingCartData?.orderTotals = data.orderTotals
+
+                cartLD.value = existingCartData
+            }
+
+            override fun onRequestFailed(errorMessage: String)
+            {
+                isLoadingLD.value = false
+                dynamicAttributeUpdated = false
             }
         })
     }
@@ -59,20 +129,20 @@ class CartViewModel : BaseViewModel()
     fun applyCouponVM(discount : AddDiscountPostData, model: CartModel)
     {
 
-        isLoadingLD.postValue(true)
+        isLoadingLD.value = true
 
         model.applyCouponModel(discount, object : RequestCompleteListener<CartResponse>
         {
             override fun onRequestSuccess(data: CartResponse)
             {
-                isLoadingLD.postValue(false)
+                isLoadingLD.value = false
 
-                cartLD.postValue(data.cartRootData)
+                cartLD.value = data.cartRootData
             }
 
             override fun onRequestFailed(errorMessage: String)
             {
-                isLoadingLD.postValue(false)
+                isLoadingLD.value = false
             }
         })
     }
@@ -80,21 +150,45 @@ class CartViewModel : BaseViewModel()
     fun applyGiftCardVM(discount : AddDiscountPostData, model: CartModel)
     {
 
-        isLoadingLD.postValue(true)
+        isLoadingLD.value = true
 
         model.applyGiftCardModel(discount, object : RequestCompleteListener<CartResponse>
         {
             override fun onRequestSuccess(data: CartResponse)
             {
-                isLoadingLD.postValue(false)
+                isLoadingLD.value = false
 
-                cartLD.postValue(data.cartRootData)
+                cartLD.value = data.cartRootData
             }
 
             override fun onRequestFailed(errorMessage: String)
             {
-                isLoadingLD.postValue(false)
+                isLoadingLD.value = false
             }
         })
+    }
+
+    fun setAttrSelected(
+        attrId: Int,
+        value: Value,
+        isSelected: Boolean,
+        multipleSelection: Boolean
+    ) {
+        val attrMap = selectedAttrLD.value!!
+
+        if (isSelected) {
+            if (!multipleSelection) attrMap[attrId] = mutableListOf()
+
+            attrMap[attrId]?.add(value)
+        } else
+            attrMap[attrId]?.remove(value)
+
+        selectedAttrLD.value = attrMap
+
+        dynamicAttributeUpdated = true
+    }
+
+    fun isAttrSelected(attrId: Int, value: Value): Boolean {
+        return selectedAttrLD.value?.get(attrId)?.contains(value) ?: false
     }
 }
