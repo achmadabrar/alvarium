@@ -28,7 +28,7 @@ class ProductDetailViewModel : BaseViewModel() {
     var addToCartResponseLD = MutableLiveData<AddToCartResponse>()
 
     fun getProductDetail(prodId: Long, model: ProductDetailModel) {
-        isLoadingLD.postValue(true)
+        isLoadingLD.value = true
 
         model.getProductDetailModel(prodId, object : RequestCompleteListener<ProductDetailResponse>
         {
@@ -57,18 +57,18 @@ class ProductDetailViewModel : BaseViewModel() {
                     attrMap[attr.productAttributeId] = list
                 }
 
-                isLoadingLD.postValue(false)
+                isLoadingLD.value = false
 
-                productLiveData.postValue(data.data)
+                productLiveData.value = data.data
 
                 val price = data.data?.productPrice?.priceValue ?: 0.toDouble()
-                productPriceLD.postValue(price)
-                selectedAttrLD.postValue(attrMap)
+                productPriceLD.value = price
+                selectedAttrLD.value = attrMap
             }
 
             override fun onRequestFailed(errorMessage: String) {
-                isLoadingLD.postValue(false)
-                isInvalidProductLD.postValue(true)
+                isLoadingLD.value = false
+                isInvalidProductLD.value = true
             }
 
         })
@@ -152,7 +152,7 @@ class ProductDetailViewModel : BaseViewModel() {
                               model: ProductDetailModel)
     {
 
-        isLoadingLD.postValue(true)
+        isLoadingLD.value = true
 
         model.addProductToCartModel(productId,
                                     1,
@@ -162,29 +162,29 @@ class ProductDetailViewModel : BaseViewModel() {
         {
             override fun onRequestSuccess(data: AddToCartResponse)
             {
-                isLoadingLD.postValue(false)
+                isLoadingLD.value = false
 
-                addToCartResponseLD.postValue(data)
-                cartProductsCountLD.postValue(data.cartRootData.cart.items.size)
+                addToCartResponseLD.value = data
+                cartProductsCountLD.value = data.cartRootData.cart.items.size
             }
 
             override fun onRequestFailed(errorMessage: String)
             {
-                isLoadingLD.postValue(false)
+                isLoadingLD.value = false
             }
         })
     }
 
     fun incrementQuantity() {
-        quantityLiveData.postValue(quantityLiveData.value?.plus(1))
+        quantityLiveData.value = quantityLiveData.value?.plus(1)
     }
 
     fun decrementQuantity() {
         if(quantityLiveData.value!! > 1) {
-            quantityLiveData.postValue(quantityLiveData.value?.minus(1))
+            quantityLiveData.setValue(quantityLiveData.value?.minus(1))
         } else {
             // FIXME how to show toast?
-            // toastMessageLD.postValue("Invalid quantity")
+            // toastMessageLD.setValue("Invalid quantity")
         }
     }
 
@@ -198,7 +198,7 @@ class ProductDetailViewModel : BaseViewModel() {
             }
         }
 
-        productPriceLD.postValue(price)
+        productPriceLD.value = price
     }
 
     fun isAttrSelected(attrId: Long, value: AttributeControlValue) : Boolean {
@@ -221,7 +221,7 @@ class ProductDetailViewModel : BaseViewModel() {
 
         adjustProductPrice()
 
-        selectedAttrLD.postValue(attrMap)
+        selectedAttrLD.value = attrMap
     }
 
 }

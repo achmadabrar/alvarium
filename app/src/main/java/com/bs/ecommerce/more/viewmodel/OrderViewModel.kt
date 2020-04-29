@@ -10,6 +10,7 @@ import com.bs.ecommerce.product.model.data.OrderHistoryData
 class OrderViewModel : BaseViewModel() {
 
     var orderHistoryLD = MutableLiveData<OrderHistoryData>()
+    var orderDetailsLD = MutableLiveData<OrderDetailsData>()
 
     fun getOrderHistory(model: OrderModel) {
         isLoadingLD.value = true
@@ -34,7 +35,7 @@ class OrderViewModel : BaseViewModel() {
         model.getOrderDetails(orderId, object : RequestCompleteListener<OrderDetailsData> {
             override fun onRequestSuccess(data: OrderDetailsData) {
                 isLoadingLD.value = false
-
+                orderDetailsLD.value = data
             }
 
             override fun onRequestFailed(errorMessage: String) {
