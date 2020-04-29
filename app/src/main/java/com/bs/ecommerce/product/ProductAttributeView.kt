@@ -3,13 +3,14 @@ package com.bs.ecommerce.product
 import android.content.Context
 import android.content.res.ColorStateList
 import android.graphics.Color
+import android.text.Editable
+import android.text.TextWatcher
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
-import android.widget.CheckBox
-import android.widget.RadioButton
-import android.widget.RadioGroup
-import android.widget.TextView
+import android.view.inputmethod.EditorInfo
+import android.widget.*
+import android.widget.TextView.OnEditorActionListener
 import androidx.appcompat.widget.AppCompatRadioButton
 import androidx.core.view.ViewCompat
 import androidx.core.view.children
@@ -20,11 +21,13 @@ import com.bs.ecommerce.product.model.data.ProductDetail
 import com.bs.ecommerce.product.viewModel.ProductDetailViewModel
 import com.bs.ecommerce.utils.AttributeControlType
 import com.bs.ecommerce.utils.ColorSelectionProcess
+import com.bs.ecommerce.utils.showLog
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import kotlinx.android.synthetic.main.color_selection_layout.view.*
 import kotlinx.android.synthetic.main.other_attr_bottom_sheet.view.*
 import kotlinx.android.synthetic.main.other_attr_layout.view.*
 import org.jetbrains.anko.layoutInflater
+
 
 class ProductAttributeView(
     private val context: Context,
@@ -69,6 +72,17 @@ class ProductAttributeView(
         tvName.setCompoundDrawablesWithIntrinsicBounds(
             0, 0, if (attr.isRequired) R.drawable.ic_star_formular else 0, 0
         )
+
+        val etUserInput = layout.findViewById<EditText>(R.id.etUserInput)
+
+        etUserInput.setOnEditorActionListener(OnEditorActionListener { v, actionId, _ ->
+            if (actionId == EditorInfo.IME_ACTION_DONE) {
+                "xyz".showLog(v.text.toString())
+                //TODO save text to viewmodel
+                return@OnEditorActionListener false
+            }
+            false
+        })
 
         inflatedViews[attr.productAttributeId] = layout
     }

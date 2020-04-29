@@ -1,10 +1,12 @@
 package com.bs.ecommerce.product.model
 
 import com.bs.ecommerce.common.RequestCompleteListener
+import com.bs.ecommerce.home.homepage.model.data.HomePageProductResponse
+import com.bs.ecommerce.networking.Api
 import com.bs.ecommerce.networking.RetroClient
-import com.bs.ecommerce.product.model.data.ProductDetailResponse
 import com.bs.ecommerce.product.model.data.AddToCartPostData
 import com.bs.ecommerce.product.model.data.AddToCartResponse
+import com.bs.ecommerce.product.model.data.ProductDetailResponse
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -49,6 +51,54 @@ class ProductDetailModelImpl :
             }
 
         })
+    }
+
+    override fun getRelatedProducts(
+        productId: Long,
+        thumbnailSizePx: Int,
+        callback: RequestCompleteListener<HomePageProductResponse>
+    ) {
+        RetroClient.api.getRelatedProducts(productId, thumbnailSizePx)
+            .enqueue(object : Callback<HomePageProductResponse> {
+                override fun onResponse(
+                    call: Call<HomePageProductResponse>,
+                    response: Response<HomePageProductResponse>
+                ) {
+                    if (response.body() != null)
+                        callback.onRequestSuccess(response.body() as HomePageProductResponse)
+                    else
+                        callback.onRequestFailed(response.message())
+                }
+
+
+                override fun onFailure(call: Call<HomePageProductResponse>, t: Throwable) {
+                    callback.onRequestFailed(t.localizedMessage ?: "")
+                }
+            })
+    }
+
+    override fun getAlsoPurchasedProducts(
+        productId: Long,
+        thumbnailSizePx: Int,
+        callback: RequestCompleteListener<HomePageProductResponse>
+    ) {
+        RetroClient.api.getSimilarProducts(productId, thumbnailSizePx)
+            .enqueue(object : Callback<HomePageProductResponse> {
+                override fun onResponse(
+                    call: Call<HomePageProductResponse>,
+                    response: Response<HomePageProductResponse>
+                ) {
+                    if (response.body() != null)
+                        callback.onRequestSuccess(response.body() as HomePageProductResponse)
+                    else
+                        callback.onRequestFailed(response.message())
+                }
+
+
+                override fun onFailure(call: Call<HomePageProductResponse>, t: Throwable) {
+                    callback.onRequestFailed(t.localizedMessage ?: "")
+                }
+            })
     }
 
 }

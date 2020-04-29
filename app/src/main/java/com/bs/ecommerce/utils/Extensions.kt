@@ -203,7 +203,7 @@ fun WebView.show(text : String, nightMode: Boolean = true)
 
 }
 
-fun WebView.show(text: String, backgroundColorRes: Int) {
+fun WebView.show(text: String, backgroundColorRes: Int, textColorRes: Int = R.color.whiteOrBlack) {
 
     val webViewBg = "#" + Integer.toHexString(
         ContextCompat.getColor(
@@ -211,10 +211,16 @@ fun WebView.show(text: String, backgroundColorRes: Int) {
         ) and 0x00ffffff
     )
 
+    val textColor = "#" + Integer.toHexString(
+        ContextCompat.getColor(
+            context, textColorRes
+        ) and 0x00ffffff
+    )
+
     val htmlRtlHeader = "dir=\"rtl\" lang=\"\""
 
     var htmlColorHeader =
-            "<style type=\"text/css\">body{color: #fff; background-color: $webViewBg;}</style>"
+            "<style type=\"text/css\">body{color: $textColor; background-color: $webViewBg;}</style>"
 
 
     val htmlFontHeader =

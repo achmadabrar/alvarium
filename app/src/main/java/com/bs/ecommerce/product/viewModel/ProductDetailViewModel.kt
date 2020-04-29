@@ -1,23 +1,25 @@
 package com.bs.ecommerce.product.viewModel
 
+import android.util.Log
 import androidx.lifecycle.MutableLiveData
-import com.bs.ecommerce.R
 import com.bs.ecommerce.auth.register.data.KeyValuePair
 import com.bs.ecommerce.base.BaseViewModel
 import com.bs.ecommerce.common.RequestCompleteListener
+import com.bs.ecommerce.home.homepage.model.data.HomePageProductResponse
 import com.bs.ecommerce.product.model.ProductDetailModel
 import com.bs.ecommerce.product.model.data.*
 import com.bs.ecommerce.utils.AttributeControlType
 import com.bs.ecommerce.utils.showLog
-import com.bs.ecommerce.utils.toast
 import java.util.*
 
 class ProductDetailViewModel : BaseViewModel() {
 
     var productLiveData = MutableLiveData<ProductDetail>()
+    var relatedProductsLD = MutableLiveData<List<ProductSummary>>()
+    var similarProductsLD = MutableLiveData<List<ProductSummary>>()
+
     var quantityLiveData = MutableLiveData(1)
     var productPriceLD = MutableLiveData<Double>()
-    var toastMessageLD = MutableLiveData("")
     var isInvalidProductLD = MutableLiveData<Boolean>()
     var selectedAttrLD = MutableLiveData<MutableMap<Long, MutableList<AttributeControlValue>>>()
 
@@ -63,6 +65,37 @@ class ProductDetailViewModel : BaseViewModel() {
             override fun onRequestFailed(errorMessage: String) {
                 isLoadingLD.postValue(false)
                 isInvalidProductLD.postValue(true)
+            }
+
+        })
+    }
+
+    fun getRelatedProducts(prodId: Long, thumbnailSizePx: Int, model: ProductDetailModel) {
+
+        model.getRelatedProducts(prodId, thumbnailSizePx, object: RequestCompleteListener<HomePageProductResponse> {
+
+            override fun onRequestSuccess(data: HomePageProductResponse) {
+                relatedProductsLD.value = data.homePageProductList
+            }
+
+            override fun onRequestFailed(errorMessage: String) {
+                Log.e("", errorMessage)
+            }
+
+        })
+    }
+
+
+    fun getSimilarProducts(prodId: Long, thumbnailSizePx: Int, model: ProductDetailModel) {
+
+        model.getAlsoPurchasedProducts(prodId, thumbnailSizePx, object: RequestCompleteListener<HomePageProductResponse> {
+
+            override fun onRequestSuccess(data: HomePageProductResponse) {
+                relatedProductsLD.value = data.homePageProductList
+            }
+
+            override fun onRequestFailed(errorMessage: String) {
+                Log.e("", errorMessage)
             }
 
         })
@@ -145,7 +178,8 @@ class ProductDetailViewModel : BaseViewModel() {
         if(quantityLiveData.value!! > 1) {
             quantityLiveData.postValue(quantityLiveData.value?.minus(1))
         } else {
-            toastMessageLD.postValue("Invalid quantity")
+            // FIXME how to show toast?
+            // toastMessageLD.postValue("Invalid quantity")
         }
     }
 

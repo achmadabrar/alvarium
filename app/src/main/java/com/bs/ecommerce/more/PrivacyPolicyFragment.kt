@@ -27,7 +27,7 @@ class PrivacyPolicyFragment : BaseFragment() {
         super.onViewCreated(view, savedInstanceState)
 
 
-        wv_privacy_policy?.show(getString(R.string.placeholder_long))
+        wv_privacy_policy?.show(getString(R.string.placeholder_long), R.color.fragment_background)
 
     }
 }

@@ -26,11 +26,13 @@
             android:layout_above="@+id/addtoCartLayout">
 
             <LinearLayout
+                android:id="@+id/productDetailsScrollView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/fragment_margin"
                 android:layout_marginEnd="@dimen/fragment_margin"
-                android:descendantFocusability="afterDescendants"
+                android:visibility="gone"
+                tools:visibility="visible"
                 android:orientation="vertical">
 
                 <include
@@ -112,15 +114,18 @@
 
                 <include layout="@layout/horizontal_divider" />
 
-                <include
-                    android:id="@+id/featuredProductLayout"
-                    layout="@layout/featured_product_layout"
+                <ViewStub
+                    android:id="@+id/vsRelatedProduct"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="5dp"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginEnd="5dp"
-                    android:visibility="gone"
+                    android:layout="@layout/featured_product_layout"
+                    tools:visibility="visible"/>
+
+                <ViewStub
+                    android:id="@+id/vsSimilarProduct"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout="@layout/featured_product_layout"
                     tools:visibility="visible"/>
 
             </LinearLayout>

@@ -196,5 +196,8 @@
 
     <string name="price">Price</string>
     <string name="remaining">remaining</string>
+    <string name="description">Description</string>
+    <string name="related_products">Related Products</string>
+    <string name="people_also_purchase">People Also Purchase</string>
 
 </resources>

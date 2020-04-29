@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.view.View
 import android.widget.RelativeLayout
 import android.widget.TextView
-import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -14,15 +13,11 @@ import com.bs.ecommerce.R
 import com.bs.ecommerce.base.BaseFragment
 import com.bs.ecommerce.base.BaseViewModel
 import com.bs.ecommerce.home.FeaturedProductAdapter
-import com.bs.ecommerce.main.MainViewModel
 import com.bs.ecommerce.product.model.ProductDetailModel
 import com.bs.ecommerce.product.model.ProductDetailModelImpl
 import com.bs.ecommerce.product.model.data.ProductSummary
 import com.bs.ecommerce.product.viewModel.ProductDetailViewModel
-import com.bs.ecommerce.utils.ItemClickListener
-import com.bs.ecommerce.utils.RecyclerViewMargin
-import com.bs.ecommerce.utils.show
-import com.bs.ecommerce.utils.toast
+import com.bs.ecommerce.utils.*
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetBehavior.BottomSheetCallback
 import kotlinx.android.synthetic.main.featured_product_layout.view.*
@@ -40,7 +35,6 @@ class ProductDetailFragment : BaseFragment(), View.OnClickListener {
     private lateinit var bsBehavior: BottomSheetBehavior<*>
     private lateinit var model: ProductDetailModel
     private var productAttributeView: ProductAttributeView? = null
-    private lateinit var mainViewModel: MainViewModel
 
     override fun getFragmentTitle() = R.string.title_product
 
@@ -60,9 +54,23 @@ class ProductDetailFragment : BaseFragment(), View.OnClickListener {
 
         model = ProductDetailModelImpl()
         viewModel = ViewModelProvider(this).get(ProductDetailViewModel::class.java)
-        mainViewModel = ViewModelProvider(requireActivity()).get(MainViewModel::class.java)
 
-        (viewModel as ProductDetailViewModel).getProductDetail(productId, model)
+        (viewModel as ProductDetailViewModel).apply {
+
+            getProductDetail(productId, model)
+
+            getRelatedProducts(
+                productId,
+                resources.getDimensionPixelSize(R.dimen.product_item_size),
+                model
+            )
+
+            getSimilarProducts(
+                productId,
+                resources.getDimensionPixelSize(R.dimen.product_item_size),
+                model
+            )
+        }
 
         setLiveDataListeners()
 
@@ -81,7 +89,6 @@ class ProductDetailFragment : BaseFragment(), View.OnClickListener {
             productLiveData.observe(
                 viewLifecycleOwner,
                 Observer { product ->
-                    productDetailsRootLayout.visibility = View.VISIBLE
 
                     // slider image
                     val detailsSliderAdapter =
@@ -108,12 +115,24 @@ class ProductDetailFragment : BaseFragment(), View.OnClickListener {
 
                     // short description
                     productNameLayout.tvProductName.text = product.name
-                    //productNameLayout.tvProductDescription.text = TextUtils().getHtmlFormattedText(product.shortDescription)
-                    product.shortDescription?.let {   productNameLayout?.tvProductDescription?.show(it)    }
+                    product.shortDescription?.let {
+                        productNameLayout?.tvProductDescription?.show(
+                            it,
+                            R.color.fragment_background
+                        )
+                    }
 
-                    productPriceLayout.tvOriginalPrice.text = product.productPrice?.oldPrice ?: "$0"
-                    productPriceLayout.tvOriginalPrice.paintFlags =
-                        productPriceLayout.tvOriginalPrice.paintFlags or Paint.STRIKE_THRU_TEXT_FLAG
+                    // product price
+                    productPriceLayout.tvOriginalPrice.apply {
+                        if (product.productPrice?.oldPrice == null) {
+                            visibility = View.GONE
+                        } else {
+                            text = product.productPrice?.oldPrice
+                            paintFlags =
+                                productPriceLayout.tvOriginalPrice.paintFlags or Paint.STRIKE_THRU_TEXT_FLAG
+                        }
+                    }
+
                     productPriceLayout.tvDiscountPercent.text = "40% Off"
 
                     tvAvailability.text = product.stockAvailability
@@ -121,16 +140,25 @@ class ProductDetailFragment : BaseFragment(), View.OnClickListener {
                     productQuantityLayout.tvQuantity.text = "1"
 
                     // long description
-                    productDescLayout.tvProductName.text = "Description"
-                    product.fullDescription?.let {   productDescLayout?.tvProductDescription?.show(it)    }
+                    productDescLayout.tvProductName.text = getString(R.string.description)
+                    product.fullDescription?.let {
+                        productDescLayout?.tvProductDescription?.show(
+                            it,
+                            R.color.fragment_background
+                        )
+                    }
 
                     // setup product attributes
                     productAttributeView =
-                        ProductAttributeView(requireContext(), viewModel as ProductDetailViewModel,
-                            bottomSheetLayout, bsBehavior)
+                        ProductAttributeView(
+                            requireContext(), viewModel as ProductDetailViewModel,
+                            bottomSheetLayout, bsBehavior
+                        )
                     for (i in productAttributeView!!.getAttrViews()) {
                         attrViewHolder.addView(i)
                     }
+
+                    productDetailsScrollView.visibility = View.VISIBLE
 
                 })
 
@@ -138,8 +166,7 @@ class ProductDetailFragment : BaseFragment(), View.OnClickListener {
                 viewLifecycleOwner,
                 Observer { isInvalid ->
 
-                    if (isInvalid)
-                    {
+                    if (isInvalid) {
                         toast(getString(R.string.invalid_barcode))
                         requireActivity().supportFragmentManager.popBackStackImmediate()
                     }
@@ -162,14 +189,8 @@ class ProductDetailFragment : BaseFragment(), View.OnClickListener {
                     productQuantityLayout.tvQuantity.text = quantity.toString()
                 })
 
-            toastMessageLD.observe(
-                viewLifecycleOwner,
-                Observer { message ->
-                    if(message.isNotEmpty())
-                        Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
-                })
 
-          productPriceLD.observe(
+            productPriceLD.observe(
                 viewLifecycleOwner,
                 Observer { price ->
                     productPriceLayout.tvDiscountPrice.text = "$%.2f".format(price)
@@ -179,14 +200,13 @@ class ProductDetailFragment : BaseFragment(), View.OnClickListener {
                 viewLifecycleOwner,
                 Observer { attrMap ->
 
-                    for(i in attrMap.keys)
-                    {
+                    for (i in attrMap.keys) {
                         val view = attrViewHolder.findViewWithTag<View>(i)
                         val textView = view.findViewById<TextView>(R.id.tvSelectedAttr)
 
                         val selectedAttr = attrMap[i]
 
-                        if(selectedAttr.isNullOrEmpty()) {
+                        if (selectedAttr.isNullOrEmpty()) {
                             textView?.text = getString(R.string.select)
                         } else {
                             textView?.text = attrMap[i]?.get(0)?.name
@@ -194,26 +214,27 @@ class ProductDetailFragment : BaseFragment(), View.OnClickListener {
                     }
                 })
 
-            mainViewModel.featuredProductListLD.observe(viewLifecycleOwner,
+            relatedProductsLD.observe(viewLifecycleOwner,
                 Observer { list ->
-                    populateFeaturedProductList(list)
+                    populateRelatedProductList(list)
                 })
 
+            similarProductsLD.observe(viewLifecycleOwner,
+                Observer { list ->
+                    populateSimilarProductList(list)
+                })
         }
 
     }
 
-    private fun populateFeaturedProductList(list: List<ProductSummary>) {
-        if (list.isNullOrEmpty()) {
-            featuredProductLayout.visibility = View.GONE
-            return
-        }
+    private fun populateRelatedProductList(list: List<ProductSummary>) {
 
-        featuredProductLayout.visibility = View.VISIBLE
-        featuredProductLayout.tvProductName.text = getString(R.string.featured_products)
-        featuredProductLayout.tvSeeAll.setOnClickListener {
-            toast("Sell All")
-        }
+        if (list.isNullOrEmpty() || vsRelatedProduct==null)
+            return
+
+        val featuredProductLayout = vsRelatedProduct.inflate()
+
+        featuredProductLayout.tvProductName.text = getString(R.string.related_products)
 
         featuredProductLayout.rvFeaturedProduct.apply {
             layoutManager =
@@ -224,7 +245,33 @@ class ProductDetailFragment : BaseFragment(), View.OnClickListener {
 
             adapter = FeaturedProductAdapter(list, object : ItemClickListener<ProductSummary> {
                 override fun onClick(view: View, position: Int, data: ProductSummary) {
-                    toast("Not yet implemented")
+                    if (data.id != null)
+                        replaceFragmentSafely(newInstance(data.id.toLong()))
+                }
+            })
+        }
+    }
+
+    private fun populateSimilarProductList(list: List<ProductSummary>) {
+
+        if (list.isNullOrEmpty() || vsSimilarProduct ==null)
+            return
+
+        val similarProductLayout = vsSimilarProduct.inflate()
+
+        similarProductLayout.tvProductName.text = getString(R.string.people_also_purchase)
+
+        similarProductLayout.rvFeaturedProduct.apply {
+            layoutManager =
+                LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+
+            addItemDecoration(RecyclerViewMargin(15, 1, false))
+            setHasFixedSize(true)
+
+            adapter = FeaturedProductAdapter(list, object : ItemClickListener<ProductSummary> {
+                override fun onClick(view: View, position: Int, data: ProductSummary) {
+                    if (data.id != null)
+                        replaceFragmentSafely(newInstance(data.id.toLong()))
                 }
             })
         }

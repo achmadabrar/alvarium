@@ -108,6 +108,18 @@ interface Api {
     @GET("product/productdetails/{id}/0")
     fun getProductDetails(@Path("id") id: Long): Call<ProductDetailResponse>
 
+    @GET("product/relatedproducts/{id}/{thumbnailSize}")
+    fun getRelatedProducts(
+        @Path("id") productId: Long,
+        @Path("thumbnailSize") thumbSize: Int
+    ): Call<HomePageProductResponse>
+
+    @GET("product/productsalsopurchased/{id}/{thumbnailSize}")
+    fun getSimilarProducts(
+        @Path("id") productId: Long,
+        @Path("thumbnailSize") thumbSize: Int
+    ): Call<HomePageProductResponse>
+
     @POST("shoppingCart/AddProductToCart/details/{productId}/{shoppingCartTypeId}")
     fun addProductIntoCartAPI(@Path("productId") id: Long,
                            @Path("shoppingCartTypeId") shoppingCartTypeId: Long,
@@ -232,8 +244,7 @@ interface Api {
     @GET("productdetails/{id}")
     fun getProductDetails(@Path("id") id: Long): Call<ProductDetailResponse>
 
-    @GET("relatedproducts/{id}?thumbPictureSize=320")
-    fun getRelatedProducts(@Path("id") id: Long): Call<RelatedProductResponse>
+
 
     @POST("ProductDetailsPagePrice/{productId}")
     fun getUpdatedPrice(@Path("productId") id: Long, @Body list: List<KeyValuePair>): Call<PriceResponse>
@@ -344,7 +355,7 @@ interface Api {
 
     companion object
     {
-        val imageSize = "600"
+        val thumbnailImageSize = 320
         val manufactureImageSize = "800"
         const val queryString = "thumbPictureSize"
         val qs_price = "price"
