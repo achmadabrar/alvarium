@@ -158,7 +158,7 @@ abstract class BaseFragment : Fragment()
         //LoginManager.getInstance().logOut()
         requireActivity().invalidateOptionsMenu()
 
-        (viewModel as OptionViewModel).changeLogInText()
+        (viewModel as OptionViewModel).loadOptions(prefObject)
     }
 
 

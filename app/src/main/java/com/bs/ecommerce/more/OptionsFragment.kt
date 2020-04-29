@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.RelativeLayout
 import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import com.bs.ecommerce.R
 import com.bs.ecommerce.auth.login.LoginFragment
 import com.bs.ecommerce.base.BaseFragment
@@ -46,57 +47,58 @@ class OptionsFragment : BaseFragment() {
         super.onViewCreated(view, savedInstanceState)
 
 
-        if(!viewCreated) {
 
-            (viewModel as OptionViewModel).optionsLD.observe(viewLifecycleOwner, Observer { options ->
-                ll_option_holder.removeAllViews()
+        viewModel = ViewModelProvider(this).get(OptionViewModel::class.java)
 
-                for(i in options) {
-                    val optionView = layoutInflater.inflate(R.layout.options_layout, null)
-                    optionView.tag = i.nameResId
+        (viewModel as OptionViewModel).optionsLD.observe(viewLifecycleOwner, Observer { options ->
+            ll_option_holder.removeAllViews()
 
-                    optionView.tvOptionName.text = getString(i.nameResId)
-                    optionView.ivOptionIcon.setImageResource(i.iconResId)
+            for (i in options) {
+                val optionView = layoutInflater.inflate(R.layout.options_layout, null)
+                optionView.tag = i.nameResId
 
-                    optionView.setOnClickListener {
+                optionView.tvOptionName.text = getString(i.nameResId)
+                optionView.ivOptionIcon.setImageResource(i.iconResId)
 
-                        when(i.nameResId) {
+                optionView.setOnClickListener {
 
-                            R.string.title_scan_barcode ->
-                                checkPermissionAndOpenScannerFragment()
+                    when (i.nameResId) {
 
-                            R.string.settings ->
-                                replaceFragmentSafely(SettingsFragment())
+                        R.string.title_scan_barcode ->
+                            checkPermissionAndOpenScannerFragment()
 
-                            R.string.login ->
-                                replaceFragmentSafely(LoginFragment())
+                        R.string.settings ->
+                            replaceFragmentSafely(SettingsFragment())
 
-                            R.string.log_out ->
-                                logoutConfirmationDialog()
+                        R.string.login ->
+                            replaceFragmentSafely(LoginFragment())
 
-                            R.string.privacy_policy ->
-                                replaceFragmentSafely(PrivacyPolicyFragment())
+                        R.string.log_out ->
+                            logoutConfirmationDialog()
 
-                            R.string.my_orders ->
-                                replaceFragmentSafely(OrderHistoryFragment())
+                        R.string.privacy_policy ->
+                            replaceFragmentSafely(PrivacyPolicyFragment())
 
-                            R.string.title_checkout ->
-                                replaceFragmentSafely(CheckoutStepFragment())
-                        }
+                        R.string.my_orders ->
+                            replaceFragmentSafely(OrderHistoryFragment())
+
+                        R.string.title_checkout ->
+                            replaceFragmentSafely(CheckoutStepFragment())
                     }
-
-                    ll_option_holder.addView(optionView)
                 }
-            })
 
-            if(prefObject.getPrefsBoolValue(PrefSingleton.IS_LOGGED_IN))
-                (viewModel as OptionViewModel).loadOptions(loggedIn = true)
-            else
-                (viewModel as OptionViewModel).loadOptions(loggedIn = false)
+                ll_option_holder.addView(optionView)
+            }
+        })
+
+        /*if(prefObject.getPrefsBoolValue(PrefSingleton.IS_LOGGED_IN))
+            (viewModel as OptionViewModel).loadOptions(loggedIn = true)
+        else
+            (viewModel as OptionViewModel).loadOptions(loggedIn = false)*/
+
+        (viewModel as OptionViewModel).loadOptions(prefObject)
 
 
-
-            viewCreated = true
-        }
+        viewCreated = true
     }
 }

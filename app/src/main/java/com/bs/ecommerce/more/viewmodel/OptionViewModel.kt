@@ -4,12 +4,13 @@ import androidx.lifecycle.MutableLiveData
 import com.bs.ecommerce.R
 import com.bs.ecommerce.base.BaseViewModel
 import com.bs.ecommerce.more.model.data.AppOptions
+import com.bs.ecommerce.utils.PrefSingleton
 
 class OptionViewModel : BaseViewModel() {
 
     var optionsLD = MutableLiveData<List<AppOptions>>()
 
-    fun loadOptions(loggedIn : Boolean) {
+    fun loadOptions(prefObject: PrefSingleton) {
 
         val data = mutableListOf<AppOptions>()
 
@@ -21,7 +22,7 @@ class OptionViewModel : BaseViewModel() {
 
         data.add(AppOptions(R.string.my_orders, R.drawable.ic_my_order))
 
-        if(loggedIn)
+        if(prefObject.getPrefsBoolValue(PrefSingleton.IS_LOGGED_IN))
             data.add(AppOptions(R.string.log_out, R.drawable.ic_login))
         else
             data.add(AppOptions(R.string.login, R.drawable.ic_login))
@@ -31,7 +32,7 @@ class OptionViewModel : BaseViewModel() {
         optionsLD.postValue(data)
     }
 
-    fun changeLogInText()
+    /*fun changeLogInText()
     {
         //val data = optionsLD.value as MutableList<AppOptions>
 
@@ -39,5 +40,5 @@ class OptionViewModel : BaseViewModel() {
 
         (optionsLD.value as MutableList<AppOptions>).add(AppOptions(R.string.log_out, R.drawable.ic_login))
 
-    }
+    }*/
 }
