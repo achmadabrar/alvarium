@@ -148,7 +148,7 @@ fun Activity.hideKeyboard(): Boolean {
     return false
 }
 
-fun EditText?.showOrHideOrRequired(isEnabledParam: Boolean = false, isRequired: Boolean = false)
+fun EditText?.showOrHideOrRequired(isEnabledParam: Boolean = false, isRequired: Boolean = false, value: String? = null)
 {
     if(this != null)
     {
@@ -159,6 +159,9 @@ fun EditText?.showOrHideOrRequired(isEnabledParam: Boolean = false, isRequired: 
 
         if(isRequired)
             this.setCompoundDrawablesRelativeWithIntrinsicBounds(0, 0, R.drawable.ic_star_formular, 0)
+
+        if(value != null && value.isNotEmpty())
+            this.setText(value)
     }
 
 

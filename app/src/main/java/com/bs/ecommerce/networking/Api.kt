@@ -59,7 +59,7 @@ interface Api {
 
     //checkout
 
-    @GET("checkout/billingform")
+    @GET("checkout/getbilling")
     fun getBillingFormAPI(): Call<BillingAddressResponse>
 
     @GET("country/getstatesbycountryid/{countryId}")
