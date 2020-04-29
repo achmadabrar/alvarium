@@ -120,37 +120,37 @@ open class RegisterFragment : BaseFragment(), View.OnClickListener
         with(data)
         {
 
-            customerFirstNameEditText?.showOrHideOrRequired(isEnabledParam = true, isRequired =   false)
+            customerFirstNameEditText?.showOrHideOrRequired(isEnabledParam = true, isRequired =   false, value = firstName)
 
-            customerLastNameEditText?.showOrHideOrRequired(isEnabledParam = true, isRequired =   false)
+            customerLastNameEditText?.showOrHideOrRequired(isEnabledParam = true, isRequired =   false, value = lastName)
 
-            emailEditText?.showOrHideOrRequired(isEnabledParam = true, isRequired =   true)
+            emailEditText?.showOrHideOrRequired(isEnabledParam = true, isRequired =   true, value = email)
 
             enterPasswordEditText?.showOrHideOrRequired(isEnabledParam = true, isRequired =   true)
 
             confirmPasswordEditText?.showOrHideOrRequired(isEnabledParam = true, isRequired =   true)
 
-            dateOfBirthTextView?.showOrHideOrRequired(isEnabledParam = dateOfBirthEnabled, isRequired =   dateOfBirthRequired)
+            dateOfBirthTextView?.showOrHideOrRequired(isEnabledParam = dateOfBirthEnabled, isRequired =   dateOfBirthRequired, value = "")
 
-            usernameEditText?.showOrHideOrRequired(isEnabledParam = usernamesEnabled, isRequired =   false)
+            usernameEditText?.showOrHideOrRequired(isEnabledParam = usernamesEnabled, isRequired =   false, value = username)
 
-            companyInfoEditText?.showOrHideOrRequired(isEnabledParam = companyEnabled, isRequired =   companyRequired)
+            companyInfoEditText?.showOrHideOrRequired(isEnabledParam = companyEnabled, isRequired =   companyRequired, value = company)
 
-            streetAddressEditText?.showOrHideOrRequired(isEnabledParam = streetAddressEnabled, isRequired =   streetAddressRequired)
+            streetAddressEditText?.showOrHideOrRequired(isEnabledParam = streetAddressEnabled, isRequired =   streetAddressRequired, value = streetAddress)
 
-            streetAddress2EditText?.showOrHideOrRequired(isEnabledParam = streetAddress2Enabled, isRequired =   streetAddress2Required)
+            streetAddress2EditText?.showOrHideOrRequired(isEnabledParam = streetAddress2Enabled, isRequired =   streetAddress2Required, value = streetAddress2)
 
-            zipOrPostalCodeEditText?.showOrHideOrRequired(isEnabledParam = zipPostalCodeEnabled, isRequired =   zipPostalCodeRequired)
+            zipOrPostalCodeEditText?.showOrHideOrRequired(isEnabledParam = zipPostalCodeEnabled, isRequired =   zipPostalCodeRequired, value = zipPostalCode)
 
-            cityEditText?.showOrHideOrRequired(isEnabledParam = cityEnabled, isRequired =   cityRequired)
+            cityEditText?.showOrHideOrRequired(isEnabledParam = cityEnabled, isRequired =   cityRequired, value = city)
 
-            countryEditText?.showOrHideOrRequired(isEnabledParam = countryEnabled, isRequired =   countryRequired)
+            countryEditText?.showOrHideOrRequired(isEnabledParam = countryEnabled, isRequired =   countryRequired, value = county)
 
             stateProvinceEditText?.showOrHideOrRequired(isEnabledParam = stateProvinceEnabled, isRequired =   stateProvinceRequired)
 
-            phoneEditText?.showOrHideOrRequired(isEnabledParam = phoneEnabled, isRequired =   phoneRequired)
+            phoneEditText?.showOrHideOrRequired(isEnabledParam = phoneEnabled, isRequired =   phoneRequired, value = phone)
 
-            faxEditText?.showOrHideOrRequired(isEnabledParam = faxEnabled, isRequired =   faxRequired)
+            faxEditText?.showOrHideOrRequired(isEnabledParam = faxEnabled, isRequired =   faxRequired, value = fax)
 
 
 

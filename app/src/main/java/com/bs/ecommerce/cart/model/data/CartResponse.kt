@@ -1,4 +1,5 @@
 package com.bs.ecommerce.cart.model.data
+import com.bs.ecommerce.networking.BaseResponse
 import com.google.gson.annotations.SerializedName
 
 
@@ -11,11 +12,7 @@ data class CartRootData(
 )
 
 
-data class CartResponse(
-    @SerializedName("Data") var cartRootData: CartRootData = CartRootData(),
-    @SerializedName("ErrorList") var errorList: List<Any> = listOf(),
-    @SerializedName("Message") var message: Any = Any()
-)
+open class CartResponse(@SerializedName("Data") var cartRootData: CartRootData = CartRootData()) : BaseResponse()
 
 
 

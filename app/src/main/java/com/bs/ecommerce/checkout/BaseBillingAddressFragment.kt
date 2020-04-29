@@ -14,6 +14,7 @@ import com.bs.ecommerce.checkout.model.CheckoutModel
 import com.bs.ecommerce.checkout.model.CheckoutModelImpl
 import com.bs.ecommerce.checkout.model.data.AvailableCountry
 import com.bs.ecommerce.checkout.model.data.BillingAddress
+import com.bs.ecommerce.checkout.model.data.BillingNewAddress
 import com.bs.ecommerce.utils.showOrHideOrRequired
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayout.OnTabSelectedListener
@@ -62,12 +63,12 @@ class BaseBillingAddressFragment : BaseFragment()
         (viewModel as CheckoutAddressViewModel).billingAddressResponseLD.observe(viewLifecycleOwner, Observer { billingAddressResponse ->
 
 
-            with(billingAddressResponse)
+            with(billingAddressResponse.data.billingAddress)
             {
-                createForms(newAddress!!)
+                createForms(this.billingNewAddress)
 
-                val countryNameList = newAddress?.availableCountries?.map { it.text }
-                populateCountrySpinner(countryNameList!!, newAddress?.availableCountries)
+                val countryNameList = billingNewAddress.availableCountries.map { it.text }
+                populateCountrySpinner(countryNameList, billingNewAddress.availableCountries)
                 //generateDropdownList(existingAddresses)
                 //setValueinFormField(newAddress)
             }
@@ -106,16 +107,16 @@ class BaseBillingAddressFragment : BaseFragment()
 
     }
 
-    private fun createForms(newAddress: BillingAddress)
+    private fun createForms(newAddress: BillingNewAddress)
     {
         with(newAddress)
         {
 
-            etFirstName?.showOrHideOrRequired(isEnabledParam = true, isRequired =   false)
+            etFirstName?.showOrHideOrRequired(isEnabledParam = true, isRequired =   false, value = firstName)
 
-            etLastName?.showOrHideOrRequired(isEnabledParam = true, isRequired =   false)
+            etLastName?.showOrHideOrRequired(isEnabledParam = true, isRequired =   false, value = lastName)
 
-            etEmail?.showOrHideOrRequired(isEnabledParam = true, isRequired =   true)
+            etEmail?.showOrHideOrRequired(isEnabledParam = true, isRequired =   true, value = email)
 
             etCompanyName?.showOrHideOrRequired(isEnabledParam = companyEnabled, isRequired =   companyRequired)
 
@@ -158,19 +159,6 @@ class BaseBillingAddressFragment : BaseFragment()
             override fun onTabUnselected(tab: TabLayout.Tab) {}
             override fun onTabReselected(tab: TabLayout.Tab) {}
         })
-
-        val categories: MutableList<String> = ArrayList()
-        categories.add("Automobile")
-        categories.add("Business Services")
-        categories.add("Computers")
-        categories.add("Education")
-        categories.add("Personal")
-        categories.add("Travel")
-
-        val dataAdapter: ArrayAdapter<String> = ArrayAdapter<String>(requireContext(), R.layout.simple_spinner_item, categories)
-        dataAdapter.setDropDownViewResource(R.layout.simple_spinner_dropdown_item)
-
-        countrySpinner.adapter = dataAdapter
     }
 
 

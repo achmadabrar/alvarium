@@ -54,7 +54,6 @@ open class CustomerInfo : BaseResponse() {
 
     @SerializedName("CustomerAttributes") var customerAttributes: List<ProductAttribute>? = null
 
-    @SerializedName("FormValues") var formValues: List<KeyValuePair>? = null
 
     override fun toString(): String {
         return "CustomerInfo{" +

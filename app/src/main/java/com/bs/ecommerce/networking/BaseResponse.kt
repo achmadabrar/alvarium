@@ -1,5 +1,7 @@
 package com.bs.ecommerce.networking
 
+import com.bs.ecommerce.auth.register.data.KeyValuePair
+import com.bs.ecommerce.utils.showLog
 import com.google.gson.annotations.SerializedName
 
 /**
@@ -8,11 +10,11 @@ import com.google.gson.annotations.SerializedName
 
 open class BaseResponse
 {
-    @SerializedName("Message") val message: String = ""
+    @SerializedName("FormValues") var formValues: List<KeyValuePair>? = null
 
-    @SerializedName("StatusCode") var statusCode: Int = 0
+    @SerializedName("Message") var message: String = ""
 
-    @SerializedName("ErrorList") lateinit var errorList: Array<String>
+    @SerializedName("ErrorList")  var errorList: Array<String> = arrayOf()
 
     val errorsAsFormattedString: String
         get()
@@ -24,6 +26,8 @@ open class BaseResponse
                 for (i in errorList.indices)
                 {
                     errors += "  " + (i + 1) + ": " + errorList[i] + " \n"
+
+                    "wewtet".showLog(errorList[i])
                 }
             }
             return errors
