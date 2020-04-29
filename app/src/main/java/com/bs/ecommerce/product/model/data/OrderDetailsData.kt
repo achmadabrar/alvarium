@@ -1,6 +1,7 @@
 package com.bs.ecommerce.product.model.data
 
 
+import com.bs.ecommerce.cart.model.data.GiftCard
 import com.google.gson.annotations.SerializedName
 
 data class OrderDetailsData(

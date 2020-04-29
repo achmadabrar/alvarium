@@ -117,7 +117,7 @@ class OrderHistoryFragment : BaseFragment() {
 
             holder.itemView.setOnClickListener {
                 if (order.id != null)
-                    replaceFragmentSafely(CustomerOrderDetailsFragment.newInstance(order.id))
+                    replaceFragmentSafely(OrderDetailsFragment.newInstance(order.id))
             }
         }
 

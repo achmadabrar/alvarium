@@ -190,4 +190,11 @@
     <string name="order_date">Order Date:\u0020</string>
     <string name="order_total">Order Total:\u0020</string>
     <string name="order_status">Order Status:\u0020</string>
+    <string name="shipping_method">Shipping Method</string>
+    <string name="payment_method">Payment Method</string>
+    <string name="order_details">Order Details</string>
+
+    <string name="price">Price</string>
+    <string name="remaining">remaining</string>
+
 </resources>

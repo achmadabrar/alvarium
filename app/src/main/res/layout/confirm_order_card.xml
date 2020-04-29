@@ -1,55 +1,66 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:cardView="http://schemas.android.com/apk/res-auto"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    cardView:cardCornerRadius="@dimen/cardCornerRadius"
-    android:layout_marginTop="5dp"
-    cardView:cardPreventCornerOverlap="false"
-    cardView:cardUseCompatPadding="true">
+    android:background="@color/list_item_bg">
 
-    <LinearLayout
-        android:layout_width="match_parent"
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline_v_1"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.09" />
+
+    <TextView
+        android:id="@+id/tvCardTitle"
+        style="@style/OrderDetailsTitleTextViewStyle"
+        tools:text="@string/placeholder"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/ivCardThumb"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:scaleType="center"
+        android:layout_marginStart="5dp"
+        android:src="@drawable/ic_payment"
+        android:visibility="gone"
+        tools:visibility="visible"
+        android:contentDescription="@string/placeholder"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvCardTitle" />
 
-        <TextView
-            android:id="@+id/tvCardTitle"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/confirm_order_card_title_bg"
-            android:padding="10dp"
-            android:text="@string/placeholder"
-            android:textColor="@color/whiteOrBlack"
-            android:textStyle="bold" />
+    <TextView
+        android:id="@+id/tvCardDetails"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="5dp"
+        android:drawablePadding="10dp"
+        android:maxLines="1"
+        android:padding="5dp"
+        tools:text="@string/placeholder"
+        android:textColor="@color/whiteOrBlack"
+        android:textSize="@dimen/tv_text_size_regular"
+        android:textStyle="bold"
+        app:layout_constraintStart_toEndOf="@id/ivCardThumb"
+        app:layout_constraintTop_toBottomOf="@id/tvCardTitle" />
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/list_item_bg"
-            android:orientation="horizontal"
-            android:weightSum="1">
+    <TextView
+        android:id="@+id/tvCardDetails2"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="5dp"
+        android:drawablePadding="10dp"
+        android:padding="5dp"
+        tools:text="@string/placeholder"
+        android:textColor="@color/whiteOrBlack"
+        android:textSize="@dimen/tv_text_size_small"
+        app:layout_constraintStart_toEndOf="@id/ivCardThumb"
+        app:layout_constraintTop_toBottomOf="@id/tvCardDetails" />
 
-            <ImageView
-                android:id="@+id/ivCardThumb"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="0.1"
-                android:scaleType="center"
-                android:src="@drawable/ic_payment" />
-
-            <TextView
-                android:id="@+id/tvCardDetails"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="0.9"
-                android:drawablePadding="10dp"
-                android:textSize="@dimen/tv_text_size_small"
-                android:padding="5dp"
-                android:text="@string/placeholder"
-                android:textColor="@color/whiteOrBlack" />
-        </LinearLayout>
-
-    </LinearLayout>
-
-</androidx.cardview.widget.CardView>
+</androidx.constraintlayout.widget.ConstraintLayout>
