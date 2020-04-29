@@ -11,6 +11,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bs.ecommerce.R
+import com.bs.ecommerce.base.BaseActivity
 import com.bs.ecommerce.base.BaseFragment
 import com.bs.ecommerce.base.BaseViewModel
 import com.bs.ecommerce.home.FeaturedProductAdapter
@@ -19,10 +20,7 @@ import com.bs.ecommerce.product.model.ProductDetailModel
 import com.bs.ecommerce.product.model.ProductDetailModelImpl
 import com.bs.ecommerce.product.model.data.ProductSummary
 import com.bs.ecommerce.product.viewModel.ProductDetailViewModel
-import com.bs.ecommerce.utils.ItemClickListener
-import com.bs.ecommerce.utils.RecyclerViewMargin
-import com.bs.ecommerce.utils.show
-import com.bs.ecommerce.utils.toast
+import com.bs.ecommerce.utils.*
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetBehavior.BottomSheetCallback
 import kotlinx.android.synthetic.main.featured_product_layout.view.*
@@ -154,6 +152,24 @@ class ProductDetailFragment : BaseFragment(), View.OnClickListener {
                         showLoading()
                     else
                         hideLoading()
+                })
+
+            cartProductsCountLD.observe(
+                viewLifecycleOwner,
+                Observer { count ->
+
+                    MyApplication.setCartCounter(count)
+                    activity?.let {  (it as BaseActivity).updateHotCount(count)    }
+                })
+
+            addToCartResponseLD.observe(
+                viewLifecycleOwner,
+                Observer { response ->
+
+                    if(response.errorList.isNotEmpty())
+                        toast(response.errorsAsFormattedString)
+                    else
+                        toast(response.message)
                 })
 
             quantityLiveData.observe(

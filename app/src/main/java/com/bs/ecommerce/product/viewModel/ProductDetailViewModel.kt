@@ -21,6 +21,10 @@ class ProductDetailViewModel : BaseViewModel() {
     var isInvalidProductLD = MutableLiveData<Boolean>()
     var selectedAttrLD = MutableLiveData<MutableMap<Long, MutableList<AttributeControlValue>>>()
 
+    var cartProductsCountLD = MutableLiveData<Int>()
+
+    var addToCartResponseLD = MutableLiveData<AddToCartResponse>()
+
     fun getProductDetail(prodId: Long, model: ProductDetailModel) {
         isLoadingLD.postValue(true)
 
@@ -127,7 +131,8 @@ class ProductDetailViewModel : BaseViewModel() {
             {
                 isLoadingLD.postValue(false)
 
-                "ewtetert".showLog(data.isSuccess.toString())
+                addToCartResponseLD.postValue(data)
+                cartProductsCountLD.postValue(data.cartRootData.cart.items.size)
             }
 
             override fun onRequestFailed(errorMessage: String)
