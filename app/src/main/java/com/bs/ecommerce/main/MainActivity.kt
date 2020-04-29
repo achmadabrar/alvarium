@@ -17,6 +17,7 @@ import com.bs.ecommerce.home.homepage.HomeFragment
 import com.bs.ecommerce.main.model.MainModel
 import com.bs.ecommerce.main.model.MainModelImpl
 import com.bs.ecommerce.more.OptionsFragment
+import com.bs.ecommerce.networking.NetworkUtil
 import com.bs.ecommerce.product.SearchFragment
 import com.bs.ecommerce.utils.PrefSingleton
 import com.bs.ecommerce.utils.createIfNotInBackStack
@@ -42,6 +43,9 @@ class MainActivity : BaseActivity()
     override fun onCreate(savedInstanceState: Bundle?)
     {
         super.onCreate(savedInstanceState)
+
+        // load access token from sharedPreferences to memory
+        NetworkUtil.token = prefObject.getPrefs(prefObject.TOKEN_KEY)
 
         mainModel = MainModelImpl(applicationContext)
 
