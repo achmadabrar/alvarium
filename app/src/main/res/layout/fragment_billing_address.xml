@@ -25,35 +25,6 @@
             android:paddingBottom="20dp"
             android:orientation="vertical">
 
-            <LinearLayout
-                style="@style/RoundedSpinner"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <androidx.appcompat.widget.AppCompatSpinner
-                    android:id="@+id/countrySpinner"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    tools:listitem="@layout/simple_spinner_item"
-                    android:entries="@array/spinner_dummy_data"
-                    android:textColor="@color/white" />
-            </LinearLayout>
-
-            <LinearLayout
-                style="@style/RoundedSpinner"
-                android:layout_marginTop="15dp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <androidx.appcompat.widget.AppCompatSpinner
-                    android:id="@+id/stateSpinner"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    tools:listitem="@layout/simple_spinner_item"
-                    android:entries="@array/spinner_dummy_data"
-                    android:textColor="@color/white" />
-            </LinearLayout>
-
             <include
                 layout="@layout/address_form"
                 android:layout_width="match_parent"

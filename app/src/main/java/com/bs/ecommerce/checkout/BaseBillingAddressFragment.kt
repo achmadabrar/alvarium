@@ -13,7 +13,6 @@ import com.bs.ecommerce.base.BaseViewModel
 import com.bs.ecommerce.checkout.model.CheckoutModel
 import com.bs.ecommerce.checkout.model.CheckoutModelImpl
 import com.bs.ecommerce.checkout.model.data.AvailableCountry
-import com.bs.ecommerce.checkout.model.data.BillingAddress
 import com.bs.ecommerce.checkout.model.data.BillingNewAddress
 import com.bs.ecommerce.utils.showOrHideOrRequired
 import com.google.android.material.tabs.TabLayout
@@ -60,36 +59,59 @@ class BaseBillingAddressFragment : BaseFragment()
 
     private fun setLiveDataListeners() {
 
-        (viewModel as CheckoutAddressViewModel).billingAddressResponseLD.observe(viewLifecycleOwner, Observer { billingAddressResponse ->
+        with(viewModel as CheckoutAddressViewModel)
+        {
+            billingAddressResponseLD.observe(viewLifecycleOwner, Observer { billingAddressResponse ->
 
+                with(billingAddressResponse.data.billingAddress)
+                {
+                    createForms(this.billingNewAddress)
 
-            with(billingAddressResponse.data.billingAddress)
-            {
-                createForms(this.billingNewAddress)
+                    val countryNameList = billingNewAddress.availableCountries.map { it.text }
+                    populateCountrySpinner(countryNameList, billingNewAddress.availableCountries)
 
-                val countryNameList = billingNewAddress.availableCountries.map { it.text }
-                populateCountrySpinner(countryNameList, billingNewAddress.availableCountries)
-                //generateDropdownList(existingAddresses)
-                //setValueinFormField(newAddress)
-            }
-        })
+                    layoutBillingAddress?.visibility =View.VISIBLE
+                }
+            })
 
-        (viewModel as CheckoutAddressViewModel).isLoadingLD.observe(viewLifecycleOwner, Observer { isShowLoader ->
+            stateListLD.observe(viewLifecycleOwner, Observer { stateList ->
 
-            if (isShowLoader)
-                showLoading()
-            else
-                hideLoading()
-        })
+                stateSpinner?.adapter = createSpinnerAdapter(stateList.map { it.name })
 
+                stateSpinner?.onItemSelectedListener = object : AdapterView.OnItemSelectedListener
+                {
+                    override fun onItemSelected(parent: AdapterView<*>, view: View, position: Int, id: Long)
+                    {
+                        if (position != 0)
+                            StateProvinceCode = "" + stateList[position - 1].id
+                    }
+                    override fun onNothingSelected(parent: AdapterView<*>) {}
+                }
+
+                stateSpinnerLayout?.visibility =View.VISIBLE
+            })
+
+            isLoadingLD.observe(viewLifecycleOwner, Observer { isShowLoader ->
+
+                if (isShowLoader)
+                    showLoading()
+                else
+                    hideLoading()
+            })
+        }
+    }
+
+    private fun createSpinnerAdapter(nameList: List<String>): ArrayAdapter<String>
+    {
+        val dataAdapter: ArrayAdapter<String> = ArrayAdapter<String>(requireContext(), R.layout.simple_spinner_item, nameList)
+        dataAdapter.setDropDownViewResource(R.layout.simple_spinner_dropdown_item)
+        return dataAdapter
     }
 
     private fun populateCountrySpinner(countryNameList: List<String>, availableCountries: List<AvailableCountry>?)
     {
-        val dataAdapter: ArrayAdapter<String> = ArrayAdapter<String>(requireContext(), R.layout.simple_spinner_item, countryNameList)
-        dataAdapter.setDropDownViewResource(R.layout.simple_spinner_dropdown_item)
 
-        countrySpinner?.adapter = dataAdapter
+        countrySpinner?.adapter = createSpinnerAdapter(countryNameList)
         countrySpinner?.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(parent: AdapterView<*>, view: View, position: Int, id: Long) {
                 if (position != 0) {
