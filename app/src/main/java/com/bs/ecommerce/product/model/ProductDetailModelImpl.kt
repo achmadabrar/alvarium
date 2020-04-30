@@ -53,6 +53,30 @@ class ProductDetailModelImpl :
         })
     }
 
+    override fun addProductToWishList(
+        productId: Long,
+        callback: RequestCompleteListener<AddToCartResponse>
+    ) {
+
+        RetroClient.api.addProductIntoCartAPI(productId, Api.typeWishList, AddToCartPostData())
+            .enqueue(object : Callback<AddToCartResponse> {
+                override fun onFailure(call: Call<AddToCartResponse>, t: Throwable) {
+                    callback.onRequestFailed(t.localizedMessage ?: "Unknown")
+                }
+
+                override fun onResponse(
+                    call: Call<AddToCartResponse>,
+                    response: Response<AddToCartResponse>
+                ) {
+                    if (response.body() != null)
+                        callback.onRequestSuccess(response.body() as AddToCartResponse)
+                    else
+                        callback.onRequestFailed(response.message())
+                }
+
+            })
+    }
+
     override fun getRelatedProducts(
         productId: Long,
         thumbnailSizePx: Int,

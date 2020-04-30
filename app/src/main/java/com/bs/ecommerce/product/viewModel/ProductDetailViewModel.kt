@@ -6,6 +6,7 @@ import com.bs.ecommerce.auth.register.data.KeyValuePair
 import com.bs.ecommerce.base.BaseViewModel
 import com.bs.ecommerce.common.RequestCompleteListener
 import com.bs.ecommerce.home.homepage.model.data.HomePageProductResponse
+import com.bs.ecommerce.networking.Api
 import com.bs.ecommerce.product.model.ProductDetailModel
 import com.bs.ecommerce.product.model.data.*
 import com.bs.ecommerce.utils.AttributeControlType
@@ -155,7 +156,7 @@ class ProductDetailViewModel : BaseViewModel() {
         isLoadingLD.value = true
 
         model.addProductToCartModel(productId,
-                                    1,
+                                    Api.typeShoppingCart,
                                     prepareBodyForAttributes(productId, quantity, selectedAttrLD.value!!),
 
             object : RequestCompleteListener<AddToCartResponse>

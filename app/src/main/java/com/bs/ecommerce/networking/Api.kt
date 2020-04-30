@@ -154,6 +154,17 @@ interface Api {
     @GET("order/history")
     fun getOrderHistory(): Call<OrderHistoryResponse>
 
+    // WishList
+
+    @GET("shoppingcart/wishlist")
+    fun getWishList(): Call<WishListResponse>
+
+    @POST("shoppingcart/updatewishlist")
+    fun updateWishList(@Body list: List<KeyValuePair>): Call<WishListResponse>
+
+    @POST("shoppingcart/additemstocartfromwishlist")
+    fun moveAllWishListItemsToCart(): Call<WishListResponse>
+
 /*    @POST("setcurrency/{id}")
     fun setCurrency(@Path("id") id: Long): Call<LanguageResponse>
 
@@ -211,8 +222,6 @@ interface Api {
     @get:GET("checkout/opccheckoutforguest")
     val isGuestCheckout: Call<IsGuestCheckoutResponse>
 
-    @get:GET("shoppingCart/wishlist")
-    val wishList: Call<WishListProductResponse>
 
     @get:GET("categoriesNmanufactures/search")
     val advanceSearchOptions: Call<AdvanceSearchSpinnerOptionResponse>
@@ -366,6 +375,9 @@ interface Api {
         val shoppingCartTypeCart = 1
         val shoppingCartTypeWishlist = 2
         val cartProductId: Long = 0
+        const val removeFromCartOrWishList: String = "removefromcart"
+        const val typeShoppingCart: Long = 1
+        const val typeWishList: Long = 2
 
         @JvmStatic
         val DEFAULT_PAGE_SIZE = 9

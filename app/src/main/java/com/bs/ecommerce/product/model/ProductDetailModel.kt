@@ -20,4 +20,9 @@ interface ProductDetailModel {
     fun getAlsoPurchasedProducts(productId: Long, thumbnailSizePx: Int,
                                  callback: RequestCompleteListener<HomePageProductResponse>)
 
+    fun addProductToWishList(
+        productId: Long,
+        callback: RequestCompleteListener<AddToCartResponse>
+    )
+
 }

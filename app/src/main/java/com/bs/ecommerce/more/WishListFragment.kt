@@ -1,22 +1,27 @@
 package com.bs.ecommerce.more
 
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import android.widget.RelativeLayout
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.bs.ecommerce.R
 import com.bs.ecommerce.base.BaseFragment
 import com.bs.ecommerce.base.BaseViewModel
+import com.bs.ecommerce.more.adapter.WishListAdapter
+import com.bs.ecommerce.more.model.WishListModel
+import com.bs.ecommerce.more.model.WishListModelImpl
 import com.bs.ecommerce.more.viewmodel.WishListViewModel
+import com.bs.ecommerce.product.model.data.WishListItem
+import com.bs.ecommerce.utils.ItemClickListener
 import com.bs.ecommerce.utils.RecyclerViewMargin
-import com.bs.ecommerce.utils.loadImg
 import kotlinx.android.synthetic.main.fragment_wishlist.*
-import kotlinx.android.synthetic.main.item_wish_list.view.*
 
-class WishListFragment: BaseFragment() {
+class WishListFragment : BaseFragment() {
+
+    private lateinit var model: WishListModel
+    private lateinit var listAdaapter: WishListAdapter
 
     override fun getLayoutId(): Int = R.layout.fragment_wishlist
 
@@ -29,69 +34,73 @@ class WishListFragment: BaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        model = WishListModelImpl()
+        viewModel = ViewModelProvider(this).get(WishListViewModel::class.java)
+
+        (viewModel as WishListViewModel).getWishList(model)
+
+        setLiveDataObserver()
+
         initView()
     }
 
+    private fun setLiveDataObserver() {
+
+        (viewModel as WishListViewModel).apply {
+
+            wishListLD.observe(viewLifecycleOwner, Observer { data ->
+
+                btnAddAllToCart.visibility = if (data.items?.isNotEmpty() == true)
+                    View.VISIBLE else View.GONE
+
+                tvNoData.visibility = if (data.items.isNullOrEmpty())
+                    View.VISIBLE else View.GONE
+
+                listAdaapter.addData(data.items)
+            })
+
+            isLoadingLD.observe(viewLifecycleOwner, Observer { isShowLoader ->
+                if (isShowLoader)
+                    showLoading()
+                else
+                    hideLoading()
+            })
+        }
+    }
+
     private fun initView() {
-        btnAddAllToCart.visibility = View.VISIBLE
 
         btnAddAllToCart.setOnClickListener {
             // TODO api call
         }
 
-        populateOrderList()
-    }
+        val clickListener = object : ItemClickListener<WishListItem> {
 
-    private fun populateOrderList() {
-        val items: MutableList<TempItem> = mutableListOf()
+            override fun onClick(view: View, position: Int, data: WishListItem) {
 
-        for (i in 1..4) {
-            items.add(TempItem("Item $i", "$${i * 167}"))
+                when (view.id) {
+
+                    R.id.icRemoveItem ->
+                        (viewModel as WishListViewModel)
+                            .removeItemFromWishList(data.id, model)
+
+                    R.id.btnAddToCart ->
+                        (viewModel as WishListViewModel)
+                            .moveItemToCart(data.id, model)
+                }
+            }
         }
 
         rvWishList?.apply {
             setHasFixedSize(true)
-            layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
+            layoutManager =
+                LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
             addItemDecoration(RecyclerViewMargin(10, 1, true))
-            adapter = TempAdapter(items)
-        }
-    }
 
-    //-----------------------
-
-    inner class TempAdapter(
-        private val list: List<TempItem>
-    ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
-
-        override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-            val itemView =
-                LayoutInflater.from(parent.context)
-                    .inflate(R.layout.item_wish_list, parent, false)
-            return object : RecyclerView.ViewHolder(itemView) {}
-        }
-
-        override fun getItemCount(): Int = list.size
-
-        override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-            holder.itemView.tvProductName.text = list[position].name
-            holder.itemView.tvProductPrice.text = list[position].price
-
-            holder.itemView.ivProductThumb.loadImg("")
-
-            holder.itemView.btnAddToCart.setOnClickListener {
-                // TODO api call
-            }
-
-            holder.itemView.icRemoveItem.setOnClickListener {
-                // TODO api call
-            }
+            listAdaapter = WishListAdapter(clickListener)
+            adapter = listAdaapter
         }
 
     }
-
-    inner class TempItem(
-        val name: String,
-        val price: String
-    )
 
 }

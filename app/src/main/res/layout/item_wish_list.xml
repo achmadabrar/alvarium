@@ -20,7 +20,6 @@
             android:layout_width="@dimen/product_thumbnail_cart"
             android:layout_height="@dimen/product_thumbnail_cart"
             android:layout_alignParentStart="true"
-            android:paddingEnd="10dp"
             android:contentDescription="@string/placeholder"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -40,17 +39,19 @@
 
         <TextView
             android:id="@+id/tvProductName"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_below="@id/icRemoveItem"
+            android:layout_marginStart="5dp"
             android:layout_toEndOf="@id/ivProductThumb"
             android:ellipsize="end"
             android:maxLines="2"
             android:textColor="@color/whiteOrBlack"
             android:textSize="@dimen/tv_text_size_regular"
             android:textStyle="bold"
+            app:layout_constraintEnd_toStartOf="@id/icRemoveItem"
             app:layout_constraintStart_toEndOf="@id/ivProductThumb"
-            app:layout_constraintTop_toBottomOf="@id/icRemoveItem"
+            app:layout_constraintTop_toTopOf="parent"
             tools:text="@string/placeholder" />
 
         <TextView
@@ -58,6 +59,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/tvProductName"
+            android:layout_marginStart="5dp"
             android:layout_marginTop="5dp"
             android:layout_toEndOf="@id/ivProductThumb"
             android:textColor="@color/whiteOrBlack"
@@ -72,6 +74,7 @@
             android:layout_width="wrap_content"
             android:layout_height="25dp"
             android:layout_alignParentBottom="true"
+            android:layout_marginStart="5dp"
             android:layout_toEndOf="@id/ivProductThumb"
             android:backgroundTint="@color/whiteOrGray"
             android:gravity="center_vertical"
