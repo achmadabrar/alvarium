@@ -90,8 +90,16 @@ class HomeFragment : BaseFragment() {
         productClickListener = object : ItemClickListener<ProductSummary> {
             override fun onClick(view: View, position: Int, data: ProductSummary) {
 
-                if (data.id != null)
-                    replaceFragmentSafely(ProductDetailFragment.newInstance(data.id.toLong()))
+                if(data.id == null) return
+
+                when(view.id) {
+
+                    R.id.itemView ->
+                        replaceFragmentSafely(ProductDetailFragment.newInstance(data.id.toLong()))
+
+                    R.id.ivAddToFav ->
+                        viewModel.addToWishList(data.id.toLong())
+                }
             }
         }
 

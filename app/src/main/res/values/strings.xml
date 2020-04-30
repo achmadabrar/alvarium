@@ -202,5 +202,6 @@
     <string name="related_products">Related Products</string>
     <string name="people_also_purchase">People Also Purchase</string>
     <string name="add_all_items_to_cart">Add All Items to Cart</string>
+    <string name="adding_to_wish_list">Adding to WishList…</string>
 
 </resources>

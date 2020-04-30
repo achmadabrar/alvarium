@@ -35,6 +35,7 @@ class ProductDetailFragment : BaseFragment(), View.OnClickListener {
 
     private lateinit var bsBehavior: BottomSheetBehavior<*>
     private lateinit var model: ProductDetailModel
+    private lateinit var listItemClickListener: ItemClickListener<ProductSummary>
     private var productAttributeView: ProductAttributeView? = null
 
     override fun getFragmentTitle() = R.string.title_product
@@ -262,12 +263,7 @@ class ProductDetailFragment : BaseFragment(), View.OnClickListener {
             addItemDecoration(RecyclerViewMargin(15, 1, false))
             setHasFixedSize(true)
 
-            adapter = FeaturedProductAdapter(list, object : ItemClickListener<ProductSummary> {
-                override fun onClick(view: View, position: Int, data: ProductSummary) {
-                    if (data.id != null)
-                        replaceFragmentSafely(newInstance(data.id.toLong()))
-                }
-            })
+            adapter = FeaturedProductAdapter(list, listItemClickListener)
         }
     }
 
@@ -287,12 +283,7 @@ class ProductDetailFragment : BaseFragment(), View.OnClickListener {
             addItemDecoration(RecyclerViewMargin(15, 1, false))
             setHasFixedSize(true)
 
-            adapter = FeaturedProductAdapter(list, object : ItemClickListener<ProductSummary> {
-                override fun onClick(view: View, position: Int, data: ProductSummary) {
-                    if (data.id != null)
-                        replaceFragmentSafely(newInstance(data.id.toLong()))
-                }
-            })
+            adapter = FeaturedProductAdapter(list, listItemClickListener)
         }
     }
 
@@ -324,6 +315,21 @@ class ProductDetailFragment : BaseFragment(), View.OnClickListener {
         bottomSheetLayout.tvDone.setOnClickListener(this)
         productQuantityLayout.btnMinus.setOnClickListener(this)
         productQuantityLayout.btnPlus.setOnClickListener(this)
+
+        listItemClickListener = object : ItemClickListener<ProductSummary> {
+            override fun onClick(view: View, position: Int, data: ProductSummary) {
+                if(data.id == null) return
+
+                when(view.id) {
+
+                    R.id.itemView ->
+                        replaceFragmentSafely(newInstance(data.id.toLong()))
+
+                    R.id.ivAddToFav ->
+                        viewModel.addToWishList(data.id.toLong())
+                }
+            }
+        }
     }
 
 

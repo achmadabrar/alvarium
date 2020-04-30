@@ -31,6 +31,8 @@ class MyApplication : MultiDexApplication()
             .setPrefsName(packageName)
             .setUseDefaultSharedPreference(true)
             .build()
+
+        mAppContext = this.applicationContext
     }
 
 
@@ -42,6 +44,8 @@ class MyApplication : MultiDexApplication()
         var paypalKey = "payPalKey"
         var myCartCounter: Int = 0
         val orderIdKey = "orderIdKey"
+
+        var mAppContext: Context? = null
 
         fun setCartCounter(counter: Int)
         {

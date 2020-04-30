@@ -30,7 +30,12 @@ class FeaturedProductAdapter(
 
         holder.itemView.ivProductThumb.loadImg(productsList[position].defaultPictureModel?.imageUrl)
 
+        holder.itemView.id = R.id.itemView
         holder.itemView.setOnClickListener { v ->
+            listener.onClick(v, position, productsList[position])
+        }
+
+        holder.itemView.ivAddToFav.setOnClickListener { v ->
             listener.onClick(v, position, productsList[position])
         }
     }

@@ -35,7 +35,12 @@ class ProductListAdapter(
             productsList[position].defaultPictureModel?.imageUrl
         )
 
-        holder.itemView.setOnClickListener { v->
+        holder.itemView.id = R.id.itemView
+        holder.itemView.setOnClickListener { v ->
+            listener.onClick(v, position, productsList[position])
+        }
+
+        holder.itemView.ivAddToFav.setOnClickListener { v ->
             listener.onClick(v, position, productsList[position])
         }
     }

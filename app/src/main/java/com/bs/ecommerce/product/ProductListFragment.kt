@@ -27,6 +27,7 @@ import com.bs.ecommerce.product.viewModel.ProductListViewModel
 import com.bs.ecommerce.utils.ItemClickListener
 import com.bs.ecommerce.utils.inflate
 import com.bs.ecommerce.utils.replaceFragmentSafely
+import com.bs.ecommerce.utils.toast
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import kotlinx.android.synthetic.main.fragment_product_list.*
 import kotlinx.android.synthetic.main.sort_option_bottom_sheet.view.*
@@ -135,7 +136,14 @@ class ProductListFragment : BaseFragment() {
 
                 if (data.id == null) return
 
-                replaceFragmentSafely(ProductDetailFragment.newInstance(data.id.toLong()))
+                when(view.id) {
+
+                    R.id.itemView ->
+                        replaceFragmentSafely(ProductDetailFragment.newInstance(data.id.toLong()))
+
+                    R.id.ivAddToFav ->
+                        viewModel.addToWishList(data.id.toLong())
+                }
             }
         }
 
