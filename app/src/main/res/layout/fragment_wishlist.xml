@@ -28,13 +28,13 @@
 
     <Button
         android:id="@+id/btnAddAllToCart"
+        style="@style/RectangularButtonRegular"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:background="@color/pink"
+        android:background="@drawable/rect_background_ripple"
         android:text="@string/add_all_items_to_cart"
         android:textColor="@color/white"
-        android:textSize="@dimen/button_text_size"
         android:visibility="gone"
         tools:visibility="visible" />
 

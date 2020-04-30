@@ -21,7 +21,7 @@
 
     <Button
         android:id="@+id/btnApplyCoupon"
-        style="@style/RoundedButtonPink"
+        style="@style/RoundedButtonRegular"
         android:layout_width="0dp"
         android:layout_height="@dimen/btn_height"
         android:layout_marginStart="3dp"

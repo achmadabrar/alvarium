@@ -97,13 +97,13 @@
 
         <Button
             android:id="@+id/btnCheckOut"
+            style="@style/RectangularButtonRegular"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
-            android:background="@color/pink"
+            android:backgroundTint="@color/pink"
             android:text="@string/cart_proceed_to_checkout"
             android:textColor="@color/white"
-            android:textSize="@dimen/button_text_size"
             android:visibility="gone"
             tools:visibility="visible" />
 

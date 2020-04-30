@@ -89,7 +89,7 @@
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/loginButton"
-            style="@style/RoundedButtonPink"
+            style="@style/RoundedButtonRegular"
             android:layout_width="0dp"
             android:layout_height="@dimen/btn_height"
             android:layout_marginTop="20dp"

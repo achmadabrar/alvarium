@@ -142,11 +142,11 @@
 
             <Button
                 android:id="@+id/btnAddToCart"
-                style="?android:attr/buttonBarButtonStyle"
+                style="@style/RectangularButtonRegular"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:background="@color/darkOrGray"
+                android:backgroundTint="@color/darkOrGray"
                 android:gravity="center"
                 android:singleLine="true"
                 android:text="@string/add_to_cart_plus"
@@ -156,12 +156,12 @@
 
             <Button
                 android:id="@+id/btnBuyNow"
-                style="?android:attr/buttonBarButtonStyle"
+                style="@style/RectangularButtonRegular"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_gravity="center"
                 android:layout_weight="1"
-                android:background="@color/pink"
+                android:backgroundTint="@color/pink"
                 android:drawableStart="@drawable/app_icon_cart"
                 android:gravity="center"
                 android:paddingStart="25dp"

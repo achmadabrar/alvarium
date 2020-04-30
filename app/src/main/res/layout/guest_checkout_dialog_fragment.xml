@@ -71,7 +71,7 @@
 
         <Button
             android:id="@+id/btnGuestCheckout"
-            style="@style/RoundedEditText"
+            style="@style/RoundedButtonRegular"
             android:layout_width="match_parent"
             android:layout_height="@dimen/slim_btn_height"
             android:layout_gravity="center"
@@ -87,7 +87,7 @@
 
         <Button
             android:id="@+id/btnRegister"
-            style="@style/RoundedEditText"
+            style="@style/RoundedButtonRegular"
             android:layout_width="match_parent"
             android:layout_height="@dimen/slim_btn_height"
             android:layout_gravity="center"
@@ -118,7 +118,7 @@
             android:layout_gravity="center"
             android:layout_marginTop="10dp"
             android:layout_marginBottom="10dp"
-            android:background="@drawable/rounded_background"
+            style="@style/RoundedButtonRegular"
             android:backgroundTint="@color/pink"
             android:paddingStart="25dp"
             android:paddingEnd="25dp"

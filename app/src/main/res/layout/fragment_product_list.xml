@@ -42,11 +42,12 @@
             android:layout_height="@dimen/btn_height"
             android:orientation="horizontal"
             android:visibility="gone"
-            android:background="@color/product_list_btn_bg"
             tools:visibility="visible">
 
             <LinearLayout
                 android:id="@+id/btnBrand"
+                android:background="@drawable/rect_background_ripple"
+                android:backgroundTint="@color/product_list_btn_bg"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_gravity="center"
@@ -77,6 +78,8 @@
 
             <LinearLayout
                 android:id="@+id/btnFilter"
+                android:background="@drawable/rect_background_ripple"
+                android:backgroundTint="@color/product_list_btn_bg"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_gravity="center"
