@@ -20,6 +20,7 @@ import com.bs.ecommerce.cart.model.data.CartRootData
 import com.bs.ecommerce.cart.model.data.OrderTotal
 import com.bs.ecommerce.utils.MyApplication
 import com.bs.ecommerce.utils.showLog
+import com.bs.ecommerce.utils.showTextPendingCalculationOnCheckout
 import com.bs.ecommerce.utils.toast
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import kotlinx.android.synthetic.main.fragment_cart.*
@@ -305,14 +306,20 @@ class CartFragment : BaseFragment() {
             else
                 giftCardLayout?.visibility = View.GONE
 
-            if (orderTotal.isEmpty()) {
-                tvTotal?.setText(R.string.calculated_during_checkout)
-                tvTotal?.setTextColor(Color.RED)
-            }
-            if (shipping.isEmpty()) {
-                tvTotal?.setText(R.string.calculated_during_checkout)
-                tvTotal?.setTextColor(Color.RED)
-            }
+            orderTotal?.let {
+
+                if (it.isEmpty())
+                    tvTotal?.showTextPendingCalculationOnCheckout()
+            } ?: tvTotal?.showTextPendingCalculationOnCheckout()
+
+
+            shipping?.let {
+
+                if (it.isEmpty())
+                    tvShippingCharge?.showTextPendingCalculationOnCheckout()
+            } ?: tvShippingCharge?.showTextPendingCalculationOnCheckout()
+
+
         }
     }
 
