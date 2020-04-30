@@ -4,6 +4,7 @@ package com.bs.ecommerce.utils
 
 import android.app.Activity
 import android.content.Context
+import android.graphics.Color
 import android.os.Build
 import android.util.Log
 import android.util.Patterns
@@ -12,10 +13,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import android.webkit.WebView
-import android.widget.EditText
-import android.widget.ImageView
-import android.widget.LinearLayout
-import android.widget.Toast
+import android.widget.*
 import androidx.annotation.AnimRes
 import androidx.annotation.IdRes
 import androidx.core.content.ContextCompat
@@ -253,4 +251,12 @@ fun String.isNumeric(): Boolean
     } catch (e: NumberFormatException) {
         false
     }
+}
+
+fun TextView?.showTextPendingCalculationOnCheckout()
+{
+    this?.setText(R.string.calculated_during_checkout)
+    this?.textSize = 13F
+    this?.maxLines = 2
+    this?.setTextColor(Color.RED)
 }
