@@ -6,5 +6,5 @@ import com.google.gson.annotations.SerializedName
 
 
 data class HomePageProductResponse(
-    @SerializedName("Data") var homePageProductList: List<ProductSummary> = listOf()
+    @SerializedName("Data") var homePageProductList: List<ProductSummary>?
 ) : BaseResponse()

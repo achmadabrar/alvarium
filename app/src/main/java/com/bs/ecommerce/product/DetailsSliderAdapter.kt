@@ -8,7 +8,7 @@ import android.widget.ImageView
 import android.widget.LinearLayout
 import com.bs.ecommerce.R
 import com.bs.ecommerce.product.model.data.PictureModel
-import com.squareup.picasso.Picasso
+import com.bs.ecommerce.utils.loadImg
 
 /**
  * Created by BS148 on 11/8/2016.
@@ -34,7 +34,7 @@ class DetailsSliderAdapter(private val context: Context, private var imageUrl: L
         val imageView = view.findViewById<View>(R.id.image_view) as ImageView
         val linearLayout = view.findViewById<View>(R.id.layout) as LinearLayout
 
-        Picasso.with(context).load(imageUrl[pos].imageUrl).fit().centerInside().into(imageView)
+        imageView.loadImg(imageUrl[pos].imageUrl)
         container.addView(view)
         linearLayout.setOnClickListener { v ->
             if (sliderClickListener != null) {

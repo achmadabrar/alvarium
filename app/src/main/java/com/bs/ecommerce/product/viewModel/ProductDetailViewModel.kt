@@ -79,7 +79,7 @@ class ProductDetailViewModel : BaseViewModel() {
         model.getRelatedProducts(prodId, thumbnailSizePx, object: RequestCompleteListener<HomePageProductResponse> {
 
             override fun onRequestSuccess(data: HomePageProductResponse) {
-                relatedProductsLD.value = data.homePageProductList
+                relatedProductsLD.value = data.homePageProductList ?: listOf()
             }
 
             override fun onRequestFailed(errorMessage: String) {
@@ -95,7 +95,7 @@ class ProductDetailViewModel : BaseViewModel() {
         model.getAlsoPurchasedProducts(prodId, thumbnailSizePx, object: RequestCompleteListener<HomePageProductResponse> {
 
             override fun onRequestSuccess(data: HomePageProductResponse) {
-                relatedProductsLD.value = data.homePageProductList
+                similarProductsLD.value = data.homePageProductList ?: listOf()
             }
 
             override fun onRequestFailed(errorMessage: String) {

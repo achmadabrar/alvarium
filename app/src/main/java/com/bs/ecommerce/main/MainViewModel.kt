@@ -40,7 +40,7 @@ class MainViewModel : BaseViewModel() {
             override fun onRequestSuccess(data: HomePageProductResponse) {
                 isLoadingLD.value = false
 
-                featuredProductListLD.value = data.homePageProductList
+                featuredProductListLD.value = data.homePageProductList ?: listOf()
             }
 
             override fun onRequestFailed(errorMessage: String) {
@@ -66,7 +66,7 @@ class MainViewModel : BaseViewModel() {
     fun getBestSellingProducts(model: HomePageModel) {
         model.fetchBestSellingProducts(object : RequestCompleteListener<HomePageProductResponse> {
             override fun onRequestSuccess(data: HomePageProductResponse) {
-                bestSellingProductLD.value = data.homePageProductList
+                bestSellingProductLD.value = data.homePageProductList ?: listOf()
             }
 
             override fun onRequestFailed(errorMessage: String) {
