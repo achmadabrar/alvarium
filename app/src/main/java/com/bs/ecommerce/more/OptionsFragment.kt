@@ -84,6 +84,9 @@ class OptionsFragment : BaseFragment() {
 
                         R.string.title_checkout ->
                             replaceFragmentSafely(CheckoutStepFragment())
+
+                        R.string.title_wishlist ->
+                            replaceFragmentSafely(WishListFragment())
                     }
                 }
 

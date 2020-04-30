@@ -49,7 +49,7 @@ class HomePageModelImpl(private val context: Context) : HomePageModel {
                 ) {
                     if (response.body() != null) {
                         callback.onRequestSuccess(response.body() as HomePageProductResponse)
-                    } else if (response.code() == 404 && !response.errorBody()?.toString()
+                    } else if (response.code() == 400 && !response.errorBody()?.toString()
                             .isNullOrEmpty()) {
 
                         val errorBody = GsonBuilder().create().fromJson(

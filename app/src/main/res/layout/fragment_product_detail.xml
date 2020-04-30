@@ -32,6 +32,7 @@
                 android:layout_marginStart="@dimen/fragment_margin"
                 android:layout_marginEnd="@dimen/fragment_margin"
                 android:visibility="gone"
+                android:animateLayoutChanges="true"
                 tools:visibility="visible"
                 android:orientation="vertical">
 
@@ -148,7 +149,7 @@
                 android:background="@color/darkOrGray"
                 android:gravity="center"
                 android:singleLine="true"
-                android:text="@string/add_to_cart"
+                android:text="@string/add_to_cart_plus"
                 android:textColor="@color/whiteOrBlack"
                 android:textSize="14sp"
                 android:textStyle="bold" />

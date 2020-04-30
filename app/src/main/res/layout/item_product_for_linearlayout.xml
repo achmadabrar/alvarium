@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="@dimen/product_item_size"
     android:layout_height="wrap_content"
@@ -10,37 +11,47 @@
         android:layout_width="@dimen/product_item_size"
         android:layout_height="@dimen/product_item_size"
         android:scaleType="centerCrop"
-        tools:src="@tools:sample/avatars" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:src="@tools:sample/avatars"
+        android:contentDescription="@string/placeholder" />
 
     <TextView
         android:id="@+id/tvProductName"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_below="@id/ivProductThumb"
         android:layout_marginStart="3dp"
         android:ellipsize="end"
         android:maxLines="2"
+        android:minLines="2"
         android:textColor="@color/whiteOrBlack"
         android:textSize="@dimen/tv_text_size_tiny"
         android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/ivProductThumb"
         tools:text="@string/placeholder" />
 
     <TextView
         android:id="@+id/tvProductPrice"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_below="@id/tvProductName"
         android:layout_marginStart="3dp"
         android:maxLines="1"
         android:textColor="@color/red"
         android:textSize="11sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvProductName"
         tools:text="@string/placeholder_price" />
 
     <!--  inactive star color:  android:progressBackgroundTint="@color/gray" -->
     <RatingBar
         android:id="@+id/ratingBar"
         style="?android:attr/ratingBarStyleSmall"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_below="@id/tvProductPrice"
         android:layout_alignParentStart="true"
@@ -48,11 +59,13 @@
         android:numStars="5"
         android:progressTint="@color/golden"
         android:rating="3"
-        android:stepSize="1" />
+        android:stepSize="1"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvProductPrice" />
 
     <TextView
         android:id="@+id/tvRating"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_below="@id/tvProductPrice"
         android:layout_marginStart="3dp"
@@ -61,28 +74,22 @@
         android:paddingTop="2dp"
         android:textColor="@color/grayOrDark"
         android:textSize="10sp"
+        app:layout_constraintStart_toEndOf="@id/ratingBar"
+        app:layout_constraintTop_toBottomOf="@id/tvProductPrice"
         tools:text="(12)" />
 
     <ImageView
-        android:id="@+id/ivAddToCart"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/tvProductPrice"
-        android:layout_alignParentEnd="true"
-        android:layout_marginEnd="5dp"
-        android:paddingTop="2dp"
-        android:src="@drawable/ic_cart"
-        android:tint="@color/grayOrDark" />
-
-    <ImageView
         android:id="@+id/ivAddToFav"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/tvProductPrice"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:layout_below="@id/tvProductName"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
         android:layout_marginEnd="5dp"
-        android:layout_toStartOf="@id/ivAddToCart"
-        android:paddingTop="3dp"
         android:src="@drawable/ic_heart"
-        android:tint="@color/grayOrDark" />
+        android:tint="@color/grayOrDark"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:contentDescription="@string/placeholder" />
 
-</RelativeLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -29,7 +29,6 @@ class SubcategoryListAdapter (
         holder.itemView.tvProductName.text = subcatList[position].name
 
         holder.itemView.ratingBar.visibility = View.GONE
-        holder.itemView.ivAddToCart.visibility = View.GONE
         holder.itemView.ivAddToFav.visibility = View.GONE
 
         holder.itemView.ivProductThumb.loadImg(
