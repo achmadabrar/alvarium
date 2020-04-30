@@ -18,20 +18,11 @@
         android:textStyle="bold" />
 
     <TextView
-        style="@style/RoundedButtonPink"
+        style="@style/RoundedButtonTiny_1"
         android:id="@+id/btnSeeAll"
         android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
-        android:paddingStart="15dp"
-        android:paddingEnd="15dp"
-        android:layout_width="wrap_content"
-        android:layout_height="25dp"
-        android:backgroundTint="@color/whiteOrGray"
-        android:gravity="center_vertical"
-        android:text="@string/see_all"
-        android:textColor="@color/red"
-        android:textSize="@dimen/tv_text_size_tiny"
-        android:textStyle="bold" />
+        android:text="@string/see_all"/>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvList"

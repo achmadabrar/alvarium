@@ -34,16 +34,7 @@
 
     <TextView
         android:id="@+id/btnClearFilter"
-        style="@style/RoundedButtonPink"
-        android:layout_width="wrap_content"
-        android:layout_height="25dp"
-        android:backgroundTint="@color/whiteOrGray"
-        android:gravity="center_vertical"
-        android:paddingStart="15dp"
-        android:paddingEnd="15dp"
-        android:text="@string/remove_filter"
-        android:textColor="@color/red"
-        android:textSize="@dimen/tv_text_size_tiny"
-        android:textStyle="bold" />
+        style="@style/RoundedButtonTiny_1"
+        android:text="@string/remove_filter" />
 
 </LinearLayout>

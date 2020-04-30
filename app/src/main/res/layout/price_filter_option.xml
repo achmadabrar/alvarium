@@ -20,18 +20,9 @@
 
     <TextView
         android:id="@+id/btnRemoveFilter"
-        style="@style/RoundedButtonPink"
-        android:layout_width="wrap_content"
-        android:layout_height="25dp"
+        style="@style/RoundedButtonTiny_1"
         android:layout_alignParentEnd="true"
         android:layout_centerVertical="true"
-        android:backgroundTint="@color/whiteOrGray"
-        android:gravity="center_vertical"
-        android:paddingStart="15dp"
-        android:paddingEnd="15dp"
-        android:text="Remove"
-        android:textColor="@color/red"
-        android:textSize="@dimen/tv_text_size_tiny"
-        android:textStyle="bold" />
+        android:text="@string/remove" />
 
 </RelativeLayout>

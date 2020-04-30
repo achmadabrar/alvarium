@@ -184,8 +184,7 @@ class ProductDetailViewModel : BaseViewModel() {
         if(quantityLiveData.value!! > 1) {
             quantityLiveData.setValue(quantityLiveData.value?.minus(1))
         } else {
-            // FIXME how to show toast?
-            // toastMessageLD.setValue("Invalid quantity")
+            toast("Invalid quantity")
         }
     }
 

@@ -70,20 +70,11 @@
 
         <TextView
             android:id="@+id/btnAddToCart"
-            style="@style/RoundedButtonPink"
-            android:layout_width="wrap_content"
-            android:layout_height="25dp"
+            style="@style/RoundedButtonTiny_1"
             android:layout_alignParentBottom="true"
             android:layout_marginStart="5dp"
             android:layout_toEndOf="@id/ivProductThumb"
-            android:backgroundTint="@color/whiteOrGray"
-            android:gravity="center_vertical"
-            android:paddingStart="15dp"
-            android:paddingEnd="15dp"
             android:text="@string/add_to_cart"
-            android:textColor="@color/red"
-            android:textSize="@dimen/tv_text_size_tiny"
-            android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toEndOf="@id/ivProductThumb" />
 
