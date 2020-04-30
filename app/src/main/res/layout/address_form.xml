@@ -42,6 +42,38 @@
         android:imeOptions="actionNext"
         android:inputType="textEmailAddress" />
 
+    <LinearLayout
+        style="@style/RoundedSpinner"
+        android:layout_marginTop="15dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <androidx.appcompat.widget.AppCompatSpinner
+            android:id="@+id/countrySpinner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            tools:listitem="@layout/simple_spinner_item"
+            android:entries="@array/spinner_dummy_data"
+            android:textColor="@color/white" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/stateSpinnerLayout"
+        style="@style/RoundedSpinner"
+        android:layout_marginTop="15dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone">
+
+        <androidx.appcompat.widget.AppCompatSpinner
+            android:id="@+id/stateSpinner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            tools:listitem="@layout/simple_spinner_item"
+            android:entries="@array/spinner_dummy_data"
+            android:textColor="@color/white" />
+    </LinearLayout>
+
     <EditText
         android:id="@+id/etCompanyName"
         style="@style/RoundedEditText"
@@ -74,36 +106,6 @@
         android:hint="@string/city"
         android:imeOptions="actionNext"
         android:inputType="textCapWords" />
-
-    <LinearLayout
-        style="@style/RoundedSpinner"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="15dp">
-
-        <androidx.appcompat.widget.AppCompatSpinner
-            android:id="@+id/spCountry"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:entries="@array/spinner_dummy_data"
-            tools:listitem="@layout/simple_spinner_item"
-            android:textColor="@color/white" />
-    </LinearLayout>
-
-    <LinearLayout
-        style="@style/RoundedSpinner"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="15dp">
-
-        <androidx.appcompat.widget.AppCompatSpinner
-            android:id="@+id/spState"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:entries="@array/spinner_dummy_data"
-            tools:listitem="@layout/simple_spinner_item"
-            android:textColor="@color/white" />
-    </LinearLayout>
 
 
     <EditText
