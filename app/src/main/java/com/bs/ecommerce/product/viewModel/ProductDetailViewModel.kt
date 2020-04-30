@@ -110,7 +110,7 @@ class ProductDetailViewModel : BaseViewModel() {
     private fun prepareBodyForAttributes(
                                 productId : Long,
                                 quantity: String,
-                                selectedAttributeMap: MutableMap<Long, MutableList<AttributeControlValue>>): AddToCartPostData
+                                selectedAttributeMap: MutableMap<Long, MutableList<AttributeControlValue>>): UpdateCartPostData
     {
         val productAttributePrefix = "product_attribute"
 
@@ -139,7 +139,7 @@ class ProductDetailViewModel : BaseViewModel() {
         keyValuePair.value = quantity
         allKeyValueList.add(keyValuePair)
 
-        val body = AddToCartPostData(Any(), allKeyValueList, Any())
+        val body = UpdateCartPostData(allKeyValueList)
         body.formValues = allKeyValueList
 
         "key_value".showLog(body.toString())

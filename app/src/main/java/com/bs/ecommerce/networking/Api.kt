@@ -42,7 +42,7 @@ interface Api {
     fun getCartData(): Call<CartResponse>
 
     @POST("shoppingcart/updatecart")
-    fun updateCartData(@Body list: List<KeyValuePair>): Call<CartResponse>
+    fun updateCartData(@Body updateCartPostData: UpdateCartPostData): Call<CartResponse>
 
 
     @POST("shoppingcart/applydiscountcoupon")
@@ -123,7 +123,7 @@ interface Api {
     @POST("shoppingCart/AddProductToCart/details/{productId}/{shoppingCartTypeId}")
     fun addProductIntoCartAPI(@Path("productId") id: Long,
                            @Path("shoppingCartTypeId") shoppingCartTypeId: Long,
-                           @Body addToCartPostData: AddToCartPostData): Call<AddToCartResponse>
+                           @Body updateCartPostData: UpdateCartPostData): Call<AddToCartResponse>
 
     @GET("catalog/category/{id}")
     fun getProductList(@Path("id") id: Long, @QueryMap options: Map<String, String>): Call<CategoryResponse>

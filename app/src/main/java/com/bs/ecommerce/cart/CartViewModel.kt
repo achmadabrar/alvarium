@@ -9,6 +9,7 @@ import com.bs.ecommerce.cart.model.data.CartResponse
 import com.bs.ecommerce.cart.model.data.CartRootData
 import com.bs.ecommerce.cart.model.data.Value
 import com.bs.ecommerce.common.RequestCompleteListener
+import com.bs.ecommerce.product.model.data.UpdateCartPostData
 import com.bs.ecommerce.utils.AttributeControlType
 import java.util.ArrayList
 import java.util.HashMap
@@ -64,12 +65,15 @@ class CartViewModel : BaseViewModel()
         })
     }
 
-    fun updateCartData(keyValuePairs: List<KeyValuePair>, model: CartModel)
+    fun updateCartData(allKeyValueList: List<KeyValuePair>, model: CartModel)
     {
+
+        val body = UpdateCartPostData(allKeyValueList)
+        body.formValues = allKeyValueList
 
         isLoadingLD.value = true
 
-        model.updateCartData(keyValuePairs, object : RequestCompleteListener<CartResponse>
+        model.updateCartData(body, object : RequestCompleteListener<CartResponse>
         {
             override fun onRequestSuccess(data: CartResponse)
             {
