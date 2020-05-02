@@ -16,12 +16,13 @@ import com.bs.ecommerce.more.viewmodel.WishListViewModel
 import com.bs.ecommerce.product.model.data.WishListItem
 import com.bs.ecommerce.utils.ItemClickListener
 import com.bs.ecommerce.utils.RecyclerViewMargin
+import com.bs.ecommerce.utils.showLog
 import kotlinx.android.synthetic.main.fragment_wishlist.*
 
 class WishListFragment : BaseFragment() {
 
     private lateinit var model: WishListModel
-    private lateinit var listAdaapter: WishListAdapter
+    private lateinit var listAdapter: WishListAdapter
 
     override fun getLayoutId(): Int = R.layout.fragment_wishlist
 
@@ -34,14 +35,17 @@ class WishListFragment : BaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        model = WishListModelImpl()
-        viewModel = ViewModelProvider(this).get(WishListViewModel::class.java)
+        if(!viewCreated) {
+            "nop_".showLog("creating view")
 
-        (viewModel as WishListViewModel).getWishList(model)
+            model = WishListModelImpl()
+            viewModel = ViewModelProvider(this).get(WishListViewModel::class.java)
 
+            (viewModel as WishListViewModel).getWishList(model)
+
+            initView()
+        }
         setLiveDataObserver()
-
-        initView()
     }
 
     private fun setLiveDataObserver() {
@@ -56,7 +60,7 @@ class WishListFragment : BaseFragment() {
                 tvNoData.visibility = if (data.items.isNullOrEmpty())
                     View.VISIBLE else View.GONE
 
-                listAdaapter.addData(data.items)
+                listAdapter.addData(data.items)
             })
 
             isLoadingLD.observe(viewLifecycleOwner, Observer { isShowLoader ->
@@ -97,8 +101,8 @@ class WishListFragment : BaseFragment() {
                 LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
             addItemDecoration(RecyclerViewMargin(10, 1, true))
 
-            listAdaapter = WishListAdapter(clickListener)
-            adapter = listAdaapter
+            listAdapter = WishListAdapter(clickListener)
+            adapter = listAdapter
         }
 
     }

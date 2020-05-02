@@ -22,7 +22,6 @@ class CategoryFragment : BaseFragment()
 
     private lateinit var mainModel: MainModel
     private lateinit var mainViewModel: MainViewModel
-    private var viewCreated = false
 
     override fun getFragmentTitle() = R.string.title_category
 

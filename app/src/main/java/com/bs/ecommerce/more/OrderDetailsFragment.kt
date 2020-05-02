@@ -40,16 +40,19 @@ class OrderDetailsFragment : BaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val orderId = arguments?.getInt(ORDER_ID)
-        if(orderId == null)
-            requireActivity().supportFragmentManager.popBackStackImmediate()
+        if(!viewCreated) {
+            val orderId = arguments?.getInt(ORDER_ID)
 
-        model = OrderModelImpl()
-        viewModel = ViewModelProvider(this).get(OrderViewModel::class.java)
+            if (orderId == null)
+                requireActivity().supportFragmentManager.popBackStackImmediate()
+
+            model = OrderModelImpl()
+            viewModel = ViewModelProvider(this).get(OrderViewModel::class.java)
+
+            (viewModel as OrderViewModel).getOrderDetails(orderId!!, model)
+        }
 
         setLiveDataObserver()
-
-        (viewModel as OrderViewModel).getOrderDetails(orderId!!, model)
     }
 
     private fun setLiveDataObserver() {

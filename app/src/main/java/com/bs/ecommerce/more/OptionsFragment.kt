@@ -19,36 +19,27 @@ import kotlinx.android.synthetic.main.options_layout.view.*
 
 class OptionsFragment : BaseFragment() {
 
-    private var viewCreated = false
-    private var rootView: View? = null
-
-
     override fun getFragmentTitle() = R.string.title_more
 
     override fun getLayoutId(): Int = R.layout.fragment_options
 
     override fun getRootLayout(): RelativeLayout? = optionsFragmentRootLayout
 
-    override fun createViewModel(): BaseViewModel =
-        OptionViewModel()
-
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        if (rootView == null)
-            rootView = container?.inflate(R.layout.fragment_options)
-
-        return rootView
-    }
+    override fun createViewModel(): BaseViewModel = OptionViewModel()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        if(!viewCreated) {
+            viewModel = ViewModelProvider(this).get(OptionViewModel::class.java)
+            (viewModel as OptionViewModel).loadOptions(prefObject)
+        }
 
+        observeLiveData()
 
-        viewModel = ViewModelProvider(this).get(OptionViewModel::class.java)
+    }
+
+    private fun observeLiveData() {
 
         (viewModel as OptionViewModel).optionsLD.observe(viewLifecycleOwner, Observer { options ->
             ll_option_holder.removeAllViews()
@@ -93,15 +84,5 @@ class OptionsFragment : BaseFragment() {
                 ll_option_holder.addView(optionView)
             }
         })
-
-        /*if(prefObject.getPrefsBoolValue(PrefSingleton.IS_LOGGED_IN))
-            (viewModel as OptionViewModel).loadOptions(loggedIn = true)
-        else
-            (viewModel as OptionViewModel).loadOptions(loggedIn = false)*/
-
-        (viewModel as OptionViewModel).loadOptions(prefObject)
-
-
-        viewCreated = true
     }
 }

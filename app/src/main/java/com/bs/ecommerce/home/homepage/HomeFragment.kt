@@ -1,9 +1,7 @@
 package com.bs.ecommerce.home.homepage
 
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import android.widget.RelativeLayout
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
@@ -19,11 +17,14 @@ import com.bs.ecommerce.home.homepage.model.HomePageModelImpl
 import com.bs.ecommerce.home.homepage.model.data.SliderData
 import com.bs.ecommerce.main.MainViewModel
 import com.bs.ecommerce.product.ProductDetailFragment
+import com.bs.ecommerce.product.ProductListFragment
 import com.bs.ecommerce.product.model.data.CategoryModel
 import com.bs.ecommerce.product.model.data.Manufacturer
 import com.bs.ecommerce.product.model.data.ProductSummary
-import com.bs.ecommerce.product.ProductListFragment
-import com.bs.ecommerce.utils.*
+import com.bs.ecommerce.utils.ItemClickListener
+import com.bs.ecommerce.utils.RecyclerViewMargin
+import com.bs.ecommerce.utils.replaceFragmentSafely
+import com.bs.ecommerce.utils.toast
 import kotlinx.android.synthetic.main.featured_list_layout.view.*
 import kotlinx.android.synthetic.main.fragment_home.*
 import kotlinx.android.synthetic.main.slider.view.*
@@ -33,8 +34,6 @@ class HomeFragment : BaseFragment() {
 
     private lateinit var model: HomePageModel
     private lateinit var productClickListener: ItemClickListener<ProductSummary>
-    private var viewCreated = false
-    private var rootView: View? = null
 
 
     override fun getFragmentTitle() =  R.string.title_home_page
@@ -44,21 +43,6 @@ class HomeFragment : BaseFragment() {
     override fun getRootLayout(): RelativeLayout? = homePageRootView
 
     override fun createViewModel(): BaseViewModel = MainViewModel()
-
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-
-        if (rootView == null) {
-            rootView = container?.inflate(R.layout.fragment_home)
-        } /*else {
-            val parent = rootView?.parent as ViewGroup?
-            parent?.removeView(rootView)
-        }*/
-        return rootView
-    }
 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -78,7 +62,6 @@ class HomeFragment : BaseFragment() {
             }
 
             initComponents()
-            viewCreated = true
         }
 
         setLiveDataListeners()

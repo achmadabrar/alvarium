@@ -2,32 +2,27 @@ package com.bs.ecommerce.base
 
 import android.Manifest
 import android.app.AlertDialog
-import androidx.lifecycle.Observer
-import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Bundle
-import androidx.annotation.LayoutRes
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.RelativeLayout
+import androidx.annotation.LayoutRes
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.fragment.app.Fragment
 import com.bs.ecommerce.R
-import com.bs.ecommerce.auth.login.LoginViewModel
 import com.bs.ecommerce.more.barcode.BarCodeCaptureFragment
 import com.bs.ecommerce.more.viewmodel.OptionViewModel
 import com.bs.ecommerce.networking.NetworkUtil
 import com.bs.ecommerce.utils.*
 import com.pnikosis.materialishprogress.ProgressWheel
-import kotlin.properties.Delegates
-
 
 
 abstract class BaseFragment : Fragment()
 {
-    protected var progressWheel: ProgressWheel? = null
+    private var progressWheel: ProgressWheel? = null
     protected open lateinit var viewModel: BaseViewModel
 
     protected var prefObject = PrefSingleton
@@ -49,8 +44,21 @@ abstract class BaseFragment : Fragment()
 
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? = inflater.inflate(getLayoutId(), container, false)
+    protected var rootView: View? = null
+    protected var viewCreated: Boolean = false
 
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+
+        if (rootView == null) {
+            rootView = inflater.inflate(getLayoutId(), container, false)
+            viewCreated = false
+        } else {
+            (rootView?.parent as ViewGroup?)?.removeView(rootView)
+            viewCreated = true
+        }
+
+        return rootView
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?)
     {

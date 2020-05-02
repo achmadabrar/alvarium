@@ -18,6 +18,7 @@ import com.bs.ecommerce.more.viewmodel.OrderViewModel
 import com.bs.ecommerce.product.model.data.Order
 import com.bs.ecommerce.utils.TextUtils
 import com.bs.ecommerce.utils.replaceFragmentSafely
+import com.bs.ecommerce.utils.showLog
 import kotlinx.android.synthetic.main.fragment_customer_order.*
 import kotlinx.android.synthetic.main.item_customer_order.view.*
 
@@ -35,12 +36,16 @@ class OrderHistoryFragment : BaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        model = OrderModelImpl()
-        viewModel = ViewModelProvider(this).get(OrderViewModel::class.java)
+        if (!viewCreated) {
+            "nop_".showLog("creating view")
+
+            model = OrderModelImpl()
+            viewModel = ViewModelProvider(this).get(OrderViewModel::class.java)
+
+            (viewModel as OrderViewModel).getOrderHistory(model)
+        }
 
         setLiveDataObserver()
-
-        (viewModel as OrderViewModel).getOrderHistory(model)
     }
 
     private fun setLiveDataObserver() {
@@ -77,13 +82,13 @@ class OrderHistoryFragment : BaseFragment() {
             layoutManager =
                 LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
             //addItemDecoration(RecyclerViewMargin(15, 1, true))
-            adapter = TempAdapter(orders)
+            adapter = OrderHistoryAdapter(orders)
         }
     }
 
 
 
-    inner class TempAdapter(
+    inner class OrderHistoryAdapter(
         private val list: List<Order>
     ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 

@@ -4,9 +4,7 @@ import android.graphics.Rect
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.util.Log
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import android.view.ViewTreeObserver
 import android.widget.*
 import androidx.core.view.GravityCompat
@@ -25,9 +23,7 @@ import com.bs.ecommerce.product.model.data.ProductSummary
 import com.bs.ecommerce.product.model.data.SubCategory
 import com.bs.ecommerce.product.viewModel.ProductListViewModel
 import com.bs.ecommerce.utils.ItemClickListener
-import com.bs.ecommerce.utils.inflate
 import com.bs.ecommerce.utils.replaceFragmentSafely
-import com.bs.ecommerce.utils.toast
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import kotlinx.android.synthetic.main.fragment_product_list.*
 import kotlinx.android.synthetic.main.sort_option_bottom_sheet.view.*
@@ -46,9 +42,6 @@ class ProductListFragment : BaseFragment() {
     private lateinit var productListAdapter: ProductListAdapter
     private lateinit var bsBehavior: BottomSheetBehavior<*>
 
-    private var viewCreated = false
-    private var rootView: View? = null
-
     override fun getFragmentTitle() = R.string.title_register
 
     override fun getLayoutId(): Int = R.layout.fragment_product_list
@@ -57,17 +50,6 @@ class ProductListFragment : BaseFragment() {
 
     override fun createViewModel(): BaseViewModel = ProductListViewModel()
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-
-        if (rootView == null)
-            rootView = container?.inflate(R.layout.fragment_product_list)
-
-        return rootView
-    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -89,8 +71,6 @@ class ProductListFragment : BaseFragment() {
             viewModel = ViewModelProviders.of(this).get(ProductListViewModel::class.java)
 
             getProducts(resetFilters = true)
-
-            viewCreated = true
         }
 
         setLiveDataListeners()

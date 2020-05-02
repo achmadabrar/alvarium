@@ -40,9 +40,6 @@ class SearchFragment : BaseFragment() {
     private lateinit var productListAdapter: ProductListAdapter
     private lateinit var bsBehavior: BottomSheetBehavior<*>
 
-    private var viewCreated = false
-    private var rootView: View? = null
-
     private var searchView: SearchView? = null
 
     override fun getFragmentTitle() = R.string.title_search
@@ -53,17 +50,6 @@ class SearchFragment : BaseFragment() {
 
     override fun createViewModel(): BaseViewModel = ProductListViewModel()
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-
-        if (rootView == null)
-            rootView = container?.inflate(R.layout.fragment_product_list)
-
-        return rootView
-    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -86,8 +72,6 @@ class SearchFragment : BaseFragment() {
                     replaceFragmentSafely(ProductDetailFragment.newInstance(data.id.toLong()))
                 }
             }
-
-            viewCreated = true
         }
 
         setLiveDataListeners()

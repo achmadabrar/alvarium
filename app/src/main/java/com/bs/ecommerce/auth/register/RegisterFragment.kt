@@ -38,7 +38,6 @@ open class RegisterFragment : BaseFragment(), View.OnClickListener
 
     internal var myCalendar: Calendar? = null
 
-    private var viewCreated = false
 
 
     var customerInfo: GetRegistrationResponse  = GetRegistrationResponse()
