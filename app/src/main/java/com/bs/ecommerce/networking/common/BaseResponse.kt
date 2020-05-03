@@ -1,4 +1,4 @@
-package com.bs.ecommerce.networking
+package com.bs.ecommerce.networking.common
 
 import com.bs.ecommerce.auth.register.data.KeyValuePair
 import com.bs.ecommerce.utils.showLog

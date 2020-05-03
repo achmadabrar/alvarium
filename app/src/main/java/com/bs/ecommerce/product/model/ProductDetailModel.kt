@@ -4,7 +4,7 @@ import com.bs.ecommerce.common.RequestCompleteListener
 import com.bs.ecommerce.home.homepage.model.data.HomePageProductResponse
 import com.bs.ecommerce.product.model.data.AddToCartResponse
 import com.bs.ecommerce.product.model.data.ProductDetailResponse
-import com.bs.ecommerce.product.model.data.UpdateCartPostData
+import com.bs.ecommerce.networking.common.KeyValueFormData
 
 interface ProductDetailModel {
 
@@ -12,7 +12,7 @@ interface ProductDetailModel {
 
     fun addProductToCartModel(productId: Long,
                               cartTypeId: Long,
-                              updateCartPostData: UpdateCartPostData, callback: RequestCompleteListener<AddToCartResponse>)
+                              KeyValueFormData: KeyValueFormData, callback: RequestCompleteListener<AddToCartResponse>)
 
     fun getRelatedProducts(productId: Long, thumbnailSizePx: Int,
                            callback: RequestCompleteListener<HomePageProductResponse>)

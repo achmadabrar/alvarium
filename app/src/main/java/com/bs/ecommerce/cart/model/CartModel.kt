@@ -5,13 +5,13 @@ import com.bs.ecommerce.cart.model.data.AddDiscountPostData
 import com.bs.ecommerce.cart.model.data.CartResponse
 import com.bs.ecommerce.cart.model.data.CartRootData
 import com.bs.ecommerce.common.RequestCompleteListener
-import com.bs.ecommerce.product.model.data.UpdateCartPostData
+import com.bs.ecommerce.networking.common.KeyValueFormData
 
 interface CartModel
 {
     fun getCartData(callback: RequestCompleteListener<CartResponse>)
 
-    fun updateCartData(updateCartPostData: UpdateCartPostData, callback: RequestCompleteListener<CartResponse>)
+    fun updateCartData(KeyValueFormData: KeyValueFormData, callback: RequestCompleteListener<CartResponse>)
 
     fun applyCouponModel(discount: AddDiscountPostData, callback: RequestCompleteListener<CartResponse>)
 

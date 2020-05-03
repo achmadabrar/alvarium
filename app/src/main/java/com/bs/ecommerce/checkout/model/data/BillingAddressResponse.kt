@@ -1,6 +1,6 @@
 package com.bs.ecommerce.checkout.model.data
 
-import com.bs.ecommerce.networking.BaseResponse
+import com.bs.ecommerce.networking.common.BaseResponse
 import com.google.gson.annotations.SerializedName
 
 
@@ -15,7 +15,7 @@ data class BillingAddressData(
 
 data class BillingAddress(
     @SerializedName("BillingNewAddress") var billingNewAddress: BillingNewAddress = BillingNewAddress(),
-    @SerializedName("ExistingAddresses") var existingAddresses: List<Any> = listOf(),
+    @SerializedName("ExistingAddresses") var existingAddresses: List<BillingNewAddress> = listOf(),
     @SerializedName("InvalidExistingAddresses") var invalidExistingAddresses: List<Any> = listOf(),
     @SerializedName("NewAddressPreselected") var newAddressPreselected: Boolean = false,
     @SerializedName("ShipToSameAddress") var shipToSameAddress: Boolean = false,
@@ -27,7 +27,7 @@ data class BillingAddress(
 data class BillingNewAddress(
     @SerializedName("Address1") var address1: Any = Any(),
     @SerializedName("Address2") var address2: Any = Any(),
-    @SerializedName("AvailableCountries") var availableCountries: List<AvailableCountry> = listOf(),
+    @SerializedName("AvailableCountries") var availableCountries: List<AvailableCountry>? = null,
     @SerializedName("AvailableStates") var availableStates: List<AvailableCountry> = listOf(),
     @SerializedName("City") var city: Any = Any(),
     @SerializedName("CityEnabled") var cityEnabled: Boolean = false,

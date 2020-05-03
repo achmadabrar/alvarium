@@ -1,17 +1,16 @@
 package com.bs.ecommerce.checkout.model
 
 import android.content.Context
-import com.bs.ecommerce.auth.register.data.KeyValuePair
-import com.bs.ecommerce.cart.model.data.AddDiscountPostData
 import com.bs.ecommerce.cart.model.data.CartResponse
-import com.bs.ecommerce.checkout.model.data.BillingAddressResponse
-import com.bs.ecommerce.checkout.model.data.CheckoutPostData
-import com.bs.ecommerce.checkout.model.data.StateListResponse
+import com.bs.ecommerce.checkout.model.data.*
 import com.bs.ecommerce.networking.RetroClient
 import com.bs.ecommerce.common.RequestCompleteListener
+import com.bs.ecommerce.networking.common.KeyValueFormData
+import com.google.gson.GsonBuilder
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+
 
 class CheckoutModelImpl(private val context: Context): CheckoutModel
 {
@@ -51,6 +50,61 @@ class CheckoutModelImpl(private val context: Context): CheckoutModel
 
 
             override fun onFailure(call: Call<StateListResponse>, t: Throwable) {
+                callback.onRequestFailed(t.localizedMessage!!)
+            }
+        })
+    }
+
+
+    override fun saveNewBilling(billingAddress: SaveBillingPostData, callback: RequestCompleteListener<SaveBillingResponse>)
+    {
+        RetroClient.api.saveNewBillingAPI(billingAddress).enqueue(object : Callback<SaveBillingResponse>
+        {
+            override fun onResponse(call: Call<SaveBillingResponse>, response: Response<SaveBillingResponse>)
+            {
+                if (response.body() != null)
+                    callback.onRequestSuccess(response.body()!!)
+
+                else if (response.code() == 300 || response.code() == 400)
+                {
+                    val gson = GsonBuilder().create()
+                    val errorBody = gson.fromJson(response.errorBody()!!.string(), SaveBillingResponse::class.java)
+
+                    callback.onRequestSuccess(errorBody as SaveBillingResponse)
+                }
+                else
+                    callback.onRequestFailed(response.message())
+            }
+
+
+            override fun onFailure(call: Call<SaveBillingResponse>, t: Throwable) {
+                callback.onRequestFailed(t.localizedMessage!!)
+            }
+        })
+    }
+
+    override fun saveExistingBilling(keyValueFormData: KeyValueFormData, callback: RequestCompleteListener<SaveBillingResponse>)
+    {
+        RetroClient.api.saveExistingBillingAPI(keyValueFormData).enqueue(object : Callback<SaveBillingResponse>
+        {
+            override fun onResponse(call: Call<SaveBillingResponse>, response: Response<SaveBillingResponse>)
+            {
+                if (response.body() != null)
+                    callback.onRequestSuccess(response.body()!!)
+
+                else if (response.code() == 300 || response.code() == 400)
+                {
+                    val gson = GsonBuilder().create()
+                    val errorBody = gson.fromJson(response.errorBody()!!.string(), SaveBillingResponse::class.java)
+
+                    callback.onRequestSuccess(errorBody as SaveBillingResponse)
+                }
+                else
+                    callback.onRequestFailed(response.message())
+            }
+
+
+            override fun onFailure(call: Call<SaveBillingResponse>, t: Throwable) {
                 callback.onRequestFailed(t.localizedMessage!!)
             }
         })

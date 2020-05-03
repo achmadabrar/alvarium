@@ -1,7 +1,6 @@
 package com.bs.ecommerce.auth.register.data
 
-import com.bs.ecommerce.networking.BaseResponse
-import com.bs.ecommerce.product.model.data.AttributeControlValue
+import com.bs.ecommerce.networking.common.BaseResponse
 import com.bs.ecommerce.product.model.data.ProductAttribute
 import com.google.gson.annotations.SerializedName
 
