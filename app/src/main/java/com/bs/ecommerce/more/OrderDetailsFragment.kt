@@ -21,6 +21,7 @@ import com.bs.ecommerce.product.model.data.Item
 import com.bs.ecommerce.product.model.data.OrderDetailsData
 import com.bs.ecommerce.utils.RecyclerViewMargin
 import com.bs.ecommerce.utils.TextUtils
+import com.bs.ecommerce.utils.toast
 import kotlinx.android.synthetic.main.confirm_order_card.view.*
 import kotlinx.android.synthetic.main.fragment_customer_order_detail.*
 import kotlinx.android.synthetic.main.item_order_details.view.*
@@ -43,13 +44,17 @@ class OrderDetailsFragment : BaseFragment() {
         if(!viewCreated) {
             val orderId = arguments?.getInt(ORDER_ID)
 
-            if (orderId == null)
+            if (orderId == null) {
+                toast(R.string.invalid_id)
+
                 requireActivity().supportFragmentManager.popBackStackImmediate()
+                return
+            }
 
             model = OrderModelImpl()
             viewModel = ViewModelProvider(this).get(OrderViewModel::class.java)
 
-            (viewModel as OrderViewModel).getOrderDetails(orderId!!, model)
+            (viewModel as OrderViewModel).getOrderDetails(orderId, model)
         }
 
         setLiveDataObserver()

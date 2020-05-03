@@ -54,13 +54,13 @@ class WishListFragment : BaseFragment() {
 
             wishListLD.observe(viewLifecycleOwner, Observer { data ->
 
-                btnAddAllToCart.visibility = if (data.items?.isNotEmpty() == true)
+                btnAddAllToCart.visibility = if (data?.items?.isNotEmpty() == true)
                     View.VISIBLE else View.GONE
 
-                tvNoData.visibility = if (data.items.isNullOrEmpty())
+                tvNoData.visibility = if (data?.items.isNullOrEmpty())
                     View.VISIBLE else View.GONE
 
-                listAdapter.addData(data.items)
+                listAdapter.addData(data?.items)
             })
 
             isLoadingLD.observe(viewLifecycleOwner, Observer { isShowLoader ->
@@ -75,7 +75,7 @@ class WishListFragment : BaseFragment() {
     private fun initView() {
 
         btnAddAllToCart.setOnClickListener {
-            // TODO api call
+            (viewModel as WishListViewModel).moveAllItemsToCart(model)
         }
 
         val clickListener = object : ItemClickListener<WishListItem> {

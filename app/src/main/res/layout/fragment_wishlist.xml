@@ -4,6 +4,7 @@
     android:layout_height="match_parent"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/wishListRootLayout"
+    android:animateLayoutChanges="true"
     android:background="@color/fragment_background">
 
     <androidx.recyclerview.widget.RecyclerView
@@ -24,7 +25,7 @@
         android:textSize="@dimen/tv_text_size_regular"
         tools:visibility="visible"
         android:visibility="gone"
-        android:text="@string/no_data_found"/>
+        android:text="@string/no_items_in_your_wishlist"/>
 
     <Button
         android:id="@+id/btnAddAllToCart"

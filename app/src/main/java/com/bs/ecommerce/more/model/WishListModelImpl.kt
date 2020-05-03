@@ -47,4 +47,23 @@ class WishListModelImpl : WishListModel {
             }
         })
     }
+
+    override fun moveItemsToCart(
+        keyValuePairs: List<KeyValuePair>,
+        callback: RequestCompleteListener<WishListResponse>
+    ) {
+        RetroClient.api.moveWishListItemsToCart(keyValuePairs).enqueue(object : Callback<WishListResponse> {
+
+            override fun onResponse(call: Call<WishListResponse>, response: Response<WishListResponse>) {
+                if (response.body() != null)
+                    callback.onRequestSuccess(response.body() as WishListResponse)
+                else
+                    callback.onRequestFailed(response.message())
+            }
+
+            override fun onFailure(call: Call<WishListResponse>, t: Throwable) {
+                callback.onRequestFailed(t.localizedMessage!!)
+            }
+        })
+    }
 }

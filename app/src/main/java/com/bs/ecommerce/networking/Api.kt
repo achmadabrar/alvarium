@@ -163,7 +163,7 @@ interface Api {
     fun updateWishList(@Body list: List<KeyValuePair>): Call<WishListResponse>
 
     @POST("shoppingcart/additemstocartfromwishlist")
-    fun moveAllWishListItemsToCart(): Call<WishListResponse>
+    fun moveWishListItemsToCart(@Body list: List<KeyValuePair>): Call<WishListResponse>
 
 /*    @POST("setcurrency/{id}")
     fun setCurrency(@Path("id") id: Long): Call<LanguageResponse>
@@ -376,6 +376,7 @@ interface Api {
         val shoppingCartTypeWishlist = 2
         val cartProductId: Long = 0
         const val removeFromCartOrWishList: String = "removefromcart"
+        const val addToCart: String = "addtocart"
         const val typeShoppingCart: Long = 1
         const val typeWishList: Long = 2
 

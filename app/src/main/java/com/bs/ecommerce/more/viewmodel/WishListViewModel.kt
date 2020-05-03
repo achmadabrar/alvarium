@@ -12,7 +12,7 @@ import java.util.*
 
 class WishListViewModel : BaseViewModel() {
 
-    var wishListLD = MutableLiveData<WishListData>()
+    var wishListLD = MutableLiveData<WishListData?>()
 
     fun getWishList(model: WishListModel) {
         isLoadingLD.value = true
@@ -64,10 +64,64 @@ class WishListViewModel : BaseViewModel() {
     }
 
     fun moveItemToCart(itemId: Int?, model: WishListModel) {
-        // TODO implement
+        prepareFormValue(itemId, false, model)
     }
 
-    fun moveAllItemsToCart(itemId: Int?, model: WishListModel) {
-        // TODO implement
+    fun moveAllItemsToCart(model: WishListModel) {
+        prepareFormValue(-1, true, model)
+    }
+
+    private fun prepareFormValue(itemId: Int?, allItems: Boolean = false, model: WishListModel) {
+
+        val keyValuePairs = ArrayList<KeyValuePair>()
+
+        if (allItems) {
+
+            if (wishListLD.value?.items.isNullOrEmpty())
+                return
+
+            val items = wishListLD.value?.items!!
+
+            for (item in items) {
+                KeyValuePair().apply {
+                    this.key = Api.addToCart
+                    this.value = item.id.toString()
+
+                    keyValuePairs.add(this)
+                }
+            }
+        } else {
+
+            if(itemId==null)
+                return
+
+            KeyValuePair().apply {
+                this.key = Api.addToCart
+                this.value = itemId.toString()
+
+                keyValuePairs.add(this)
+            }
+        }
+
+        isLoadingLD.value = true
+
+        model.moveItemsToCart(keyValuePairs, object : RequestCompleteListener<WishListResponse> {
+            override fun onRequestSuccess(data: WishListResponse) {
+                isLoadingLD.value = false
+
+                wishListLD.value = data.wishListData
+
+                if(data.errorList.isNotEmpty())
+                    toast(data.errorsAsFormattedString)
+                else
+                    toast(data.message)
+            }
+
+            override fun onRequestFailed(errorMessage: String) {
+                isLoadingLD.value = false
+
+                toast(errorMessage)
+            }
+        })
     }
 }
