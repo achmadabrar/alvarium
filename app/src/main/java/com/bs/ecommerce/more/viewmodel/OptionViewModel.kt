@@ -31,6 +31,8 @@ class OptionViewModel : BaseViewModel() {
 
         data.add(AppOptions(R.string.title_wishlist, R.drawable.ic_heart))
 
+        data.add(AppOptions(R.string.title_addresses, R.drawable.ic_heart))
+
         optionsLD.postValue(data)
     }
 

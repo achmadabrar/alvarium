@@ -23,6 +23,7 @@
     <string name="title_privacy_policy">Privacy Policy</string>
     <string name="title_checkout">Checkout</string>
     <string name="title_wishlist">Wish List</string>
+    <string name="title_addresses">Addresses</string>
 
     <!-- Barcode Fragment  -->
     <string name="place_barcode_in_camera">Put barcode here to Scan instantly</string>
@@ -64,14 +65,14 @@
     <string name="male">"Male"</string>
     <string name="female">"Female"</string>
     <string name="newsletter">"Newsletter"</string>
-    <string name="reg_hint_company_name">Company name:</string>
+    <string name="reg_hint_company_name">Company name</string>
     <string name="reg_hint_password">Password</string>
     <string name="reg_hint_confirm_password">Confirm password</string>
     <string name="reg_hint_is_required"> Is Required</string>
 
 
     <string name="reg_hint_username">Username:</string>
-    <string name="reg_hint_fax">Fax:</string>
+    <string name="reg_hint_fax">Fax</string>
     <string name="reg_hint_street_address">Street Address:</string>
     <string name="reg_hint_street_address2">Street Address 2:</string>
     <string name="reg_hint_zip_or_postal_code">Zip Or PostalCode:</string>
@@ -204,5 +205,15 @@
     <string name="add_all_items_to_cart">Add All Items to Cart</string>
     <string name="adding_to_wish_list">Adding to WishList…</string>
     <string name="remove">Remove</string>
+    <string name="invalid_id">Invalid ID</string>
+    <string name="no_items_in_your_wishlist">No Items in Your Wish List</string>
+
+    <!-- Address   -->
+    <string name="add_new">Add New Address</string>
+    <string name="text_save">Save</string>
+    <string name="address_saved">Address Saved Successfully</string>
+    <string name="address_update_succss">Address Updated Successfully</string>
+    <string name="confirm_address_delete">Do you want to delete this address?</string>
+    <string name="delete_address">Delete Address</string>
 
 </resources>

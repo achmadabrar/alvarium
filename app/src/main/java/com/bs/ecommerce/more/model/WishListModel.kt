@@ -12,4 +12,9 @@ interface WishListModel {
         keyValuePairs: List<KeyValuePair>,
         callback: RequestCompleteListener<WishListResponse>
     )
+
+    fun moveItemsToCart(
+        keyValuePairs: List<KeyValuePair>,
+        callback: RequestCompleteListener<WishListResponse>
+    )
 }

@@ -21,6 +21,7 @@ import com.bs.ecommerce.utils.replaceFragmentSafely
 import com.bs.ecommerce.utils.showLog
 import kotlinx.android.synthetic.main.fragment_customer_order.*
 import kotlinx.android.synthetic.main.item_customer_order.view.*
+import java.lang.ref.WeakReference
 
 class OrderHistoryFragment : BaseFragment() {
     private lateinit var model: OrderModel
@@ -110,7 +111,7 @@ class OrderHistoryFragment : BaseFragment() {
             holder.itemView.tvOrderDate.text = getString(R.string.order_date).plus(
                 TextUtils().tzTimeConverter(
                     order.createdOn,
-                    requireContext()
+                    WeakReference(requireContext())
                 )
             )
 

@@ -1,85 +1,86 @@
 package com.bs.ecommerce.product.model.data
 
 
+import com.bs.ecommerce.checkout.model.data.AvailableCountry
 import com.google.gson.annotations.SerializedName
 
-data class Address(
+data class AddressModel(
     @SerializedName("Address1")
-    val address1: String?,
+    var address1: String?,
     @SerializedName("Address2")
-    val address2: String?,
+    var address2: String?,
     @SerializedName("AvailableCountries")
-    val availableCountries: List<Any>?,
+    var availableCountries: List<AvailableCountry>?,
     @SerializedName("AvailableStates")
-    val availableStates: List<Any>?,
+    var availableStates: List<AvailableCountry>?,
     @SerializedName("City")
-    val city: String?,
+    var city: String?,
     @SerializedName("CityEnabled")
-    val cityEnabled: Boolean?,
+    var cityEnabled: Boolean?,
     @SerializedName("CityRequired")
-    val cityRequired: Boolean?,
+    var cityRequired: Boolean?,
     @SerializedName("Company")
-    val company: String?,
+    var company: String?,
     @SerializedName("CompanyEnabled")
-    val companyEnabled: Boolean?,
+    var companyEnabled: Boolean?,
     @SerializedName("CompanyRequired")
-    val companyRequired: Boolean?,
+    var companyRequired: Boolean?,
     @SerializedName("CountryEnabled")
-    val countryEnabled: Boolean?,
+    var countryEnabled: Boolean?,
     @SerializedName("CountryId")
-    val countryId: Int?,
+    var countryId: Int?,
     @SerializedName("CountryName")
-    val countryName: String?,
+    var countryName: String?,
     @SerializedName("County")
-    val county: Any?,
+    var county: Any?,
     @SerializedName("CountyEnabled")
-    val countyEnabled: Boolean?,
+    var countyEnabled: Boolean?,
     @SerializedName("CountyRequired")
-    val countyRequired: Boolean?,
+    var countyRequired: Boolean?,
     @SerializedName("CustomAddressAttributes")
-    val customAddressAttributes: List<Any>?,
+    var customAddressAttributes: List<Any>?,
     @SerializedName("CustomProperties")
-    val customProperties: CustomProperties?,
+    var customProperties: CustomProperties?,
     @SerializedName("Email")
-    val email: String?,
+    var email: String?,
     @SerializedName("FaxEnabled")
-    val faxEnabled: Boolean?,
+    var faxEnabled: Boolean?,
     @SerializedName("FaxNumber")
-    val faxNumber: String?,
+    var faxNumber: String?,
     @SerializedName("FaxRequired")
-    val faxRequired: Boolean?,
+    var faxRequired: Boolean?,
     @SerializedName("FirstName")
-    val firstName: String?,
+    var firstName: String?,
     @SerializedName("FormattedCustomAddressAttributes")
-    val formattedCustomAddressAttributes: String?,
+    var formattedCustomAddressAttributes: String?,
     @SerializedName("Id")
-    val id: Int?,
+    var id: Int?,
     @SerializedName("LastName")
-    val lastName: String?,
+    var lastName: String?,
     @SerializedName("PhoneEnabled")
-    val phoneEnabled: Boolean?,
+    var phoneEnabled: Boolean?,
     @SerializedName("PhoneNumber")
-    val phoneNumber: String?,
+    var phoneNumber: String?,
     @SerializedName("PhoneRequired")
-    val phoneRequired: Boolean?,
+    var phoneRequired: Boolean?,
     @SerializedName("StateProvinceEnabled")
-    val stateProvinceEnabled: Boolean?,
+    var stateProvinceEnabled: Boolean?,
     @SerializedName("StateProvinceId")
-    val stateProvinceId: Any?,
+    var stateProvinceId: Int?,
     @SerializedName("StateProvinceName")
-    val stateProvinceName: String?,
+    var stateProvinceName: String?,
     @SerializedName("StreetAddress2Enabled")
-    val streetAddress2Enabled: Boolean?,
+    var streetAddress2Enabled: Boolean?,
     @SerializedName("StreetAddress2Required")
-    val streetAddress2Required: Boolean?,
+    var streetAddress2Required: Boolean?,
     @SerializedName("StreetAddressEnabled")
-    val streetAddressEnabled: Boolean?,
+    var streetAddressEnabled: Boolean?,
     @SerializedName("StreetAddressRequired")
-    val streetAddressRequired: Boolean?,
+    var streetAddressRequired: Boolean?,
     @SerializedName("ZipPostalCode")
-    val zipPostalCode: String?,
+    var zipPostalCode: String?,
     @SerializedName("ZipPostalCodeEnabled")
-    val zipPostalCodeEnabled: Boolean?,
+    var zipPostalCodeEnabled: Boolean?,
     @SerializedName("ZipPostalCodeRequired")
-    val zipPostalCodeRequired: Boolean?
+    var zipPostalCodeRequired: Boolean?
 )

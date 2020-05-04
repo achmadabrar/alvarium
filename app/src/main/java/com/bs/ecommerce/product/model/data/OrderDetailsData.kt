@@ -6,7 +6,7 @@ import com.google.gson.annotations.SerializedName
 
 data class OrderDetailsData(
     @SerializedName("BillingAddress")
-    val billingAddress: Address?,
+    val billingAddress: AddressModel?,
     @SerializedName("CanRePostProcessPayment")
     val canRePostProcessPayment: Boolean?,
     @SerializedName("CheckoutAttributeInfo")
@@ -60,7 +60,7 @@ data class OrderDetailsData(
     @SerializedName("PdfInvoiceDisabled")
     val pdfInvoiceDisabled: Boolean?,
     @SerializedName("PickupAddress")
-    val pickupAddress: Address?,
+    val pickupAddress: AddressModel?,
     @SerializedName("PickupInStore")
     val pickupInStore: Boolean?,
     @SerializedName("PricesIncludeTax")
@@ -74,7 +74,7 @@ data class OrderDetailsData(
     @SerializedName("Shipments")
     val shipments: List<Any>?,
     @SerializedName("ShippingAddress")
-    val shippingAddress: Address?,
+    val shippingAddress: AddressModel?,
     @SerializedName("ShippingMethod")
     val shippingMethod: String?,
     @SerializedName("ShippingStatus")
