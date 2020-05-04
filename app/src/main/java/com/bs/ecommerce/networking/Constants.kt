@@ -26,4 +26,11 @@ object Constants
 /*    @JvmStatic val DEFAULT_URL = "http://52.168.183.212/api/"
     @JvmStatic var BASE_URL = "http://52.168.183.212/api/"*/
 
+
+    @JvmStatic val BILLING_ADDRESS = 0
+    @JvmStatic val SHIPPING_ADDRESS = 1
+    @JvmStatic val SHIPPING_METHOD = 2
+    @JvmStatic val PAYMENT_METHOD = 3
+
 }
+

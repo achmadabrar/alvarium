@@ -13,8 +13,10 @@ import com.bs.ecommerce.checkout.model.CheckoutModel
 import com.bs.ecommerce.checkout.model.CheckoutModelImpl
 import com.bs.ecommerce.checkout.model.data.AvailableCountry
 import com.bs.ecommerce.checkout.model.data.BillingAddressData
-import com.bs.ecommerce.checkout.model.data.BillingNewAddress
+import com.bs.ecommerce.checkout.model.data.AddressModel
+import com.bs.ecommerce.networking.Constants
 import com.bs.ecommerce.utils.isEmailValid
+import com.bs.ecommerce.utils.showLog
 import com.bs.ecommerce.utils.showOrHideOrRequired
 import com.bs.ecommerce.utils.toast
 import com.google.android.material.tabs.TabLayout
@@ -25,11 +27,10 @@ import kotlinx.android.synthetic.main.fragment_billing_address.*
 import java.util.ArrayList
 
 
-class BaseBillingAddressFragment : BaseFragment()
+open class BaseBillingAddressFragment : BaseFragment()
 {
-    private lateinit var model: CheckoutModel
+    protected lateinit var model: CheckoutModel
 
-    lateinit var keyPrefixTag: String
 
     var isValidInfo = true
 
@@ -38,9 +39,9 @@ class BaseBillingAddressFragment : BaseFragment()
 
     private var billingAddressData = BillingAddressData()
 
-    var isBillingAddressSubmitted = false
+    protected var isBillingAddressSubmitted = false
 
-    var addressID: Long = 0
+    protected var addressID: Long = 0
 
     override fun getFragmentTitle() = R.string.title_shopping_cart
 
@@ -54,13 +55,13 @@ class BaseBillingAddressFragment : BaseFragment()
     {
         super.onViewCreated(view, savedInstanceState)
 
-        initView()
-
         model = CheckoutModelImpl(activity?.applicationContext!!)
 
         viewModel  = ViewModelProvider(this).get(CheckoutAddressViewModel::class.java)
 
         (viewModel as CheckoutAddressViewModel).getBillingFormVM(model)
+
+        setAddressTabClickListener()
 
         setLiveDataListeners()
 
@@ -80,17 +81,17 @@ class BaseBillingAddressFragment : BaseFragment()
 
     }
 
-    private fun createNewAddressLayout(billingNewAddress: BillingNewAddress)
+    protected fun createNewAddressLayout(billingNewAddress: AddressModel)
     {
         createForms(billingNewAddress)
 
         val countryNameList = billingNewAddress.availableCountries?.map { it.text }
         populateCountrySpinner(countryNameList!!, billingNewAddress.availableCountries)
 
-        newAddressLayout.visibility = View.VISIBLE
+        newAddressLayout?.visibility = View.VISIBLE
     }
 
-    private fun setLiveDataListeners() {
+    open fun setLiveDataListeners() {
 
         with(viewModel as CheckoutAddressViewModel)
         {
@@ -101,10 +102,10 @@ class BaseBillingAddressFragment : BaseFragment()
                 with(billingAddressResponse.data.billingAddress)
                 {
 
-                    if(this.existingAddresses.isEmpty())
-                        createNewAddressLayout(this.billingNewAddress)
-                    else
+                    if(this.existingAddresses.isNotEmpty())
                         createAddressDropdown(this.existingAddresses)
+                    else
+                        createNewAddressLayout(this.billingNewAddress)
 
                     layoutBillingAddress?.visibility = View.VISIBLE
                 }
@@ -124,7 +125,7 @@ class BaseBillingAddressFragment : BaseFragment()
                     override fun onNothingSelected(parent: AdapterView<*>) {}
                 }
 
-                stateSpinnerLayout?.visibility =View.VISIBLE
+                stateSpinnerLayout?.visibility = View.VISIBLE
             })
 
             isLoadingLD.observe(viewLifecycleOwner, Observer { isShowLoader ->
@@ -140,15 +141,26 @@ class BaseBillingAddressFragment : BaseFragment()
                 if(saveResponse.errorList.isNotEmpty())
                     toast(saveResponse.errorsAsFormattedString)
                 else
-                    toast(saveResponse.message)
+                {
+                    toast("Address Added Successfully")
+                    isBillingAddressSubmitted = true
+                    Handler().post {   addressTabLayout?.getTabAt(1)?.select()  }
+                }
+
+
+
 
             })
         }
     }
 
-    private fun createAddressDropdown(existingAddresses: List<BillingNewAddress>)
+    private fun createAddressDropdown(existingAddresses: List<AddressModel>)
     {
-        existingAddressSpinner?.adapter = createSpinnerAdapter(getDropDownAddressList(existingAddresses))
+        val addressList = mutableListOf<String>()
+        addressList.addAll(existingAddresses.map { "${it.firstName}, ${it.lastName}, ${it.address1},${it.city},${it.countryName}" })
+        addressList.add("New Address")
+
+        existingAddressSpinner?.adapter = createSpinnerAdapter(addressList)
 
         existingAddressSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener
         {
@@ -156,22 +168,11 @@ class BaseBillingAddressFragment : BaseFragment()
 
             override fun onNothingSelected(parent: AdapterView<*>) = Unit
         }
+        existingAddressLayout?.visibility = View.VISIBLE
 
     }
 
-    protected fun getDropDownAddressList(existingAddress: List<BillingNewAddress>?): List<String>
-    {
-        val addressList = ArrayList<String>()
-        for (address in existingAddress!!)
-        {
-            val data = "${address.firstName}, ${address.lastName}, ${address.address1},${address.city},${address.countryName}"
-            addressList.add(data)
-        }
-        addressList.add("New Address")
-        return addressList
-    }
-
-    protected fun onSelectAddressDropDown(existingAddress: List<BillingNewAddress>, position: Int)
+    private fun onSelectAddressDropDown(existingAddress: List<AddressModel>, position: Int)
     {
         if (isNewAddressSelected(existingAddress, position))
         {
@@ -182,17 +183,17 @@ class BaseBillingAddressFragment : BaseFragment()
             onSelectExistingAddress(existingAddress, position)
 
     }
-    protected fun onSelectExistingAddress(existingAddress: List<BillingNewAddress>, position: Int)
+    protected fun onSelectExistingAddress(existingAddress: List<AddressModel>, position: Int)
     {
         addressID = existingAddress[position].id.toLong()
         newAddressLayout?.visibility = View.GONE
     }
     
 
-    protected fun isNewAddressSelected(existingAddress: List<BillingNewAddress>?, position: Int): Boolean = (position == existingAddress!!.size)
+    private fun isNewAddressSelected(existingAddress: List<AddressModel>?, position: Int): Boolean = (position == existingAddress!!.size)
     
 
-    private fun createSpinnerAdapter(nameList: List<String>): ArrayAdapter<String>
+    protected fun createSpinnerAdapter(nameList: List<String>): ArrayAdapter<String>
     {
         val dataAdapter: ArrayAdapter<String> = ArrayAdapter<String>(requireContext(), R.layout.simple_spinner_item, nameList)
         dataAdapter.setDropDownViewResource(R.layout.simple_spinner_dropdown_item)
@@ -220,7 +221,7 @@ class BaseBillingAddressFragment : BaseFragment()
 
     }
 
-    private fun createForms(newAddress: BillingNewAddress)
+    private fun createForms(newAddress: AddressModel)
     {
         with(newAddress)
         {
@@ -256,20 +257,20 @@ class BaseBillingAddressFragment : BaseFragment()
 
     }
 
-    private fun initView()
+    private fun setAddressTabClickListener()
     {
-        billingTabLayout?.addOnTabSelectedListener(object : OnTabSelectedListener {
+        addressTabLayout?.addOnTabSelectedListener(object : OnTabSelectedListener {
             override fun onTabSelected(tab: TabLayout.Tab)
             {
 
                 when(tab.position)
                 {
-                    0 -> {
+                    Constants.BILLING_ADDRESS -> {
                         layoutBillingAddress.visibility = View.VISIBLE
                         layoutShippingAddress.visibility = View.GONE
                     }
 
-                    1 ->
+                    Constants.SHIPPING_ADDRESS ->
                     {
                         if (isBillingAddressSubmitted)
                         {
@@ -279,7 +280,7 @@ class BaseBillingAddressFragment : BaseFragment()
                         else
                         {
                             toast("Please complete previous step")
-                            Handler().post {   billingTabLayout?.getTabAt(0)?.select()  }
+                            Handler().post {   addressTabLayout?.getTabAt(0)?.select()  }
                         }
 
 
@@ -306,7 +307,7 @@ class BaseBillingAddressFragment : BaseFragment()
     }
 
 
-    private fun getAddressWithValidation()
+    protected fun getAddressWithValidation()
     {
         with(billingAddressData.billingAddress.billingNewAddress)
         {

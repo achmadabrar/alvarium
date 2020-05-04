@@ -14,19 +14,19 @@ data class BillingAddressData(
 )
 
 data class BillingAddress(
-    @SerializedName("BillingNewAddress") var billingNewAddress: BillingNewAddress = BillingNewAddress(),
-    @SerializedName("ExistingAddresses") var existingAddresses: List<BillingNewAddress> = listOf(),
-    @SerializedName("InvalidExistingAddresses") var invalidExistingAddresses: List<Any> = listOf(),
+    @SerializedName("BillingNewAddress") var billingNewAddress: AddressModel = AddressModel(),
+    @SerializedName("ExistingAddresses") var existingAddresses: List<AddressModel> = listOf(),
+    @SerializedName("InvalidExistingAddresses") var invalidExistingAddresses: List<AddressModel> = listOf(),
     @SerializedName("NewAddressPreselected") var newAddressPreselected: Boolean = false,
     @SerializedName("ShipToSameAddress") var shipToSameAddress: Boolean = false,
     @SerializedName("ShipToSameAddressAllowed") var shipToSameAddressAllowed: Boolean = false
 )
 
 
-//open class BaseBillingNewAddress(@SerializedName("BillingNewAddress") var billingNewAddress: BillingNewAddress = BillingNewAddress())
+//open class BaseAddressModel(@SerializedName("AddressModel") var billingNewAddress: AddressModel = AddressModel())
 
 
-data class BillingNewAddress(
+data class AddressModel(
     @SerializedName("Address1") var address1: Any = Any(),
     @SerializedName("Address2") var address2: Any = Any(),
     @SerializedName("AvailableCountries") var availableCountries: List<AvailableCountry>? = null,

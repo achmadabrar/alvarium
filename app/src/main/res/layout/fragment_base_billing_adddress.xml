@@ -6,7 +6,7 @@
     android:layout_height="match_parent">
 
     <com.google.android.material.tabs.TabLayout
-        android:id="@+id/billingTabLayout"
+        android:id="@+id/addressTabLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:tabBackground="@drawable/tab_color_selector"
@@ -34,7 +34,7 @@
         android:id="@+id/layoutBillingAddress"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/billingTabLayout"
+        android:layout_below="@id/addressTabLayout"
         layout="@layout/fragment_billing_address"
         android:visibility="gone"/>
 
@@ -42,7 +42,7 @@
         android:id="@+id/layoutShippingAddress"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/billingTabLayout"
+        android:layout_below="@id/addressTabLayout"
         layout="@layout/fragment_shipping_address"
         android:visibility="gone"/>
 
