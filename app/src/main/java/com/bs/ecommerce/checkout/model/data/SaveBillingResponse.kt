@@ -40,16 +40,27 @@ data class PaymentMethodModel(
 data class ShippingAddressModel(
     @SerializedName("AllowPickupInStore") var allowPickupInStore: Boolean = false,
     @SerializedName("DisplayPickupPointsOnMap") var displayPickupPointsOnMap: Boolean = false,
-    @SerializedName("ExistingAddresses") var existingAddresses: List<Any> = listOf(),
+    @SerializedName("ExistingAddresses") var existingAddresses: List<AddressModel> = listOf(),
     @SerializedName("GoogleMapsApiKey") var googleMapsApiKey: Any = Any(),
     @SerializedName("InvalidExistingAddresses") var invalidExistingAddresses: List<Any> = listOf(),
     @SerializedName("NewAddressPreselected") var newAddressPreselected: Boolean = false,
     @SerializedName("PickupInStore") var pickupInStore: Boolean = false,
     @SerializedName("PickupInStoreOnly") var pickupInStoreOnly: Boolean = false,
-    @SerializedName("PickupPoints") var pickupPoints: List<Any> = listOf(),
-    @SerializedName("ShippingNewAddress") var shippingNewAddress: BillingNewAddress = BillingNewAddress(),
+    @SerializedName("PickupPoints") var pickupPoints: List<Store> = listOf(),
+    @SerializedName("ShippingNewAddress") var shippingNewAddress: AddressModel = AddressModel(),
     @SerializedName("Warnings") var warnings: List<Any> = listOf()
 )
+
+class Store {
+    @SerializedName("Id") var id: Long = 0
+    @SerializedName("Name") var name: String? = null
+    @SerializedName("ProviderSystemName") var providerSystemName: String? = null
+    @SerializedName("Address") var address: String? = null
+    @SerializedName("City") var city: String? = null
+    @SerializedName("CountryName") var countryName: String? = null
+    @SerializedName("ZipPostalCode") var zipPostalCode: String? = null
+    @SerializedName("PickupFee") var pickupFee: String? = null
+}
 
 data class ShippingMethodModel(
     @SerializedName("NotifyCustomerAboutShippingFromMultipleLocations") var notifyCustomerAboutShippingFromMultipleLocations: Boolean = false,
