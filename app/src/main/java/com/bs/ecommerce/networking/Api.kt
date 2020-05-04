@@ -191,6 +191,12 @@ interface Api {
     @GET("customer/addressedit/{addressId}")
     fun getEditAddressData(@Path("addressId") id: Int): Call<EditCustomerAddressResponse>
 
+    @POST("customer/addressedit/{addressId}")
+    fun editAddress(
+        @Path("addressId") id: Int,
+        @Body body: EditCustomerAddressResponse
+    ): Call<ResponseBody>
+
 /*    @POST("setcurrency/{id}")
     fun setCurrency(@Path("id") id: Long): Call<LanguageResponse>
 

@@ -66,7 +66,7 @@ data class AddressModel(
     @SerializedName("StateProvinceEnabled")
     var stateProvinceEnabled: Boolean?,
     @SerializedName("StateProvinceId")
-    var stateProvinceId: Any?,
+    var stateProvinceId: Int?,
     @SerializedName("StateProvinceName")
     var stateProvinceName: String?,
     @SerializedName("StreetAddress2Enabled")

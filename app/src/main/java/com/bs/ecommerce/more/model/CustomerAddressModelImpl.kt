@@ -80,6 +80,33 @@ class CustomerAddressModelImpl : CustomerAddressModel {
         })
     }
 
+    override fun updateAddress(
+        address: AddressModel,
+        callback: RequestCompleteListener<Any?>
+    ) {
+        val reqBody =
+            EditCustomerAddressResponse(EditCustomerAddressData(address, CustomProperties()))
+
+        RetroClient.api.editAddress(address.id!!, reqBody).enqueue(object :
+            Callback<ResponseBody> {
+
+            override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
+                callback.onRequestFailed(t.localizedMessage ?: "Unknown")
+            }
+
+            override fun onResponse(
+                call: Call<ResponseBody>,
+                response: Response<ResponseBody>
+            ) {
+                if (response.code() == 200)
+                    callback.onRequestSuccess(null)
+                else
+                    callback.onRequestFailed(response.message())
+            }
+
+        })
+    }
+
     override fun saveAddress(
         address: AddressModel,
         callback: RequestCompleteListener<Any?>

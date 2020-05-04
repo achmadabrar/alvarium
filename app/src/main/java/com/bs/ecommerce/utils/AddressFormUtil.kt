@@ -14,7 +14,7 @@ import kotlinx.android.synthetic.main.address_form.view.*
 
 class AddressFormUtil(private val form: View, private val context: Context) {
 
-    private var isValidForm: Boolean = false
+    private var isValidForm: Boolean = true
     var validAddress: AddressModel? = null
         private set
 
@@ -42,6 +42,10 @@ class AddressFormUtil(private val form: View, private val context: Context) {
             override fun onNothingSelected(parent: AdapterView<*>) {}
         }
 
+        // set selected country
+        availableCountries.indexOfFirst { it.selected }.also {
+            if (it >= 0) form.countrySpinner.setSelection(it)
+        }
     }
 
     fun prepareEditText(address: AddressModel) {
@@ -67,7 +71,8 @@ class AddressFormUtil(private val form: View, private val context: Context) {
 
             form.etCompanyName?.showOrHideOrRequired(
                 isEnabledParam = companyEnabled == true,
-                isRequired = companyRequired == true
+                isRequired = companyRequired == true,
+                value = company
             )
 
             form.etStateProvince?.showOrHideOrRequired(
@@ -77,37 +82,38 @@ class AddressFormUtil(private val form: View, private val context: Context) {
 
             form.etCity?.showOrHideOrRequired(
                 isEnabledParam = cityEnabled == true,
-                isRequired = cityRequired == true
+                isRequired = cityRequired == true,
+                value = city
             )
 
             form.etStreetAddress?.showOrHideOrRequired(
                 isEnabledParam = streetAddressEnabled == true,
-                isRequired = streetAddressRequired == true
+                isRequired = streetAddressRequired == true,
+                value = address1
             )
 
             form.etStreetAddress2?.showOrHideOrRequired(
                 isEnabledParam = streetAddress2Enabled == true,
-                isRequired = streetAddress2Required == true
+                isRequired = streetAddress2Required == true,
+                value = address2
             )
 
             form.etZipCode?.showOrHideOrRequired(
                 isEnabledParam = zipPostalCodeEnabled == true,
-                isRequired = zipPostalCodeRequired == true
+                isRequired = zipPostalCodeRequired == true,
+                value = zipPostalCode
             )
 
             form.etPhone?.showOrHideOrRequired(
                 isEnabledParam = phoneEnabled == true,
-                isRequired = phoneRequired == true
+                isRequired = phoneRequired == true,
+                value = phoneNumber
             )
 
             form.etFax?.showOrHideOrRequired(
                 isEnabledParam = faxEnabled == true,
-                isRequired = faxRequired == true
-            )
-
-            form.etZipCode?.showOrHideOrRequired(
-                isEnabledParam = zipPostalCodeEnabled == true,
-                isRequired = zipPostalCodeRequired == true
+                isRequired = faxRequired == true,
+                value = faxNumber
             )
 
         }
@@ -220,7 +226,7 @@ class AddressFormUtil(private val form: View, private val context: Context) {
         }
     }
 
-    fun populateStateSpinner(states: List<AvailableState>) {
+    fun populateStateSpinner(selectedStateId: Int?, states: List<AvailableState>) {
 
         val spinnerAdapter: ArrayAdapter<AvailableState> =
             ArrayAdapter<AvailableState>(context, R.layout.simple_spinner_item, states)
@@ -230,5 +236,10 @@ class AddressFormUtil(private val form: View, private val context: Context) {
         form.stateSpinner?.adapter = spinnerAdapter
 
         form.stateSpinnerLayout?.visibility = View.VISIBLE
+
+        // set selected country
+        states.indexOfFirst { it.id == selectedStateId }.also {
+            if (it >= 0) form.stateSpinner.setSelection(it)
+        }
     }
 }

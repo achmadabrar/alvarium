@@ -98,6 +98,27 @@ class AddressViewModel: CheckoutAddressViewModel() {
         })
     }
 
+    fun updateAddress(address: AddressModel, model: CustomerAddressModel) {
+
+        if(isLoadingLD.value == true)
+            return
+
+        isLoadingLD.value = true
+
+        model.updateAddress(address, object : RequestCompleteListener<Any?> {
+            override fun onRequestSuccess(data: Any?) {
+                isLoadingLD.value = false
+                resetFormLD.value = true
+            }
+
+            override fun onRequestFailed(errorMessage: String) {
+                isLoadingLD.value = false
+                toast(errorMessage)
+            }
+
+        })
+    }
+
     fun deleteAddress(address: AddressModel, positionInList: Int, model: CustomerAddressModel) {
         if(isLoadingLD.value == true || address.id==null)
             return

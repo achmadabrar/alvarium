@@ -29,4 +29,9 @@ interface CustomerAddressModel {
         addressId: Int,
         callback: RequestCompleteListener<Any?>
     )
+
+    fun updateAddress(
+        address: AddressModel,
+        callback: RequestCompleteListener<Any?>
+    )
 }

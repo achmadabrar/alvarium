@@ -51,7 +51,7 @@ class AddOrEditAddressFragment : BaseFragment() {
                 isEditMode = editMode == true
 
                 if (isEditMode && id != null)
-                    getExistingAddressFormData(id, model)
+                    addressLD.value = tempAddress // FIXME getExistingAddressFormData(id, model)
                 else if (!isEditMode)
                     getNewAddressFormData(model)
             }
@@ -70,7 +70,7 @@ class AddOrEditAddressFragment : BaseFragment() {
             })
 
             stateListLD.observe(viewLifecycleOwner, Observer { statesList ->
-                formUtil.populateStateSpinner(statesList)
+                formUtil.populateStateSpinner(addressLD.value?.stateProvinceId ?: 0, statesList)
             })
 
 
@@ -127,7 +127,7 @@ class AddOrEditAddressFragment : BaseFragment() {
                 (viewModel as AddressViewModel).apply {
 
                     if (isEditMode) {
-                        // TODO
+                        updateAddress(formUtil.validAddress!!, model)
                     } else {
                         saveCustomerAddress(formUtil.validAddress!!, model)
                     }
@@ -141,12 +141,18 @@ class AddOrEditAddressFragment : BaseFragment() {
         private const val key_is_edit: String = "key_is_edit"
         private const val key_id: String = "key_id"
 
+        // FIXME remove this var when getExistingAddressFormData api works
+        private var tempAddress: AddressModel? = null
+
         fun newInstance(address: AddressModel?, isEdit: Boolean): AddOrEditAddressFragment {
 
             val bundle = Bundle().apply {
                 putBoolean(key_is_edit, isEdit)
 
-                if (isEdit) putInt(key_id, address?.id ?: -1)
+                if (isEdit) {
+                    putInt(key_id, address?.id ?: -1)
+                    tempAddress = address
+                }
             }
 
             return AddOrEditAddressFragment().apply {
