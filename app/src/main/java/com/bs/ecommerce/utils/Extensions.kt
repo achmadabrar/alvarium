@@ -47,7 +47,7 @@ fun Fragment.replaceFragmentSafely(
     val ft = requireActivity().supportFragmentManager
         .beginTransaction()
         .setCustomAnimations(enterAnimation, exitAnimation, popEnterAnimation, popExitAnimation)
-        .replace(containerViewId, fragment)
+        .replace(containerViewId, fragment, fragment::class.java.simpleName)
         .addToBackStack(fragment::class.java.simpleName)
 
     if (!requireActivity().supportFragmentManager.isStateSaved) {

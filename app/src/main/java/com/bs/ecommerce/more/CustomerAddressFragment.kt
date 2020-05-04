@@ -41,10 +41,9 @@ class CustomerAddressFragment : BaseFragment() {
             viewModel = ViewModelProvider(this).get(AddressViewModel::class.java)
 
             setupView()
-        }
 
-        // intentionally calling api every time
-        (viewModel as AddressViewModel).getCustomerAddresses(model)
+            (viewModel as AddressViewModel).getCustomerAddresses(model)
+        }
 
         setLiveDataObserver()
     }
@@ -107,6 +106,11 @@ class CustomerAddressFragment : BaseFragment() {
         }
 
 
+    }
+
+    // FIXME Bad Practice. Inter fragment communication should be done with interface. Replace ASAP
+    fun updateAddressList() {
+        (viewModel as AddressViewModel).getCustomerAddresses(model)
     }
 
     private fun showDeleteConfirmationDialog(data: AddressModel, position: Int) {

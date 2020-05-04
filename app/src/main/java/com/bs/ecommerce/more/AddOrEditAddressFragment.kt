@@ -51,7 +51,7 @@ class AddOrEditAddressFragment : BaseFragment() {
                 isEditMode = editMode == true
 
                 if (isEditMode && id != null)
-                    addressLD.value = tempAddress // FIXME getExistingAddressFormData(id, model)
+                    getExistingAddressFormData(id, model)
                 else if (!isEditMode)
                     getNewAddressFormData(model)
             }
@@ -85,6 +85,16 @@ class AddOrEditAddressFragment : BaseFragment() {
 
                 if (resetForm && lifecycle.currentState.isAtLeast(Lifecycle.State.RESUMED)) {
                     toast(if (isEditMode) R.string.address_update_succss else R.string.address_saved)
+
+                    // Update address list to show changes
+                    // FIXME Bad Practice. Inter fragment communication should be done with interface. Replace ASAP
+                    val fragment =
+                        requireActivity().supportFragmentManager.findFragmentByTag(
+                            CustomerAddressFragment::class.java.simpleName
+                        )
+
+                    if(fragment!=null && fragment is CustomerAddressFragment)
+                        fragment.updateAddressList()
 
                     // close this fragment
                     requireActivity().supportFragmentManager.popBackStack()
@@ -141,18 +151,12 @@ class AddOrEditAddressFragment : BaseFragment() {
         private const val key_is_edit: String = "key_is_edit"
         private const val key_id: String = "key_id"
 
-        // FIXME remove this var when getExistingAddressFormData api works
-        private var tempAddress: AddressModel? = null
-
         fun newInstance(address: AddressModel?, isEdit: Boolean): AddOrEditAddressFragment {
 
             val bundle = Bundle().apply {
                 putBoolean(key_is_edit, isEdit)
 
-                if (isEdit) {
-                    putInt(key_id, address?.id ?: -1)
-                    tempAddress = address
-                }
+                if (isEdit) putInt(key_id, address?.id ?: -1)
             }
 
             return AddOrEditAddressFragment().apply {
