@@ -7,7 +7,7 @@ import com.bs.ecommerce.cart.model.data.CartResponse
 import com.bs.ecommerce.cart.model.data.CartRootData
 import com.bs.ecommerce.common.RequestCompleteListener
 import com.bs.ecommerce.networking.RetroClient
-import com.bs.ecommerce.product.model.data.UpdateCartPostData
+import com.bs.ecommerce.networking.common.KeyValueFormData
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -35,10 +35,10 @@ class CartModelImpl(private val context: Context): CartModel
         })
     }
 
-    override fun updateCartData(updateCartPostData: UpdateCartPostData, callback: RequestCompleteListener<CartResponse>)
+    override fun updateCartData(KeyValueFormData: KeyValueFormData, callback: RequestCompleteListener<CartResponse>)
     {
 
-        RetroClient.api.updateCartData(updateCartPostData).enqueue(object : Callback<CartResponse>
+        RetroClient.api.updateCartData(KeyValueFormData).enqueue(object : Callback<CartResponse>
         {
             override fun onResponse(call: Call<CartResponse>, response: Response<CartResponse>)
             {

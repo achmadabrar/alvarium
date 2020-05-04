@@ -1,8 +1,6 @@
 package com.bs.ecommerce.auth.login.data
 import com.bs.ecommerce.auth.register.data.CustomerInfo
-import com.bs.ecommerce.auth.register.data.KeyValuePair
-import com.bs.ecommerce.networking.BaseResponse
-import com.bs.ecommerce.utils.showLog
+import com.bs.ecommerce.networking.common.BaseResponse
 import com.google.gson.annotations.SerializedName
 
 

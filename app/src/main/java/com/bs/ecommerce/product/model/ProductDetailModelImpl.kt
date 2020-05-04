@@ -6,7 +6,7 @@ import com.bs.ecommerce.networking.Api
 import com.bs.ecommerce.networking.RetroClient
 import com.bs.ecommerce.product.model.data.AddToCartResponse
 import com.bs.ecommerce.product.model.data.ProductDetailResponse
-import com.bs.ecommerce.product.model.data.UpdateCartPostData
+import com.bs.ecommerce.networking.common.KeyValueFormData
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -33,11 +33,11 @@ class ProductDetailModelImpl :
 
     override fun addProductToCartModel(productId: Long,
                                        cartTypeId: Long,
-                                       updateCartPostData: UpdateCartPostData,
+                                       KeyValueFormData: KeyValueFormData,
                                        callback: RequestCompleteListener<AddToCartResponse>)
     {
 
-        RetroClient.api.addProductIntoCartAPI(productId, cartTypeId, updateCartPostData).enqueue(object : Callback<AddToCartResponse>
+        RetroClient.api.addProductIntoCartAPI(productId, cartTypeId, KeyValueFormData).enqueue(object : Callback<AddToCartResponse>
         {
             override fun onFailure(call: Call<AddToCartResponse>, t: Throwable) {
                 callback.onRequestFailed(t.localizedMessage ?: "Unknown")
@@ -58,7 +58,9 @@ class ProductDetailModelImpl :
         callback: RequestCompleteListener<AddToCartResponse>
     ) {
 
-        RetroClient.api.addProductIntoCartAPI(productId, Api.typeWishList, UpdateCartPostData())
+        RetroClient.api.addProductIntoCartAPI(productId, Api.typeWishList,
+            KeyValueFormData()
+        )
             .enqueue(object : Callback<AddToCartResponse> {
                 override fun onFailure(call: Call<AddToCartResponse>, t: Throwable) {
                     callback.onRequestFailed(t.localizedMessage ?: "Unknown")

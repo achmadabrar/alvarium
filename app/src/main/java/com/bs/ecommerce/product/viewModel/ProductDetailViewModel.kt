@@ -7,6 +7,7 @@ import com.bs.ecommerce.base.BaseViewModel
 import com.bs.ecommerce.common.RequestCompleteListener
 import com.bs.ecommerce.home.homepage.model.data.HomePageProductResponse
 import com.bs.ecommerce.networking.Api
+import com.bs.ecommerce.networking.common.KeyValueFormData
 import com.bs.ecommerce.product.model.ProductDetailModel
 import com.bs.ecommerce.product.model.data.*
 import com.bs.ecommerce.utils.AttributeControlType
@@ -110,7 +111,7 @@ class ProductDetailViewModel : BaseViewModel() {
     private fun prepareBodyForAttributes(
                                 productId : Long,
                                 quantity: String,
-                                selectedAttributeMap: MutableMap<Long, MutableList<AttributeControlValue>>): UpdateCartPostData
+                                selectedAttributeMap: MutableMap<Long, MutableList<AttributeControlValue>>): KeyValueFormData
     {
         val productAttributePrefix = "product_attribute"
 
@@ -139,7 +140,9 @@ class ProductDetailViewModel : BaseViewModel() {
         keyValuePair.value = quantity
         allKeyValueList.add(keyValuePair)
 
-        val body = UpdateCartPostData(allKeyValueList)
+        val body = KeyValueFormData(
+            allKeyValueList
+        )
         body.formValues = allKeyValueList
 
         "key_value".showLog(body.toString())

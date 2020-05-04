@@ -9,7 +9,7 @@ import com.bs.ecommerce.cart.model.data.CartResponse
 import com.bs.ecommerce.cart.model.data.CartRootData
 import com.bs.ecommerce.cart.model.data.Value
 import com.bs.ecommerce.common.RequestCompleteListener
-import com.bs.ecommerce.product.model.data.UpdateCartPostData
+import com.bs.ecommerce.networking.common.KeyValueFormData
 import com.bs.ecommerce.utils.AttributeControlType
 import java.util.ArrayList
 import java.util.HashMap
@@ -68,7 +68,9 @@ class CartViewModel : BaseViewModel()
     fun updateCartData(allKeyValueList: List<KeyValuePair>, model: CartModel)
     {
 
-        val body = UpdateCartPostData(allKeyValueList)
+        val body = KeyValueFormData(
+            allKeyValueList
+        )
         body.formValues = allKeyValueList
 
         isLoadingLD.value = true

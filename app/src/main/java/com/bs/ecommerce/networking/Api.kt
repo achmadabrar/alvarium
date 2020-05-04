@@ -7,13 +7,12 @@ import com.bs.ecommerce.auth.register.data.KeyValuePair
 import com.bs.ecommerce.cart.model.data.AddDiscountPostData
 import com.bs.ecommerce.cart.model.data.CartResponse
 import com.bs.ecommerce.cart.model.data.CartRootData
-import com.bs.ecommerce.checkout.model.data.BillingAddressResponse
-import com.bs.ecommerce.checkout.model.data.CheckoutPostData
-import com.bs.ecommerce.checkout.model.data.StateListResponse
+import com.bs.ecommerce.checkout.model.data.*
 import com.bs.ecommerce.home.homepage.model.data.HomePageProductResponse
 import com.bs.ecommerce.home.homepage.model.data.SliderResponse
 import com.bs.ecommerce.main.model.data.AppLandingSettingResponse
 import com.bs.ecommerce.main.model.data.CategoryTreeResponse
+import com.bs.ecommerce.networking.common.KeyValueFormData
 import com.bs.ecommerce.product.model.data.*
 import retrofit2.Call
 import retrofit2.http.*
@@ -42,7 +41,7 @@ interface Api {
     fun getCartData(): Call<CartResponse>
 
     @POST("shoppingcart/updatecart")
-    fun updateCartData(@Body updateCartPostData: UpdateCartPostData): Call<CartResponse>
+    fun updateCartData(@Body KeyValueFormData: KeyValueFormData): Call<CartResponse>
 
 
     @POST("shoppingcart/applydiscountcoupon")
@@ -64,6 +63,12 @@ interface Api {
 
     @GET("country/getstatesbycountryid/{countryId}")
     fun getStatesAPI(@Path("countryId") id: String): Call<StateListResponse>
+
+    @POST("checkout/savebilling")
+    fun saveNewBillingAPI(@Body billingAddressPostData: SaveBillingPostData): Call<SaveBillingResponse>
+
+    @POST("checkout/savebilling")
+    fun saveExistingBillingAPI(@Body KeyValueFormData: KeyValueFormData): Call<SaveBillingResponse>
 
     @GET("checkout/checkoutgetshippingmethods")
     fun getShippingMethodAPI(): Call<CartResponse>
@@ -123,7 +128,8 @@ interface Api {
     @POST("shoppingCart/AddProductToCart/details/{productId}/{shoppingCartTypeId}")
     fun addProductIntoCartAPI(@Path("productId") id: Long,
                            @Path("shoppingCartTypeId") shoppingCartTypeId: Long,
-                           @Body updateCartPostData: UpdateCartPostData): Call<AddToCartResponse>
+                           @Body KeyValueFormData: KeyValueFormData
+    ): Call<AddToCartResponse>
 
     @GET("catalog/category/{id}")
     fun getProductList(@Path("id") id: Long, @QueryMap options: Map<String, String>): Call<CategoryResponse>
