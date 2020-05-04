@@ -9,5 +9,11 @@ import com.google.gson.annotations.SerializedName
 data class StateListResponse(@SerializedName("Data") val stateList: List<AvailableState>?) : BaseResponse()
 
 
-class AvailableState(    @SerializedName("id") val id: Int,
-                         @SerializedName("name") val name: String)
+class AvailableState(
+    @SerializedName("id") val id: Int,
+    @SerializedName("name") val name: String
+) {
+    override fun toString(): String {
+        return name
+    }
+}

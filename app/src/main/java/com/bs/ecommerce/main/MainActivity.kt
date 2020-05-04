@@ -5,6 +5,7 @@ import android.os.Handler
 import android.view.View
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.core.view.GravityCompat
+import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.bs.ecommerce.R
@@ -197,7 +198,13 @@ class MainActivity : BaseActivity()
         when (item.itemId) {
             R.id.bottom_nav_home -> {
 
-                createIfNotInBackStack<HomeFragment>(HomeFragment())
+                // HomeFragment is never in backStack
+                // Pop all items from backStack will make HomeFragment visible
+                supportFragmentManager.popBackStack(
+                    null,
+                    FragmentManager.POP_BACK_STACK_INCLUSIVE
+                )
+
                 return@OnNavigationItemSelectedListener true
             }
             R.id.bottom_nav_categories -> {

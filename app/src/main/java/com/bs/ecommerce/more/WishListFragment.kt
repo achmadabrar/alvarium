@@ -3,12 +3,15 @@ package com.bs.ecommerce.more
 import android.os.Bundle
 import android.view.View
 import android.widget.RelativeLayout
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bs.ecommerce.R
+import com.bs.ecommerce.base.BaseActivity
 import com.bs.ecommerce.base.BaseFragment
 import com.bs.ecommerce.base.BaseViewModel
+import com.bs.ecommerce.cart.CartFragment
 import com.bs.ecommerce.more.adapter.WishListAdapter
 import com.bs.ecommerce.more.model.WishListModel
 import com.bs.ecommerce.more.model.WishListModelImpl
@@ -16,6 +19,7 @@ import com.bs.ecommerce.more.viewmodel.WishListViewModel
 import com.bs.ecommerce.product.model.data.WishListItem
 import com.bs.ecommerce.utils.ItemClickListener
 import com.bs.ecommerce.utils.RecyclerViewMargin
+import com.bs.ecommerce.utils.replaceFragmentSafely
 import com.bs.ecommerce.utils.showLog
 import kotlinx.android.synthetic.main.fragment_wishlist.*
 
@@ -61,6 +65,15 @@ class WishListFragment : BaseFragment() {
                     View.VISIBLE else View.GONE
 
                 listAdapter.addData(data?.items)
+            })
+
+            goToCartLD.observe(viewLifecycleOwner, Observer { goToCart ->
+
+                if (goToCart && lifecycle.currentState.isAtLeast(Lifecycle.State.RESUMED)) {
+
+                    // FIXME what will happen to this Fragment?
+                    replaceFragmentSafely(CartFragment())
+                }
             })
 
             isLoadingLD.observe(viewLifecycleOwner, Observer { isShowLoader ->

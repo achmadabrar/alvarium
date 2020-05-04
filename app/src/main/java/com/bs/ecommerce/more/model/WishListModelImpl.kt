@@ -3,7 +3,9 @@ package com.bs.ecommerce.more.model
 
 import com.bs.ecommerce.auth.register.data.KeyValuePair
 import com.bs.ecommerce.common.RequestCompleteListener
+
 import com.bs.ecommerce.networking.RetroClient
+import com.bs.ecommerce.networking.common.BaseResponse
 import com.bs.ecommerce.product.model.data.WishListResponse
 import retrofit2.Call
 import retrofit2.Callback
@@ -52,7 +54,9 @@ class WishListModelImpl : WishListModel {
         keyValuePairs: List<KeyValuePair>,
         callback: RequestCompleteListener<WishListResponse>
     ) {
-        RetroClient.api.moveWishListItemsToCart(keyValuePairs).enqueue(object : Callback<WishListResponse> {
+        val reqBody = BaseResponse().apply { formValues = keyValuePairs }
+
+        RetroClient.api.moveWishListItemsToCart(reqBody).enqueue(object : Callback<WishListResponse> {
 
             override fun onResponse(call: Call<WishListResponse>, response: Response<WishListResponse>) {
                 if (response.body() != null)

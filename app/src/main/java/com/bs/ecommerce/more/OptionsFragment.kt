@@ -78,6 +78,9 @@ class OptionsFragment : BaseFragment() {
 
                         R.string.title_wishlist ->
                             replaceFragmentSafely(WishListFragment())
+
+                        R.string.title_addresses ->
+                            replaceFragmentSafely(CustomerAddressFragment())
                     }
                 }
 

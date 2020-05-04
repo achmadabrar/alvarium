@@ -13,6 +13,7 @@ import java.util.*
 class WishListViewModel : BaseViewModel() {
 
     var wishListLD = MutableLiveData<WishListData?>()
+    var goToCartLD = MutableLiveData<Boolean>()
 
     fun getWishList(model: WishListModel) {
         isLoadingLD.value = true
@@ -49,7 +50,7 @@ class WishListViewModel : BaseViewModel() {
 
     fun removeItemFromWishList(itemId: Int?, model: WishListModel) {
 
-        if(itemId==null) return
+        if (itemId == null) return
 
         val keyValuePairs = ArrayList<KeyValuePair>()
         KeyValuePair().apply {
@@ -92,7 +93,7 @@ class WishListViewModel : BaseViewModel() {
             }
         } else {
 
-            if(itemId==null)
+            if (itemId == null)
                 return
 
             KeyValuePair().apply {
@@ -109,18 +110,21 @@ class WishListViewModel : BaseViewModel() {
             override fun onRequestSuccess(data: WishListResponse) {
                 isLoadingLD.value = false
 
-                wishListLD.value = data.wishListData
-
-                if(data.errorList.isNotEmpty())
+                if (data.errorList.isNotEmpty()) {
                     toast(data.errorsAsFormattedString)
-                else
+                    goToCartLD.value = false
+                } else {
                     toast(data.message)
+                    goToCartLD.value = true
+                }
             }
 
             override fun onRequestFailed(errorMessage: String) {
                 isLoadingLD.value = false
+                goToCartLD.value = false
 
                 toast(errorMessage)
+
             }
         })
     }

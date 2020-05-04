@@ -16,7 +16,6 @@ import com.bs.ecommerce.cart.GiftCardAdapter
 import com.bs.ecommerce.more.model.OrderModel
 import com.bs.ecommerce.more.model.OrderModelImpl
 import com.bs.ecommerce.more.viewmodel.OrderViewModel
-import com.bs.ecommerce.product.model.data.Address
 import com.bs.ecommerce.product.model.data.Item
 import com.bs.ecommerce.product.model.data.OrderDetailsData
 import com.bs.ecommerce.utils.RecyclerViewMargin
@@ -26,6 +25,7 @@ import kotlinx.android.synthetic.main.confirm_order_card.view.*
 import kotlinx.android.synthetic.main.fragment_customer_order_detail.*
 import kotlinx.android.synthetic.main.item_order_details.view.*
 import kotlinx.android.synthetic.main.table_order_total.*
+import java.lang.ref.WeakReference
 
 class OrderDetailsFragment : BaseFragment() {
     private lateinit var model: OrderModel
@@ -81,7 +81,7 @@ class OrderDetailsFragment : BaseFragment() {
             .plus(
                 TextUtils().tzTimeConverter(
                     data.createdOn,
-                    requireContext()
+                    WeakReference(requireContext())
                 )
             ).plus("\n").plus(getString(R.string.order_status)).plus(data.orderStatus).plus("\n")
             .plus(
@@ -94,11 +94,15 @@ class OrderDetailsFragment : BaseFragment() {
 
         shippingAddressCard.tvCardTitle.text = getString(R.string.shipping_address)
         shippingAddressCard.tvCardDetails.text = data.shippingAddress?.firstName.plus(" ").plus(data.shippingAddress?.lastName)
-        shippingAddressCard.tvCardDetails2.text = getFormattedAddress(data.shippingAddress)
+        shippingAddressCard.tvCardDetails2.text = TextUtils().getFormattedAddress(
+            data.shippingAddress, WeakReference(requireContext())
+        )
 
         billingAddressCard.tvCardTitle.text = getString(R.string.billing_address)
         billingAddressCard.tvCardDetails.text = data.billingAddress?.firstName.plus(" ").plus(data.billingAddress?.lastName)
-        billingAddressCard.tvCardDetails2.text = getFormattedAddress(data.billingAddress)
+        billingAddressCard.tvCardDetails2.text = TextUtils().getFormattedAddress(
+            data.billingAddress, WeakReference(requireContext())
+        )
 
         shippingMethodCard.tvCardTitle.text = getString(R.string.shipping_method)
         shippingMethodCard.tvCardDetails.text = data.shippingMethod
@@ -172,27 +176,6 @@ class OrderDetailsFragment : BaseFragment() {
                 tvTotal?.setTextColor(android.graphics.Color.RED)
             }
         }
-    }
-
-    private fun getFormattedAddress(address: Address?): String {
-        if (address == null) return ""
-
-        return StringBuilder().apply {
-            append(getString(R.string.reg_hint_email)).append(" ").append(address.email)
-                .append("\n")
-
-            append(getString(R.string.reg_hint_phone)).append(" ").append(address.phoneNumber)
-                .append("\n")
-
-            if (address.faxNumber?.isNotEmpty() == true)
-                append(getString(R.string.reg_hint_fax)).append(" ").append(address.faxNumber)
-                    .append("\n")
-
-            append(address.company).append("\n")
-            append(address.address1).append("\n")
-            append(address.city).append(" ").append(address.zipPostalCode).append("\n")
-            append(address.countryName)
-        }.toString()
     }
 
     //--------------------

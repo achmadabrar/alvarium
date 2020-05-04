@@ -4,7 +4,7 @@ package com.bs.ecommerce.product.model.data
 import com.bs.ecommerce.networking.common.BaseResponse
 import com.google.gson.annotations.SerializedName
 
-data class WishListResponse(
+data class CustomerAddressResponse(
     @SerializedName("Data")
-    val wishListData: WishListData?
-) : BaseResponse()
+    val `data`: CustomerAddressData?
+): BaseResponse()

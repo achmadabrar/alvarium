@@ -10,7 +10,7 @@ import com.bs.ecommerce.checkout.model.data.*
 import com.bs.ecommerce.common.RequestCompleteListener
 import com.bs.ecommerce.networking.common.KeyValueFormData
 
-class CheckoutAddressViewModel : BaseViewModel()
+open class CheckoutAddressViewModel : BaseViewModel()
 {
     var cartLD = MutableLiveData<CartRootData>()
 

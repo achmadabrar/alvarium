@@ -12,8 +12,10 @@ import com.bs.ecommerce.home.homepage.model.data.HomePageProductResponse
 import com.bs.ecommerce.home.homepage.model.data.SliderResponse
 import com.bs.ecommerce.main.model.data.AppLandingSettingResponse
 import com.bs.ecommerce.main.model.data.CategoryTreeResponse
+import com.bs.ecommerce.networking.common.BaseResponse
 import com.bs.ecommerce.networking.common.KeyValueFormData
 import com.bs.ecommerce.product.model.data.*
+import okhttp3.ResponseBody
 import retrofit2.Call
 import retrofit2.http.*
 
@@ -169,7 +171,25 @@ interface Api {
     fun updateWishList(@Body list: List<KeyValuePair>): Call<WishListResponse>
 
     @POST("shoppingcart/additemstocartfromwishlist")
-    fun moveWishListItemsToCart(@Body list: List<KeyValuePair>): Call<WishListResponse>
+    fun moveWishListItemsToCart(@Body body: BaseResponse): Call<WishListResponse>
+
+
+    // Customer Address
+
+    @GET("customer/addresses")
+    fun getCustomerAddresses(): Call<CustomerAddressResponse>
+
+    @GET("customer/addressadd")
+    fun getAddAddressData(): Call<EditCustomerAddressResponse>
+
+    @POST("customer/addressadd")
+    fun saveCustomerAddress(@Body body: EditCustomerAddressResponse): Call<ResponseBody>
+
+    @POST("customer/addressdelete/{addressId}")
+    fun deleteCustomerAddress(@Path("addressId") id: Int): Call<ResponseBody>
+
+    @GET("customer/addressedit/{addressId}")
+    fun getEditAddressData(@Path("addressId") id: Int): Call<EditCustomerAddressResponse>
 
 /*    @POST("setcurrency/{id}")
     fun setCurrency(@Path("id") id: Long): Call<LanguageResponse>
@@ -218,9 +238,6 @@ interface Api {
 
     @get:GET("shoppingcart/checkoutorderinformation")
     val checkoutOrderSummary: Call<CheckoutOrderSummaryResponse>
-
-    @get:GET("customer/addresses")
-    val customerAddresses: Call<CustomerAddressResponse>
 
     @get:GET("order/customerorders")
     val customerOrders: Call<CustomerOrdersResponse>

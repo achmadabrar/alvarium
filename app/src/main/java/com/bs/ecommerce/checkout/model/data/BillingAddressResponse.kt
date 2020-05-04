@@ -75,6 +75,10 @@ data class AvailableCountry(
     @SerializedName("Selected") var selected: Boolean = false,
     @SerializedName("Text") var text: String = "",
     @SerializedName("Value") var value: String = ""
-)
+) {
+    override fun toString(): String {
+        return text
+    }
+}
 
 
