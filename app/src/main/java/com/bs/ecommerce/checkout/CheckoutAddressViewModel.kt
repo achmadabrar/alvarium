@@ -39,10 +39,10 @@ class CheckoutAddressViewModel : BaseViewModel()
             }
         })
     }
-    fun saveBillingVM(billingAddressData: BillingAddressData, model: CheckoutModel)
+    fun saveNewBillingVM(billingAddress: BillingAddress, model: CheckoutModel)
     {
         val saveBillingPostData = SaveBillingPostData()
-        saveBillingPostData.data = billingAddressData
+        saveBillingPostData.data = billingAddress
 
         isLoadingLD.postValue(true)
 

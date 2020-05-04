@@ -71,7 +71,7 @@ class BaseBillingAddressFragment : BaseFragment()
                 getAddressWithValidation()
 
                 if(isValidInfo)
-                    (viewModel as CheckoutAddressViewModel).saveBillingVM(billingAddressData, model)
+                    (viewModel as CheckoutAddressViewModel).saveNewBillingVM(billingAddressData.billingAddress, model)
             }
             else
                 (viewModel as CheckoutAddressViewModel).saveBillingFromExistingAddressVM(addressID, model)

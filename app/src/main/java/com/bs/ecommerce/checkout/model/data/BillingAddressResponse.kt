@@ -23,6 +23,8 @@ data class BillingAddress(
 )
 
 
+//open class BaseBillingNewAddress(@SerializedName("BillingNewAddress") var billingNewAddress: BillingNewAddress = BillingNewAddress())
+
 
 data class BillingNewAddress(
     @SerializedName("Address1") var address1: Any = Any(),
