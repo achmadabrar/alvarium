@@ -18,6 +18,7 @@ import com.bs.ecommerce.home.homepage.HomeFragment
 import com.bs.ecommerce.main.model.MainModel
 import com.bs.ecommerce.main.model.MainModelImpl
 import com.bs.ecommerce.more.OptionsFragment
+import com.bs.ecommerce.more.UserAccountFragment
 import com.bs.ecommerce.networking.NetworkUtil
 import com.bs.ecommerce.product.SearchFragment
 import com.bs.ecommerce.utils.PrefSingleton
@@ -221,11 +222,9 @@ class MainActivity : BaseActivity()
             }
             R.id.bottom_nav_account -> {
 
-                if(prefObject.getPrefsBoolValue(PrefSingleton.IS_LOGGED_IN))
-                    createIfNotInBackStack<LoginFragment>(CustomerInfoFragment())
-                else
-                    createIfNotInBackStack<LoginFragment>(LoginFragment())
-
+                createIfNotInBackStack<UserAccountFragment>(
+                    UserAccountFragment()
+                )
                 return@OnNavigationItemSelectedListener true
             }
             R.id.bottom_nav_more -> {

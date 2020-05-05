@@ -15,7 +15,6 @@ import androidx.fragment.app.Fragment
 import com.bs.ecommerce.R
 import com.bs.ecommerce.customViews.ContentLoadingDialog
 import com.bs.ecommerce.more.barcode.BarCodeCaptureFragment
-import com.bs.ecommerce.more.viewmodel.OptionViewModel
 import com.bs.ecommerce.networking.NetworkUtil
 import com.bs.ecommerce.utils.*
 import com.pnikosis.materialishprogress.ProgressWheel
@@ -139,13 +138,18 @@ abstract class BaseFragment : Fragment()
         }
     }
 
-    fun logoutConfirmationDialog()
+    fun logoutConfirmationDialog(onClickListener: View.OnClickListener)
     {
         val builder = AlertDialog.Builder(requireActivity())
 
         builder.setMessage(R.string.are_you_sure_logout).setTitle(R.string.log_out)
 
-        builder.setPositiveButton(R.string.yes) { _, _ -> performLogout() }
+        builder.setPositiveButton(R.string.yes) { _, _ ->
+            performLogout()
+
+            // update UI
+            onClickListener.onClick(rootView)
+        }
         builder.setNegativeButton(R.string.no) { dialog, _ -> dialog.dismiss() }
 
         val dialog = builder.create()
@@ -158,10 +162,9 @@ abstract class BaseFragment : Fragment()
         MyApplication.myCartCounter = 0
         prefObject.setPrefs(PrefSingleton.TOKEN_KEY, "")
         prefObject.setPrefs(PrefSingleton.IS_LOGGED_IN, false)
+        prefObject.setCustomerInfo(PrefSingleton.CUSTOMER_INFO, null)
         //LoginManager.getInstance().logOut()
         requireActivity().invalidateOptionsMenu()
-
-        (viewModel as OptionViewModel).loadOptions(prefObject)
     }
 
 

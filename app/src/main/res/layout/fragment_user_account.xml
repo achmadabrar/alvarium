@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/userAccountRootLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/blackOrWhite"
+    android:orientation="vertical">
+
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/rootScrollViewBillingAddress"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:background="@color/blackOrWhite"
+        android:orientation="vertical"
+        android:screenOrientation="nosensor"
+        android:scrollbars="none">
+
+        <LinearLayout
+            android:id="@+id/menuHolder"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:animateLayoutChanges="true"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tvUserName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:gravity="center"
+                tools:text="@string/placeholder"
+                android:textColor="@color/whiteOrBlack"
+                android:textSize="22sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tvUserEmail"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="@dimen/user_account_section_gap"
+                android:gravity="center"
+                tools:text="@string/placeholder"
+                android:textColor="@color/whiteOrBlack"
+                android:textSize="@dimen/tv_text_size_regular"
+                android:textStyle="bold" />
+
+            <include
+                android:id="@+id/accInfoLayout"
+                layout="@layout/item_user_account" />
+
+            <include
+                android:id="@+id/addressLayout"
+                layout="@layout/item_user_account"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/user_account_section_gap" />
+
+            <include
+                android:id="@+id/wishListLayout"
+                layout="@layout/item_user_account" />
+
+            <include
+                android:id="@+id/orderLayout"
+                layout="@layout/item_user_account" />
+
+            <include
+                android:id="@+id/cartLayout"
+                layout="@layout/item_user_account"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/user_account_section_gap" />
+
+            <include
+                android:id="@+id/reviewLayout"
+                layout="@layout/item_user_account"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/user_account_section_gap" />
+
+            <include
+                android:id="@+id/loginLayout"
+                layout="@layout/item_user_account"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="30dp" />
+        </LinearLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+</RelativeLayout>

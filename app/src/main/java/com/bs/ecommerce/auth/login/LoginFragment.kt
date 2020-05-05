@@ -6,6 +6,7 @@ import android.util.Log
 import android.view.View
 import android.widget.RelativeLayout
 import android.widget.Toast
+import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.bs.ecommerce.R
@@ -18,7 +19,6 @@ import com.bs.ecommerce.auth.register.RegisterFragment
 import com.bs.ecommerce.base.BaseFragment
 import com.bs.ecommerce.base.BaseViewModel
 import com.bs.ecommerce.home.homepage.HomeFragment
-import com.bs.ecommerce.main.MainActivity
 import com.bs.ecommerce.main.model.AuthModel
 import com.bs.ecommerce.networking.NetworkUtil
 import com.bs.ecommerce.utils.*
@@ -107,6 +107,8 @@ class LoginFragment : BaseFragment()
 
                     prefObject.setPrefs(PrefSingleton.TOKEN_KEY, it)
                     prefObject.setPrefs(PrefSingleton.IS_LOGGED_IN, true)
+                    prefObject.setCustomerInfo(PrefSingleton.CUSTOMER_INFO,
+                        loginResponse.loginData.customerInfo)
 
                     NetworkUtil.token = it
 
@@ -114,7 +116,12 @@ class LoginFragment : BaseFragment()
 
                     toast(getString(R.string.login_successful))
 
-                    replaceFragmentSafely(HomeFragment())
+                    // HomeFragment is never in backStack
+                    // Pop all items from backStack will make HomeFragment visible
+                    requireActivity().supportFragmentManager.popBackStack(
+                        null,
+                        FragmentManager.POP_BACK_STACK_INCLUSIVE
+                    )
                 }
                     ?:    toast(loginResponse?.errorsAsFormattedString.toString())
             })
