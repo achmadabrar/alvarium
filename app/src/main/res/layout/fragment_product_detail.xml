@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    android:layout_height="match_parent">
 
     <RelativeLayout
         android:id="@+id/productDetailsRootLayout"
@@ -31,23 +31,26 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/fragment_margin"
                 android:layout_marginEnd="@dimen/fragment_margin"
-                android:visibility="gone"
                 android:animateLayoutChanges="true"
-                tools:visibility="visible"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:visibility="gone"
+                tools:visibility="visible">
 
-                <include
-                    android:id="@+id/imageSlider"
-                    layout="@layout/slider"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
 
-                <include
-                    android:id="@+id/productNameLayout"
-                    layout="@layout/product_name_layout"
+                <ViewStub
+                    android:id="@+id/vsImageSlider"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="5dp" />
+                    android:layout="@layout/slider"
+                    tools:visibility="visible" />
+
+                <ViewStub
+                    android:id="@+id/vsProductNameLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:layout="@layout/product_name_layout"
+                    tools:visibility="visible" />
 
                 <include layout="@layout/horizontal_divider" />
 
@@ -101,17 +104,18 @@
                     android:id="@+id/attrViewHolder"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:layout_margin="5dp"/>
+                    android:layout_margin="5dp"
+                    android:orientation="vertical" />
 
                 <include layout="@layout/horizontal_divider" />
 
-                <include
-                    android:id="@+id/productDescLayout"
-                    layout="@layout/product_name_layout"
+                <ViewStub
+                    android:id="@+id/vsProductDescLayout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="5dp" />
+                    android:layout_margin="5dp"
+                    android:layout="@layout/product_name_layout"
+                    tools:visibility="visible" />
 
                 <include layout="@layout/horizontal_divider" />
 
@@ -120,14 +124,14 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout="@layout/featured_product_layout"
-                    tools:visibility="visible"/>
+                    tools:visibility="visible" />
 
                 <ViewStub
                     android:id="@+id/vsSimilarProduct"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout="@layout/featured_product_layout"
-                    tools:visibility="visible"/>
+                    tools:visibility="visible" />
 
             </LinearLayout>
 
@@ -138,7 +142,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:visibility="gone"
+            tools:visibility="visible">
 
             <Button
                 android:id="@+id/btnAddToCart"
@@ -176,11 +182,11 @@
 
     <include
         android:id="@+id/bottomSheetLayout"
+        layout="@layout/other_attr_bottom_sheet"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        layout="@layout/other_attr_bottom_sheet"
         app:behavior_hideable="true"
         app:behavior_peekHeight="0dp"
-        app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior"/>
+        app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
