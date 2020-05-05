@@ -16,6 +16,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bs.ecommerce.R
 import com.bs.ecommerce.base.BaseFragment
 import com.bs.ecommerce.base.BaseViewModel
+import com.bs.ecommerce.cart.CartFragment
 import com.bs.ecommerce.product.model.ProductListModel
 import com.bs.ecommerce.product.model.ProductListModelImpl
 import com.bs.ecommerce.product.model.data.PagingFilteringContext
@@ -122,7 +123,7 @@ class ProductListFragment : BaseFragment() {
                         replaceFragmentSafely(ProductDetailFragment.newInstance(data.id.toLong()))
 
                     R.id.ivAddToFav ->
-                        viewModel.addToWishList(data.id.toLong())
+                        addProductToWishList(data.id.toLong())
                 }
             }
         }
@@ -225,6 +226,13 @@ class ProductListFragment : BaseFragment() {
                 btnFilter.visibility = View.GONE
                 drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED)
             }
+        })
+
+        viewModel.addedToWishListLD.observe(viewLifecycleOwner, Observer { action ->
+            if (action == 1) {
+                replaceFragmentSafely(CartFragment())
+            }
+            blockingLoader.hideDialog()
         })
     }
 

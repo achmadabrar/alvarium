@@ -13,6 +13,7 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.bs.ecommerce.R
+import com.bs.ecommerce.customViews.ContentLoadingDialog
 import com.bs.ecommerce.more.barcode.BarCodeCaptureFragment
 import com.bs.ecommerce.more.viewmodel.OptionViewModel
 import com.bs.ecommerce.networking.NetworkUtil
@@ -24,6 +25,7 @@ abstract class BaseFragment : Fragment()
 {
     private var progressWheel: ProgressWheel? = null
     protected open lateinit var viewModel: BaseViewModel
+    protected val blockingLoader: ContentLoadingDialog by lazy { ContentLoadingDialog(requireContext()) }
 
     protected var prefObject = PrefSingleton
 
@@ -71,19 +73,12 @@ abstract class BaseFragment : Fragment()
             if (it is BaseFragment)
                 "currentFragment".showLog(it.toString())
         }
+    }
 
-      /*  viewModel.isLoadingLD.observe(viewLifecycleOwner, Observer {
-            it?.let {
-                if (it)
-                {
-                    if(getRootLayout() != null )
-                        showLoading()
 
-                    else hideLoading()
-                }
-            }
-        })
-*/
+    open fun addProductToWishList(productId: Long) {
+        blockingLoader.showDialog()
+        viewModel.addToWishList(productId)
     }
 
 

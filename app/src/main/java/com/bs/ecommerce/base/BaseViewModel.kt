@@ -1,20 +1,18 @@
 package com.bs.ecommerce.base
 
 import android.widget.Toast
-import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.bs.ecommerce.R
 import com.bs.ecommerce.common.RequestCompleteListener
 import com.bs.ecommerce.product.model.ProductDetailModelImpl
 import com.bs.ecommerce.product.model.data.AddToCartResponse
 import com.bs.ecommerce.utils.MyApplication
 
 
-
 open class BaseViewModel : ViewModel()
 {
     var isLoadingLD = MutableLiveData<Boolean>()
+    var addedToWishListLD = MutableLiveData<Int>()
 
     override fun onCleared()
     {
@@ -23,22 +21,24 @@ open class BaseViewModel : ViewModel()
 
     fun addToWishList(productId: Long) {
 
-        toast(MyApplication.mAppContext?.getString(R.string.adding_to_wish_list))
-
         val model = ProductDetailModelImpl()
 
         model.addProductToWishList(productId, object : RequestCompleteListener<AddToCartResponse> {
 
             override fun onRequestSuccess(data: AddToCartResponse) {
 
-                if(data.errorList.isNotEmpty())
+                if(data.errorList.isNotEmpty()) {
                     toast(data.errorsAsFormattedString)
-                else
+                    addedToWishListLD.value = 1 // goto cart page
+                } else {
                     toast(data.message)
+                    addedToWishListLD.value = 2 // success
+                }
             }
 
             override fun onRequestFailed(errorMessage: String) {
                 toast(errorMessage)
+                addedToWishListLD.value = 3 // other error. do nothing
             }
 
         })

@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.bs.ecommerce.R
 import com.bs.ecommerce.base.BaseFragment
 import com.bs.ecommerce.base.BaseViewModel
+import com.bs.ecommerce.cart.CartFragment
 import com.bs.ecommerce.home.FeaturedProductAdapter
 import com.bs.ecommerce.home.ManufacturerListAdapter
 import com.bs.ecommerce.home.homepage.model.HomePageModel
@@ -81,7 +82,7 @@ class HomeFragment : BaseFragment() {
                         replaceFragmentSafely(ProductDetailFragment.newInstance(data.id.toLong()))
 
                     R.id.ivAddToFav ->
-                        viewModel.addToWishList(data.id.toLong())
+                        addProductToWishList(data.id.toLong())
                 }
             }
         }
@@ -159,6 +160,13 @@ class HomeFragment : BaseFragment() {
                 showLoading()
             else
                 hideLoading()
+        })
+
+        viewModel.addedToWishListLD.observe(viewLifecycleOwner, Observer { action ->
+            if (action == 1) {
+                replaceFragmentSafely(CartFragment())
+            }
+            blockingLoader.hideDialog()
         })
     }
 

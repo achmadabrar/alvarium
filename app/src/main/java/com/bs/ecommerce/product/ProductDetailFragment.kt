@@ -13,6 +13,7 @@ import com.bs.ecommerce.R
 import com.bs.ecommerce.base.BaseActivity
 import com.bs.ecommerce.base.BaseFragment
 import com.bs.ecommerce.base.BaseViewModel
+import com.bs.ecommerce.cart.CartFragment
 import com.bs.ecommerce.home.FeaturedProductAdapter
 import com.bs.ecommerce.product.model.ProductDetailModel
 import com.bs.ecommerce.product.model.ProductDetailModelImpl
@@ -243,6 +244,13 @@ class ProductDetailFragment : BaseFragment(), View.OnClickListener {
                 Observer { list ->
                     populateSimilarProductList(list)
                 })
+
+            viewModel.addedToWishListLD.observe(viewLifecycleOwner, Observer { action ->
+                if (action == 1) {
+                    replaceFragmentSafely(CartFragment())
+                }
+                blockingLoader.hideDialog()
+            })
         }
 
     }
@@ -326,7 +334,7 @@ class ProductDetailFragment : BaseFragment(), View.OnClickListener {
                         replaceFragmentSafely(newInstance(data.id.toLong()))
 
                     R.id.ivAddToFav ->
-                        viewModel.addToWishList(data.id.toLong())
+                        addProductToWishList(data.id.toLong())
                 }
             }
         }
