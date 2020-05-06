@@ -409,6 +409,8 @@ interface Api {
         const val typeShoppingCart: Long = 1
         const val typeWishList: Long = 2
 
+        const val productAttributePrefix = "product_attribute"
+
         @JvmStatic
         val DEFAULT_PAGE_SIZE = 9
     }

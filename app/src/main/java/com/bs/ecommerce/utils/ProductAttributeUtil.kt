@@ -1,53 +1,56 @@
-package com.bs.ecommerce.product
+package com.bs.ecommerce.utils
 
 import android.content.Context
 import android.content.res.ColorStateList
 import android.graphics.Color
-import android.text.Editable
-import android.text.TextWatcher
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
 import android.widget.*
-import android.widget.TextView.OnEditorActionListener
 import androidx.appcompat.widget.AppCompatRadioButton
 import androidx.core.view.ViewCompat
 import androidx.core.view.children
 import com.bs.ecommerce.R
+import com.bs.ecommerce.auth.register.data.KeyValuePair
+import com.bs.ecommerce.networking.common.KeyValueFormData
 import com.bs.ecommerce.product.model.data.AttributeControlValue
 import com.bs.ecommerce.product.model.data.ProductAttribute
-import com.bs.ecommerce.product.model.data.ProductDetail
-import com.bs.ecommerce.product.viewModel.ProductDetailViewModel
-import com.bs.ecommerce.utils.AttributeControlType
-import com.bs.ecommerce.utils.ColorSelectionProcess
-import com.bs.ecommerce.utils.showLog
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import kotlinx.android.synthetic.main.color_selection_layout.view.*
-import kotlinx.android.synthetic.main.other_attr_bottom_sheet.view.*
 import kotlinx.android.synthetic.main.other_attr_layout.view.*
 import org.jetbrains.anko.layoutInflater
+import java.util.*
 
-
-class ProductAttributeView(
-    private val context: Context,
-    private val viewModel: ProductDetailViewModel,
-    private val bottomSheetLayout: View,
+class ProductAttributeUtil(
+    private val attributes: List<ProductAttribute>,
+    private val attributeViewHolder: LinearLayout,
+    private val attributeValueHolder: LinearLayout,
     private val bsBehavior: BottomSheetBehavior<*>
 ) {
-    /*private var attributes: List<ProductAttribute>
+
+    private val selectedAttributes = HashMap<Long, MutableList<AttributeControlValue>>()
+
     private lateinit var colorSelectionProcess: ColorSelectionProcess
     private lateinit var sizeSelectionProcess: ColorSelectionProcess
-    private var product: ProductDetail = viewModel.productLiveData.value!!
-    private var layoutInflater: LayoutInflater
+
+    private var tvProductPrice: TextView? = null
+    private var basicProductPrice: Double = 0.0
+
+    private var viewGroup: ViewGroup? = null
+    private var layoutInflater: LayoutInflater = attributeViewHolder.context.layoutInflater
+    private val context: Context = attributeViewHolder.context
 
     private val inflatedViews: MutableMap<Long, View> = mutableMapOf()
 
     init {
-        this.attributes = product.productAttributes
-        layoutInflater = context.layoutInflater
 
-        for (attr in product.productAttributes) {
+        preSelectedAttributes()
+
+        // Generate dynamic attribute views
+
+        for (attr in attributes) {
             when (attr.attributeControlType) {
 
                 AttributeControlType.ColorSquares -> colorSelectionAttr(attr)
@@ -59,36 +62,17 @@ class ProductAttributeView(
         }
     }
 
-    private fun textInputAttr(attr: ProductAttribute) {
-        val layout = layoutInflater.inflate(R.layout.edittext_attribute, null)
-        layout.tag = attr.productAttributeId
+    // Add attribute views to parent view
+    fun attachAttributesToFragment() {
+        attributeViewHolder.removeAllViews()
 
-        val tvName = layout.findViewById<TextView>(R.id.tvLayoutTitle)
-        tvName.text = attr.textPrompt ?: attr.name
-
-        //val tvDesc = layout.findViewById<TextView>(R.id.tvLayoutSubTitle)
-        //tvDesc.text = attr.description ?: "Select your ${attr.name}"
-
-        tvName.setCompoundDrawablesWithIntrinsicBounds(
-            0, 0, if (attr.isRequired) R.drawable.ic_star_formular else 0, 0
-        )
-
-        val etUserInput = layout.findViewById<EditText>(R.id.etUserInput)
-
-        etUserInput.setOnEditorActionListener(OnEditorActionListener { v, actionId, _ ->
-            if (actionId == EditorInfo.IME_ACTION_DONE) {
-                "xyz".showLog(v.text.toString())
-                //TODO save text to viewmodel
-                return@OnEditorActionListener false
-            }
-            false
-        })
-
-        inflatedViews[attr.productAttributeId] = layout
+        for (i in getAttrViews()) {
+            attributeViewHolder.addView(i)
+        }
     }
 
     private fun genericAttributes(attr: ProductAttribute) {
-        val layout = layoutInflater.inflate(R.layout.other_attr_layout, null)
+        val layout = layoutInflater.inflate(R.layout.other_attr_layout, viewGroup)
         layout.tag = attr.productAttributeId
 
         val tvName = layout.findViewById<TextView>(R.id.tvLayoutTitle)
@@ -103,27 +87,27 @@ class ProductAttributeView(
 
         layout.tvSelectedAttr.setOnClickListener {
             if (bsBehavior.state != BottomSheetBehavior.STATE_EXPANDED) {
-                bottomSheetLayout.attributeValueHolder.removeAllViews()
+                attributeValueHolder.removeAllViews()
                 radioGroup.removeAllViews()
                 radioGroup.setOnCheckedChangeListener(null)
 
                 for (i in attr.values) {
                     val label = "${i.name} ${i.priceAdjustment ?: ""}"
-                    val selected = viewModel.isAttrSelected(attr.productAttributeId, i)
+                    val selected = isAttrSelected(attr.productAttributeId, i)
 
                     when (attr.attributeControlType) {
                         AttributeControlType.Checkboxes -> {
                             val cb =
                                 layoutInflater.inflate(
                                     R.layout.other_attr_checkbox,
-                                    null
+                                    viewGroup
                                 ) as CheckBox
                             cb.text = label
                             cb.isChecked = selected
-                            bottomSheetLayout.attributeValueHolder.addView(cb)
+                            attributeValueHolder.addView(cb)
 
                             cb.setOnCheckedChangeListener { _, isChecked ->
-                                viewModel.setAttrSelected(
+                                setAttrSelected(
                                     attr.productAttributeId,
                                     i,
                                     isChecked,
@@ -134,23 +118,24 @@ class ProductAttributeView(
 
                         AttributeControlType.DropdownList -> {
                             val tv =
-                                layoutInflater.inflate(R.layout.generic_attr_item, null) as TextView
+                                layoutInflater.inflate(R.layout.generic_attr_item, viewGroup) as TextView
                             tv.text = label
                             tv.setCompoundDrawablesWithIntrinsicBounds(
                                 0, 0,
                                 if (selected) R.drawable.ic_tic_mark else R.drawable.transparent_tic_mark,
                                 0
                             )
-                            bottomSheetLayout.attributeValueHolder.addView(tv)
+                            attributeValueHolder.addView(tv)
 
                             tv.setOnClickListener { v ->
-                                viewModel.setAttrSelected(attr.productAttributeId, i,
+                                setAttrSelected(
+                                    attr.productAttributeId, i,
                                     isSelected = true,
                                     multipleSelection = false
                                 )
 
-                                for (i in bottomSheetLayout.attributeValueHolder.children) {
-                                    (i as TextView).setCompoundDrawablesWithIntrinsicBounds(
+                                for (ii in attributeValueHolder.children) {
+                                    (ii as TextView).setCompoundDrawablesWithIntrinsicBounds(
                                         0, 0, R.drawable.transparent_tic_mark, 0
                                     )
                                     (v as TextView).setCompoundDrawablesWithIntrinsicBounds(
@@ -163,7 +148,7 @@ class ProductAttributeView(
                         AttributeControlType.RadioList -> {
 
                             val rb = layoutInflater.inflate(
-                                R.layout.other_attr_radiobutton, null
+                                R.layout.other_attr_radiobutton, viewGroup
                             ) as RadioButton
                             rb.text = label
                             rb.tag = i
@@ -180,29 +165,65 @@ class ProductAttributeView(
                             v.findViewById(checkedId) ?: return@setOnCheckedChangeListener
                         val value = rb.tag as AttributeControlValue
 
-                        viewModel.setAttrSelected(
+                        setAttrSelected(
                             attr.productAttributeId, value,
                             isSelected = true,
                             multipleSelection = false
                         )
                     }
 
-                    bottomSheetLayout.attributeValueHolder.addView(radioGroup)
+                    attributeValueHolder.addView(radioGroup)
                 }
 
                 bsBehavior.setState(BottomSheetBehavior.STATE_EXPANDED)
             } else {
                 bsBehavior.state = BottomSheetBehavior.STATE_COLLAPSED
                 // radioGroup.removeAllViews()
-                bottomSheetLayout.attributeValueHolder.removeAllViews()
+                attributeValueHolder.removeAllViews()
             }
         }
 
         inflatedViews[attr.productAttributeId] = layout
     }
 
+    private fun textInputAttr(attr: ProductAttribute) {
+        val layout = layoutInflater.inflate(R.layout.edittext_attribute, viewGroup)
+        layout.tag = attr.productAttributeId
+
+        val tvName = layout.findViewById<TextView>(R.id.tvLayoutTitle)
+        tvName.text = attr.textPrompt ?: attr.name
+
+        //val tvDesc = layout.findViewById<TextView>(R.id.tvLayoutSubTitle)
+        //tvDesc.text = attr.description ?: "Select your ${attr.name}"
+
+        tvName.setCompoundDrawablesWithIntrinsicBounds(
+            0, 0, if (attr.isRequired) R.drawable.ic_star_formular else 0, 0
+        )
+
+        val etUserInput = layout.findViewById<EditText>(R.id.etUserInput)
+
+        val value = AttributeControlValue()
+        value.id = -1
+
+        etUserInput.setOnEditorActionListener(TextView.OnEditorActionListener { v, actionId, _ ->
+            if (actionId == EditorInfo.IME_ACTION_DONE) {
+                "xyz".showLog(v.text.toString())
+                // save text to viewmodel
+                value.name = v.text.toString()
+                setAttrSelected(attr.productAttributeId, value,
+                    isSelected = true,
+                    multipleSelection = false
+                )
+                return@OnEditorActionListener false
+            }
+            false
+        })
+
+        inflatedViews[attr.productAttributeId] = layout
+    }
+
     private fun colorSelectionAttr(attr: ProductAttribute) {
-        val colorSelectionLayout = layoutInflater.inflate(R.layout.color_selection_layout, null)
+        val colorSelectionLayout = layoutInflater.inflate(R.layout.color_selection_layout, viewGroup)
         colorSelectionLayout.tag = attr.productAttributeId
 
 
@@ -215,7 +236,11 @@ class ProductAttributeView(
 
         for (x in attr.values) {
 
-            val radioButton = layoutInflater.inflate(R.layout.radiobutton_product_color, colorSelectionLayout.radioGridGroup, false) as AppCompatRadioButton
+            val radioButton = layoutInflater.inflate(
+                R.layout.radiobutton_product_color,
+                colorSelectionLayout.radioGridGroup,
+                false
+            ) as AppCompatRadioButton
 
             radioButton.id = x.id //++dynamicViewId
             radioButton.isChecked = x.isPreSelected
@@ -229,9 +254,8 @@ class ProductAttributeView(
             radioButton.setOnCheckedChangeListener { buttonView, isChecked ->
                 if (isChecked) {
                     colorSelectionProcess.resetRadioButton(buttonView.id)
-                    // paymentMethodValue = method.paymentMethodSystemName
                 }
-                viewModel.setAttrSelected(attr.productAttributeId, x, isChecked, false)
+                setAttrSelected(attr.productAttributeId, x, isChecked, false)
                 Log.d("as", isChecked.toString())
             }
 
@@ -244,7 +268,7 @@ class ProductAttributeView(
     }
 
     private fun sizeSelectionAttr(attr: ProductAttribute) {
-        val sizeSelectionLayout = layoutInflater.inflate(R.layout.color_selection_layout, null)
+        val sizeSelectionLayout = layoutInflater.inflate(R.layout.color_selection_layout, viewGroup)
         sizeSelectionLayout.tag = attr.productAttributeId
 
         val tvName = sizeSelectionLayout.findViewById<TextView>(R.id.tvLayoutTitle)
@@ -270,7 +294,7 @@ class ProductAttributeView(
                     sizeSelectionProcess.resetRadioButton(buttonView.id)
                 }
                 Log.d("as", isChecked.toString())
-                viewModel.setAttrSelected(attr.productAttributeId, x, isChecked, false)
+                setAttrSelected(attr.productAttributeId, x, isChecked, false)
             }
 
             radioButton.setOnClickListener {
@@ -282,11 +306,106 @@ class ProductAttributeView(
         inflatedViews[attr.productAttributeId] = sizeSelectionLayout
     }
 
-    fun getAttrViews(): List<View> {
+    private fun getAttrViews(): List<View> {
         return inflatedViews.values.toMutableList()
     }
 
-    fun onBottomSheetClose() {
+    private fun preSelectedAttributes() {
+        // sorting attribute values
+        for (attr in attributes) {
+            attr.values = attr.values.sortedBy { !it.isPreSelected }
 
-    }*/
+            val list = mutableListOf<AttributeControlValue>()
+
+            for (value in attr.values) {
+                if (value.isPreSelected) {
+                    list.add(value)
+
+                    if (attr.attributeControlType != AttributeControlType.Checkboxes)
+                        break
+                }
+            }
+
+            selectedAttributes[attr.productAttributeId] = list
+        }
+    }
+
+    private fun isAttrSelected(attrId: Long, value: AttributeControlValue): Boolean {
+        return selectedAttributes[attrId]?.contains(value) ?: false
+    }
+
+    private fun setAttrSelected(
+        attrId: Long, value: AttributeControlValue,
+        isSelected: Boolean, multipleSelection: Boolean
+    ) {
+
+        if (isSelected) {
+            if (!multipleSelection) selectedAttributes[attrId] = mutableListOf()
+
+            selectedAttributes[attrId]?.add(value)
+        } else
+            selectedAttributes[attrId]?.remove(value)
+
+        updateUI()
+        adjustProductPrice()
+    }
+
+    private fun updateUI() {
+        for (i in selectedAttributes.keys) {
+            val view = attributeViewHolder.findViewWithTag<View>(i)
+            val textView = view?.findViewById<TextView>(R.id.tvSelectedAttr)
+
+            val selectedAttr = selectedAttributes[i]
+
+            if (selectedAttr.isNullOrEmpty()) {
+                textView?.text = context.getString(R.string.select)
+            } else {
+                textView?.text = selectedAttributes[i]?.get(0)?.name
+            }
+        }
+    }
+
+    fun setupProductPriceCalculation(initialPrice: Double, textView: TextView) {
+        basicProductPrice = initialPrice
+        tvProductPrice = textView
+
+        adjustProductPrice()
+    }
+
+    private fun adjustProductPrice() {
+        var price = basicProductPrice
+
+        for (valueList in selectedAttributes.values) {
+            for (i in valueList) {
+                if(!i.isPreSelected)
+                    price = price.plus(i.priceAdjustmentValue)
+            }
+        }
+
+        tvProductPrice?.text = "$%.2f".format(price)
+    }
+
+
+    fun getFormData(productAttributePrefix: String): KeyValueFormData {
+
+        val allKeyValueList = ArrayList<KeyValuePair>()
+
+        for ((key, valueList) in selectedAttributes)
+        {
+            if(valueList.isNotEmpty())
+            {
+                for(attribute in valueList)
+                {
+                    val keyValuePair = KeyValuePair()
+                    keyValuePair.key = "${productAttributePrefix}_${key}"
+                    keyValuePair.value = if(attribute.id == -1) attribute.name!! else attribute.id.toString()
+                    allKeyValueList.add(keyValuePair)
+
+                    "key_value".showLog(" Key : $key    values: ${keyValuePair.value}")
+                }
+            }
+        }
+
+        return KeyValueFormData( allKeyValueList )
+    }
 }
