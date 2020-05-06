@@ -330,17 +330,17 @@ class ProductAttributeUtil(
         }
     }
 
-    private fun isAttrSelected(attrId: Long, value: AttributeControlValue): Boolean {
+    private fun isAttrSelected(attrId: Long?, value: AttributeControlValue): Boolean {
         return selectedAttributes[attrId]?.contains(value) ?: false
     }
 
     private fun setAttrSelected(
-        attrId: Long, value: AttributeControlValue,
+        attrId: Long?, value: AttributeControlValue,
         isSelected: Boolean, multipleSelection: Boolean
     ) {
 
         if (isSelected) {
-            if (!multipleSelection) selectedAttributes[attrId] = mutableListOf()
+            if (!multipleSelection) selectedAttributes[attrId!!] = mutableListOf()
 
             selectedAttributes[attrId]?.add(value)
         } else
@@ -378,7 +378,7 @@ class ProductAttributeUtil(
         for (valueList in selectedAttributes.values) {
             for (i in valueList) {
                 if(!i.isPreSelected)
-                    price = price.plus(i.priceAdjustmentValue)
+                    price = price.plus(i.priceAdjustmentValue ?: 0.0)
             }
         }
 
