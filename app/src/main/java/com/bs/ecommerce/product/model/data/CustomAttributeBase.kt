@@ -2,8 +2,10 @@ package com.bs.ecommerce.product.model.data
 
 import com.google.gson.annotations.SerializedName
 
-
-open class ProductAttribute() {
+/**
+ * Base class for all types of custom attributes
+ */
+open class CustomAttribute {
     @SerializedName("AllowedFileExtensions")
     val allowedFileExtensions: List<Any>? = null
 
@@ -31,9 +33,6 @@ open class ProductAttribute() {
     @SerializedName("Name")
     val name: String? = null
 
-    @SerializedName("ProductAttributeId")
-    val productAttributeId: Long = 0
-
     @SerializedName("ProductId")
     val productId: Long? = null
 
@@ -53,9 +52,29 @@ open class ProductAttribute() {
     var values: List<AttributeControlValue> = listOf()
 
     override fun equals(other: Any?): Boolean {
-        if (other !is ProductAttribute) return false
-        return other.productAttributeId == this.productAttributeId
+        if (other !is CustomAttribute) return false
+        return other.id == this.id
+    }
+
+    override fun hashCode(): Int {
+        return id.hashCode()
     }
 }
 
-class CustomerAttribute : ProductAttribute()
+class ProductAttribute : CustomAttribute() {
+    @SerializedName("ProductAttributeId")
+    val productAttributeId: Long = 0
+
+    /*override fun equals(other: Any?): Boolean {
+        if (other !is ProductAttribute) return false
+        return other.productAttributeId == this.productAttributeId
+    }
+
+    override fun hashCode(): Int {
+        return productAttributeId.hashCode()
+    }*/
+}
+
+class CustomerAttribute : CustomAttribute()
+
+class CheckoutAttribute: CustomAttribute()
