@@ -1,48 +1,73 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/editAddressRootLayout"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/fragment_background">
+    android:layout_height="match_parent">
 
-    <androidx.core.widget.NestedScrollView
-        android:id="@+id/rootScrollViewBillingAddress"
+    <RelativeLayout
+        android:id="@+id/editAddressRootLayout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:background="@color/fragment_background"
-        android:orientation="vertical"
-        android:screenOrientation="nosensor"
-        android:scrollbars="none">
+        android:layout_height="match_parent"
+        android:background="@color/fragment_background">
 
-        <LinearLayout
-            android:id="@+id/formParentLL"
+        <androidx.core.widget.NestedScrollView
+            android:id="@+id/rootScrollViewBillingAddress"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:visibility="gone"
-            tools:visibility="visible"
-            android:orientation="vertical">
+            android:layout_alignParentTop="true"
+            android:background="@color/fragment_background"
+            android:orientation="vertical"
+            android:screenOrientation="nosensor"
+            android:scrollbars="none">
 
-            <include
-                android:id="@+id/addressForm"
-                layout="@layout/address_form"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/form_margin"
-                android:layout_marginEnd="@dimen/form_margin"
-                android:visibility="visible" />
-
-            <Button
-                android:id="@+id/btnSave"
-                style="@style/RectangularButtonRegular"
+            <LinearLayout
+                android:id="@+id/formParentLL"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:text="@string/text_save" />
-        </LinearLayout>
+                android:visibility="gone"
+                tools:visibility="visible"
+                android:orientation="vertical">
 
-    </androidx.core.widget.NestedScrollView>
+                <include
+                    android:id="@+id/addressForm"
+                    layout="@layout/address_form"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/form_margin"
+                    android:layout_marginEnd="@dimen/form_margin"
+                    android:visibility="visible" />
 
-</RelativeLayout>
+                <LinearLayout
+                    android:id="@+id/customAttributeViewHolder"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_marginStart="@dimen/form_margin"
+                    android:layout_marginEnd="@dimen/form_margin"
+                    android:layout_marginTop="10dp"/>
+
+                <Button
+                    android:id="@+id/btnSave"
+                    style="@style/RectangularButtonRegular"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:text="@string/text_save" />
+            </LinearLayout>
+
+        </androidx.core.widget.NestedScrollView>
+
+    </RelativeLayout>
+
+    <include
+        android:id="@+id/bottomSheetLayoutCart"
+        layout="@layout/other_attr_bottom_sheet"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:behavior_hideable="true"
+        app:behavior_peekHeight="0dp"
+        app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior" />
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

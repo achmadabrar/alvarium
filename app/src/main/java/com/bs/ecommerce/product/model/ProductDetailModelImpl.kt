@@ -7,6 +7,7 @@ import com.bs.ecommerce.networking.RetroClient
 import com.bs.ecommerce.product.model.data.AddToCartResponse
 import com.bs.ecommerce.product.model.data.ProductDetailResponse
 import com.bs.ecommerce.networking.common.KeyValueFormData
+import com.bs.ecommerce.utils.TextUtils
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response

@@ -4,10 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="5dp"
     android:background="@color/fragment_background">
 
-    <androidx.constraintlayout.widget.Guideline
+    <!--<androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline_v_half"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
@@ -44,32 +43,27 @@
         app:layout_constraintTop_toBottomOf="@id/tvLayoutTitle"
         android:visibility="gone"
         tools:text="@string/placeholder" />
+-->
 
     <EditText
         android:id="@+id/etUserInput"
-        android:layout_width="0dp"
+        style="@style/RoundedEditText"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:backgroundTint="@color/gray"
-        android:drawablePadding="10dp"
-        android:ellipsize="end"
-        android:gravity="start"
         android:inputType="text"
         android:imeOptions="actionDone"
         android:maxLines="1"
-        android:textColor="@color/whiteOrBlack"
-        android:textColorHint="@color/gray"
-        android:textSize="@dimen/tv_text_size_regular"
+        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tvLayoutTitle"
         tools:hint="@string/placeholder" />
 
     <!-- DO NOT REMOVE. USED FROM BOTTOM MARGIN -->
     <View
         android:layout_width="1dp"
         android:layout_height="1dp"
-        android:layout_marginTop="5dp"
+        android:layout_marginTop="10dp"
         app:layout_constraintStart_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tvLayoutSubTitle"/>
+        app:layout_constraintTop_toBottomOf="@id/etUserInput"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

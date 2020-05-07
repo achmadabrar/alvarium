@@ -1,9 +1,10 @@
 package com.bs.ecommerce.more.model
 
+import com.bs.ecommerce.auth.register.data.KeyValuePair
 import com.bs.ecommerce.common.RequestCompleteListener
 import com.bs.ecommerce.networking.RetroClient
-import com.bs.ecommerce.networking.common.BaseResponse
 import com.bs.ecommerce.product.model.data.*
+import com.bs.ecommerce.utils.TextUtils
 import okhttp3.ResponseBody
 import retrofit2.Call
 import retrofit2.Callback
@@ -82,10 +83,12 @@ class CustomerAddressModelImpl : CustomerAddressModel {
 
     override fun updateAddress(
         address: AddressModel,
+        customAttributes: List<KeyValuePair>,
         callback: RequestCompleteListener<Any?>
     ) {
         val reqBody =
             EditCustomerAddressResponse(EditCustomerAddressData(address, CustomProperties()))
+        reqBody.formValues = customAttributes
 
         RetroClient.api.editAddress(address.id!!, reqBody).enqueue(object :
             Callback<ResponseBody> {
@@ -101,7 +104,9 @@ class CustomerAddressModelImpl : CustomerAddressModel {
                 if (response.code() == 200)
                     callback.onRequestSuccess(null)
                 else
-                    callback.onRequestFailed(response.message())
+                    callback.onRequestFailed(
+                        TextUtils().getErrorMessage(response.errorBody()?.string())
+                    )
             }
 
         })
@@ -109,9 +114,11 @@ class CustomerAddressModelImpl : CustomerAddressModel {
 
     override fun saveAddress(
         address: AddressModel,
+        customAttributes: List<KeyValuePair>,
         callback: RequestCompleteListener<Any?>
     ) {
         val reqBody = EditCustomerAddressResponse(EditCustomerAddressData(address, CustomProperties()))
+        reqBody.formValues = customAttributes
 
         RetroClient.api.saveCustomerAddress(reqBody).enqueue(object :
             Callback<ResponseBody> {
@@ -127,7 +134,9 @@ class CustomerAddressModelImpl : CustomerAddressModel {
                 if (response.code() == 201)
                     callback.onRequestSuccess(null)
                 else
-                    callback.onRequestFailed(response.message())
+                    callback.onRequestFailed(
+                        TextUtils().getErrorMessage(response.errorBody()?.string())
+                    )
             }
 
         })

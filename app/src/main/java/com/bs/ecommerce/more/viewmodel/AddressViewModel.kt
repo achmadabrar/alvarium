@@ -1,6 +1,7 @@
 package com.bs.ecommerce.more.viewmodel
 
 import androidx.lifecycle.MutableLiveData
+import com.bs.ecommerce.auth.register.data.KeyValuePair
 import com.bs.ecommerce.checkout.CheckoutAddressViewModel
 import com.bs.ecommerce.common.RequestCompleteListener
 import com.bs.ecommerce.more.model.CustomerAddressModel
@@ -76,14 +77,14 @@ class AddressViewModel: CheckoutAddressViewModel() {
         })
     }
 
-    fun saveCustomerAddress(address: AddressModel, model: CustomerAddressModel) {
+    fun saveCustomerAddress(address: AddressModel, customAttributes: List<KeyValuePair>, model: CustomerAddressModel) {
 
         if(isLoadingLD.value == true)
             return
 
         isLoadingLD.value = true
 
-        model.saveAddress(address, object : RequestCompleteListener<Any?> {
+        model.saveAddress(address, customAttributes, object : RequestCompleteListener<Any?> {
             override fun onRequestSuccess(data: Any?) {
                 isLoadingLD.value = false
 
@@ -98,14 +99,14 @@ class AddressViewModel: CheckoutAddressViewModel() {
         })
     }
 
-    fun updateAddress(address: AddressModel, model: CustomerAddressModel) {
+    fun updateAddress(address: AddressModel, customAttributes: List<KeyValuePair>, model: CustomerAddressModel) {
 
         if(isLoadingLD.value == true)
             return
 
         isLoadingLD.value = true
 
-        model.updateAddress(address, object : RequestCompleteListener<Any?> {
+        model.updateAddress(address, customAttributes, object : RequestCompleteListener<Any?> {
             override fun onRequestSuccess(data: Any?) {
                 isLoadingLD.value = false
                 resetFormLD.value = true

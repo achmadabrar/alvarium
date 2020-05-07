@@ -190,17 +190,21 @@ class CustomAttributeManager(
         val layout = layoutInflater.inflate(R.layout.edittext_attribute, viewGroup)
         layout.tag = attr.id
 
-        val tvName = layout.findViewById<TextView>(R.id.tvLayoutTitle)
-        tvName.text = attr.textPrompt ?: attr.name
+        //val tvName = layout.findViewById<TextView>(R.id.tvLayoutTitle)
+        //tvName.text = attr.textPrompt ?: attr.name
 
         //val tvDesc = layout.findViewById<TextView>(R.id.tvLayoutSubTitle)
         //tvDesc.text = attr.description ?: "Select your ${attr.name}"
 
-        tvName.setCompoundDrawablesWithIntrinsicBounds(
+        /*tvName.setCompoundDrawablesWithIntrinsicBounds(
             0, 0, if (attr.isRequired) R.drawable.ic_star_formular else 0, 0
-        )
+        )*/
 
         val etUserInput = layout.findViewById<EditText>(R.id.etUserInput)
+        etUserInput.hint = attr.textPrompt ?: attr.name
+        etUserInput.setCompoundDrawablesWithIntrinsicBounds(
+            0, 0, if (attr.isRequired) R.drawable.ic_star_formular else 0, 0
+        )
 
         val value = AttributeControlValue()
         value.id = -1

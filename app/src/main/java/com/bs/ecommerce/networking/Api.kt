@@ -411,6 +411,7 @@ interface Api {
 
         const val productAttributePrefix = "product_attribute"
         const val checkOutAttributePrefix = "checkout_attribute"
+        const val addressAttributePrefix = "address_attribute"
 
         @JvmStatic
         val DEFAULT_PAGE_SIZE = 9

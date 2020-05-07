@@ -78,3 +78,5 @@ class ProductAttribute : CustomAttribute() {
 class CustomerAttribute : CustomAttribute()
 
 class CheckoutAttribute: CustomAttribute()
+
+class AddressAttribute: CustomAttribute()
