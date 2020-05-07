@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.ContextWrapper
 import androidx.multidex.MultiDex
 import androidx.multidex.MultiDexApplication
+import com.bs.ecommerce.checkout.model.data.SaveBillingResponse
 import com.facebook.FacebookSdk
 import com.facebook.appevents.AppEventsLogger
 import com.pixplicity.easyprefs.library.Prefs
@@ -52,6 +53,8 @@ class MyApplication : MultiDexApplication()
             myCartCounter = counter
             //BaseActivity.updateHotCount(counter)
         }
+
+        var saveBillingResponse : SaveBillingResponse? = null
     }
 
 }

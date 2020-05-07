@@ -27,10 +27,24 @@ object Constants
     @JvmStatic var BASE_URL = "http://52.168.183.212/api/"*/
 
 
-    @JvmStatic val BILLING_ADDRESS = 0
-    @JvmStatic val SHIPPING_ADDRESS = 1
-    @JvmStatic val SHIPPING_METHOD = 2
-    @JvmStatic val PAYMENT_METHOD = 3
+    @JvmStatic val BILLING_ADDRESS_TAB = 0
+    @JvmStatic val SHIPPING_ADDRESS_TAB = 1
+    @JvmStatic val SHIPPING_ADDRESS_FRAGMENT_TAB = "SHIPPING_ADDRESS_FRAGMENT"
+    @JvmStatic val SHIPPING_METHOD_TAB = 2
+    @JvmStatic val PAYMENT_METHOD_TAB = 3
 
+
+
+
+    @JvmStatic val CartPage = 0
+    @JvmStatic val BillingAddress = 1
+    @JvmStatic val ShippingAddress = 2
+    @JvmStatic val StorePickUp = 15
+    @JvmStatic val ShippingMethod = 3
+    @JvmStatic val PaymentMethod = 4
+    @JvmStatic val PaymentInfo = 5
+    @JvmStatic val ConfirmOrder = 6
+    @JvmStatic val RedirectToGateway = 7
+    @JvmStatic val Completed = 8
 }
 

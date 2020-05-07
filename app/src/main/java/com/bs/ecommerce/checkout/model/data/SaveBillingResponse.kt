@@ -64,6 +64,17 @@ class Store {
 
 data class ShippingMethodModel(
     @SerializedName("NotifyCustomerAboutShippingFromMultipleLocations") var notifyCustomerAboutShippingFromMultipleLocations: Boolean = false,
-    @SerializedName("ShippingMethods") var shippingMethods: List<Any> = listOf(),
+    @SerializedName("ShippingMethods") var shippingMethods: List<ShippingMethod> = listOf(),
     @SerializedName("Warnings") var warnings: List<Any> = listOf()
 )
+
+
+data class ShippingMethod(
+    @SerializedName("Description") var description: String = "",
+    @SerializedName("Fee") var fee: String = "",
+    @SerializedName("Name") var name: String = "",
+    @SerializedName("Selected") var selected: Boolean = false,
+    @SerializedName("ShippingOption") var shippingOption: String = "",
+    @SerializedName("ShippingRateComputationMethodSystemName") var shippingRateComputationMethodSystemName: String = ""
+)
+

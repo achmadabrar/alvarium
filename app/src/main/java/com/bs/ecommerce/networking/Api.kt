@@ -72,6 +72,12 @@ interface Api {
     @POST("checkout/savebilling")
     fun saveExistingBillingAPI(@Body KeyValueFormData: KeyValueFormData): Call<SaveBillingResponse>
 
+    @POST("checkout/saveshipping")
+    fun saveNewShippingAPI(@Body shippingAddressPostData: SaveShippingPostData): Call<SaveBillingResponse>
+
+    @POST("checkout/saveshipping")
+    fun saveExistingShippingAPI(@Body KeyValueFormData: KeyValueFormData): Call<SaveBillingResponse>
+
     @GET("checkout/checkoutgetshippingmethods")
     fun getShippingMethodAPI(): Call<CartResponse>
 

@@ -110,6 +110,60 @@ class CheckoutModelImpl(private val context: Context): CheckoutModel
         })
     }
 
+    override fun saveNewShipping(shippingAddress: SaveShippingPostData, callback: RequestCompleteListener<SaveBillingResponse>)
+    {
+        RetroClient.api.saveNewShippingAPI(shippingAddress).enqueue(object : Callback<SaveBillingResponse>
+        {
+            override fun onResponse(call: Call<SaveBillingResponse>, response: Response<SaveBillingResponse>)
+            {
+                if (response.body() != null)
+                    callback.onRequestSuccess(response.body()!!)
+
+                else if (response.code() == 300 || response.code() == 400)
+                {
+                    val gson = GsonBuilder().create()
+                    val errorBody = gson.fromJson(response.errorBody()!!.string(), SaveBillingResponse::class.java)
+
+                    callback.onRequestSuccess(errorBody as SaveBillingResponse)
+                }
+                else
+                    callback.onRequestFailed(response.message())
+            }
+
+
+            override fun onFailure(call: Call<SaveBillingResponse>, t: Throwable) {
+                callback.onRequestFailed(t.localizedMessage!!)
+            }
+        })
+    }
+
+    override fun saveExistingShipping(keyValueFormData: KeyValueFormData, callback: RequestCompleteListener<SaveBillingResponse>)
+    {
+        RetroClient.api.saveExistingShippingAPI(keyValueFormData).enqueue(object : Callback<SaveBillingResponse>
+        {
+            override fun onResponse(call: Call<SaveBillingResponse>, response: Response<SaveBillingResponse>)
+            {
+                if (response.body() != null)
+                    callback.onRequestSuccess(response.body()!!)
+
+                else if (response.code() == 300 || response.code() == 400)
+                {
+                    val gson = GsonBuilder().create()
+                    val errorBody = gson.fromJson(response.errorBody()!!.string(), SaveBillingResponse::class.java)
+
+                    callback.onRequestSuccess(errorBody as SaveBillingResponse)
+                }
+                else
+                    callback.onRequestFailed(response.message())
+            }
+
+
+            override fun onFailure(call: Call<SaveBillingResponse>, t: Throwable) {
+                callback.onRequestFailed(t.localizedMessage!!)
+            }
+        })
+    }
+
     override fun getShippingMethod(callback: RequestCompleteListener<CartResponse>)
     {
 

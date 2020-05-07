@@ -31,6 +31,11 @@ class CheckoutStepFragment : BaseFragment() {
         checkoutBottomNav.setOnNavigationItemSelectedListener { item ->
             when (item.itemId) {
                 R.id.menu_address -> replaceFragment(BaseBillingAddressFragment())
+                    /*if(!isBillingAddressSubmitted)
+                                        replaceFragment(BaseBillingAddressFragment())
+                                     else
+                                        replaceFragment(ShippingAddressFragment())*/
+
                 R.id.menu_shipping -> replaceFragment(ShippingMethodFragment())
                 R.id.menu_payment -> replaceFragment(PaymentMethodFragment())
                 R.id.menu_confirm -> replaceFragment(ConfirmOrderFragment())
@@ -46,4 +51,10 @@ class CheckoutStepFragment : BaseFragment() {
         transaction.commit()
         childFragmentManager.executePendingTransactions()
     }
+
+    companion object{
+        @JvmStatic var isBillingAddressSubmitted = false
+        @JvmStatic var isShippingAddressSubmitted = false
+    }
+
 }

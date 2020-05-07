@@ -12,7 +12,7 @@
         style="@style/RoundedEditText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="15dp"
         android:autofillHints=""
         android:drawableEnd="@drawable/ic_star_formular"
         android:hint="@string/reg_hint_first_name"
