@@ -6,6 +6,8 @@ import android.view.View
 import com.bs.ecommerce.R
 import com.bs.ecommerce.auth.register.RegisterFragment
 import com.bs.ecommerce.auth.register.RegistrationViewModel
+import com.bs.ecommerce.networking.Api
+import com.bs.ecommerce.networking.common.KeyValueFormData
 
 
 class CustomerInfoFragment : RegisterFragment()
@@ -24,8 +26,13 @@ class CustomerInfoFragment : RegisterFragment()
 
     override fun performSubmit()
     {
-        if(isValidInfo)
-            (viewModel as RegistrationViewModel).postRegisterVM(customerInfo, model)
+        // custom attribute fields value
+        val formValue = customAttributeManager
+            ?.getFormData(Api.customerAttributePrefix) ?: KeyValueFormData()
+
+        customerInfo.formValues = formValue.formValues
+
+        (viewModel as RegistrationViewModel).postRegisterVM(customerInfo, model)
     }
 
 

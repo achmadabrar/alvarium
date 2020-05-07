@@ -346,15 +346,15 @@
 
                 <androidx.appcompat.widget.AppCompatButton
                     android:id="@+id/saveBtn"
+                    style="@style/RectangularButtonRegular"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="20dp"
-                    android:background="@color/pink"
+                    android:backgroundTint="@color/pink"
                     android:nextFocusLeft="@+id/login_remember_password"
                     android:nextFocusUp="@+id/login_remember_password"
                     android:text="@string/reg_btn_register"
-                    android:textColor="@color/white"
-                    android:textSize="@dimen/button_text_size" />
+                    android:textColor="@color/white" />
             </LinearLayout>
 
         </androidx.core.widget.NestedScrollView>
