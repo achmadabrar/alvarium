@@ -1,9 +1,7 @@
 package com.bs.ecommerce.more
 
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import android.widget.RelativeLayout
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -64,8 +62,11 @@ class OptionsFragment : BaseFragment() {
                         R.string.login ->
                             replaceFragmentSafely(LoginFragment())
 
-                        R.string.log_out ->
-                            logoutConfirmationDialog()
+                        /*R.string.log_out ->
+                            logoutConfirmationDialog(View.OnClickListener {
+                                // updating UI
+                                setupView()
+                            })*/
 
                         R.string.privacy_policy ->
                             replaceFragmentSafely(PrivacyPolicyFragment())

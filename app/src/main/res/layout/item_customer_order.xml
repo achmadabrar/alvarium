@@ -70,7 +70,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
         android:layout_centerVertical="true"
-        android:tint="@color/whiteOrGray"
+        android:tint="@color/co_list_item_divider"
         app:srcCompat="@drawable/ic_chevron_right" />
 
 </RelativeLayout>

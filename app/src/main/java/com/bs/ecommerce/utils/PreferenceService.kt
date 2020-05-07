@@ -1,7 +1,10 @@
 package com.bs.ecommerce.utils
 
 
+import com.bs.ecommerce.auth.register.data.CustomerInfo
+import com.google.gson.Gson
 import com.pixplicity.easyprefs.library.Prefs
+import java.lang.Exception
 
 
 object PrefSingleton
@@ -30,6 +33,24 @@ object PrefSingleton
         Prefs.putInt(key, value)
     }
 
+    fun setCustomerInfo(key: String, value: CustomerInfo?) {
+        Prefs.putString(key, if(value==null) "" else Gson().toJson(value))
+    }
+
+    fun getCustomerInfo(key: String) : CustomerInfo? {
+        val v =   Prefs.getString(key, "")
+
+        return if(v.isNotEmpty()) {
+            try {
+                Gson().fromJson(v, CustomerInfo::class.java)
+            } catch (e: Exception) {
+                null
+            }
+        } else {
+            null
+        }
+    }
+
     object PrefSingleton
 
 
@@ -50,5 +71,6 @@ object PrefSingleton
     var CURRENT_LANGUAGE_ID = "current_language_id"
     var NST = "nst"
     var DeviceID = "DEVICE_UNIQUE_ID"
+    var CUSTOMER_INFO = "CUSTOMER_INFO"
 
 }

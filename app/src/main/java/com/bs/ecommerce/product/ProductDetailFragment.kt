@@ -4,7 +4,6 @@ import android.graphics.Paint
 import android.os.Bundle
 import android.view.View
 import android.widget.RelativeLayout
-import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -13,14 +12,16 @@ import com.bs.ecommerce.R
 import com.bs.ecommerce.base.BaseActivity
 import com.bs.ecommerce.base.BaseFragment
 import com.bs.ecommerce.base.BaseViewModel
+import com.bs.ecommerce.cart.CartFragment
 import com.bs.ecommerce.home.FeaturedProductAdapter
+import com.bs.ecommerce.networking.Api
+import com.bs.ecommerce.networking.common.KeyValueFormData
 import com.bs.ecommerce.product.model.ProductDetailModel
 import com.bs.ecommerce.product.model.ProductDetailModelImpl
 import com.bs.ecommerce.product.model.data.ProductSummary
 import com.bs.ecommerce.product.viewModel.ProductDetailViewModel
 import com.bs.ecommerce.utils.*
 import com.google.android.material.bottomsheet.BottomSheetBehavior
-import com.google.android.material.bottomsheet.BottomSheetBehavior.BottomSheetCallback
 import kotlinx.android.synthetic.main.featured_product_layout.view.*
 import kotlinx.android.synthetic.main.fragment_product_detail.*
 import kotlinx.android.synthetic.main.other_attr_bottom_sheet.view.*
@@ -36,7 +37,7 @@ class ProductDetailFragment : BaseFragment(), View.OnClickListener {
     private lateinit var bsBehavior: BottomSheetBehavior<*>
     private lateinit var model: ProductDetailModel
     private lateinit var listItemClickListener: ItemClickListener<ProductSummary>
-    private var productAttributeView: ProductAttributeView? = null
+    private var productAttributeView: ProductAttributeUtil? = null
 
     override fun getFragmentTitle() = R.string.title_product
 
@@ -50,38 +51,40 @@ class ProductDetailFragment : BaseFragment(), View.OnClickListener {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val productId = arguments?.getLong(PRODUCT_ID) ?: 1
+        if(arguments?.getLong(PRODUCT_ID)==null) {
+            toast(R.string.invalid_id)
+            requireActivity().supportFragmentManager.popBackStack()
+            return
+        }
 
-        initView()
+        if(!viewCreated) {
 
-        model = ProductDetailModelImpl()
-        viewModel = ViewModelProvider(this).get(ProductDetailViewModel::class.java)
+            val productId: Long = arguments?.getLong(PRODUCT_ID)!!
 
-        (viewModel as ProductDetailViewModel).apply {
+            initView(productId)
 
-            getProductDetail(productId, model)
+            model = ProductDetailModelImpl()
+            viewModel = ViewModelProvider(this).get(ProductDetailViewModel::class.java)
 
-            getRelatedProducts(
-                productId,
-                resources.getDimensionPixelSize(R.dimen.product_item_size),
-                model
-            )
+            (viewModel as ProductDetailViewModel).apply {
 
-            getSimilarProducts(
-                productId,
-                resources.getDimensionPixelSize(R.dimen.product_item_size),
-                model
-            )
+                getProductDetail(productId, model)
+
+                getRelatedProducts(
+                    productId,
+                    resources.getDimensionPixelSize(R.dimen.product_item_size),
+                    model
+                )
+
+                getSimilarProducts(
+                    productId,
+                    resources.getDimensionPixelSize(R.dimen.product_item_size),
+                    model
+                )
+            }
         }
 
         setLiveDataListeners()
-
-        btnAddToCart?.setOnClickListener {
-            (viewModel as ProductDetailViewModel).addProductToCartModel(
-                productId,
-                productQuantityLayout?.tvQuantity?.text.toString(), model
-            )
-        }
     }
 
     private fun setLiveDataListeners() {
@@ -93,15 +96,17 @@ class ProductDetailFragment : BaseFragment(), View.OnClickListener {
                 Observer { product ->
 
                     // slider image
+                    val imageSlider = vsImageSlider?.inflate()
+
                     val detailsSliderAdapter =
                         DetailsSliderAdapter(requireContext(), product.pictureModels)
-                    imageSlider.view_pager_slider?.adapter = detailsSliderAdapter
-                    imageSlider.view_pager_slider?.currentItem = 0
-                    imageSlider.circle_indicator?.setViewPager(imageSlider.view_pager_slider)
+                    imageSlider?.view_pager_slider?.adapter = detailsSliderAdapter
+                    imageSlider?.view_pager_slider?.currentItem = 0
+                    imageSlider?.circle_indicator?.setViewPager(imageSlider.view_pager_slider)
 
-                    imageSlider.circle_indicator?.pageColor =
+                    imageSlider?.circle_indicator?.pageColor =
                         ContextCompat.getColor(activity!!, R.color.white)
-                    imageSlider.circle_indicator?.fillColor =
+                    imageSlider?.circle_indicator?.fillColor =
                         ContextCompat.getColor(activity!!, R.color.darkOrGray)
 
                     detailsSliderAdapter.setOnSliderClickListener(object :
@@ -116,7 +121,8 @@ class ProductDetailFragment : BaseFragment(), View.OnClickListener {
                     })
 
                     // short description
-                    productNameLayout.tvProductName.text = product.name
+                    val productNameLayout = vsProductNameLayout?.inflate()
+                    productNameLayout?.tvProductName?.text = product.name
                     product.shortDescription?.let {
                         productNameLayout?.tvProductDescription?.show(
                             it,
@@ -142,7 +148,8 @@ class ProductDetailFragment : BaseFragment(), View.OnClickListener {
                     productQuantityLayout.tvQuantity.text = "1"
 
                     // long description
-                    productDescLayout.tvProductName.text = getString(R.string.description)
+                    val productDescLayout = vsProductDescLayout?.inflate()
+                    productDescLayout?.tvProductName?.text = getString(R.string.description)
                     product.fullDescription?.let {
                         productDescLayout?.tvProductDescription?.show(
                             it,
@@ -152,15 +159,22 @@ class ProductDetailFragment : BaseFragment(), View.OnClickListener {
 
                     // setup product attributes
                     productAttributeView =
-                        ProductAttributeView(
-                            requireContext(), viewModel as ProductDetailViewModel,
-                            bottomSheetLayout, bsBehavior
+                        ProductAttributeUtil(
+                            attributes = product.productAttributes,
+                            attributeViewHolder = attrViewHolder,
+                            attributeValueHolder = bottomSheetLayout.attributeValueHolder,
+                            bsBehavior = bsBehavior
                         )
-                    for (i in productAttributeView!!.getAttrViews()) {
-                        attrViewHolder.addView(i)
-                    }
+
+                    productAttributeView?.attachAttributesToFragment()
+
+                    productAttributeView?.setupProductPriceCalculation(
+                        product?.productPrice?.priceValue ?: 0.0,
+                        productPriceLayout.tvDiscountPrice
+                    )
 
                     productDetailsScrollView.visibility = View.VISIBLE
+                    addtoCartLayout.visibility = View.VISIBLE
 
                 })
 
@@ -209,31 +223,6 @@ class ProductDetailFragment : BaseFragment(), View.OnClickListener {
                     productQuantityLayout.tvQuantity.text = quantity.toString()
                 })
 
-
-            productPriceLD.observe(
-                viewLifecycleOwner,
-                Observer { price ->
-                    productPriceLayout.tvDiscountPrice.text = "$%.2f".format(price)
-                })
-
-            selectedAttrLD.observe(
-                viewLifecycleOwner,
-                Observer { attrMap ->
-
-                    for (i in attrMap.keys) {
-                        val view = attrViewHolder.findViewWithTag<View>(i)
-                        val textView = view.findViewById<TextView>(R.id.tvSelectedAttr)
-
-                        val selectedAttr = attrMap[i]
-
-                        if (selectedAttr.isNullOrEmpty()) {
-                            textView?.text = getString(R.string.select)
-                        } else {
-                            textView?.text = attrMap[i]?.get(0)?.name
-                        }
-                    }
-                })
-
             relatedProductsLD.observe(viewLifecycleOwner,
                 Observer { list ->
                     populateRelatedProductList(list)
@@ -243,6 +232,13 @@ class ProductDetailFragment : BaseFragment(), View.OnClickListener {
                 Observer { list ->
                     populateSimilarProductList(list)
                 })
+
+            viewModel.addedToWishListLD.observe(viewLifecycleOwner, Observer { action ->
+                if (action == 1) {
+                    replaceFragmentSafely(CartFragment())
+                }
+                blockingLoader.hideDialog()
+            })
         }
 
     }
@@ -287,12 +283,12 @@ class ProductDetailFragment : BaseFragment(), View.OnClickListener {
         }
     }
 
-    private fun initView() {
+    private fun initView(productId: Long) {
         // to avoid auto scrolling of scrollview
         focusStealer.requestFocus()
 
         bsBehavior = BottomSheetBehavior.from(bottomSheetLayout)
-        bsBehavior.addBottomSheetCallback(object : BottomSheetCallback() {
+        /*bsBehavior.addBottomSheetCallback(object : BottomSheetCallback() {
             override fun onStateChanged(bottomSheet: View, newState: Int) {
                 when (newState) {
                     BottomSheetBehavior.STATE_HIDDEN -> {
@@ -310,7 +306,7 @@ class ProductDetailFragment : BaseFragment(), View.OnClickListener {
 
             override fun onSlide(bottomSheet: View, slideOffset: Float) {
             }
-        })
+        })*/
 
         bottomSheetLayout.tvDone.setOnClickListener(this)
         productQuantityLayout.btnMinus.setOnClickListener(this)
@@ -326,9 +322,18 @@ class ProductDetailFragment : BaseFragment(), View.OnClickListener {
                         replaceFragmentSafely(newInstance(data.id.toLong()))
 
                     R.id.ivAddToFav ->
-                        viewModel.addToWishList(data.id.toLong())
+                        addProductToWishList(data.id.toLong())
                 }
             }
+        }
+
+        btnAddToCart?.setOnClickListener {
+            (viewModel as ProductDetailViewModel).addProductToCartModel(
+                productId,
+                productQuantityLayout?.tvQuantity?.text.toString(),
+                productAttributeView?.getFormData(Api.productAttributePrefix) ?: KeyValueFormData(),
+                model
+            )
         }
     }
 
@@ -339,7 +344,7 @@ class ProductDetailFragment : BaseFragment(), View.OnClickListener {
             R.id.btnMinus -> (viewModel as ProductDetailViewModel).decrementQuantity()
             R.id.tvDone -> {
                 bsBehavior.state = BottomSheetBehavior.STATE_COLLAPSED
-                productAttributeView?.onBottomSheetClose()
+                //productAttributeView?.onBottomSheetClose()
             }
         }
     }

@@ -2,19 +2,31 @@ package com.bs.ecommerce.product.model.data
 
 import com.google.gson.annotations.SerializedName
 
-/**
- * Created by bs206 on 3/16/18.
- */
-class AttributeControlValue
-{
-    @SerializedName("Name") var name: String? = null
-    @SerializedName("ColorSquaresRgb") var colorSquaresRgb: String? = null
-    @SerializedName("PriceAdjustment") var priceAdjustment: String? = null
-    @SerializedName("PriceAdjustmentValue") var priceAdjustmentValue: Double = 0.toDouble()
-    @SerializedName("IsPreSelected") var isPreSelected: Boolean = false
-    @SerializedName("Id") var id: Int = 0
-    @SerializedName("PictureModel") var pictureModel: PictureModel? = null
-    @SerializedName("DefaultValue") var defaultValue: String? = null
+class AttributeControlValue {
+    @SerializedName("ColorSquaresRgb")
+    var colorSquaresRgb: String? = null
+    @SerializedName("CustomProperties")
+    var customProperties: CustomProperties? = null
+    @SerializedName("CustomerEntersQty")
+    var customerEntersQty: Boolean? = null
+    @SerializedName("Id")
+    var id: Int = 0
+    @SerializedName("ImageSquaresPictureModel")
+    var imageSquaresPictureModel: PictureModel? = null
+    @SerializedName("IsPreSelected")
+    var isPreSelected: Boolean = false
+    @SerializedName("Name")
+    var name: String? = null
+    @SerializedName("PictureId")
+    var pictureId: Int?  = null
+    @SerializedName("PriceAdjustment")
+    var priceAdjustment: String? = null
+    @SerializedName("PriceAdjustmentUsePercentage")
+    var priceAdjustmentUsePercentage: Boolean? = null
+    @SerializedName("PriceAdjustmentValue")
+    var priceAdjustmentValue: Double? = null
+    @SerializedName("Quantity")
+    var quantity: Int?  = null
 
     override fun equals(other: Any?): Boolean {
         if(other !is AttributeControlValue) return false

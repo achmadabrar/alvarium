@@ -9,10 +9,11 @@ import com.bs.ecommerce.home.homepage.model.data.HomePageProductResponse
 import com.bs.ecommerce.networking.Api
 import com.bs.ecommerce.networking.common.KeyValueFormData
 import com.bs.ecommerce.product.model.ProductDetailModel
-import com.bs.ecommerce.product.model.data.*
-import com.bs.ecommerce.utils.AttributeControlType
+import com.bs.ecommerce.product.model.data.AddToCartResponse
+import com.bs.ecommerce.product.model.data.ProductDetail
+import com.bs.ecommerce.product.model.data.ProductDetailResponse
+import com.bs.ecommerce.product.model.data.ProductSummary
 import com.bs.ecommerce.utils.showLog
-import java.util.*
 
 class ProductDetailViewModel : BaseViewModel() {
 
@@ -21,9 +22,8 @@ class ProductDetailViewModel : BaseViewModel() {
     var similarProductsLD = MutableLiveData<List<ProductSummary>>()
 
     var quantityLiveData = MutableLiveData(1)
-    var productPriceLD = MutableLiveData<Double>()
+
     var isInvalidProductLD = MutableLiveData<Boolean>()
-    var selectedAttrLD = MutableLiveData<MutableMap<Long, MutableList<AttributeControlValue>>>()
 
     var cartProductsCountLD = MutableLiveData<Int>()
 
@@ -36,36 +36,9 @@ class ProductDetailViewModel : BaseViewModel() {
         {
             override fun onRequestSuccess(data: ProductDetailResponse)
             {
-                val attrMap = HashMap<Long, MutableList<AttributeControlValue>>()
-
-                // sorting attribute values
-                for(attr in data.data?.productAttributes!!)
-                {
-                    attr.values = attr.values.sortedBy { !it.isPreSelected }
-
-                    val list = mutableListOf<AttributeControlValue>()
-
-                    for(value in attr.values)
-                    {
-                        if(value.isPreSelected)
-                        {
-                            list.add(value)
-
-                            if(attr.attributeControlType != AttributeControlType.Checkboxes)
-                                break
-                        }
-                    }
-
-                    attrMap[attr.productAttributeId] = list
-                }
-
                 isLoadingLD.value = false
 
                 productLiveData.value = data.data
-
-                val price = data.data?.productPrice?.priceValue ?: 0.toDouble()
-                productPriceLD.value = price
-                selectedAttrLD.value = attrMap
             }
 
             override fun onRequestFailed(errorMessage: String) {
@@ -107,52 +80,33 @@ class ProductDetailViewModel : BaseViewModel() {
         })
     }
 
-
+    /**
+     * Attributes are already added. Add product quantity attribute here
+     */
     private fun prepareBodyForAttributes(
                                 productId : Long,
                                 quantity: String,
-                                selectedAttributeMap: MutableMap<Long, MutableList<AttributeControlValue>>): KeyValueFormData
-    {
-        val productAttributePrefix = "product_attribute"
-
-        val allKeyValueList = ArrayList<KeyValuePair>()
-
-        for ((key, valueList) in selectedAttributeMap)
-        {
-            if(valueList.isNotEmpty())
-            {
-                val selectedIdList = valueList.map { it.id }
-
-                for(i in selectedIdList.indices)
-                {
-                    val keyValuePair = KeyValuePair()
-                    keyValuePair.key = "${productAttributePrefix}_${key}"
-                    keyValuePair.value = selectedIdList[i].toString()
-                    allKeyValueList.add(keyValuePair)
-
-                    "key_value".showLog(" Key : $key    values: ${selectedIdList[i]}")
-                }
-            }
-        }
+                                keyValueFormData: KeyValueFormData): KeyValueFormData {
         val keyValuePair = KeyValuePair()
 
         keyValuePair.key = "addtocart_$productId.EnteredQuantity"
         keyValuePair.value = quantity
-        allKeyValueList.add(keyValuePair)
 
-        val body = KeyValueFormData(
-            allKeyValueList
-        )
-        body.formValues = allKeyValueList
+        val v = keyValueFormData.formValues as MutableList
+        v.add(keyValuePair)
 
-        "key_value".showLog(body.toString())
 
-        return body
+        keyValueFormData.formValues = v
+
+        "key_value".showLog(keyValueFormData.toString())
+
+        return keyValueFormData
     }
 
 
     fun addProductToCartModel(productId : Long,
                               quantity: String,
+                              keyValueFormData: KeyValueFormData,
                               model: ProductDetailModel)
     {
 
@@ -160,7 +114,7 @@ class ProductDetailViewModel : BaseViewModel() {
 
         model.addProductToCartModel(productId,
                                     Api.typeShoppingCart,
-                                    prepareBodyForAttributes(productId, quantity, selectedAttrLD.value!!),
+                                    prepareBodyForAttributes(productId, quantity, keyValueFormData),
 
             object : RequestCompleteListener<AddToCartResponse>
         {
@@ -189,42 +143,6 @@ class ProductDetailViewModel : BaseViewModel() {
         } else {
             toast("Invalid quantity")
         }
-    }
-
-    private fun adjustProductPrice() {
-        var price: Double = productLiveData.value?.productPrice?.priceValue ?: 0.toDouble()
-        val attrMap = selectedAttrLD.value!!
-
-        for(valueList in attrMap.values) {
-            for(i in valueList) {
-                price = price.plus(i.priceAdjustmentValue)
-            }
-        }
-
-        productPriceLD.value = price
-    }
-
-    fun isAttrSelected(attrId: Long, value: AttributeControlValue) : Boolean {
-        return selectedAttrLD.value?.get(attrId)?.contains(value) ?: false
-    }
-
-    fun setAttrSelected(attrId: Long, value: AttributeControlValue,
-                        isSelected: Boolean, multipleSelection: Boolean) {
-        val attrMap = selectedAttrLD.value!!
-
-        if(isSelected)
-        {
-            if (!multipleSelection) attrMap[attrId] = mutableListOf()
-
-            attrMap[attrId]?.add(value)
-        }
-        else
-            attrMap[attrId]?.remove(value)
-
-
-        adjustProductPrice()
-
-        selectedAttrLD.value = attrMap
     }
 
 }

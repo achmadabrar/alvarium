@@ -65,7 +65,7 @@
     <color name="settings_card_bg">#313437</color>
 
     <!-- Customer Order -->
-    <color name="co_list_item_divider">#303033</color>
+    <color name="co_list_item_divider">#55555A</color>
     <color name="co_fragment_bg">#222222</color>
 
     <color name="seekbar_thumb">#D31039</color>

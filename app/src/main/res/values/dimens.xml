@@ -21,4 +21,6 @@
     <dimen name="tv_text_size_tiny">12sp</dimen>
     <dimen name="product_preview">300dp</dimen>
     <dimen name="banner_height">180dp</dimen>
+
+    <dimen name="user_account_section_gap">40dp</dimen>
 </resources>
