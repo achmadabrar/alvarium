@@ -24,55 +24,31 @@
             android:orientation="vertical"
             android:paddingBottom="20dp">
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
+     <!--       <include layout="@layout/fragment_billing_address_store_layout"
                 android:id="@+id/storeLayout"
                 android:visibility="gone"
-                tools:visibility="visible">
+                tools:visibility="visible"/>
 
-                <CheckBox
-                    android:id="@+id/storeCheckBox"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:button="@drawable/custom_radio_button"
-                    android:checked="false"
-                    android:text="@string/store"
-                    android:textColor="@color/radiobutton_text"
-                    android:textSize="18sp" />
+            <LinearLayout
+                style="@style/RoundedSpinner"
+                android:id="@+id/existingAddressLayout"
+                android:layout_marginTop="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="gone">
 
-                <TextView
+                <androidx.appcompat.widget.AppCompatSpinner
+                    android:id="@+id/existingAddressSpinner"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp"
-                    android:gravity="center"
-                    android:text="Select Store or Shipping address"
-                    android:textColor="@color/radiobutton_text"
-                    android:textSize="18sp" />
-
-                <LinearLayout
-                    android:id="@+id/storeSpinnerLayout"
-                    style="@style/RoundedSpinner"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp">
-
-                    <androidx.appcompat.widget.AppCompatSpinner
-                        android:id="@+id/storeSpinner"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:entries="@array/spinner_dummy_data"
-                        tools:listitem="@layout/simple_spinner_item"
-                        android:textColor="@color/white" />
-                </LinearLayout>
-
-            </LinearLayout>
+                    tools:listitem="@layout/simple_spinner_item"
+                    android:entries="@array/spinner_dummy_data"
+                    android:textColor="@color/white" />
+            </LinearLayout>-->
 
 
             <include
-                android:id="@+id/shippingAddressLayout"
+                android:id="@+id/newAddressLayoutLL"
                 layout="@layout/address_form"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

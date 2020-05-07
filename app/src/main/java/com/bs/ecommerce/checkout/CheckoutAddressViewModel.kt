@@ -8,6 +8,7 @@ import com.bs.ecommerce.cart.model.data.CartRootData
 import com.bs.ecommerce.checkout.model.CheckoutModel
 import com.bs.ecommerce.checkout.model.data.*
 import com.bs.ecommerce.common.RequestCompleteListener
+import com.bs.ecommerce.networking.Constants
 import com.bs.ecommerce.networking.common.KeyValueFormData
 
 open class CheckoutAddressViewModel : BaseViewModel()
@@ -39,10 +40,32 @@ open class CheckoutAddressViewModel : BaseViewModel()
             }
         })
     }
-    fun saveNewBillingVM(billingAddress: BillingAddress, model: CheckoutModel)
+
+    fun getStatesByCountryVM(countryCode: String, model: CheckoutModel)
+    {
+        isLoadingLD.postValue(true)
+
+        model.getStatesByCountryForm(countryCode, object : RequestCompleteListener<StateListResponse>
+        {
+            override fun onRequestSuccess(data: StateListResponse)
+            {
+                isLoadingLD.postValue(false)
+                stateListLD.postValue(data.stateList)
+            }
+
+            override fun onRequestFailed(errorMessage: String)
+            {
+                isLoadingLD.postValue(false)
+            }
+        })
+    }
+
+
+    fun saveNewBillingVM(newAddress: AddressModel, model: CheckoutModel)
     {
         val saveBillingPostData = SaveBillingPostData()
-        saveBillingPostData.data = billingAddress
+        saveBillingPostData.data = BillingAddress()
+        saveBillingPostData.data.billingNewAddress = newAddress
 
         isLoadingLD.postValue(true)
 
@@ -89,16 +112,21 @@ open class CheckoutAddressViewModel : BaseViewModel()
         })
     }
 
-    fun getStatesByCountryVM(countryCode: String, model: CheckoutModel)
+    fun saveNewShippingVM(newAddress: AddressModel, model: CheckoutModel)
     {
+        val saveShippingPostData = SaveShippingPostData()
+        saveShippingPostData.data = ShippingAddress()
+        saveShippingPostData.data.shippingNewAddress = newAddress
+
         isLoadingLD.postValue(true)
 
-        model.getStatesByCountryForm(countryCode, object : RequestCompleteListener<StateListResponse>
+        model.saveNewShipping(saveShippingPostData, object : RequestCompleteListener<SaveBillingResponse>
         {
-            override fun onRequestSuccess(data: StateListResponse)
+            override fun onRequestSuccess(data: SaveBillingResponse)
             {
                 isLoadingLD.postValue(false)
-                stateListLD.postValue(data.stateList)
+
+                saveBillingResponseLD.postValue(data)
             }
 
             override fun onRequestFailed(errorMessage: String)
@@ -107,6 +135,42 @@ open class CheckoutAddressViewModel : BaseViewModel()
             }
         })
     }
+
+    fun saveShippingFromExistingAddressVM(type: Int, addressId: Long, model: CheckoutModel)
+    {
+        var key = ""
+
+        when(type)
+        {
+            Constants.BillingAddress -> key = "billing_address_id"
+            Constants.ShippingAddress -> key = "shipping_address_id"
+            Constants.StorePickUp -> key = "pickup_points_id"
+        }
+
+
+        isLoadingLD.postValue(true)
+
+        val keyValuePair = KeyValuePair()
+        keyValuePair.key = key
+        keyValuePair.value = addressId.toString()
+
+        model.saveExistingShipping(KeyValueFormData(listOf(keyValuePair)), object : RequestCompleteListener<SaveBillingResponse>
+        {
+            override fun onRequestSuccess(data: SaveBillingResponse)
+            {
+                isLoadingLD.postValue(false)
+
+                saveBillingResponseLD.postValue(data)
+            }
+
+            override fun onRequestFailed(errorMessage: String)
+            {
+                isLoadingLD.postValue(false)
+            }
+        })
+    }
+
+
 
     fun getShippingMethodVM(model: CheckoutModel)
     {

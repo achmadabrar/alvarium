@@ -3,7 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/baseBillingRootLayout"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <com.google.android.material.tabs.TabLayout
         android:id="@+id/addressTabLayout"
@@ -30,20 +31,21 @@
 
     </com.google.android.material.tabs.TabLayout>
 
+
     <include
-        android:id="@+id/layoutBillingAddress"
+        android:id="@+id/layoutCheckoutAddress"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@id/addressTabLayout"
         layout="@layout/fragment_billing_address"
         android:visibility="gone"/>
 
-    <include
+<!--    <include
         android:id="@+id/layoutShippingAddress"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@id/addressTabLayout"
-        layout="@layout/fragment_shipping_address"
-        android:visibility="gone"/>
+        layout="@layout/fragment_billing_address"
+        android:visibility="gone"/>-->
 
 </RelativeLayout>

@@ -7,6 +7,7 @@ import com.bs.ecommerce.networking.RetroClient
 import com.bs.ecommerce.product.model.data.AddToCartResponse
 import com.bs.ecommerce.product.model.data.ProductDetailResponse
 import com.bs.ecommerce.networking.common.KeyValueFormData
+import com.google.gson.GsonBuilder
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -46,6 +47,12 @@ class ProductDetailModelImpl :
             override fun onResponse(call: Call<AddToCartResponse>, response: Response<AddToCartResponse>) {
                 if (response.body() != null)
                     callback.onRequestSuccess(response.body() as AddToCartResponse)
+
+                else if (response.code() == 300 || response.code() == 400)
+                {
+                    val errorBody = GsonBuilder().create().fromJson(response.errorBody()!!.string(), AddToCartResponse::class.java)
+                    callback.onRequestSuccess(errorBody as AddToCartResponse)
+                }
                 else
                     callback.onRequestFailed(response.message())
             }
@@ -72,6 +79,12 @@ class ProductDetailModelImpl :
                 ) {
                     if (response.body() != null)
                         callback.onRequestSuccess(response.body() as AddToCartResponse)
+
+                    else if (response.code() == 300 || response.code() == 400)
+                    {
+                        val errorBody = GsonBuilder().create().fromJson(response.errorBody()!!.string(), AddToCartResponse::class.java)
+                        callback.onRequestSuccess(errorBody as AddToCartResponse)
+                    }
                     else
                         callback.onRequestFailed(response.message())
                 }

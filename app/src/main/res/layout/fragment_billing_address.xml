@@ -25,10 +25,15 @@
             android:paddingBottom="20dp"
             android:orientation="vertical">
 
+            <include layout="@layout/fragment_billing_address_store_layout"
+                android:id="@+id/storeLayout"
+                android:visibility="gone"
+                tools:visibility="visible"/>
+
             <LinearLayout
                 style="@style/RoundedSpinner"
                 android:id="@+id/existingAddressLayout"
-                android:layout_marginTop="15dp"
+                android:layout_marginTop="8dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:visibility="gone">
