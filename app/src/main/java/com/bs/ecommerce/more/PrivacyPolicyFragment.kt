@@ -3,15 +3,11 @@ package com.bs.ecommerce.more
 import android.os.Bundle
 import android.view.View
 import android.widget.RelativeLayout
-import androidx.core.content.ContextCompat
 import com.bs.ecommerce.R
 import com.bs.ecommerce.base.BaseFragment
 import com.bs.ecommerce.base.BaseViewModel
-import com.bs.ecommerce.main.MainViewModel
-import com.bs.ecommerce.utils.Language
 import com.bs.ecommerce.utils.show
 import kotlinx.android.synthetic.main.fragment_privacy_policy.*
-import java.util.*
 
 class PrivacyPolicyFragment : BaseFragment() {
 
@@ -21,7 +17,7 @@ class PrivacyPolicyFragment : BaseFragment() {
 
     override fun getRootLayout(): RelativeLayout? = privacyPolicyLayout
 
-    override fun createViewModel(): BaseViewModel = MainViewModel()
+    override fun createViewModel(): BaseViewModel = BaseViewModel()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
