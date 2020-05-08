@@ -20,14 +20,10 @@ interface CheckoutModel
 
     fun saveExistingShipping(KeyValueFormData: KeyValueFormData, callback: RequestCompleteListener<SaveBillingResponse>)
 
-    fun getShippingMethod(callback: RequestCompleteListener<CartResponse>)
+    fun saveShippingMethod(KeyValueFormData: KeyValueFormData, callback: RequestCompleteListener<SaveBillingResponse>)
 
-    fun saveShippingMethod(checkoutPostData: CheckoutPostData, callback: RequestCompleteListener<CartResponse>)
+    fun savePaymentMethod(KeyValueFormData: KeyValueFormData, callback: RequestCompleteListener<SaveBillingResponse>)
 
-    fun getPaymentMethod(callback: RequestCompleteListener<CartResponse>)
-
-    fun savePaymentMethod(checkoutPostData: CheckoutPostData, callback: RequestCompleteListener<CartResponse>)
-
-    fun getCheckoutConfirmInformation(callback: RequestCompleteListener<CartResponse>)
+    fun getCheckoutConfirmInformation(callback: RequestCompleteListener<SaveBillingResponse>)
 
 }

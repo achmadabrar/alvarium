@@ -10,6 +10,9 @@ import android.view.accessibility.AccessibilityNodeInfo
 import android.widget.CompoundButton
 import androidx.appcompat.widget.AppCompatRadioButton
 
+
+//import android.support.v7.widget.RadioButton;
+
 /**
  * Created by Ashraful on 11/26/2015.
  */
@@ -159,7 +162,7 @@ class RadioGridGroupforReyMaterial : androidx.gridlayout.widget.GridLayout {
                     child.setId(id)
                 }
                 child.setOnCheckedChangeListener(
-                        mChildOnCheckedChangeListener)
+                    mChildOnCheckedChangeListener)
             }
 
             mOnHierarchyChangeListener?.onChildViewAdded(parent, child)

@@ -1,22 +1,23 @@
 package com.bs.ecommerce.checkout
 
 import android.os.Bundle
-import android.os.Handler
 import android.view.View
 import android.widget.AdapterView
 import androidx.lifecycle.Observer
-import com.bs.ecommerce.checkout.model.data.*
+import com.bs.ecommerce.R
+import com.bs.ecommerce.checkout.model.data.SaveBillingResponse
+import com.bs.ecommerce.checkout.model.data.ShippingAddressModel
+import com.bs.ecommerce.checkout.model.data.Store
 import com.bs.ecommerce.networking.Constants
 import com.bs.ecommerce.utils.MyApplication
 import com.bs.ecommerce.utils.toast
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import kotlinx.android.synthetic.main.fragment_base_billing_adddress.*
 import kotlinx.android.synthetic.main.fragment_billing_address.*
-import kotlinx.android.synthetic.main.fragment_billing_address.btnContinue
 import kotlinx.android.synthetic.main.fragment_billing_address_store_layout.*
-import kotlinx.android.synthetic.main.fragment_shipping_address.*
 
 
-class ShippingAddressFragment : BaseBillingAddressFragment()
+class ShippingAddressFragment : BaseCheckoutAddressFragment()
 {
     private var storeId: Long = 0
 
@@ -26,15 +27,35 @@ class ShippingAddressFragment : BaseBillingAddressFragment()
 
         initShippingLayout(MyApplication.saveBillingResponse!!)
 
-    }
-    override fun saveStoreData()
-    {
+        setLiveDataListeners()
 
+        btnContinue?.setOnClickListener {
+
+            if(storeCheckBox?.isChecked!!)
+                saveStoreData()
+
+            else if(addressID == 0L)
+            {
+                val newAddress = getAddressWithValidation(newAddress!!)
+
+                if(isValidInfo)
+                    (viewModel as CheckoutAddressViewModel).saveNewShippingVM(newAddress, model)
+            }
+            else
+                (viewModel as CheckoutAddressViewModel)
+                    .saveShippingFromExistingAddressVM(type = Constants.ShippingAddress, addressId = addressID, model = model)
+        }
+
+    }
+    private fun saveStoreData()
+    {
         (viewModel as CheckoutAddressViewModel)
             .saveShippingFromExistingAddressVM(type = Constants.StorePickUp, addressId = addressID, model = model)
     }
 
     override fun setLiveDataListeners() {
+
+        super.setLiveDataListeners()
 
         with(viewModel as CheckoutAddressViewModel)
         {
@@ -45,14 +66,25 @@ class ShippingAddressFragment : BaseBillingAddressFragment()
                     toast(saveResponse.errorsAsFormattedString)
                 else
                 {
-                    toast("Address Added Successfully")
+                    toast("Shipping Address Added Successfully")
                     MyApplication.saveBillingResponse = saveResponse
                     CheckoutStepFragment.isShippingAddressSubmitted = true
 
-                    Handler().post {   addressTabLayout?.getTabAt(Constants.SHIPPING_ADDRESS_TAB)?.select()  }
+
+                    val bottomNavigationView = rootView?.findViewById(R.id.checkoutBottomNav) as BottomNavigationView?
+                    bottomNavigationView?.selectedItemId = R.id.menu_shipping
+
+/*                    checkoutBottomNav?.let {
+
+                        it.selectedItemId = it.findViewById<BottomNavigationView>(R.id.menu_shipping)
+                    }*/
+                    /*val view = checkoutBottomNav?.findViewById<BottomNavigationView>(R.id.menu_shipping)
+                    view?.performClick()*/
+
                 }
 
             })
+
         }
     }
 
@@ -61,6 +93,8 @@ class ShippingAddressFragment : BaseBillingAddressFragment()
 
         with(saveBillingResponse.data.shippingAddressModel)
         {
+
+            newAddress = shippingNewAddress
 
             if(saveBillingResponse.data.shippingAddressModel.allowPickupInStore)
                 storeLayout?.visibility = View.VISIBLE
@@ -101,9 +135,6 @@ class ShippingAddressFragment : BaseBillingAddressFragment()
                 createNewAddressLayout(shippingNewAddress)
 
             layoutCheckoutAddress?.visibility = View.VISIBLE
-
-            storeLayout.visibility = View.VISIBLE
-
         }
     }
     private fun generateStoreDropdownList(storeList: List<Store>)

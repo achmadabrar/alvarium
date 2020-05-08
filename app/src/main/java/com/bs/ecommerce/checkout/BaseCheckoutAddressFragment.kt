@@ -19,10 +19,9 @@ import com.google.android.material.tabs.TabLayout.OnTabSelectedListener
 import kotlinx.android.synthetic.main.address_form.*
 import kotlinx.android.synthetic.main.fragment_base_billing_adddress.*
 import kotlinx.android.synthetic.main.fragment_billing_address.*
-import kotlinx.android.synthetic.main.fragment_billing_address_store_layout.*
 
 
-open class BaseBillingAddressFragment : BaseFragment()
+open class BaseCheckoutAddressFragment : BaseFragment()
 {
     protected lateinit var model: CheckoutModel
 
@@ -32,9 +31,7 @@ open class BaseBillingAddressFragment : BaseFragment()
     protected var countryIdByForm: String = ""
     protected var stateProvinceIdByForm = ""
 
-    private var billingAddress = BillingAddress()
-    private var shippingAddress = ShippingAddress()
-
+    protected var newAddress : AddressModel? = null
 
     protected var addressID: Long = 0
 
@@ -46,7 +43,6 @@ open class BaseBillingAddressFragment : BaseFragment()
 
     override fun createViewModel(): BaseViewModel = CheckoutAddressViewModel()
 
-    open fun saveStoreData(){}
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?)
     {
@@ -56,86 +52,16 @@ open class BaseBillingAddressFragment : BaseFragment()
 
         viewModel  = ViewModelProvider(this).get(CheckoutAddressViewModel::class.java)
 
-        if(!isCurrentTabShipping())
-            (viewModel as CheckoutAddressViewModel).getBillingFormVM(model)
-
         setAddressTabClickListener()
 
         setLiveDataListeners()
 
-        btnContinue?.setOnClickListener {
-
-            if(isCurrentTabShipping())
-            {
-                if(storeCheckBox?.isChecked!!)
-                    saveStoreData()
-
-                else if(addressID == 0L)
-                {
-                    val newAddress = getAddressWithValidation(shippingAddress.shippingNewAddress)
-
-                    if(isValidInfo)
-                        (viewModel as CheckoutAddressViewModel).saveNewShippingVM(newAddress, model)
-                }
-                else
-                    (viewModel as CheckoutAddressViewModel)
-                        .saveShippingFromExistingAddressVM(type = Constants.ShippingAddress, addressId = addressID, model = model)
-            }
-            else
-            {
-                if(addressID == 0L)
-                {
-                    val newAddress = getAddressWithValidation(billingAddress.billingNewAddress)
-
-                    if(isValidInfo)
-                        (viewModel as CheckoutAddressViewModel).saveNewBillingVM(newAddress, model)
-                }
-                else
-                    (viewModel as CheckoutAddressViewModel).saveBillingFromExistingAddressVM(addressID, model)
-            }
-
-
-
-        }
-
 
     }
-
-    protected fun createNewAddressLayout(billingNewAddress: AddressModel)
-    {
-        createForms(billingNewAddress)
-
-        val countryNameList = billingNewAddress.availableCountries?.map { it.text }
-        populateCountrySpinner(countryNameList!!, billingNewAddress.availableCountries)
-
-        newAddressLayout?.visibility = View.VISIBLE
-    }
-
-    private fun showBillingAddressUI(billingAddressResponse: BillingAddressResponse)
-    {
-        with(billingAddressResponse.data.billingAddress)
-        {
-            if(this.existingAddresses.isNotEmpty())
-                createAddressDropdown(this.existingAddresses)
-            else
-                createNewAddressLayout(this.billingNewAddress)
-
-            layoutCheckoutAddress?.visibility = View.VISIBLE
-
-        }
-    }
-
     open fun setLiveDataListeners() {
 
         with(viewModel as CheckoutAddressViewModel)
         {
-            billingAddressResponseLD.observe(viewLifecycleOwner, Observer { billingAddressResponse ->
-
-                billingAddress = billingAddressResponse.data.billingAddress
-
-                showBillingAddressUI(billingAddressResponse)
-
-            })
 
             stateListLD.observe(viewLifecycleOwner, Observer { stateList ->
 
@@ -162,29 +88,19 @@ open class BaseBillingAddressFragment : BaseFragment()
                     hideLoading()
             })
 
-            saveBillingResponseLD.observe(viewLifecycleOwner, Observer { saveResponse ->
-
-                if(saveResponse.errorList.isNotEmpty())
-                    toast(saveResponse.errorsAsFormattedString)
-                else
-                {
-                    toast("Address Added Successfully")
-
-                    MyApplication.saveBillingResponse = saveResponse
-
-                    shippingAddress.shippingNewAddress = saveResponse.data.shippingAddressModel.shippingNewAddress
-
-                    CheckoutStepFragment.isBillingAddressSubmitted = true
-
-                    Handler().post {   addressTabLayout?.getTabAt(Constants.SHIPPING_ADDRESS_TAB)?.select()  }
-                }
-
-
-
-
-            })
         }
     }
+
+    protected fun createNewAddressLayout(address: AddressModel)
+    {
+        createForms(address)
+
+        val countryNameList = address.availableCountries?.map { it.text }
+        populateCountrySpinner(countryNameList!!, address.availableCountries)
+
+        newAddressLayout?.visibility = View.VISIBLE
+    }
+
 
     protected fun createAddressDropdown(existingAddresses: List<AddressModel>)
     {
@@ -209,7 +125,7 @@ open class BaseBillingAddressFragment : BaseFragment()
         if (isNewAddressSelected(existingAddress, position))
         {
             addressID = 0
-            createNewAddressLayout(billingAddress.billingNewAddress)
+            createNewAddressLayout(newAddress!!)
         }
         else
             onSelectExistingAddress(existingAddress, position)
@@ -299,8 +215,8 @@ open class BaseBillingAddressFragment : BaseFragment()
             {
                 if (CheckoutStepFragment.isBillingAddressSubmitted)
                 {
-                    if(requireActivity().supportFragmentManager.findFragmentById(R.id.checkoutFragmentHolder) !is ShippingAddressFragment)
-                        replaceFragmentSafely(ShippingAddressFragment())
+                    if(!isCurrentTabShipping())
+                        replaceFragment(ShippingAddressFragment())
 
                 }
                 else
@@ -314,7 +230,7 @@ open class BaseBillingAddressFragment : BaseFragment()
         }
     }
     private fun replaceFragment(fragment: BaseFragment) {
-        val transaction = childFragmentManager.beginTransaction()
+        val transaction = requireActivity().supportFragmentManager.beginTransaction()
         transaction.addToBackStack(fragment.tag)
         transaction.replace(R.id.checkoutFragmentHolder, fragment)
         //transaction.commit()
@@ -414,6 +330,6 @@ open class BaseBillingAddressFragment : BaseFragment()
     }
 
     protected fun isCurrentTabShipping() : Boolean
-            = requireActivity().supportFragmentManager.findFragmentById(R.id.layoutFrame) is ShippingAddressFragment
+            = requireActivity().supportFragmentManager.findFragmentById(R.id.checkoutFragmentHolder) is ShippingAddressFragment
 
 }

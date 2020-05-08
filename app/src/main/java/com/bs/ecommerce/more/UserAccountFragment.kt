@@ -74,7 +74,7 @@ class UserAccountFragment: BaseFragment() {
         }
 
         reviewLayout.apply {
-            ivOptionIcon.setImageResource(R.drawable.ic_review)
+            ivOptionIcon.setImageResource(R.drawable.app_icon_cart)
             tvOptionName.text = getString(R.string.my_reviews)
             setOnClickListener { toast("No Implemented") }
         }

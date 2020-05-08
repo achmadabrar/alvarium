@@ -164,12 +164,12 @@ class CheckoutModelImpl(private val context: Context): CheckoutModel
         })
     }
 
-    override fun getShippingMethod(callback: RequestCompleteListener<CartResponse>)
+    override fun saveShippingMethod(KeyValueFormData: KeyValueFormData, callback: RequestCompleteListener<SaveBillingResponse>)
     {
 
-        RetroClient.api.getShippingMethodAPI().enqueue(object : Callback<CartResponse>
+        RetroClient.api.saveShippingMethodAPI(KeyValueFormData).enqueue(object : Callback<SaveBillingResponse>
         {
-            override fun onResponse(call: Call<CartResponse>, response: Response<CartResponse>)
+            override fun onResponse(call: Call<SaveBillingResponse>, response: Response<SaveBillingResponse>)
             {
                 if (response.body() != null)
                     callback.onRequestSuccess(response.body()!!)
@@ -178,18 +178,18 @@ class CheckoutModelImpl(private val context: Context): CheckoutModel
             }
 
 
-            override fun onFailure(call: Call<CartResponse>, t: Throwable) {
+            override fun onFailure(call: Call<SaveBillingResponse>, t: Throwable) {
                 callback.onRequestFailed(t.localizedMessage!!)
             }
         })
     }
 
-    override fun getPaymentMethod(callback: RequestCompleteListener<CartResponse>)
+    override fun savePaymentMethod(KeyValueFormData: KeyValueFormData, callback: RequestCompleteListener<SaveBillingResponse>)
     {
 
-        RetroClient.api.getPaymentMethodAPI().enqueue(object : Callback<CartResponse>
+        RetroClient.api.savePaymentMethodAPI(KeyValueFormData).enqueue(object : Callback<SaveBillingResponse>
         {
-            override fun onResponse(call: Call<CartResponse>, response: Response<CartResponse>)
+            override fun onResponse(call: Call<SaveBillingResponse>, response: Response<SaveBillingResponse>)
             {
                 if (response.body() != null)
                     callback.onRequestSuccess(response.body()!!)
@@ -198,18 +198,19 @@ class CheckoutModelImpl(private val context: Context): CheckoutModel
             }
 
 
-            override fun onFailure(call: Call<CartResponse>, t: Throwable) {
+            override fun onFailure(call: Call<SaveBillingResponse>, t: Throwable) {
                 callback.onRequestFailed(t.localizedMessage!!)
             }
         })
     }
 
-    override fun getCheckoutConfirmInformation(callback: RequestCompleteListener<CartResponse>)
+
+    override fun getCheckoutConfirmInformation(callback: RequestCompleteListener<SaveBillingResponse>)
     {
 
-        RetroClient.api.getCheckoutConfirmInformationAPI().enqueue(object : Callback<CartResponse>
+        RetroClient.api.getCheckoutConfirmInformationAPI().enqueue(object : Callback<SaveBillingResponse>
         {
-            override fun onResponse(call: Call<CartResponse>, response: Response<CartResponse>)
+            override fun onResponse(call: Call<SaveBillingResponse>, response: Response<SaveBillingResponse>)
             {
                 if (response.body() != null)
                     callback.onRequestSuccess(response.body()!!)
@@ -218,51 +219,9 @@ class CheckoutModelImpl(private val context: Context): CheckoutModel
             }
 
 
-            override fun onFailure(call: Call<CartResponse>, t: Throwable) {
+            override fun onFailure(call: Call<SaveBillingResponse>, t: Throwable) {
                 callback.onRequestFailed(t.localizedMessage!!)
             }
         })
     }
-
-
-    override fun saveShippingMethod(checkoutPostData: CheckoutPostData, callback: RequestCompleteListener<CartResponse>)
-    {
-
-        RetroClient.api.saveShippingMethodAPI(checkoutPostData).enqueue(object : Callback<CartResponse>
-        {
-            override fun onResponse(call: Call<CartResponse>, response: Response<CartResponse>)
-            {
-                if (response.body() != null)
-                    callback.onRequestSuccess(response.body()!!)
-                else
-                    callback.onRequestFailed(response.message())
-            }
-
-
-            override fun onFailure(call: Call<CartResponse>, t: Throwable) {
-                callback.onRequestFailed(t.localizedMessage!!)
-            }
-        })
-    }
-
-    override fun savePaymentMethod(checkoutPostData: CheckoutPostData, callback: RequestCompleteListener<CartResponse>)
-    {
-
-        RetroClient.api.savePaymentMethodAPI(checkoutPostData).enqueue(object : Callback<CartResponse>
-        {
-            override fun onResponse(call: Call<CartResponse>, response: Response<CartResponse>)
-            {
-                if (response.body() != null)
-                    callback.onRequestSuccess(response.body()!!)
-                else
-                    callback.onRequestFailed(response.message())
-            }
-
-
-            override fun onFailure(call: Call<CartResponse>, t: Throwable) {
-                callback.onRequestFailed(t.localizedMessage!!)
-            }
-        })
-    }
-
 }

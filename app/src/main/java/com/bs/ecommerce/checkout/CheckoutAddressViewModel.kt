@@ -172,17 +172,21 @@ open class CheckoutAddressViewModel : BaseViewModel()
 
 
 
-    fun getShippingMethodVM(model: CheckoutModel)
+    fun saveShippingMethodVM(value: String, model: CheckoutModel)
     {
+
+        val keyValuePair = KeyValuePair()
+        keyValuePair.key = "shippingoption"
+        keyValuePair.value = value
+
         isLoadingLD.postValue(true)
 
-        model.getShippingMethod(object : RequestCompleteListener<CartResponse>
+        model.saveShippingMethod(KeyValueFormData(listOf(keyValuePair)), object : RequestCompleteListener<SaveBillingResponse>
         {
-            override fun onRequestSuccess(data: CartResponse)
+            override fun onRequestSuccess(data: SaveBillingResponse)
             {
                 isLoadingLD.postValue(false)
 
-                cartLD.postValue(data.cartRootData)
             }
 
             override fun onRequestFailed(errorMessage: String)
@@ -192,37 +196,17 @@ open class CheckoutAddressViewModel : BaseViewModel()
         })
     }
 
-    fun getPaymentMethodVM(model: CheckoutModel)
-    {
-        isLoadingLD.postValue(true)
-
-        model.getPaymentMethod(object : RequestCompleteListener<CartResponse>
-        {
-            override fun onRequestSuccess(data: CartResponse)
-            {
-                isLoadingLD.postValue(false)
-
-                cartLD.postValue(data.cartRootData)
-            }
-
-            override fun onRequestFailed(errorMessage: String)
-            {
-                isLoadingLD.postValue(false)
-            }
-        })
-    }
 
     fun getCheckoutConfirmInformationVM(model: CheckoutModel)
     {
         isLoadingLD.postValue(true)
 
-        model.getCheckoutConfirmInformation(object : RequestCompleteListener<CartResponse>
+        model.getCheckoutConfirmInformation(object : RequestCompleteListener<SaveBillingResponse>
         {
-            override fun onRequestSuccess(data: CartResponse)
+            override fun onRequestSuccess(data: SaveBillingResponse)
             {
                 isLoadingLD.postValue(false)
 
-                cartLD.postValue(data.cartRootData)
             }
 
             override fun onRequestFailed(errorMessage: String)

@@ -1,19 +1,32 @@
 package com.bs.ecommerce.checkout
 
 import android.os.Bundle
+import android.os.Handler
 import android.text.Html
 import android.view.View
 import android.widget.RelativeLayout
 import android.widget.TextView
 import androidx.appcompat.widget.AppCompatRadioButton
+import androidx.lifecycle.ViewModelProvider
 import com.bs.ecommerce.R
 import com.bs.ecommerce.base.BaseFragment
 import com.bs.ecommerce.base.BaseViewModel
+import com.bs.ecommerce.checkout.model.CheckoutModel
+import com.bs.ecommerce.checkout.model.CheckoutModelImpl
+import com.bs.ecommerce.checkout.model.data.ShippingMethod
 import com.bs.ecommerce.customViews.CheckableLinearLayout
+import com.bs.ecommerce.customViews.MethodSelectionProcess
 import com.bs.ecommerce.main.MainViewModel
+import com.bs.ecommerce.utils.MyApplication
+import com.bs.ecommerce.utils.showLog
 import kotlinx.android.synthetic.main.fragment_shipping_method.*
 
 class ShippingMethodFragment : BaseFragment() {
+
+
+    protected lateinit var model: CheckoutModel
+    private lateinit var methodSelectionProcess: MethodSelectionProcess
+    private var shippingMethodValue = ""
 
     override fun getFragmentTitle() = R.string.title_shopping_cart
 
@@ -21,28 +34,46 @@ class ShippingMethodFragment : BaseFragment() {
 
     override fun getRootLayout(): RelativeLayout = shippingMethodRootLayout
 
-    override fun createViewModel(): BaseViewModel = MainViewModel()
+    override fun createViewModel(): BaseViewModel = CheckoutAddressViewModel()
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?)
+    {
         super.onViewCreated(view, savedInstanceState)
 
-        for(i in 1..3) {
-            generateRadioButton(ShippingMethod("Shipping Method $i", "$50", "This is a description"))
+        model = CheckoutModelImpl(activity?.applicationContext!!)
+
+        viewModel  = ViewModelProvider(this).get(CheckoutAddressViewModel::class.java)
+
+        val shippingMethods = MyApplication.saveBillingResponse!!.data.shippingMethodModel.shippingMethods
+
+        addMethodRadioGroup(shippingMethods)
+
+        btnContinue?.setOnClickListener {
+
+            "dsdsdsdsdssfsf".showLog(shippingMethodValue)
+
+            (viewModel as CheckoutAddressViewModel).saveShippingMethodVM(shippingMethodValue, model)
+        }
+
+    }
+    private fun addMethodRadioGroup(shippingMethods: List<ShippingMethod>?)
+    {
+        methodSelectionProcess = MethodSelectionProcess(radioGridGroup!!)
+
+        if (shippingMethods != null)
+        {
+            for (method in shippingMethods)
+                generateRadioButton(method)
         }
     }
 
-    private fun generateRadioButton(method: ShippingMethod) {
-        val eachCheckLayout = layoutInflater.inflate(
-            R.layout.item_shipping_method,
-            radioGridGroup,
-            false
-        ) as CheckableLinearLayout
+    private fun generateRadioButton(method: ShippingMethod)
+    {
+        val eachCheckLayout = layoutInflater.inflate(R.layout.item_shipping_method, radioGridGroup, false) as CheckableLinearLayout
 
-        val description =
-            eachCheckLayout.findViewById<View>(R.id.tv_shippingMethodDescription) as TextView
+        val description = eachCheckLayout.findViewById<View>(R.id.tv_shippingMethodDescription) as TextView
 
-        val tv_shippingMethodAmount =
-            eachCheckLayout.findViewById<View>(R.id.tv_shippingMethodAmount) as TextView
+        val tv_shippingMethodAmount = eachCheckLayout.findViewById<View>(R.id.tv_shippingMethodAmount) as TextView
 
         val radioButton = eachCheckLayout.findViewById<View>(R.id.rb_shippingChoice) as AppCompatRadioButton
 
@@ -50,16 +81,35 @@ class ShippingMethodFragment : BaseFragment() {
         radioButton.id = id + 1
         tv_shippingMethodAmount.text = method.fee
 
-        radioButton.isChecked = true
+        if (isPreselected(method))
+        {
+            radioButton.isChecked = true
+            shippingMethodValue = method.name + "___" + method.shippingRateComputationMethodSystemName
+        }
+        else
+            radioButton.isChecked = false
 
         description.text = Html.fromHtml(method.description)
 
         radioGridGroup.addView(eachCheckLayout)
-    }
 
-    data class ShippingMethod(
-        val name: String,
-        val fee: String,
-        val description: String
-    )
+        radioButton.setOnCheckedChangeListener { buttonView, isChecked ->
+            if (isChecked)
+            {
+                shippingMethodValue = method.name + "___" + method.shippingRateComputationMethodSystemName
+                Handler().post {  methodSelectionProcess.resetRadioButton(buttonView.id) }
+            }
+        }
+
+        eachCheckLayout.setOnCheckedChangeListener(object : CheckableLinearLayout.OnCheckedChangeListener
+        {
+            override fun onCheckedChanged(checkableView: View, isChecked: Boolean)
+            {
+                if (isChecked)
+                    radioButton.isChecked = true
+
+            }
+        })
+    }
+    private fun isPreselected(shippingMethod: ShippingMethod): Boolean = shippingMethod.selected
 }

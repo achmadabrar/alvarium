@@ -26,11 +26,11 @@ class CheckoutStepFragment : BaseFragment() {
     }
 
     private fun initView() {
-        replaceFragment(BaseBillingAddressFragment())
+        replaceFragment(BillingAddressFragment())
 
         checkoutBottomNav.setOnNavigationItemSelectedListener { item ->
             when (item.itemId) {
-                R.id.menu_address -> replaceFragment(BaseBillingAddressFragment())
+                R.id.menu_address -> replaceFragment(BillingAddressFragment())
                     /*if(!isBillingAddressSubmitted)
                                         replaceFragment(BaseBillingAddressFragment())
                                      else
@@ -44,7 +44,7 @@ class CheckoutStepFragment : BaseFragment() {
         }
     }
 
-    private fun replaceFragment(fragment: BaseFragment) {
+    fun replaceFragment(fragment: BaseFragment) {
         val transaction = childFragmentManager.beginTransaction()
         transaction.addToBackStack(fragment.tag)
         transaction.replace(R.id.checkoutFragmentHolder, fragment)
