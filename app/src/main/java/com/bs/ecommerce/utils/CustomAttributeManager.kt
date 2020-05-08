@@ -16,15 +16,15 @@ import com.bs.ecommerce.R
 import com.bs.ecommerce.auth.register.data.KeyValuePair
 import com.bs.ecommerce.networking.common.KeyValueFormData
 import com.bs.ecommerce.product.model.data.AttributeControlValue
-import com.bs.ecommerce.product.model.data.ProductAttribute
+import com.bs.ecommerce.product.model.data.CustomAttribute
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import kotlinx.android.synthetic.main.color_selection_layout.view.*
 import kotlinx.android.synthetic.main.other_attr_layout.view.*
 import org.jetbrains.anko.layoutInflater
 import java.util.*
 
-class ProductAttributeUtil(
-    private val attributes: List<ProductAttribute>,
+class CustomAttributeManager(
+    private val attributes: List<CustomAttribute>,
     private val attributeViewHolder: LinearLayout,
     private val attributeValueHolder: LinearLayout,
     private val bsBehavior: BottomSheetBehavior<*>
@@ -71,9 +71,9 @@ class ProductAttributeUtil(
         }
     }
 
-    private fun genericAttributes(attr: ProductAttribute) {
+    private fun genericAttributes(attr: CustomAttribute) {
         val layout = layoutInflater.inflate(R.layout.other_attr_layout, viewGroup)
-        layout.tag = attr.productAttributeId
+        layout.tag = attr.id
 
         val tvName = layout.findViewById<TextView>(R.id.tvLayoutTitle)
         val tvDesc = layout.findViewById<TextView>(R.id.tvLayoutSubTitle)
@@ -93,7 +93,7 @@ class ProductAttributeUtil(
 
                 for (i in attr.values) {
                     val label = "${i.name} ${i.priceAdjustment ?: ""}"
-                    val selected = isAttrSelected(attr.productAttributeId, i)
+                    val selected = isAttrSelected(attr.id, i)
 
                     when (attr.attributeControlType) {
                         AttributeControlType.Checkboxes -> {
@@ -108,7 +108,7 @@ class ProductAttributeUtil(
 
                             cb.setOnCheckedChangeListener { _, isChecked ->
                                 setAttrSelected(
-                                    attr.productAttributeId,
+                                    attr.id,
                                     i,
                                     isChecked,
                                     true
@@ -129,7 +129,7 @@ class ProductAttributeUtil(
 
                             tv.setOnClickListener { v ->
                                 setAttrSelected(
-                                    attr.productAttributeId, i,
+                                    attr.id, i,
                                     isSelected = true,
                                     multipleSelection = false
                                 )
@@ -166,7 +166,7 @@ class ProductAttributeUtil(
                         val value = rb.tag as AttributeControlValue
 
                         setAttrSelected(
-                            attr.productAttributeId, value,
+                            attr.id, value,
                             isSelected = true,
                             multipleSelection = false
                         )
@@ -183,24 +183,28 @@ class ProductAttributeUtil(
             }
         }
 
-        inflatedViews[attr.productAttributeId] = layout
+        inflatedViews[attr.id] = layout
     }
 
-    private fun textInputAttr(attr: ProductAttribute) {
+    private fun textInputAttr(attr: CustomAttribute) {
         val layout = layoutInflater.inflate(R.layout.edittext_attribute, viewGroup)
-        layout.tag = attr.productAttributeId
+        layout.tag = attr.id
 
-        val tvName = layout.findViewById<TextView>(R.id.tvLayoutTitle)
-        tvName.text = attr.textPrompt ?: attr.name
+        //val tvName = layout.findViewById<TextView>(R.id.tvLayoutTitle)
+        //tvName.text = attr.textPrompt ?: attr.name
 
         //val tvDesc = layout.findViewById<TextView>(R.id.tvLayoutSubTitle)
         //tvDesc.text = attr.description ?: "Select your ${attr.name}"
 
-        tvName.setCompoundDrawablesWithIntrinsicBounds(
+        /*tvName.setCompoundDrawablesWithIntrinsicBounds(
             0, 0, if (attr.isRequired) R.drawable.ic_star_formular else 0, 0
-        )
+        )*/
 
         val etUserInput = layout.findViewById<EditText>(R.id.etUserInput)
+        etUserInput.hint = attr.textPrompt ?: attr.name
+        etUserInput.setCompoundDrawablesWithIntrinsicBounds(
+            0, 0, if (attr.isRequired) R.drawable.ic_star_formular else 0, 0
+        )
 
         val value = AttributeControlValue()
         value.id = -1
@@ -210,7 +214,7 @@ class ProductAttributeUtil(
                 "xyz".showLog(v.text.toString())
                 // save text to viewmodel
                 value.name = v.text.toString()
-                setAttrSelected(attr.productAttributeId, value,
+                setAttrSelected(attr.id, value,
                     isSelected = true,
                     multipleSelection = false
                 )
@@ -219,12 +223,12 @@ class ProductAttributeUtil(
             false
         })
 
-        inflatedViews[attr.productAttributeId] = layout
+        inflatedViews[attr.id] = layout
     }
 
-    private fun colorSelectionAttr(attr: ProductAttribute) {
+    private fun colorSelectionAttr(attr: CustomAttribute) {
         val colorSelectionLayout = layoutInflater.inflate(R.layout.color_selection_layout, viewGroup)
-        colorSelectionLayout.tag = attr.productAttributeId
+        colorSelectionLayout.tag = attr.id
 
 
         val tvName = colorSelectionLayout.findViewById<TextView>(R.id.tvLayoutTitle)
@@ -255,7 +259,7 @@ class ProductAttributeUtil(
                 if (isChecked) {
                     colorSelectionProcess.resetRadioButton(buttonView.id)
                 }
-                setAttrSelected(attr.productAttributeId, x, isChecked, false)
+                setAttrSelected(attr.id, x, isChecked, false)
                 Log.d("as", isChecked.toString())
             }
 
@@ -264,12 +268,12 @@ class ProductAttributeUtil(
             }
         }
 
-        inflatedViews[attr.productAttributeId] = colorSelectionLayout
+        inflatedViews[attr.id] = colorSelectionLayout
     }
 
-    private fun sizeSelectionAttr(attr: ProductAttribute) {
+    private fun sizeSelectionAttr(attr: CustomAttribute) {
         val sizeSelectionLayout = layoutInflater.inflate(R.layout.color_selection_layout, viewGroup)
-        sizeSelectionLayout.tag = attr.productAttributeId
+        sizeSelectionLayout.tag = attr.id
 
         val tvName = sizeSelectionLayout.findViewById<TextView>(R.id.tvLayoutTitle)
         val tvDesc = sizeSelectionLayout.findViewById<TextView>(R.id.tvLayoutSubTitle)
@@ -294,7 +298,7 @@ class ProductAttributeUtil(
                     sizeSelectionProcess.resetRadioButton(buttonView.id)
                 }
                 Log.d("as", isChecked.toString())
-                setAttrSelected(attr.productAttributeId, x, isChecked, false)
+                setAttrSelected(attr.id, x, isChecked, false)
             }
 
             radioButton.setOnClickListener {
@@ -303,7 +307,7 @@ class ProductAttributeUtil(
         }
 
 
-        inflatedViews[attr.productAttributeId] = sizeSelectionLayout
+        inflatedViews[attr.id] = sizeSelectionLayout
     }
 
     private fun getAttrViews(): List<View> {
@@ -326,7 +330,7 @@ class ProductAttributeUtil(
                 }
             }
 
-            selectedAttributes[attr.productAttributeId] = list
+             selectedAttributes[attr.id] = list
         }
     }
 
@@ -373,16 +377,19 @@ class ProductAttributeUtil(
     }
 
     private fun adjustProductPrice() {
-        var price = basicProductPrice
 
-        for (valueList in selectedAttributes.values) {
-            for (i in valueList) {
-                if(!i.isPreSelected)
-                    price = price.plus(i.priceAdjustmentValue ?: 0.0)
+        tvProductPrice?.apply {
+            var price = basicProductPrice
+
+            for (valueList in selectedAttributes.values) {
+                for (i in valueList) {
+                    if(!i.isPreSelected)
+                        price = price.plus(i.priceAdjustmentValue ?: 0.0)
+                }
             }
-        }
 
-        tvProductPrice?.text = "$%.2f".format(price)
+            text = "$%.2f".format(price)
+        }
     }
 
 

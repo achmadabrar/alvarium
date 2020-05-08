@@ -5,7 +5,10 @@ import android.os.Build
 import android.text.Html
 import android.text.Spanned
 import com.bs.ecommerce.R
+import com.bs.ecommerce.networking.common.BaseResponse
 import com.bs.ecommerce.product.model.data.AddressModel
+import com.google.gson.Gson
+import com.google.gson.JsonSyntaxException
 import java.lang.ref.WeakReference
 import java.text.ParseException
 import java.text.SimpleDateFormat
@@ -79,5 +82,21 @@ class TextUtils {
             append(address.countryName)
 
         }.toString()
+    }
+
+    /**
+     * Extracts error message from retrofit error body
+     */
+    fun getErrorMessage(errorMsg: String?): String {
+
+        if (errorMsg.isNullOrEmpty()) return ""
+
+        val baseResponse = try {
+            Gson().fromJson(errorMsg, BaseResponse::class.java)
+        } catch (e: JsonSyntaxException) {
+            null
+        }
+
+        return baseResponse?.errorsAsFormattedString ?: errorMsg
     }
 }

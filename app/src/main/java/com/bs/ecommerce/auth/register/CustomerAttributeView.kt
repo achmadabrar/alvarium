@@ -1,6 +1,6 @@
 package com.bs.ecommerce.auth.register
 
-import android.content.Context
+/*import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.CheckBox
@@ -169,4 +169,4 @@ class CustomerAttributeView(
     fun onBottomSheetClose() {
 
     }
-}
+}*/

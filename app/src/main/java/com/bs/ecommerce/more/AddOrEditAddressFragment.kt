@@ -14,17 +14,27 @@ import com.bs.ecommerce.checkout.model.data.AvailableCountry
 import com.bs.ecommerce.more.model.CustomerAddressModel
 import com.bs.ecommerce.more.model.CustomerAddressModelImpl
 import com.bs.ecommerce.more.viewmodel.AddressViewModel
+import com.bs.ecommerce.networking.Api
+import com.bs.ecommerce.networking.common.KeyValueFormData
 import com.bs.ecommerce.product.model.data.AddressModel
 import com.bs.ecommerce.utils.AddressFormUtil
+import com.bs.ecommerce.utils.CustomAttributeManager
 import com.bs.ecommerce.utils.ItemClickListener
 import com.bs.ecommerce.utils.toast
+import com.google.android.material.bottomsheet.BottomSheetBehavior
 import kotlinx.android.synthetic.main.fragment_address_edit.*
+import kotlinx.android.synthetic.main.other_attr_bottom_sheet.*
+import kotlinx.android.synthetic.main.other_attr_bottom_sheet.view.*
 
 class AddOrEditAddressFragment : BaseFragment() {
 
     private val formUtil: AddressFormUtil by lazy {
         AddressFormUtil(addressForm, requireContext())
     }
+
+    private lateinit var countrySelectListener: ItemClickListener<AvailableCountry>
+    private var customAttributeManager: CustomAttributeManager? = null
+    private lateinit var bsBehavior: BottomSheetBehavior<*>
 
     private lateinit var model: CustomerAddressModel
 
@@ -44,6 +54,8 @@ class AddOrEditAddressFragment : BaseFragment() {
             val editMode = arguments?.getBoolean(key_is_edit)
             val id = arguments?.getInt(key_id)
 
+            initView()
+
             viewModel = ViewModelProvider(this).get(AddressViewModel::class.java)
             model = CustomerAddressModelImpl()
 
@@ -58,6 +70,47 @@ class AddOrEditAddressFragment : BaseFragment() {
         }
 
         setLiveDataObserver()
+    }
+
+    private fun initView() {
+        bsBehavior = BottomSheetBehavior.from(bottomSheetLayoutCart)
+
+        tvDone.setOnClickListener{
+            bsBehavior.state = BottomSheetBehavior.STATE_COLLAPSED
+            //dynamicAttributeView?.onBottomSheetClose()
+        }
+
+        btnSave.setOnClickListener {
+            val userAddress: AddressModel? = (viewModel as AddressViewModel).addressLD.value
+
+            if (userAddress != null && formUtil.isFormDataValid(userAddress)) {
+
+                (viewModel as AddressViewModel).apply {
+
+                    // custom attribute fields value
+                    val formValue = customAttributeManager
+                        ?.getFormData(Api.addressAttributePrefix) ?: KeyValueFormData()
+
+                    if (isEditMode) {
+                        updateAddress(formUtil.validAddress!!, formValue.formValues, model)
+                    } else {
+                        saveCustomerAddress(formUtil.validAddress!!, formValue.formValues, model)
+                    }
+                }
+            }
+        }
+
+        countrySelectListener = object : ItemClickListener<AvailableCountry> {
+            override fun onClick(view: View, position: Int, data: AvailableCountry) {
+
+                // load states for selected country
+                if (data.value != "0") {
+                    (viewModel as AddressViewModel).getStatesByCountryVM(
+                        data.value, CheckoutModelImpl(requireContext())
+                    )
+                }
+            }
+        }
     }
 
     private fun setLiveDataObserver() {
@@ -107,18 +160,6 @@ class AddOrEditAddressFragment : BaseFragment() {
 
         formParentLL.visibility = View.VISIBLE
 
-        val countrySelectListener = object : ItemClickListener<AvailableCountry> {
-            override fun onClick(view: View, position: Int, data: AvailableCountry) {
-
-                // load states for selected country
-                if (data.value != "0") {
-                    (viewModel as AddressViewModel).getStatesByCountryVM(
-                        data.value, CheckoutModelImpl(requireContext())
-                    )
-                }
-            }
-        }
-
         formUtil.apply {
 
             populateCountrySpinner(
@@ -129,21 +170,16 @@ class AddOrEditAddressFragment : BaseFragment() {
             prepareEditText(address)
         }
 
-        btnSave.setOnClickListener {
-            val userAddress: AddressModel? = (viewModel as AddressViewModel).addressLD.value
+        // setup product attributes
+        customAttributeManager =
+            CustomAttributeManager(
+                attributes = address.customAddressAttributes ?: listOf(),
+                attributeViewHolder = customAttributeViewHolder,
+                attributeValueHolder = bottomSheetLayoutCart.attributeValueHolder,
+                bsBehavior = bsBehavior
+            )
 
-            if (userAddress != null && formUtil.isFormDataValid(userAddress)) {
-
-                (viewModel as AddressViewModel).apply {
-
-                    if (isEditMode) {
-                        updateAddress(formUtil.validAddress!!, model)
-                    } else {
-                        saveCustomerAddress(formUtil.validAddress!!, model)
-                    }
-                }
-            }
-        }
+        customAttributeManager?.attachAttributesToFragment()
     }
 
     companion object {

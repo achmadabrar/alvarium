@@ -38,7 +38,7 @@ data class AddressModel(
     @SerializedName("CountyRequired")
     var countyRequired: Boolean?,
     @SerializedName("CustomAddressAttributes")
-    var customAddressAttributes: List<CustomAddressAttribute>?,
+    var customAddressAttributes: List<AddressAttribute>?,
     @SerializedName("CustomProperties")
     var customProperties: CustomProperties?,
     @SerializedName("Email")

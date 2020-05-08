@@ -28,7 +28,7 @@ data class GetRegisterData(
     @SerializedName("County") var county: String = "",
     @SerializedName("CountyEnabled") var countyEnabled: Boolean = false,
     @SerializedName("CountyRequired") var countyRequired: Boolean = false,
-    @SerializedName("CustomerAttributes") var customerAttributes: List<CustomerAttribute> = listOf(),
+    @SerializedName("CustomerAttributes") var customerAttributes: List<CustomerAttribute>? = listOf(),
     @SerializedName("DateOfBirthDay") var dateOfBirthDay: String = "",
     @SerializedName("DateOfBirthEnabled") var dateOfBirthEnabled: Boolean = false,
     @SerializedName("DateOfBirthMonth") var dateOfBirthMonth: String = "",

@@ -5,7 +5,10 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="5dp"
-    android:background="@color/fragment_background">
+    android:background="@drawable/rect_background_ripple"
+    android:clickable="true"
+    android:focusable="false"
+    android:backgroundTint="@color/fragment_background">
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline_v_half"
@@ -32,10 +35,11 @@
 
     <TextView
         android:id="@id/tvLayoutSubTitle"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:gravity="start"
-        android:maxLines="1"
+        android:maxLines="2"
+        android:ellipsize="end"
         android:textColor="@color/gray"
         android:textSize="@dimen/tv_text_size_small"
         app:layout_constraintEnd_toStartOf="@id/guideline_v_half"

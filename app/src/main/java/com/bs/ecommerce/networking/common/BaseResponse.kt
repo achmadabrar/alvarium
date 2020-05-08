@@ -25,11 +25,12 @@ open class BaseResponse
             {
                 for (i in errorList.indices)
                 {
-                    errors += "  " + (i + 1) + ": " + errorList[i] + " \n"
+                    //errors += "  " + (i + 1) + ": " + errorList[i] + " \n"
+                    errors += "‣ " + errorList[i] + "\n"
 
                     "wewtet".showLog(errorList[i])
                 }
             }
-            return errors
+            return errors.trim()
         }
 }

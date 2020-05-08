@@ -37,7 +37,7 @@ class ProductDetailFragment : BaseFragment(), View.OnClickListener {
     private lateinit var bsBehavior: BottomSheetBehavior<*>
     private lateinit var model: ProductDetailModel
     private lateinit var listItemClickListener: ItemClickListener<ProductSummary>
-    private var productAttributeView: ProductAttributeUtil? = null
+    private var customAttributeManager: CustomAttributeManager? = null
 
     override fun getFragmentTitle() = R.string.title_product
 
@@ -158,17 +158,17 @@ class ProductDetailFragment : BaseFragment(), View.OnClickListener {
                     }
 
                     // setup product attributes
-                    productAttributeView =
-                        ProductAttributeUtil(
+                    customAttributeManager =
+                        CustomAttributeManager(
                             attributes = product.productAttributes,
                             attributeViewHolder = attrViewHolder,
                             attributeValueHolder = bottomSheetLayout.attributeValueHolder,
                             bsBehavior = bsBehavior
                         )
 
-                    productAttributeView?.attachAttributesToFragment()
+                    customAttributeManager?.attachAttributesToFragment()
 
-                    productAttributeView?.setupProductPriceCalculation(
+                    customAttributeManager?.setupProductPriceCalculation(
                         product?.productPrice?.priceValue ?: 0.0,
                         productPriceLayout.tvDiscountPrice
                     )
@@ -331,7 +331,7 @@ class ProductDetailFragment : BaseFragment(), View.OnClickListener {
             (viewModel as ProductDetailViewModel).addProductToCartModel(
                 productId,
                 productQuantityLayout?.tvQuantity?.text.toString(),
-                productAttributeView?.getFormData(Api.productAttributePrefix) ?: KeyValueFormData(),
+                customAttributeManager?.getFormData(Api.productAttributePrefix) ?: KeyValueFormData(),
                 model
             )
         }

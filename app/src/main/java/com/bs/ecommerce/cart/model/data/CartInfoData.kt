@@ -1,5 +1,6 @@
 package com.bs.ecommerce.cart.model.data
 
+import com.bs.ecommerce.product.model.data.CheckoutAttribute
 import com.google.gson.annotations.SerializedName
 
 data class CartInfoData(

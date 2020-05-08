@@ -1,22 +1,8 @@
 package com.bs.ecommerce.cart
 
 import android.content.Context
-import android.view.LayoutInflater
 import android.view.View
-import android.widget.CheckBox
-import android.widget.RadioButton
-import android.widget.RadioGroup
-import android.widget.TextView
-import androidx.core.view.children
-import com.bs.ecommerce.R
-import com.bs.ecommerce.cart.model.data.CartRootData
-import com.bs.ecommerce.cart.model.data.CheckoutAttribute
-import com.bs.ecommerce.cart.model.data.Value
-import com.bs.ecommerce.utils.AttributeControlType
 import com.google.android.material.bottomsheet.BottomSheetBehavior
-import kotlinx.android.synthetic.main.other_attr_bottom_sheet.view.*
-import kotlinx.android.synthetic.main.dynamic_attr_layout.view.*
-import org.jetbrains.anko.layoutInflater
 
 class CartDynamicAttribute(
     private val context: Context,
@@ -24,7 +10,7 @@ class CartDynamicAttribute(
     private val bottomSheetLayout: View,
     private val bsBehavior: BottomSheetBehavior<*>
 ) {
-    private var attributes: List<CheckoutAttribute>
+    /*private var attributes: List<CheckoutAttribute>
 
     private var cartRootData: CartRootData = viewModel.cartLD.value!!
 
@@ -162,5 +148,5 @@ class CartDynamicAttribute(
 
     fun onBottomSheetClose() {
 
-    }
+    }*/
 }

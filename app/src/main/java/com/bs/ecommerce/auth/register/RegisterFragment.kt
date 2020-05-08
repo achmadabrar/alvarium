@@ -15,6 +15,8 @@ import com.bs.ecommerce.auth.register.data.GetRegistrationResponse
 import com.bs.ecommerce.base.BaseFragment
 import com.bs.ecommerce.base.BaseViewModel
 import com.bs.ecommerce.main.model.AuthModel
+import com.bs.ecommerce.networking.Api
+import com.bs.ecommerce.networking.common.KeyValueFormData
 import com.bs.ecommerce.utils.*
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import kotlinx.android.synthetic.main.fragment_registration.*
@@ -31,7 +33,7 @@ open class RegisterFragment : BaseFragment(), View.OnClickListener
 
     override fun createViewModel(): BaseViewModel = RegistrationViewModel()
 
-    private var customerAttributeView: CustomerAttributeView? = null
+    protected var customAttributeManager: CustomAttributeManager? = null
     private lateinit var bsBehavior: BottomSheetBehavior<*>
 
     var isValidInfo = true
@@ -96,7 +98,7 @@ open class RegisterFragment : BaseFragment(), View.OnClickListener
             getRegistrationResponseLD.observe(requireActivity(), Observer { getRegistrationResponse ->
 
                 if(getRegistrationResponse.errorList.isNotEmpty())
-                    toast(TextUtils().getHtmlFormattedText(getRegistrationResponse?.errorsAsFormattedString.toString()).toString())
+                    toast(getRegistrationResponse?.errorsAsFormattedString.toString())
                 else
                     setViewsInitially(getRegistrationResponse.data)
 
@@ -161,15 +163,16 @@ open class RegisterFragment : BaseFragment(), View.OnClickListener
 
 
 
-            bottomSheetLayoutRegister?.let {
+            // setup product attributes
+            customAttributeManager =
+                CustomAttributeManager(
+                    attributes = data.customerAttributes ?: listOf(),
+                    attributeViewHolder = attrViewHolderRegisterPage,
+                    attributeValueHolder = bottomSheetLayoutRegister.attributeValueHolder,
+                    bsBehavior = bsBehavior
+                )
 
-                customerAttributeView = CustomerAttributeView(requireContext(), viewModel as RegistrationViewModel, it, bsBehavior)
-
-                for (i in customerAttributeView!!.getAttrViews()) {
-                    attrViewHolderRegisterPage?.addView(i)
-                }
-
-            }
+            customAttributeManager?.attachAttributesToFragment()
 
         }
 
@@ -218,8 +221,15 @@ open class RegisterFragment : BaseFragment(), View.OnClickListener
 
     open fun performSubmit()
     {
-        if(isValidInfo)
+        if(isValidInfo) {
+            // custom attribute fields value
+            val formValue = customAttributeManager
+                ?.getFormData(Api.customerAttributePrefix) ?: KeyValueFormData()
+
+            customerInfo.formValues = formValue.formValues
+
             (viewModel as RegistrationViewModel).postRegisterVM(customerInfo, model)
+        }
     }
 
     private fun showValidation( editText: EditText, isRequired: Boolean)
@@ -320,7 +330,7 @@ open class RegisterFragment : BaseFragment(), View.OnClickListener
     fun initView() {
 
         bsBehavior = BottomSheetBehavior.from(bottomSheetLayoutRegister)
-        bsBehavior.addBottomSheetCallback(object : BottomSheetBehavior.BottomSheetCallback() {
+        /*bsBehavior.addBottomSheetCallback(object : BottomSheetBehavior.BottomSheetCallback() {
             override fun onStateChanged(bottomSheet: View, newState: Int) {
                 when (newState) {
                     BottomSheetBehavior.STATE_HIDDEN -> {
@@ -338,7 +348,7 @@ open class RegisterFragment : BaseFragment(), View.OnClickListener
 
             override fun onSlide(bottomSheet: View, slideOffset: Float) {
             }
-        })
+        })*/
 
         bottomSheetLayoutRegister?.tvDone?.setOnClickListener(this)
     }
@@ -348,7 +358,7 @@ open class RegisterFragment : BaseFragment(), View.OnClickListener
         when(v.id) {
             R.id.tvDone -> {
                 bsBehavior.state = BottomSheetBehavior.STATE_COLLAPSED
-                customerAttributeView?.onBottomSheetClose()
+                //customerAttributeView?.onBottomSheetClose()
             }
         }
     }

@@ -1,5 +1,6 @@
 package com.bs.ecommerce.more.model
 
+import com.bs.ecommerce.auth.register.data.KeyValuePair
 import com.bs.ecommerce.common.RequestCompleteListener
 import com.bs.ecommerce.product.model.data.AddressModel
 import com.bs.ecommerce.product.model.data.CustomerAddressData
@@ -22,6 +23,7 @@ interface CustomerAddressModel {
 
     fun saveAddress(
         address: AddressModel,
+        customAttributes: List<KeyValuePair>,
         callback: RequestCompleteListener<Any?>
     )
 
@@ -32,6 +34,7 @@ interface CustomerAddressModel {
 
     fun updateAddress(
         address: AddressModel,
+        customAttributes: List<KeyValuePair>,
         callback: RequestCompleteListener<Any?>
     )
 }

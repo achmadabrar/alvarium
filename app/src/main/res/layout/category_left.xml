@@ -10,13 +10,18 @@
     android:orientation="vertical"
     android:descendantFocusability="blocksDescendants">
 
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/expandList"
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/categorySwipeRefresh"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:listitem="@layout/item_category"
-        tools:itemCount="10"
-        android:nestedScrollingEnabled="false"/>
+        android:layout_height="match_parent">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/expandList"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            tools:listitem="@layout/item_category"
+            tools:itemCount="10"
+            android:nestedScrollingEnabled="false"/>
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
 </RelativeLayout>

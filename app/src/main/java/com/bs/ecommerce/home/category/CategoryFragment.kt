@@ -45,8 +45,11 @@ class CategoryFragment : BaseFragment()
             mainViewModel = ViewModelProvider(this).get(MainViewModel::class.java)
 
             mainViewModel.getNavDrawerCategoryList(mainModel)
-            viewCreated = true
 
+            categorySwipeRefresh.setOnRefreshListener {
+                categorySwipeRefresh.isRefreshing = false
+                mainViewModel.getNavDrawerCategoryList(mainModel)
+            }
         }
 
         setLiveDataListeners()

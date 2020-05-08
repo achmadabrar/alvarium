@@ -31,6 +31,7 @@
             android:layout_weight="0.2"
             android:layout_height="wrap_content"
             android:src="@drawable/ic_plus_left_category"
+            android:tint="@color/whiteOrBlack"
             android:layout_gravity="center_vertical"/>
 
     </LinearLayout>
