@@ -24,6 +24,8 @@
     <string name="title_checkout">Checkout</string>
     <string name="title_wishlist">Wish List</string>
     <string name="title_addresses">Addresses</string>
+    <string name="title_about_us">About Us</string>
+    <string name="title_contact_us">Contact Us</string>
 
     <!-- Barcode Fragment  -->
     <string name="place_barcode_in_camera">Put barcode here to Scan instantly</string>
@@ -221,5 +223,13 @@
     <string name="my_addresses">My Addresses</string>
     <string name="shopping_cart">Shopping Cart</string>
     <string name="my_reviews">My Reviews</string>
+
+    <!-- Contact Us  -->
+    <string name="submit">Submit</string>
+    <string name="hint_name">Your Name</string>
+    <string name="hint_email">Your Email</string>
+    <string name="hint_enquiry">Your Enquiry</string>
+    <string name="validation_toast">Enter %s</string>
+    <string name="enquiry_success_msg">Your enquiry has successfully sent to the store owner</string>
 
 </resources>

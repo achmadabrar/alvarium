@@ -20,6 +20,10 @@ class OptionViewModel : BaseViewModel() {
 
         data.add(AppOptions(R.string.privacy_policy, R.drawable.ic_privacy))
 
+        data.add(AppOptions(R.string.title_about_us, R.drawable.ic_about_us))
+
+        data.add(AppOptions(R.string.title_contact_us, R.drawable.ic_settings))
+
         data.add(AppOptions(R.string.title_checkout, R.drawable.ic_my_order))
 
         data.add(AppOptions(R.string.placeholder, R.drawable.ic_placeholder))
