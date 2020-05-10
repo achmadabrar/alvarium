@@ -21,7 +21,7 @@ import com.bs.ecommerce.utils.MyApplication
 import com.bs.ecommerce.utils.showLog
 import kotlinx.android.synthetic.main.fragment_shipping_method.*
 
-class ShippingMethodFragment : BaseFragment() {
+class ShippingMethodFragment : BaseCheckoutNavigationFragment() {
 
 
     protected lateinit var model: CheckoutModel
@@ -50,8 +50,6 @@ class ShippingMethodFragment : BaseFragment() {
 
         btnContinue?.setOnClickListener {
 
-            "dsdsdsdsdssfsf".showLog(shippingMethodValue)
-
             (viewModel as CheckoutAddressViewModel).saveShippingMethodVM(shippingMethodValue, model)
         }
 
@@ -78,7 +76,10 @@ class ShippingMethodFragment : BaseFragment() {
         val radioButton = eachCheckLayout.findViewById<View>(R.id.rb_shippingChoice) as AppCompatRadioButton
 
         radioButton.text = method.name
-        radioButton.id = id + 1
+        //radioButton.id = id + 1
+
+        radioButton.id = View.generateViewId()
+
         tv_shippingMethodAmount.text = method.fee
 
         if (isPreselected(method))
