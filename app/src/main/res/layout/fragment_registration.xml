@@ -350,11 +350,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="20dp"
-                    android:backgroundTint="@color/pink"
                     android:nextFocusLeft="@+id/login_remember_password"
                     android:nextFocusUp="@+id/login_remember_password"
-                    android:text="@string/reg_btn_register"
-                    android:textColor="@color/white" />
+                    android:text="@string/reg_btn_register" />
             </LinearLayout>
 
         </androidx.core.widget.NestedScrollView>

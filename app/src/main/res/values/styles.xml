@@ -3,9 +3,9 @@
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.DayNight.NoActionBar">
         <!-- Customize your theme here. -->
-        <item name="colorPrimary">@color/theme_background</item>
-        <item name="colorPrimaryDark">@color/theme_background</item>
-        <item name="colorAccent">@color/gray</item>
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimary</item>
+        <item name="colorAccent">@color/colorAccent</item>
 
         <item name="fontFamily">@font/montserrat_regular</item>
         <item name="android:fontFamily">@font/montserrat_regular</item>
@@ -34,7 +34,7 @@
 
     <style name="RoundedSpinner">
         <item name="android:background">@drawable/rounded_background</item>
-        <item name="android:backgroundTint">@color/edittext_background</item>
+        <item name="android:backgroundTint">@color/etStyle1_background</item>
         <item name="android:paddingStart">8dp</item>
         <item name="android:paddingTop">10dp</item>
         <item name="android:paddingEnd">8dp</item>
@@ -46,13 +46,13 @@
 
     <style name="RoundedEditText">
         <item name="android:background">@drawable/rounded_background</item>
-        <item name="android:backgroundTint">@color/edittext_background</item>
+        <item name="android:backgroundTint">@color/etStyle1_background</item>
         <item name="android:paddingStart">15dp</item>
         <item name="android:paddingTop">10dp</item>
         <item name="android:paddingEnd">15dp</item>
         <item name="android:paddingBottom">10dp</item>
         <item name="android:textColor">@color/whiteOrBlack</item>
-        <item name="android:textColorHint">@color/login_tv_text</item>
+        <item name="android:textColorHint">@color/etStyle1_hint</item>
         <item name="android:textSize">@dimen/et_text_size</item>
         <item name="android:maxLines">1</item>
     </style>
@@ -69,15 +69,15 @@
 
     <style name="RoundedButtonRegular">
         <item name="android:background">@drawable/rounded_background_ripple</item>
-        <item name="android:backgroundTint">@color/pink</item>
-        <item name="android:textColor">@color/login_tv_color</item>
+        <item name="android:backgroundTint">@color/btnStyle1_background</item>
+        <item name="android:textColor">@color/btnStyle1_text</item>
         <item name="android:textSize">@dimen/button_text_size</item>
     </style>
 
     <style name="RectangularButtonRegular">
         <item name="android:background">@drawable/rect_background_ripple</item>
-        <item name="android:backgroundTint">@color/pink</item>
-        <item name="android:textColor">@color/login_tv_color</item>
+        <item name="android:backgroundTint">@color/btnStyle1_background</item>
+        <item name="android:textColor">@color/btnStyle1_text</item>
         <item name="android:textSize">@dimen/button_text_size</item>
     </style>
 

@@ -20,22 +20,12 @@ class OptionViewModel : BaseViewModel() {
 
         data.add(AppOptions(R.string.privacy_policy, R.drawable.ic_privacy))
 
-        data.add(AppOptions(R.string.my_orders, R.drawable.ic_my_order))
-
-        if(prefObject.getPrefsBoolValue(PrefSingleton.IS_LOGGED_IN))
-            data.add(AppOptions(R.string.log_out, R.drawable.ic_login))
-        else
-            data.add(AppOptions(R.string.login, R.drawable.ic_login))
-
         data.add(AppOptions(R.string.title_checkout, R.drawable.ic_my_order))
 
-        data.add(AppOptions(R.string.title_wishlist, R.drawable.ic_heart))
-
-        data.add(AppOptions(R.string.title_addresses, R.drawable.ic_heart))
+        data.add(AppOptions(R.string.placeholder, R.drawable.ic_placeholder))
 
         optionsLD.postValue(data)
     }
-
     /*fun changeLogInText()
     {
         //val data = optionsLD.value as MutableList<AppOptions>

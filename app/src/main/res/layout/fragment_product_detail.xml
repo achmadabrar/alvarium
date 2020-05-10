@@ -167,14 +167,12 @@
                 android:layout_height="match_parent"
                 android:layout_gravity="center"
                 android:layout_weight="1"
-                android:backgroundTint="@color/pink"
                 android:drawableStart="@drawable/app_icon_cart"
                 android:gravity="center"
                 android:paddingStart="25dp"
                 android:paddingEnd="25dp"
                 android:singleLine="true"
                 android:text="@string/buy_now"
-                android:textColor="@color/white"
                 android:textSize="14sp"
                 android:textStyle="bold" />
         </LinearLayout>

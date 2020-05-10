@@ -110,14 +110,12 @@
 
     <Button
         android:id="@+id/checkoutButton"
+        style="@style/RectangularButtonRegular"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_marginTop="5dp"
-        android:background="@color/pink"
         android:text="@string/confirm"
-        android:textColor="@color/login_tv_color"
-        android:textSize="@dimen/button_text_size"
         android:visibility="gone"
         tools:visibility="visible" />
 
