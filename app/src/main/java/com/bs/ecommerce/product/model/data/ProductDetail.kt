@@ -79,9 +79,9 @@ data class ProductDetail(
     @SerializedName("ProductType")
     val productType: Int?,
     @SerializedName("RentalEndDate")
-    val rentalEndDate: Any?,
+    var rentalEndDate: Any?,
     @SerializedName("RentalStartDate")
-    val rentalStartDate: Any?,
+    var rentalStartDate: Any?,
     @SerializedName("SeName")
     val seName: String?,
     @SerializedName("ShortDescription")

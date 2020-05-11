@@ -104,6 +104,20 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="5dp" />
 
+                <include
+                    android:id="@+id/hd13"
+                    android:visibility="gone"
+                    tools:visibility="visible"
+                    layout="@layout/horizontal_divider" />
+
+                <ViewStub
+                    android:id="@+id/vsRentalProduct"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:layout="@layout/rental_product_layout"
+                    tools:visibility="visible" />
+
                 <LinearLayout
                     android:id="@+id/attrViewHolder"
                     android:layout_width="match_parent"

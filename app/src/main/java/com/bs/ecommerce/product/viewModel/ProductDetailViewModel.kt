@@ -14,6 +14,8 @@ import com.bs.ecommerce.product.model.data.ProductDetail
 import com.bs.ecommerce.product.model.data.ProductDetailResponse
 import com.bs.ecommerce.product.model.data.ProductSummary
 import com.bs.ecommerce.utils.showLog
+import java.util.*
+
 
 class ProductDetailViewModel : BaseViewModel() {
 
@@ -28,6 +30,9 @@ class ProductDetailViewModel : BaseViewModel() {
     var cartProductsCountLD = MutableLiveData<Int>()
 
     var addToCartResponseLD = MutableLiveData<AddToCartResponse>()
+
+    var rentDateFrom: Long? = null
+    var rentDateTo: Long? = null
 
     fun getProductDetail(prodId: Long, model: ProductDetailModel) {
         isLoadingLD.value = true
@@ -142,6 +147,37 @@ class ProductDetailViewModel : BaseViewModel() {
             quantityLiveData.setValue(quantityLiveData.value?.minus(1))
         } else {
             toast("Invalid quantity")
+        }
+    }
+
+    fun setRentDate(d: Int, m: Int, y: Int, isStartTime: Boolean) {
+
+        val cal = Calendar.getInstance()
+        cal[Calendar.DAY_OF_MONTH] = d
+        cal[Calendar.MONTH] = m
+        cal[Calendar.YEAR] = y
+
+        if (isStartTime) {
+            rentDateFrom = cal.timeInMillis
+            rentDateTo = cal.timeInMillis
+        }
+        else {
+            rentDateTo = cal.timeInMillis
+        }
+    }
+
+    fun getRentDate(isStartTime: Boolean): Long {
+
+        return if(isStartTime) {
+            rentDateFrom ?: Calendar.getInstance().timeInMillis.also { rentDateFrom = it }
+        } else {
+
+            if(rentDateTo == null) {
+                rentDateTo = getRentDate(true)
+                rentDateTo!!
+            } else {
+                rentDateTo!!
+            }
         }
     }
 

@@ -1,5 +1,7 @@
 package com.bs.ecommerce.product
 
+import android.annotation.SuppressLint
+import android.app.DatePickerDialog
 import android.graphics.Paint
 import android.os.Bundle
 import android.view.View
@@ -31,7 +33,9 @@ import kotlinx.android.synthetic.main.product_name_layout.view.*
 import kotlinx.android.synthetic.main.product_name_layout.view.tvProductName
 import kotlinx.android.synthetic.main.product_price_layout.view.*
 import kotlinx.android.synthetic.main.product_quantity.view.*
+import kotlinx.android.synthetic.main.rental_product_layout.view.*
 import kotlinx.android.synthetic.main.slider.view.*
+import java.util.*
 
 
 class ProductDetailFragment : BaseFragment(), View.OnClickListener {
@@ -171,10 +175,15 @@ class ProductDetailFragment : BaseFragment(), View.OnClickListener {
                     customAttributeManager?.attachAttributesToFragment()
 
                     customAttributeManager?.setupProductPriceCalculation(
-                        product?.productPrice?.priceValue ?: 0.0,
+                        product?.productPrice,
                         productPriceLayout.tvDiscountPrice
                     )
 
+
+                    // Rental Product
+                    if(product.isRental == true) {
+                        populateRentalProductSection(product)
+                    }
 
                     // Associated Product
                     val isGroupProduct = product.associatedProducts?.isNotEmpty() ?: false
@@ -265,6 +274,55 @@ class ProductDetailFragment : BaseFragment(), View.OnClickListener {
             })
         }
 
+    }
+
+    @SuppressLint("SetTextI18n")
+    private fun populateRentalProductSection(product: ProductDetail) {
+        if (vsRentalProduct == null) return
+
+        val rentalProductLayout = vsRentalProduct.inflate()
+
+        btnBuyNow.text = getString(R.string.rent_now)
+        hd13.visibility = View.VISIBLE
+
+        val calender: Calendar = Calendar.getInstance()
+
+        rentalProductLayout.etRentFrom.setOnClickListener{
+
+            val dialog = DatePickerDialog(
+                requireContext(), DatePickerDialog.OnDateSetListener { _, y, m, d ->
+                    rentalProductLayout.etRentFrom.text = "$d / $m / $y"
+                    rentalProductLayout.etRentTo.text = "$d / $m / $y"
+
+                    (viewModel as ProductDetailViewModel).setRentDate(d, m, y, true)
+                },
+                calender.get(Calendar.YEAR), calender.get(Calendar.MONTH),
+                calender.get(Calendar.DAY_OF_MONTH)
+            )
+
+            dialog.datePicker.minDate = (viewModel as ProductDetailViewModel).getRentDate(true)
+            dialog.show()
+        }
+
+        rentalProductLayout.etRentTo.setOnClickListener{
+
+            if (rentalProductLayout.etRentFrom.text.isNullOrEmpty()) {
+                toast("Select start date")
+                return@setOnClickListener
+            }
+
+            val dialog = DatePickerDialog(
+                requireContext(), DatePickerDialog.OnDateSetListener { _, y, m, d ->
+                    rentalProductLayout.etRentTo.text = "$d / $m / $y"
+                    (viewModel as ProductDetailViewModel).setRentDate(d, m, y, false)
+                },
+                calender.get(Calendar.YEAR), calender.get(Calendar.MONTH),
+                calender.get(Calendar.DAY_OF_MONTH)
+            )
+
+            dialog.datePicker.minDate = (viewModel as ProductDetailViewModel).getRentDate(false)
+            dialog.show()
+        }
     }
 
     private fun populateAssociatedProductList(list: List<ProductDetail>) {
