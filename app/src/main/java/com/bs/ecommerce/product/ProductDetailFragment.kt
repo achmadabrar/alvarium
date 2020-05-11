@@ -16,8 +16,10 @@ import com.bs.ecommerce.cart.CartFragment
 import com.bs.ecommerce.home.FeaturedProductAdapter
 import com.bs.ecommerce.networking.Api
 import com.bs.ecommerce.networking.common.KeyValueFormData
+import com.bs.ecommerce.product.adapter.AssociatedProductAdapter
 import com.bs.ecommerce.product.model.ProductDetailModel
 import com.bs.ecommerce.product.model.ProductDetailModelImpl
+import com.bs.ecommerce.product.model.data.ProductDetail
 import com.bs.ecommerce.product.model.data.ProductSummary
 import com.bs.ecommerce.product.viewModel.ProductDetailViewModel
 import com.bs.ecommerce.utils.*
@@ -141,7 +143,7 @@ class ProductDetailFragment : BaseFragment(), View.OnClickListener {
                         }
                     }
 
-                    productPriceLayout.tvDiscountPercent.text = "40% Off"
+                    //productPriceLayout.tvDiscountPercent.text = "40% Off"
 
                     tvAvailability.text = product.stockAvailability
 
@@ -173,8 +175,30 @@ class ProductDetailFragment : BaseFragment(), View.OnClickListener {
                         productPriceLayout.tvDiscountPrice
                     )
 
+
+                    // Associated Product
+                    val isGroupProduct = product.associatedProducts?.isNotEmpty() ?: false
+
+                    if(isGroupProduct) {
+                        populateAssociatedProductList(product.associatedProducts!!)
+
+                        // Hide unrelated layouts
+                        productPriceLayout.visibility = View.GONE
+                        productQuantityLayout.visibility = View.GONE
+                        addtoCartLayout.visibility = View.GONE
+
+                        // Hide horizontal dividers
+                        hd11.visibility = View.GONE
+                        hd12.visibility = View.GONE
+
+                        productDetailsScrollView.visibility = View.VISIBLE
+
+                        return@Observer
+                    } else {
+                        addtoCartLayout.visibility = View.VISIBLE
+                    }
+
                     productDetailsScrollView.visibility = View.VISIBLE
-                    addtoCartLayout.visibility = View.VISIBLE
 
                 })
 
@@ -241,6 +265,42 @@ class ProductDetailFragment : BaseFragment(), View.OnClickListener {
             })
         }
 
+    }
+
+    private fun populateAssociatedProductList(list: List<ProductDetail>) {
+        if (list.isEmpty() || vsAssociatedProduct==null)
+            return
+
+        val associatedProductLayout = vsAssociatedProduct.inflate()
+
+        associatedProductLayout.tvProductName.text = getString(R.string.associated_product)
+
+        associatedProductLayout.rvFeaturedProduct.apply {
+            layoutManager =
+                LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
+
+            //addItemDecoration(RecyclerViewMargin(5, 1, isVertical = true))
+            setHasFixedSize(true)
+
+            val clickListener = object: ItemClickListener<ProductDetail> {
+                override fun onClick(view: View, position: Int, data: ProductDetail) {
+
+                    when(view.id) {
+                        R.id.itemView ->
+                            toast(data.name ?: "")
+
+                        R.id.ivAddToWishList ->
+                            addProductToWishList(data.id!!)
+
+                        R.id.ivAddToCart ->
+                            addToCartClickAction(data.id!!, data.quantity.toString())
+                    }
+
+                }
+            }
+
+            adapter = AssociatedProductAdapter(list, clickListener)
+        }
     }
 
     private fun populateRelatedProductList(list: List<ProductSummary>) {
@@ -328,15 +388,18 @@ class ProductDetailFragment : BaseFragment(), View.OnClickListener {
         }
 
         btnAddToCart?.setOnClickListener {
-            (viewModel as ProductDetailViewModel).addProductToCartModel(
-                productId,
-                productQuantityLayout?.tvQuantity?.text.toString(),
-                customAttributeManager?.getFormData(Api.productAttributePrefix) ?: KeyValueFormData(),
-                model
-            )
+            addToCartClickAction(productId, productQuantityLayout?.tvQuantity?.text.toString())
         }
     }
 
+    private fun addToCartClickAction(productId: Long, quantity: String) {
+        (viewModel as ProductDetailViewModel).addProductToCartModel(
+            productId,
+            quantity,
+            customAttributeManager?.getFormData(Api.productAttributePrefix) ?: KeyValueFormData(),
+            model
+        )
+    }
 
     override fun onClick(v: View) {
         when(v.id) {

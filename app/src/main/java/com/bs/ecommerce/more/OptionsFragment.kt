@@ -10,6 +10,7 @@ import com.bs.ecommerce.base.BaseFragment
 import com.bs.ecommerce.base.BaseViewModel
 import com.bs.ecommerce.checkout.CheckoutStepFragment
 import com.bs.ecommerce.more.viewmodel.OptionViewModel
+import com.bs.ecommerce.product.ProductDetailFragment
 import com.bs.ecommerce.utils.replaceFragmentSafely
 import kotlinx.android.synthetic.main.fragment_options.*
 import kotlinx.android.synthetic.main.options_layout.view.*
@@ -69,6 +70,9 @@ class OptionsFragment : BaseFragment() {
 
                         R.string.title_checkout ->
                             replaceFragmentSafely(CheckoutStepFragment())
+
+                        R.string.placeholder ->
+                            replaceFragmentSafely(ProductDetailFragment.newInstance(13))
                     }
                 }
 

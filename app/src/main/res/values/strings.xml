@@ -231,5 +231,6 @@
     <string name="hint_enquiry">Your Enquiry</string>
     <string name="validation_toast">Enter %s</string>
     <string name="enquiry_success_msg">Your enquiry has successfully sent to the store owner</string>
+    <string name="associated_product">Associated Products</string>
 
 </resources>

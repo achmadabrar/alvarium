@@ -52,7 +52,9 @@
                     android:layout="@layout/product_name_layout"
                     tools:visibility="visible" />
 
-                <include layout="@layout/horizontal_divider" />
+                <include
+                    android:id="@+id/hd11"
+                    layout="@layout/horizontal_divider" />
 
                 <include
                     android:id="@+id/productPriceLayout"
@@ -91,7 +93,9 @@
                         tools:text="@string/placeholder" />
                 </LinearLayout>
 
-                <include layout="@layout/horizontal_divider" />
+                <include
+                    android:id="@+id/hd12"
+                    layout="@layout/horizontal_divider" />
 
                 <include
                     android:id="@+id/productQuantityLayout"
@@ -118,6 +122,13 @@
                     tools:visibility="visible" />
 
                 <include layout="@layout/horizontal_divider" />
+
+                <ViewStub
+                    android:id="@+id/vsAssociatedProduct"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout="@layout/featured_product_layout"
+                    tools:visibility="gone" />
 
                 <ViewStub
                     android:id="@+id/vsRelatedProduct"
