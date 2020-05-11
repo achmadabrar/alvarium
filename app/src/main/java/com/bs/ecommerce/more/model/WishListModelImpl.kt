@@ -6,6 +6,7 @@ import com.bs.ecommerce.common.RequestCompleteListener
 
 import com.bs.ecommerce.networking.RetroClient
 import com.bs.ecommerce.networking.common.BaseResponse
+import com.bs.ecommerce.networking.common.KeyValueFormData
 import com.bs.ecommerce.product.model.data.WishListResponse
 import retrofit2.Call
 import retrofit2.Callback
@@ -35,7 +36,7 @@ class WishListModelImpl : WishListModel {
         callback: RequestCompleteListener<WishListResponse>
     ) {
 
-        RetroClient.api.updateWishList(keyValuePairs).enqueue(object : Callback<WishListResponse> {
+        RetroClient.api.updateWishList(KeyValueFormData(keyValuePairs)).enqueue(object : Callback<WishListResponse> {
 
             override fun onResponse(call: Call<WishListResponse>, response: Response<WishListResponse>) {
                 if (response.body() != null)

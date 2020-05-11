@@ -88,7 +88,7 @@ interface Api {
     fun getCheckoutConfirmInformationAPI(): Call<SaveBillingResponse>
 
     @POST("shoppingcart/checkoutattributechange")
-    fun updateCheckOutAttribute(@Body list: List<KeyValuePair>): Call<CartRootData>
+    fun updateCheckOutAttribute(@Body kvFormData: KeyValueFormData): Call<CartRootData>
 
 
     //homepage
@@ -168,7 +168,7 @@ interface Api {
     fun getWishList(): Call<WishListResponse>
 
     @POST("shoppingcart/updatewishlist")
-    fun updateWishList(@Body list: List<KeyValuePair>): Call<WishListResponse>
+    fun updateWishList(@Body kvFormData: KeyValueFormData): Call<WishListResponse>
 
     @POST("shoppingcart/additemstocartfromwishlist")
     fun moveWishListItemsToCart(@Body body: BaseResponse): Call<WishListResponse>

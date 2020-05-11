@@ -100,7 +100,7 @@ class CartModelImpl(private val context: Context): CartModel
         list: List<KeyValuePair>,
         callback: RequestCompleteListener<CartRootData>
     ) {
-        RetroClient.api.updateCheckOutAttribute(list).enqueue(object : Callback<CartRootData> {
+        RetroClient.api.updateCheckOutAttribute(KeyValueFormData(list)).enqueue(object : Callback<CartRootData> {
             override fun onResponse(call: Call<CartRootData>, response: Response<CartRootData>) {
                 if (response.body() != null)
                     callback.onRequestSuccess(response.body() as CartRootData)
