@@ -5,6 +5,7 @@ import android.os.Handler
 import android.view.View
 import androidx.lifecycle.Observer
 import com.bs.ecommerce.checkout.model.data.BillingAddressResponse
+import com.bs.ecommerce.checkout.model.data.ShippingAddress
 import com.bs.ecommerce.networking.Constants
 import com.bs.ecommerce.utils.*
 import kotlinx.android.synthetic.main.fragment_base_billing_adddress.*
@@ -52,7 +53,7 @@ class BillingAddressFragment : BaseCheckoutAddressFragment()
 
             })
 
-            saveBillingResponseLD.observe(viewLifecycleOwner, Observer { saveResponse ->
+            /*saveBillingResponseLD.observe(viewLifecycleOwner, Observer { saveResponse ->
 
                 if(saveResponse.errorList.isNotEmpty())
                     toast(saveResponse.errorsAsFormattedString)
@@ -65,11 +66,13 @@ class BillingAddressFragment : BaseCheckoutAddressFragment()
 
                     CheckoutStepFragment.isBillingAddressSubmitted = true
 
-                    Handler().post {   addressTabLayout?.getTabAt(Constants.SHIPPING_ADDRESS_TAB)?.select()  }
+
+                    if(saveResponse.data.nextStep == Constants.ShippingAddress)
+                        Handler().post {   addressTabLayout?.getTabAt(Constants.SHIPPING_ADDRESS_TAB)?.select()  }
 
                 }
 
-            })
+            })*/
         }
     }
     protected fun showBillingAddressUI(billingAddressResponse: BillingAddressResponse)

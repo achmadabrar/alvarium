@@ -21,7 +21,7 @@ import kotlinx.android.synthetic.main.fragment_base_billing_adddress.*
 import kotlinx.android.synthetic.main.fragment_billing_address.*
 
 
-open class BaseCheckoutAddressFragment : BaseFragment()
+open class BaseCheckoutAddressFragment : BaseCheckoutNavigationFragment()
 {
     protected lateinit var model: CheckoutModel
 
@@ -58,7 +58,9 @@ open class BaseCheckoutAddressFragment : BaseFragment()
 
 
     }
-    open fun setLiveDataListeners() {
+    override fun setLiveDataListeners() {
+
+        super.setLiveDataListeners()
 
         with(viewModel as CheckoutAddressViewModel)
         {
