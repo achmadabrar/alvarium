@@ -3,7 +3,6 @@ package com.bs.ecommerce.networking
 import com.bs.ecommerce.auth.login.data.LoginPostData
 import com.bs.ecommerce.auth.login.data.LoginResponse
 import com.bs.ecommerce.auth.register.data.GetRegistrationResponse
-import com.bs.ecommerce.auth.register.data.KeyValuePair
 import com.bs.ecommerce.cart.model.data.AddDiscountPostData
 import com.bs.ecommerce.cart.model.data.CartResponse
 import com.bs.ecommerce.cart.model.data.CartRootData
@@ -197,6 +196,11 @@ interface Api {
         @Body body: EditCustomerAddressResponse
     ): Call<ResponseBody>
 
+    // TOPIC
+
+    @GET("topic/details/{systemName}")
+    fun getTopic(@Path("systemName") systemName: String) : Call<TopicResponse>
+
 /*    @POST("setcurrency/{id}")
     fun setCurrency(@Path("id") id: Long): Call<LanguageResponse>
 
@@ -254,12 +258,6 @@ interface Api {
 
     @get:GET("categoriesNmanufactures/search")
     val advanceSearchOptions: Call<AdvanceSearchSpinnerOptionResponse>
-
-    @GET("topics/AboutUs")
-    fun aboutUs(): Call<AboutUsResponse>
-
-    @GET("topics/PrivacyInfo")
-    fun privacyPolicy() : Call<PrivacyPolicyResponse>
 
     @POST("AppStart")
     fun initApp(@Body appStartRequest: AppStartRequest): Call<AppThemeResponse>
@@ -414,6 +412,9 @@ interface Api {
         const val checkOutAttributePrefix = "checkout_attribute"
         const val addressAttributePrefix = "address_attribute"
         const val customerAttributePrefix = "customer_attribute"
+
+        const val topicAboutUs = "AboutUs"
+        const val topicPrivacyPolicy = "PrivacyInfo"
 
         @JvmStatic
         val DEFAULT_PAGE_SIZE = 9

@@ -3,7 +3,9 @@
     android:id="@+id/bottom_sheet"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="?attr/primaryListItemBg"
+    android:background="@drawable/rounded_background_top"
+    android:backgroundTint="?attr/primaryListItemBg"
+    android:elevation="16dp"
     android:orientation="vertical">
 
     <TextView

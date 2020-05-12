@@ -17,6 +17,8 @@ import com.bs.ecommerce.R
 import com.bs.ecommerce.base.BaseFragment
 import com.bs.ecommerce.base.BaseViewModel
 import com.bs.ecommerce.cart.CartFragment
+import com.bs.ecommerce.product.adapter.ProductListAdapter
+import com.bs.ecommerce.product.adapter.SubCategoryAdapter
 import com.bs.ecommerce.product.model.ProductListModel
 import com.bs.ecommerce.product.model.ProductListModelImpl
 import com.bs.ecommerce.product.model.data.PagingFilteringContext
@@ -130,7 +132,9 @@ class ProductListFragment : BaseFragment() {
 
         bsBehavior = BottomSheetBehavior.from(bottomSheetLayout)
 
-        productListAdapter = ProductListAdapter(productClickListener)
+        productListAdapter = ProductListAdapter(
+            productClickListener
+        )
 
         rvProductList.adapter = productListAdapter
 
@@ -252,7 +256,11 @@ class ProductListFragment : BaseFragment() {
         subcategoryPopupWindow.isModal = true
         subcategoryPopupWindow.setBackgroundDrawable(ColorDrawable(0))
 
-        subcategoryPopupWindow.setAdapter(SubCategoryAdapter(subCatList))
+        subcategoryPopupWindow.setAdapter(
+            SubCategoryAdapter(
+                subCatList
+            )
+        )
 
         categoryNameTextView?.setOnClickListener {
             if (subcategoryPopupWindow.isShowing) {

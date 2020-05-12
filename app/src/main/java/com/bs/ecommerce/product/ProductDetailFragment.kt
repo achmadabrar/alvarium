@@ -20,6 +20,7 @@ import com.bs.ecommerce.home.FeaturedProductAdapter
 import com.bs.ecommerce.networking.Api
 import com.bs.ecommerce.networking.common.KeyValueFormData
 import com.bs.ecommerce.product.adapter.AssociatedProductAdapter
+import com.bs.ecommerce.product.adapter.DetailsSliderAdapter
 import com.bs.ecommerce.product.model.ProductDetailModel
 import com.bs.ecommerce.product.model.ProductDetailModelImpl
 import com.bs.ecommerce.product.model.data.ProductDetail
@@ -106,7 +107,10 @@ class ProductDetailFragment : BaseFragment(), View.OnClickListener {
                     val imageSlider = vsImageSlider?.inflate()
 
                     val detailsSliderAdapter =
-                        DetailsSliderAdapter(requireContext(), product.pictureModels)
+                        DetailsSliderAdapter(
+                            requireContext(),
+                            product.pictureModels
+                        )
                     imageSlider?.view_pager_slider?.adapter = detailsSliderAdapter
                     imageSlider?.view_pager_slider?.currentItem = 0
                     imageSlider?.circle_indicator?.setViewPager(imageSlider.view_pager_slider)

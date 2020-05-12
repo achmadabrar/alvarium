@@ -20,6 +20,7 @@ import com.bs.ecommerce.R
 import com.bs.ecommerce.base.BaseFragment
 import com.bs.ecommerce.base.BaseViewModel
 import com.bs.ecommerce.main.MainActivity
+import com.bs.ecommerce.product.adapter.ProductListAdapter
 import com.bs.ecommerce.product.model.SearchModel
 import com.bs.ecommerce.product.model.SearchModelImpl
 import com.bs.ecommerce.product.model.data.PagingFilteringContext
@@ -109,7 +110,9 @@ class SearchFragment : BaseFragment() {
 
         bsBehavior = BottomSheetBehavior.from(bottomSheetLayout)
 
-        productListAdapter = ProductListAdapter(productClickListener)
+        productListAdapter = ProductListAdapter(
+            productClickListener
+        )
 
         rvProductList.adapter = productListAdapter
 
