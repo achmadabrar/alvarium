@@ -3,6 +3,7 @@ package com.bs.ecommerce.home.homepage
 import android.os.Bundle
 import android.view.View
 import android.widget.RelativeLayout
+import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -22,12 +23,16 @@ import com.bs.ecommerce.product.ProductListFragment
 import com.bs.ecommerce.product.model.data.CategoryModel
 import com.bs.ecommerce.product.model.data.Manufacturer
 import com.bs.ecommerce.product.model.data.ProductSummary
+import com.bs.ecommerce.product.model.data.SubCategory
 import com.bs.ecommerce.utils.ItemClickListener
 import com.bs.ecommerce.utils.RecyclerViewMargin
 import com.bs.ecommerce.utils.replaceFragmentSafely
 import com.bs.ecommerce.utils.toast
+import com.google.android.material.bottomsheet.BottomSheetBehavior
 import kotlinx.android.synthetic.main.featured_list_layout.view.*
 import kotlinx.android.synthetic.main.fragment_home.*
+import kotlinx.android.synthetic.main.home_fragment_bottomsheet.*
+import kotlinx.android.synthetic.main.home_fragment_bottomsheet.view.*
 import kotlinx.android.synthetic.main.slider.view.*
 
 
@@ -35,6 +40,10 @@ class HomeFragment : BaseFragment() {
 
     private lateinit var model: HomePageModel
     private lateinit var productClickListener: ItemClickListener<ProductSummary>
+
+    private val bsBehavior: BottomSheetBehavior<*> by lazy {
+        BottomSheetBehavior.from(bottomSheetLayout)
+    }
 
 
     override fun getFragmentTitle() =  R.string.title_home_page
@@ -120,6 +129,10 @@ class HomeFragment : BaseFragment() {
             setHasFixedSize(true)
 
             addItemDecoration(RecyclerViewMargin(15, 1, false))
+        }
+
+        tvCloseBs.setOnClickListener {
+            bsBehavior.state = BottomSheetBehavior.STATE_COLLAPSED
         }
     }
 
@@ -221,6 +234,10 @@ class HomeFragment : BaseFragment() {
 
             linearLayout.visibility = View.VISIBLE
             linearLayout.tvTitle.text = featuredCategory.name
+            linearLayout.ivMore.visibility = if(featuredCategory.subCategories?.isNullOrEmpty() == true)
+                View.GONE else View.VISIBLE
+
+
             linearLayout.btnSeeAll.setOnClickListener {
 
                 if (featuredCategory.id == null) return@setOnClickListener
@@ -232,6 +249,10 @@ class HomeFragment : BaseFragment() {
                         ProductListFragment.GetBy.CATEGORY
                     )
                 )
+            }
+
+            linearLayout.ivMore.setOnClickListener {
+                populateBottomSheet(featuredCategory.subCategories)
             }
 
             linearLayout.rvList.apply {
@@ -306,5 +327,25 @@ class HomeFragment : BaseFragment() {
             ManufacturerListAdapter(list, itemClickListener)
     }
 
+    private fun populateBottomSheet(subCategories: List<SubCategory>) {
+        bottomSheetLayout.subcategoryNameHolder.removeAllViews()
 
+        for (item in subCategories) {
+            val v:View = layoutInflater.inflate(R.layout.item_home_bs_options, null, false)
+
+            v.findViewById<TextView>(R.id.tvName).text = item.name
+
+            v.setOnClickListener {
+                bsBehavior.state = BottomSheetBehavior.STATE_COLLAPSED
+
+                replaceFragmentSafely(ProductListFragment.newInstance(
+                    item.name ?: "", item.id!!, ProductListFragment.GetBy.CATEGORY
+                ))
+            }
+
+            bottomSheetLayout.subcategoryNameHolder.addView(v)
+        }
+
+        bsBehavior.state = BottomSheetBehavior.STATE_EXPANDED
+    }
 }

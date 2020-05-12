@@ -1,46 +1,65 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="?attr/fragmentBackGroundColor"
-    xmlns:tools="http://schemas.android.com/tools">
+    android:background="?attr/fragmentBackGroundColor">
 
     <TextView
         android:id="@+id/tvTitle"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentStart="true"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_toStartOf="@id/btnSeeAll"
         android:paddingBottom="10dp"
-        tools:text="@string/placeholder"
+        android:maxLines="1"
+        android:ellipsize="end"
         android:textColor="?attr/primaryTextColor"
         android:textSize="@dimen/tv_text_size_large"
-        android:textStyle="bold" />
+        android:textStyle="bold"
+        tools:text="@string/placeholder" />
 
     <TextView
-        style="@style/RoundedButtonTiny_1"
         android:id="@+id/btnSeeAll"
+        style="@style/RoundedButtonTiny_1"
+        android:layout_alignParentTop="true"
+        android:layout_marginEnd="5dp"
+        android:layout_toStartOf="@id/ivMore"
+        android:text="@string/see_all" />
+
+    <ImageView
+        android:id="@+id/ivMore"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
-        android:text="@string/see_all"/>
+        android:background="?android:attr/selectableItemBackgroundBorderless"
+        android:clickable="true"
+        android:paddingStart="3dp"
+        android:paddingEnd="3dp"
+        android:src="@drawable/ic_more_vert"
+        android:tint="?attr/primaryIconTint"
+        android:visibility="gone"
+        tools:visibility="visible" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvList"
-        android:layout_below="@id/tvTitle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        tools:listitem="@layout/item_product_for_linearlayout"
-        tools:orientation="horizontal"
+        android:layout_below="@id/tvTitle"
+        tools:itemCount="5"
         tools:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-        tools:itemCount="5"/>
+        tools:listitem="@layout/item_product_for_linearlayout"
+        tools:orientation="horizontal" />
 
     <View
         android:id="@+id/divider"
         android:layout_width="match_parent"
         android:layout_height="1dp"
+        android:layout_below="@id/rvList"
         android:layout_marginTop="10dp"
         android:layout_marginBottom="5dp"
-        android:layout_below="@id/rvList"
-        android:background="@color/darkOrGray" />
+        android:background="?attr/horizontalDividerBg" />
 
 </RelativeLayout>

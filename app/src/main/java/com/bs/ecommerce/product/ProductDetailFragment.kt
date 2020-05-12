@@ -118,9 +118,10 @@ class ProductDetailFragment : BaseFragment(), View.OnClickListener {
 
                     detailsSliderAdapter.setOnSliderClickListener(object :
                         DetailsSliderAdapter.OnSliderClickListener {
-                        override fun onSliderClick(view: View, sliderPosition: Int) {
-                            // TODO Open fullscreen image activity
-                            FullScreenImageActivity.sliderPosition = sliderPosition
+                        override fun onSliderClick(view: View, position: Int) {
+
+                            // Open fullscreen image activity
+                            FullScreenImageActivity.sliderPosition = position
                             FullScreenImageActivity.pictureModels = product.pictureModels
                             val intent = Intent(activity, FullScreenImageActivity::class.java)
                             startActivity(intent)

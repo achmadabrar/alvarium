@@ -11,6 +11,7 @@
 
     <color name="toolbar_color">#121312</color>
     <color name="fragment_background">#222222</color>
+    <color name="horizontal_divider">#313437</color>
 
     <color name="etStyle1_background">#333333</color>
     <color name="register_title_text">#F2F2F2</color>

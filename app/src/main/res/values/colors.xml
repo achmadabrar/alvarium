@@ -24,6 +24,8 @@
     <color name="btnStyle1_text">#F2F2F2</color>
     <color name="btnStyle1_background">#FF476E</color>
 
+    <color name="horizontal_divider">#C5C5C5</color>
+
 
     <!--    Different in dark/light theme   -->
 

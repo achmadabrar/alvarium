@@ -12,10 +12,13 @@
 
         <item name="fragmentBackGroundColor">@color/fragment_background</item>
         <item name="primaryListItemBg">@color/list_item_bg</item>
+        <item name="horizontalDividerBg">@color/horizontal_divider</item>
 
         <item name="bottomNavBg">@color/nav_item_bg</item>
 
         <item name="primaryTextColor">@color/whiteOrBlack</item>
+        <item name="primaryIconTint">@color/whiteOrBlack</item>
+        <item name="secondaryIconTint">@color/blue</item>
     </style>
 
     <!--<style name="Nop.Theme.Dark" parent="Theme.AppCompat.Light.NoActionBar">
