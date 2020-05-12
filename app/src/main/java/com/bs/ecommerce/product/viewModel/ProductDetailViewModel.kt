@@ -13,6 +13,7 @@ import com.bs.ecommerce.product.model.data.AddToCartResponse
 import com.bs.ecommerce.product.model.data.ProductDetail
 import com.bs.ecommerce.product.model.data.ProductDetailResponse
 import com.bs.ecommerce.product.model.data.ProductSummary
+import com.bs.ecommerce.utils.TextUtils
 import com.bs.ecommerce.utils.showLog
 import java.util.*
 
@@ -97,11 +98,25 @@ class ProductDetailViewModel : BaseViewModel() {
         keyValuePair.key = "addtocart_$productId.EnteredQuantity"
         keyValuePair.value = quantity
 
-        val v = keyValueFormData.formValues as MutableList
-        v.add(keyValuePair)
+        val formValues = keyValueFormData.formValues as MutableList
+        formValues.add(keyValuePair)
+
+        // Add rental start & end date for Rental Product
+        if (productLiveData.value?.isRental == true) {
+
+            formValues.add(KeyValuePair().apply {
+                key = Api.rentalStart.plus(productId)
+                value = TextUtils().epoch2DateString(rentDateFrom ?: 0L, "MM/dd/yyyy")
+            })
+
+            formValues.add(KeyValuePair().apply {
+                key = Api.rentalEnd.plus(productId)
+                value = TextUtils().epoch2DateString(rentDateTo ?: 0L, "MM/dd/yyyy")
+            })
+        }
 
 
-        keyValueFormData.formValues = v
+        keyValueFormData.formValues = formValues
 
         "key_value".showLog(keyValueFormData.toString())
 

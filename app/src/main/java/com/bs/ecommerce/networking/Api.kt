@@ -401,13 +401,14 @@ interface Api {
         val qs_page_size = "PageSize"
         val qs_order_by = "orderby"
         val qs_spec = "specs"
-        val shoppingCartTypeCart = 1
-        val shoppingCartTypeWishlist = 2
-        val cartProductId: Long = 0
+
         const val removeFromCartOrWishList: String = "removefromcart"
         const val addToCart: String = "addtocart"
         const val typeShoppingCart: Long = 1
         const val typeWishList: Long = 2
+
+        const val rentalStart: String = "rental_start_date_"
+        const val rentalEnd: String = "rental_end_date_"
 
         const val productAttributePrefix = "product_attribute"
         const val checkOutAttributePrefix = "checkout_attribute"

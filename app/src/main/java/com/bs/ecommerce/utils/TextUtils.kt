@@ -57,6 +57,26 @@ class TextUtils {
         return date
     }
 
+    fun epoch2DateString(epochMilliSeconds: Long, formatString: String): String {
+        val sdf = SimpleDateFormat(formatString, Locale.getDefault())
+        sdf.timeZone = TimeZone.getDefault()
+
+        return sdf.format(epochMilliSeconds)
+    }
+
+    fun dateStringToEpoch(plainDate: String, format: String): Long? {
+        val df = SimpleDateFormat(format, Locale.ROOT)
+
+        try {
+            val date = df.parse(plainDate)
+            return date?.time
+        } catch (e: ParseException) {
+            e.printStackTrace()
+        }
+
+        return null
+    }
+
 
     fun getFormattedAddress(address: AddressModel?, context: WeakReference<Context>): String {
 
