@@ -8,7 +8,7 @@
 
     <RelativeLayout
         android:id="@+id/register_root_layout"
-        android:background="@color/fragment_background"
+        android:background="?attr/fragmentBackGroundColor"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 

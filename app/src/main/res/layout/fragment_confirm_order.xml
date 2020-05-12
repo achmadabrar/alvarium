@@ -5,7 +5,7 @@
     android:id="@+id/confirmOrderRootLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/fragment_background">
+    android:background="?attr/fragmentBackGroundColor">
 
     <androidx.core.widget.NestedScrollView
         android:id="@+id/allLayoutExceptButton"
@@ -58,14 +58,14 @@
                         android:padding="10dp"
                         android:textStyle="bold"
                         android:text="@string/products"
-                        android:textColor="@color/whiteOrBlack" />
+                        android:textColor="?attr/primaryTextColor" />
 
 
                     <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/checkoutProductList"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:background="@color/fragment_background"
+                        android:background="?attr/fragmentBackGroundColor"
                         android:nestedScrollingEnabled="false"
                         android:paddingTop="5dp"
                         tools:itemCount="2"
@@ -93,7 +93,7 @@
                         android:padding="10dp"
                         android:textStyle="bold"
                         android:text="@string/invoice"
-                        android:textColor="@color/whiteOrBlack" />
+                        android:textColor="?attr/primaryTextColor" />
 
                     <include
                         layout="@layout/table_order_total"

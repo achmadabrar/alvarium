@@ -20,8 +20,8 @@
             android:paddingTop="10dp"
             android:paddingEnd="20dp"
             android:paddingBottom="10dp"
-            android:background="@color/toolbar_color"
-            android:textColor="@color/whiteOrBlack"
+            android:background="?attr/toolbarColor"
+            android:textColor="?attr/primaryTextColor"
             android:textSize="@dimen/tv_text_size_large"
             android:textStyle="bold"
             android:visibility="gone"
@@ -31,7 +31,7 @@
 
     <RelativeLayout
         android:id="@+id/productListRootLayout"
-        android:background="@color/fragment_background"
+        android:background="?attr/fragmentBackGroundColor"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
@@ -59,14 +59,14 @@
                     android:layout_height="wrap_content"
                     android:text="@string/sort_by"
                     android:textSize="@dimen/button_text_size"
-                    android:textColor="@color/whiteOrBlack"
+                    android:textColor="?attr/primaryTextColor"
                     android:layout_marginEnd="10dp"/>
 
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:src="@drawable/ic_arrow_down"
-                    android:tint="@color/whiteOrBlack"
+                    android:tint="?attr/primaryTextColor"
                     android:contentDescription="@string/placeholder"/>
             </LinearLayout>
 
@@ -91,14 +91,14 @@
                     android:layout_height="wrap_content"
                     android:text="@string/filter"
                     android:textSize="@dimen/button_text_size"
-                    android:textColor="@color/whiteOrBlack"
+                    android:textColor="?attr/primaryTextColor"
                     android:layout_marginEnd="10dp"/>
 
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:src="@drawable/ic_filter"
-                    android:tint="@color/whiteOrBlack"/>
+                    android:tint="?attr/primaryTextColor"/>
             </LinearLayout>
 
         </LinearLayout>
@@ -107,7 +107,7 @@
             android:id="@+id/drawerLayout"
             android:layout_below="@id/llButtonHolder"
             android:layout_width="match_parent"
-            android:background="@color/fragment_background"
+            android:background="?attr/fragmentBackGroundColor"
             android:visibility="visible"
             android:layout_height="match_parent">
 
@@ -126,7 +126,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:textColor="@color/whiteOrBlack"
+                android:textColor="?attr/primaryTextColor"
                 android:textSize="@dimen/tv_text_size_regular"
                 tools:visibility="visible"
                 android:visibility="gone"

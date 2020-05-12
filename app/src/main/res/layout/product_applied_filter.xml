@@ -14,7 +14,7 @@
         android:paddingTop="8dp"
         android:paddingBottom="8dp"
         android:text="@string/currently_shopping_by"
-        android:textColor="@color/whiteOrBlack"
+        android:textColor="?attr/primaryTextColor"
         android:textSize="@dimen/tv_text_size_semi_large"
         android:textStyle="bold" />
 
@@ -27,7 +27,7 @@
         android:button="@drawable/custom_radio_button"
         android:checked="true"
         android:padding="5dp"
-        android:textColor="@color/whiteOrBlack"
+        android:textColor="?attr/primaryTextColor"
         android:textSize="@dimen/tv_text_size_regular"
         android:visibility="visible"
         tools:text="@string/placeholder" />

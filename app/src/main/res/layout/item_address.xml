@@ -5,7 +5,7 @@
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@drawable/rounded_background_slight"
-    android:backgroundTint="@color/list_item_bg"
+    android:backgroundTint="?attr/primaryListItemBg"
     android:padding="10dp">
 
     <androidx.constraintlayout.widget.Guideline
@@ -21,7 +21,7 @@
         android:layout_height="wrap_content"
         android:ellipsize="end"
         android:maxLines="2"
-        android:textColor="@color/whiteOrBlack"
+        android:textColor="?attr/primaryTextColor"
         android:textSize="@dimen/tv_text_size_semi_large"
         android:textStyle="bold"
         tools:text="@string/placeholder"
@@ -34,7 +34,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
-        android:textColor="@color/whiteOrBlack"
+        android:textColor="?attr/primaryTextColor"
         android:textSize="@dimen/tv_text_size_regular"
         tools:text="@string/placeholder"
         app:layout_constraintStart_toStartOf="parent"

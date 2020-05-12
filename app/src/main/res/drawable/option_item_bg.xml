@@ -9,7 +9,7 @@
 
     <item android:bottom="1dp" >
         <shape>
-            <solid android:color="@color/fragment_background" />
+            <solid android:color="?attr/fragmentBackGroundColor" />
         </shape>
     </item>
 

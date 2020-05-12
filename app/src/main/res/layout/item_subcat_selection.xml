@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:background="@color/toolbar_color">
+    android:background="?attr/toolbarColor">
 
     <TextView
         android:id="@+id/topCategoryName"
@@ -14,7 +14,7 @@
         android:paddingTop="8dp"
         android:paddingEnd="10dp"
         android:paddingBottom="8dp"
-        android:textColor="@color/whiteOrBlack"
+        android:textColor="?attr/primaryTextColor"
         android:textSize="@dimen/tv_text_size_large"
         android:textStyle="bold"
         tools:text="@string/placeholder" />

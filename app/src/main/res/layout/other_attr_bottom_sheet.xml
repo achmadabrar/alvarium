@@ -3,7 +3,7 @@
     android:id="@+id/bottom_sheet"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/list_item_bg"
+    android:background="?attr/primaryListItemBg"
     android:orientation="vertical">
 
     <TextView

@@ -23,7 +23,7 @@
         android:layout_marginStart="15dp"
         android:maxLines="1"
         android:layout_toEndOf="@id/ivOptionIcon"
-        android:textColor="@color/whiteOrBlack"
+        android:textColor="?attr/primaryTextColor"
         android:textSize="@dimen/tv_text_size_large"
         android:textStyle="bold"
         tools:text="@string/placeholder" />
@@ -36,7 +36,7 @@
         android:layout_marginStart="15dp"
         android:maxLines="1"
         android:layout_toEndOf="@id/ivOptionIcon"
-        android:textColor="@color/whiteOrBlack"
+        android:textColor="?attr/primaryTextColor"
         android:textSize="@dimen/tv_text_size_regular"
         tools:text="@string/placeholder" />
 
@@ -47,7 +47,7 @@
         android:layout_below="@id/tvOrderStatus"
         android:layout_marginStart="15dp"
         android:layout_toEndOf="@id/ivOptionIcon"
-        android:textColor="@color/whiteOrBlack"
+        android:textColor="?attr/primaryTextColor"
         android:maxLines="1"
         android:textSize="@dimen/tv_text_size_regular"
         tools:text="@string/placeholder" />
@@ -60,7 +60,7 @@
         android:layout_below="@id/tvOrderDate"
         android:layout_marginStart="15dp"
         android:layout_toEndOf="@id/ivOptionIcon"
-        android:textColor="@color/whiteOrBlack"
+        android:textColor="?attr/primaryTextColor"
         android:textSize="@dimen/tv_text_size_regular"
         tools:text="@string/placeholder" />
 

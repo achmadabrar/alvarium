@@ -11,7 +11,7 @@
         android:id="@+id/ivOptionIcon"
         android:layout_width="30dp"
         android:layout_height="30dp"
-        android:tint="@color/icon_tint_active"
+        android:tint="@color/blue"
         tools:src="@drawable/ic_settings"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"/>
@@ -23,7 +23,7 @@
         android:layout_marginStart="15dp"
         android:layout_marginEnd="10dp"
         android:text="@string/placeholder"
-        android:textColor="@color/whiteOrBlack"
+        android:textColor="?attr/primaryTextColor"
         android:textSize="@dimen/tv_text_size_large"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toEndOf="@id/ivOptionIcon"

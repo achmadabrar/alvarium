@@ -13,7 +13,7 @@
         android:padding="5dp"
         android:maxLines="2"
         android:layout_toStartOf="@id/btnRemoveFilter"
-        android:textColor="@color/whiteOrBlack"
+        android:textColor="?attr/primaryTextColor"
         android:textSize="@dimen/tv_text_size_regular"
         android:visibility="visible"
         tools:text="@string/placeholder" />

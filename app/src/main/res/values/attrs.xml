@@ -4,4 +4,19 @@
     <declare-styleable name="AspectRatioView">
         <attr name="aspectRatio" format="float"/>
     </declare-styleable>
+
+    <attr name="toolbarColor" format="reference"/>
+    <attr name="toolbarTextColor" format="reference"/>
+
+    <attr name="fragmentBackGroundColor" format="reference"/>
+    <attr name="primaryListItemBg" format="reference"/>
+
+    <attr name="bottomNavBg"/>
+
+    <attr name="primaryTextColor" format="reference"/>
+    <attr name="secondaryTextColor" format="reference"/>
+
+    <attr name="buttonStyle1Color" format="reference"/>
+    <attr name="buttonStyle1TextColor" format="reference" />
+    <attr name="primaryButtonTheme" format="reference" />
 </resources>

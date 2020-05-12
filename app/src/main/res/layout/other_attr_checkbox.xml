@@ -6,6 +6,6 @@
     android:button="@drawable/custom_radio_button"
     android:checked="false"
     android:padding="5dp"
-    android:textColor="@color/whiteOrBlack"
+    android:textColor="?attr/primaryTextColor"
     android:textSize="@dimen/tv_text_size_regular"
     tools:text="@string/placeholder" />

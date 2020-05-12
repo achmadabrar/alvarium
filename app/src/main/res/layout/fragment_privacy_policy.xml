@@ -4,7 +4,7 @@
     android:id="@+id/privacyPolicyLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/fragment_background">
+    android:background="?attr/fragmentBackGroundColor">
 
     <WebView
         android:id="@+id/wv_privacy_policy"

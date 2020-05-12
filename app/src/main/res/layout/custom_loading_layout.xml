@@ -5,7 +5,7 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:background="@drawable/rounded_background_slight"
-    android:backgroundTint="@color/list_item_bg">
+    android:backgroundTint="?attr/primaryListItemBg">
 
     <ImageView
         android:id="@+id/ivLoaderGif"
@@ -22,7 +22,7 @@
         android:layout_height="wrap_content"
         android:gravity="center"
         android:text="Please Wait..."
-        android:textColor="@color/whiteOrBlack"
+        android:textColor="?attr/primaryTextColor"
         android:textSize="@dimen/tv_text_size_regular"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

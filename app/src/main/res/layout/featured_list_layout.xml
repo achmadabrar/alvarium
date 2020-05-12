@@ -2,7 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/fragment_background"
+    android:background="?attr/fragmentBackGroundColor"
     xmlns:tools="http://schemas.android.com/tools">
 
     <TextView
@@ -13,7 +13,7 @@
         android:layout_height="wrap_content"
         android:paddingBottom="10dp"
         tools:text="@string/placeholder"
-        android:textColor="@color/whiteOrBlack"
+        android:textColor="?attr/primaryTextColor"
         android:textSize="@dimen/tv_text_size_large"
         android:textStyle="bold" />
 

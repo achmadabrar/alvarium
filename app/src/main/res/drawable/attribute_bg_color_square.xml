@@ -3,7 +3,7 @@
     <solid android:color="@android:color/transparent"/>
     <stroke
         android:width="2dp"
-        android:color="@color/colorAccent"
+        android:color="?attr/colorAccent"
         android:dashWidth="2dp"
         android:dashGap="2dp"/>
     <padding

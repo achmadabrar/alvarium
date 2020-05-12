@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginBottom="5dp"
-    app:cardBackgroundColor="@color/list_item_bg"
+    app:cardBackgroundColor="?attr/primaryListItemBg"
     app:cardCornerRadius="10dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -51,7 +51,7 @@
             android:layout_height="wrap_content"
             android:ellipsize="end"
             android:maxLines="2"
-            android:textColor="@color/whiteOrBlack"
+            android:textColor="?attr/primaryTextColor"
             android:textSize="@dimen/tv_text_size_regular"
             android:textStyle="bold"
             app:layout_constraintEnd_toStartOf="@id/icRemoveItem"
@@ -83,7 +83,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
-            android:textColor="@color/whiteOrBlack"
+            android:textColor="?attr/primaryTextColor"
             android:textSize="@dimen/tv_text_size_regular"
             android:textStyle="bold"
             android:visibility="gone"
@@ -110,7 +110,7 @@
                 android:layout_marginStart="20dp"
                 android:ellipsize="end"
                 android:maxLines="1"
-                android:textColor="@color/whiteOrBlack"
+                android:textColor="?attr/primaryTextColor"
                 android:visibility="visible"
                 tools:text="1" />
         </LinearLayout>
@@ -120,7 +120,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
-            android:textColor="@color/whiteOrBlack"
+            android:textColor="?attr/primaryTextColor"
             android:textSize="@dimen/tv_text_size_regular"
             android:visibility="gone"
             app:layout_constraintStart_toEndOf="@id/referenceView"

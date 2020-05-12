@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/fragment_background"
+    android:background="?attr/fragmentBackGroundColor"
     android:gravity="center"
     android:orientation="horizontal">
 
@@ -19,7 +19,7 @@
             android:layout_height="wrap_content"
             android:gravity="start"
             android:text="@string/quantity"
-            android:textColor="@color/whiteOrBlack"
+            android:textColor="?attr/primaryTextColor"
             android:textSize="@dimen/tv_text_size_regular"
             android:textStyle="bold" />
 
@@ -70,7 +70,7 @@
                     android:background="@color/darkOrGray"
                     android:textSize="18sp"
                     android:text="@string/text_minus"
-                    android:textColor="@color/whiteOrBlack" />
+                    android:textColor="?attr/primaryTextColor" />
 
                 <View
                     android:layout_width="0.5dp"
@@ -85,7 +85,7 @@
                     android:contentDescription="@string/placeholder"
                     android:text="@string/text_plus"
                     android:textSize="18sp"
-                    android:textColor="@color/whiteOrBlack" />
+                    android:textColor="?attr/primaryTextColor" />
 
             </LinearLayout>
 

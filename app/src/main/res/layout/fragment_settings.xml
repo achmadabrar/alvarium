@@ -27,7 +27,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/test_your_api"
-                android:textColor="@color/whiteOrBlack"
+                android:textColor="?attr/primaryTextColor"
                 android:textSize="@dimen/tv_text_size_large"
                 android:textStyle="bold" />
 
@@ -40,7 +40,7 @@
                 android:backgroundTint="@color/gray"
                 android:gravity="start"
                 android:hint="@string/sample_base_url"
-                android:textColor="@color/whiteOrBlack"
+                android:textColor="?attr/primaryTextColor"
                 android:textColorHint="@color/grayOrDark"
                 android:textSize="@dimen/tv_text_size_regular" />
 
@@ -85,7 +85,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/select_language"
-                android:textColor="@color/whiteOrBlack"
+                android:textColor="?attr/primaryTextColor"
                 android:textSize="@dimen/tv_text_size_large"
                 android:textStyle="bold" />
 
@@ -124,7 +124,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/select_currency"
-                android:textColor="@color/whiteOrBlack"
+                android:textColor="?attr/primaryTextColor"
                 android:textSize="@dimen/tv_text_size_large"
                 android:textStyle="bold" />
 

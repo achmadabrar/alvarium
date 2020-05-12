@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/fragment_background">
+    android:background="?attr/fragmentBackGroundColor">
 
     <!--<androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline_v_half"
@@ -21,7 +21,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
         android:gravity="start"
-        android:textColor="@color/whiteOrBlack"
+        android:textColor="?attr/primaryTextColor"
         android:textSize="@dimen/tv_text_size_regular"
         android:textStyle="bold"
         android:drawablePadding="10dp"
