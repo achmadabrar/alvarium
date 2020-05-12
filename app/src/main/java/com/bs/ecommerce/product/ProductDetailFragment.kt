@@ -2,6 +2,7 @@ package com.bs.ecommerce.product
 
 import android.annotation.SuppressLint
 import android.app.DatePickerDialog
+import android.content.Intent
 import android.graphics.Paint
 import android.os.Bundle
 import android.view.View
@@ -118,11 +119,11 @@ class ProductDetailFragment : BaseFragment(), View.OnClickListener {
                     detailsSliderAdapter.setOnSliderClickListener(object :
                         DetailsSliderAdapter.OnSliderClickListener {
                         override fun onSliderClick(view: View, sliderPosition: Int) {
-                            // TODO
-                            /*FullScreenImageActivity.sliderPosition = sliderPosition
-                            FullScreenImageActivity.pictureModels = detail.pictureModels
+                            // TODO Open fullscreen image activity
+                            FullScreenImageActivity.sliderPosition = sliderPosition
+                            FullScreenImageActivity.pictureModels = product.pictureModels
                             val intent = Intent(activity, FullScreenImageActivity::class.java)
-                            startActivity(intent)*/
+                            startActivity(intent)
                         }
                     })
 
