@@ -12,7 +12,10 @@ import androidx.annotation.LayoutRes
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import com.bs.ecommerce.R
+import com.bs.ecommerce.cart.CartViewModel
+import com.bs.ecommerce.cart.model.data.CartProduct
 import com.bs.ecommerce.customViews.ContentLoadingDialog
 import com.bs.ecommerce.more.barcode.BarCodeCaptureFragment
 import com.bs.ecommerce.networking.NetworkUtil
@@ -72,6 +75,26 @@ abstract class BaseFragment : Fragment()
             if (it is BaseFragment)
                 "currentFragment".showLog(it.toString())
         }
+
+    }
+
+    protected fun updateCartItemCounter(cartList: List<CartProduct>) : Int
+    {
+        var totalItems = 0
+
+        for(i in cartList.indices)
+        {
+            totalItems += cartList[i].quantity
+        }
+        updateTopCart(totalItems)
+
+        return totalItems
+    }
+
+    protected fun updateTopCart(totalItems: Int)
+    {
+        MyApplication.setCartCounter(totalItems)
+        activity?.let {  (it as BaseActivity).updateHotCount(totalItems)    }
     }
 
 
@@ -83,10 +106,6 @@ abstract class BaseFragment : Fragment()
 
     protected fun showLoading()
     {
-
-/*        if(progressWheel != null)
-            getRootLayout()?.removeAllViews()*/
-
         val params = RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT)
         params.addRule(RelativeLayout.CENTER_IN_PARENT, RelativeLayout.TRUE)
 
@@ -97,8 +116,7 @@ abstract class BaseFragment : Fragment()
 
         try {
             getRootLayout()?.addView(progressWheel, params)
-        } catch (e: Exception)
-        {
+        } catch (e: Exception) {
             "exception".showLog(e.toString())
         }
     }

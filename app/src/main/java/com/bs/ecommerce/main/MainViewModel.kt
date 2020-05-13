@@ -2,6 +2,9 @@ package com.bs.ecommerce.main
 
 import androidx.lifecycle.MutableLiveData
 import com.bs.ecommerce.base.BaseViewModel
+import com.bs.ecommerce.cart.model.CartModel
+import com.bs.ecommerce.cart.model.data.CartResponse
+import com.bs.ecommerce.cart.model.data.CartRootData
 import com.bs.ecommerce.common.RequestCompleteListener
 import com.bs.ecommerce.home.homepage.model.HomePageModel
 import com.bs.ecommerce.home.homepage.model.data.HomePageProductResponse
@@ -31,6 +34,7 @@ class MainViewModel : BaseViewModel() {
     var toastMessageLD = MutableLiveData<String>()
 
     var testUrlSuccessLD = MutableLiveData<Boolean>()
+
 
     fun getFeaturedProducts(model: HomePageModel) {
 

@@ -14,7 +14,6 @@ import com.bs.ecommerce.networking.common.KeyValueFormData
 
 open class CheckoutAddressViewModel : BaseViewModel()
 {
-    var cartLD = MutableLiveData<CartRootData>()
 
     var getBillingAddressLD = MutableLiveData<BillingAddressResponse>()
 

@@ -28,8 +28,6 @@ class ProductDetailViewModel : BaseViewModel() {
 
     var isInvalidProductLD = MutableLiveData<Boolean>()
 
-    var cartProductsCountLD = MutableLiveData<Int>()
-
     var addToCartResponseLD = MutableLiveData<AddToCartResponse>()
 
     var rentDateFrom: Long? = null
@@ -132,9 +130,7 @@ class ProductDetailViewModel : BaseViewModel() {
 
         isLoadingLD.value = true
 
-        model.addProductToCartModel(productId,
-                                    Api.typeShoppingCart,
-                                    prepareBodyForAttributes(productId, quantity, keyValueFormData),
+        model.addProductToCartModel(productId, Api.typeShoppingCart, prepareBodyForAttributes(productId, quantity, keyValueFormData),
 
             object : RequestCompleteListener<AddToCartResponse>
         {
@@ -143,7 +139,6 @@ class ProductDetailViewModel : BaseViewModel() {
                 isLoadingLD.value = false
 
                 addToCartResponseLD.value = data
-                cartProductsCountLD.value = data.cartRootData.cart.items.size
             }
 
             override fun onRequestFailed(errorMessage: String)

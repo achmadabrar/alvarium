@@ -12,31 +12,8 @@ import com.bs.ecommerce.networking.common.KeyValueFormData
 
 class CartViewModel : BaseViewModel()
 {
-    var cartLD = MutableLiveData<CartRootData>()
 
     private var dynamicAttributeUpdated = false
-
-
-    fun getCartVM(model: CartModel)
-    {
-
-        isLoadingLD.value = true
-
-        model.getCartData(object : RequestCompleteListener<CartResponse>
-        {
-            override fun onRequestSuccess(data: CartResponse)
-            {
-                isLoadingLD.value = false
-
-                cartLD.value = data.cartRootData
-            }
-
-            override fun onRequestFailed(errorMessage: String)
-            {
-                isLoadingLD.value = false
-            }
-        })
-    }
 
     fun updateCartData(allKeyValueList: List<KeyValuePair>, model: CartModel)
     {

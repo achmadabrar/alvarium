@@ -17,7 +17,6 @@ class CartModelImpl(private val context: Context): CartModel
 
     override fun getCartData(callback: RequestCompleteListener<CartResponse>)
     {
-
         RetroClient.api.getCartData().enqueue(object : Callback<CartResponse>
         {
             override fun onResponse(call: Call<CartResponse>, response: Response<CartResponse>)
@@ -34,7 +33,6 @@ class CartModelImpl(private val context: Context): CartModel
             }
         })
     }
-
     override fun updateCartData(KeyValueFormData: KeyValueFormData, callback: RequestCompleteListener<CartResponse>)
     {
 

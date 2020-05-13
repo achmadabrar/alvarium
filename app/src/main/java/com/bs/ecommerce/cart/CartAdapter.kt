@@ -53,12 +53,8 @@ open class CartAdapter(
     }
 
 
-    override fun onCreateViewHolder(
-        parent: ViewGroup,
-        viewType: Int
-    ): RecyclerView.ViewHolder {
-        val itemView =
-            LayoutInflater.from(parent.context).inflate(R.layout.cart_list_item, parent, false)
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
+        val itemView = LayoutInflater.from(parent.context).inflate(R.layout.cart_list_item, parent, false)
         return ProductSummaryHolder(itemView)
     }
 
@@ -67,11 +63,6 @@ open class CartAdapter(
     private fun setTouchListener(holder: ProductSummaryHolder, productModel: CartProduct) {
 
         val editText = holder.productQuantity
-
-        /*if (productModel.quantity == 1) {
-            holder.qunatityDownImageView.alpha = 0.7F
-            holder.qunatityDownImageView.invalidate()
-        }*/
 
         holder.qunatityUpImageView.setOnClickListener { updateQuntity(1, editText, productModel) }
 
@@ -84,28 +75,23 @@ open class CartAdapter(
         }
     }
 
-    private fun updateQuntity(
-        quantity: Int, textView: TextView,
-        productModel: CartProduct
-    ) {
+    private fun updateQuntity(quantity: Int, textView: TextView, productModel: CartProduct)
+    {
         val previousQuantity = Integer.parseInt(textView.text.toString())
         val totalQuntity = previousQuantity + quantity
-        if (totalQuntity > 0) {
+
+        if (totalQuntity > 0)
             updateCartItem("itemquantity" + productModel.id, "" + totalQuntity)
-        }
+
 
     }
 
     private fun updateCartItem(key: String, value: String) {
-        val keyValuePairs = ArrayList<KeyValuePair>()
-        KeyValuePair().apply {
+        val keyValuePairList = ArrayList<KeyValuePair>()
 
-            this.key = key
-            this.value = value
-            keyValuePairs.add(this)
-        }
+        keyValuePairList.add(KeyValuePair(key = key, value = value))
 
-        (viewModel as CartViewModel).updateCartData(keyValuePairs, model)
+        (viewModel as CartViewModel).updateCartData(keyValuePairList, model)
     }
 
     override fun onBindViewHolder(
@@ -126,7 +112,6 @@ open class CartAdapter(
 
                 holder?.productImage?.loadImg(productModel.picture?.imageUrl)
 
-                //holder?.fav!!.tag = position
 
                 if(isCheckout)
                 {

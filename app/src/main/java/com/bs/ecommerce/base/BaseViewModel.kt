@@ -3,6 +3,9 @@ package com.bs.ecommerce.base
 import android.widget.Toast
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.bs.ecommerce.cart.model.CartModel
+import com.bs.ecommerce.cart.model.data.CartResponse
+import com.bs.ecommerce.cart.model.data.CartRootData
 import com.bs.ecommerce.common.RequestCompleteListener
 import com.bs.ecommerce.product.model.ProductDetailModelImpl
 import com.bs.ecommerce.product.model.data.AddToCartResponse
@@ -13,6 +16,28 @@ open class BaseViewModel : ViewModel()
 {
     var isLoadingLD = MutableLiveData<Boolean>()
     var addedToWishListLD = MutableLiveData<Int>()
+
+    var cartLD = MutableLiveData<CartRootData>()
+
+    fun getCartVM(model: CartModel)
+    {
+        isLoadingLD.value = true
+
+        model.getCartData(object : RequestCompleteListener<CartResponse>
+        {
+            override fun onRequestSuccess(data: CartResponse)
+            {
+                isLoadingLD.value = false
+
+                cartLD.value = data.cartRootData
+            }
+
+            override fun onRequestFailed(errorMessage: String)
+            {
+                isLoadingLD.value = false
+            }
+        })
+    }
 
     override fun onCleared()
     {

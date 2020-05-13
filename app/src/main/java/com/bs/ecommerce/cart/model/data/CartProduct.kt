@@ -19,7 +19,7 @@ class CartProduct
 
     @SerializedName("Discount") var discount: Any? = null
 
-    @SerializedName("Quantity") var quantity: Int? = null
+    @SerializedName("Quantity") var quantity: Int = 0
 
     @SerializedName("AllowedQuantities") var allowedQuantities: List<Any> = ArrayList()
 
