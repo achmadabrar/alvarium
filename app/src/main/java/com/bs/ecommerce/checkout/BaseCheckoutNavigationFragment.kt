@@ -28,7 +28,7 @@ abstract class BaseCheckoutNavigationFragment : BaseFragment()
     {
         super.onViewCreated(view, savedInstanceState)
 
-        setLiveDataListeners()
+        setAddressTabClickListener()
 
 
     }
@@ -37,7 +37,7 @@ abstract class BaseCheckoutNavigationFragment : BaseFragment()
         with(viewModel as CheckoutAddressViewModel)
         {
 
-            saveBillingResponseLD.observe(viewLifecycleOwner, Observer { saveResponse ->
+            saveResponseLD.observe(viewLifecycleOwner, Observer { saveResponse ->
 
                 if(saveResponse.errorList.isNotEmpty())
                     toast(saveResponse.errorsAsFormattedString)
@@ -46,16 +46,19 @@ abstract class BaseCheckoutNavigationFragment : BaseFragment()
 
                     toast("Added Successfully")
 
-                    MyApplication.saveBillingResponse = saveResponse
+                    MyApplication.checkoutSaveResponse = saveResponse
 
                     CheckoutStepFragment.isBillingAddressSubmitted = true
 
-
                     when(saveResponse.data.nextStep)
                     {
-                        Constants.ShippingAddress -> Handler().post {   addressTabLayout?.getTabAt(Constants.SHIPPING_ADDRESS_TAB)?.select()  }
-                        //Constants.ShippingMethod -> (parentFragment as CheckoutStepFragment).replaceFragment(ShippingMethodFragment())
-                        //Constants.PaymentMethod -> (parentFragment as CheckoutStepFragment).replaceFragment(PaymentMethodFragment())
+
+                        Constants.ShippingAddress -> {
+
+                            addressTabLayout?.getTabAt(Constants.SHIPPING_ADDRESS_TAB)?.select()
+                        }
+                        Constants.ShippingMethod -> replaceFragment(ShippingMethodFragment())
+                        Constants.PaymentMethod -> (parentFragment as CheckoutStepFragment).replaceFragment(PaymentMethodFragment())
                         Constants.PaymentInfo -> (parentFragment as CheckoutStepFragment).replaceFragment(ConfirmOrderFragment())
                     }
 
@@ -65,5 +68,77 @@ abstract class BaseCheckoutNavigationFragment : BaseFragment()
             })
         }
     }
+
+    private fun manualTabSelection(tabPosition: Int)
+    {
+        when(tabPosition)
+        {
+            Constants.BILLING_ADDRESS_TAB -> layoutCheckoutAddress?.visibility = View.VISIBLE
+
+            Constants.SHIPPING_ADDRESS_TAB ->
+            {
+                if (CheckoutStepFragment.isBillingAddressSubmitted)
+                {
+                    replaceFragmentWithoutPendingTransactions(ShippingAddressFragment())
+
+                }
+                else
+                {
+                    toast("Please complete previous step")
+                    Handler().post {   addressTabLayout?.getTabAt(Constants.BILLING_ADDRESS_TAB)?.select()  }
+                }
+
+                "sfdsgsdgd".showLog(CheckoutStepFragment.isBillingAddressSubmitted.toString())
+            }
+        }
+    }
+
+
+    private fun setAddressTabClickListener()
+    {
+        addressTabLayout?.addOnTabSelectedListener(object : OnTabSelectedListener {
+            override fun onTabSelected(tab: TabLayout.Tab)
+            {
+                manualTabSelection(tab.position)
+            }
+
+            override fun onTabUnselected(tab: TabLayout.Tab) {}
+            override fun onTabReselected(tab: TabLayout.Tab)
+            {}
+        })
+    }
+
+    private fun replaceFragment(fragment: BaseFragment) {
+        val transaction = requireActivity().supportFragmentManager.beginTransaction()
+        transaction.addToBackStack(fragment.tag)
+        transaction.replace(R.id.checkoutFragmentHolder, fragment)
+        //transaction.commit()
+
+        if (requireActivity().supportFragmentManager.isStateSaved)
+        {
+            transaction.commit()
+            childFragmentManager.executePendingTransactions()
+        }
+
+    }
+
+    private fun replaceFragmentWithoutPendingTransactions(fragment: BaseFragment) {
+        val transaction = requireActivity().supportFragmentManager.beginTransaction()
+        transaction.addToBackStack(fragment.tag)
+        transaction.replace(R.id.checkoutFragmentHolder, fragment)
+        transaction.commit()
+
+        /*if (requireActivity().supportFragmentManager.isStateSaved)
+        {
+            transaction.commit()
+            //childFragmentManager.executePendingTransactions()
+        }*/
+
+        //replaceFragmentSafely(ShippingAddressFragment())
+
+    }
+
+    protected fun isCurrentTabShipping() : Boolean
+            = requireActivity().supportFragmentManager.findFragmentById(R.id.checkoutFragmentHolder) is ShippingAddressFragment
 
 }

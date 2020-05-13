@@ -3,6 +3,7 @@ package com.bs.ecommerce.main
 import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
+import com.bs.ecommerce.BuildConfig
 import com.bs.ecommerce.R
 import com.bs.ecommerce.networking.NetworkUtil
 import com.bs.ecommerce.base.BaseActivity
@@ -17,9 +18,12 @@ import java.util.*
 class SplashScreenActivity : BaseActivity()
 {
 
-    private val NST_KEY = "bm9wU3RhdGlvblRva2Vu"
-    private val NST_SECRET = "bm9wS2V5"
+/*    private val NST_KEY = "bm9wU3RhdGlvblRva2Vu"
+    private val NST_SECRET = "bm9wS2V5"*/
 
+
+    private val NST_KEY = BuildConfig.NST_KEY
+    private val NST_SECRET = BuildConfig.NST_SECRET
 
     override fun getLayoutId(): Int = R.layout.activity_splash_screen
 

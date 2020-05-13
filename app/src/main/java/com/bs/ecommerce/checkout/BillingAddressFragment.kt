@@ -1,13 +1,9 @@
 package com.bs.ecommerce.checkout
 
 import android.os.Bundle
-import android.os.Handler
 import android.view.View
 import androidx.lifecycle.Observer
 import com.bs.ecommerce.checkout.model.data.BillingAddressResponse
-import com.bs.ecommerce.checkout.model.data.ShippingAddress
-import com.bs.ecommerce.networking.Constants
-import com.bs.ecommerce.utils.*
 import kotlinx.android.synthetic.main.fragment_base_billing_adddress.*
 import kotlinx.android.synthetic.main.fragment_billing_address.*
 
@@ -33,7 +29,7 @@ class BillingAddressFragment : BaseCheckoutAddressFragment()
                     (viewModel as CheckoutAddressViewModel).saveNewBillingVM(newAddress, model)
             }
             else
-                (viewModel as CheckoutAddressViewModel).saveBillingFromExistingAddressVM(addressID, model)
+                (viewModel as CheckoutAddressViewModel).saveExistingBillingVM(addressID, model, shipToSameAddressCheckBox.isChecked)
         }
 
     }
@@ -45,34 +41,15 @@ class BillingAddressFragment : BaseCheckoutAddressFragment()
 
         with(viewModel as CheckoutAddressViewModel)
         {
-            billingAddressResponseLD.observe(viewLifecycleOwner, Observer { billingAddressResponse ->
+            getBillingAddressLD.observe(viewLifecycleOwner, Observer { getBilling ->
 
-                newAddress = billingAddressResponse.data.billingAddress.billingNewAddress
+                newAddress = getBilling.data.billingAddress.billingNewAddress
 
-                showBillingAddressUI(billingAddressResponse)
+                showBillingAddressUI(getBilling)
 
             })
 
-            /*saveBillingResponseLD.observe(viewLifecycleOwner, Observer { saveResponse ->
 
-                if(saveResponse.errorList.isNotEmpty())
-                    toast(saveResponse.errorsAsFormattedString)
-                else
-                {
-
-                    toast("Address Added Successfully")
-
-                    MyApplication.saveBillingResponse = saveResponse
-
-                    CheckoutStepFragment.isBillingAddressSubmitted = true
-
-
-                    if(saveResponse.data.nextStep == Constants.ShippingAddress)
-                        Handler().post {   addressTabLayout?.getTabAt(Constants.SHIPPING_ADDRESS_TAB)?.select()  }
-
-                }
-
-            })*/
         }
     }
     protected fun showBillingAddressUI(billingAddressResponse: BillingAddressResponse)
@@ -85,6 +62,8 @@ class BillingAddressFragment : BaseCheckoutAddressFragment()
                 createNewAddressLayout(this.billingNewAddress)
 
             layoutCheckoutAddress?.visibility = View.VISIBLE
+
+            shipToSameAddressCheckBox?.visibility = View.VISIBLE
 
         }
     }

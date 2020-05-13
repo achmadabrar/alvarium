@@ -13,6 +13,7 @@ import com.bs.ecommerce.home.homepage.model.data.SliderResponse
 import com.bs.ecommerce.main.model.data.AppLandingSettingResponse
 import com.bs.ecommerce.main.model.data.CategoryTreeResponse
 import com.bs.ecommerce.networking.common.BaseResponse
+import com.bs.ecommerce.networking.common.ExistingAddress
 import com.bs.ecommerce.networking.common.KeyValueFormData
 import com.bs.ecommerce.product.model.data.*
 import okhttp3.ResponseBody
@@ -67,25 +68,25 @@ interface Api {
     fun getStatesAPI(@Path("countryId") id: String): Call<StateListResponse>
 
     @POST("checkout/savebilling")
-    fun saveNewBillingAPI(@Body billingAddressPostData: SaveBillingPostData): Call<SaveBillingResponse>
+    fun saveNewBillingAPI(@Body billingAddressPostData: SaveBillingPostData): Call<CheckoutSaveResponse>
 
     @POST("checkout/savebilling")
-    fun saveExistingBillingAPI(@Body KeyValueFormData: KeyValueFormData): Call<SaveBillingResponse>
+    fun saveExistingBillingAPI(@Body postModel: ExistingAddress): Call<CheckoutSaveResponse>
 
     @POST("checkout/saveshipping")
-    fun saveNewShippingAPI(@Body shippingAddressPostData: SaveShippingPostData): Call<SaveBillingResponse>
+    fun saveNewShippingAPI(@Body shippingAddressPostData: SaveShippingPostData): Call<CheckoutSaveResponse>
 
     @POST("checkout/saveshipping")
-    fun saveExistingShippingAPI(@Body KeyValueFormData: KeyValueFormData): Call<SaveBillingResponse>
+    fun saveExistingShippingAPI(@Body postModel: ExistingAddress): Call<CheckoutSaveResponse>
 
     @POST("checkout/saveshippingmethod")
-    fun saveShippingMethodAPI(@Body KeyValueFormData: KeyValueFormData): Call<SaveBillingResponse>
+    fun saveShippingMethodAPI(@Body postModel: KeyValueFormData): Call<CheckoutSaveResponse>
 
     @POST("checkout/savepaymentmethod")
-    fun savePaymentMethodAPI(@Body KeyValueFormData: KeyValueFormData): Call<SaveBillingResponse>
+    fun savePaymentMethodAPI(@Body postModel: KeyValueFormData): Call<CheckoutSaveResponse>
 
     @GET("shoppingcart/checkoutorderinformation ")
-    fun getCheckoutConfirmInformationAPI(): Call<SaveBillingResponse>
+    fun getCheckoutConfirmInformationAPI(): Call<CheckoutSaveResponse>
 
     @POST("shoppingcart/checkoutattributechange")
     fun updateCheckOutAttribute(@Body list: List<KeyValuePair>): Call<CartRootData>

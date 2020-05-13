@@ -44,7 +44,7 @@ class ShippingMethodFragment : BaseCheckoutNavigationFragment() {
 
         viewModel  = ViewModelProvider(this).get(CheckoutAddressViewModel::class.java)
 
-        val shippingMethods = MyApplication.saveBillingResponse!!.data.shippingMethodModel.shippingMethods
+        val shippingMethods = MyApplication.checkoutSaveResponse!!.data.shippingMethodModel.shippingMethods
 
         addMethodRadioGroup(shippingMethods)
 

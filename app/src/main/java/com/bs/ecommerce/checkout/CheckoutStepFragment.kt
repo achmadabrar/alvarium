@@ -51,7 +51,6 @@ class CheckoutStepFragment : BaseFragment() {
         transaction.commit()
         childFragmentManager.executePendingTransactions()
     }
-
     companion object{
         @JvmStatic var isBillingAddressSubmitted = false
         @JvmStatic var isShippingAddressSubmitted = false
