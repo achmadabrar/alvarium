@@ -10,7 +10,7 @@ import com.bs.ecommerce.product.model.data.CategoryModel
 import com.bs.ecommerce.product.model.data.HomePageCategoryResponse
 import com.bs.ecommerce.product.model.data.Manufacturer
 import com.bs.ecommerce.product.model.data.ManufacturerResponse
-import com.google.gson.GsonBuilder
+import com.bs.ecommerce.utils.TextUtils
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -47,23 +47,11 @@ class HomePageModelImpl(private val context: Context) : HomePageModel {
                     call: Call<HomePageProductResponse>,
                     response: Response<HomePageProductResponse>
                 ) {
-                    if (response.body() != null) {
+
+                    if(response.body()!=null && response.code() == 200) {
                         callback.onRequestSuccess(response.body() as HomePageProductResponse)
-                    } else if (response.code() == 400 && !response.errorBody()?.toString()
-                            .isNullOrEmpty()) {
-
-                        val errorBody = GsonBuilder().create().fromJson(
-                            response.errorBody()!!.string(),
-                            HomePageProductResponse::class.java
-                        )
-
-                        if(errorBody==null) {
-                            callback.onRequestFailed(response.message())
-                        } else {
-                            callback.onRequestSuccess(errorBody)
-                        }
                     } else {
-                        callback.onRequestFailed(response.message())
+                        callback.onRequestFailed(TextUtils.getErrorMessage(response))
                     }
                 }
 

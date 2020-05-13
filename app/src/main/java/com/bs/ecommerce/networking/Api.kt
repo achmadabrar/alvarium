@@ -1,5 +1,7 @@
 package com.bs.ecommerce.networking
 
+import com.bs.ecommerce.auth.login.data.ChangePasswordResponse
+import com.bs.ecommerce.auth.login.data.ForgotPasswordResponse
 import com.bs.ecommerce.auth.login.data.LoginPostData
 import com.bs.ecommerce.auth.login.data.LoginResponse
 import com.bs.ecommerce.auth.register.data.GetRegistrationResponse
@@ -56,7 +58,11 @@ interface Api {
     @POST("customer/login") fun postLoginAPI(@Body loginPostData: LoginPostData): Call<LoginResponse>
 
 
+    @POST("customer/passwordrecovery")
+    fun forgetPassword(@Body forgetData: ForgotPasswordResponse): Call<ForgotPasswordResponse>
 
+    @POST("customer/changepassword")
+    fun changePassword(@Body userData: ChangePasswordResponse): Call<ChangePasswordResponse>
 
     //checkout
 
@@ -350,10 +356,6 @@ interface Api {
     fun saveCustomerInfo(@Body customerInfo: CustomerInfo): Call<CustomerInfo>
 
     @POST("login") fun performLogin(@Body loginData: LoginData): Call<LoginResponse>
-
-
-    @POST("customer/passwordrecovery")
-    fun forgetPassword(@Body forgetData: ForgetData): Call<ForgetResponse>
 
     @POST("customer/register")
     fun preformRegistration(@Body customerRegistrationInfo: CustomerRegistrationInfo): Call<RegistrationResponse>

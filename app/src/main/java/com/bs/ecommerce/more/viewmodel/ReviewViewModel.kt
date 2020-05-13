@@ -18,6 +18,9 @@ class ReviewViewModel: BaseViewModel() {
     var lastPageReached = false
     var shouldAppend = true
 
+    // tracks the list item, for which the current operation is ongoing
+    var operationalItemIndex: Int? = null
+
     fun getMyReviews(model: ReviewModel) {
 
         if(lastPageReached) return
@@ -63,5 +66,12 @@ class ReviewViewModel: BaseViewModel() {
             }
 
         })
+    }
+
+    fun setReviewHelpfulness(position: Int, positive: Boolean, model: ReviewModel) {
+
+        operationalItemIndex = position
+
+
     }
 }

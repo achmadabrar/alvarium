@@ -5,7 +5,7 @@ import com.bs.ecommerce.auth.login.data.LoginResponse
 import com.bs.ecommerce.auth.login.data.LoginPostData
 import com.bs.ecommerce.common.RequestCompleteListener
 import com.bs.ecommerce.base.BaseViewModel
-import com.bs.ecommerce.main.model.AuthModel
+import com.bs.ecommerce.auth.AuthModel
 
 
 class LoginViewModel  : BaseViewModel()

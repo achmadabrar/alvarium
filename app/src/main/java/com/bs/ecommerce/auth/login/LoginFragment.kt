@@ -18,8 +18,7 @@ import com.bs.ecommerce.auth.login.data.LoginPostData
 import com.bs.ecommerce.auth.register.RegisterFragment
 import com.bs.ecommerce.base.BaseFragment
 import com.bs.ecommerce.base.BaseViewModel
-import com.bs.ecommerce.home.homepage.HomeFragment
-import com.bs.ecommerce.main.model.AuthModel
+import com.bs.ecommerce.auth.AuthModel
 import com.bs.ecommerce.networking.NetworkUtil
 import com.bs.ecommerce.utils.*
 import com.facebook.*

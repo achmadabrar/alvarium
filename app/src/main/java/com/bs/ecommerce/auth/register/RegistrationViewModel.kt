@@ -4,7 +4,7 @@ import androidx.lifecycle.MutableLiveData
 import com.bs.ecommerce.auth.register.data.GetRegistrationResponse
 import com.bs.ecommerce.base.BaseViewModel
 import com.bs.ecommerce.common.RequestCompleteListener
-import com.bs.ecommerce.main.model.AuthModel
+import com.bs.ecommerce.auth.AuthModel
 
 
 class RegistrationViewModel  : BaseViewModel()
