@@ -8,7 +8,7 @@
     android:background="@drawable/rect_background_ripple"
     android:clickable="true"
     android:focusable="false"
-    android:backgroundTint="@color/fragment_background">
+    android:backgroundTint="?attr/fragmentBackGroundColor">
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline_v_half"
@@ -25,7 +25,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
         android:gravity="start"
-        android:textColor="@color/whiteOrBlack"
+        android:textColor="?attr/primaryTextColor"
         android:textSize="@dimen/tv_text_size_regular"
         android:textStyle="bold"
         app:layout_constraintEnd_toStartOf="@id/guideline_v_half"

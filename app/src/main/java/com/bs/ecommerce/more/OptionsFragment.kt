@@ -6,12 +6,12 @@ import android.widget.RelativeLayout
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.bs.ecommerce.R
-import com.bs.ecommerce.auth.login.LoginFragment
 import com.bs.ecommerce.base.BaseFragment
 import com.bs.ecommerce.base.BaseViewModel
 import com.bs.ecommerce.checkout.CheckoutStepFragment
 import com.bs.ecommerce.more.viewmodel.OptionViewModel
-import com.bs.ecommerce.utils.*
+import com.bs.ecommerce.product.ProductDetailFragment
+import com.bs.ecommerce.utils.replaceFragmentSafely
 import kotlinx.android.synthetic.main.fragment_options.*
 import kotlinx.android.synthetic.main.options_layout.view.*
 
@@ -59,29 +59,20 @@ class OptionsFragment : BaseFragment() {
                         R.string.settings ->
                             replaceFragmentSafely(SettingsFragment())
 
-                        R.string.login ->
-                            replaceFragmentSafely(LoginFragment())
-
-                        /*R.string.log_out ->
-                            logoutConfirmationDialog(View.OnClickListener {
-                                // updating UI
-                                setupView()
-                            })*/
-
                         R.string.privacy_policy ->
                             replaceFragmentSafely(PrivacyPolicyFragment())
 
-                        R.string.my_orders ->
-                            replaceFragmentSafely(OrderHistoryFragment())
+                        R.string.title_about_us ->
+                            replaceFragmentSafely(AboutUsFragment())
+
+                        R.string.title_contact_us ->
+                            replaceFragmentSafely(ContactUsFragment())
 
                         R.string.title_checkout ->
                             replaceFragmentSafely(CheckoutStepFragment())
 
-                        R.string.title_wishlist ->
-                            replaceFragmentSafely(WishListFragment())
-
-                        R.string.title_addresses ->
-                            replaceFragmentSafely(CustomerAddressFragment())
+                        R.string.placeholder ->
+                            replaceFragmentSafely(ProductDetailFragment.newInstance(40))
                     }
                 }
 

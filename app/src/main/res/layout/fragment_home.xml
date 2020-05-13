@@ -1,80 +1,96 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.swiperefreshlayout.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/swipeRefreshLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <androidx.core.widget.NestedScrollView
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/swipeRefreshLayout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/fragment_background"
-        android:fillViewport="true"
-        android:scrollbars="none">
+        android:layout_height="match_parent">
 
-        <RelativeLayout
-            android:id="@+id/homePageRootView"
+        <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:animateLayoutChanges="true"
-            android:fillViewport="true">
+            android:background="?attr/fragmentBackGroundColor"
+            android:fillViewport="true"
+            android:scrollbars="none">
 
-            <include
-                android:id="@+id/banner"
-                layout="@layout/home_page_banner"
+            <RelativeLayout
+                android:id="@+id/homePageRootView"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:visibility="gone"
-                tools:visibility="visible" />
+                android:layout_height="match_parent"
+                android:animateLayoutChanges="true"
+                android:fillViewport="true">
 
-            <include
-                android:id="@+id/bestSellingLayout"
-                layout="@layout/featured_list_layout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/banner"
-                android:layout_marginStart="@dimen/fragment_margin"
-                android:layout_marginTop="10dp"
-                android:layout_marginEnd="@dimen/fragment_margin"
-                android:visibility="gone"
-                tools:visibility="visible" />
+                <include
+                    android:id="@+id/banner"
+                    layout="@layout/home_page_banner"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:visibility="gone"
+                    tools:visibility="visible" />
 
-            <include
-                android:id="@+id/featuredProductLayout"
-                layout="@layout/featured_list_layout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/bestSellingLayout"
-                android:layout_marginStart="@dimen/fragment_margin"
-                android:layout_marginTop="10dp"
-                android:layout_marginEnd="@dimen/fragment_margin"
-                android:visibility="gone"
-                tools:visibility="visible" />
+                <include
+                    android:id="@+id/bestSellingLayout"
+                    layout="@layout/featured_list_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/banner"
+                    android:layout_marginStart="@dimen/fragment_margin"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="@dimen/fragment_margin"
+                    android:visibility="gone"
+                    tools:visibility="visible" />
+
+                <include
+                    android:id="@+id/featuredProductLayout"
+                    layout="@layout/featured_list_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/bestSellingLayout"
+                    android:layout_marginStart="@dimen/fragment_margin"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="@dimen/fragment_margin"
+                    android:visibility="gone"
+                    tools:visibility="visible" />
 
 
-            <LinearLayout
-                android:id="@+id/featuredCategoryContainerLayout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/featuredProductLayout"
-                android:layout_marginStart="@dimen/fragment_margin"
-                android:layout_marginTop="10dp"
-                android:layout_marginEnd="@dimen/fragment_margin"
-                android:orientation="vertical"
-                android:visibility="gone" />
+                <LinearLayout
+                    android:id="@+id/featuredCategoryContainerLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/featuredProductLayout"
+                    android:layout_marginStart="@dimen/fragment_margin"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="@dimen/fragment_margin"
+                    android:orientation="vertical"
+                    android:visibility="gone" />
 
-            <include
-                android:id="@+id/featuredManufacturerLayout"
-                layout="@layout/featured_list_layout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/featuredCategoryContainerLayout"
-                android:layout_marginStart="@dimen/fragment_margin"
-                android:layout_marginTop="10dp"
-                android:layout_marginEnd="@dimen/fragment_margin"
-                android:visibility="gone"
-                tools:visibility="visible" />
+                <include
+                    android:id="@+id/featuredManufacturerLayout"
+                    layout="@layout/featured_list_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/featuredCategoryContainerLayout"
+                    android:layout_marginStart="@dimen/fragment_margin"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="@dimen/fragment_margin"
+                    android:visibility="gone"
+                    tools:visibility="visible" />
 
-        </RelativeLayout>
-    </androidx.core.widget.NestedScrollView>
-</androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+            </RelativeLayout>
+        </androidx.core.widget.NestedScrollView>
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
+    <include
+        android:id="@+id/bottomSheetLayout"
+        layout="@layout/home_fragment_bottomsheet"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:behavior_hideable="true"
+        app:behavior_peekHeight="0dp"
+        app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior" />
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

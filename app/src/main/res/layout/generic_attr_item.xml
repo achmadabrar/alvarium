@@ -8,8 +8,8 @@
     android:checked="true"
     android:drawableEnd="@drawable/ic_tic_mark"
     android:drawableTint="@color/green"
-    android:padding="5dp"
-    android:textColor="@color/whiteOrBlack"
+    android:padding="7dp"
+    android:textColor="?attr/primaryTextColor"
     android:textSize="@dimen/tv_text_size_regular"
     android:visibility="visible"
     tools:text="@string/placeholder" />

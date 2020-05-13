@@ -20,7 +20,7 @@
         android:contentDescription="Cart"
         app:srcCompat="@drawable/app_icon_cart"
         android:layout_alignParentStart="true"
-        android:tint="@color/whiteOrBlack" />
+        android:tint="?attr/toolbarTextColor" />
 
     <TextView
         android:id="@+id/hotlist_hot"

@@ -105,7 +105,7 @@ class CustomerAddressModelImpl : CustomerAddressModel {
                     callback.onRequestSuccess(null)
                 else
                     callback.onRequestFailed(
-                        TextUtils().getErrorMessage(response.errorBody()?.string())
+                        TextUtils.getErrorMessage(response)
                     )
             }
 
@@ -135,7 +135,7 @@ class CustomerAddressModelImpl : CustomerAddressModel {
                     callback.onRequestSuccess(null)
                 else
                     callback.onRequestFailed(
-                        TextUtils().getErrorMessage(response.errorBody()?.string())
+                        TextUtils.getErrorMessage(response)
                     )
             }
 

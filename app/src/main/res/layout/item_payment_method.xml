@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@drawable/rounded_background_slight"
-    android:backgroundTint="@color/list_item_bg"
+    android:backgroundTint="?attr/primaryListItemBg"
     android:clickable="true"
     android:focusable="true"
     android:gravity="center"
@@ -15,7 +15,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:contentDescription="@string/placeholder"
-        android:tint="@color/whiteOrBlack"
+        android:tint="?attr/primaryIconTint"
         android:src="@drawable/ic_payment" />
 
     <androidx.appcompat.widget.AppCompatRadioButton
@@ -28,7 +28,7 @@
         android:checked="true"
         android:gravity="center_vertical"
         android:padding="5dp"
-        android:textColor="@color/whiteOrBlack"
+        android:textColor="?attr/primaryTextColor"
         android:textStyle="bold"
         tools:text="@string/placeholder" />
 

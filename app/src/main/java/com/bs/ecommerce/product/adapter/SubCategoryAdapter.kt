@@ -1,4 +1,4 @@
-package com.bs.ecommerce.product
+package com.bs.ecommerce.product.adapter
 
 import android.content.Context
 import android.view.LayoutInflater

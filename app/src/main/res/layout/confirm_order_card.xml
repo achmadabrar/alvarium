@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/list_item_bg">
+    android:background="?attr/primaryListItemBg">
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline_v_1"
@@ -44,7 +44,7 @@
         android:maxLines="1"
         android:padding="5dp"
         tools:text="@string/placeholder"
-        android:textColor="@color/whiteOrBlack"
+        android:textColor="?attr/primaryTextColor"
         android:textSize="@dimen/tv_text_size_regular"
         android:textStyle="bold"
         app:layout_constraintStart_toEndOf="@id/ivCardThumb"
@@ -58,7 +58,7 @@
         android:drawablePadding="10dp"
         android:padding="5dp"
         tools:text="@string/placeholder"
-        android:textColor="@color/whiteOrBlack"
+        android:textColor="?attr/primaryTextColor"
         android:textSize="@dimen/tv_text_size_small"
         app:layout_constraintStart_toEndOf="@id/ivCardThumb"
         app:layout_constraintTop_toBottomOf="@id/tvCardDetails" />

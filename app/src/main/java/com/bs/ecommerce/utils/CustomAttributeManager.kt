@@ -17,6 +17,7 @@ import com.bs.ecommerce.auth.register.data.KeyValuePair
 import com.bs.ecommerce.networking.common.KeyValueFormData
 import com.bs.ecommerce.product.model.data.AttributeControlValue
 import com.bs.ecommerce.product.model.data.CustomAttribute
+import com.bs.ecommerce.product.model.data.ProductPrice
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import kotlinx.android.synthetic.main.color_selection_layout.view.*
 import kotlinx.android.synthetic.main.other_attr_layout.view.*
@@ -36,7 +37,7 @@ class CustomAttributeManager(
     private lateinit var sizeSelectionProcess: ColorSelectionProcess
 
     private var tvProductPrice: TextView? = null
-    private var basicProductPrice: Double = 0.0
+    private var priceModel: ProductPrice? = null
 
     private var viewGroup: ViewGroup? = null
     private var layoutInflater: LayoutInflater = attributeViewHolder.context.layoutInflater
@@ -369,8 +370,11 @@ class CustomAttributeManager(
         }
     }
 
-    fun setupProductPriceCalculation(initialPrice: Double, textView: TextView) {
-        basicProductPrice = initialPrice
+    fun setupProductPriceCalculation(priceModel: ProductPrice?, textView: TextView) {
+
+        if(priceModel == null) return
+
+        this.priceModel = priceModel
         tvProductPrice = textView
 
         adjustProductPrice()
@@ -379,7 +383,13 @@ class CustomAttributeManager(
     private fun adjustProductPrice() {
 
         tvProductPrice?.apply {
-            var price = basicProductPrice
+
+            if(priceModel!!.isRental == true) {
+                text = priceModel!!.rentalPrice
+                return@apply
+            }
+
+            var price = priceModel!!.priceValue!!
 
             for (valueList in selectedAttributes.values) {
                 for (i in valueList) {

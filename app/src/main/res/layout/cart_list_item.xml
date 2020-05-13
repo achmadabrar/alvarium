@@ -5,24 +5,12 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginBottom="5dp"
-    app:cardBackgroundColor="@color/list_item_bg"
+    app:cardBackgroundColor="?attr/primaryListItemBg"
     app:cardCornerRadius="10dp">
 
-    <ImageView
-        android:id="@+id/icRemoveItem"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="end"
-        android:layout_marginTop="5dp"
-        android:layout_marginEnd="8dp"
-        android:contentDescription="@string/placeholder"
-        android:padding="2dp"
-        android:src="@drawable/ic_cross" />
-
-    <RelativeLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="10dp"
         android:paddingStart="5dp"
         android:paddingTop="8dp"
         android:paddingEnd="5dp"
@@ -32,64 +20,85 @@
             android:id="@+id/ivProductThumb"
             android:layout_width="@dimen/product_thumbnail_cart"
             android:layout_height="@dimen/product_thumbnail_cart"
-            android:layout_alignParentStart="true"
             android:layout_marginEnd="10dp"
             android:contentDescription="@string/placeholder"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
             tools:src="@tools:sample/avatars" />
 
+        <View
+            android:id="@+id/referenceView"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginStart="5dp"
+            app:layout_constraintStart_toEndOf="@id/ivProductThumb"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/icRemoveItem"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:contentDescription="@string/placeholder"
+            android:padding="5dp"
+            android:src="@drawable/ic_cross"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/tvProductName"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_toEndOf="@id/ivProductThumb"
             android:ellipsize="end"
             android:maxLines="2"
-            android:textColor="@color/whiteOrBlack"
+            android:textColor="?attr/primaryTextColor"
             android:textSize="@dimen/tv_text_size_regular"
             android:textStyle="bold"
+            app:layout_constraintEnd_toStartOf="@id/icRemoveItem"
+            app:layout_constraintStart_toEndOf="@id/referenceView"
+            app:layout_constraintTop_toTopOf="parent"
             tools:text="@string/placeholder" />
 
         <include
             android:id="@+id/productPriceLayout"
             layout="@layout/product_price_layout"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_below="@id/tvProductName"
             android:layout_marginTop="5dp"
-            android:layout_toEndOf="@id/ivProductThumb" />
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/referenceView"
+            app:layout_constraintTop_toBottomOf="@id/tvProductName" />
 
         <WebView
             android:id="@+id/tvAttribute1"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_below="@id/productPriceLayout"
             android:layout_marginTop="5dp"
-            android:layout_toEndOf="@id/ivProductThumb"
             android:textSize="15sp"
-            tools:text="@string/placeholder" />
+            app:layout_constraintStart_toEndOf="@id/referenceView"
+            app:layout_constraintTop_toBottomOf="@id/productPriceLayout" />
 
         <TextView
             android:id="@+id/quantityForCheckout"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_below="@id/tvAttribute1"
             android:layout_marginTop="5dp"
-            android:layout_toEndOf="@id/ivProductThumb"
-            android:textColor="@color/whiteOrBlack"
+            android:textColor="?attr/primaryTextColor"
             android:textSize="@dimen/tv_text_size_regular"
             android:textStyle="bold"
             android:visibility="gone"
+            app:layout_constraintStart_toEndOf="@id/referenceView"
+            app:layout_constraintTop_toBottomOf="@id/tvAttribute1"
             tools:text="@string/placeholder" />
 
         <LinearLayout
             android:id="@+id/btn_holder"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="35dp"
-            android:layout_below="@id/quantityForCheckout"
             android:layout_marginTop="5dp"
-            android:layout_toEndOf="@id/ivProductThumb"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            app:layout_constraintStart_toEndOf="@id/referenceView"
+            app:layout_constraintTop_toBottomOf="@id/quantityForCheckout">
 
             <include layout="@layout/qunatity_button" />
 
@@ -101,24 +110,24 @@
                 android:layout_marginStart="20dp"
                 android:ellipsize="end"
                 android:maxLines="1"
-                android:textColor="@color/whiteOrBlack"
+                android:textColor="?attr/primaryTextColor"
                 android:visibility="visible"
                 tools:text="1" />
         </LinearLayout>
 
         <TextView
             android:id="@+id/tvAttribute2"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_below="@id/btn_holder"
             android:layout_marginTop="5dp"
-            android:layout_toEndOf="@id/ivProductThumb"
-            android:textColor="@color/whiteOrBlack"
+            android:textColor="?attr/primaryTextColor"
             android:textSize="@dimen/tv_text_size_regular"
             android:visibility="gone"
+            app:layout_constraintStart_toEndOf="@id/referenceView"
+            app:layout_constraintTop_toBottomOf="@id/quantityForCheckout"
             tools:text="@string/placeholder" />
 
-    </RelativeLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 
 </androidx.cardview.widget.CardView>

@@ -9,6 +9,7 @@ import com.bs.ecommerce.networking.common.BaseResponse
 import com.bs.ecommerce.product.model.data.AddressModel
 import com.google.gson.Gson
 import com.google.gson.JsonSyntaxException
+import retrofit2.Response
 import java.lang.ref.WeakReference
 import java.text.ParseException
 import java.text.SimpleDateFormat
@@ -57,6 +58,26 @@ class TextUtils {
         return date
     }
 
+    fun epoch2DateString(epochMilliSeconds: Long, formatString: String): String {
+        val sdf = SimpleDateFormat(formatString, Locale.getDefault())
+        sdf.timeZone = TimeZone.getDefault()
+
+        return sdf.format(epochMilliSeconds)
+    }
+
+    fun dateStringToEpoch(plainDate: String, format: String): Long? {
+        val df = SimpleDateFormat(format, Locale.ROOT)
+
+        try {
+            val date = df.parse(plainDate)
+            return date?.time
+        } catch (e: ParseException) {
+            e.printStackTrace()
+        }
+
+        return null
+    }
+
 
     fun getFormattedAddress(address: AddressModel?, context: WeakReference<Context>): String {
 
@@ -84,19 +105,37 @@ class TextUtils {
         }.toString()
     }
 
-    /**
-     * Extracts error message from retrofit error body
-     */
-    fun getErrorMessage(errorMsg: String?): String {
+    companion object {
 
-        if (errorMsg.isNullOrEmpty()) return ""
+        /**
+         * Extracts error message from retrofit error body
+         */
+        /*fun getErrorMessage(errorMsg: String?): String {
 
-        val baseResponse = try {
-            Gson().fromJson(errorMsg, BaseResponse::class.java)
-        } catch (e: JsonSyntaxException) {
-            null
+            if (errorMsg.isNullOrEmpty()) return ""
+
+            val baseResponse = try {
+                Gson().fromJson(errorMsg, BaseResponse::class.java)
+            } catch (e: JsonSyntaxException) {
+                null
+            }
+
+            return baseResponse?.errorsAsFormattedString ?: errorMsg
+        }*/
+
+        fun getErrorMessage(response: Response<*>): String {
+
+            val errorMsg = response.errorBody()?.string()
+
+            if (errorMsg.isNullOrEmpty()) return response.raw().message
+
+            val baseResponse = try {
+                Gson().fromJson(errorMsg, BaseResponse::class.java)
+            } catch (e: JsonSyntaxException) {
+                null
+            }
+
+            return baseResponse?.errorsAsFormattedString ?: errorMsg
         }
-
-        return baseResponse?.errorsAsFormattedString ?: errorMsg
     }
 }

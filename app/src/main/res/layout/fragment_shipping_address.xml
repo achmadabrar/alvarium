@@ -4,13 +4,13 @@
     android:id="@+id/shippingAddressRootLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/fragment_background">
+    android:background="?attr/fragmentBackGroundColor">
 
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
-        android:background="@color/fragment_background"
+        android:background="?attr/fragmentBackGroundColor"
         android:orientation="vertical"
         android:screenOrientation="nosensor"
         android:scrollbars="none">

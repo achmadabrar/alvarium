@@ -3,7 +3,6 @@ package com.bs.ecommerce.networking
 import com.bs.ecommerce.auth.login.data.LoginPostData
 import com.bs.ecommerce.auth.login.data.LoginResponse
 import com.bs.ecommerce.auth.register.data.GetRegistrationResponse
-import com.bs.ecommerce.auth.register.data.KeyValuePair
 import com.bs.ecommerce.cart.model.data.AddDiscountPostData
 import com.bs.ecommerce.cart.model.data.CartResponse
 import com.bs.ecommerce.cart.model.data.CartRootData
@@ -89,7 +88,7 @@ interface Api {
     fun getCheckoutConfirmInformationAPI(): Call<CheckoutSaveResponse>
 
     @POST("shoppingcart/checkoutattributechange")
-    fun updateCheckOutAttribute(@Body list: List<KeyValuePair>): Call<CartRootData>
+    fun updateCheckOutAttribute(@Body kvFormData: KeyValueFormData): Call<CartRootData>
 
 
     //homepage
@@ -169,7 +168,7 @@ interface Api {
     fun getWishList(): Call<WishListResponse>
 
     @POST("shoppingcart/updatewishlist")
-    fun updateWishList(@Body list: List<KeyValuePair>): Call<WishListResponse>
+    fun updateWishList(@Body kvFormData: KeyValueFormData): Call<WishListResponse>
 
     @POST("shoppingcart/additemstocartfromwishlist")
     fun moveWishListItemsToCart(@Body body: BaseResponse): Call<WishListResponse>
@@ -197,6 +196,11 @@ interface Api {
         @Path("addressId") id: Int,
         @Body body: EditCustomerAddressResponse
     ): Call<ResponseBody>
+
+    // TOPIC
+
+    @GET("topic/details/{systemName}")
+    fun getTopic(@Path("systemName") systemName: String) : Call<TopicResponse>
 
 /*    @POST("setcurrency/{id}")
     fun setCurrency(@Path("id") id: Long): Call<LanguageResponse>
@@ -255,12 +259,6 @@ interface Api {
 
     @get:GET("categoriesNmanufactures/search")
     val advanceSearchOptions: Call<AdvanceSearchSpinnerOptionResponse>
-
-    @GET("topics/AboutUs")
-    fun aboutUs(): Call<AboutUsResponse>
-
-    @GET("topics/PrivacyInfo")
-    fun privacyPolicy() : Call<PrivacyPolicyResponse>
 
     @POST("AppStart")
     fun initApp(@Body appStartRequest: AppStartRequest): Call<AppThemeResponse>
@@ -402,18 +400,22 @@ interface Api {
         val qs_page_size = "PageSize"
         val qs_order_by = "orderby"
         val qs_spec = "specs"
-        val shoppingCartTypeCart = 1
-        val shoppingCartTypeWishlist = 2
-        val cartProductId: Long = 0
+
         const val removeFromCartOrWishList: String = "removefromcart"
         const val addToCart: String = "addtocart"
         const val typeShoppingCart: Long = 1
         const val typeWishList: Long = 2
 
+        const val rentalStart: String = "rental_start_date_"
+        const val rentalEnd: String = "rental_end_date_"
+
         const val productAttributePrefix = "product_attribute"
         const val checkOutAttributePrefix = "checkout_attribute"
         const val addressAttributePrefix = "address_attribute"
         const val customerAttributePrefix = "customer_attribute"
+
+        const val topicAboutUs = "AboutUs"
+        const val topicPrivacyPolicy = "PrivacyInfo"
 
         @JvmStatic
         val DEFAULT_PAGE_SIZE = 9

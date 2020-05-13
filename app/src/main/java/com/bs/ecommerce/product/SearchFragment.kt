@@ -20,12 +20,16 @@ import com.bs.ecommerce.R
 import com.bs.ecommerce.base.BaseFragment
 import com.bs.ecommerce.base.BaseViewModel
 import com.bs.ecommerce.main.MainActivity
+import com.bs.ecommerce.product.adapter.ProductListAdapter
+import com.bs.ecommerce.product.model.SearchModel
+import com.bs.ecommerce.product.model.SearchModelImpl
 import com.bs.ecommerce.product.model.data.PagingFilteringContext
 import com.bs.ecommerce.product.model.data.ProductSummary
 import com.bs.ecommerce.product.viewModel.ProductListViewModel
-import com.bs.ecommerce.product.model.SearchModel
-import com.bs.ecommerce.product.model.SearchModelImpl
-import com.bs.ecommerce.utils.*
+import com.bs.ecommerce.utils.ItemClickListener
+import com.bs.ecommerce.utils.MyApplication
+import com.bs.ecommerce.utils.replaceFragmentSafely
+import com.bs.ecommerce.utils.toast
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import kotlinx.android.synthetic.main.fragment_product_list.*
 import kotlinx.android.synthetic.main.sort_option_bottom_sheet.view.*
@@ -63,15 +67,8 @@ class SearchFragment : BaseFragment() {
             model = SearchModelImpl()
             viewModel = ViewModelProviders.of(this).get(ProductListViewModel::class.java)
 
-
-            productClickListener = object : ItemClickListener<ProductSummary> {
-                override fun onClick(view: View, position: Int, data: ProductSummary) {
-
-                    if (data.id == null) return
-
-                    replaceFragmentSafely(ProductDetailFragment.newInstance(data.id.toLong()))
-                }
-            }
+        } else {
+            (viewModel as ProductListViewModel).shouldAppend = false
         }
 
         setLiveDataListeners()
@@ -113,7 +110,9 @@ class SearchFragment : BaseFragment() {
 
         bsBehavior = BottomSheetBehavior.from(bottomSheetLayout)
 
-        productListAdapter = ProductListAdapter(productClickListener)
+        productListAdapter = ProductListAdapter(
+            productClickListener
+        )
 
         rvProductList.adapter = productListAdapter
 

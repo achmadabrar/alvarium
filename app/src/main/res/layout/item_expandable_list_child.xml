@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="32dp"
     xmlns:tools="http://schemas.android.com/tools"
-    android:background="@color/fragment_background"
+    android:background="?attr/fragmentBackGroundColor"
     android:descendantFocusability="blocksDescendants">
 
     <LinearLayout
@@ -24,7 +24,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             tools:text="@string/placeholder"
-            android:textColor="@color/whiteOrBlack"
+            android:textColor="?attr/primaryTextColor"
             android:textSize="@dimen/tv_text_size_small" />
 
     </LinearLayout>

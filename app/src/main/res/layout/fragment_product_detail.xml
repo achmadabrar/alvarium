@@ -9,7 +9,7 @@
         android:id="@+id/productDetailsRootLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/fragment_background">
+        android:background="?attr/fragmentBackGroundColor">
 
         <!--focusStealer, to avoid NestedScrollingView to scroll due to dynamically created views that take the focus-->
         <View
@@ -52,7 +52,9 @@
                     android:layout="@layout/product_name_layout"
                     tools:visibility="visible" />
 
-                <include layout="@layout/horizontal_divider" />
+                <include
+                    android:id="@+id/hd11"
+                    layout="@layout/horizontal_divider" />
 
                 <include
                     android:id="@+id/productPriceLayout"
@@ -75,7 +77,7 @@
                         android:layout_weight="1"
                         android:gravity="start"
                         android:text="@string/availability"
-                        android:textColor="@color/whiteOrBlack"
+                        android:textColor="?attr/primaryTextColor"
                         android:textSize="@dimen/tv_text_size_regular"
                         android:textStyle="bold" />
 
@@ -91,7 +93,9 @@
                         tools:text="@string/placeholder" />
                 </LinearLayout>
 
-                <include layout="@layout/horizontal_divider" />
+                <include
+                    android:id="@+id/hd12"
+                    layout="@layout/horizontal_divider" />
 
                 <include
                     android:id="@+id/productQuantityLayout"
@@ -99,6 +103,20 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="5dp" />
+
+                <include
+                    android:id="@+id/hd13"
+                    android:visibility="gone"
+                    tools:visibility="visible"
+                    layout="@layout/horizontal_divider" />
+
+                <ViewStub
+                    android:id="@+id/vsRentalProduct"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:layout="@layout/rental_product_layout"
+                    tools:visibility="visible" />
 
                 <LinearLayout
                     android:id="@+id/attrViewHolder"
@@ -118,6 +136,13 @@
                     tools:visibility="visible" />
 
                 <include layout="@layout/horizontal_divider" />
+
+                <ViewStub
+                    android:id="@+id/vsAssociatedProduct"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout="@layout/featured_product_layout"
+                    tools:visibility="gone" />
 
                 <ViewStub
                     android:id="@+id/vsRelatedProduct"
@@ -156,7 +181,7 @@
                 android:gravity="center"
                 android:singleLine="true"
                 android:text="@string/add_to_cart_plus"
-                android:textColor="@color/whiteOrBlack"
+                android:textColor="?attr/primaryTextColor"
                 android:textSize="14sp"
                 android:textStyle="bold" />
 
@@ -167,14 +192,12 @@
                 android:layout_height="match_parent"
                 android:layout_gravity="center"
                 android:layout_weight="1"
-                android:backgroundTint="@color/pink"
                 android:drawableStart="@drawable/app_icon_cart"
                 android:gravity="center"
                 android:paddingStart="25dp"
                 android:paddingEnd="25dp"
                 android:singleLine="true"
                 android:text="@string/buy_now"
-                android:textColor="@color/white"
                 android:textSize="14sp"
                 android:textStyle="bold" />
         </LinearLayout>

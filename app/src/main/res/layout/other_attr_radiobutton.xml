@@ -7,5 +7,5 @@
     tools:text="@string/placeholder"
     android:padding="5dp"
     android:checked="false"
-    android:textColor="@color/whiteOrBlack"
+    android:textColor="?attr/primaryTextColor"
     android:textSize="@dimen/tv_text_size_regular" />

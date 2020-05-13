@@ -22,8 +22,7 @@
                 android:id="@+id/layoutFrame"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:layout_weight="1"
-                android:background="@color/home_frame_background"/>
+                android:layout_weight="1"/>
 
             <com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx
                 android:id="@+id/navigation"
@@ -32,7 +31,7 @@
                 android:layout_gravity="bottom"
                 android:elevation="16dp"
                 android:textAlignment="gravity"
-                app:itemBackground="@drawable/item_bg"
+                app:itemBackground="@drawable/home_bottom_nav_item_bg"
                 app:itemIconTint="@color/color_change_bottom"
                 app:itemTextColor="@color/color_change_bottom"
                 app:menu="@menu/navigation"

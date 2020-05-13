@@ -4,26 +4,32 @@ package com.bs.ecommerce.product.model.data
 import com.google.gson.annotations.SerializedName
 
 data class ProductPrice(
-    @SerializedName("AvailableForPreOrder")
-        val availableForPreOrder: Boolean?,
+    @SerializedName("BasePricePAngV")
+    val basePricePAngV: Any?,
+    @SerializedName("CallForPrice")
+    val callForPrice: Boolean?,
+    @SerializedName("CurrencyCode")
+    val currencyCode: String?,
     @SerializedName("CustomProperties")
-        val customProperties: CustomProperties?,
-    @SerializedName("DisableAddToCompareListButton")
-        val disableAddToCompareListButton: Boolean?,
-    @SerializedName("DisableBuyButton")
-        val disableBuyButton: Boolean?,
-    @SerializedName("DisableWishlistButton")
-        val disableWishlistButton: Boolean?,
+    val customProperties: CustomProperties?,
+    @SerializedName("CustomerEntersPrice")
+    val customerEntersPrice: Boolean?,
     @SerializedName("DisplayTaxShippingInfo")
-        val displayTaxShippingInfo: Boolean?,
-    @SerializedName("ForceRedirectionAfterAddingToCart")
-        val forceRedirectionAfterAddingToCart: Boolean?,
+    val displayTaxShippingInfo: Boolean?,
+    @SerializedName("HidePrices")
+    val hidePrices: Boolean?,
     @SerializedName("IsRental")
-        val isRental: Boolean?,
+    val isRental: Boolean?,
     @SerializedName("OldPrice")
-        val oldPrice: String?,
+    val oldPrice: String?,
     @SerializedName("Price")
-        val price: String?,
+    val price: String?,
     @SerializedName("PriceValue")
-        val priceValue: Double?
+    val priceValue: Double?,
+    @SerializedName("PriceWithDiscount")
+    val priceWithDiscount: String?,
+    @SerializedName("ProductId")
+    val productId: Int?,
+    @SerializedName("RentalPrice")
+    val rentalPrice: String?
 )

@@ -13,7 +13,7 @@
         android:layout_height="match_parent"
         android:background="@color/darkOrGray"
         android:text="@string/text_minus"
-        android:textColor="@color/whiteOrBlack"
+        android:textColor="?attr/primaryTextColor"
         android:textSize="18sp" />
 
     <View
@@ -28,7 +28,7 @@
         android:background="@color/darkOrGray"
         android:contentDescription="@string/placeholder"
         android:text="@string/text_plus"
-        android:textColor="@color/whiteOrBlack"
+        android:textColor="?attr/primaryTextColor"
         android:textSize="18sp" />
 
 </LinearLayout>

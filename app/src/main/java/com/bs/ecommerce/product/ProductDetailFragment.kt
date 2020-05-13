@@ -1,5 +1,8 @@
 package com.bs.ecommerce.product
 
+import android.annotation.SuppressLint
+import android.app.DatePickerDialog
+import android.content.Intent
 import android.graphics.Paint
 import android.os.Bundle
 import android.view.View
@@ -16,8 +19,11 @@ import com.bs.ecommerce.cart.CartFragment
 import com.bs.ecommerce.home.FeaturedProductAdapter
 import com.bs.ecommerce.networking.Api
 import com.bs.ecommerce.networking.common.KeyValueFormData
+import com.bs.ecommerce.product.adapter.AssociatedProductAdapter
+import com.bs.ecommerce.product.adapter.DetailsSliderAdapter
 import com.bs.ecommerce.product.model.ProductDetailModel
 import com.bs.ecommerce.product.model.ProductDetailModelImpl
+import com.bs.ecommerce.product.model.data.ProductDetail
 import com.bs.ecommerce.product.model.data.ProductSummary
 import com.bs.ecommerce.product.viewModel.ProductDetailViewModel
 import com.bs.ecommerce.utils.*
@@ -29,7 +35,9 @@ import kotlinx.android.synthetic.main.product_name_layout.view.*
 import kotlinx.android.synthetic.main.product_name_layout.view.tvProductName
 import kotlinx.android.synthetic.main.product_price_layout.view.*
 import kotlinx.android.synthetic.main.product_quantity.view.*
+import kotlinx.android.synthetic.main.rental_product_layout.view.*
 import kotlinx.android.synthetic.main.slider.view.*
+import java.util.*
 
 
 class ProductDetailFragment : BaseFragment(), View.OnClickListener {
@@ -99,7 +107,10 @@ class ProductDetailFragment : BaseFragment(), View.OnClickListener {
                     val imageSlider = vsImageSlider?.inflate()
 
                     val detailsSliderAdapter =
-                        DetailsSliderAdapter(requireContext(), product.pictureModels)
+                        DetailsSliderAdapter(
+                            requireContext(),
+                            product.pictureModels
+                        )
                     imageSlider?.view_pager_slider?.adapter = detailsSliderAdapter
                     imageSlider?.view_pager_slider?.currentItem = 0
                     imageSlider?.circle_indicator?.setViewPager(imageSlider.view_pager_slider)
@@ -111,12 +122,13 @@ class ProductDetailFragment : BaseFragment(), View.OnClickListener {
 
                     detailsSliderAdapter.setOnSliderClickListener(object :
                         DetailsSliderAdapter.OnSliderClickListener {
-                        override fun onSliderClick(view: View, sliderPosition: Int) {
-                            // TODO
-                            /*FullScreenImageActivity.sliderPosition = sliderPosition
-                            FullScreenImageActivity.pictureModels = detail.pictureModels
+                        override fun onSliderClick(view: View, position: Int) {
+
+                            // Open fullscreen image activity
+                            FullScreenImageActivity.sliderPosition = position
+                            FullScreenImageActivity.pictureModels = product.pictureModels
                             val intent = Intent(activity, FullScreenImageActivity::class.java)
-                            startActivity(intent)*/
+                            startActivity(intent)
                         }
                     })
 
@@ -141,7 +153,7 @@ class ProductDetailFragment : BaseFragment(), View.OnClickListener {
                         }
                     }
 
-                    productPriceLayout.tvDiscountPercent.text = "40% Off"
+                    //productPriceLayout.tvDiscountPercent.text = "40% Off"
 
                     tvAvailability.text = product.stockAvailability
 
@@ -169,12 +181,39 @@ class ProductDetailFragment : BaseFragment(), View.OnClickListener {
                     customAttributeManager?.attachAttributesToFragment()
 
                     customAttributeManager?.setupProductPriceCalculation(
-                        product?.productPrice?.priceValue ?: 0.0,
+                        product?.productPrice,
                         productPriceLayout.tvDiscountPrice
                     )
 
+
+                    // Rental Product
+                    if(product.isRental == true) {
+                        populateRentalProductSection(product)
+                    }
+
+                    // Associated Product
+                    val isGroupProduct = product.associatedProducts?.isNotEmpty() ?: false
+
+                    if(isGroupProduct) {
+                        populateAssociatedProductList(product.associatedProducts!!)
+
+                        // Hide unrelated layouts
+                        productPriceLayout.visibility = View.GONE
+                        productQuantityLayout.visibility = View.GONE
+                        addtoCartLayout.visibility = View.GONE
+
+                        // Hide horizontal dividers
+                        hd11.visibility = View.GONE
+                        hd12.visibility = View.GONE
+
+                        productDetailsScrollView.visibility = View.VISIBLE
+
+                        return@Observer
+                    } else {
+                        addtoCartLayout.visibility = View.VISIBLE
+                    }
+
                     productDetailsScrollView.visibility = View.VISIBLE
-                    addtoCartLayout.visibility = View.VISIBLE
 
                 })
 
@@ -241,6 +280,91 @@ class ProductDetailFragment : BaseFragment(), View.OnClickListener {
             })
         }
 
+    }
+
+    @SuppressLint("SetTextI18n")
+    private fun populateRentalProductSection(product: ProductDetail) {
+        if (vsRentalProduct == null) return
+
+        val rentalProductLayout = vsRentalProduct.inflate()
+
+        btnBuyNow.text = getString(R.string.rent_now)
+        hd13.visibility = View.VISIBLE
+
+        val calender: Calendar = Calendar.getInstance()
+
+        rentalProductLayout.etRentFrom.setOnClickListener{
+
+            val dialog = DatePickerDialog(
+                requireContext(), DatePickerDialog.OnDateSetListener { _, y, m, d ->
+                    rentalProductLayout.etRentFrom.text = "$d / $m / $y"
+                    rentalProductLayout.etRentTo.text = "$d / $m / $y"
+
+                    (viewModel as ProductDetailViewModel).setRentDate(d, m, y, true)
+                },
+                calender.get(Calendar.YEAR), calender.get(Calendar.MONTH),
+                calender.get(Calendar.DAY_OF_MONTH)
+            )
+
+            dialog.datePicker.minDate = (viewModel as ProductDetailViewModel).getRentDate(true)
+            dialog.show()
+        }
+
+        rentalProductLayout.etRentTo.setOnClickListener{
+
+            if (rentalProductLayout.etRentFrom.text.isNullOrEmpty()) {
+                toast("Select start date")
+                return@setOnClickListener
+            }
+
+            val dialog = DatePickerDialog(
+                requireContext(), DatePickerDialog.OnDateSetListener { _, y, m, d ->
+                    rentalProductLayout.etRentTo.text = "$d / $m / $y"
+                    (viewModel as ProductDetailViewModel).setRentDate(d, m, y, false)
+                },
+                calender.get(Calendar.YEAR), calender.get(Calendar.MONTH),
+                calender.get(Calendar.DAY_OF_MONTH)
+            )
+
+            dialog.datePicker.minDate = (viewModel as ProductDetailViewModel).getRentDate(false)
+            dialog.show()
+        }
+    }
+
+    private fun populateAssociatedProductList(list: List<ProductDetail>) {
+        if (list.isEmpty() || vsAssociatedProduct==null)
+            return
+
+        val associatedProductLayout = vsAssociatedProduct.inflate()
+
+        associatedProductLayout.tvProductName.text = getString(R.string.associated_product)
+
+        associatedProductLayout.rvFeaturedProduct.apply {
+            layoutManager =
+                LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
+
+            //addItemDecoration(RecyclerViewMargin(5, 1, isVertical = true))
+            setHasFixedSize(true)
+
+            val clickListener = object: ItemClickListener<ProductDetail> {
+                override fun onClick(view: View, position: Int, data: ProductDetail) {
+
+                    when(view.id) {
+                        R.id.itemView ->
+                            toast(data.name ?: "")
+
+                        R.id.ivAddToWishList ->
+                            addProductToWishList(data.id!!)
+
+                        R.id.ivAddToCart ->
+                            addToCartClickAction(data.id!!, data.quantity.toString())
+                    }
+
+                }
+            }
+
+            adapter = AssociatedProductAdapter(list, clickListener)
+        }
     }
 
     private fun populateRelatedProductList(list: List<ProductSummary>) {
@@ -328,15 +452,18 @@ class ProductDetailFragment : BaseFragment(), View.OnClickListener {
         }
 
         btnAddToCart?.setOnClickListener {
-            (viewModel as ProductDetailViewModel).addProductToCartModel(
-                productId,
-                productQuantityLayout?.tvQuantity?.text.toString(),
-                customAttributeManager?.getFormData(Api.productAttributePrefix) ?: KeyValueFormData(),
-                model
-            )
+            addToCartClickAction(productId, productQuantityLayout?.tvQuantity?.text.toString())
         }
     }
 
+    private fun addToCartClickAction(productId: Long, quantity: String) {
+        (viewModel as ProductDetailViewModel).addProductToCartModel(
+            productId,
+            quantity,
+            customAttributeManager?.getFormData(Api.productAttributePrefix) ?: KeyValueFormData(),
+            model
+        )
+    }
 
     override fun onClick(v: View) {
         when(v.id) {

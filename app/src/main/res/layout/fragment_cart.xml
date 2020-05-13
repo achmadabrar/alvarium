@@ -10,7 +10,7 @@
         android:id="@+id/cartRootLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/fragment_background">
+        android:background="?attr/fragmentBackGroundColor">
 
         <!--focusStealer, to avoid NestedScrollingView to scroll due to dynamically created views that take the focus-->
         <View
@@ -101,9 +101,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
-            android:backgroundTint="@color/pink"
             android:text="@string/cart_proceed_to_checkout"
-            android:textColor="@color/white"
             android:visibility="gone"
             tools:visibility="visible" />
 

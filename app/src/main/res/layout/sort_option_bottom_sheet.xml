@@ -3,7 +3,7 @@
     android:id="@+id/bottom_sheet"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/list_item_bg"
+    android:background="?attr/primaryListItemBg"
     android:orientation="vertical">
 
     <TextView
@@ -15,7 +15,7 @@
         android:paddingEnd="10dp"
         android:paddingBottom="5dp"
         android:text="@string/sort_by"
-        android:textColor="@color/whiteOrBlack"
+        android:textColor="?attr/primaryTextColor"
         android:textSize="@dimen/tv_text_size_regular"
         android:textStyle="bold" />
 

@@ -3,7 +3,7 @@
     android:id="@+id/shippingMethodRootLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/fragment_background">
+    android:background="?attr/fragmentBackGroundColor">
 
     <ScrollView
         android:layout_width="match_parent"
@@ -32,13 +32,11 @@
 
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/btnContinue"
+                style="@style/RectangularButtonRegular"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:background="@color/pink"
-                android:text="@string/text_continue"
-                android:textColor="@color/login_tv_color"
-                android:textSize="@dimen/button_text_size" />
+                android:text="@string/text_continue" />
 
         </LinearLayout>
     </ScrollView>

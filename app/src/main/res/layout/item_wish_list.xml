@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    app:cardBackgroundColor="@color/list_item_bg"
+    app:cardBackgroundColor="?attr/primaryListItemBg"
     app:cardCornerRadius="10dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -46,7 +46,7 @@
             android:layout_toEndOf="@id/ivProductThumb"
             android:ellipsize="end"
             android:maxLines="2"
-            android:textColor="@color/whiteOrBlack"
+            android:textColor="?attr/primaryTextColor"
             android:textSize="@dimen/tv_text_size_regular"
             android:textStyle="bold"
             app:layout_constraintEnd_toStartOf="@id/icRemoveItem"
@@ -62,7 +62,7 @@
             android:layout_marginStart="5dp"
             android:layout_marginTop="5dp"
             android:layout_toEndOf="@id/ivProductThumb"
-            android:textColor="@color/whiteOrBlack"
+            android:textColor="?attr/primaryTextColor"
             android:textSize="@dimen/tv_text_size_regular"
             app:layout_constraintStart_toEndOf="@id/ivProductThumb"
             app:layout_constraintTop_toBottomOf="@id/tvProductName"
