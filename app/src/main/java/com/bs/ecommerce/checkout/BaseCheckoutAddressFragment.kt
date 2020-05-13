@@ -52,8 +52,6 @@ open class BaseCheckoutAddressFragment : BaseCheckoutNavigationFragment()
 
         viewModel  = ViewModelProvider(this).get(CheckoutAddressViewModel::class.java)
 
-        setAddressTabClickListener()
-
         setLiveDataListeners()
 
 
@@ -207,57 +205,6 @@ open class BaseCheckoutAddressFragment : BaseCheckoutNavigationFragment()
 
     }
 
-    private fun handleTabSelection(tabPosition: Int)
-    {
-        when(tabPosition)
-        {
-            Constants.BILLING_ADDRESS_TAB -> layoutCheckoutAddress?.visibility = View.VISIBLE
-
-            Constants.SHIPPING_ADDRESS_TAB ->
-            {
-                if (CheckoutStepFragment.isBillingAddressSubmitted)
-                {
-                    if(!isCurrentTabShipping())
-                        replaceFragment(ShippingAddressFragment())
-
-                }
-                else
-                {
-                    toast("Please complete previous step")
-                    Handler().post {   addressTabLayout?.getTabAt(Constants.BILLING_ADDRESS_TAB)?.select()  }
-                }
-
-                "sfdsgsdgd".showLog(CheckoutStepFragment.isBillingAddressSubmitted.toString())
-            }
-        }
-    }
-    private fun replaceFragment(fragment: BaseFragment) {
-        val transaction = requireActivity().supportFragmentManager.beginTransaction()
-        transaction.addToBackStack(fragment.tag)
-        transaction.replace(R.id.checkoutFragmentHolder, fragment)
-        //transaction.commit()
-
-        if (!requireActivity().supportFragmentManager.isStateSaved)
-        {
-            transaction.commit()
-            childFragmentManager.executePendingTransactions()
-        }
-
-    }
-
-    private fun setAddressTabClickListener()
-    {
-        addressTabLayout?.addOnTabSelectedListener(object : OnTabSelectedListener {
-            override fun onTabSelected(tab: TabLayout.Tab)
-            {
-                handleTabSelection(tab.position)
-            }
-
-            override fun onTabUnselected(tab: TabLayout.Tab) {}
-            override fun onTabReselected(tab: TabLayout.Tab)
-            {}
-        })
-    }
 
     private fun showValidation( editText: EditText, isRequired: Boolean)
     {
@@ -330,8 +277,5 @@ open class BaseCheckoutAddressFragment : BaseCheckoutNavigationFragment()
 
         return address
     }
-
-    protected fun isCurrentTabShipping() : Boolean
-            = requireActivity().supportFragmentManager.findFragmentById(R.id.checkoutFragmentHolder) is ShippingAddressFragment
 
 }

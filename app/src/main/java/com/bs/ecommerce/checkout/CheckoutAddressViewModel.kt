@@ -3,23 +3,24 @@ package com.bs.ecommerce.checkout
 import androidx.lifecycle.MutableLiveData
 import com.bs.ecommerce.auth.register.data.KeyValuePair
 import com.bs.ecommerce.base.BaseViewModel
-import com.bs.ecommerce.cart.model.data.CartResponse
 import com.bs.ecommerce.cart.model.data.CartRootData
 import com.bs.ecommerce.checkout.model.CheckoutModel
 import com.bs.ecommerce.checkout.model.data.*
 import com.bs.ecommerce.common.RequestCompleteListener
 import com.bs.ecommerce.networking.Constants
+import com.bs.ecommerce.networking.common.Data
+import com.bs.ecommerce.networking.common.ExistingAddress
 import com.bs.ecommerce.networking.common.KeyValueFormData
 
 open class CheckoutAddressViewModel : BaseViewModel()
 {
     var cartLD = MutableLiveData<CartRootData>()
 
-    var billingAddressResponseLD = MutableLiveData<BillingAddressResponse>()
+    var getBillingAddressLD = MutableLiveData<BillingAddressResponse>()
 
     var stateListLD = MutableLiveData<List<AvailableState>>()
 
-    var saveBillingResponseLD = MutableLiveData<SaveBillingResponse>()
+    var saveResponseLD = MutableLiveData<CheckoutSaveResponse>()
 
     fun getBillingFormVM(model: CheckoutModel)
     {
@@ -31,7 +32,7 @@ open class CheckoutAddressViewModel : BaseViewModel()
             {
                 isLoadingLD.postValue(false)
 
-                billingAddressResponseLD.postValue(data)
+                getBillingAddressLD.postValue(data)
             }
 
             override fun onRequestFailed(errorMessage: String)
@@ -69,13 +70,13 @@ open class CheckoutAddressViewModel : BaseViewModel()
 
         isLoadingLD.postValue(true)
 
-        model.saveNewBilling(saveBillingPostData, object : RequestCompleteListener<SaveBillingResponse>
+        model.saveNewBilling(saveBillingPostData, object : RequestCompleteListener<CheckoutSaveResponse>
         {
-            override fun onRequestSuccess(data: SaveBillingResponse)
+            override fun onRequestSuccess(data: CheckoutSaveResponse)
             {
                 isLoadingLD.postValue(false)
 
-                saveBillingResponseLD.postValue(data)
+                saveResponseLD.postValue(data)
             }
 
             override fun onRequestFailed(errorMessage: String)
@@ -85,24 +86,22 @@ open class CheckoutAddressViewModel : BaseViewModel()
         })
     }
 
-    fun saveBillingFromExistingAddressVM(addressId: Long, model: CheckoutModel)
+    fun saveExistingBillingVM(addressId: Long, model: CheckoutModel, shipToSameAddress: Boolean)
     {
-
-        val key = "billing_address_id"
 
         isLoadingLD.postValue(true)
 
-        val keyValuePair = KeyValuePair()
-        keyValuePair.key = key
-        keyValuePair.value = addressId.toString()
+        val existingAddress = ExistingAddress(
+            formValues = listOf(getKeyValue("billing_address_id", addressId)),
+            data = Data(shipToSameAddress = shipToSameAddress))
 
-        model.saveExistingBilling(KeyValueFormData(listOf(keyValuePair)), object : RequestCompleteListener<SaveBillingResponse>
+        model.saveExistingBilling(existingAddress, object : RequestCompleteListener<CheckoutSaveResponse>
         {
-            override fun onRequestSuccess(data: SaveBillingResponse)
+            override fun onRequestSuccess(data: CheckoutSaveResponse)
             {
                 isLoadingLD.postValue(false)
 
-                saveBillingResponseLD.postValue(data)
+                saveResponseLD.postValue(data)
             }
 
             override fun onRequestFailed(errorMessage: String)
@@ -120,13 +119,13 @@ open class CheckoutAddressViewModel : BaseViewModel()
 
         isLoadingLD.postValue(true)
 
-        model.saveNewShipping(saveShippingPostData, object : RequestCompleteListener<SaveBillingResponse>
+        model.saveNewShipping(saveShippingPostData, object : RequestCompleteListener<CheckoutSaveResponse>
         {
-            override fun onRequestSuccess(data: SaveBillingResponse)
+            override fun onRequestSuccess(data: CheckoutSaveResponse)
             {
                 isLoadingLD.postValue(false)
 
-                saveBillingResponseLD.postValue(data)
+                saveResponseLD.postValue(data)
             }
 
             override fun onRequestFailed(errorMessage: String)
@@ -136,35 +135,48 @@ open class CheckoutAddressViewModel : BaseViewModel()
         })
     }
 
+    private fun getKeyValue(key: String, addressId: Long) = KeyValuePair(key = key, value = addressId.toString())
+
     fun saveShippingFromExistingAddressVM(type: Int, addressId: Long, model: CheckoutModel)
     {
-        var key = ""
+        var existingAddress = ExistingAddress()
 
         when(type)
         {
-            Constants.BillingAddress -> key = "billing_address_id"
-            Constants.ShippingAddress -> key = "shipping_address_id"
-            Constants.StorePickUp -> key = "pickup_points_id"
-        }
+            Constants.BillingAddress -> {
+                existingAddress = ExistingAddress(
+                    formValues = listOf(getKeyValue("billing_address_id", addressId)),
+                    data = Data(shipToSameAddress = false))
+            }
 
+            Constants.ShippingAddress -> {
+                existingAddress = ExistingAddress(
+                    formValues = listOf(getKeyValue("shipping_address_id", addressId)),
+                    data = Data(shipToSameAddress = false))
+            }
+
+            Constants.StorePickUp -> {
+                existingAddress = ExistingAddress(
+                    formValues = listOf(getKeyValue("pickup-points-id", addressId)),
+                    data = Data(pickupInStore = false)
+                )
+            }
+
+        }
 
         isLoadingLD.postValue(true)
 
-        val keyValuePair = KeyValuePair()
-        keyValuePair.key = key
-        keyValuePair.value = addressId.toString()
 
-        model.saveExistingShipping(KeyValueFormData(listOf(keyValuePair)), object : RequestCompleteListener<SaveBillingResponse>
+        model.saveExistingShipping(existingAddress, object : RequestCompleteListener<CheckoutSaveResponse>
         {
-            override fun onRequestSuccess(data: SaveBillingResponse)
+            override fun onRequestSuccess(data: CheckoutSaveResponse)
             {
                 isLoadingLD.postValue(false)
 
-                saveBillingResponseLD.postValue(data)
+                saveResponseLD.postValue(data)
             }
 
-            override fun onRequestFailed(errorMessage: String)
-            {
+            override fun onRequestFailed(errorMessage: String) {
                 isLoadingLD.postValue(false)
             }
         })
@@ -181,9 +193,9 @@ open class CheckoutAddressViewModel : BaseViewModel()
 
         isLoadingLD.postValue(true)
 
-        model.saveShippingMethod(KeyValueFormData(listOf(keyValuePair)), object : RequestCompleteListener<SaveBillingResponse>
+        model.saveShippingMethod(KeyValueFormData(listOf(keyValuePair)), object : RequestCompleteListener<CheckoutSaveResponse>
         {
-            override fun onRequestSuccess(data: SaveBillingResponse)
+            override fun onRequestSuccess(data: CheckoutSaveResponse)
             {
                 isLoadingLD.postValue(false)
 
@@ -201,9 +213,9 @@ open class CheckoutAddressViewModel : BaseViewModel()
     {
         isLoadingLD.postValue(true)
 
-        model.getCheckoutConfirmInformation(object : RequestCompleteListener<SaveBillingResponse>
+        model.getCheckoutConfirmInformation(object : RequestCompleteListener<CheckoutSaveResponse>
         {
-            override fun onRequestSuccess(data: SaveBillingResponse)
+            override fun onRequestSuccess(data: CheckoutSaveResponse)
             {
                 isLoadingLD.postValue(false)
 

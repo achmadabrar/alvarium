@@ -4,7 +4,7 @@ import com.bs.ecommerce.networking.common.BaseResponse
 import com.google.gson.annotations.SerializedName
 
 
-data class SaveBillingResponse(@SerializedName("Data") var data: SaveBillingData = SaveBillingData()) : BaseResponse()
+data class CheckoutSaveResponse(@SerializedName("Data") var data: SaveBillingData = SaveBillingData()) : BaseResponse()
 
 data class SaveBillingData(
     @SerializedName("BillingAddressModel") var billingAddressModel: BillingAddress = BillingAddress(),

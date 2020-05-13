@@ -5,7 +5,7 @@ import android.view.View
 import android.widget.AdapterView
 import androidx.lifecycle.Observer
 import com.bs.ecommerce.R
-import com.bs.ecommerce.checkout.model.data.SaveBillingResponse
+import com.bs.ecommerce.checkout.model.data.CheckoutSaveResponse
 import com.bs.ecommerce.checkout.model.data.ShippingAddressModel
 import com.bs.ecommerce.checkout.model.data.Store
 import com.bs.ecommerce.networking.Constants
@@ -25,9 +25,7 @@ class ShippingAddressFragment : BaseCheckoutAddressFragment()
     {
         super.onViewCreated(view, savedInstanceState)
 
-        initShippingLayout(MyApplication.saveBillingResponse!!)
-
-        setLiveDataListeners()
+        initShippingLayout(MyApplication.checkoutSaveResponse!!)
 
         btnContinue?.setOnClickListener {
 
@@ -53,42 +51,7 @@ class ShippingAddressFragment : BaseCheckoutAddressFragment()
             .saveShippingFromExistingAddressVM(type = Constants.StorePickUp, addressId = addressID, model = model)
     }
 
-    override fun setLiveDataListeners() {
-
-        super.setLiveDataListeners()
-
-        with(viewModel as CheckoutAddressViewModel)
-        {
-
-            saveBillingResponseLD.observe(viewLifecycleOwner, Observer { saveResponse ->
-
-                if(saveResponse.errorList.isNotEmpty())
-                    toast(saveResponse.errorsAsFormattedString)
-                else
-                {
-                    toast("Shipping Address Added Successfully")
-                    MyApplication.saveBillingResponse = saveResponse
-                    CheckoutStepFragment.isShippingAddressSubmitted = true
-
-
-                    val bottomNavigationView = rootView?.findViewById(R.id.checkoutBottomNav) as BottomNavigationView?
-                    bottomNavigationView?.selectedItemId = R.id.menu_shipping
-
-/*                    checkoutBottomNav?.let {
-
-                        it.selectedItemId = it.findViewById<BottomNavigationView>(R.id.menu_shipping)
-                    }*/
-                    /*val view = checkoutBottomNav?.findViewById<BottomNavigationView>(R.id.menu_shipping)
-                    view?.performClick()*/
-
-                }
-
-            })
-
-        }
-    }
-
-    private fun initShippingLayout(saveBillingResponse: SaveBillingResponse)
+    private fun initShippingLayout(saveBillingResponse: CheckoutSaveResponse)
     {
 
         with(saveBillingResponse.data.shippingAddressModel)
@@ -149,7 +112,7 @@ class ShippingAddressFragment : BaseCheckoutAddressFragment()
         {
             override fun onItemSelected(parent: AdapterView<*>, view: View?, position: Int, id: Long)
             {
-                storeId = MyApplication.saveBillingResponse!!.data.shippingAddressModel.pickupPoints[position].id
+                storeId = MyApplication.checkoutSaveResponse!!.data.shippingAddressModel.pickupPoints[position].id
             }
 
             override fun onNothingSelected(parent: AdapterView<*>)

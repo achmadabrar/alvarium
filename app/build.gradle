@@ -15,6 +15,10 @@ android {
 
 
         buildConfigField "String", "BASE_URL", "\"" + getBaseUrl() + "\""
+
+        buildConfigField "String", "NST_KEY", getNstKey()
+        buildConfigField "String", "NST_SECRET",  getSecret()
+
     }
     buildTypes {
         release {
@@ -116,13 +120,35 @@ dependencies {
 }
 
 
+def getNstKey() {
+    Properties properties = new Properties()
+    properties.load(project.rootProject.file('local.properties').newDataInputStream())
+
+    String nst = properties.getProperty("NST_KEY")
+/*    if(nst == null)
+        throw new GradleException("Add 'nst' field at local.properties file.")*/
+
+    return nst
+}
+def getSecret() {
+    Properties properties = new Properties()
+    properties.load(project.rootProject.file('local.properties').newDataInputStream())
+
+    String secret = properties.getProperty("NST_SECRET")
+    /*if(secret == null)
+        throw new GradleException("Add 'secret' field at local.properties file.")
+*/
+    return secret
+}
+
+
 def getBaseUrl() {
     Properties properties = new Properties()
     properties.load(project.rootProject.file('local.properties').newDataInputStream())
 
     String baseUrl = properties.getProperty("base_url")
-    if(baseUrl==null)
-        throw new GradleException("Add 'base_url' field at local.properties file.")
+    /*if(baseUrl==null)
+        throw new GradleException("Add 'base_url' field at local.properties file.")*/
 
     return baseUrl
 }
