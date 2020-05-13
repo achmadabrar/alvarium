@@ -3,18 +3,18 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/addressRootLayout"
+    android:id="@+id/productReviewRootLayout"
     android:animateLayoutChanges="true"
     android:background="?attr/fragmentBackGroundColor">
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rvAddress"
+        android:id="@+id/rvReview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@id/btnAddNew"
+        android:layout_above="@id/btnAddReview"
         android:nestedScrollingEnabled="false"
         tools:itemCount="4"
-        tools:listitem="@layout/item_address" />
+        tools:listitem="@layout/item_product_review" />
 
     <TextView
         android:id="@+id/tvNoData"
@@ -28,13 +28,14 @@
         android:text="@string/no_data_found"/>
 
     <Button
-        android:id="@+id/btnAddNew"
+        android:id="@+id/btnAddReview"
         style="@style/RectangularButtonRegular"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:background="@drawable/rect_background_ripple"
-        android:text="@string/add_new"
-        android:visibility="visible" />
+        android:text="@string/write_your_own_review"
+        android:visibility="gone"
+        tools:visibility="visible"/>
 
 </RelativeLayout>

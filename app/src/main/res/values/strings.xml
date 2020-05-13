@@ -26,6 +26,10 @@
     <string name="title_addresses">Addresses</string>
     <string name="title_about_us">About Us</string>
     <string name="title_contact_us">Contact Us</string>
+    <string name="title_my_addresses">My Addresses</string>
+    <string name="title_my_reviews">My Reviews</string>
+    <string name="title_Add_review">Add Review</string>
+    <string name="title_reviews">Product Review</string>
 
     <!-- Barcode Fragment  -->
     <string name="place_barcode_in_camera">Put barcode here to Scan instantly</string>
@@ -220,9 +224,7 @@
     <string name="loading">Loading…</string>
     <string name="my_account">Account</string>
     <string name="account_info">Account Info</string>
-    <string name="my_addresses">My Addresses</string>
     <string name="shopping_cart">Shopping Cart</string>
-    <string name="my_reviews">My Reviews</string>
 
     <!-- Contact Us  -->
     <string name="submit">Submit</string>
@@ -235,5 +237,11 @@
     <string name="start_date">Start Date</string>
     <string name="end_date">End Date</string>
     <string name="rent_now">Rent Now!</string>
+    <string name="n_reviews">%d review(s)</string>
+    <string name="was_this_review_helpful">Was this review helpful?</string>string>
+    <string name="write_your_own_review">Write your own review</string>
+    <string name="review_title">Review Title</string>
+    <string name="review_text">Review Text</string>
+    <string name="your_rating"> Your Rating</string>
 
 </resources>

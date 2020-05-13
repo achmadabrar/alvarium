@@ -17,6 +17,7 @@ import com.bs.ecommerce.base.BaseFragment
 import com.bs.ecommerce.base.BaseViewModel
 import com.bs.ecommerce.cart.CartFragment
 import com.bs.ecommerce.home.FeaturedProductAdapter
+import com.bs.ecommerce.more.ProductReviewFragment
 import com.bs.ecommerce.networking.Api
 import com.bs.ecommerce.networking.common.KeyValueFormData
 import com.bs.ecommerce.product.adapter.AssociatedProductAdapter
@@ -35,6 +36,7 @@ import kotlinx.android.synthetic.main.product_name_layout.view.*
 import kotlinx.android.synthetic.main.product_name_layout.view.tvProductName
 import kotlinx.android.synthetic.main.product_price_layout.view.*
 import kotlinx.android.synthetic.main.product_quantity.view.*
+import kotlinx.android.synthetic.main.product_rating_layout.view.*
 import kotlinx.android.synthetic.main.rental_product_layout.view.*
 import kotlinx.android.synthetic.main.slider.view.*
 import java.util.*
@@ -141,6 +143,22 @@ class ProductDetailFragment : BaseFragment(), View.OnClickListener {
                             R.color.fragment_background
                         )
                     }
+
+                    // product rating & review section
+                    productRatingLayout.ratingBar.rating =
+                        (product.productReviewOverview?.ratingSum ?: 0).toFloat()
+
+                    productRatingLayout.tvReviewCount.text = getString(
+                        R.string.n_reviews, product.productReviewOverview?.totalReviews ?: 0
+                    )
+
+                    productRatingLayout.setOnClickListener {
+
+                        if(product.productReviewOverview?.allowCustomerReviews == true) {
+                            replaceFragmentSafely(ProductReviewFragment.newInstance(product.id!!))
+                        }
+                    }
+
 
                     // product price
                     productPriceLayout.tvOriginalPrice.apply {

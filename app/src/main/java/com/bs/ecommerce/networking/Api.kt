@@ -201,6 +201,14 @@ interface Api {
     @GET("topic/details/{systemName}")
     fun getTopic(@Path("systemName") systemName: String) : Call<TopicResponse>
 
+    // Review
+
+    @GET("product/productreviews")
+    fun getMyReviews(@Query("pageNumber") page: Int) : Call<MyReviewsResponse>
+
+    @GET("product/productreviews/{productId}")
+    fun getProductReview(@Path("productId") id: Long) : Call<ProductReviewResponse>
+
 /*    @POST("setcurrency/{id}")
     fun setCurrency(@Path("id") id: Long): Call<LanguageResponse>
 

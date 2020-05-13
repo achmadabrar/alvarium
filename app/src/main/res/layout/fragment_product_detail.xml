@@ -53,6 +53,13 @@
                     tools:visibility="visible" />
 
                 <include
+                    android:id="@+id/productRatingLayout"
+                    layout="@layout/product_rating_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp" />
+
+                <include
                     android:id="@+id/hd11"
                     layout="@layout/horizontal_divider" />
 

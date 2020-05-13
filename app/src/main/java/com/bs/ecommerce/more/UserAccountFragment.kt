@@ -12,7 +12,6 @@ import com.bs.ecommerce.base.BaseViewModel
 import com.bs.ecommerce.cart.CartFragment
 import com.bs.ecommerce.utils.PrefSingleton
 import com.bs.ecommerce.utils.replaceFragmentSafely
-import com.bs.ecommerce.utils.toast
 import kotlinx.android.synthetic.main.fragment_user_account.*
 import kotlinx.android.synthetic.main.item_user_account.view.*
 
@@ -51,7 +50,7 @@ class UserAccountFragment: BaseFragment() {
 
         addressLayout.apply {
             ivOptionIcon.setImageResource(R.drawable.app_bottom_icon_home)
-            tvOptionName.text = getString(R.string.my_addresses)
+            tvOptionName.text = getString(R.string.title_my_addresses)
             setOnClickListener { clickAction(CustomerAddressFragment()) }
         }
 
@@ -75,8 +74,8 @@ class UserAccountFragment: BaseFragment() {
 
         reviewLayout.apply {
             ivOptionIcon.setImageResource(R.drawable.app_icon_cart)
-            tvOptionName.text = getString(R.string.my_reviews)
-            setOnClickListener { toast("No Implemented") }
+            tvOptionName.text = getString(R.string.title_my_reviews)
+            setOnClickListener { clickAction(CustomerReviewFragment()) }
         }
 
         loginLayout.apply {

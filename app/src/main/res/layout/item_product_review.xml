@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/rounded_background_slight"
+    android:backgroundTint="?attr/primaryListItemBg">
+
+    <TextView
+        android:id="@+id/tvReviewTitle"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="3dp"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:textColor="?attr/primaryTextColor"
+        android:textSize="@dimen/tv_text_size_semi_large"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="@string/placeholder" />
+
+    <TextView
+        android:id="@+id/tvReviewText"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="3dp"
+        android:maxLines="5"
+        android:textColor="?attr/primaryTextColor"
+        android:textSize="@dimen/tv_text_size_regular"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvReviewTitle"
+        tools:text="@string/placeholder_long" />
+
+    <!--  inactive star color:  android:progressBackgroundTint="@color/gray" -->
+    <RatingBar
+        android:id="@+id/ratingBar"
+        style="?android:attr/ratingBarStyleSmall"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="3dp"
+        android:layout_marginTop="5dp"
+        android:numStars="5"
+        android:progressTint="?attr/ratingStarColor"
+        android:rating="3"
+        android:stepSize="1"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvReviewText" />
+
+    <TextView
+        android:id="@+id/tvDate"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="3dp"
+        android:layout_toEndOf="@id/ratingBar"
+        android:maxLines="1"
+        android:paddingTop="2dp"
+        android:textColor="?attr/secondaryTextColor"
+        android:textSize="@dimen/tv_text_size_tiny"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/ratingBar"
+        tools:text="Date" />
+
+    <TextView
+        android:id="@+id/tvReviewBy"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="3dp"
+        android:layout_marginEnd="10dp"
+        android:layout_toEndOf="@id/ratingBar"
+        android:maxLines="1"
+        android:paddingTop="2dp"
+        android:textColor="?attr/secondaryTextColor"
+        android:textSize="@dimen/tv_text_size_tiny"
+        app:layout_constraintEnd_toStartOf="@id/tvDate"
+        app:layout_constraintTop_toBottomOf="@id/ratingBar"
+        tools:text="By" />
+
+    <TextView
+        android:id="@+id/tvHelp"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="3dp"
+        android:layout_marginEnd="10dp"
+        android:layout_toEndOf="@id/ratingBar"
+        android:textColor="?attr/secondaryTextColor"
+        android:layout_marginTop="10dp"
+        android:textSize="@dimen/tv_text_size_small"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvReviewBy"
+        android:text="@string/was_this_review_helpful"
+        tools:visibility="visible" />
+
+    <TextView
+        android:id="@+id/tvYes"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="15dp"
+        android:layout_toEndOf="@id/ratingBar"
+        android:textColor="@color/red"
+        android:textSize="@dimen/tv_text_size_small"
+        app:layout_constraintStart_toEndOf="@id/tvHelp"
+        app:layout_constraintBaseline_toBaselineOf="@id/tvHelp"
+        android:text="@string/yes"
+        tools:visibility="visible" />
+
+    <TextView
+        android:id="@+id/tvNo"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="15dp"
+        android:layout_toEndOf="@id/ratingBar"
+        android:textColor="@color/red"
+        android:textSize="@dimen/tv_text_size_small"
+        app:layout_constraintStart_toEndOf="@id/tvYes"
+        app:layout_constraintBaseline_toBaselineOf="@id/tvHelp"
+        android:text="@string/no"
+        tools:visibility="visible" />
+
+    <TextView
+        android:id="@+id/tvHelpfulnessCount"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_toEndOf="@id/ratingBar"
+        android:textColor="?attr/secondaryTextColor"
+        android:textSize="@dimen/tv_text_size_tiny"
+        app:layout_constraintStart_toEndOf="@id/tvNo"
+        app:layout_constraintBaseline_toBaselineOf="@id/tvHelp"
+        tools:text="(1/0)"
+        tools:visibility="visible" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

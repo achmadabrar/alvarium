@@ -35,6 +35,9 @@ class FeaturedProductAdapter(
             listener.onClick(v, position, productsList[position])
         }
 
+        holder.itemView.ratingBar.rating =
+            (productsList[position].reviewOverviewModel?.ratingSum ?: 0).toFloat()
+
         holder.itemView.ivAddToFav.setOnClickListener { v ->
             listener.onClick(v, position, productsList[position])
         }
