@@ -24,11 +24,21 @@ import kotlinx.android.synthetic.main.fragment_billing_address.*
 abstract class BaseCheckoutNavigationFragment : BaseFragment()
 {
 
+    protected lateinit var model: CheckoutModel
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?)
     {
         super.onViewCreated(view, savedInstanceState)
 
+        model = CheckoutModelImpl(activity?.applicationContext!!)
+
+        viewModel  = ViewModelProvider(this).get(CheckoutAddressViewModel::class.java)
+
+        setLiveDataListeners()
+
         setAddressTabClickListener()
+
+        setLiveDataListeners()
 
 
     }
@@ -58,7 +68,10 @@ abstract class BaseCheckoutNavigationFragment : BaseFragment()
                             addressTabLayout?.getTabAt(Constants.SHIPPING_ADDRESS_TAB)?.select()
                         }
                         Constants.ShippingMethod -> replaceFragment(ShippingMethodFragment())
-                        Constants.PaymentMethod -> (parentFragment as CheckoutStepFragment).replaceFragment(PaymentMethodFragment())
+                        Constants.PaymentMethod -> {
+
+                            "sdsdsds".showLog(MyApplication.checkoutSaveResponse!!.data.paymentMethodModel.paymentMethods[0].paymentMethodSystemName)
+                        } //(parentFragment as CheckoutStepFragment).replaceFragment(PaymentMethodFragment())
                         Constants.PaymentInfo -> (parentFragment as CheckoutStepFragment).replaceFragment(ConfirmOrderFragment())
                     }
 

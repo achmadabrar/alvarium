@@ -40,8 +40,8 @@ abstract class BaseActivity : AppCompatActivity()
         super.onCreate(savedInstanceState)
 
         setTheme(R.style.Nop_Theme_Dark)
-        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
-//        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+        //AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
 
         setContentView(getLayoutId())
 
@@ -245,7 +245,7 @@ abstract class BaseActivity : AppCompatActivity()
 
 
 
-    private fun setLocale(recreate: Boolean)
+    fun setLocale(recreate: Boolean)
     {
         var preferredLanguage = prefObject.getPrefs(PrefSingleton.CURRENT_LANGUAGE)
         if (TextUtils.isEmpty(preferredLanguage)) {

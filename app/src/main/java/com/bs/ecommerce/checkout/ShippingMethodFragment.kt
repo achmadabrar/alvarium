@@ -23,8 +23,6 @@ import kotlinx.android.synthetic.main.fragment_shipping_method.*
 
 class ShippingMethodFragment : BaseCheckoutNavigationFragment() {
 
-
-    protected lateinit var model: CheckoutModel
     private lateinit var methodSelectionProcess: MethodSelectionProcess
     private var shippingMethodValue = ""
 
@@ -40,9 +38,6 @@ class ShippingMethodFragment : BaseCheckoutNavigationFragment() {
     {
         super.onViewCreated(view, savedInstanceState)
 
-        model = CheckoutModelImpl(activity?.applicationContext!!)
-
-        viewModel  = ViewModelProvider(this).get(CheckoutAddressViewModel::class.java)
 
         val shippingMethods = MyApplication.checkoutSaveResponse!!.data.shippingMethodModel.shippingMethods
 

@@ -10,18 +10,15 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.bs.ecommerce.R
 import com.bs.ecommerce.auth.customerInfo.CustomerInfoFragment
-import com.bs.ecommerce.auth.login.LoginFragment
 import com.bs.ecommerce.base.BaseActivity
 import com.bs.ecommerce.cart.CartFragment
 import com.bs.ecommerce.home.category.CategoryFragment
 import com.bs.ecommerce.home.homepage.HomeFragment
-import com.bs.ecommerce.main.model.MainModel
 import com.bs.ecommerce.main.model.MainModelImpl
 import com.bs.ecommerce.more.OptionsFragment
 import com.bs.ecommerce.more.UserAccountFragment
 import com.bs.ecommerce.networking.NetworkUtil
 import com.bs.ecommerce.product.SearchFragment
-import com.bs.ecommerce.utils.PrefSingleton
 import com.bs.ecommerce.utils.createIfNotInBackStack
 import com.bs.ecommerce.utils.toast
 import com.google.android.material.bottomnavigation.BottomNavigationView
@@ -31,7 +28,7 @@ import kotlinx.android.synthetic.main.activity_main.*
 class MainActivity : BaseActivity()
 {
 
-    private lateinit var mainModel: MainModel
+    private lateinit var mainModel: MainModelImpl
     private lateinit var mainViewModel: MainViewModel
 
     private var mBackPressed: Long = 0

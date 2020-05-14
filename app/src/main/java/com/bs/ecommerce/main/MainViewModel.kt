@@ -2,9 +2,6 @@ package com.bs.ecommerce.main
 
 import androidx.lifecycle.MutableLiveData
 import com.bs.ecommerce.base.BaseViewModel
-import com.bs.ecommerce.cart.model.CartModel
-import com.bs.ecommerce.cart.model.data.CartResponse
-import com.bs.ecommerce.cart.model.data.CartRootData
 import com.bs.ecommerce.common.RequestCompleteListener
 import com.bs.ecommerce.home.homepage.model.HomePageModel
 import com.bs.ecommerce.home.homepage.model.data.HomePageProductResponse
@@ -14,6 +11,7 @@ import com.bs.ecommerce.main.model.data.AppLandingData
 import com.bs.ecommerce.main.model.data.AppLandingSettingResponse
 import com.bs.ecommerce.main.model.data.Category
 import com.bs.ecommerce.main.model.data.CategoryTreeResponse
+import com.bs.ecommerce.networking.common.BaseResponse
 import com.bs.ecommerce.product.model.data.CategoryModel
 import com.bs.ecommerce.product.model.data.Manufacturer
 import com.bs.ecommerce.product.model.data.ProductSummary
@@ -142,6 +140,43 @@ class MainViewModel : BaseViewModel() {
 
             override fun onRequestFailed(errorMessage: String) {
                 isLoadingLD.value = false
+            }
+        })
+    }
+
+
+    fun changeLanguage(languageId : Int, model: MainModel) {
+
+        isLoadingLD.value = true
+
+        model.changeLanguage(languageId.toLong(), object : RequestCompleteListener<BaseResponse> {
+            override fun onRequestSuccess(data: BaseResponse) {
+                isLoadingLD.value = false
+
+                toastMessageLD.value = data.message
+            }
+
+            override fun onRequestFailed(errorMessage: String) {
+                isLoadingLD.value = false
+                toastMessageLD.value = errorMessage
+            }
+        })
+    }
+
+    fun changeCurrency(currencyId : Int, model: MainModel) {
+
+        isLoadingLD.value = true
+
+        model.changeCurrency(currencyId.toLong(), object : RequestCompleteListener<BaseResponse> {
+            override fun onRequestSuccess(data: BaseResponse) {
+                isLoadingLD.value = false
+
+                toastMessageLD.value = data.message
+            }
+
+            override fun onRequestFailed(errorMessage: String) {
+                isLoadingLD.value = false
+                toastMessageLD.value = errorMessage
             }
         })
     }

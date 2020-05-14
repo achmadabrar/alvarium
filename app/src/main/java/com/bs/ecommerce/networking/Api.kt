@@ -26,6 +26,13 @@ import retrofit2.http.*
 
 interface Api {
 
+    @GET("common/setCurrency/{id}")
+    fun setCurrency(@Path("id") id: Long): Call<BaseResponse>
+
+    @GET("common/SetLanguage/{id}")
+    fun setLanguage(@Path("id") id: Long): Call<BaseResponse>
+
+
     @GET("home/categorytree")
     fun getHomeCategoryTree(): Call<CategoryTreeResponse>
 

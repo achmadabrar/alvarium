@@ -12,7 +12,6 @@ import com.bs.ecommerce.base.BaseFragment
 import com.bs.ecommerce.main.model.MainModel
 import com.bs.ecommerce.main.model.MainModelImpl
 import com.bs.ecommerce.main.model.data.Category
-import com.bs.ecommerce.utils.toast
 import kotlinx.android.synthetic.main.category_left.*
 import kotlinx.android.synthetic.main.category_left.categoryRootLayout
 
@@ -58,13 +57,13 @@ class CategoryFragment : BaseFragment()
 
     private fun setLiveDataListeners() {
 
-        mainViewModel.navDrawerCategoriesLD.observe(activity!!, Observer { categoryList ->
+        mainViewModel.navDrawerCategoriesLD.observe(viewLifecycleOwner, Observer { categoryList ->
 
             showList(categoryList)
         })
 
 
-        mainViewModel.isLoadingLD.observe(activity!!, Observer { isShowLoader ->
+        mainViewModel.isLoadingLD.observe(viewLifecycleOwner, Observer { isShowLoader ->
 
             if (isShowLoader)
                 showLoading()

@@ -30,11 +30,19 @@ data class PaymentInfoModel(
 
 data class PaymentMethodModel(
     @SerializedName("DisplayRewardPoints") var displayRewardPoints: Boolean = false,
-    @SerializedName("PaymentMethods") var paymentMethods: List<Any> = listOf(),
+    @SerializedName("PaymentMethods") var paymentMethods: MutableList<PaymentMethod> = mutableListOf(),
     @SerializedName("RewardPointsAmount") var rewardPointsAmount: Any = Any(),
     @SerializedName("RewardPointsBalance") var rewardPointsBalance: Int = 0,
     @SerializedName("RewardPointsEnoughToPayForOrder") var rewardPointsEnoughToPayForOrder: Boolean = false,
     @SerializedName("UseRewardPoints") var useRewardPoints: Boolean = false
+)
+data class PaymentMethod(
+    @SerializedName("Description") var description: String = "",
+    @SerializedName("Fee") var fee: Any = Any(),
+    @SerializedName("LogoUrl") var logoUrl: String = "",
+    @SerializedName("Name") var name: String = "",
+    @SerializedName("PaymentMethodSystemName") var paymentMethodSystemName: String = "",
+    @SerializedName("Selected") var selected: Boolean = false
 )
 
 data class ShippingAddressModel(
