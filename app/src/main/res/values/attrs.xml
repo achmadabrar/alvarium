@@ -11,8 +11,9 @@
     <attr name="fragmentBackGroundColor" format="reference"/>
     <attr name="primaryListItemBg" format="reference"/>
 
-    <attr name="bottomNavBg"/>
-    <attr name="horizontalDividerBg"/>
+    <attr name="bottomNavBg" format="reference"/>
+    <attr name="horizontalDividerBg" format="reference"/>
+    <attr name="ratingStarColor" format="reference"/>
 
     <attr name="primaryIconTint" format="reference"/>
     <attr name="secondaryIconTint" format="reference"/>

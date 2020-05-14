@@ -14,7 +14,7 @@ import com.bs.ecommerce.auth.register.data.GetRegisterData
 import com.bs.ecommerce.auth.register.data.GetRegistrationResponse
 import com.bs.ecommerce.base.BaseFragment
 import com.bs.ecommerce.base.BaseViewModel
-import com.bs.ecommerce.main.model.AuthModel
+import com.bs.ecommerce.auth.AuthModel
 import com.bs.ecommerce.networking.Api
 import com.bs.ecommerce.networking.common.KeyValueFormData
 import com.bs.ecommerce.utils.*

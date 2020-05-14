@@ -1,20 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/customerReviewRootLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/addressRootLayout"
-    android:animateLayoutChanges="true"
     android:background="?attr/fragmentBackGroundColor">
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rvAddress"
+        android:id="@+id/rvReview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@id/btnAddNew"
-        android:nestedScrollingEnabled="false"
-        tools:itemCount="4"
-        tools:listitem="@layout/item_address" />
+        tools:listitem="@layout/item_customer_review"
+        tools:itemCount="3" />
 
     <TextView
         android:id="@+id/tvNoData"
@@ -26,15 +23,5 @@
         tools:visibility="visible"
         android:visibility="gone"
         android:text="@string/no_data_found"/>
-
-    <Button
-        android:id="@+id/btnAddNew"
-        style="@style/RectangularButtonRegular"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:background="@drawable/rect_background_ripple"
-        android:text="@string/add_new"
-        android:visibility="visible" />
 
 </RelativeLayout>

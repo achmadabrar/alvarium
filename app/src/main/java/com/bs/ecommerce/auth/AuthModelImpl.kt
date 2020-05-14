@@ -1,11 +1,10 @@
 package com.bs.ecommerce.auth
 
-import com.bs.ecommerce.auth.login.data.LoginPostData
-import com.bs.ecommerce.auth.login.data.LoginResponse
+import com.bs.ecommerce.auth.login.data.*
 import com.bs.ecommerce.auth.register.data.GetRegistrationResponse
 import com.bs.ecommerce.common.RequestCompleteListener
-import com.bs.ecommerce.main.model.AuthModel
 import com.bs.ecommerce.networking.RetroClient
+import com.bs.ecommerce.utils.TextUtils
 import com.google.gson.GsonBuilder
 import retrofit2.Call
 import retrofit2.Callback
@@ -111,6 +110,54 @@ class AuthModelImpl: AuthModel
             override fun onFailure(call: Call<GetRegistrationResponse>, t: Throwable) {
                 callback.onRequestFailed(t.localizedMessage ?: "Unknown")
             }
+        })
+    }
+
+    override fun forgotPassword(
+        userData: ForgotPasswordData,
+        callback: RequestCompleteListener<ForgotPasswordResponse>
+    ) {
+        val reqBody = ForgotPasswordResponse(userData)
+
+        RetroClient.api.forgetPassword(reqBody).enqueue(object : Callback<ForgotPasswordResponse> {
+
+            override fun onFailure(call: Call<ForgotPasswordResponse>, t: Throwable) {
+                callback.onRequestFailed(t.localizedMessage ?: "Unknown")
+            }
+
+            override fun onResponse(call: Call<ForgotPasswordResponse>, response: Response<ForgotPasswordResponse>) {
+
+                if(response.body()!=null && response.code() == 200) {
+                    callback.onRequestSuccess(response.body() as ForgotPasswordResponse)
+                } else {
+                    callback.onRequestFailed(TextUtils.getErrorMessage(response))
+                }
+            }
+
+        })
+    }
+
+    override fun changePassword(
+        userData: ChangePasswordData,
+        callback: RequestCompleteListener<ChangePasswordResponse>
+    ) {
+        val reqBody = ChangePasswordResponse(userData)
+
+        RetroClient.api.changePassword(reqBody).enqueue(object : Callback<ChangePasswordResponse> {
+
+            override fun onFailure(call: Call<ChangePasswordResponse>, t: Throwable) {
+                callback.onRequestFailed(t.localizedMessage ?: "Unknown")
+            }
+
+            override fun onResponse(call: Call<ChangePasswordResponse>, response: Response<ChangePasswordResponse>) {
+
+                if(response.body()!=null && response.code() == 200) {
+                    callback.onRequestSuccess(response.body() as ChangePasswordResponse)
+                } else {
+                    callback.onRequestFailed(TextUtils.getErrorMessage(response))
+                }
+            }
+
         })
     }
 
