@@ -1,6 +1,8 @@
 package com.bs.ecommerce.utils
 
 import android.widget.EditText
+import android.widget.Toast
+import com.bs.ecommerce.R
 
 /**
  * Created by bs206 on 3/15/18.
@@ -9,19 +11,17 @@ class EditTextUtils {
 
     fun isValidString(et: EditText): Boolean
     {
-        val string = et.text.toString()
+        val string = et.text.toString().trim()
 
-        if (string == null || string.isEmpty())
-            return false
-         else return true
+        return string.isNotEmpty()
     }
 
     fun getString(et: EditText): String
     {
-        val string = et.text.toString()
-        if (string == null || string.length <= 0)
-            return ""
-        else return string
+        val string = et.text.toString().trim()
+        return if (string.isEmpty())
+            ""
+        else string
     }
 
     fun isValidInteger(et: EditText): Boolean
@@ -48,5 +48,22 @@ class EditTextUtils {
          if (isValidInteger(et))
             return Integer.parseInt(getString(et))
          else return 0
+    }
+
+    fun showToastIfEmpty(et: EditText): String? {
+        val userInput = et.text.toString().trim()
+
+        return if (userInput.isEmpty()) {
+
+            Toast.makeText(
+                et.context,
+                "${et.hint} ${et.context.getString(R.string.reg_hint_is_required)}",
+                Toast.LENGTH_SHORT
+            ).show()
+
+            null
+        } else {
+            userInput
+        }
     }
 }

@@ -113,6 +113,28 @@ class AuthModelImpl: AuthModel
         })
     }
 
+    override fun postCustomerInfoModel(
+        postData: GetRegistrationResponse,
+        callback: RequestCompleteListener<GetRegistrationResponse>
+    ) {
+        RetroClient.api.saveCustomerInfo(postData).enqueue(object : Callback<GetRegistrationResponse> {
+
+            override fun onFailure(call: Call<GetRegistrationResponse>, t: Throwable) {
+                callback.onRequestFailed(t.localizedMessage ?: "Unknown")
+            }
+
+            override fun onResponse(call: Call<GetRegistrationResponse>, response: Response<GetRegistrationResponse>) {
+
+                if(response.body()!=null && response.code() == 200) {
+                    callback.onRequestSuccess(response.body() as GetRegistrationResponse)
+                } else {
+                    callback.onRequestFailed(TextUtils.getErrorMessage(response))
+                }
+            }
+
+        })
+    }
+
     override fun forgotPassword(
         userData: ForgotPasswordData,
         callback: RequestCompleteListener<ForgotPasswordResponse>
@@ -137,22 +159,41 @@ class AuthModelImpl: AuthModel
         })
     }
 
-    override fun changePassword(
-        userData: ChangePasswordData,
-        callback: RequestCompleteListener<ChangePasswordResponse>
-    ) {
-        val reqBody = ChangePasswordResponse(userData)
+    override fun getChangePassword(callback: RequestCompleteListener<ChangePasswordModel>) {
 
-        RetroClient.api.changePassword(reqBody).enqueue(object : Callback<ChangePasswordResponse> {
+        RetroClient.api.getChangePasswordModel().enqueue(object : Callback<ChangePasswordModel> {
 
-            override fun onFailure(call: Call<ChangePasswordResponse>, t: Throwable) {
+            override fun onFailure(call: Call<ChangePasswordModel>, t: Throwable) {
                 callback.onRequestFailed(t.localizedMessage ?: "Unknown")
             }
 
-            override fun onResponse(call: Call<ChangePasswordResponse>, response: Response<ChangePasswordResponse>) {
+            override fun onResponse(call: Call<ChangePasswordModel>, response: Response<ChangePasswordModel>) {
 
                 if(response.body()!=null && response.code() == 200) {
-                    callback.onRequestSuccess(response.body() as ChangePasswordResponse)
+                    callback.onRequestSuccess(response.body() as ChangePasswordModel)
+                } else {
+                    callback.onRequestFailed(TextUtils.getErrorMessage(response))
+                }
+            }
+
+        })
+    }
+
+    override fun postChangePassword(
+        userData: ChangePasswordModel,
+        callback: RequestCompleteListener<ChangePasswordModel>
+    ) {
+
+        RetroClient.api.changePassword(userData).enqueue(object : Callback<ChangePasswordModel> {
+
+            override fun onFailure(call: Call<ChangePasswordModel>, t: Throwable) {
+                callback.onRequestFailed(t.localizedMessage ?: "Unknown")
+            }
+
+            override fun onResponse(call: Call<ChangePasswordModel>, response: Response<ChangePasswordModel>) {
+
+                if(response.body()!=null && response.code() == 200) {
+                    callback.onRequestSuccess(response.body() as ChangePasswordModel)
                 } else {
                     callback.onRequestFailed(TextUtils.getErrorMessage(response))
                 }

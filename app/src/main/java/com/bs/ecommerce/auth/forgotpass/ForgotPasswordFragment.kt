@@ -70,7 +70,7 @@ class ForgotPasswordFragment : BaseFragment() {
 
             actionSuccessLD.observe(viewLifecycleOwner, Observer { actionSuccess ->
                 if (actionSuccess)
-                    etEmail.text.clear()
+                    etEmail?.text?.clear()
             })
         }
     }

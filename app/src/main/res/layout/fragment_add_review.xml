@@ -43,12 +43,22 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/etReviewText"
-        android:layout_marginStart="@dimen/fragment_margin"
+        android:layout_marginStart="10dp"
         android:layout_marginTop="20dp"
-        android:layout_marginEnd="@dimen/fragment_margin"
+        android:layout_marginBottom="5dp"
+        android:layout_marginEnd="10dp"
         android:text="@string/your_rating"
         android:textColor="?attr/primaryTextColor"
         android:textSize="@dimen/tv_text_size_semi_large" />
+
+    <View
+        android:id="@+id/horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_below="@id/tvRating"
+        android:background="?attr/horizontalDividerBg" />
 
     <RatingBar
         android:id="@+id/ratingBar"

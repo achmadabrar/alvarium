@@ -12,6 +12,13 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+        <View
+            android:id="@+id/focusStealer"
+            android:layout_width="0px"
+            android:layout_height="0px"
+            android:focusable="true"
+            android:focusableInTouchMode="true" />
+
 
         <androidx.core.widget.NestedScrollView
             android:id="@+id/rootScrollView"
@@ -42,7 +49,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="@string/reg_title_your_personal_details"
-                        android:textColor="@color/register_title_text"
+                        android:textColor="?attr/primaryTextColor"
                         android:layout_marginBottom="5dp"
                         android:textSize="@dimen/registration_title_text_size"
                         android:textStyle="bold" />
@@ -87,9 +94,9 @@
                         android:layout_marginTop="15dp"
                         android:hint="@string/reg_hint_dd_mm_yy"
                         android:imeOptions="actionNext"
-                        android:inputType="date"
-                        android:editable="false"
-                        android:focusable="false"/>
+                        android:inputType="none"
+                        android:focusable="false"
+                        tools:ignore="TextFields" />
 
                     <EditText
                         android:id="@+id/emailEditText"
@@ -195,7 +202,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginEnd="15dp"
                             android:text="@string/reg_gender"
-                            android:textColor="@color/register_title_text"
+                            android:textColor="?attr/primaryTextColor"
                             android:textSize="18sp"
                             android:textStyle="bold" />
 
@@ -207,7 +214,7 @@
                             android:button="@drawable/custom_radio_button"
                             android:checked="true"
                             android:text="@string/male"
-                            android:textColor="@color/radiobutton_text"
+                            android:textColor="?attr/primaryTextColor"
                             android:textSize="18sp" />
 
                         <RadioButton
@@ -216,7 +223,7 @@
                             android:layout_height="wrap_content"
                             android:button="@drawable/custom_radio_button"
                             android:text="@string/female"
-                            android:textColor="@color/radiobutton_text"
+                            android:textColor="?attr/primaryTextColor"
                             android:textSize="18sp" />
                     </RadioGroup>
 
@@ -241,7 +248,7 @@
 
 
                     <LinearLayout
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="vertical"
                         android:id="@+id/newsletterLayout">
@@ -252,7 +259,7 @@
                             android:layout_marginTop="20dp"
                             android:text="@string/reg_title_options"
                             android:layout_marginBottom="5dp"
-                            android:textColor="@color/register_title_text"
+                            android:textColor="?attr/primaryTextColor"
                             android:textSize="@dimen/registration_title_text_size"
                             android:textStyle="bold" />
 
@@ -267,7 +274,7 @@
                             android:button="@drawable/custom_radio_button"
                             android:checked="true"
                             android:text="@string/newsletter"
-                            android:textColor="@color/radiobutton_text"
+                            android:textColor="?attr/primaryTextColor"
                             android:textSize="18sp" />
 
                     </LinearLayout>
@@ -288,59 +295,89 @@
                             android:button="@drawable/custom_radio_button"
                             android:checked="true"
                             android:text="@string/newsletter"
-                            android:textColor="@color/radiobutton_text"
+                            android:textColor="?attr/primaryTextColor"
                             android:textSize="18sp" />
 
                     </LinearLayout>
 
 
-                    <TextView
+                    <LinearLayout
+                        android:id="@+id/passwordLayout"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="20dp"
+                            android:text="@string/reg_title_your_password"
+                            android:textColor="?attr/primaryTextColor"
+                            android:layout_marginBottom="5dp"
+                            android:textSize="@dimen/registration_title_text_size"
+                            android:textStyle="bold" />
+
+                        <include layout="@layout/horizontal_divider" />
+
+                        <com.google.android.material.textfield.TextInputLayout
+                            android:id="@+id/register_password_layout"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="20dp"
+                            app:hintEnabled="false"
+                            app:passwordToggleEnabled="false">
+
+                            <com.google.android.material.textfield.TextInputEditText
+                                android:id="@+id/enterPasswordEditText"
+                                style="@style/RoundedEditText"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:hint="@string/reg_hint_password"
+                                android:imeOptions="actionNext"
+                                android:inputType="textPassword" />
+                        </com.google.android.material.textfield.TextInputLayout>
+
+                        <com.google.android.material.textfield.TextInputLayout
+                            android:id="@+id/reg_confirm_password"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="15dp"
+                            app:hintEnabled="false"
+                            app:passwordToggleEnabled="false">
+
+                            <com.google.android.material.textfield.TextInputEditText
+                                android:id="@+id/confirmPasswordEditText"
+                                style="@style/RoundedEditText"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:hint="@string/reg_hint_confirm_password"
+                                android:imeOptions="actionDone"
+                                android:inputType="textPassword" />
+                        </com.google.android.material.textfield.TextInputLayout>
+                    </LinearLayout>
+
+
+                    <include
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="20dp"
-                        android:text="@string/reg_title_your_password"
-                        android:textColor="@color/register_title_text"
+                        layout="@layout/horizontal_divider" />
+
+                    <View
+                        style="@style/horizontalLineStyle"
+                        android:layout_marginTop="5dp"/>
+
+                    <TextView
+                        android:id="@+id/tvChangePassword"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="end"
+                        android:layout_marginTop="10dp"
                         android:layout_marginBottom="5dp"
+                        android:text="@string/change_password_underlined"
+                        android:textColor="@color/blue"
                         android:textSize="@dimen/registration_title_text_size"
                         android:textStyle="bold" />
-
-                    <include layout="@layout/horizontal_divider" />
-
-                    <com.google.android.material.textfield.TextInputLayout
-                        android:id="@+id/register_password_layout"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="20dp"
-                        app:hintEnabled="false"
-                        app:passwordToggleEnabled="false">
-
-                        <com.google.android.material.textfield.TextInputEditText
-                            android:id="@+id/enterPasswordEditText"
-                            style="@style/RoundedEditText"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:hint="@string/reg_hint_password"
-                            android:imeOptions="actionNext"
-                            android:inputType="textPassword" />
-                    </com.google.android.material.textfield.TextInputLayout>
-
-                    <com.google.android.material.textfield.TextInputLayout
-                        android:id="@+id/reg_confirm_password"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="15dp"
-                        app:hintEnabled="false"
-                        app:passwordToggleEnabled="false">
-
-                        <com.google.android.material.textfield.TextInputEditText
-                            android:id="@+id/confirmPasswordEditText"
-                            style="@style/RoundedEditText"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:hint="@string/reg_hint_confirm_password"
-                            android:imeOptions="actionDone"
-                            android:inputType="textPassword" />
-                    </com.google.android.material.textfield.TextInputLayout>
 
                 </LinearLayout>
 

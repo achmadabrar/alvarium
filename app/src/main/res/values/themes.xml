@@ -21,6 +21,10 @@
         <item name="secondaryTextColor">@color/grayOrDark</item>
         <item name="primaryIconTint">@color/whiteOrBlack</item>
         <item name="secondaryIconTint">@color/blue</item>
+
+        <item name="editTextStyle1Drawable">@color/etStyle1_drawable</item>
+        <item name="editTextStyle1Hint">@color/etStyle1_hint</item>
+        <item name="editTextStyle1BG">@color/etStyle1_background</item>
     </style>
 
     <!--<style name="Nop.Theme.Dark" parent="Theme.AppCompat.Light.NoActionBar">

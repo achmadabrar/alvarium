@@ -11,6 +11,7 @@
     <string name="title_category">Categories</string>
     <string name="title_shopping_cart">Shopping Cart</string>
     <string name="title_forgot_password">Forgot Password</string>
+    <string name="title_change_password">Change Password</string>
     <string name="title_login">Login</string>
     <string name="title_register">Register</string>
     <string name="title_scan_barcode">Scan Barcode</string>
@@ -64,7 +65,7 @@
     <string name="reg_btn_register">Register</string>
     <string name="reg_hint_first_name">First name:</string>
     <string name="reg_hint_last_name">Last name:</string>
-    <string name="reg_hint_dd_mm_yy">DD/MM/YY</string>
+    <string name="reg_hint_dd_mm_yy">Date of Birth</string>
     <string name="reg_hint_email">Email</string>
     <string name="reg_hint_phone">Phone</string>
     <string name="reg_gender">Gender:</string>
@@ -243,5 +244,13 @@
     <string name="review_title">Review Title</string>
     <string name="review_text">Review Text</string>
     <string name="your_rating"> Your Rating</string>
+
+    <!-- Change Password  -->
+    <string name="confirm_new_password">Confirm New Password</string>
+    <string name="new_password">New Password</string>
+    <string name="current_password">Current Password</string>
+    <string name="password_mismatch">New passwords mismatched</string>
+    <string name="change_password_underlined"><u>Change Password</u></string>
+    <string name="customer_info_updated">Successfully Updated</string>
 
 </resources>

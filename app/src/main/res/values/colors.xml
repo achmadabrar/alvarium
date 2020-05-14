@@ -15,6 +15,7 @@
 
     <!-- EditText Style1 -->
     <color name="etStyle1_hint">#A5A5A5</color>
+    <color name="etStyle1_drawable">#A5A5A5</color>
     <color name="etStyle1_background">#F2F2F2</color>
 
     <!-- Spinner -->

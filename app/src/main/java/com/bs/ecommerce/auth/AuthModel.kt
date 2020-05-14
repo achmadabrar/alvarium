@@ -2,7 +2,6 @@ package com.bs.ecommerce.auth
 
 import com.bs.ecommerce.auth.login.data.*
 import com.bs.ecommerce.auth.register.data.GetRegistrationResponse
-import com.bs.ecommerce.auth.register.data.GetRegisterData
 import com.bs.ecommerce.common.RequestCompleteListener
 
 interface AuthModel
@@ -15,13 +14,22 @@ interface AuthModel
 
     fun getCustomerInfoModel(callback: RequestCompleteListener<GetRegistrationResponse>)
 
+    fun postCustomerInfoModel(
+        postData: GetRegistrationResponse,
+        callback: RequestCompleteListener<GetRegistrationResponse>
+    )
+
     fun forgotPassword(
         userData: ForgotPasswordData,
         callback: RequestCompleteListener<ForgotPasswordResponse>
     )
 
-    fun changePassword(
-        userData: ChangePasswordData,
-        callback: RequestCompleteListener<ChangePasswordResponse>
+    fun getChangePassword(
+        callback: RequestCompleteListener<ChangePasswordModel>
+    )
+
+    fun postChangePassword(
+        userData: ChangePasswordModel,
+        callback: RequestCompleteListener<ChangePasswordModel>
     )
 }
