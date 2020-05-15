@@ -17,7 +17,6 @@ import com.bs.ecommerce.cart.CartFragment
 import com.bs.ecommerce.main.model.data.AppLandingData
 import com.bs.ecommerce.networking.Constants
 import com.bs.ecommerce.utils.*
-import io.github.inflationx.viewpump.ViewPumpContextWrapper
 import java.util.*
 
 
@@ -40,8 +39,11 @@ abstract class BaseActivity : AppCompatActivity()
         super.onCreate(savedInstanceState)
 
         setTheme(R.style.Nop_Theme_Dark)
-        //AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
-        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+
+        if (PrefSingleton.getPrefsBoolValue(PrefSingleton.IS_DARK_THEME))
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+        else
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
 
         setContentView(getLayoutId())
 

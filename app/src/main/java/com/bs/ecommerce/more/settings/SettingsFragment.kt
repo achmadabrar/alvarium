@@ -1,7 +1,6 @@
 package com.bs.ecommerce.more.settings
 
 import android.os.Bundle
-import android.os.Handler
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
@@ -16,7 +15,7 @@ import com.bs.ecommerce.main.model.data.LanguageNavSelector
 import com.bs.ecommerce.more.viewmodel.BaseUrlChangeFragment
 import com.bs.ecommerce.utils.*
 import kotlinx.android.synthetic.main.fragment_settings.*
-import java.util.ArrayList
+import java.util.*
 
 class SettingsFragment: BaseUrlChangeFragment() {
 
@@ -51,6 +50,7 @@ class SettingsFragment: BaseUrlChangeFragment() {
 
         textChangeListener()
 
+        enableThemeSwitchOption()
 
     }
 
@@ -248,6 +248,21 @@ class SettingsFragment: BaseUrlChangeFragment() {
             (activity as BaseActivity).setLocale(true)
         }
 
+    }
+
+    private fun enableThemeSwitchOption() {
+        themeSwitchCardView.visibility = View.VISIBLE
+
+        switchTheme.isChecked = PrefSingleton.getPrefsBoolValue(PrefSingleton.IS_DARK_THEME)
+
+        switchTheme.setOnCheckedChangeListener { _, isChecked ->
+            toast("Current theme: ".plus(if(isChecked) "Dark" else "Light"))
+
+            PrefSingleton.setPrefs(PrefSingleton.IS_DARK_THEME, isChecked)
+
+            // Switch Theme
+            requireActivity().recreate()
+        }
     }
 
 }

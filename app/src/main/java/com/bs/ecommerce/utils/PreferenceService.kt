@@ -68,6 +68,7 @@ object PrefSingleton
     var discuntShow = "discuntShow"
     var CURRENT_LANGUAGE = "current_language"
     var CURRENT_CURRENCY = "CURRENT_CURRENCY"
+    var IS_DARK_THEME = "IS_DARK_THEME"
     var CURRENT_LANGUAGE_ID = "current_language_id"
     var NST = "nst"
     var DeviceID = "DEVICE_UNIQUE_ID"
