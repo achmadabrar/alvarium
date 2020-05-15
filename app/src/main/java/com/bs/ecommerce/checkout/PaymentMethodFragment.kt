@@ -9,21 +9,13 @@ import android.widget.LinearLayout
 import android.widget.RelativeLayout
 import android.widget.TextView
 import androidx.appcompat.widget.AppCompatRadioButton
-import androidx.lifecycle.ViewModelProvider
 import com.bs.ecommerce.R
-import com.bs.ecommerce.base.BaseFragment
 import com.bs.ecommerce.base.BaseViewModel
-import com.bs.ecommerce.checkout.model.CheckoutModel
-import com.bs.ecommerce.checkout.model.CheckoutModelImpl
 import com.bs.ecommerce.checkout.model.data.PaymentMethod
-import com.bs.ecommerce.checkout.model.data.ShippingMethod
 import com.bs.ecommerce.customViews.CheckableLinearLayout
 import com.bs.ecommerce.customViews.MethodSelectionProcess
-import com.bs.ecommerce.main.MainViewModel
 import com.bs.ecommerce.utils.MyApplication
 import com.bs.ecommerce.utils.loadImg
-import com.bs.ecommerce.utils.showLog
-import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.fragment_shipping_method.*
 
 class PaymentMethodFragment : BaseCheckoutNavigationFragment() {
@@ -38,7 +30,7 @@ class PaymentMethodFragment : BaseCheckoutNavigationFragment() {
 
     override fun getRootLayout(): RelativeLayout = shippingMethodRootLayout
 
-    override fun createViewModel(): BaseViewModel = MainViewModel()
+    override fun createViewModel(): BaseViewModel = CheckoutAddressViewModel()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?)
     {

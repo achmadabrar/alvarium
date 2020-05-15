@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <com.google.android.material.bottomnavigation.BottomNavigationView
+    <com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx
         android:id="@+id/checkoutBottomNav"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -19,6 +19,20 @@
         app:menu="@menu/checkout_steps"
         app:itemTextAppearanceActive="@style/BottomNavigationViewTextStyle"
         app:itemTextAppearanceInactive="@style/BottomNavigationViewTextStyle"/>
+
+<!--    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/checkoutBottomNav"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_gravity="bottom"
+        app:itemBackground="@drawable/checkout_bottom_nav_bg"
+        app:itemIconTint="@drawable/checkout_bottom_nav_text"
+        app:itemTextColor="@drawable/checkout_bottom_nav_text"
+        app:labelVisibilityMode="labeled"
+        app:menu="@menu/checkout_steps"
+        app:itemTextAppearanceActive="@style/BottomNavigationViewTextStyle"
+        app:itemTextAppearanceInactive="@style/BottomNavigationViewTextStyle"/>-->
 
     <FrameLayout
         android:id="@+id/checkoutFragmentHolder"

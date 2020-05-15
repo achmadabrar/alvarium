@@ -11,7 +11,6 @@ import com.bs.ecommerce.base.BaseFragment
 import com.bs.ecommerce.base.BaseViewModel
 import com.bs.ecommerce.checkout.model.CheckoutModel
 import com.bs.ecommerce.checkout.model.CheckoutModelImpl
-import com.bs.ecommerce.checkout.model.data.*
 import com.bs.ecommerce.networking.Constants
 import com.bs.ecommerce.utils.*
 import com.google.android.material.tabs.TabLayout
@@ -19,6 +18,7 @@ import com.google.android.material.tabs.TabLayout.OnTabSelectedListener
 import kotlinx.android.synthetic.main.address_form.*
 import kotlinx.android.synthetic.main.fragment_base_billing_adddress.*
 import kotlinx.android.synthetic.main.fragment_billing_address.*
+import kotlinx.android.synthetic.main.fragment_checkout_step.*
 
 
 abstract class BaseCheckoutNavigationFragment : BaseFragment()
@@ -67,12 +67,24 @@ abstract class BaseCheckoutNavigationFragment : BaseFragment()
 
                             addressTabLayout?.getTabAt(Constants.SHIPPING_ADDRESS_TAB)?.select()
                         }
-                        Constants.ShippingMethod -> replaceFragment(ShippingMethodFragment())
-                        Constants.PaymentMethod -> {
+                        Constants.ShippingMethod -> {
 
-                            "sdsdsds".showLog(MyApplication.checkoutSaveResponse!!.data.paymentMethodModel.paymentMethods[0].paymentMethodSystemName)
-                        } //(parentFragment as CheckoutStepFragment).replaceFragment(PaymentMethodFragment())
-                        Constants.PaymentInfo -> (parentFragment as CheckoutStepFragment).replaceFragment(ConfirmOrderFragment())
+                            "adsafasfsa".showLog("gese")
+                            //replaceFragmentWithoutSavingState(ShippingMethodFragment()) worked
+
+
+                            //checkoutBottomNav?.menu?.getItem(4)?.isChecked = true
+                            //checkoutBottomNav?.currentItem = Constants.ShippingMethod
+
+                            (parentFragment as CheckoutStepFragment).replaceFragment(ShippingMethodFragment())
+                        }
+
+
+
+                        Constants.PaymentMethod -> {
+                            replaceFragmentWithoutSavingState(PaymentMethodFragment())
+                        }
+                        Constants.PaymentInfo -> replaceFragmentWithoutSavingState(ConfirmOrderFragment())
                     }
 
 
@@ -92,7 +104,7 @@ abstract class BaseCheckoutNavigationFragment : BaseFragment()
             {
                 if (CheckoutStepFragment.isBillingAddressSubmitted)
                 {
-                    replaceFragmentWithoutPendingTransactions(ShippingAddressFragment())
+                    replaceFragmentWithoutSavingState(ShippingAddressFragment())
 
                 }
                 else
@@ -135,12 +147,13 @@ abstract class BaseCheckoutNavigationFragment : BaseFragment()
 
     }
 
-    private fun replaceFragmentWithoutPendingTransactions(fragment: BaseFragment) {
+    private fun replaceFragmentWithoutSavingState(fragment: BaseFragment) {
         val transaction = requireActivity().supportFragmentManager.beginTransaction()
         transaction.addToBackStack(fragment.tag)
         transaction.replace(R.id.checkoutFragmentHolder, fragment)
         transaction.commit()
 
+        childFragmentManager.executePendingTransactions()
         /*if (requireActivity().supportFragmentManager.isStateSaved)
         {
             transaction.commit()
@@ -148,6 +161,12 @@ abstract class BaseCheckoutNavigationFragment : BaseFragment()
         }*/
 
         //replaceFragmentSafely(ShippingAddressFragment())
+
+    }
+
+
+    private fun isCurrentTab()
+    {
 
     }
 

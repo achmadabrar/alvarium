@@ -16,7 +16,6 @@ import com.bs.ecommerce.checkout.model.CheckoutModelImpl
 import com.bs.ecommerce.checkout.model.data.ShippingMethod
 import com.bs.ecommerce.customViews.CheckableLinearLayout
 import com.bs.ecommerce.customViews.MethodSelectionProcess
-import com.bs.ecommerce.main.MainViewModel
 import com.bs.ecommerce.utils.MyApplication
 import com.bs.ecommerce.utils.showLog
 import kotlinx.android.synthetic.main.fragment_shipping_method.*
@@ -39,7 +38,7 @@ class ShippingMethodFragment : BaseCheckoutNavigationFragment() {
         super.onViewCreated(view, savedInstanceState)
 
 
-        val shippingMethods = MyApplication.checkoutSaveResponse!!.data.shippingMethodModel.shippingMethods
+        val shippingMethods = MyApplication.checkoutSaveResponse?.data?.shippingMethodModel?.shippingMethods
 
         addMethodRadioGroup(shippingMethods)
 
