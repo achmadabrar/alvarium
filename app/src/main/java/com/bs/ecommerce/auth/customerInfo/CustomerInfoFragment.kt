@@ -10,33 +10,29 @@ import com.bs.ecommerce.networking.Api
 import com.bs.ecommerce.networking.common.KeyValueFormData
 
 
-class CustomerInfoFragment : RegisterFragment()
-{
+class CustomerInfoFragment : RegisterFragment() {
     override fun getFragmentTitle() = R.string.title_customer_info
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?)
-    {
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-
-        (viewModel as RegistrationViewModel).getCustomerInfoVM(model)
-
+        if (!viewCreated) {
+            (viewModel as RegistrationViewModel).getCustomerInfoVM(model)
+        }
 
     }
 
-    override fun performSubmit()
-    {
+    override fun performSubmit() {
         // custom attribute fields value
-        val formValue = customAttributeManager
-            ?.getFormData(Api.customerAttributePrefix) ?: KeyValueFormData()
+        if(isValidInfo) {
 
-        customerInfo.formValues = formValue.formValues
+            val formValue = customAttributeManager
+                ?.getFormData(Api.customerAttributePrefix) ?: KeyValueFormData()
 
-        (viewModel as RegistrationViewModel).postRegisterVM(customerInfo, model)
+            customerInfo.formValues = formValue.formValues
+
+            (viewModel as RegistrationViewModel).postCustomerInfo(customerInfo, model)
+        }
     }
-
-
-
-
 
 }

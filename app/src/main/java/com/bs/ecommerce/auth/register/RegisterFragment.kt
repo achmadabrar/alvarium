@@ -8,13 +8,14 @@ import android.widget.RelativeLayout
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.bs.ecommerce.R
+import com.bs.ecommerce.auth.AuthModel
 import com.bs.ecommerce.auth.AuthModelImpl
 import com.bs.ecommerce.auth.customerInfo.CustomerInfoFragment
+import com.bs.ecommerce.auth.forgotpass.ChangePasswordFragment
 import com.bs.ecommerce.auth.register.data.GetRegisterData
 import com.bs.ecommerce.auth.register.data.GetRegistrationResponse
 import com.bs.ecommerce.base.BaseFragment
 import com.bs.ecommerce.base.BaseViewModel
-import com.bs.ecommerce.auth.AuthModel
 import com.bs.ecommerce.networking.Api
 import com.bs.ecommerce.networking.common.KeyValueFormData
 import com.bs.ecommerce.utils.*
@@ -38,25 +39,32 @@ open class RegisterFragment : BaseFragment(), View.OnClickListener
 
     var isValidInfo = true
 
-    internal var myCalendar: Calendar? = null
+    private var myCalendar: Calendar? = null
 
-
+    private var showPasswordField = false
 
     var customerInfo: GetRegistrationResponse  = GetRegistrationResponse()
 
-    internal var dateSetListener: DatePickerDialog.OnDateSetListener = DatePickerDialog.OnDateSetListener {
+    private val dateSetListener: DatePickerDialog.OnDateSetListener by lazy {
+        DatePickerDialog.OnDateSetListener {
 
-            view, year, monthOfYear, dayOfMonth ->
+                view, year, monthOfYear, dayOfMonth ->
 
-        myCalendar = Calendar.getInstance()
-        myCalendar?.set(Calendar.YEAR, year)
-        myCalendar?.set(Calendar.MONTH, monthOfYear)
-        myCalendar?.set(Calendar.DAY_OF_MONTH, dayOfMonth)
+            myCalendar = Calendar.getInstance()
+            myCalendar?.set(Calendar.YEAR, year)
+            myCalendar?.set(Calendar.MONTH, monthOfYear)
+            myCalendar?.set(Calendar.DAY_OF_MONTH, dayOfMonth)
 
-        val month = monthOfYear + 1
-        dateOfBirthTextView?.setText("$dayOfMonth / $month / $year")
+            dateOfBirthTextView?.setText(
+                TextUtils().getFormattedDate(
+                    dayOfMonth,
+                    monthOfYear + 1,
+                    year
+                )
+            )
 
-        saveBtn?.visibility = View.VISIBLE
+            saveBtn?.visibility = View.VISIBLE
+        }
     }
 
     lateinit var model: AuthModel
@@ -77,15 +85,14 @@ open class RegisterFragment : BaseFragment(), View.OnClickListener
 
             viewModel  = ViewModelProvider(this).get(RegistrationViewModel::class.java)
 
-            activity?.supportFragmentManager?.findFragmentById(R.id.layoutFrame)?.let {
+            requireActivity().supportFragmentManager.findFragmentById(R.id.layoutFrame)?.let {
 
-                if(it !is CustomerInfoFragment)
+                if(it !is CustomerInfoFragment) {
                     (viewModel as RegistrationViewModel).getRegistrationVM(model)
+                    showPasswordField = true
+                }
             }
-
-            viewCreated = true
         }
-
 
         setLiveDataListeners()
 
@@ -97,10 +104,27 @@ open class RegisterFragment : BaseFragment(), View.OnClickListener
 
             getRegistrationResponseLD.observe(requireActivity(), Observer { getRegistrationResponse ->
 
-                if(getRegistrationResponse.errorList.isNotEmpty())
+                if(getRegistrationResponse.errorList.isNotEmpty()) {
                     toast(getRegistrationResponse?.errorsAsFormattedString.toString())
-                else
+                } else {
                     setViewsInitially(getRegistrationResponse.data)
+                    customerInfo = getRegistrationResponse
+
+                    focusStealer?.requestFocus()
+
+                    // Update shared pref data for
+                    if(this@RegisterFragment is CustomerInfoFragment) {
+                        val oldData = prefObject.getCustomerInfo(PrefSingleton.CUSTOMER_INFO)
+
+                        oldData?.firstName = getRegistrationResponse?.data?.firstName
+                        oldData?.lastName = getRegistrationResponse?.data?.lastName
+                        oldData?.email = getRegistrationResponse?.data?.email
+
+                        prefObject.setCustomerInfo(PrefSingleton.CUSTOMER_INFO, oldData)
+
+                        toast(getRegistrationResponse.message ?: getString(R.string.customer_info_updated))
+                    }
+                }
 
             })
 
@@ -110,6 +134,14 @@ open class RegisterFragment : BaseFragment(), View.OnClickListener
                     showLoading()
                 else
                     hideLoading()
+            })
+
+            actionSuccessLD.observe(viewLifecycleOwner, Observer { actionSuccess ->
+                if(actionSuccess) {
+                    if(this@RegisterFragment !is CustomerInfoFragment) {
+                        requireActivity().onBackPressed()
+                    }
+                }
             })
         }
 
@@ -127,11 +159,12 @@ open class RegisterFragment : BaseFragment(), View.OnClickListener
 
             emailEditText?.showOrHideOrRequired(isEnabledParam = true, isRequired =   true, value = email)
 
-            enterPasswordEditText?.showOrHideOrRequired(isEnabledParam = true, isRequired =   true)
+            enterPasswordEditText?.showOrHideOrRequired(isEnabledParam = showPasswordField, isRequired =   showPasswordField)
 
-            confirmPasswordEditText?.showOrHideOrRequired(isEnabledParam = true, isRequired =   true)
+            confirmPasswordEditText?.showOrHideOrRequired(isEnabledParam = showPasswordField, isRequired =   showPasswordField)
 
-            dateOfBirthTextView?.showOrHideOrRequired(isEnabledParam = dateOfBirthEnabled, isRequired =   dateOfBirthRequired, value = "")
+            dateOfBirthTextView?.showOrHideOrRequired(isEnabledParam = dateOfBirthEnabled, isRequired =   dateOfBirthRequired,
+                value = TextUtils().getFormattedDate(dateOfBirthDay, dateOfBirthMonth, dateOfBirthYear))
 
             usernameEditText?.showOrHideOrRequired(isEnabledParam = usernamesEnabled, isRequired =   false, value = username)
 
@@ -161,7 +194,15 @@ open class RegisterFragment : BaseFragment(), View.OnClickListener
 
             privacyPolicyLayout?.showOrHide(acceptPrivacyPolicyEnabled)
 
+            passwordLayout?.showOrHide(this@RegisterFragment !is CustomerInfoFragment)
 
+
+            tvChangePassword?.visibility = if(this@RegisterFragment is CustomerInfoFragment)
+                View.VISIBLE else View.GONE
+
+            tvChangePassword.setOnClickListener {
+                replaceFragmentSafely(ChangePasswordFragment())
+            }
 
             // setup product attributes
             customAttributeManager =
@@ -175,9 +216,6 @@ open class RegisterFragment : BaseFragment(), View.OnClickListener
             customAttributeManager?.attachAttributesToFragment()
 
         }
-
-
-
 
 
         rootScrollView?.visibility = View.VISIBLE
@@ -202,9 +240,11 @@ open class RegisterFragment : BaseFragment(), View.OnClickListener
                 calender = myCalendar
 
 
-            DatePickerDialog(activity!!, dateSetListener,
+            val dialog = DatePickerDialog(activity!!, dateSetListener,
                 calender!!.get(Calendar.YEAR), calender.get(Calendar.MONTH),
-                calender.get(Calendar.DAY_OF_MONTH)).show()
+                calender.get(Calendar.DAY_OF_MONTH))
+            dialog.datePicker.maxDate = System.currentTimeMillis()
+            dialog.show()
         }
 
         saveBtn?.setOnClickListener {
@@ -239,24 +279,27 @@ open class RegisterFragment : BaseFragment(), View.OnClickListener
             isValidInfo = false
             toast("${editText.hint} ${getString(R.string.reg_hint_is_required)}" )
         }
-        else
-            isValidInfo = true
 
     }
 
     
     private fun getCustomerInfoWithValidation()
     {
+        isValidInfo = true
 
         with(customerInfo.data)
         {
 
             confirmPasswordEditText?.let {
-                val input = it.text?.trim().toString(); if(input.isNotEmpty()) confirmPassword = input else { showValidation(it, true) }
+                val input = it.text?.trim().toString(); if(input.isNotEmpty()) confirmPassword = input else { showValidation(it, showPasswordField) }
             }
 
             enterPasswordEditText?.let {
-                val input = it.text?.trim().toString(); if(input.isNotEmpty()) password = input else { showValidation(it, true) }
+                val input = it.text?.trim().toString(); if(input.isNotEmpty()) password = input else { showValidation(it, showPasswordField) }
+            }
+
+            dateOfBirthTextView?.let {
+                val input = it.text?.trim().toString(); if(input.isEmpty()) { showValidation(it, dateOfBirthRequired) }
             }
 
             companyInfoEditText?.let {
@@ -301,16 +344,15 @@ open class RegisterFragment : BaseFragment(), View.OnClickListener
             }
 
 
-            if (myCalendar != null)
-            {
-                dateOfBirthYear = myCalendar!!.get(Calendar.YEAR).toString()
-                dateOfBirthMonth = myCalendar!!.get(Calendar.MONTH).toString() + 1
-                dateOfBirthDay = myCalendar!!.get(Calendar.DAY_OF_MONTH).toString()
+            myCalendar?.get(Calendar.YEAR)?.also { dateOfBirthYear = it }
+            myCalendar?.get(Calendar.MONTH)?.also { dateOfBirthMonth = it + 1 }
+            myCalendar?.get(Calendar.DAY_OF_MONTH)?.also { dateOfBirthDay = it }
+
+            gender = when {
+                genderMaleRadioButton.isChecked -> "M"
+                genderFemaleRadioButton.isChecked -> "F"
+                else -> ""
             }
-            if (genderMaleRadioButton.isChecked)
-                gender = "M"
-            else if (genderFemaleRadioButton.isChecked)
-                gender = "F"
 
             customerLastNameEditText?.let {
                 val input = it.text?.trim().toString(); if(input.isNotEmpty()) lastName = input else { showValidation(it, true) }
@@ -328,27 +370,9 @@ open class RegisterFragment : BaseFragment(), View.OnClickListener
     }
 
     fun initView() {
+        focusStealer?.requestFocus()
 
         bsBehavior = BottomSheetBehavior.from(bottomSheetLayoutRegister)
-        /*bsBehavior.addBottomSheetCallback(object : BottomSheetBehavior.BottomSheetCallback() {
-            override fun onStateChanged(bottomSheet: View, newState: Int) {
-                when (newState) {
-                    BottomSheetBehavior.STATE_HIDDEN -> {
-                    }
-                    BottomSheetBehavior.STATE_EXPANDED -> {
-                    }
-                    BottomSheetBehavior.STATE_COLLAPSED -> {
-                    }
-                    BottomSheetBehavior.STATE_DRAGGING -> {
-                    }
-                    BottomSheetBehavior.STATE_SETTLING -> {
-                    }
-                }
-            }
-
-            override fun onSlide(bottomSheet: View, slideOffset: Float) {
-            }
-        })*/
 
         bottomSheetLayoutRegister?.tvDone?.setOnClickListener(this)
     }

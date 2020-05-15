@@ -48,8 +48,9 @@ abstract class BaseFragment : Fragment()
 
     }
 
-    protected var rootView: View? = null
+    private var rootView: View? = null
     protected var viewCreated: Boolean = false
+        private set
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 

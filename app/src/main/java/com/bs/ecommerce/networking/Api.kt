@@ -1,6 +1,6 @@
 package com.bs.ecommerce.networking
 
-import com.bs.ecommerce.auth.login.data.ChangePasswordResponse
+import com.bs.ecommerce.auth.login.data.ChangePasswordModel
 import com.bs.ecommerce.auth.login.data.ForgotPasswordResponse
 import com.bs.ecommerce.auth.login.data.LoginPostData
 import com.bs.ecommerce.auth.login.data.LoginResponse
@@ -42,6 +42,9 @@ interface Api {
     @GET("customer/info")
     fun getCustomerInfoAPI(): Call<GetRegistrationResponse>
 
+    @POST("customer/info")
+    fun saveCustomerInfo(@Body customerInfo: GetRegistrationResponse): Call<GetRegistrationResponse>
+
     @GET("customer/register")
     fun getRegisterAPI(): Call<GetRegistrationResponse>
 
@@ -68,8 +71,11 @@ interface Api {
     @POST("customer/passwordrecovery")
     fun forgetPassword(@Body forgetData: ForgotPasswordResponse): Call<ForgotPasswordResponse>
 
+    @GET("customer/changepassword")
+    fun getChangePasswordModel(): Call<ChangePasswordModel>
+
     @POST("customer/changepassword")
-    fun changePassword(@Body userData: ChangePasswordResponse): Call<ChangePasswordResponse>
+    fun changePassword(@Body userData: ChangePasswordModel): Call<ChangePasswordModel>
 
     //checkout
 
@@ -265,8 +271,6 @@ interface Api {
     val paymentMethod: Call<PaymentMethodRetrievalResponse>
 
     // Customer
-    @get:GET("customer/info")
-    val customerInfo: Call<CustomerInfo>
 
     @get:GET("shoppingcart/checkoutorderinformation")
     val checkoutOrderSummary: Call<CheckoutOrderSummaryResponse>
@@ -358,9 +362,6 @@ interface Api {
 
     @POST("checkout/checkoutsavepaymentmethod")
     fun saveCheckoutPaymentMethod(@Body valuePost: ValuePost): Call<PaymentMethodSaveResponse>
-
-    @POST("customer/info")
-    fun saveCustomerInfo(@Body customerInfo: CustomerInfo): Call<CustomerInfo>
 
     @POST("login") fun performLogin(@Body loginData: LoginData): Call<LoginResponse>
 

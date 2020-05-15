@@ -19,7 +19,7 @@ data class WishListData(
     @SerializedName("IsEditable")
     val isEditable: Boolean?,
     @SerializedName("Items")
-    val items: List<WishListItem>?,
+    var items: List<WishListItem>?,
     @SerializedName("ShowProductImages")
     val showProductImages: Boolean?,
     @SerializedName("ShowSku")

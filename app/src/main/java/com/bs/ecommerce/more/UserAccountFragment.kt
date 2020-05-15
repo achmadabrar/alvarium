@@ -73,7 +73,7 @@ class UserAccountFragment: BaseFragment() {
         }
 
         reviewLayout.apply {
-            ivOptionIcon.setImageResource(R.drawable.app_icon_cart)
+            ivOptionIcon.setImageResource(R.drawable.ic_review)
             tvOptionName.text = getString(R.string.title_my_reviews)
             setOnClickListener { clickAction(CustomerReviewFragment()) }
         }

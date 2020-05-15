@@ -105,24 +105,17 @@ class TextUtils {
         }.toString()
     }
 
+    fun getFormattedDate(dd: Int, mm: Int, yy: Int): String {
+
+        if(dd < 1 || mm < 1 || yy < 1) return ""
+        else return "$mm/$dd/$yy"
+    }
+
     companion object {
 
         /**
          * Extracts error message from retrofit error body
          */
-        /*fun getErrorMessage(errorMsg: String?): String {
-
-            if (errorMsg.isNullOrEmpty()) return ""
-
-            val baseResponse = try {
-                Gson().fromJson(errorMsg, BaseResponse::class.java)
-            } catch (e: JsonSyntaxException) {
-                null
-            }
-
-            return baseResponse?.errorsAsFormattedString ?: errorMsg
-        }*/
-
         fun getErrorMessage(response: Response<*>): String {
 
             val errorMsg = response.errorBody()?.string()

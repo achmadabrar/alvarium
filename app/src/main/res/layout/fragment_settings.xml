@@ -6,6 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/settings_fragment_bg"
+    android:animateLayoutChanges="true"
     android:paddingStart="10dp"
     android:paddingEnd="10dp">
 
@@ -152,6 +153,35 @@
                     android:entries="@array/spinner_dummy_data"
                     android:textColor="@color/white" />
             </LinearLayout>
+
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/themeSwitchCardView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/currencyCardView"
+        android:layout_marginTop="15dp"
+        app:cardBackgroundColor="@color/settings_card_bg"
+        app:cardCornerRadius="5dp"
+        android:visibility="gone"
+        tools:visibility="visible">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="15dp"
+            android:orientation="vertical">
+
+            <androidx.appcompat.widget.SwitchCompat
+                android:id="@+id/switchTheme"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/select_theme"
+                android:textStyle="bold"
+                android:textColor="?attr/primaryTextColor"
+                android:textSize="@dimen/tv_text_size_large"/>
 
         </LinearLayout>
     </androidx.cardview.widget.CardView>

@@ -56,7 +56,9 @@ class MainActivity : BaseActivity()
 
         initNavigationDrawer()
         setBottomNavigation()
-        initHomeFragment()
+
+        if (savedInstanceState == null)
+            initHomeFragment()
 
         setBackStackChangeListener()
     }

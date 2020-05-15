@@ -116,6 +116,25 @@ class WishListViewModel : BaseViewModel() {
                 } else {
                     toast(data.message)
                     goToCartLD.value = true
+
+                    // update cart item list
+
+                    val tmp = wishListLD.value
+
+                    tmp?.items?.apply {
+                        if (itemId!! < 0) {
+                            // moved all items to cart
+                            tmp.items = listOf()
+                            wishListLD.value = tmp
+                        } else {
+                            val items = tmp.items as MutableList
+                            val index = items.indexOfFirst { it.id == itemId }
+                            items.removeAt(index)
+
+                            tmp.items = items
+                            wishListLD.value = tmp
+                        }
+                    }
                 }
             }
 
