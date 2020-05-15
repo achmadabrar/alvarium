@@ -229,6 +229,11 @@ interface Api {
     @GET("product/productreviews/{productId}")
     fun getProductReview(@Path("productId") id: Long) : Call<ProductReviewResponse>
 
+    // Reward Point
+
+    @GET("order/customerrewardpoints")
+    fun getRewardPoints(@Query("pageNumber") page: Int) : Call<RewardPointResponse>
+
 /*    @POST("setcurrency/{id}")
     fun setCurrency(@Path("id") id: Long): Call<LanguageResponse>
 

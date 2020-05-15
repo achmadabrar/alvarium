@@ -73,7 +73,7 @@ class OptionsFragment : BaseFragment() {
                             replaceFragmentSafely(CheckoutStepFragment())
 
                         R.string.placeholder ->
-                            replaceFragmentSafely(ProductDetailFragment.newInstance(40))
+                            replaceFragmentSafely(RewardPointFragment())
                     }
                 }
 

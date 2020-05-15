@@ -7,6 +7,7 @@ import com.bs.ecommerce.R
 import com.bs.ecommerce.base.BaseFragment
 import com.bs.ecommerce.base.BaseViewModel
 import com.bs.ecommerce.main.MainViewModel
+import com.bs.ecommerce.utils.showLog
 import kotlinx.android.synthetic.main.fragment_checkout_step.*
 
 
@@ -44,7 +45,23 @@ class CheckoutStepFragment : BaseFragment() {
         }
     }
 
+    fun updateBottomNavItem(fragment: BaseFragment) {
+
+        val bottomNavPosition = when (fragment) {
+            is ShippingMethodFragment -> 1
+            is PaymentMethodFragment -> 2
+            is ConfirmOrderFragment -> 3
+            else -> 0
+        }
+
+        "nop_".showLog("updateBottomNavItem $bottomNavPosition")
+
+        checkoutBottomNav?.menu?.getItem(bottomNavPosition)?.isChecked = true
+    }
+
     fun replaceFragment(fragment: BaseFragment) {
+        updateBottomNavItem(fragment)
+
         val transaction = childFragmentManager.beginTransaction()
         transaction.addToBackStack(fragment.tag)
         transaction.replace(R.id.checkoutFragmentHolder, fragment)
