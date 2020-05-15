@@ -7,7 +7,6 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bs.ecommerce.R
-import com.bs.ecommerce.base.BaseActivity
 import com.bs.ecommerce.base.BaseFragment
 import com.bs.ecommerce.base.BaseViewModel
 import com.bs.ecommerce.cart.model.CartModel
@@ -81,7 +80,6 @@ class CartFragment : BaseFragment() {
 
     }
 
-
     private fun setLiveDataListeners() {
 
         (viewModel as CartViewModel).cartLD.observe(viewLifecycleOwner, Observer { cartRootData ->
@@ -90,11 +88,7 @@ class CartFragment : BaseFragment() {
             {
                 cartRootLayout?.visibility = View.VISIBLE
 
-                tvTotalItem?.text = getString(R.string.cart_items_count, cartRootData.cart.items.size)
-                MyApplication.setCartCounter(cartRootData.cart.items.size)
-
-                activity?.let {  (it as BaseActivity).updateHotCount(MyApplication.myCartCounter)    }
-
+                tvTotalItem?.text = getString(R.string.cart_items_count, updateCartItemCounter(cartRootData.cart.items))
 
                 setData(cartRootData)
             }
@@ -103,7 +97,6 @@ class CartFragment : BaseFragment() {
 
                 toast(getString(R.string.cart_empty))
                 requireActivity().supportFragmentManager.popBackStackImmediate()
-                MyApplication.setCartCounter(0)
 
             }
 

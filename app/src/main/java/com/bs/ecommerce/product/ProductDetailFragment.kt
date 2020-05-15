@@ -12,7 +12,6 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bs.ecommerce.R
-import com.bs.ecommerce.base.BaseActivity
 import com.bs.ecommerce.base.BaseFragment
 import com.bs.ecommerce.base.BaseViewModel
 import com.bs.ecommerce.cart.CartFragment
@@ -256,14 +255,6 @@ class ProductDetailFragment : BaseFragment(), View.OnClickListener {
                         hideLoading()
                 })
 
-            cartProductsCountLD.observe(
-                viewLifecycleOwner,
-                Observer { count ->
-
-                    MyApplication.setCartCounter(count)
-                    activity?.let {  (it as BaseActivity).updateHotCount(count)    }
-                })
-
             addToCartResponseLD.observe(
                 viewLifecycleOwner,
                 Observer { response ->
@@ -271,7 +262,12 @@ class ProductDetailFragment : BaseFragment(), View.OnClickListener {
                     if(response.errorList.isNotEmpty())
                         toast(response.errorsAsFormattedString)
                     else
+                    {
+                        val totalCartItems = response.data.totalShoppingCartProducts
+                        updateTopCart(totalCartItems)
                         toast(response.message)
+                    }
+
                 })
 
             quantityLiveData.observe(

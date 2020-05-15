@@ -11,6 +11,7 @@ import com.bs.ecommerce.main.model.data.AppLandingData
 import com.bs.ecommerce.main.model.data.AppLandingSettingResponse
 import com.bs.ecommerce.main.model.data.Category
 import com.bs.ecommerce.main.model.data.CategoryTreeResponse
+import com.bs.ecommerce.networking.common.BaseResponse
 import com.bs.ecommerce.product.model.data.CategoryModel
 import com.bs.ecommerce.product.model.data.Manufacturer
 import com.bs.ecommerce.product.model.data.ProductSummary
@@ -31,6 +32,7 @@ class MainViewModel : BaseViewModel() {
     var toastMessageLD = MutableLiveData<String>()
 
     var testUrlSuccessLD = MutableLiveData<Boolean>()
+
 
     fun getFeaturedProducts(model: HomePageModel) {
 
@@ -138,6 +140,43 @@ class MainViewModel : BaseViewModel() {
 
             override fun onRequestFailed(errorMessage: String) {
                 isLoadingLD.value = false
+            }
+        })
+    }
+
+
+    fun changeLanguage(languageId : Int, model: MainModel) {
+
+        isLoadingLD.value = true
+
+        model.changeLanguage(languageId.toLong(), object : RequestCompleteListener<BaseResponse> {
+            override fun onRequestSuccess(data: BaseResponse) {
+                isLoadingLD.value = false
+
+                toastMessageLD.value = data.message
+            }
+
+            override fun onRequestFailed(errorMessage: String) {
+                isLoadingLD.value = false
+                toastMessageLD.value = errorMessage
+            }
+        })
+    }
+
+    fun changeCurrency(currencyId : Int, model: MainModel) {
+
+        isLoadingLD.value = true
+
+        model.changeCurrency(currencyId.toLong(), object : RequestCompleteListener<BaseResponse> {
+            override fun onRequestSuccess(data: BaseResponse) {
+                isLoadingLD.value = false
+
+                toastMessageLD.value = data.message
+            }
+
+            override fun onRequestFailed(errorMessage: String) {
+                isLoadingLD.value = false
+                toastMessageLD.value = errorMessage
             }
         })
     }

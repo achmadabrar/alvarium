@@ -17,6 +17,7 @@ import retrofit2.Response
 
 class HomePageModelImpl(private val context: Context) : HomePageModel {
 
+
     override fun getFeaturedProducts(callback: RequestCompleteListener<HomePageProductResponse>) {
 
         RetroClient.api.getHomeFeaturedProducts()

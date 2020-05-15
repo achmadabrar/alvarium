@@ -12,6 +12,8 @@ import com.bs.ecommerce.R
 import com.bs.ecommerce.base.BaseFragment
 import com.bs.ecommerce.base.BaseViewModel
 import com.bs.ecommerce.cart.CartFragment
+import com.bs.ecommerce.cart.model.CartModel
+import com.bs.ecommerce.cart.model.CartModelImpl
 import com.bs.ecommerce.home.FeaturedProductAdapter
 import com.bs.ecommerce.home.ManufacturerListAdapter
 import com.bs.ecommerce.home.homepage.model.HomePageModel
@@ -39,6 +41,8 @@ import kotlinx.android.synthetic.main.slider.view.*
 class HomeFragment : BaseFragment() {
 
     private lateinit var model: HomePageModel
+    private lateinit var cartModel: CartModel
+
     private lateinit var productClickListener: ItemClickListener<ProductSummary>
 
     private val bsBehavior: BottomSheetBehavior<*> by lazy {
@@ -58,10 +62,12 @@ class HomeFragment : BaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        viewModel = ViewModelProvider(requireActivity()).get(MainViewModel::class.java)
+
+        callCart()
+
         if (!viewCreated) {
             model = HomePageModelImpl(requireContext())
-
-            viewModel = ViewModelProvider(requireActivity()).get(MainViewModel::class.java)
 
             (viewModel as MainViewModel).apply {
                 getFeaturedProducts(model)
@@ -76,6 +82,11 @@ class HomeFragment : BaseFragment() {
 
         setLiveDataListeners()
 
+    }
+    private fun callCart()
+    {
+        cartModel = CartModelImpl(requireContext())
+        (viewModel as MainViewModel).getCartVM(cartModel)
     }
 
     private fun initComponents() {
@@ -104,6 +115,7 @@ class HomeFragment : BaseFragment() {
                 getCategoryListWithProducts(model)
                 getManufactures(model)
                 getBestSellingProducts(model)
+                getCartVM(cartModel)
             }
         }
 
@@ -138,6 +150,8 @@ class HomeFragment : BaseFragment() {
 
     private fun setLiveDataListeners() {
         val viewModel = (viewModel as MainViewModel)
+
+        viewModel.cartLD.observe(viewLifecycleOwner, Observer { cartRootData -> updateCartItemCounter(cartRootData.cart.items) })
 
         viewModel.featuredProductListLD.observe(viewLifecycleOwner,
             Observer { list ->

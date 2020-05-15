@@ -67,13 +67,15 @@
     </androidx.cardview.widget.CardView>
 
     <androidx.cardview.widget.CardView
-        android:id="@+id/ll"
+        android:id="@+id/languageCardView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/use_your_api"
         android:layout_marginTop="15dp"
         app:cardBackgroundColor="@color/settings_card_bg"
-        app:cardCornerRadius="5dp">
+        app:cardCornerRadius="5dp"
+        android:visibility="gone"
+        tools:visibility="visible">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -90,29 +92,35 @@
                 android:textStyle="bold" />
 
 
-            <androidx.appcompat.widget.AppCompatSpinner
-                android:id="@+id/languageSpinner_settings"
+            <LinearLayout
+                style="@style/RoundedSpinner"
+                android:id="@+id/changeLanguageSpinnerLayout"
+                android:layout_marginTop="8dp"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:padding="5dp"
-                android:background="@drawable/settings_spinner_bg"
-                android:entries="@array/spinner_dummy_data"
-                android:tag="CountryId"
-                tools:listitem="@layout/simple_spinner_item" />
+                android:layout_height="wrap_content">
 
+                <androidx.appcompat.widget.AppCompatSpinner
+                    android:id="@+id/changeLanguageSpinner"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    tools:listitem="@layout/simple_spinner_item"
+                    android:entries="@array/spinner_dummy_data"
+                    android:textColor="@color/white" />
+            </LinearLayout>
         </LinearLayout>
     </androidx.cardview.widget.CardView>
 
 
     <androidx.cardview.widget.CardView
-        android:id="@+id/ll1"
+        android:id="@+id/currencyCardView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/ll"
+        android:layout_below="@+id/languageCardView"
         android:layout_marginTop="15dp"
         app:cardBackgroundColor="@color/settings_card_bg"
-        app:cardCornerRadius="5dp">
+        app:cardCornerRadius="5dp"
+        android:visibility="gone"
+        tools:visibility="visible">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -129,15 +137,21 @@
                 android:textStyle="bold" />
 
 
-            <androidx.appcompat.widget.AppCompatSpinner
-                android:id="@+id/currencySpinner_settings"
+            <LinearLayout
+                style="@style/RoundedSpinner"
+                android:id="@+id/changeCurrencySpinnerLayout"
+                android:layout_marginTop="8dp"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:entries="@array/spinner_dummy_data"
-                android:padding="5dp"
-                android:background="@drawable/settings_spinner_bg"
-                tools:listitem="@layout/simple_spinner_item" />
+                android:layout_height="wrap_content">
+
+                <androidx.appcompat.widget.AppCompatSpinner
+                    android:id="@+id/changeCurrencySpinner"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    tools:listitem="@layout/simple_spinner_item"
+                    android:entries="@array/spinner_dummy_data"
+                    android:textColor="@color/white" />
+            </LinearLayout>
 
         </LinearLayout>
     </androidx.cardview.widget.CardView>

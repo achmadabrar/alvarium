@@ -14,13 +14,19 @@ import com.bs.ecommerce.networking.common.KeyValueFormData
 
 open class CheckoutAddressViewModel : BaseViewModel()
 {
-    var cartLD = MutableLiveData<CartRootData>()
 
     var getBillingAddressLD = MutableLiveData<BillingAddressResponse>()
 
     var stateListLD = MutableLiveData<List<AvailableState>>()
 
     var saveResponseLD = MutableLiveData<CheckoutSaveResponse>()
+
+
+    private fun saveCheckoutData(data: CheckoutSaveResponse)
+    {
+        isLoadingLD.postValue(false)
+        saveResponseLD.postValue(data)
+    }
 
     fun getBillingFormVM(model: CheckoutModel)
     {
@@ -72,12 +78,7 @@ open class CheckoutAddressViewModel : BaseViewModel()
 
         model.saveNewBilling(saveBillingPostData, object : RequestCompleteListener<CheckoutSaveResponse>
         {
-            override fun onRequestSuccess(data: CheckoutSaveResponse)
-            {
-                isLoadingLD.postValue(false)
-
-                saveResponseLD.postValue(data)
-            }
+            override fun onRequestSuccess(data: CheckoutSaveResponse) = saveCheckoutData(data)
 
             override fun onRequestFailed(errorMessage: String)
             {
@@ -97,12 +98,7 @@ open class CheckoutAddressViewModel : BaseViewModel()
 
         model.saveExistingBilling(existingAddress, object : RequestCompleteListener<CheckoutSaveResponse>
         {
-            override fun onRequestSuccess(data: CheckoutSaveResponse)
-            {
-                isLoadingLD.postValue(false)
-
-                saveResponseLD.postValue(data)
-            }
+            override fun onRequestSuccess(data: CheckoutSaveResponse) = saveCheckoutData(data)
 
             override fun onRequestFailed(errorMessage: String)
             {
@@ -121,12 +117,7 @@ open class CheckoutAddressViewModel : BaseViewModel()
 
         model.saveNewShipping(saveShippingPostData, object : RequestCompleteListener<CheckoutSaveResponse>
         {
-            override fun onRequestSuccess(data: CheckoutSaveResponse)
-            {
-                isLoadingLD.postValue(false)
-
-                saveResponseLD.postValue(data)
-            }
+            override fun onRequestSuccess(data: CheckoutSaveResponse) = saveCheckoutData(data)
 
             override fun onRequestFailed(errorMessage: String)
             {
@@ -135,7 +126,7 @@ open class CheckoutAddressViewModel : BaseViewModel()
         })
     }
 
-    private fun getKeyValue(key: String, addressId: Long) = KeyValuePair(key = key, value = addressId.toString())
+    private fun getKeyValue(key: String, value: Long) = KeyValuePair(key = key, value = value.toString())
 
     fun saveShippingFromExistingAddressVM(type: Int, addressId: Long, model: CheckoutModel)
     {
@@ -145,19 +136,19 @@ open class CheckoutAddressViewModel : BaseViewModel()
         {
             Constants.BillingAddress -> {
                 existingAddress = ExistingAddress(
-                    formValues = listOf(getKeyValue("billing_address_id", addressId)),
+                    formValues = listOf(getKeyValue(key = "billing_address_id", value = addressId)),
                     data = Data(shipToSameAddress = false))
             }
 
             Constants.ShippingAddress -> {
                 existingAddress = ExistingAddress(
-                    formValues = listOf(getKeyValue("shipping_address_id", addressId)),
+                    formValues = listOf(getKeyValue(key = "shipping_address_id",value =  addressId)),
                     data = Data(shipToSameAddress = false))
             }
 
             Constants.StorePickUp -> {
                 existingAddress = ExistingAddress(
-                    formValues = listOf(getKeyValue("pickup-points-id", addressId)),
+                    formValues = listOf(getKeyValue(key = "pickup-points-id", value = addressId)),
                     data = Data(pickupInStore = false)
                 )
             }
@@ -169,12 +160,7 @@ open class CheckoutAddressViewModel : BaseViewModel()
 
         model.saveExistingShipping(existingAddress, object : RequestCompleteListener<CheckoutSaveResponse>
         {
-            override fun onRequestSuccess(data: CheckoutSaveResponse)
-            {
-                isLoadingLD.postValue(false)
-
-                saveResponseLD.postValue(data)
-            }
+            override fun onRequestSuccess(data: CheckoutSaveResponse) = saveCheckoutData(data)
 
             override fun onRequestFailed(errorMessage: String) {
                 isLoadingLD.postValue(false)
@@ -186,20 +172,41 @@ open class CheckoutAddressViewModel : BaseViewModel()
 
     fun saveShippingMethodVM(value: String, model: CheckoutModel)
     {
-
-        val keyValuePair = KeyValuePair()
-        keyValuePair.key = "shippingoption"
-        keyValuePair.value = value
+        val formValues = listOf(KeyValuePair(key = "shippingoption", value = value))
 
         isLoadingLD.postValue(true)
 
-        model.saveShippingMethod(KeyValueFormData(listOf(keyValuePair)), object : RequestCompleteListener<CheckoutSaveResponse>
+        model.saveShippingMethod(KeyValueFormData(formValues), object : RequestCompleteListener<CheckoutSaveResponse>
         {
             override fun onRequestSuccess(data: CheckoutSaveResponse)
             {
-                isLoadingLD.postValue(false)
+                with(data.data.paymentMethodModel)
+                {
+                    if(displayRewardPoints)
+                    {
+                        this.paymentMethods.add(PaymentMethod(description = "", fee = rewardPointsBalance, logoUrl = "", name = "Reward Points", paymentMethodSystemName = "", selected = false ))
+                    }
+                }
 
+                saveCheckoutData(data)
             }
+
+            override fun onRequestFailed(errorMessage: String)
+            {
+                isLoadingLD.postValue(false)
+            }
+        })
+    }
+
+    fun savePaymentMethodVM(value: String, model: CheckoutModel)
+    {
+        val formValues = listOf(KeyValuePair(key = "paymentmethod", value = value))
+
+        isLoadingLD.postValue(true)
+
+        model.savePaymentMethod(KeyValueFormData(formValues), object : RequestCompleteListener<CheckoutSaveResponse>
+        {
+            override fun onRequestSuccess(data: CheckoutSaveResponse) = saveCheckoutData(data)
 
             override fun onRequestFailed(errorMessage: String)
             {

@@ -9,6 +9,7 @@ import com.bs.ecommerce.R
 import com.bs.ecommerce.base.BaseFragment
 import com.bs.ecommerce.base.BaseViewModel
 import com.bs.ecommerce.checkout.CheckoutStepFragment
+import com.bs.ecommerce.more.settings.SettingsFragment
 import com.bs.ecommerce.more.viewmodel.OptionViewModel
 import com.bs.ecommerce.product.ProductDetailFragment
 import com.bs.ecommerce.utils.replaceFragmentSafely

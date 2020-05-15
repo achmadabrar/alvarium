@@ -17,7 +17,6 @@ class BillingAddressFragment : BaseCheckoutAddressFragment()
 
         (viewModel as CheckoutAddressViewModel).getBillingFormVM(model)
 
-        setLiveDataListeners()
 
         btnContinue?.setOnClickListener {
 
