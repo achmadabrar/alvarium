@@ -15,6 +15,7 @@ import com.bs.ecommerce.cart.model.data.AddDiscountPostData
 import com.bs.ecommerce.cart.model.data.CartProduct
 import com.bs.ecommerce.cart.model.data.CartRootData
 import com.bs.ecommerce.cart.model.data.OrderTotal
+import com.bs.ecommerce.checkout.CheckoutStepFragment
 import com.bs.ecommerce.networking.Api
 import com.bs.ecommerce.networking.common.KeyValueFormData
 import com.bs.ecommerce.product.model.data.CheckoutAttribute
@@ -50,33 +51,17 @@ class CartFragment : BaseFragment() {
     {
         super.onViewCreated(view, savedInstanceState)
 
-        model = CartModelImpl(activity?.applicationContext!!)
+        if (!viewCreated) {
+            model = CartModelImpl(activity?.applicationContext!!)
 
-        viewModel  = ViewModelProvider(this).get(CartViewModel::class.java)
+            viewModel = ViewModelProvider(this).get(CartViewModel::class.java)
 
-        (viewModel as CartViewModel).getCartVM(model)
+            (viewModel as CartViewModel).getCartVM(model)
 
+            initView()
+        }
 
         setLiveDataListeners()
-
-        initView()
-
-
-        btnApplyCoupon?.setOnClickListener {
-
-            val couponCode = etCartCoupon.text.toString().trim()
-
-            if(couponCode.isNotEmpty())
-                (viewModel as CartViewModel).applyCouponVM(AddDiscountPostData(data = couponCode), model)
-        }
-
-        btnAddGiftCode?.setOnClickListener {
-
-            val couponCode = etGiftCode.text.toString().trim()
-
-            if(couponCode.isNotEmpty())
-                (viewModel as CartViewModel).applyGiftCardVM(AddDiscountPostData(data = couponCode), model)
-        }
 
     }
 
@@ -219,13 +204,34 @@ class CartFragment : BaseFragment() {
             override fun onSlide(bottomSheet: View, slideOffset: Float) {}
         })
 
-        btnCheckOut.setOnClickListener{
-            showCheckOutOptionsDialogFragment()
+        btnCheckOut.setOnClickListener {
+
+            if (prefObject.getPrefsBoolValue(PrefSingleton.IS_LOGGED_IN)) {
+                replaceFragmentSafely(CheckoutStepFragment())
+            } else {
+                showCheckOutOptionsDialogFragment()
+            }
         }
 
         tvDone.setOnClickListener{
             bsBehavior.state = BottomSheetBehavior.STATE_COLLAPSED
             //dynamicAttributeView?.onBottomSheetClose()
+        }
+
+        btnApplyCoupon?.setOnClickListener {
+
+            val couponCode = etCartCoupon.text.toString().trim()
+
+            if(couponCode.isNotEmpty())
+                (viewModel as CartViewModel).applyCouponVM(AddDiscountPostData(data = couponCode), model)
+        }
+
+        btnAddGiftCode?.setOnClickListener {
+
+            val couponCode = etGiftCode.text.toString().trim()
+
+            if(couponCode.isNotEmpty())
+                (viewModel as CartViewModel).applyGiftCardVM(AddDiscountPostData(data = couponCode), model)
         }
     }
 

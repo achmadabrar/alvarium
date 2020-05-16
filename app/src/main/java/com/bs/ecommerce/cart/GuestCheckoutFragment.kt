@@ -9,6 +9,7 @@ import com.bs.ecommerce.auth.login.LoginFragment
 import com.bs.ecommerce.auth.register.RegisterFragment
 import com.bs.ecommerce.base.BaseFragment
 import com.bs.ecommerce.checkout.CheckoutStepFragment
+import com.bs.ecommerce.main.MainActivity
 import com.bs.ecommerce.utils.replaceFragmentSafely
 import kotlinx.android.synthetic.main.guest_checkout_dialog_fragment.*
 
@@ -60,10 +61,7 @@ class GuestCheckoutFragment : DialogFragment(), View.OnClickListener {
             R.id.btnGuestCheckout -> fragment = CheckoutStepFragment()
         }
 
-        fragment?.let {
-            replaceFragmentSafely(it, R.id.layoutFrame)
-        }
-        dismiss()
+        (requireActivity() as MainActivity).switchFragmentFromDialog(this, fragment)
     }
 
 }

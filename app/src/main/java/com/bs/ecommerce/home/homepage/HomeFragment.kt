@@ -190,9 +190,11 @@ class HomeFragment : BaseFragment() {
         })
 
         viewModel.addedToWishListLD.observe(viewLifecycleOwner, Observer { action ->
-            if (action == 1) {
-                replaceFragmentSafely(CartFragment())
+
+            action?.getContentIfNotHandled()?.let { prodId ->
+                replaceFragmentSafely(ProductDetailFragment.newInstance(prodId))
             }
+
             blockingLoader.hideDialog()
         })
     }

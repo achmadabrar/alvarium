@@ -9,13 +9,14 @@ import com.bs.ecommerce.cart.model.data.CartRootData
 import com.bs.ecommerce.common.RequestCompleteListener
 import com.bs.ecommerce.product.model.ProductDetailModelImpl
 import com.bs.ecommerce.product.model.data.AddToCartResponse
+import com.bs.ecommerce.utils.EventLD
 import com.bs.ecommerce.utils.MyApplication
 
 
 open class BaseViewModel : ViewModel()
 {
     var isLoadingLD = MutableLiveData<Boolean>()
-    var addedToWishListLD = MutableLiveData<Int>()
+    var addedToWishListLD = MutableLiveData<EventLD<Long>?>()
 
     var cartLD = MutableLiveData<CartRootData>()
 
@@ -54,16 +55,16 @@ open class BaseViewModel : ViewModel()
 
                 if(data.errorList.isNotEmpty()) {
                     toast(data.errorsAsFormattedString)
-                    addedToWishListLD.value = 1 // goto cart page
+                    addedToWishListLD.value = EventLD(productId) // goto cart page
                 } else {
                     toast(data.message)
-                    addedToWishListLD.value = 2 // success
+                    addedToWishListLD.value = null // success. do nothing
                 }
             }
 
             override fun onRequestFailed(errorMessage: String) {
                 toast(errorMessage)
-                addedToWishListLD.value = 3 // other error. do nothing
+                addedToWishListLD.value = null // error. do nothing
             }
 
         })
