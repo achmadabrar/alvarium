@@ -5,19 +5,19 @@ import com.google.gson.annotations.SerializedName
 
 data class AddProductReview(
     @SerializedName("CanCurrentCustomerLeaveReview")
-    val canCurrentCustomerLeaveReview: Boolean?,
+    var canCurrentCustomerLeaveReview: Boolean?,
     @SerializedName("CustomProperties")
-    val customProperties: CustomProperties?,
+    var customProperties: CustomProperties?,
     @SerializedName("DisplayCaptcha")
-    val displayCaptcha: Boolean?,
+    var displayCaptcha: Boolean?,
     @SerializedName("Rating")
-    val rating: Int?,
+    var rating: Int?,
     @SerializedName("Result")
-    val result: Any?,
+    var result: String?,
     @SerializedName("ReviewText")
-    val reviewText: String?,
+    var reviewText: String?,
     @SerializedName("SuccessfullyAdded")
-    val successfullyAdded: Boolean?,
+    var successfullyAdded: Boolean?,
     @SerializedName("Title")
-    val title: String?
+    var title: String?
 )

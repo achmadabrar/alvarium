@@ -18,7 +18,6 @@ import com.bs.ecommerce.more.viewmodel.ReviewViewModel
 import com.bs.ecommerce.product.AddReviewFragment
 import com.bs.ecommerce.product.model.data.ProductReviewItem
 import com.bs.ecommerce.utils.RecyclerViewMargin
-import com.bs.ecommerce.utils.replaceFragmentSafely
 import kotlinx.android.synthetic.main.fragment_product_review.*
 import kotlinx.android.synthetic.main.item_product_review.view.*
 
@@ -85,8 +84,9 @@ class ProductReviewFragment : BaseFragment() {
     private fun setupView() {
 
         btnAddReview.setOnClickListener {
-            // TODO add review click handle
-            replaceFragmentSafely(AddReviewFragment())
+            AddReviewFragment().show(
+                childFragmentManager, AddReviewFragment::class.java.simpleName
+            )
         }
 
         val mLayoutManager = LinearLayoutManager(
@@ -98,6 +98,25 @@ class ProductReviewFragment : BaseFragment() {
             layoutManager = mLayoutManager
             addItemDecoration(RecyclerViewMargin(10, 1, true))
             adapter = ReviewAdapter()
+        }
+    }
+
+    fun postProductReview(title: String, text: String, rating: Int) {
+
+        with(viewModel as ReviewViewModel) {
+
+            productReviewLD.value?.addProductReview?.let {
+
+                val postData = productReviewLD.value!!
+
+                postData.addProductReview?.let { review ->
+                    review.title = title
+                    review.reviewText = text
+                    review.rating = rating
+                }
+
+                postProductReview(postData, model)
+            }
         }
     }
 

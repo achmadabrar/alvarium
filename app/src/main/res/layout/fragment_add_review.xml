@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/addReviewRootLayout"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:background="?attr/fragmentBackGroundColor">
 
     <EditText
@@ -18,14 +19,14 @@
         android:drawableEnd="@drawable/ic_star_formular"
         android:hint="@string/review_title"
         android:imeOptions="actionNext"
-        android:inputType="textCapWords" />
+        android:inputType="textCapSentences"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
         android:id="@+id/etReviewText"
         style="@style/RoundedEditText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/etReviewTitle"
         android:layout_marginStart="@dimen/fragment_margin"
         android:layout_marginTop="10dp"
         android:layout_marginEnd="@dimen/fragment_margin"
@@ -36,44 +37,45 @@
         android:imeOptions="actionNext"
         android:inputType="textMultiLine"
         android:maxLines="10"
-        android:minLines="4" />
+        android:minLines="4"
+        app:layout_constraintTop_toBottomOf="@id/etReviewTitle" />
 
     <TextView
         android:id="@+id/tvRating"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/etReviewText"
         android:layout_marginStart="10dp"
         android:layout_marginTop="20dp"
-        android:layout_marginBottom="5dp"
         android:layout_marginEnd="10dp"
+        android:layout_marginBottom="5dp"
         android:text="@string/your_rating"
         android:textColor="?attr/primaryTextColor"
-        android:textSize="@dimen/tv_text_size_semi_large" />
+        android:textSize="@dimen/tv_text_size_semi_large"
+        app:layout_constraintTop_toBottomOf="@id/etReviewText" />
 
     <View
         android:id="@+id/horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
+        style="@style/horizontalLineStyle"
         android:layout_marginStart="10dp"
         android:layout_marginEnd="10dp"
-        android:layout_below="@id/tvRating"
-        android:background="?attr/horizontalDividerBg" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvRating" />
 
     <RatingBar
         android:id="@+id/ratingBar"
         style="?android:attr/ratingBarStyleIndicator"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_below="@id/tvRating"
         android:layout_marginStart="@dimen/fragment_margin"
         android:layout_marginTop="10dp"
         android:layout_marginEnd="@dimen/fragment_margin"
+        android:isIndicator="false"
         android:numStars="5"
         android:progressTint="?attr/ratingStarColor"
         android:rating="1"
         android:stepSize="1"
-        android:isIndicator="false"/>
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/horizontal" />
 
     <Button
         android:id="@+id/btnSubmit"
@@ -81,9 +83,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:layout_marginTop="5dp"
+        android:layout_marginTop="15dp"
         android:text="@string/submit"
         android:visibility="visible"
+        app:layout_constraintTop_toBottomOf="@id/ratingBar"
         tools:visibility="visible" />
 
-</RelativeLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

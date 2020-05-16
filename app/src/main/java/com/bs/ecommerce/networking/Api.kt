@@ -233,6 +233,12 @@ interface Api {
     @GET("product/productreviews/{productId}")
     fun getProductReview(@Path("productId") id: Long) : Call<ProductReviewResponse>
 
+    @POST("product/productreviewsadd/{productId}")
+    fun postProductReview(
+        @Path("productId") id: Long,
+        @Body userData: ProductReviewResponse
+    ) : Call<ProductReviewResponse>
+
     // Reward Point
 
     @GET("order/customerrewardpoints")

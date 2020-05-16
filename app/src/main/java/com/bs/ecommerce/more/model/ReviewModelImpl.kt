@@ -57,4 +57,31 @@ class ReviewModelImpl: ReviewModel {
 
         })
     }
+
+    override fun postProductReview(
+        productId: Long,
+        userData: ProductReviewResponse,
+        callback: RequestCompleteListener<ProductReviewResponse>
+    ) {
+        RetroClient.api.postProductReview(productId, userData)
+            .enqueue(object : Callback<ProductReviewResponse> {
+
+                override fun onFailure(call: Call<ProductReviewResponse>, t: Throwable) {
+                    callback.onRequestFailed(t.localizedMessage ?: "Unknown")
+                }
+
+                override fun onResponse(
+                    call: Call<ProductReviewResponse>,
+                    response: Response<ProductReviewResponse>
+                ) {
+
+                    if (response.body() != null && response.code() == 200) {
+                        callback.onRequestSuccess(response.body() as ProductReviewResponse)
+                    } else {
+                        callback.onRequestFailed(TextUtils.getErrorMessage(response))
+                    }
+                }
+
+            })
+    }
 }

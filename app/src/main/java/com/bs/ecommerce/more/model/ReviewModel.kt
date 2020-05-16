@@ -16,7 +16,12 @@ interface ReviewModel {
         callback: RequestCompleteListener<ProductReviewResponse>
     )
 
-    /*fun addReview()
+    fun postProductReview(
+        productId: Long,
+        userData: ProductReviewResponse,
+        callback: RequestCompleteListener<ProductReviewResponse>
+    )
 
-    fun setReviewHelpfulness()*/
+    //fun setReviewHelpfulness(
+    // productId: Long)
 }

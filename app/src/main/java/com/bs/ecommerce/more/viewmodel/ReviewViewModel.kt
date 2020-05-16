@@ -4,10 +4,7 @@ import androidx.lifecycle.MutableLiveData
 import com.bs.ecommerce.base.BaseViewModel
 import com.bs.ecommerce.common.RequestCompleteListener
 import com.bs.ecommerce.more.model.ReviewModel
-import com.bs.ecommerce.product.model.data.MyReviewsResponse
-import com.bs.ecommerce.product.model.data.ProductReview
-import com.bs.ecommerce.product.model.data.ProductReviewData
-import com.bs.ecommerce.product.model.data.ProductReviewResponse
+import com.bs.ecommerce.product.model.data.*
 
 class ReviewViewModel: BaseViewModel() {
 
@@ -71,7 +68,33 @@ class ReviewViewModel: BaseViewModel() {
     fun setReviewHelpfulness(position: Int, positive: Boolean, model: ReviewModel) {
 
         operationalItemIndex = position
+    }
 
+    fun postProductReview(
+        userData: ProductReviewData,
+        model: ReviewModel
+    ) {
+        isLoadingLD.value = true
 
+        model.postProductReview(
+            userData.productId!!, ProductReviewResponse(userData),
+            object: RequestCompleteListener<ProductReviewResponse> {
+
+            override fun onRequestSuccess(data: ProductReviewResponse) {
+                isLoadingLD.value = false
+
+                if(data.data != null) {
+                    productReviewLD.value = data.data
+
+                    toast(data.data.addProductReview?.result)
+                }
+            }
+
+            override fun onRequestFailed(errorMessage: String) {
+                isLoadingLD.value = false
+                toast(errorMessage)
+            }
+
+        })
     }
 }

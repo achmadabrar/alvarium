@@ -1,31 +1,43 @@
 package com.bs.ecommerce.product
 
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.View
-import android.widget.RelativeLayout
+import android.view.ViewGroup
+import android.view.WindowManager
+import android.widget.LinearLayout
+import androidx.fragment.app.DialogFragment
 import com.bs.ecommerce.R
-import com.bs.ecommerce.base.BaseFragment
-import com.bs.ecommerce.base.BaseViewModel
-import com.bs.ecommerce.more.viewmodel.ReviewViewModel
-import com.bs.ecommerce.utils.toast
+import com.bs.ecommerce.more.ProductReviewFragment
+import com.bs.ecommerce.product.model.data.AddProductReview
+import com.bs.ecommerce.utils.EditTextUtils
 import kotlinx.android.synthetic.main.fragment_add_review.*
 import kotlin.math.roundToInt
 
-class AddReviewFragment: BaseFragment() {
-    override fun getLayoutId(): Int = R.layout.fragment_add_review
+class AddReviewFragment : DialogFragment() {
 
-    override fun getRootLayout(): RelativeLayout? = addReviewRootLayout
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? = inflater.inflate(
+        R.layout.fragment_add_review, container, false
+    )
 
-    override fun createViewModel(): BaseViewModel = ReviewViewModel()
+    override fun onResume() {
+        super.onResume()
 
-    override fun getFragmentTitle(): Int = R.string.title_Add_review
+        val params: ViewGroup.LayoutParams? = dialog?.window?.attributes
+        params?.width = LinearLayout.LayoutParams.MATCH_PARENT
+        params?.height = LinearLayout.LayoutParams.WRAP_CONTENT
+
+        dialog?.window?.attributes = params as WindowManager.LayoutParams
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        if(!viewCreated) {
-            setupView()
-        }
+        setupView()
     }
 
     private fun setupView() {
@@ -39,26 +51,20 @@ class AddReviewFragment: BaseFragment() {
     }
 
     private fun submitIfFormIsValid() {
-        val title = etReviewTitle.text.toString().trim()
-        val text = etReviewText.text.toString().trim()
-        //val rating: Int = ratingBar.rating.roundToInt()
+        val etUtil = EditTextUtils()
 
-        if(title.isEmpty()) {
-            toast(getString(R.string.validation_toast, etReviewTitle.hint.toString()))
-            return
+        val title = etUtil.showToastIfEmpty(etReviewTitle) ?: return
+        val review = etUtil.showToastIfEmpty(etReviewText) ?: return
+        val rating: Int = ratingBar.rating.roundToInt()
+
+        if (parentFragment != null && parentFragment is ProductReviewFragment) {
+
+            (parentFragment as ProductReviewFragment).postProductReview(
+                title, review, rating
+            )
+
+            dismiss()
         }
-
-        if(text.isEmpty()) {
-            toast(getString(R.string.validation_toast, etReviewText.hint.toString()))
-            return
-        }
-
-        /*if(rating == 0) {
-            toast(getString(R.string.validation_toast, etEnquiry.hint.toString()))
-            return
-        }*/
-
-        // TODO api call here
     }
 
 
