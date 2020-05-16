@@ -10,8 +10,6 @@ import com.bs.ecommerce.checkout.model.data.ShippingAddressModel
 import com.bs.ecommerce.checkout.model.data.Store
 import com.bs.ecommerce.networking.Constants
 import com.bs.ecommerce.utils.MyApplication
-import com.bs.ecommerce.utils.toast
-import com.google.android.material.bottomnavigation.BottomNavigationView
 import kotlinx.android.synthetic.main.fragment_base_billing_adddress.*
 import kotlinx.android.synthetic.main.fragment_billing_address.*
 import kotlinx.android.synthetic.main.fragment_billing_address_store_layout.*
@@ -24,6 +22,8 @@ class ShippingAddressFragment : BaseCheckoutAddressFragment()
     override fun onViewCreated(view: View, savedInstanceState: Bundle?)
     {
         super.onViewCreated(view, savedInstanceState)
+
+        addressTabLayout?.getTabAt(Constants.SHIPPING_ADDRESS_TAB)?.select()
 
         initShippingLayout(MyApplication.checkoutSaveResponse!!)
 
@@ -51,15 +51,15 @@ class ShippingAddressFragment : BaseCheckoutAddressFragment()
             .saveShippingFromExistingAddressVM(type = Constants.StorePickUp, addressId = addressID, model = model)
     }
 
-    private fun initShippingLayout(saveBillingResponse: CheckoutSaveResponse)
+    private fun initShippingLayout(saveResponse: CheckoutSaveResponse)
     {
 
-        with(saveBillingResponse.data.shippingAddressModel)
+        with(saveResponse.data.shippingAddressModel)
         {
 
             newAddress = shippingNewAddress
 
-            if(saveBillingResponse.data.shippingAddressModel.allowPickupInStore)
+            if(saveResponse.data.shippingAddressModel.allowPickupInStore)
                 storeLayout?.visibility = View.VISIBLE
             else
                 storeLayout?.visibility = View.GONE
@@ -83,7 +83,7 @@ class ShippingAddressFragment : BaseCheckoutAddressFragment()
                     existingAddressLayout?.visibility = View.VISIBLE
                 }
             }
-            showShippingAddressUI(saveBillingResponse.data.shippingAddressModel)
+            showShippingAddressUI(saveResponse.data.shippingAddressModel)
         }
 
     }

@@ -60,21 +60,12 @@ abstract class BaseCheckoutNavigationFragment : BaseFragment()
 
                         Constants.ShippingAddress -> {
 
-                            addressTabLayout?.getTabAt(Constants.SHIPPING_ADDRESS_TAB)?.select()
+                            replaceFragmentWithoutSavingState(ShippingAddressFragment())
                         }
                         Constants.ShippingMethod -> {
 
-                            "adsafasfsa".showLog("gese")
-                            //replaceFragmentWithoutSavingState(ShippingMethodFragment()) worked
-
-
-                            //checkoutBottomNav?.menu?.getItem(4)?.isChecked = true
-                            //checkoutBottomNav?.currentItem = Constants.ShippingMethod
-
-                            (parentFragment as CheckoutStepFragment).replaceFragment(ShippingMethodFragment())
+                            replaceFragmentWithoutSavingState(ShippingMethodFragment())
                         }
-
-
 
                         Constants.PaymentMethod -> {
                             replaceFragmentWithoutSavingState(PaymentMethodFragment())
@@ -93,13 +84,18 @@ abstract class BaseCheckoutNavigationFragment : BaseFragment()
     {
         when(tabPosition)
         {
-            Constants.BILLING_ADDRESS_TAB -> layoutCheckoutAddress?.visibility = View.VISIBLE
+            Constants.BILLING_ADDRESS_TAB ->
+            {
+                if(!isCurrentTabBilling())
+                    replaceFragmentWithoutSavingState(BillingAddressFragment())
+            }
 
             Constants.SHIPPING_ADDRESS_TAB ->
             {
                 if (CheckoutStepFragment.isBillingAddressSubmitted)
                 {
-                    replaceFragmentWithoutSavingState(ShippingAddressFragment())
+                    if(!isCurrentTabShipping())
+                        replaceFragmentWithoutSavingState(ShippingAddressFragment())
 
                 }
                 else
@@ -107,8 +103,6 @@ abstract class BaseCheckoutNavigationFragment : BaseFragment()
                     toast("Please complete previous step")
                     Handler().post {   addressTabLayout?.getTabAt(Constants.BILLING_ADDRESS_TAB)?.select()  }
                 }
-
-                "sfdsgsdgd".showLog(CheckoutStepFragment.isBillingAddressSubmitted.toString())
             }
         }
     }
@@ -128,23 +122,6 @@ abstract class BaseCheckoutNavigationFragment : BaseFragment()
         })
     }
 
-    private fun replaceFragment(fragment: BaseFragment) {
-        val transaction = requireActivity().supportFragmentManager.beginTransaction()
-        transaction.addToBackStack(fragment.tag)
-        transaction.replace(R.id.checkoutFragmentHolder, fragment)
-        //transaction.commit()
-
-        if (requireActivity().supportFragmentManager.isStateSaved)
-        {
-            transaction.commit()
-            childFragmentManager.executePendingTransactions()
-        }
-
-        val csFragment = requireActivity().supportFragmentManager.
-            findFragmentByTag(CheckoutStepFragment::class.java.simpleName)
-
-        if(csFragment is CheckoutStepFragment) csFragment.updateBottomNavItem(fragment)
-    }
 
     private fun replaceFragmentWithoutSavingState(fragment: BaseFragment) {
         val transaction = requireActivity().supportFragmentManager.beginTransaction()
@@ -153,13 +130,7 @@ abstract class BaseCheckoutNavigationFragment : BaseFragment()
         transaction.commit()
 
         childFragmentManager.executePendingTransactions()
-        /*if (requireActivity().supportFragmentManager.isStateSaved)
-        {
-            transaction.commit()
-            //childFragmentManager.executePendingTransactions()
-        }*/
 
-        //replaceFragmentSafely(ShippingAddressFragment())
 
         val csFragment = requireActivity().supportFragmentManager.
                 findFragmentByTag(CheckoutStepFragment::class.java.simpleName)
@@ -167,13 +138,10 @@ abstract class BaseCheckoutNavigationFragment : BaseFragment()
         if(csFragment is CheckoutStepFragment) csFragment.updateBottomNavItem(fragment)
     }
 
-
-    private fun isCurrentTab()
-    {
-
-    }
-
-    protected fun isCurrentTabShipping() : Boolean
+    private fun isCurrentTabShipping() : Boolean
             = requireActivity().supportFragmentManager.findFragmentById(R.id.checkoutFragmentHolder) is ShippingAddressFragment
+
+    private fun isCurrentTabBilling() : Boolean
+            = requireActivity().supportFragmentManager.findFragmentById(R.id.checkoutFragmentHolder) is BillingAddressFragment
 
 }
