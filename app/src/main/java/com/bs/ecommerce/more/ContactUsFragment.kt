@@ -3,20 +3,30 @@ package com.bs.ecommerce.more
 import android.os.Bundle
 import android.view.View
 import android.widget.RelativeLayout
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import com.bs.ecommerce.R
 import com.bs.ecommerce.base.BaseFragment
 import com.bs.ecommerce.base.BaseViewModel
-import com.bs.ecommerce.more.viewmodel.ContactUsViewMode
+import com.bs.ecommerce.more.model.CommonModel
+import com.bs.ecommerce.more.model.CommonModelImpl
+import com.bs.ecommerce.more.viewmodel.ContactUsViewModel
+import com.bs.ecommerce.product.model.data.ContactUsData
+import com.bs.ecommerce.utils.EditTextUtils
+import com.bs.ecommerce.utils.TextUtils
 import com.bs.ecommerce.utils.isEmailValid
 import com.bs.ecommerce.utils.toast
 import kotlinx.android.synthetic.main.fragment_contact_us.*
 
 class ContactUsFragment: BaseFragment() {
+
+    private lateinit var model: CommonModel
+
     override fun getLayoutId(): Int = R.layout.fragment_contact_us
 
     override fun getRootLayout(): RelativeLayout? = contactUsRootLayout
 
-    override fun createViewModel(): BaseViewModel = ContactUsViewMode()
+    override fun createViewModel(): BaseViewModel = ContactUsViewModel()
 
     override fun getFragmentTitle(): Int = R.string.title_contact_us
 
@@ -24,7 +34,35 @@ class ContactUsFragment: BaseFragment() {
         super.onViewCreated(view, savedInstanceState)
 
         if(!viewCreated) {
+
+            model = CommonModelImpl()
+            viewModel = ViewModelProvider(this).get(ContactUsViewModel::class.java)
+
             setupView()
+        }
+
+        setLiveDataObserver()
+    }
+
+    private fun setLiveDataObserver() {
+
+        (viewModel as ContactUsViewModel).apply {
+
+            contactUsLD.observe(viewLifecycleOwner, Observer { data ->
+
+                if(data.successfullySent == true) {
+                    etName?.text?.clear()
+                    etEmail?.text?.clear()
+                    etEnquiry?.text?.clear()
+                }
+            })
+
+            isLoadingLD.observe(viewLifecycleOwner, Observer { isShowLoader ->
+                if (isShowLoader)
+                    showLoading()
+                else
+                    hideLoading()
+            })
         }
     }
 
@@ -33,26 +71,22 @@ class ContactUsFragment: BaseFragment() {
     }
 
     private fun submitIfFormIsValid() {
-        val name = etName.text.toString().trim()
-        val email = etEmail.text.toString().trim()
-        val enquiry = etEnquiry.text.toString().trim()
+        val etUtil = EditTextUtils()
 
-        if(name.isEmpty()) {
-            toast(getString(R.string.validation_toast, etName.hint.toString()))
+        val name = etUtil.showToastIfEmpty(etName) ?: return
+        val email = etUtil.showToastIfEmpty(etEmail) ?: return
+        val enquiry = etUtil.showToastIfEmpty(etEnquiry) ?: return
+
+        if(!email.isEmailValid()) {
+            toast(getString(R.string.enter_valid_email))
             return
         }
 
-        if(email.isEmpty() || !email.isEmailValid()) {
-            toast(getString(R.string.validation_toast, etEmail.hint.toString()))
-            return
+        ContactUsData(
+            name, email, enquiry
+        ).let {
+            (viewModel as ContactUsViewModel).postCustomersEnquiry(it, model)
         }
-
-        if(enquiry.isEmpty()) {
-            toast(getString(R.string.validation_toast, etEnquiry.hint.toString()))
-            return
-        }
-
-        // TODO api call here
     }
 
 
