@@ -15,10 +15,12 @@ import com.bs.ecommerce.base.BaseViewModel
 import com.bs.ecommerce.more.model.RewardPointModel
 import com.bs.ecommerce.more.model.RewardPointModelImpl
 import com.bs.ecommerce.more.viewmodel.RewardPointViewModel
-import com.bs.ecommerce.product.model.data.ProductReviewItem
+import com.bs.ecommerce.product.model.data.RewardPoint
 import com.bs.ecommerce.utils.RecyclerViewMargin
+import com.bs.ecommerce.utils.TextUtils
 import kotlinx.android.synthetic.main.fragment_reward_point.*
-import kotlinx.android.synthetic.main.item_product_review.view.*
+import kotlinx.android.synthetic.main.item_reward_points.view.*
+import java.lang.ref.WeakReference
 
 class RewardPointFragment : BaseFragment() {
 
@@ -54,27 +56,19 @@ class RewardPointFragment : BaseFragment() {
 
             rewardPointLD.observe(viewLifecycleOwner, Observer { rewardPoint ->
 
-                /*Your current balance is 500 reward points ($500.00).
-                  Minimum balance allowed to use is 1 reward points ($1.00).
+                tvRewardBalance.text = getString(R.string.reward_summary,
+                    rewardPoint.rewardPointsBalance, rewardPoint.rewardPointsAmount,
+                    rewardPoint.minimumRewardPointsBalance, rewardPoint.minimumRewardPointsAmount)
 
 
-                  Your current balance is 0 reward points ($0.00).
-                    Minimum balance allowed to use is 1 reward points ($1.00).
-                    History
-                    There is no balance history yet*/
-
-                /*if (data?.items?.isNullOrEmpty() == true) {
+                if (rewardPoint?.rewardPoints?.isNullOrEmpty() == true) {
                     tvNoData.visibility = View.VISIBLE
                 } else {
                     tvNoData.visibility = View.GONE
 
-                    if (data?.items?.isNotEmpty() == true)
-                        (rvReview.adapter as ReviewAdapter).addData(data.items)
+                    if (rewardPoint?.rewardPoints?.isNotEmpty() == true)
+                        (rvReview.adapter as ReviewAdapter).addData(rewardPoint.rewardPoints)
                 }
-
-                val reviewEnabled = data?.addProductReview?.canCurrentCustomerLeaveReview == true*/
-
-                //btnAddReview.visibility = if(reviewEnabled) View.VISIBLE else View.GONE
             })
 
             isLoadingLD.observe(viewLifecycleOwner, Observer { isShowLoader ->
@@ -103,12 +97,13 @@ class RewardPointFragment : BaseFragment() {
 
     inner class ReviewAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
-        private var list: MutableList<ProductReviewItem> = mutableListOf()
+        private var list: MutableList<RewardPoint> = mutableListOf()
+        private val textUtils = TextUtils()
 
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
             val itemView =
                 LayoutInflater.from(parent.context)
-                    .inflate(R.layout.item_product_review, parent, false)
+                    .inflate(R.layout.item_reward_points, parent, false)
             return object : RecyclerView.ViewHolder(itemView) {}
         }
 
@@ -119,28 +114,21 @@ class RewardPointFragment : BaseFragment() {
 
             holder.itemView.apply {
 
-                tvReviewTitle.text = item.title
-                tvReviewText.text = item.reviewText
-                tvDate.text = item.writtenOnStr
-                tvReviewBy.text = item.customerName
+                tvPoints?.text = item.points?.toString()
+                tvBalance?.text = item.pointsBalance
+                tvMessage?.text = item.message
 
-                tvHelpfulnessCount.text = item.helpfulness?.let {
-                    "(${it.helpfulYesTotal ?: 0}/${it.helpfulNoTotal ?: 0})"
-                }
+                tvCreatedOn?.text = textUtils.tzTimeConverter(
+                    item.createdOn, WeakReference(holder.itemView.context)
+                )
 
-                ratingBar.rating = (item.rating ?: 0).toFloat()
-
-                tvYes.setOnClickListener {
-                    // Positive review
-                }
-
-                tvNo.setOnClickListener {
-                    // Negative review
-                }
+                tvEndDate?.text = textUtils.tzTimeConverter(
+                    item.endDate, WeakReference(holder.itemView.context)
+                )
             }
         }
 
-        fun addData(newData: List<ProductReviewItem>) {
+        fun addData(newData: List<RewardPoint>) {
             list.clear()
             list.addAll(newData)
             notifyDataSetChanged()

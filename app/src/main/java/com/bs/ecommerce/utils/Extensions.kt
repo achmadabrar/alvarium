@@ -90,10 +90,11 @@ fun Activity.toast(message: String, duration: Int = Toast.LENGTH_SHORT) {
 
 fun Fragment.toast(resourceId: Int) = toast(getString(resourceId))
 
-fun Fragment.toast(message: String, duration: Int = Toast.LENGTH_SHORT) {
-    toast?.cancel()
-    Toast.makeText(activity, message, duration).show()
-
+fun Fragment.toast(message: String?, duration: Int = Toast.LENGTH_SHORT) {
+    message?.apply {
+        toast?.cancel()
+        Toast.makeText(activity, message, duration).show()
+    }
 }
 
 

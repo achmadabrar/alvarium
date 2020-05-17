@@ -68,7 +68,7 @@ class RegistrationViewModel  : BaseViewModel()
             override fun onRequestSuccess(data: GetRegistrationResponse)
             {
                 isLoadingLD.postValue(false)
-                toast(data.message ?: "")
+                toast(data.message)
 
                 actionSuccessLD.value = true
                 //getRegistrationResponseLD.postValue(data)

@@ -109,6 +109,7 @@
     <string name="cart_empty">Cart Is Empty</string>
     <string name="cart_items_count">%d Items</string>
     <string name="calculated_during_checkout">Calculated During Checkout</string>
+    <string name="succcessfully_added_to_wishlist">Successfully added to wish list</string>
 
     <!-- Checkout Dialog  -->
     <string name="checkout_msg_long">By creating an account on our website, you will be able to shop faster, be up to date on an orders status, and keep track of the orders you have previously made.</string>
@@ -143,6 +144,7 @@
     <string name="featured_products">Featured Products</string>
     <string name="availability">Availability</string>
     <string name="add_to_cart">Add To Cart</string>
+    <string name="add_to_wishlist">Add To WishList</string>
     <string name="add_to_cart_plus">+ Add To Cart</string>
     <string name="buy_now">Buy Now!</string>
     <string name="size">Size</string>
@@ -216,6 +218,12 @@
     <string name="remove">Remove</string>
     <string name="invalid_id">Invalid ID</string>
     <string name="no_items_in_your_wishlist">No Items in Your Wish List</string>
+
+
+    <!-- Address   -->
+    <string name="no_reward_points">There is no balance history yet</string>
+    <string name="reward_summary">Current balance is %.2f (%s)\nMinimum balance allowed to use is %.2f (%s)</string>
+    <string name="history_underlined"><u>History</u></string>
 
     <!-- Address   -->
     <string name="add_new">Add New Address</string>

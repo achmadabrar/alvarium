@@ -6,8 +6,10 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bs.ecommerce.R
 import com.bs.ecommerce.product.model.data.WishListItem
 import com.bs.ecommerce.utils.ItemClickListener
+import com.bs.ecommerce.utils.TextUtils
 import com.bs.ecommerce.utils.loadImg
 import kotlinx.android.synthetic.main.item_wish_list.view.*
+
 
 class WishListAdapter(
     private val clickListener: ItemClickListener<WishListItem>
@@ -29,6 +31,10 @@ class WishListAdapter(
         holder.itemView.tvProductPrice.text = list[position].subTotal
 
         holder.itemView.ivProductThumb.loadImg(list[position].picture?.imageUrl)
+
+        holder.itemView.tvCustomAttribute.text = TextUtils()
+            .getHtmlFormattedText(list[position].attributeInfo)
+        //holder.itemView.tvCustomAttribute.movementMethod = ScrollingMovementMethod()
 
         holder.itemView.btnAddToCart.setOnClickListener { v ->
             clickListener.onClick(v, position, list[position])

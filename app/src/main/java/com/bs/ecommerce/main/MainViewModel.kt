@@ -1,7 +1,6 @@
 package com.bs.ecommerce.main
 
 import androidx.lifecycle.MutableLiveData
-import com.bs.ecommerce.base.BaseViewModel
 import com.bs.ecommerce.checkout.CheckoutAddressViewModel
 import com.bs.ecommerce.common.RequestCompleteListener
 import com.bs.ecommerce.home.homepage.model.HomePageModel
@@ -16,6 +15,7 @@ import com.bs.ecommerce.networking.common.BaseResponse
 import com.bs.ecommerce.product.model.data.CategoryModel
 import com.bs.ecommerce.product.model.data.Manufacturer
 import com.bs.ecommerce.product.model.data.ProductSummary
+import com.bs.ecommerce.utils.showLog
 
 
 class MainViewModel : CheckoutAddressViewModel() {
@@ -30,9 +30,10 @@ class MainViewModel : CheckoutAddressViewModel() {
     var imageBannerLD = MutableLiveData<SliderData>()
 
     var appSettingsLD = MutableLiveData<AppLandingData>()
-    var toastMessageLD = MutableLiveData<String>()
 
     var testUrlSuccessLD = MutableLiveData<Boolean>()
+
+    private val logTag: String = "nop_" + this::class.java.simpleName
 
 
     fun getFeaturedProducts(model: HomePageModel) {
@@ -61,7 +62,7 @@ class MainViewModel : CheckoutAddressViewModel() {
 
             override fun onRequestFailed(errorMessage: String) {
                 featuredCategoryLD.value = listOf()
-                toastMessageLD.value = errorMessage
+                toast(errorMessage)
             }
         })
     }
@@ -74,7 +75,7 @@ class MainViewModel : CheckoutAddressViewModel() {
 
             override fun onRequestFailed(errorMessage: String) {
                 bestSellingProductLD.value = listOf()
-                toastMessageLD.value = errorMessage
+                logTag.showLog(errorMessage)
             }
 
         })
@@ -88,7 +89,7 @@ class MainViewModel : CheckoutAddressViewModel() {
 
             override fun onRequestFailed(errorMessage: String) {
                 manufacturerListLD.value = listOf()
-                toastMessageLD.value = errorMessage
+                logTag.showLog(errorMessage)
             }
         })
     }
@@ -100,7 +101,7 @@ class MainViewModel : CheckoutAddressViewModel() {
             }
 
             override fun onRequestFailed(errorMessage: String) {
-                toastMessageLD.value = errorMessage
+                logTag.showLog(errorMessage)
             }
 
         })
@@ -154,12 +155,12 @@ class MainViewModel : CheckoutAddressViewModel() {
             override fun onRequestSuccess(data: BaseResponse) {
                 isLoadingLD.value = false
 
-                toastMessageLD.value = data.message
+                toast(data.message)
             }
 
             override fun onRequestFailed(errorMessage: String) {
                 isLoadingLD.value = false
-                toastMessageLD.value = errorMessage
+                toast(errorMessage)
             }
         })
     }
@@ -172,12 +173,12 @@ class MainViewModel : CheckoutAddressViewModel() {
             override fun onRequestSuccess(data: BaseResponse) {
                 isLoadingLD.value = false
 
-                toastMessageLD.value = data.message
+                toast(data.message)
             }
 
             override fun onRequestFailed(errorMessage: String) {
                 isLoadingLD.value = false
-                toastMessageLD.value = errorMessage
+                toast(errorMessage)
             }
         })
     }

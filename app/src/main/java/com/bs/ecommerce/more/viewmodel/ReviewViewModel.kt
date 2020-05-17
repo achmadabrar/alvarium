@@ -23,7 +23,7 @@ class ReviewViewModel: BaseViewModel() {
 
     fun getMyReviews(model: ReviewModel) {
 
-        if(lastPageReached) return
+        if(lastPageReached || isLoadingLD.value == true) return
 
         isLoadingLD.value = true
 
@@ -95,7 +95,7 @@ class ReviewViewModel: BaseViewModel() {
                 isLoadingLD.value = false
 
                 if(data.data != null) {
-                    toast(data.message ?: "")
+                    toast(data.message)
 
                     data.data.productReviewId = reviewId
                     operationalReviewIdLD.value = data.data

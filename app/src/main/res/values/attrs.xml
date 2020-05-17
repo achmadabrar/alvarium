@@ -5,6 +5,15 @@
         <attr name="aspectRatio" format="float"/>
     </declare-styleable>
 
+    <declare-styleable name="IconButton">
+        <attr name="buttonTint" format="color" />
+        <attr name="textColor" format="color" />
+        <attr name="text" format="string" />
+        <attr name="drawableStart" format="integer"/>
+        <attr name="drawableEnd" format="integer"/>
+        <attr name="iconTint" format="color"/>
+    </declare-styleable>
+
     <attr name="toolbarColor" format="reference"/>
     <attr name="toolbarTextColor" format="reference"/>
 
