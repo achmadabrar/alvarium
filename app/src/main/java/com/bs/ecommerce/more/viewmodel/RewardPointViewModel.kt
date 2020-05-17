@@ -18,7 +18,7 @@ class RewardPointViewModel: BaseViewModel() {
 
     fun getRewardPoints(model: RewardPointModel) {
 
-        if(lastPageReached) return
+        if(lastPageReached || isLoadingLD.value == true) return
 
         isLoadingLD.value = true
 

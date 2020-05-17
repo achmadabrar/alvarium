@@ -1,47 +1,41 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="@dimen/btn_height"
-    android:background="@drawable/rect_background_ripple"
-    android:backgroundTint="@color/product_list_btn_bg">
+    android:layout_centerInParent="true"
+    android:background="@drawable/rect_background_ripple">
 
     <ImageView
         android:id="@+id/icStart"
-        android:layout_width="0dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:contentDescription="@string/placeholder"
+        android:layout_toStartOf="@id/tvLabel"
+        android:layout_centerVertical="true"
         android:tint="?attr/primaryIconTint"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
         tools:src="@drawable/ic_arrow_down" />
 
     <TextView
         android:id="@+id/tvLabel"
-        android:layout_width="0dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
         android:layout_marginEnd="10dp"
         android:gravity="center"
         android:textColor="?attr/primaryTextColor"
         android:textSize="@dimen/button_text_size"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@id/icEnd"
-        app:layout_constraintStart_toEndOf="@id/icStart"
-        app:layout_constraintTop_toTopOf="parent"
+        android:layout_centerInParent="true"
         tools:text="@string/placeholder" />
 
     <ImageView
         android:id="@+id/icEnd"
-        android:layout_width="0dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:contentDescription="@string/placeholder"
         android:tint="?attr/primaryIconTint"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        android:layout_toEndOf="@id/tvLabel"
+        android:layout_centerVertical="true"
         tools:src="@drawable/ic_arrow_down" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+</RelativeLayout>

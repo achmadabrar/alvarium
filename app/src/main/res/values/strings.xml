@@ -143,6 +143,7 @@
     <string name="featured_products">Featured Products</string>
     <string name="availability">Availability</string>
     <string name="add_to_cart">Add To Cart</string>
+    <string name="add_to_wishlist">Add To WishList</string>
     <string name="add_to_cart_plus">+ Add To Cart</string>
     <string name="buy_now">Buy Now!</string>
     <string name="size">Size</string>

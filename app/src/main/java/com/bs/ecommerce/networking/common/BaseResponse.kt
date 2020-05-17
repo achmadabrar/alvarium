@@ -12,7 +12,7 @@ open class BaseResponse
 {
     @SerializedName("FormValues") var formValues: List<KeyValuePair>? = null
 
-    @SerializedName("Message") var message: String = ""
+    @SerializedName("Message") var message: String? = ""
 
     @SerializedName("ErrorList")  var errorList: Array<String> = arrayOf()
 

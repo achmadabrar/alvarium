@@ -25,7 +25,7 @@ class ContactUsViewModel: BaseViewModel() {
                 if(data.contactUsData != null)
                     contactUsLD.value = data.contactUsData
 
-                toast(data.message ?: "")
+                toast(data.message)
             }
 
             override fun onRequestFailed(errorMessage: String) {

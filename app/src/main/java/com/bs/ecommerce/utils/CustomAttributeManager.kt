@@ -3,11 +3,12 @@ package com.bs.ecommerce.utils
 import android.content.Context
 import android.content.res.ColorStateList
 import android.graphics.Color
+import android.text.Editable
+import android.text.TextWatcher
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.inputmethod.EditorInfo
 import android.widget.*
 import androidx.appcompat.widget.AppCompatRadioButton
 import androidx.core.view.ViewCompat
@@ -23,6 +24,7 @@ import kotlinx.android.synthetic.main.color_selection_layout.view.*
 import kotlinx.android.synthetic.main.other_attr_layout.view.*
 import org.jetbrains.anko.layoutInflater
 import java.util.*
+
 
 class CustomAttributeManager(
     private val attributes: List<CustomAttribute>,
@@ -191,16 +193,6 @@ class CustomAttributeManager(
         val layout = layoutInflater.inflate(R.layout.edittext_attribute, viewGroup)
         layout.tag = attr.id
 
-        //val tvName = layout.findViewById<TextView>(R.id.tvLayoutTitle)
-        //tvName.text = attr.textPrompt ?: attr.name
-
-        //val tvDesc = layout.findViewById<TextView>(R.id.tvLayoutSubTitle)
-        //tvDesc.text = attr.description ?: "Select your ${attr.name}"
-
-        /*tvName.setCompoundDrawablesWithIntrinsicBounds(
-            0, 0, if (attr.isRequired) R.drawable.ic_star_formular else 0, 0
-        )*/
-
         val etUserInput = layout.findViewById<EditText>(R.id.etUserInput)
         etUserInput.hint = attr.textPrompt ?: attr.name
         etUserInput.setCompoundDrawablesWithIntrinsicBounds(
@@ -210,18 +202,24 @@ class CustomAttributeManager(
         val value = AttributeControlValue()
         value.id = -1
 
-        etUserInput.setOnEditorActionListener(TextView.OnEditorActionListener { v, actionId, _ ->
-            if (actionId == EditorInfo.IME_ACTION_DONE) {
-                "xyz".showLog(v.text.toString())
-                // save text to viewmodel
-                value.name = v.text.toString()
+        etUserInput.addTextChangedListener(object : TextWatcher {
+            override fun afterTextChanged(s: Editable) {}
+            override fun beforeTextChanged(
+                s: CharSequence, start: Int,
+                count: Int, after: Int) {}
+
+            override fun onTextChanged(
+                s: CharSequence, start: Int,
+                before: Int, count: Int
+            ) {
+                "xyz".showLog(s.toString())
+
+                value.name = s.toString()
                 setAttrSelected(attr.id, value,
                     isSelected = true,
                     multipleSelection = false
                 )
-                return@OnEditorActionListener false
             }
-            false
         })
 
         inflatedViews[attr.id] = layout

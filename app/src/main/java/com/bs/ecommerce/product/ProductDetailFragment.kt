@@ -14,7 +14,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.bs.ecommerce.R
 import com.bs.ecommerce.base.BaseFragment
 import com.bs.ecommerce.base.BaseViewModel
-import com.bs.ecommerce.cart.CartFragment
 import com.bs.ecommerce.home.FeaturedProductAdapter
 import com.bs.ecommerce.more.ProductReviewFragment
 import com.bs.ecommerce.networking.Api
@@ -218,6 +217,7 @@ class ProductDetailFragment : BaseFragment(), View.OnClickListener {
                         productPriceLayout.visibility = View.GONE
                         productQuantityLayout.visibility = View.GONE
                         addtoCartLayout.visibility = View.GONE
+                        btnAddToWishList.visibility = View.GONE
 
                         // Hide horizontal dividers
                         hd11.visibility = View.GONE
@@ -228,6 +228,7 @@ class ProductDetailFragment : BaseFragment(), View.OnClickListener {
                         return@Observer
                     } else {
                         addtoCartLayout.visibility = View.VISIBLE
+                        btnAddToWishList.visibility = View.VISIBLE
                     }
 
                     productDetailsScrollView.visibility = View.VISIBLE
@@ -368,10 +369,10 @@ class ProductDetailFragment : BaseFragment(), View.OnClickListener {
                             toast(data.name ?: "")
 
                         R.id.ivAddToWishList ->
-                            addProductToWishList(data.id!!)
+                            addToCartClickAction(data.id!!, data.quantity.toString(), cart = false)
 
                         R.id.ivAddToCart ->
-                            addToCartClickAction(data.id!!, data.quantity.toString())
+                            addToCartClickAction(data.id!!, data.quantity.toString(), cart = true)
                     }
 
                 }
@@ -466,16 +467,21 @@ class ProductDetailFragment : BaseFragment(), View.OnClickListener {
         }
 
         btnAddToCart?.setOnClickListener {
-            addToCartClickAction(productId, productQuantityLayout?.tvQuantity?.text.toString())
+            addToCartClickAction(productId, productQuantityLayout?.tvQuantity?.text.toString(), cart = true)
+        }
+
+        btnAddToWishList?.setOnClickListener {
+            addToCartClickAction(productId, productQuantityLayout?.tvQuantity?.text.toString(), cart = false)
         }
     }
 
-    private fun addToCartClickAction(productId: Long, quantity: String) {
+    private fun addToCartClickAction(productId: Long, quantity: String, cart: Boolean) {
         (viewModel as ProductDetailViewModel).addProductToCartModel(
             productId,
             quantity,
             customAttributeManager?.getFormData(Api.productAttributePrefix) ?: KeyValueFormData(),
-            model
+            model,
+            if(cart) Api.typeShoppingCart else Api.typeWishList
         )
     }
 

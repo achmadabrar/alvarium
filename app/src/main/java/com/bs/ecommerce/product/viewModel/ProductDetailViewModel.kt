@@ -125,12 +125,13 @@ class ProductDetailViewModel : BaseViewModel() {
     fun addProductToCartModel(productId : Long,
                               quantity: String,
                               keyValueFormData: KeyValueFormData,
-                              model: ProductDetailModel)
+                              model: ProductDetailModel,
+                              cartType: Long = Api.typeShoppingCart)
     {
 
         isLoadingLD.value = true
 
-        model.addProductToCartModel(productId, Api.typeShoppingCart, prepareBodyForAttributes(productId, quantity, keyValueFormData),
+        model.addProductToCartModel(productId, cartType, prepareBodyForAttributes(productId, quantity, keyValueFormData),
 
             object : RequestCompleteListener<AddToCartResponse>
         {
