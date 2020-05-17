@@ -32,11 +32,6 @@ class CheckoutStepFragment : BaseFragment() {
         checkoutBottomNav.setOnNavigationItemSelectedListener { item ->
             when (item.itemId) {
                 R.id.menu_address -> replaceFragment(BillingAddressFragment())
-                    /*if(!isBillingAddressSubmitted)
-                                        replaceFragment(BaseBillingAddressFragment())
-                                     else
-                                        replaceFragment(ShippingAddressFragment())*/
-
                 R.id.menu_shipping -> replaceFragment(ShippingMethodFragment())
                 R.id.menu_payment -> replaceFragment(PaymentMethodFragment())
                 R.id.menu_confirm -> replaceFragment(ConfirmOrderFragment())
