@@ -5,6 +5,7 @@ import android.view.View
 import androidx.lifecycle.Observer
 import com.bs.ecommerce.checkout.model.data.BillingAddressResponse
 import com.bs.ecommerce.networking.Constants
+import com.bs.ecommerce.utils.MyApplication
 import com.bs.ecommerce.utils.showLog
 import kotlinx.android.synthetic.main.fragment_base_billing_adddress.*
 import kotlinx.android.synthetic.main.fragment_billing_address.*

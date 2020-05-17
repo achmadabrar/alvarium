@@ -54,7 +54,7 @@ class MyApplication : MultiDexApplication()
             //BaseActivity.updateHotCount(counter)
         }
 
-        var checkoutSaveResponse : CheckoutSaveResponse? = null
+        var checkoutSaveResponse : CheckoutSaveResponse = CheckoutSaveResponse()
     }
 
 }

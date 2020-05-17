@@ -14,6 +14,7 @@ import com.bs.ecommerce.base.BaseViewModel
 import com.bs.ecommerce.checkout.model.data.PaymentMethod
 import com.bs.ecommerce.customViews.CheckableLinearLayout
 import com.bs.ecommerce.customViews.MethodSelectionProcess
+import com.bs.ecommerce.networking.Constants
 import com.bs.ecommerce.utils.MyApplication
 import com.bs.ecommerce.utils.loadImg
 import kotlinx.android.synthetic.main.fragment_shipping_method.*
@@ -36,7 +37,7 @@ class PaymentMethodFragment : BaseCheckoutNavigationFragment() {
     {
         super.onViewCreated(view, savedInstanceState)
 
-        val paymentMethods = MyApplication.checkoutSaveResponse!!.data.paymentMethodModel.paymentMethods
+        val paymentMethods = MyApplication.checkoutSaveResponse.data.paymentMethodModel.paymentMethods
 
         addMethodRadioGroup(paymentMethods)
 
