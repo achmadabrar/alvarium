@@ -3,11 +3,10 @@ package com.bs.ecommerce.checkout
 import androidx.lifecycle.MutableLiveData
 import com.bs.ecommerce.auth.register.data.KeyValuePair
 import com.bs.ecommerce.base.BaseViewModel
-import com.bs.ecommerce.cart.model.data.CartRootData
 import com.bs.ecommerce.checkout.model.CheckoutModel
 import com.bs.ecommerce.checkout.model.data.*
 import com.bs.ecommerce.common.RequestCompleteListener
-import com.bs.ecommerce.networking.Constants
+import com.bs.ecommerce.networking.NetworkConstants
 import com.bs.ecommerce.networking.common.Data
 import com.bs.ecommerce.networking.common.ExistingAddress
 import com.bs.ecommerce.networking.common.KeyValueFormData
@@ -134,19 +133,19 @@ open class CheckoutAddressViewModel : BaseViewModel()
 
         when(type)
         {
-            Constants.BillingAddress -> {
+            CheckoutConstants.BillingAddress -> {
                 existingAddress = ExistingAddress(
                     formValues = listOf(getKeyValue(key = "billing_address_id", value = addressId)),
                     data = Data(shipToSameAddress = false))
             }
 
-            Constants.ShippingAddress -> {
+            CheckoutConstants.ShippingAddress -> {
                 existingAddress = ExistingAddress(
                     formValues = listOf(getKeyValue(key = "shipping_address_id",value =  addressId)),
                     data = Data(shipToSameAddress = false))
             }
 
-            Constants.StorePickUp -> {
+            CheckoutConstants.StorePickUp -> {
                 existingAddress = ExistingAddress(
                     formValues = listOf(getKeyValue(key = "pickup-points-id", value = addressId)),
                     data = Data(pickupInStore = true)

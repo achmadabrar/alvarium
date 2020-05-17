@@ -15,7 +15,7 @@ import com.bs.ecommerce.R
 import com.bs.ecommerce.auth.login.LoginFragment
 import com.bs.ecommerce.cart.CartFragment
 import com.bs.ecommerce.main.model.data.AppLandingData
-import com.bs.ecommerce.networking.Constants
+import com.bs.ecommerce.networking.NetworkConstants
 import com.bs.ecommerce.utils.*
 import java.util.*
 
@@ -127,7 +127,7 @@ abstract class BaseActivity : AppCompatActivity()
     fun getBaseUrl()
     {
         if (prefObject.getPrefsBoolValue(PrefSingleton.SHOULD_USE_NEW_URL))
-            Constants.BASE_URL = prefObject.getPrefs(PrefSingleton.NEW_URL)
+            NetworkConstants.BASE_URL = prefObject.getPrefs(PrefSingleton.NEW_URL)
 
     }
 

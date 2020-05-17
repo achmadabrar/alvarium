@@ -12,7 +12,7 @@ import com.bs.ecommerce.base.BaseViewModel
 import com.bs.ecommerce.main.MainActivity
 import com.bs.ecommerce.main.MainViewModel
 import com.bs.ecommerce.main.model.MainModel
-import com.bs.ecommerce.networking.Constants
+import com.bs.ecommerce.networking.NetworkConstants
 
 import com.bs.ecommerce.networking.NetworkUtil
 import com.bs.ecommerce.utils.*
@@ -35,7 +35,7 @@ abstract class BaseUrlChangeFragment : BaseFragment()
 
     protected fun keepOldUrl()
     {
-        Constants.BASE_URL = Constants.DEFAULT_URL
+        NetworkConstants.BASE_URL = NetworkConstants.DEFAULT_URL
         prefObject.setPrefs(PrefSingleton.SHOULD_USE_NEW_URL, false)
         forceRunApp()
     }
@@ -52,7 +52,7 @@ abstract class BaseUrlChangeFragment : BaseFragment()
 
     private fun testApiCall()
     {
-        Constants.BASE_URL = newBaseUrlEditTextFromSettings?.text?.trim().toString() + "/api/"
+        NetworkConstants.BASE_URL = newBaseUrlEditTextFromSettings?.text?.trim().toString() + "/api/"
 
 
         mainViewModel.getNavDrawerCategoryList(mainModel)
@@ -91,7 +91,7 @@ abstract class BaseUrlChangeFragment : BaseFragment()
     {
         val url = newBaseUrlEditTextFromSettings?.text?.trim().toString() + "/api/"
 
-        Constants.BASE_URL = url
+        NetworkConstants.BASE_URL = url
         prefObject.setPrefs(PrefSingleton.NEW_URL, url)
         prefObject.setPrefs(PrefSingleton.SHOULD_USE_NEW_URL, true)
 

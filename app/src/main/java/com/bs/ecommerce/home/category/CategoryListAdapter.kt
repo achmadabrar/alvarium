@@ -15,9 +15,6 @@ import com.bs.ecommerce.main.MainActivity
 import com.bs.ecommerce.main.model.data.Category
 import com.bs.ecommerce.product.ProductListFragment
 
-/**
- * Created by Arif Islam on 23-Feb-17.
- */
 
 class CategoryListAdapter(private val context: Context, private val categoryList: List<Category>, private val fragment: androidx.fragment.app.Fragment) : androidx.recyclerview.widget.RecyclerView.Adapter<androidx.recyclerview.widget.RecyclerView.ViewHolder>()
 {
@@ -31,7 +28,7 @@ class CategoryListAdapter(private val context: Context, private val categoryList
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): androidx.recyclerview.widget.RecyclerView.ViewHolder
     {
         val itemView = LayoutInflater.from(parent.context).inflate(R.layout.item_category, parent, false)
-        return ProductSummaryHolder(itemView)
+        return CategoryViewHolder(itemView)
 
     }
 
@@ -39,12 +36,12 @@ class CategoryListAdapter(private val context: Context, private val categoryList
     {
 
         val categoryModel = categoryList[position]
-        val holder = bindViewHolder as ProductSummaryHolder
+        val holder = bindViewHolder as CategoryViewHolder
         holder.topCategoryName.text = categoryModel.name.toUpperCase()
 
         holder.categoryChildList.setAdapter(SubCategoryListAdapter(context, categoryModel.subcategories, fragment))
 
-        holder.topCategoryName.setOnClickListener(CategoryOnClicklistener(categoryModel))
+        holder.topCategoryName.setOnClickListener(CategoryOnClickListener(categoryModel))
 
 
         if(categoryModel.subcategories.isNotEmpty())
@@ -81,7 +78,7 @@ class CategoryListAdapter(private val context: Context, private val categoryList
     }
 
 
-    private inner class ProductSummaryHolder internal constructor(itemView: View) : androidx.recyclerview.widget.RecyclerView.ViewHolder(itemView), View.OnClickListener {
+    private inner class CategoryViewHolder internal constructor(itemView: View) : androidx.recyclerview.widget.RecyclerView.ViewHolder(itemView), View.OnClickListener {
         internal var topCategoryName: TextView
         internal var topCategoryExpandableButton : ImageView
         internal var categoryChildList: ExpandableListView
@@ -99,13 +96,13 @@ class CategoryListAdapter(private val context: Context, private val categoryList
 
     }
 
-    private inner class CategoryOnClicklistener(internal var category: Category) : View.OnClickListener {
+    private inner class CategoryOnClickListener(internal var category: Category) : View.OnClickListener {
         override fun onClick(v: View) {
-            gotocategoryListPage(category)
+            goToCategoryListPage(category)
         }
     }
 
-    private fun gotocategoryListPage(category: Category)
+    private fun goToCategoryListPage(category: Category)
     {
         val activity = fragment.requireActivity()
 

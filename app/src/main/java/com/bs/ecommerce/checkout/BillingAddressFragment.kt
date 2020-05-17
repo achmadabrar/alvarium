@@ -4,9 +4,7 @@ import android.os.Bundle
 import android.view.View
 import androidx.lifecycle.Observer
 import com.bs.ecommerce.checkout.model.data.BillingAddressResponse
-import com.bs.ecommerce.networking.Constants
-import com.bs.ecommerce.utils.MyApplication
-import com.bs.ecommerce.utils.showLog
+import com.bs.ecommerce.networking.NetworkConstants
 import kotlinx.android.synthetic.main.fragment_base_billing_adddress.*
 import kotlinx.android.synthetic.main.fragment_billing_address.*
 
@@ -18,7 +16,7 @@ class BillingAddressFragment : BaseCheckoutAddressFragment()
     {
         super.onViewCreated(view, savedInstanceState)
 
-        addressTabLayout?.getTabAt(Constants.BILLING_ADDRESS_TAB)?.select()
+        addressTabLayout?.getTabAt(CheckoutConstants.BILLING_ADDRESS_TAB)?.select()
 
         layoutCheckoutAddress?.visibility = View.VISIBLE
 

@@ -7,18 +7,12 @@ import android.view.View
 import android.widget.RelativeLayout
 import android.widget.TextView
 import androidx.appcompat.widget.AppCompatRadioButton
-import androidx.lifecycle.ViewModelProvider
 import com.bs.ecommerce.R
-import com.bs.ecommerce.base.BaseFragment
 import com.bs.ecommerce.base.BaseViewModel
-import com.bs.ecommerce.checkout.model.CheckoutModel
-import com.bs.ecommerce.checkout.model.CheckoutModelImpl
 import com.bs.ecommerce.checkout.model.data.ShippingMethod
 import com.bs.ecommerce.customViews.CheckableLinearLayout
 import com.bs.ecommerce.customViews.MethodSelectionProcess
-import com.bs.ecommerce.networking.Constants
 import com.bs.ecommerce.utils.MyApplication
-import com.bs.ecommerce.utils.showLog
 import kotlinx.android.synthetic.main.fragment_shipping_method.*
 
 class ShippingMethodFragment : BaseCheckoutNavigationFragment() {

@@ -61,7 +61,7 @@ class SubCategoryListAdapter(private val context: Context, private val categorie
 
         val inflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
         convertView = inflater.inflate(R.layout.item_expandable_list_group, null)
-        val iv_icon = convertView.findViewById<View>(R.id.iv_icon) as AppCompatImageView
+        val logo = convertView.findViewById<View>(R.id.logo) as AppCompatImageView
         val expandableIcon = convertView.findViewById<View>(R.id.expandableIcon) as AppCompatImageView
         val text = convertView.findViewById<View>(R.id.textView_name) as TextView
         val subCategory = getGroup(groupPosition)
@@ -81,7 +81,7 @@ class SubCategoryListAdapter(private val context: Context, private val categorie
 
         text.setOnClickListener( CategoryonClicklistener(subCategory.categoryId, subCategory.name))
 
-        iv_icon.loadImg(subCategory.iconUrl)
+        logo.loadImg(subCategory.iconUrl)
 
         return convertView!!
     }
