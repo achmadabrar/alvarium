@@ -2,6 +2,8 @@ package com.bs.ecommerce.more.model
 
 import com.bs.ecommerce.common.RequestCompleteListener
 import com.bs.ecommerce.networking.RetroClient
+import com.bs.ecommerce.networking.common.KeyValueFormData
+import com.bs.ecommerce.product.model.data.HelpfulnessResponse
 import com.bs.ecommerce.product.model.data.MyReviewsResponse
 import com.bs.ecommerce.product.model.data.ProductReviewResponse
 import com.bs.ecommerce.utils.TextUtils
@@ -56,5 +58,59 @@ class ReviewModelImpl: ReviewModel {
             }
 
         })
+    }
+
+    override fun postProductReview(
+        productId: Long,
+        userData: ProductReviewResponse,
+        callback: RequestCompleteListener<ProductReviewResponse>
+    ) {
+        RetroClient.api.postProductReview(productId, userData)
+            .enqueue(object : Callback<ProductReviewResponse> {
+
+                override fun onFailure(call: Call<ProductReviewResponse>, t: Throwable) {
+                    callback.onRequestFailed(t.localizedMessage ?: "Unknown")
+                }
+
+                override fun onResponse(
+                    call: Call<ProductReviewResponse>,
+                    response: Response<ProductReviewResponse>
+                ) {
+
+                    if (response.body() != null && response.code() == 200) {
+                        callback.onRequestSuccess(response.body() as ProductReviewResponse)
+                    } else {
+                        callback.onRequestFailed(TextUtils.getErrorMessage(response))
+                    }
+                }
+
+            })
+    }
+
+    override fun postReviewHelpfulness(
+        reviewId: Long,
+        formData: KeyValueFormData,
+        callback: RequestCompleteListener<HelpfulnessResponse>
+    ) {
+        RetroClient.api.postReviewHelpfulness(reviewId, formData)
+            .enqueue(object : Callback<HelpfulnessResponse> {
+
+                override fun onFailure(call: Call<HelpfulnessResponse>, t: Throwable) {
+                    callback.onRequestFailed(t.localizedMessage ?: "Unknown")
+                }
+
+                override fun onResponse(
+                    call: Call<HelpfulnessResponse>,
+                    response: Response<HelpfulnessResponse>
+                ) {
+
+                    if (response.body() != null && response.code() == 200) {
+                        callback.onRequestSuccess(response.body() as HelpfulnessResponse)
+                    } else {
+                        callback.onRequestFailed(TextUtils.getErrorMessage(response))
+                    }
+                }
+
+            })
     }
 }

@@ -15,10 +15,8 @@ import com.bs.ecommerce.base.BaseViewModel
 import com.bs.ecommerce.more.model.RewardPointModel
 import com.bs.ecommerce.more.model.RewardPointModelImpl
 import com.bs.ecommerce.more.viewmodel.RewardPointViewModel
-import com.bs.ecommerce.product.AddReviewFragment
 import com.bs.ecommerce.product.model.data.ProductReviewItem
 import com.bs.ecommerce.utils.RecyclerViewMargin
-import com.bs.ecommerce.utils.replaceFragmentSafely
 import kotlinx.android.synthetic.main.fragment_reward_point.*
 import kotlinx.android.synthetic.main.item_product_review.view.*
 

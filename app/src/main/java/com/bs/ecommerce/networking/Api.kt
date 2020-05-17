@@ -221,6 +221,10 @@ interface Api {
     @GET("topic/details/{systemName}")
     fun getTopic(@Path("systemName") systemName: String) : Call<TopicResponse>
 
+
+    @POST("common/contactus")
+    fun contactUs(@Body userData: ContactUsResponse) : Call<ContactUsResponse>
+
     // Review
 
     @GET("product/productreviews")
@@ -228,6 +232,18 @@ interface Api {
 
     @GET("product/productreviews/{productId}")
     fun getProductReview(@Path("productId") id: Long) : Call<ProductReviewResponse>
+
+    @POST("product/productreviewsadd/{productId}")
+    fun postProductReview(
+        @Path("productId") id: Long,
+        @Body userData: ProductReviewResponse
+    ) : Call<ProductReviewResponse>
+
+    @POST("product/setproductreviewhelpfulness/{reviewId}")
+    fun postReviewHelpfulness(
+        @Path("reviewId") id: Long,
+        @Body kvFormData: KeyValueFormData
+    ) : Call<HelpfulnessResponse>
 
     // Reward Point
 
@@ -431,6 +447,9 @@ interface Api {
 
         const val rentalStart: String = "rental_start_date_"
         const val rentalEnd: String = "rental_end_date_"
+
+        const val productReviewId: String = "productReviewId"
+        const val wasReviewHelpful: String = "washelpful"
 
         const val productAttributePrefix = "product_attribute"
         const val checkOutAttributePrefix = "checkout_attribute"

@@ -5,12 +5,14 @@ import android.os.Handler
 import android.view.View
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.core.view.GravityCompat
+import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.bs.ecommerce.R
 import com.bs.ecommerce.auth.customerInfo.CustomerInfoFragment
 import com.bs.ecommerce.base.BaseActivity
+import com.bs.ecommerce.base.BaseFragment
 import com.bs.ecommerce.cart.CartFragment
 import com.bs.ecommerce.home.category.CategoryFragment
 import com.bs.ecommerce.home.homepage.HomeFragment
@@ -20,6 +22,7 @@ import com.bs.ecommerce.more.UserAccountFragment
 import com.bs.ecommerce.networking.NetworkUtil
 import com.bs.ecommerce.product.SearchFragment
 import com.bs.ecommerce.utils.createIfNotInBackStack
+import com.bs.ecommerce.utils.replaceFragmentSafely
 import com.bs.ecommerce.utils.toast
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import kotlinx.android.synthetic.main.activity_main.*
@@ -243,5 +246,18 @@ class MainActivity : BaseActivity()
         supportFragmentManager.beginTransaction()
             .add(R.id.layoutFrame, homeFragment)
             .commit()
+    }
+
+    fun switchFragmentFromDialog(dialog: DialogFragment, fragment: BaseFragment?) {
+
+        fragment?.let {
+            supportFragmentManager
+                .beginTransaction()
+                .replace(R.id.layoutFrame, it, it::class.java.simpleName)
+                .addToBackStack(it::class.java.simpleName)
+                .commit()
+        }
+        
+        dialog.dismiss()
     }
 }

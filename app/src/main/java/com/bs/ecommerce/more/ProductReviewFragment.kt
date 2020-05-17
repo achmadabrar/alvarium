@@ -16,9 +16,9 @@ import com.bs.ecommerce.more.model.ReviewModel
 import com.bs.ecommerce.more.model.ReviewModelImpl
 import com.bs.ecommerce.more.viewmodel.ReviewViewModel
 import com.bs.ecommerce.product.AddReviewFragment
+import com.bs.ecommerce.product.model.data.Helpfulness
 import com.bs.ecommerce.product.model.data.ProductReviewItem
 import com.bs.ecommerce.utils.RecyclerViewMargin
-import com.bs.ecommerce.utils.replaceFragmentSafely
 import kotlinx.android.synthetic.main.fragment_product_review.*
 import kotlinx.android.synthetic.main.item_product_review.view.*
 
@@ -72,6 +72,13 @@ class ProductReviewFragment : BaseFragment() {
                 btnAddReview.visibility = if(reviewEnabled) View.VISIBLE else View.GONE
             })
 
+            operationalReviewIdLD.observe(viewLifecycleOwner, Observer { data ->
+
+                data?.let {
+                    (rvReview.adapter as ReviewAdapter).updateReviewHelpfulnessCount(it)
+                }
+            })
+
             isLoadingLD.observe(viewLifecycleOwner, Observer { isShowLoader ->
 
                 if (isShowLoader)
@@ -85,8 +92,9 @@ class ProductReviewFragment : BaseFragment() {
     private fun setupView() {
 
         btnAddReview.setOnClickListener {
-            // TODO add review click handle
-            replaceFragmentSafely(AddReviewFragment())
+            AddReviewFragment().show(
+                childFragmentManager, AddReviewFragment::class.java.simpleName
+            )
         }
 
         val mLayoutManager = LinearLayoutManager(
@@ -98,6 +106,25 @@ class ProductReviewFragment : BaseFragment() {
             layoutManager = mLayoutManager
             addItemDecoration(RecyclerViewMargin(10, 1, true))
             adapter = ReviewAdapter()
+        }
+    }
+
+    fun postProductReview(title: String, text: String, rating: Int) {
+
+        with(viewModel as ReviewViewModel) {
+
+            productReviewLD.value?.addProductReview?.let {
+
+                val postData = productReviewLD.value!!
+
+                postData.addProductReview?.let { review ->
+                    review.title = title
+                    review.reviewText = text
+                    review.rating = rating
+                }
+
+                postProductReview(postData, model)
+            }
         }
     }
 
@@ -131,11 +158,19 @@ class ProductReviewFragment : BaseFragment() {
                 ratingBar.rating = (item.rating ?: 0).toFloat()
 
                 tvYes.setOnClickListener {
-                    // Positive review
+                    (viewModel as ReviewViewModel).postReviewHelpfulness(
+                        item.helpfulness?.productReviewId!!,
+                        positive = true,
+                        model = model
+                    )
                 }
 
                 tvNo.setOnClickListener {
-                    // Negative review
+                    (viewModel as ReviewViewModel).postReviewHelpfulness(
+                        item.helpfulness?.productReviewId!!,
+                        positive = false,
+                        model = model
+                    )
                 }
             }
         }
@@ -144,6 +179,16 @@ class ProductReviewFragment : BaseFragment() {
             list.clear()
             list.addAll(newData)
             notifyDataSetChanged()
+        }
+
+        fun updateReviewHelpfulnessCount(data: Helpfulness) {
+            val index = list.indexOfFirst { reviewItem -> reviewItem.id == data.productReviewId }
+
+            if(index > -1) {
+                list[index].helpfulness = data
+
+                notifyItemChanged(index)
+            }
         }
 
     }

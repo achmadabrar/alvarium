@@ -1,6 +1,8 @@
 package com.bs.ecommerce.more.model
 
 import com.bs.ecommerce.common.RequestCompleteListener
+import com.bs.ecommerce.networking.common.KeyValueFormData
+import com.bs.ecommerce.product.model.data.HelpfulnessResponse
 import com.bs.ecommerce.product.model.data.MyReviewsResponse
 import com.bs.ecommerce.product.model.data.ProductReviewResponse
 
@@ -16,7 +18,15 @@ interface ReviewModel {
         callback: RequestCompleteListener<ProductReviewResponse>
     )
 
-    /*fun addReview()
+    fun postProductReview(
+        productId: Long,
+        userData: ProductReviewResponse,
+        callback: RequestCompleteListener<ProductReviewResponse>
+    )
 
-    fun setReviewHelpfulness()*/
+    fun postReviewHelpfulness(
+        reviewId: Long,
+        formData: KeyValueFormData,
+        callback: RequestCompleteListener<HelpfulnessResponse>
+    )
 }

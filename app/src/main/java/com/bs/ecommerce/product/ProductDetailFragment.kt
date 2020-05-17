@@ -287,8 +287,8 @@ class ProductDetailFragment : BaseFragment(), View.OnClickListener {
                 })
 
             viewModel.addedToWishListLD.observe(viewLifecycleOwner, Observer { action ->
-                if (action == 1) {
-                    replaceFragmentSafely(CartFragment())
+                action?.getContentIfNotHandled()?.let { prodId ->
+                    replaceFragmentSafely(newInstance(prodId))
                 }
                 blockingLoader.hideDialog()
             })

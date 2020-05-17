@@ -13,7 +13,7 @@ data class ProductReviewData(
     @SerializedName("Items")
     val items: List<ProductReviewItem>?,
     @SerializedName("ProductId")
-    val productId: Int?,
+    val productId: Long?,
     @SerializedName("ProductName")
     val productName: String?,
     @SerializedName("ProductSeName")
