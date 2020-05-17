@@ -83,7 +83,7 @@ class MainActivity : BaseActivity()
             val topFragment = supportFragmentManager.findFragmentById(R.id.layoutFrame)
             var topFragmentName = ""
 
-            if(topFragment!=null)
+            if(topFragment != null)
                 topFragmentName = topFragment::class.java.simpleName
 
             var bottomNavPosition = -1

@@ -14,6 +14,7 @@ import com.bs.ecommerce.utils.*
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayout.OnTabSelectedListener
 import kotlinx.android.synthetic.main.fragment_base_billing_adddress.*
+import kotlinx.android.synthetic.main.fragment_checkout_step.*
 
 
 abstract class BaseCheckoutNavigationFragment : BaseFragment()
@@ -36,7 +37,12 @@ abstract class BaseCheckoutNavigationFragment : BaseFragment()
         setLiveDataListeners()
 
 
+       /* val csFragment = requireActivity().supportFragmentManager.findFragmentByTag(CheckoutStepFragment::class.java.simpleName)
+        if(csFragment is CheckoutStepFragment) csFragment.setBackStackChangeListener()*/
+
+
     }
+
     open fun setLiveDataListeners() {
 
         with(viewModel as CheckoutAddressViewModel)
@@ -48,32 +54,37 @@ abstract class BaseCheckoutNavigationFragment : BaseFragment()
                     toast(saveResponse.errorsAsFormattedString)
                 else
                 {
-
-                    toast("Added Successfully")
-
-                    MyApplication.checkoutSaveResponse = saveResponse
-
                     CheckoutStepFragment.isBillingAddressSubmitted = true
 
                     when(saveResponse.data.nextStep)
                     {
+                        Constants.ShippingAddress ->
+                        {
+                            MyApplication.checkoutSaveResponse.data.shippingAddressModel = saveResponse.data.shippingAddressModel
 
-                        Constants.ShippingAddress -> {
+                            toast("Billing Address added Successfully")
 
                             replaceFragmentWithoutSavingState(ShippingAddressFragment())
                         }
-                        Constants.ShippingMethod -> {
+                        Constants.ShippingMethod ->
+                        {
+                            MyApplication.checkoutSaveResponse.data.shippingMethodModel = saveResponse.data.shippingMethodModel
+
+                            toast("Shipping Address added Successfully")
 
                             replaceFragmentWithoutSavingState(ShippingMethodFragment())
                         }
+                        Constants.PaymentMethod ->
+                        {
+                            MyApplication.checkoutSaveResponse.data.paymentMethodModel = saveResponse.data.paymentMethodModel
 
-                        Constants.PaymentMethod -> {
+                            toast("Shipping Method added Successfully")
+
                             replaceFragmentWithoutSavingState(PaymentMethodFragment())
                         }
+
                         Constants.PaymentInfo -> replaceFragmentWithoutSavingState(ConfirmOrderFragment())
                     }
-
-
                 }
 
             })

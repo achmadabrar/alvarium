@@ -63,9 +63,34 @@ class CheckoutStepFragment : BaseFragment() {
         transaction.commit()
         childFragmentManager.executePendingTransactions()
     }
+
+    /*fun setBackStackChangeListener()
+    {
+        requireActivity().supportFragmentManager.addOnBackStackChangedListener {
+
+            val topFragment = requireActivity().supportFragmentManager.findFragmentById(R.id.checkoutFragmentHolder)
+            var topFragmentName = ""
+
+            if(topFragment != null)
+                topFragmentName = topFragment::class.java.simpleName
+
+            var bottomNavPosition = -1
+
+            when(topFragmentName) {
+                ConfirmOrderFragment::class.java.simpleName -> bottomNavPosition = 2
+                PaymentMethodFragment::class.java.simpleName -> bottomNavPosition = 1
+                ShippingMethodFragment::class.java.simpleName -> bottomNavPosition = 0
+                //BillingAddressFragment::class.java.simpleName -> bottomNavPosition = 0
+            }
+
+            if(bottomNavPosition >= 0)
+                checkoutBottomNav?.menu?.getItem(bottomNavPosition)?.isChecked = true
+
+            "sdsfsfdsdsd".showLog(topFragmentName)
+        }
+    }*/
     companion object{
         @JvmStatic var isBillingAddressSubmitted = false
-        @JvmStatic var isShippingAddressSubmitted = false
     }
 
 }

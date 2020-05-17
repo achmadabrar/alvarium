@@ -149,7 +149,7 @@ open class CheckoutAddressViewModel : BaseViewModel()
             Constants.StorePickUp -> {
                 existingAddress = ExistingAddress(
                     formValues = listOf(getKeyValue(key = "pickup-points-id", value = addressId)),
-                    data = Data(pickupInStore = false)
+                    data = Data(pickupInStore = true)
                 )
             }
 
