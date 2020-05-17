@@ -72,6 +72,12 @@ class UserAccountFragment: BaseFragment() {
             setOnClickListener { clickAction(CartFragment()) }
         }
 
+        rewardPointsLayout.apply {
+            ivOptionIcon.setImageResource(R.drawable.ic_reward_points)
+            tvOptionName.text = getString(R.string.title_reward_points)
+            setOnClickListener { clickAction(RewardPointFragment()) }
+        }
+
         reviewLayout.apply {
             ivOptionIcon.setImageResource(R.drawable.ic_review)
             tvOptionName.text = getString(R.string.title_my_reviews)

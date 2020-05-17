@@ -7,14 +7,23 @@
     android:animateLayoutChanges="true"
     android:background="?attr/fragmentBackGroundColor">
 
+    <TextView
+        android:id="@+id/tvRewardBalance"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="?attr/primaryTextColor"
+        android:textSize="@dimen/tv_text_size_semi_large"
+        android:lineSpacingMultiplier="1.25"
+        android:padding="5dp"
+        tools:text="@string/placeholder_long"/>
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvReview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@id/btnAddReview"
-        android:nestedScrollingEnabled="false"
+        android:layout_below="@id/tvRewardBalance"
         tools:itemCount="4"
-        tools:listitem="@layout/item_product_review" />
+        tools:listitem="@layout/item_reward_points" />
 
     <TextView
         android:id="@+id/tvNoData"
@@ -25,6 +34,6 @@
         android:textSize="@dimen/tv_text_size_regular"
         tools:visibility="visible"
         android:visibility="gone"
-        android:text="@string/no_data_found"/>
+        android:text="@string/no_reward_points"/>
 
 </RelativeLayout>

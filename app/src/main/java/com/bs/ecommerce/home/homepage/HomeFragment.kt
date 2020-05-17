@@ -11,7 +11,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.bs.ecommerce.R
 import com.bs.ecommerce.base.BaseFragment
 import com.bs.ecommerce.base.BaseViewModel
-import com.bs.ecommerce.cart.CartFragment
 import com.bs.ecommerce.cart.model.CartModel
 import com.bs.ecommerce.cart.model.CartModelImpl
 import com.bs.ecommerce.home.FeaturedProductAdapter
@@ -29,7 +28,6 @@ import com.bs.ecommerce.product.model.data.SubCategory
 import com.bs.ecommerce.utils.ItemClickListener
 import com.bs.ecommerce.utils.RecyclerViewMargin
 import com.bs.ecommerce.utils.replaceFragmentSafely
-import com.bs.ecommerce.utils.toast
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import kotlinx.android.synthetic.main.featured_list_layout.view.*
 import kotlinx.android.synthetic.main.fragment_home.*
@@ -177,10 +175,6 @@ class HomeFragment : BaseFragment() {
             populateBanner(sliderData)
         })
 
-
-        viewModel.toastMessageLD.observe(viewLifecycleOwner, Observer { msg ->
-            if (msg.isNotEmpty()) toast(msg)
-        })
 
         viewModel.isLoadingLD.observe(viewLifecycleOwner, Observer { isShowLoader ->
             if (isShowLoader)

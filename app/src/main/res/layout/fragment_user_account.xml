@@ -68,6 +68,10 @@
 
             <include
                 android:id="@+id/cartLayout"
+                layout="@layout/item_user_account" />
+
+            <include
+                android:id="@+id/rewardPointsLayout"
                 layout="@layout/item_user_account"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
