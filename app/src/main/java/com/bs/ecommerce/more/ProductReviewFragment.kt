@@ -16,6 +16,7 @@ import com.bs.ecommerce.more.model.ReviewModel
 import com.bs.ecommerce.more.model.ReviewModelImpl
 import com.bs.ecommerce.more.viewmodel.ReviewViewModel
 import com.bs.ecommerce.product.AddReviewFragment
+import com.bs.ecommerce.product.model.data.Helpfulness
 import com.bs.ecommerce.product.model.data.ProductReviewItem
 import com.bs.ecommerce.utils.RecyclerViewMargin
 import kotlinx.android.synthetic.main.fragment_product_review.*
@@ -69,6 +70,13 @@ class ProductReviewFragment : BaseFragment() {
                 val reviewEnabled = data?.addProductReview?.canCurrentCustomerLeaveReview == true
 
                 btnAddReview.visibility = if(reviewEnabled) View.VISIBLE else View.GONE
+            })
+
+            operationalReviewIdLD.observe(viewLifecycleOwner, Observer { data ->
+
+                data?.let {
+                    (rvReview.adapter as ReviewAdapter).updateReviewHelpfulnessCount(it)
+                }
             })
 
             isLoadingLD.observe(viewLifecycleOwner, Observer { isShowLoader ->
@@ -150,11 +158,19 @@ class ProductReviewFragment : BaseFragment() {
                 ratingBar.rating = (item.rating ?: 0).toFloat()
 
                 tvYes.setOnClickListener {
-                    // Positive review
+                    (viewModel as ReviewViewModel).postReviewHelpfulness(
+                        item.helpfulness?.productReviewId!!,
+                        positive = true,
+                        model = model
+                    )
                 }
 
                 tvNo.setOnClickListener {
-                    // Negative review
+                    (viewModel as ReviewViewModel).postReviewHelpfulness(
+                        item.helpfulness?.productReviewId!!,
+                        positive = false,
+                        model = model
+                    )
                 }
             }
         }
@@ -163,6 +179,16 @@ class ProductReviewFragment : BaseFragment() {
             list.clear()
             list.addAll(newData)
             notifyDataSetChanged()
+        }
+
+        fun updateReviewHelpfulnessCount(data: Helpfulness) {
+            val index = list.indexOfFirst { reviewItem -> reviewItem.id == data.productReviewId }
+
+            if(index > -1) {
+                list[index].helpfulness = data
+
+                notifyItemChanged(index)
+            }
         }
 
     }

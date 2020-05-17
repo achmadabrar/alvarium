@@ -1,9 +1,12 @@
 package com.bs.ecommerce.more.viewmodel
 
 import androidx.lifecycle.MutableLiveData
+import com.bs.ecommerce.auth.register.data.KeyValuePair
 import com.bs.ecommerce.base.BaseViewModel
 import com.bs.ecommerce.common.RequestCompleteListener
 import com.bs.ecommerce.more.model.ReviewModel
+import com.bs.ecommerce.networking.Api
+import com.bs.ecommerce.networking.common.KeyValueFormData
 import com.bs.ecommerce.product.model.data.*
 
 class ReviewViewModel: BaseViewModel() {
@@ -16,7 +19,7 @@ class ReviewViewModel: BaseViewModel() {
     var shouldAppend = true
 
     // tracks the list item, for which the current operation is ongoing
-    var operationalItemIndex: Int? = null
+    var operationalReviewIdLD = MutableLiveData<Helpfulness?>()
 
     fun getMyReviews(model: ReviewModel) {
 
@@ -65,9 +68,46 @@ class ReviewViewModel: BaseViewModel() {
         })
     }
 
-    fun setReviewHelpfulness(position: Int, positive: Boolean, model: ReviewModel) {
+    fun postReviewHelpfulness(reviewId: Long, positive: Boolean, model: ReviewModel) {
 
-        operationalItemIndex = position
+        isLoadingLD.value = true
+
+        // preparing request body
+
+        val formValues: MutableList<KeyValuePair> = mutableListOf()
+
+        formValues.add(KeyValuePair().apply {
+            key = Api.productReviewId
+            value = reviewId.toString()
+        })
+
+        formValues.add(KeyValuePair().apply {
+            key = Api.wasReviewHelpful
+            value = positive.toString()
+        })
+
+        model.postReviewHelpfulness(
+            reviewId,
+            KeyValueFormData(formValues),
+            object: RequestCompleteListener<HelpfulnessResponse> {
+
+            override fun onRequestSuccess(data: HelpfulnessResponse) {
+                isLoadingLD.value = false
+
+                if(data.data != null) {
+                    toast(data.message ?: "")
+
+                    data.data.productReviewId = reviewId
+                    operationalReviewIdLD.value = data.data
+                }
+            }
+
+            override fun onRequestFailed(errorMessage: String) {
+                isLoadingLD.value = false
+                toast(errorMessage)
+            }
+
+        })
     }
 
     fun postProductReview(

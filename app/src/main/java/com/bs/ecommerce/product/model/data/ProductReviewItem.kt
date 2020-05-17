@@ -15,7 +15,7 @@ data class ProductReviewItem(
     @SerializedName("CustomerName")
     val customerName: String?,
     @SerializedName("Helpfulness")
-    val helpfulness: Helpfulness?,
+    var helpfulness: Helpfulness?,
     @SerializedName("Id")
     val id: Long?,
     @SerializedName("Rating")
@@ -28,4 +28,6 @@ data class ProductReviewItem(
     val title: String?,
     @SerializedName("WrittenOnStr")
     val writtenOnStr: String?
-)
+) {
+    fun isEquals(id: Long?) : Boolean = this.id == id
+}

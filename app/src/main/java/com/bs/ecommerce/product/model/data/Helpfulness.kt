@@ -1,6 +1,7 @@
 package com.bs.ecommerce.product.model.data
 
 
+import com.bs.ecommerce.networking.common.BaseResponse
 import com.google.gson.annotations.SerializedName
 
 data class Helpfulness(
@@ -11,5 +12,10 @@ data class Helpfulness(
     @SerializedName("HelpfulYesTotal")
     val helpfulYesTotal: Int?,
     @SerializedName("ProductReviewId")
-    val productReviewId: Int?
+    var productReviewId: Long?
 )
+
+data class HelpfulnessResponse(
+    @SerializedName("Data")
+    val data: Helpfulness?
+) : BaseResponse()

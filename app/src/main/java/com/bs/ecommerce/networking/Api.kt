@@ -239,6 +239,12 @@ interface Api {
         @Body userData: ProductReviewResponse
     ) : Call<ProductReviewResponse>
 
+    @POST("product/setproductreviewhelpfulness/{reviewId}")
+    fun postReviewHelpfulness(
+        @Path("reviewId") id: Long,
+        @Body kvFormData: KeyValueFormData
+    ) : Call<HelpfulnessResponse>
+
     // Reward Point
 
     @GET("order/customerrewardpoints")
@@ -441,6 +447,9 @@ interface Api {
 
         const val rentalStart: String = "rental_start_date_"
         const val rentalEnd: String = "rental_end_date_"
+
+        const val productReviewId: String = "productReviewId"
+        const val wasReviewHelpful: String = "washelpful"
 
         const val productAttributePrefix = "product_attribute"
         const val checkOutAttributePrefix = "checkout_attribute"
