@@ -109,6 +109,7 @@
     <string name="cart_empty">Cart Is Empty</string>
     <string name="cart_items_count">%d Items</string>
     <string name="calculated_during_checkout">Calculated During Checkout</string>
+    <string name="succcessfully_added_to_wishlist">Successfully added to wish list</string>
 
     <!-- Checkout Dialog  -->
     <string name="checkout_msg_long">By creating an account on our website, you will be able to shop faster, be up to date on an orders status, and keep track of the orders you have previously made.</string>

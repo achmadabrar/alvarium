@@ -192,6 +192,12 @@ interface Api {
     @POST("shoppingcart/additemstocartfromwishlist")
     fun moveWishListItemsToCart(@Body body: BaseResponse): Call<WishListResponse>
 
+    @POST("shoppingCart/addproducttocart/catalog/{productId}/{cartType}")
+    fun addToCartFromList(
+        @Path("productId") productId: Long,
+        @Path("cartType") type: Long,
+        @Body kvFormData: KeyValueFormData
+    ): Call<AddToWishListResponse>
 
     // Customer Address
 
@@ -333,11 +339,6 @@ interface Api {
     fun getUpdatedPrice(@Path("productId") id: Long, @Body list: List<KeyValuePair>): Call<PriceResponse>
 
     // Get shopping cart
-    @POST("AddProductToCart/{productId}/{shoppingCartTypeId}")
-    fun addProductIntoCart(@Path("productId") id: Long, @Path("shoppingCartTypeId") shoppingCartTypeId: Long, @Body list: List<KeyValuePair>): Call<AddtoCartResponse>
-
-    @POST("ShoppingCart/UpdateCart")
-    fun updateCartProductList(@Body list: List<KeyValuePair>): Call<CartProductListResponse>
 
     @GET("productdetails/{id}")
     fun getCartItemProductDetailResponse(@Path("id") id: Long, @QueryMap options: Map<String, String>): Call<ProductDetailResponse>

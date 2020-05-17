@@ -1,12 +1,14 @@
 package com.bs.ecommerce.product.model
 
+import com.bs.ecommerce.auth.register.data.KeyValuePair
 import com.bs.ecommerce.common.RequestCompleteListener
 import com.bs.ecommerce.home.homepage.model.data.HomePageProductResponse
 import com.bs.ecommerce.networking.Api
 import com.bs.ecommerce.networking.RetroClient
-import com.bs.ecommerce.product.model.data.AddToCartResponse
-import com.bs.ecommerce.product.model.data.ProductDetailResponse
 import com.bs.ecommerce.networking.common.KeyValueFormData
+import com.bs.ecommerce.product.model.data.AddToCartResponse
+import com.bs.ecommerce.product.model.data.AddToWishListResponse
+import com.bs.ecommerce.product.model.data.ProductDetailResponse
 import com.google.gson.GsonBuilder
 import retrofit2.Call
 import retrofit2.Callback
@@ -62,28 +64,35 @@ class ProductDetailModelImpl :
 
     override fun addProductToWishList(
         productId: Long,
-        callback: RequestCompleteListener<AddToCartResponse>
+        cartType: Long,
+        callback: RequestCompleteListener<AddToWishListResponse>
     ) {
+        // create request body
+        val formValues: MutableList<KeyValuePair> = mutableListOf()
 
-        RetroClient.api.addProductIntoCartAPI(productId, Api.typeWishList,
-            KeyValueFormData()
-        )
-            .enqueue(object : Callback<AddToCartResponse> {
-                override fun onFailure(call: Call<AddToCartResponse>, t: Throwable) {
+        formValues.add(KeyValuePair().apply {
+            key = Api.productReviewId
+            value = "addtocart_$productId.EnteredQuantity"
+        })
+
+        RetroClient.api.addToCartFromList(productId, cartType, KeyValueFormData(formValues))
+            .enqueue(object : Callback<AddToWishListResponse> {
+
+                override fun onFailure(call: Call<AddToWishListResponse>, t: Throwable) {
                     callback.onRequestFailed(t.localizedMessage ?: "Unknown")
                 }
 
                 override fun onResponse(
-                    call: Call<AddToCartResponse>,
-                    response: Response<AddToCartResponse>
+                    call: Call<AddToWishListResponse>,
+                    response: Response<AddToWishListResponse>
                 ) {
                     if (response.body() != null)
-                        callback.onRequestSuccess(response.body() as AddToCartResponse)
+                        callback.onRequestSuccess(response.body() as AddToWishListResponse)
 
                     else if (response.code() == 300 || response.code() == 400)
                     {
-                        val errorBody = GsonBuilder().create().fromJson(response.errorBody()!!.string(), AddToCartResponse::class.java)
-                        callback.onRequestSuccess(errorBody as AddToCartResponse)
+                        val errorBody = GsonBuilder().create().fromJson(response.errorBody()!!.string(), AddToWishListResponse::class.java)
+                        callback.onRequestSuccess(errorBody as AddToWishListResponse)
                     }
                     else
                         callback.onRequestFailed(response.message())

@@ -2,9 +2,10 @@ package com.bs.ecommerce.product.model
 
 import com.bs.ecommerce.common.RequestCompleteListener
 import com.bs.ecommerce.home.homepage.model.data.HomePageProductResponse
-import com.bs.ecommerce.product.model.data.AddToCartResponse
-import com.bs.ecommerce.product.model.data.ProductDetailResponse
 import com.bs.ecommerce.networking.common.KeyValueFormData
+import com.bs.ecommerce.product.model.data.AddToCartResponse
+import com.bs.ecommerce.product.model.data.AddToWishListResponse
+import com.bs.ecommerce.product.model.data.ProductDetailResponse
 
 interface ProductDetailModel {
 
@@ -22,7 +23,8 @@ interface ProductDetailModel {
 
     fun addProductToWishList(
         productId: Long,
-        callback: RequestCompleteListener<AddToCartResponse>
+        cartType: Long,
+        callback: RequestCompleteListener<AddToWishListResponse>
     )
 
 }

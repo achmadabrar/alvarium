@@ -69,6 +69,21 @@
             tools:text="@string/placeholder_price" />
 
         <TextView
+            android:id="@+id/tvCustomAttribute"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="5dp"
+            android:maxLines="1"
+            android:ellipsize="end"
+            android:scrollbars = "vertical"
+            android:textColor="?attr/primaryTextColor"
+            android:textSize="@dimen/tv_text_size_regular"
+            app:layout_constraintStart_toEndOf="@id/ivProductThumb"
+            app:layout_constraintTop_toBottomOf="@id/tvProductPrice"
+            tools:text="@string/placeholder" />
+
+        <TextView
             android:id="@+id/btnAddToCart"
             style="@style/RoundedButtonTiny_1"
             android:layout_alignParentBottom="true"
