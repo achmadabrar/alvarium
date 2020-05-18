@@ -190,7 +190,7 @@ class ProductFilterFragment : BaseFragment() {
 
         for (i in tmp.value) {
 
-            val tv = layoutInflater.inflate(R.layout.generic_attr_item, view, false) as TextView
+            val tv = layoutInflater.inflate(R.layout.custom_attribute_dropdown, view, false) as TextView
             tv.text = i.specificationAttributeOptionName
             tv.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0)
 

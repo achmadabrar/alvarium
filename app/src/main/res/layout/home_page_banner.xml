@@ -10,19 +10,30 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content">
 
-        <androidx.viewpager.widget.ViewPager
-            android:id="@+id/view_pager_slider"
+        <com.daimajia.slider.library.SliderLayout
+            android:id="@+id/view_pager_slider1"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:overScrollMode="never" />
+            custom:auto_cycle="true"
+            custom:indicator_visibility="visible"
+            android:adjustViewBounds="true"
+            android:layout_alignParentTop="true"
+            custom:pager_animation_span="1100"/>
 
-        <com.viewpagerindicator.CirclePageIndicator
+        <com.daimajia.slider.library.Indicators.PagerIndicator
             android:id="@+id/circle_indicator"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="16dp" />
+            android:gravity="center"
+            android:paddingBottom="5dp"
+            custom:selected_drawable="@drawable/home_slider_indicator_selected"
+            custom:selected_padding_left="3dp"
+            custom:selected_padding_right="3dp"
+            custom:unselected_drawable="@drawable/home_slider_indicator_unselected"
+            custom:unselected_padding_left="3dp"
+            custom:unselected_padding_right="3dp" />
     </RelativeLayout>
 
 
