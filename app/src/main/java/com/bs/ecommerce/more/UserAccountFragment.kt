@@ -9,6 +9,7 @@ import com.bs.ecommerce.auth.customerInfo.CustomerInfoFragment
 import com.bs.ecommerce.auth.login.LoginFragment
 import com.bs.ecommerce.base.BaseFragment
 import com.bs.ecommerce.base.BaseViewModel
+import com.bs.ecommerce.base.ToolbarLogoBaseFragment
 import com.bs.ecommerce.cart.CartFragment
 import com.bs.ecommerce.utils.PrefSingleton
 import com.bs.ecommerce.utils.replaceFragmentSafely
@@ -16,7 +17,7 @@ import kotlinx.android.synthetic.main.fragment_user_account.*
 import kotlinx.android.synthetic.main.item_user_account.view.*
 
 
-class UserAccountFragment: BaseFragment() {
+class UserAccountFragment: ToolbarLogoBaseFragment() {
 
     override fun getLayoutId(): Int = R.layout.fragment_user_account
 

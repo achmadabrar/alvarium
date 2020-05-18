@@ -3,6 +3,7 @@ package com.bs.ecommerce.main
 import android.os.Bundle
 import android.os.Handler
 import android.view.View
+import android.widget.Toolbar
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.core.view.GravityCompat
 import androidx.fragment.app.DialogFragment
@@ -30,6 +31,8 @@ import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : BaseActivity()
 {
+
+    lateinit var toolbarTop : androidx.appcompat.widget.Toolbar
 
     private lateinit var mainModel: MainModelImpl
     private lateinit var mainViewModel: MainViewModel
@@ -104,7 +107,7 @@ class MainActivity : BaseActivity()
 
     private fun initNavigationDrawer()
     {
-        val toolbarTop: androidx.appcompat.widget.Toolbar = findViewById(R.id.appToolbar)
+        toolbarTop = findViewById(R.id.appToolbar)
         setSupportActionBar(toolbarTop)
 
 
@@ -114,7 +117,7 @@ class MainActivity : BaseActivity()
             {
                 super.onDrawerClosed(drawerView)
 
-                supportFragmentManager.findFragmentById(R.id.layoutFrame)?.let {
+                /*supportFragmentManager.findFragmentById(R.id.layoutFrame)?.let {
 
                     when(it)
                     {
@@ -123,7 +126,7 @@ class MainActivity : BaseActivity()
                         is OptionsFragment -> title = getString(R.string.title_more)
                         is CustomerInfoFragment -> title = getString(R.string.title_customer_info)
                     }
-                }
+                }*/
 
                 invalidateOptionsMenu()
                 syncState()
@@ -133,7 +136,7 @@ class MainActivity : BaseActivity()
             {
                 super.onDrawerOpened(drawerView)
 
-                title = getString(R.string.title_category)
+                //title = getString(R.string.title_category)
 
                 invalidateOptionsMenu()
                 syncState()

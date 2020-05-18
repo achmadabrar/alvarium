@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.bs.ecommerce.R
 import com.bs.ecommerce.base.BaseFragment
 import com.bs.ecommerce.base.BaseViewModel
+import com.bs.ecommerce.base.ToolbarLogoBaseFragment
 import com.bs.ecommerce.cart.model.CartModel
 import com.bs.ecommerce.cart.model.CartModelImpl
 import com.bs.ecommerce.home.FeaturedProductAdapter
@@ -45,7 +46,7 @@ import org.jetbrains.anko.uiThread
 import java.net.URL
 
 
-class HomeFragment : BaseFragment() {
+class HomeFragment : ToolbarLogoBaseFragment() {
 
     private lateinit var model: HomePageModel
     private lateinit var cartModel: CartModel

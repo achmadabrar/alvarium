@@ -7,6 +7,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.bs.ecommerce.R
 import com.bs.ecommerce.base.BaseFragment
+import com.bs.ecommerce.base.ToolbarLogoBaseFragment
 import com.bs.ecommerce.checkout.model.CheckoutModel
 import com.bs.ecommerce.checkout.model.CheckoutModelImpl
 import com.bs.ecommerce.utils.*
@@ -15,7 +16,7 @@ import com.google.android.material.tabs.TabLayout.OnTabSelectedListener
 import kotlinx.android.synthetic.main.fragment_base_billing_adddress.*
 
 
-abstract class BaseCheckoutNavigationFragment : BaseFragment()
+abstract class BaseCheckoutNavigationFragment : ToolbarLogoBaseFragment()
 {
 
     protected lateinit var model: CheckoutModel

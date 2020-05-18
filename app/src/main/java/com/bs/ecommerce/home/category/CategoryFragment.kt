@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.bs.ecommerce.R
 import com.bs.ecommerce.main.MainViewModel
 import com.bs.ecommerce.base.BaseFragment
+import com.bs.ecommerce.base.ToolbarLogoBaseFragment
 import com.bs.ecommerce.main.model.MainModel
 import com.bs.ecommerce.main.model.MainModelImpl
 import com.bs.ecommerce.main.model.data.Category
@@ -16,7 +17,7 @@ import kotlinx.android.synthetic.main.category_left.*
 import kotlinx.android.synthetic.main.category_left.categoryRootLayout
 
 
-class CategoryFragment : BaseFragment()
+class CategoryFragment : ToolbarLogoBaseFragment()
 {
 
     private lateinit var mainModel: MainModel
@@ -34,8 +35,6 @@ class CategoryFragment : BaseFragment()
     override fun onViewCreated(view: View, savedInstanceState: Bundle?)
     {
         super.onViewCreated(view, savedInstanceState)
-
-        activity?.title = getString(R.string.title_category)
 
         if (!viewCreated)
         {
