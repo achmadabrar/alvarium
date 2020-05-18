@@ -8,6 +8,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.bs.ecommerce.R
 import com.bs.ecommerce.base.BaseFragment
 import com.bs.ecommerce.base.BaseViewModel
+import com.bs.ecommerce.base.ToolbarLogoBaseFragment
 import com.bs.ecommerce.checkout.CheckoutStepFragment
 import com.bs.ecommerce.more.settings.SettingsFragment
 import com.bs.ecommerce.more.viewmodel.OptionViewModel
@@ -16,7 +17,7 @@ import com.bs.ecommerce.utils.replaceFragmentSafely
 import kotlinx.android.synthetic.main.fragment_options.*
 import kotlinx.android.synthetic.main.options_layout.view.*
 
-class OptionsFragment : BaseFragment() {
+class OptionsFragment : ToolbarLogoBaseFragment() {
 
     override fun getFragmentTitle() = R.string.title_more
 

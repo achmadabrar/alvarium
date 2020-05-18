@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.bs.ecommerce.R
 import com.bs.ecommerce.base.BaseFragment
 import com.bs.ecommerce.base.BaseViewModel
+import com.bs.ecommerce.base.ToolbarLogoBaseFragment
 import com.bs.ecommerce.cart.model.CartModel
 import com.bs.ecommerce.cart.model.CartModelImpl
 import com.bs.ecommerce.home.FeaturedProductAdapter
@@ -36,7 +37,7 @@ import kotlinx.android.synthetic.main.home_fragment_bottomsheet.view.*
 import kotlinx.android.synthetic.main.slider.view.*
 
 
-class HomeFragment : BaseFragment() {
+class HomeFragment : ToolbarLogoBaseFragment() {
 
     private lateinit var model: HomePageModel
     private lateinit var cartModel: CartModel

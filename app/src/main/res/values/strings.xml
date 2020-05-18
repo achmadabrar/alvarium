@@ -78,6 +78,8 @@
     <string name="reg_hint_confirm_password">Confirm password</string>
     <string name="reg_hint_is_required"> Is Required</string>
 
+    <string name="save">Save</string>
+
 
     <string name="reg_hint_username">Username:</string>
     <string name="reg_hint_fax">Fax</string>

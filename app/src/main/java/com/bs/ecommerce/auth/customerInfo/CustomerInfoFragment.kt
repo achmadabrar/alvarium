@@ -8,6 +8,7 @@ import com.bs.ecommerce.auth.register.RegisterFragment
 import com.bs.ecommerce.auth.register.RegistrationViewModel
 import com.bs.ecommerce.networking.Api
 import com.bs.ecommerce.networking.common.KeyValueFormData
+import kotlinx.android.synthetic.main.fragment_registration.*
 
 
 class CustomerInfoFragment : RegisterFragment() {
@@ -15,6 +16,8 @@ class CustomerInfoFragment : RegisterFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        saveBtn.text = getString(R.string.save)
 
         if (!viewCreated) {
             (viewModel as RegistrationViewModel).getCustomerInfoVM(model)

@@ -6,12 +6,13 @@ import android.widget.RelativeLayout
 import com.bs.ecommerce.R
 import com.bs.ecommerce.base.BaseFragment
 import com.bs.ecommerce.base.BaseViewModel
+import com.bs.ecommerce.base.ToolbarLogoBaseFragment
 import com.bs.ecommerce.main.MainViewModel
 import com.bs.ecommerce.utils.showLog
 import kotlinx.android.synthetic.main.fragment_checkout_step.*
 
 
-class CheckoutStepFragment : BaseFragment() {
+class CheckoutStepFragment : ToolbarLogoBaseFragment() {
 
     override fun getFragmentTitle() = R.string.title_shopping_cart
 

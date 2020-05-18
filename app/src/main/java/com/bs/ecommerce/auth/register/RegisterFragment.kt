@@ -16,6 +16,7 @@ import com.bs.ecommerce.auth.register.data.GetRegisterData
 import com.bs.ecommerce.auth.register.data.GetRegistrationResponse
 import com.bs.ecommerce.base.BaseFragment
 import com.bs.ecommerce.base.BaseViewModel
+import com.bs.ecommerce.base.ToolbarLogoBaseFragment
 import com.bs.ecommerce.networking.Api
 import com.bs.ecommerce.networking.common.KeyValueFormData
 import com.bs.ecommerce.utils.*
@@ -24,7 +25,7 @@ import kotlinx.android.synthetic.main.fragment_registration.*
 import kotlinx.android.synthetic.main.other_attr_bottom_sheet.view.*
 import java.util.*
 
-open class RegisterFragment : BaseFragment(), View.OnClickListener
+open class RegisterFragment : ToolbarLogoBaseFragment(), View.OnClickListener
 {
     override fun getFragmentTitle() = R.string.title_register
 
