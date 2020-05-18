@@ -30,6 +30,7 @@ class ProductDetailViewModel : BaseViewModel() {
 
     var addToCartResponseLD = MutableLiveData<AddToCartResponse>()
 
+    var gotoCartPage = false
     var rentDateFrom: Long? = null
     var rentDateTo: Long? = null
 

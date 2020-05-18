@@ -403,8 +403,7 @@ class CustomAttributeManager(
 
             for (valueList in selectedAttributes.values) {
                 for (i in valueList) {
-                    if(!i.isPreSelected)
-                        price = price.plus(i.priceAdjustmentValue ?: 0.0)
+                    price = price.plus(i.priceAdjustmentValue ?: 0.0)
                 }
             }
 

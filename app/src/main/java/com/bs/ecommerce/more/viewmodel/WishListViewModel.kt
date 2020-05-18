@@ -147,4 +147,8 @@ class WishListViewModel : BaseViewModel() {
             }
         })
     }
+
+    fun eventHandled() {
+        goToCartLD.value = false
+    }
 }

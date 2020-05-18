@@ -8,12 +8,14 @@ import android.os.Bundle
 import android.view.View
 import android.widget.RelativeLayout
 import androidx.core.content.ContextCompat
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bs.ecommerce.R
 import com.bs.ecommerce.base.BaseFragment
 import com.bs.ecommerce.base.BaseViewModel
+import com.bs.ecommerce.cart.CartFragment
 import com.bs.ecommerce.home.FeaturedProductAdapter
 import com.bs.ecommerce.more.ProductReviewFragment
 import com.bs.ecommerce.networking.Api
@@ -267,6 +269,13 @@ class ProductDetailFragment : BaseFragment(), View.OnClickListener {
                         val totalCartItems = response.data.totalShoppingCartProducts
                         updateTopCart(totalCartItems)
                         toast(response.message)
+
+                        if (gotoCartPage) {
+                            gotoCartPage = false
+
+                            if (lifecycle.currentState.isAtLeast(Lifecycle.State.RESUMED))
+                                replaceFragmentSafely(CartFragment())
+                        }
                     }
 
                 })
@@ -312,8 +321,8 @@ class ProductDetailFragment : BaseFragment(), View.OnClickListener {
 
             val dialog = DatePickerDialog(
                 requireContext(), DatePickerDialog.OnDateSetListener { _, y, m, d ->
-                    rentalProductLayout.etRentFrom.text = "$d / $m / $y"
-                    rentalProductLayout.etRentTo.text = "$d / $m / $y"
+                    rentalProductLayout.etRentFrom.text = TextUtils().getFormattedDate(d,m,y)
+                    rentalProductLayout.etRentTo.text = TextUtils().getFormattedDate(d,m,y)
 
                     (viewModel as ProductDetailViewModel).setRentDate(d, m, y, true)
                 },
@@ -447,6 +456,7 @@ class ProductDetailFragment : BaseFragment(), View.OnClickListener {
             }
         })*/
 
+        btnBuyNow.setOnClickListener(this)
         bottomSheetLayout.tvDone.setOnClickListener(this)
         productQuantityLayout.btnMinus.setOnClickListener(this)
         productQuantityLayout.btnPlus.setOnClickListener(this)
@@ -472,6 +482,11 @@ class ProductDetailFragment : BaseFragment(), View.OnClickListener {
 
         btnAddToWishList?.setOnClickListener {
             addToCartClickAction(productId, productQuantityLayout?.tvQuantity?.text.toString(), cart = false)
+        }
+
+        btnBuyNow?.setOnClickListener {
+            (viewModel as ProductDetailViewModel).gotoCartPage = true
+            addToCartClickAction(productId, productQuantityLayout?.tvQuantity?.text.toString(), cart = true)
         }
     }
 
