@@ -63,7 +63,7 @@
 
     <include
         android:id="@+id/bottomSheetLayoutCart"
-        layout="@layout/other_attr_bottom_sheet"
+        layout="@layout/custom_attribute_bottom_sheet"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:behavior_hideable="true"

@@ -74,22 +74,22 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="5dp"
             android:layout_marginTop="5dp"
-            android:maxLines="1"
-            android:ellipsize="end"
-            android:scrollbars = "vertical"
+            android:layout_marginBottom="5dp"
+            android:scrollHorizontally="false"
             android:textColor="?attr/primaryTextColor"
             android:textSize="@dimen/tv_text_size_regular"
+            android:minLines="2"
             app:layout_constraintStart_toEndOf="@id/ivProductThumb"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tvProductPrice"
-            tools:text="@string/placeholder" />
+            tools:text="@string/placeholder_long" />
 
         <TextView
             android:id="@+id/btnAddToCart"
             style="@style/RoundedButtonTiny_1"
-            android:layout_alignParentBottom="true"
             android:layout_marginStart="5dp"
-            android:layout_toEndOf="@id/ivProductThumb"
             android:text="@string/add_to_cart"
+            app:layout_constraintTop_toBottomOf="@id/tvCustomAttribute"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toEndOf="@id/ivProductThumb" />
 

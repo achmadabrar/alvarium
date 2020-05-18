@@ -20,8 +20,8 @@ import com.bs.ecommerce.networking.Api
 import com.bs.ecommerce.networking.common.KeyValueFormData
 import com.bs.ecommerce.utils.*
 import com.google.android.material.bottomsheet.BottomSheetBehavior
+import kotlinx.android.synthetic.main.custom_attribute_bottom_sheet.view.*
 import kotlinx.android.synthetic.main.fragment_registration.*
-import kotlinx.android.synthetic.main.other_attr_bottom_sheet.view.*
 import java.util.*
 
 open class RegisterFragment : BaseFragment(), View.OnClickListener
@@ -113,7 +113,7 @@ open class RegisterFragment : BaseFragment(), View.OnClickListener
                     focusStealer?.requestFocus()
 
                     // Update shared pref data for
-                    if(this@RegisterFragment is CustomerInfoFragment) {
+                    if(this@RegisterFragment is CustomerInfoFragment && customerInfoUpdate) {
                         val oldData = prefObject.getCustomerInfo(PrefSingleton.CUSTOMER_INFO)
 
                         oldData?.firstName = getRegistrationResponse?.data?.firstName
@@ -123,6 +123,8 @@ open class RegisterFragment : BaseFragment(), View.OnClickListener
                         prefObject.setCustomerInfo(PrefSingleton.CUSTOMER_INFO, oldData)
 
                         toast(getRegistrationResponse.message ?: getString(R.string.customer_info_updated))
+
+                        customerInfoUpdate = false
                     }
                 }
 
@@ -136,7 +138,7 @@ open class RegisterFragment : BaseFragment(), View.OnClickListener
                     hideLoading()
             })
 
-            actionSuccessLD.observe(viewLifecycleOwner, Observer { actionSuccess ->
+            registrationSuccessLD.observe(viewLifecycleOwner, Observer { actionSuccess ->
                 if(actionSuccess) {
                     if(this@RegisterFragment !is CustomerInfoFragment) {
                         requireActivity().onBackPressed()

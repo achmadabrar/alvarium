@@ -24,7 +24,7 @@ class ProductDetailViewModel : BaseViewModel() {
     var relatedProductsLD = MutableLiveData<List<ProductSummary>>()
     var similarProductsLD = MutableLiveData<List<ProductSummary>>()
 
-    var quantityLiveData = MutableLiveData(1)
+    var quantityLiveData = MutableLiveData<Int>()
 
     var isInvalidProductLD = MutableLiveData<Boolean>()
 
@@ -44,6 +44,7 @@ class ProductDetailViewModel : BaseViewModel() {
                 isLoadingLD.value = false
 
                 productLiveData.value = data.data
+                quantityLiveData.value = data.data?.addToCart?.enteredQuantity ?: 1
             }
 
             override fun onRequestFailed(errorMessage: String) {
@@ -86,19 +87,31 @@ class ProductDetailViewModel : BaseViewModel() {
     }
 
     /**
-     * Attributes are already added. Add product quantity attribute here
+     * Custom Attributes are already added from {@link CustomAttributeManager#getFormData}
+     * Add product quantity, Price (donation), Rental date here
      */
     private fun prepareBodyForAttributes(
                                 productId : Long,
                                 quantity: String,
                                 keyValueFormData: KeyValueFormData): KeyValueFormData {
-        val keyValuePair = KeyValuePair()
 
-        keyValuePair.key = "addtocart_$productId.EnteredQuantity"
-        keyValuePair.value = quantity
 
         val formValues = keyValueFormData.formValues as MutableList
-        formValues.add(keyValuePair)
+
+        val keyPrefix = "addtocart_$productId."
+
+        formValues.add(KeyValuePair().apply {
+            key = keyPrefix.plus("EnteredQuantity")
+            value = quantity
+        })
+
+        if(productLiveData.value?.addToCart?.customerEntersPrice == true) {
+
+            formValues.add(KeyValuePair().apply {
+                key = keyPrefix.plus("CustomerEnteredPrice")
+                value = productLiveData.value?.addToCart?.customerEnteredPrice?.toString() ?: ""
+            })
+        }
 
         // Add rental start & end date for Rental Product
         if (productLiveData.value?.isRental == true) {

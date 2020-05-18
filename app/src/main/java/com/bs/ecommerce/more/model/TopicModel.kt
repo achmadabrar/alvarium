@@ -9,4 +9,9 @@ interface TopicModel {
         systemName: String,
         callback: RequestCompleteListener<TopicResponse>
     )
+
+    fun getTopicById(
+        topicId: Int,
+        callback: RequestCompleteListener<TopicResponse>
+    )
 }

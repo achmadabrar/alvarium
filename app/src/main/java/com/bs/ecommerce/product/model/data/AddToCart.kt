@@ -11,9 +11,9 @@ data class AddToCart(
     @SerializedName("CustomProperties")
     val customProperties: CustomProperties?,
     @SerializedName("CustomerEnteredPrice")
-    val customerEnteredPrice: Int?,
+    var customerEnteredPrice: Double?,
     @SerializedName("CustomerEnteredPriceRange")
-    val customerEnteredPriceRange: Any?,
+    val customerEnteredPriceRange: String?,
     @SerializedName("CustomerEntersPrice")
     val customerEntersPrice: Boolean?,
     @SerializedName("DisableBuyButton")
@@ -21,17 +21,17 @@ data class AddToCart(
     @SerializedName("DisableWishlistButton")
     val disableWishlistButton: Boolean?,
     @SerializedName("EnteredQuantity")
-    val enteredQuantity: Int?,
+    var enteredQuantity: Int?,
     @SerializedName("IsRental")
     val isRental: Boolean?,
     @SerializedName("MinimumQuantityNotification")
-    val minimumQuantityNotification: Int?,
+    val minimumQuantityNotification: String?,
     @SerializedName("PreOrderAvailabilityStartDateTimeUserTime")
     val preOrderAvailabilityStartDateTimeUserTime: Any?,
     @SerializedName("PreOrderAvailabilityStartDateTimeUtc")
     val preOrderAvailabilityStartDateTimeUtc: Any?,
     @SerializedName("ProductId")
-    val productId: Int?,
+    val productId: Long?,
     @SerializedName("UpdateShoppingCartItemType")
     val updateShoppingCartItemType: Any?,
     @SerializedName("UpdatedShoppingCartItemId")

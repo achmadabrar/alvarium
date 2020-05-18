@@ -31,7 +31,10 @@ class CustomerInfoFragment : RegisterFragment() {
 
             customerInfo.formValues = formValue.formValues
 
-            (viewModel as RegistrationViewModel).postCustomerInfo(customerInfo, model)
+            (viewModel as RegistrationViewModel).apply {
+                customerInfoUpdate = true
+                postCustomerInfo(customerInfo, model)
+            }
         }
     }
 

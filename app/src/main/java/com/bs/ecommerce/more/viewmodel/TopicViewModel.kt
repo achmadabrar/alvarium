@@ -31,4 +31,25 @@ class TopicViewModel: BaseViewModel() {
 
         })
     }
+
+    fun fetchTopic(topicId: Int, model: TopicModel) {
+
+        isLoadingLD.value = true
+
+        model.getTopicById(topicId, object: RequestCompleteListener<TopicResponse> {
+
+            override fun onRequestSuccess(data: TopicResponse) {
+                isLoadingLD.value = false
+
+                if(data.data != null)
+                    topicLD.value = data.data
+            }
+
+            override fun onRequestFailed(errorMessage: String) {
+                isLoadingLD.value = false
+                toast(errorMessage)
+            }
+
+        })
+    }
 }

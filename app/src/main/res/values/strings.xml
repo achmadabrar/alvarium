@@ -154,6 +154,7 @@
     <string name="done">Done</string>
     <string name="select">Select</string>
     <string name="featured_manufacturer">Featured Manufacturers</string>
+    <string name="free_delivery">Free Delivery</string>
 
     <string name="email_address">Email Address</string>
     <string name="send">Send</string>
