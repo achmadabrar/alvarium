@@ -59,6 +59,7 @@ class RewardPointFragment : BaseFragment() {
                 tvRewardBalance.text = getString(R.string.reward_summary,
                     rewardPoint.rewardPointsBalance, rewardPoint.rewardPointsAmount,
                     rewardPoint.minimumRewardPointsBalance, rewardPoint.minimumRewardPointsAmount)
+                rewardBalanceCardView.visibility = View.VISIBLE
 
 
                 if (rewardPoint?.rewardPoints?.isNullOrEmpty() == true) {
