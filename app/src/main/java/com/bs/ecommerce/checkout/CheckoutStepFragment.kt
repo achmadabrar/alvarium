@@ -45,6 +45,7 @@ class CheckoutStepFragment : BaseFragment() {
         val bottomNavPosition = when (fragment) {
             is ShippingMethodFragment -> 1
             is PaymentMethodFragment -> 2
+            is PaymentInfoFragment -> 2
             is ConfirmOrderFragment -> 3
             else -> 0
         }

@@ -3,12 +3,10 @@ package com.bs.ecommerce.checkout
 import android.os.Bundle
 import android.view.View
 import android.widget.AdapterView
-import androidx.lifecycle.Observer
-import com.bs.ecommerce.R
 import com.bs.ecommerce.checkout.model.data.CheckoutSaveResponse
 import com.bs.ecommerce.checkout.model.data.ShippingAddressModel
 import com.bs.ecommerce.checkout.model.data.Store
-import com.bs.ecommerce.networking.Constants
+import com.bs.ecommerce.networking.NetworkConstants
 import com.bs.ecommerce.utils.MyApplication
 import kotlinx.android.synthetic.main.fragment_base_billing_adddress.*
 import kotlinx.android.synthetic.main.fragment_billing_address.*
@@ -23,7 +21,7 @@ class ShippingAddressFragment : BaseCheckoutAddressFragment()
     {
         super.onViewCreated(view, savedInstanceState)
 
-        addressTabLayout?.getTabAt(Constants.SHIPPING_ADDRESS_TAB)?.select()
+        addressTabLayout?.getTabAt(CheckoutConstants.SHIPPING_ADDRESS_TAB)?.select()
 
         initShippingLayout(MyApplication.checkoutSaveResponse)
 
@@ -41,14 +39,14 @@ class ShippingAddressFragment : BaseCheckoutAddressFragment()
             }
             else
                 (viewModel as CheckoutAddressViewModel)
-                    .saveShippingFromExistingAddressVM(type = Constants.ShippingAddress, addressId = addressID, model = model)
+                    .saveShippingFromExistingAddressVM(type = CheckoutConstants.ShippingAddress, addressId = addressID, model = model)
         }
 
     }
     private fun saveStoreData()
     {
         (viewModel as CheckoutAddressViewModel)
-            .saveShippingFromExistingAddressVM(type = Constants.StorePickUp, addressId = addressID, model = model)
+            .saveShippingFromExistingAddressVM(type = CheckoutConstants.StorePickUp, addressId = addressID, model = model)
     }
 
     private fun initShippingLayout(saveResponse: CheckoutSaveResponse)

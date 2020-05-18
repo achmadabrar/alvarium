@@ -66,7 +66,7 @@ class CheckoutModelImpl(private val context: Context): CheckoutModel
                 if (response.body() != null)
                     callback.onRequestSuccess(response.body()!!)
 
-                else if (response.code() == 300 || response.code() == 400)
+                else if (response.code() == 300 || response.code() == 400 || response.code() == 500)
                 {
                     val gson = GsonBuilder().create()
                     val errorBody = gson.fromJson(response.errorBody()!!.string(), CheckoutSaveResponse::class.java)
@@ -93,7 +93,7 @@ class CheckoutModelImpl(private val context: Context): CheckoutModel
                 if (response.body() != null)
                     callback.onRequestSuccess(response.body()!!)
 
-                else if (response.code() == 300 || response.code() == 400)
+                else if (response.code() == 300 || response.code() == 400 || response.code() == 500)
                 {
                     val gson = GsonBuilder().create()
                     val errorBody = gson.fromJson(response.errorBody()!!.string(), CheckoutSaveResponse::class.java)
@@ -120,7 +120,7 @@ class CheckoutModelImpl(private val context: Context): CheckoutModel
                 if (response.body() != null)
                     callback.onRequestSuccess(response.body()!!)
 
-                else if (response.code() == 300 || response.code() == 400)
+                else if (response.code() == 300 || response.code() == 400 || response.code() == 500)
                 {
                     val gson = GsonBuilder().create()
                     val errorBody = gson.fromJson(response.errorBody()!!.string(), CheckoutSaveResponse::class.java)
@@ -147,7 +147,7 @@ class CheckoutModelImpl(private val context: Context): CheckoutModel
                 if (response.body() != null)
                     callback.onRequestSuccess(response.body()!!)
 
-                else if (response.code() == 300 || response.code() == 400)
+                else if (response.code() == 300 || response.code() == 400 || response.code() == 500)
                 {
                     val gson = GsonBuilder().create()
                     val errorBody = gson.fromJson(response.errorBody()!!.string(), CheckoutSaveResponse::class.java)

@@ -9,12 +9,10 @@ import com.bs.ecommerce.R
 import com.bs.ecommerce.base.BaseFragment
 import com.bs.ecommerce.checkout.model.CheckoutModel
 import com.bs.ecommerce.checkout.model.CheckoutModelImpl
-import com.bs.ecommerce.networking.Constants
 import com.bs.ecommerce.utils.*
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayout.OnTabSelectedListener
 import kotlinx.android.synthetic.main.fragment_base_billing_adddress.*
-import kotlinx.android.synthetic.main.fragment_checkout_step.*
 
 
 abstract class BaseCheckoutNavigationFragment : BaseFragment()
@@ -33,8 +31,6 @@ abstract class BaseCheckoutNavigationFragment : BaseFragment()
         setLiveDataListeners()
 
         setAddressTabClickListener()
-
-        setLiveDataListeners()
 
 
        /* val csFragment = requireActivity().supportFragmentManager.findFragmentByTag(CheckoutStepFragment::class.java.simpleName)
@@ -58,7 +54,7 @@ abstract class BaseCheckoutNavigationFragment : BaseFragment()
 
                     when(saveResponse.data.nextStep)
                     {
-                        Constants.ShippingAddress ->
+                        CheckoutConstants.ShippingAddress ->
                         {
                             MyApplication.checkoutSaveResponse.data.shippingAddressModel = saveResponse.data.shippingAddressModel
 
@@ -66,7 +62,7 @@ abstract class BaseCheckoutNavigationFragment : BaseFragment()
 
                             replaceFragmentWithoutSavingState(ShippingAddressFragment())
                         }
-                        Constants.ShippingMethod ->
+                        CheckoutConstants.ShippingMethod ->
                         {
                             MyApplication.checkoutSaveResponse.data.shippingMethodModel = saveResponse.data.shippingMethodModel
 
@@ -74,7 +70,7 @@ abstract class BaseCheckoutNavigationFragment : BaseFragment()
 
                             replaceFragmentWithoutSavingState(ShippingMethodFragment())
                         }
-                        Constants.PaymentMethod ->
+                        CheckoutConstants.PaymentMethod ->
                         {
                             MyApplication.checkoutSaveResponse.data.paymentMethodModel = saveResponse.data.paymentMethodModel
 
@@ -82,8 +78,14 @@ abstract class BaseCheckoutNavigationFragment : BaseFragment()
 
                             replaceFragmentWithoutSavingState(PaymentMethodFragment())
                         }
+                        CheckoutConstants.PaymentInfo -> {
 
-                        Constants.PaymentInfo -> replaceFragmentWithoutSavingState(ConfirmOrderFragment())
+                            toast("Payment Method added Successfully")
+
+                            replaceFragmentWithoutSavingState(PaymentInfoFragment())
+                        }
+
+                        CheckoutConstants.ConfirmOrder -> replaceFragmentWithoutSavingState(ConfirmOrderFragment())
                     }
                 }
 
@@ -95,13 +97,13 @@ abstract class BaseCheckoutNavigationFragment : BaseFragment()
     {
         when(tabPosition)
         {
-            Constants.BILLING_ADDRESS_TAB ->
+            CheckoutConstants.BILLING_ADDRESS_TAB ->
             {
                 if(!isCurrentTabBilling())
                     replaceFragmentWithoutSavingState(BillingAddressFragment())
             }
 
-            Constants.SHIPPING_ADDRESS_TAB ->
+            CheckoutConstants.SHIPPING_ADDRESS_TAB ->
             {
                 if (CheckoutStepFragment.isBillingAddressSubmitted)
                 {
@@ -112,7 +114,7 @@ abstract class BaseCheckoutNavigationFragment : BaseFragment()
                 else
                 {
                     toast("Please complete previous step")
-                    Handler().post {   addressTabLayout?.getTabAt(Constants.BILLING_ADDRESS_TAB)?.select()  }
+                    Handler().post {   addressTabLayout?.getTabAt(CheckoutConstants.BILLING_ADDRESS_TAB)?.select()  }
                 }
             }
         }

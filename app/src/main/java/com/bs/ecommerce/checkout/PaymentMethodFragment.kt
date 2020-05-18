@@ -2,10 +2,8 @@ package com.bs.ecommerce.checkout
 
 import android.os.Bundle
 import android.os.Handler
-import android.text.Html
 import android.view.View
 import android.widget.ImageView
-import android.widget.LinearLayout
 import android.widget.RelativeLayout
 import android.widget.TextView
 import androidx.appcompat.widget.AppCompatRadioButton
@@ -14,7 +12,6 @@ import com.bs.ecommerce.base.BaseViewModel
 import com.bs.ecommerce.checkout.model.data.PaymentMethod
 import com.bs.ecommerce.customViews.CheckableLinearLayout
 import com.bs.ecommerce.customViews.MethodSelectionProcess
-import com.bs.ecommerce.networking.Constants
 import com.bs.ecommerce.utils.MyApplication
 import com.bs.ecommerce.utils.loadImg
 import kotlinx.android.synthetic.main.fragment_shipping_method.*
@@ -23,7 +20,7 @@ class PaymentMethodFragment : BaseCheckoutNavigationFragment() {
 
 
     private lateinit var methodSelectionProcess: MethodSelectionProcess
-    private var shippingMethodValue = ""
+    private var paymentMethodValue = ""
 
     override fun getFragmentTitle() = R.string.title_shopping_cart
 
@@ -43,7 +40,7 @@ class PaymentMethodFragment : BaseCheckoutNavigationFragment() {
 
         btnContinue?.setOnClickListener {
 
-            (viewModel as CheckoutAddressViewModel).savePaymentMethodVM(shippingMethodValue, model)
+            (viewModel as CheckoutAddressViewModel).savePaymentMethodVM(paymentMethodValue, model)
         }
     }
 
@@ -77,7 +74,7 @@ class PaymentMethodFragment : BaseCheckoutNavigationFragment() {
         if (isPreselected(method))
         {
             radioButton.isChecked = true
-            shippingMethodValue = method.name + "___" + method.paymentMethodSystemName
+            paymentMethodValue = method.paymentMethodSystemName
         }
         else
             radioButton.isChecked = false
@@ -89,7 +86,7 @@ class PaymentMethodFragment : BaseCheckoutNavigationFragment() {
         radioButton.setOnCheckedChangeListener { buttonView, isChecked ->
             if (isChecked)
             {
-                shippingMethodValue = method.name + "___" + method.paymentMethodSystemName
+                paymentMethodValue = method.paymentMethodSystemName
                 Handler().post {  methodSelectionProcess.resetRadioButton(buttonView.id) }
             }
         }

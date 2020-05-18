@@ -49,7 +49,7 @@ object RetroClient
             val fullLogger = httpClient.build()
 
             return Retrofit.Builder()
-                    .baseUrl(Constants.BASE_URL)
+                    .baseUrl(NetworkConstants.BASE_URL)
                     .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                     .addConverterFactory(GsonConverterFactory.create(gson))
                     .client(okHttpLogger)                                       //TODO or fullLogger
