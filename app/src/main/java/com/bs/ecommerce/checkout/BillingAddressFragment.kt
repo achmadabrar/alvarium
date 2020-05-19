@@ -24,6 +24,8 @@ class BillingAddressFragment : BaseCheckoutAddressFragment()
 
         btnContinue?.setOnClickListener {
 
+            backNavigation = false
+
             if(addressID == 0L)
             {
                 val newAddress = getAddressWithValidation(newAddress!!)

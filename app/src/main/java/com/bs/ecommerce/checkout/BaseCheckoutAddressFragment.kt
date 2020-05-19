@@ -73,7 +73,9 @@ open class BaseCheckoutAddressFragment : BaseCheckoutNavigationFragment()
         createForms(address)
 
         val countryNameList = address.availableCountries?.map { it.text }
-        populateCountrySpinner(countryNameList!!, address.availableCountries)
+
+        countryNameList?.let {  populateCountrySpinner(countryNameList, address.availableCountries)  }
+
 
         newAddressLayout?.visibility = View.VISIBLE
     }

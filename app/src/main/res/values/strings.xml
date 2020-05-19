@@ -136,6 +136,7 @@
     <string name="products">Products</string>
     <string name="pickup_point_address">Picup point address</string>
     <string name="invoice">Invoice</string>
+    <string name="skip_payment_dialog">Are you sure you want to skip payment?</string>
 
     <!-- ProductDetails Fragment -->
     <string name="quantity">Quantity</string>

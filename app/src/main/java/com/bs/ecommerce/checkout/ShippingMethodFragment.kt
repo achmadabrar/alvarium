@@ -7,12 +7,15 @@ import android.view.View
 import android.widget.RelativeLayout
 import android.widget.TextView
 import androidx.appcompat.widget.AppCompatRadioButton
+import androidx.lifecycle.Observer
 import com.bs.ecommerce.R
 import com.bs.ecommerce.base.BaseViewModel
 import com.bs.ecommerce.checkout.model.data.ShippingMethod
 import com.bs.ecommerce.customViews.CheckableLinearLayout
 import com.bs.ecommerce.customViews.MethodSelectionProcess
 import com.bs.ecommerce.utils.MyApplication
+import com.bs.ecommerce.utils.showLog
+import kotlinx.android.synthetic.main.fragment_checkout_step.*
 import kotlinx.android.synthetic.main.fragment_shipping_method.*
 
 class ShippingMethodFragment : BaseCheckoutNavigationFragment() {
@@ -32,11 +35,22 @@ class ShippingMethodFragment : BaseCheckoutNavigationFragment() {
     {
         super.onViewCreated(view, savedInstanceState)
 
+        checkoutBottomNav?.menu?.getItem(CheckoutConstants.SHIPPING_TAB)?.isChecked = true
+
         val shippingMethods = MyApplication.checkoutSaveResponse.data.shippingMethodModel.shippingMethods
 
+        //if(!backNavigation)
         addMethodRadioGroup(shippingMethods)
 
+
+/*        (viewModel as CheckoutAddressViewModel).shippingMethodModelLD.observe(viewLifecycleOwner, Observer { shippingMethodModel ->
+            addMethodRadioGroup(shippingMethodModel.shippingMethods)
+
+        })*/
+
         btnContinue?.setOnClickListener {
+
+            backNavigation = false
 
             (viewModel as CheckoutAddressViewModel).saveShippingMethodVM(shippingMethodValue, model)
         }

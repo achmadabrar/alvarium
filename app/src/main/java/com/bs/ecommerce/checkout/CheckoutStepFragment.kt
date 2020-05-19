@@ -3,12 +3,16 @@ package com.bs.ecommerce.checkout
 import android.os.Bundle
 import android.view.View
 import android.widget.RelativeLayout
+import androidx.lifecycle.ViewModelProvider
 import com.bs.ecommerce.R
 import com.bs.ecommerce.base.BaseFragment
 import com.bs.ecommerce.base.BaseViewModel
 import com.bs.ecommerce.base.ToolbarLogoBaseFragment
+import com.bs.ecommerce.checkout.model.CheckoutModel
+import com.bs.ecommerce.checkout.model.CheckoutModelImpl
 import com.bs.ecommerce.main.MainViewModel
 import com.bs.ecommerce.utils.showLog
+import com.bs.ecommerce.utils.toast
 import kotlinx.android.synthetic.main.fragment_checkout_step.*
 
 
@@ -20,34 +24,49 @@ class CheckoutStepFragment : ToolbarLogoBaseFragment() {
 
     override fun getRootLayout(): RelativeLayout = checkoutStepRootLayout
 
-    override fun createViewModel(): BaseViewModel = MainViewModel()
+    override fun createViewModel(): BaseViewModel = CheckoutAddressViewModel()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initView()
+
+        viewModel  = ViewModelProvider(this).get(CheckoutAddressViewModel::class.java)
     }
 
     private fun initView() {
+
+        BaseCheckoutNavigationFragment.backNavigation = false
+
         replaceFragment(BillingAddressFragment())
 
         checkoutBottomNav.setOnNavigationItemSelectedListener { item ->
-            when (item.itemId) {
-                R.id.menu_address -> replaceFragment(BillingAddressFragment())
-                R.id.menu_shipping -> replaceFragment(ShippingMethodFragment())
-                R.id.menu_payment -> replaceFragment(PaymentMethodFragment())
-                R.id.menu_confirm -> replaceFragment(ConfirmOrderFragment())
+
+            if (requireActivity().supportFragmentManager.findFragmentById(R.id.checkoutFragmentHolder) is PaymentInfoFragment)
+            {
+                toast(getString(R.string.skip_payment_dialog))  //TODO will be a dialog
+                false
             }
-            true
+            else
+            {
+                when (item.itemId) {
+                    R.id.menu_address -> replaceFragment(BillingAddressFragment())
+                    R.id.menu_shipping -> replaceFragment(ShippingMethodFragment())
+                    R.id.menu_payment -> replaceFragment(PaymentMethodFragment())
+                    R.id.menu_confirm -> replaceFragment(ConfirmOrderFragment())
+                }
+                true
+            }
+
         }
     }
 
     fun updateBottomNavItem(fragment: BaseFragment) {
 
         val bottomNavPosition = when (fragment) {
-            is ShippingMethodFragment -> 1
-            is PaymentMethodFragment -> 2
-            is PaymentInfoFragment -> 2
-            is ConfirmOrderFragment -> 3
+            is ShippingMethodFragment -> CheckoutConstants.SHIPPING_TAB
+            is PaymentMethodFragment -> CheckoutConstants.PAYMENT_TAB
+            is PaymentInfoFragment -> CheckoutConstants.PAYMENT_TAB
+            is ConfirmOrderFragment -> CheckoutConstants.CONFIRM_TAB
             else -> 0
         }
 
@@ -65,32 +84,6 @@ class CheckoutStepFragment : ToolbarLogoBaseFragment() {
         transaction.commit()
         childFragmentManager.executePendingTransactions()
     }
-
-    /*fun setBackStackChangeListener()
-    {
-        requireActivity().supportFragmentManager.addOnBackStackChangedListener {
-
-            val topFragment = requireActivity().supportFragmentManager.findFragmentById(R.id.checkoutFragmentHolder)
-            var topFragmentName = ""
-
-            if(topFragment != null)
-                topFragmentName = topFragment::class.java.simpleName
-
-            var bottomNavPosition = -1
-
-            when(topFragmentName) {
-                ConfirmOrderFragment::class.java.simpleName -> bottomNavPosition = 2
-                PaymentMethodFragment::class.java.simpleName -> bottomNavPosition = 1
-                ShippingMethodFragment::class.java.simpleName -> bottomNavPosition = 0
-                //BillingAddressFragment::class.java.simpleName -> bottomNavPosition = 0
-            }
-
-            if(bottomNavPosition >= 0)
-                checkoutBottomNav?.menu?.getItem(bottomNavPosition)?.isChecked = true
-
-            "sdsfsfdsdsd".showLog(topFragmentName)
-        }
-    }*/
     companion object{
         @JvmStatic var isBillingAddressSubmitted = false
     }

@@ -20,6 +20,10 @@ open class CheckoutAddressViewModel : BaseViewModel()
 
     var saveResponseLD = MutableLiveData<CheckoutSaveResponse>()
 
+    var shippingMethodModelLD = MutableLiveData<ShippingMethodModel>()
+
+    var paymentMethodModelLD = MutableLiveData<PaymentMethodModel>()
+
 
     private fun saveCheckoutData(data: CheckoutSaveResponse)
     {
@@ -185,8 +189,8 @@ open class CheckoutAddressViewModel : BaseViewModel()
                     {
                         this.paymentMethods.add(PaymentMethod(description = "", fee = rewardPointsBalance, logoUrl = "", name = "Reward Points", paymentMethodSystemName = "", selected = false ))
                     }
+                    shippingMethodModelLD.postValue(data.data.shippingMethodModel)
                 }
-
                 saveCheckoutData(data)
             }
 
@@ -205,7 +209,11 @@ open class CheckoutAddressViewModel : BaseViewModel()
 
         model.savePaymentMethod(KeyValueFormData(formValues), object : RequestCompleteListener<CheckoutSaveResponse>
         {
-            override fun onRequestSuccess(data: CheckoutSaveResponse) = saveCheckoutData(data)
+            override fun onRequestSuccess(data: CheckoutSaveResponse){
+
+                saveCheckoutData(data)
+                paymentMethodModelLD.postValue(data.data.paymentMethodModel)
+            }
 
             override fun onRequestFailed(errorMessage: String)
             {
