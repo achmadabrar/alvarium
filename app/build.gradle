@@ -103,6 +103,8 @@ dependencies {
     implementation 'com.pixplicity.easyprefs:library:1.9.0'
     implementation 'com.github.ittianyu:BottomNavigationViewEx:2.0.2'
     implementation 'com.binjar.prefsdroid:prefs-droid:1.1.0'
+    implementation 'com.daimajia.slider:library:1.1.5@aar'
+    implementation 'com.nineoldandroids:library:2.4.0'
 
     implementation('com.github.ihsanbal:LoggingInterceptor:3.0.0') { // HTTP pretty log printing library
         exclude group: 'org.json', module: 'json'

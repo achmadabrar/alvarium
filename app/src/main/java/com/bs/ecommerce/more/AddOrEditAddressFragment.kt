@@ -22,9 +22,9 @@ import com.bs.ecommerce.utils.CustomAttributeManager
 import com.bs.ecommerce.utils.ItemClickListener
 import com.bs.ecommerce.utils.toast
 import com.google.android.material.bottomsheet.BottomSheetBehavior
+import kotlinx.android.synthetic.main.custom_attribute_bottom_sheet.*
+import kotlinx.android.synthetic.main.custom_attribute_bottom_sheet.view.*
 import kotlinx.android.synthetic.main.fragment_address_edit.*
-import kotlinx.android.synthetic.main.other_attr_bottom_sheet.*
-import kotlinx.android.synthetic.main.other_attr_bottom_sheet.view.*
 
 class AddOrEditAddressFragment : BaseFragment() {
 

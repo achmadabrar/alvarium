@@ -12,4 +12,7 @@
     android:textColor="?attr/primaryTextColor"
     android:textSize="@dimen/tv_text_size_regular"
     android:visibility="visible"
-    tools:text="@string/placeholder" />
+    tools:text="@string/placeholder"
+    android:background="?attr/selectableItemBackground"
+    android:clickable="true"
+    android:focusable="false"/>

@@ -400,7 +400,7 @@
         android:id="@+id/bottomSheetLayoutRegister"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        layout="@layout/other_attr_bottom_sheet"
+        layout="@layout/custom_attribute_bottom_sheet"
         app:behavior_hideable="true"
         app:behavior_peekHeight="0dp"
         app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior"/>

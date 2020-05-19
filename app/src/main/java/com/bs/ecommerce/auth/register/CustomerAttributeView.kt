@@ -19,7 +19,7 @@ import com.bs.ecommerce.utils.AttributeControlType
 import com.bs.ecommerce.utils.ColorSelectionProcess
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import kotlinx.android.synthetic.main.color_selection_layout.view.*
-import kotlinx.android.synthetic.main.other_attr_bottom_sheet.view.*
+import kotlinx.android.synthetic.main.custom_attribute_bottom_sheet.view.*
 import kotlinx.android.synthetic.main.other_attr_layout.view.*
 import org.jetbrains.anko.layoutInflater
 

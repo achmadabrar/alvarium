@@ -27,21 +27,25 @@ class WishListAdapter(
     override fun getItemCount(): Int = list.size
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        holder.itemView.tvProductName.text = list[position].productName
-        holder.itemView.tvProductPrice.text = list[position].subTotal
 
-        holder.itemView.ivProductThumb.loadImg(list[position].picture?.imageUrl)
+        val item = list[position]
 
-        holder.itemView.tvCustomAttribute.text = TextUtils()
-            .getHtmlFormattedText(list[position].attributeInfo)
-        //holder.itemView.tvCustomAttribute.movementMethod = ScrollingMovementMethod()
+        with(holder.itemView) {
+            tvProductName.text = item.productName
+            tvProductPrice.text = item.subTotal
 
-        holder.itemView.btnAddToCart.setOnClickListener { v ->
-            clickListener.onClick(v, position, list[position])
-        }
+            ivProductThumb.loadImg(item.picture?.imageUrl)
 
-        holder.itemView.icRemoveItem.setOnClickListener { v ->
-            clickListener.onClick(v, position, list[position])
+            tvCustomAttribute.text = TextUtils()
+                .getHtmlFormattedText(item.attributeInfo)
+
+            btnAddToCart.setOnClickListener { v ->
+                clickListener.onClick(v, position, item)
+            }
+
+            icRemoveItem.setOnClickListener { v ->
+                clickListener.onClick(v, position, item)
+            }
         }
     }
 

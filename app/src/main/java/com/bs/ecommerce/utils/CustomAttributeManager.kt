@@ -21,7 +21,6 @@ import com.bs.ecommerce.product.model.data.CustomAttribute
 import com.bs.ecommerce.product.model.data.ProductPrice
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import kotlinx.android.synthetic.main.color_selection_layout.view.*
-import kotlinx.android.synthetic.main.other_attr_layout.view.*
 import org.jetbrains.anko.layoutInflater
 import java.util.*
 
@@ -75,7 +74,7 @@ class CustomAttributeManager(
     }
 
     private fun genericAttributes(attr: CustomAttribute) {
-        val layout = layoutInflater.inflate(R.layout.other_attr_layout, viewGroup)
+        val layout = layoutInflater.inflate(R.layout.custom_attribute_selection_layout, viewGroup)
         layout.tag = attr.id
 
         val tvName = layout.findViewById<TextView>(R.id.tvLayoutTitle)
@@ -88,7 +87,7 @@ class CustomAttributeManager(
         tvSelectedAttr.text =
             attr.values.find { it.isPreSelected }?.name ?: context.getString(R.string.select)
 
-        layout.tvSelectedAttr.setOnClickListener {
+        layout.setOnClickListener {
             if (bsBehavior.state != BottomSheetBehavior.STATE_EXPANDED) {
                 attributeValueHolder.removeAllViews()
                 radioGroup.removeAllViews()
@@ -102,7 +101,7 @@ class CustomAttributeManager(
                         AttributeControlType.Checkboxes -> {
                             val cb =
                                 layoutInflater.inflate(
-                                    R.layout.other_attr_checkbox,
+                                    R.layout.custom_attribute_checkbox,
                                     viewGroup
                                 ) as CheckBox
                             cb.text = label
@@ -119,9 +118,22 @@ class CustomAttributeManager(
                             }
                         }
 
+
+                        AttributeControlType.ReadonlyCheckboxes -> {
+                            val cb =
+                                layoutInflater.inflate(
+                                    R.layout.custom_attribute_checkbox,
+                                    viewGroup
+                                ) as CheckBox
+                            cb.text = label
+                            cb.isChecked = selected
+                            cb.isEnabled = false
+                            attributeValueHolder.addView(cb)
+                        }
+
                         AttributeControlType.DropdownList -> {
                             val tv =
-                                layoutInflater.inflate(R.layout.generic_attr_item, viewGroup) as TextView
+                                layoutInflater.inflate(R.layout.custom_attribute_dropdown, viewGroup) as TextView
                             tv.text = label
                             tv.setCompoundDrawablesWithIntrinsicBounds(
                                 0, 0,
@@ -151,7 +163,7 @@ class CustomAttributeManager(
                         AttributeControlType.RadioList -> {
 
                             val rb = layoutInflater.inflate(
-                                R.layout.other_attr_radiobutton, viewGroup
+                                R.layout.custom_attribute_radiobutton, viewGroup
                             ) as RadioButton
                             rb.text = label
                             rb.tag = i
@@ -190,7 +202,7 @@ class CustomAttributeManager(
     }
 
     private fun textInputAttr(attr: CustomAttribute) {
-        val layout = layoutInflater.inflate(R.layout.edittext_attribute, viewGroup)
+        val layout = layoutInflater.inflate(R.layout.custom_attribute_edittext, viewGroup)
         layout.tag = attr.id
 
         val etUserInput = layout.findViewById<EditText>(R.id.etUserInput)
@@ -391,8 +403,7 @@ class CustomAttributeManager(
 
             for (valueList in selectedAttributes.values) {
                 for (i in valueList) {
-                    if(!i.isPreSelected)
-                        price = price.plus(i.priceAdjustmentValue ?: 0.0)
+                    price = price.plus(i.priceAdjustmentValue ?: 0.0)
                 }
             }
 

@@ -157,6 +157,7 @@
     <string name="done">Done</string>
     <string name="select">Select</string>
     <string name="featured_manufacturer">Featured Manufacturers</string>
+    <string name="free_delivery">Free Delivery</string>
 
     <string name="email_address">Email Address</string>
     <string name="send">Send</string>
@@ -218,6 +219,7 @@
     <string name="people_also_purchase">People Also Purchase</string>
     <string name="add_all_items_to_cart">Add All Items to Cart</string>
     <string name="adding_to_wish_list">Adding to WishList…</string>
+    <string name="please_wait">Please Wait…</string>
     <string name="remove">Remove</string>
     <string name="invalid_id">Invalid ID</string>
     <string name="no_items_in_your_wishlist">No Items in Your Wish List</string>

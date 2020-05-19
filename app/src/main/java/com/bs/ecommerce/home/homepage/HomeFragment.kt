@@ -1,10 +1,10 @@
 package com.bs.ecommerce.home.homepage
 
+import android.graphics.BitmapFactory
 import android.os.Bundle
 import android.view.View
 import android.widget.RelativeLayout
 import android.widget.TextView
-import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -29,12 +29,21 @@ import com.bs.ecommerce.product.model.data.SubCategory
 import com.bs.ecommerce.utils.ItemClickListener
 import com.bs.ecommerce.utils.RecyclerViewMargin
 import com.bs.ecommerce.utils.replaceFragmentSafely
+import com.bs.ecommerce.utils.showLog
+import com.daimajia.slider.library.Indicators.PagerIndicator
+import com.daimajia.slider.library.SliderLayout
+import com.daimajia.slider.library.SliderTypes.BaseSliderView
+import com.daimajia.slider.library.SliderTypes.DefaultSliderView
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import kotlinx.android.synthetic.main.featured_list_layout.view.*
 import kotlinx.android.synthetic.main.fragment_home.*
 import kotlinx.android.synthetic.main.home_fragment_bottomsheet.*
 import kotlinx.android.synthetic.main.home_fragment_bottomsheet.view.*
-import kotlinx.android.synthetic.main.slider.view.*
+import kotlinx.android.synthetic.main.home_page_banner.*
+import kotlinx.android.synthetic.main.home_page_banner.view.*
+import org.jetbrains.anko.doAsync
+import org.jetbrains.anko.uiThread
+import java.net.URL
 
 
 class HomeFragment : ToolbarLogoBaseFragment() {
@@ -195,34 +204,80 @@ class HomeFragment : ToolbarLogoBaseFragment() {
     }
 
     private fun populateBanner(sliderData: SliderData) {
-        banner
+
         if (sliderData.isEnabled == false || sliderData.sliders.isNullOrEmpty()) {
             banner.visibility = View.GONE
             return
         }
 
         banner.visibility = View.VISIBLE
-        val detailsSliderAdapter = BannerSliderAdapter(sliderData.sliders)
 
-        banner.view_pager_slider.adapter = detailsSliderAdapter
-        banner.view_pager_slider.currentItem = 0
+        banner.view_pager_slider1?.removeAllSliders()
+        banner.view_pager_slider1?.setPresetIndicator(SliderLayout.PresetIndicators.Center_Bottom)
 
-        banner.circle_indicator.apply {
-            setViewPager(banner.view_pager_slider)
-            pageColor = ContextCompat.getColor(activity!!, R.color.white)
-            fillColor = ContextCompat.getColor(activity!!, R.color.darkOrGray)
-        }
+        var biggestImageAR = 100000F
 
-        // TODO Enable auto scrolling for the slider
-        /*var currentPage = 0
+        for (imageModel in sliderData.sliders) {
 
-        Timer("SettingUp", false).schedule(object: TimerTask() {
-            override fun run() {
-                banner.view_pager_slider.currentItem = currentPage % sliderData.sliders.size
-                currentPage++
+            val textSliderView = DefaultSliderView(requireContext())
+
+            textSliderView.image(imageModel.imageUrl).scaleType =
+                BaseSliderView.ScaleType.CenterInside
+
+            doAsync {
+                //Execute all the long running tasks here
+                val url = URL(imageModel.imageUrl)
+                val bitmap = BitmapFactory.decodeStream(url.openConnection().getInputStream())
+
+                uiThread {
+
+                    val thisImageAR = (bitmap?.width!!.toFloat() / bitmap.height.toFloat())
+
+                    if (thisImageAR < biggestImageAR)
+                        biggestImageAR = thisImageAR
+
+                    "testabc".showLog(thisImageAR.toString())
+
+                    slider?.setmAspectRatio(biggestImageAR)
+                    "testabc1".showLog(biggestImageAR.toString())
+
+                }
             }
 
-        }, 5000, 2000)*/
+            /*val bundle  =  bundleOf("isProduct" to imageModel.isProduct,
+                "ProdOrCatId" to imageModel.prodOrCatId)
+
+
+            textSliderView.bundle(bundle)
+
+            textSliderView.setOnSliderClickListener { slider ->
+
+                val bundle1 = slider.bundle
+
+                val isProduct = bundle1.getInt("isProduct")
+                val catOrProductId = bundle1.getInt("ProdOrCatId")
+
+                if (catOrProductId != 0)
+                {
+                    if (isProduct != 0)
+                    {
+                        ProductModel().apply {
+
+                            id = catOrProductId.toLong()
+                            name = ""
+                            ProductDetailFragment.productModel = this
+                        }
+                        replaceFragmentSafely(ProductDetailFragment(), R.id.container)
+                    }
+                    else
+                        replaceFragmentSafely(ProductListFragmentFor3_8.newInstance("Category", catOrProductId), R.id.container)
+
+                }
+            }*/
+
+            banner.view_pager_slider1?.addSlider(textSliderView)
+            banner.view_pager_slider1?.setCustomIndicator(view!!.findViewById<View>(R.id.circle_indicator) as PagerIndicator)
+        }
     }
 
     private fun populateFeaturedCategoryList(list: List<CategoryModel>) {

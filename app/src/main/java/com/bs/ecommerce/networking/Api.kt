@@ -227,6 +227,8 @@ interface Api {
     @GET("topic/details/{systemName}")
     fun getTopic(@Path("systemName") systemName: String) : Call<TopicResponse>
 
+    @GET("topic/detailsbyid/{id}")
+    fun getTopicById(@Path("id") topicId: Int) : Call<TopicResponse>
 
     @POST("common/contactus")
     fun contactUs(@Body userData: ContactUsResponse) : Call<ContactUsResponse>

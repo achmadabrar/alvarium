@@ -261,7 +261,7 @@ class SearchFragment : BaseFragment() {
 
             for(i in sortOption.availableSortOptions) {
 
-                val tv = layoutInflater.inflate(R.layout.generic_attr_item, null) as TextView
+                val tv = layoutInflater.inflate(R.layout.custom_attribute_dropdown, null) as TextView
                 tv.text = i.text
                 tv.setCompoundDrawablesWithIntrinsicBounds(
                     0, 0,

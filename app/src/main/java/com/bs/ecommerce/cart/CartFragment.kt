@@ -21,12 +21,12 @@ import com.bs.ecommerce.networking.common.KeyValueFormData
 import com.bs.ecommerce.product.model.data.CheckoutAttribute
 import com.bs.ecommerce.utils.*
 import com.google.android.material.bottomsheet.BottomSheetBehavior
+import kotlinx.android.synthetic.main.custom_attribute_bottom_sheet.*
+import kotlinx.android.synthetic.main.custom_attribute_bottom_sheet.view.*
 import kotlinx.android.synthetic.main.fragment_cart.*
 import kotlinx.android.synthetic.main.ll_cart_coupon.*
 import kotlinx.android.synthetic.main.ll_cart_gift_card.*
 import kotlinx.android.synthetic.main.ll_cart_title.*
-import kotlinx.android.synthetic.main.other_attr_bottom_sheet.*
-import kotlinx.android.synthetic.main.other_attr_bottom_sheet.view.*
 import kotlinx.android.synthetic.main.table_order_total.*
 
 

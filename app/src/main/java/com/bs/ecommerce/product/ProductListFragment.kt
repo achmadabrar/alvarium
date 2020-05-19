@@ -16,7 +16,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bs.ecommerce.R
 import com.bs.ecommerce.base.BaseFragment
 import com.bs.ecommerce.base.BaseViewModel
-import com.bs.ecommerce.cart.CartFragment
 import com.bs.ecommerce.product.adapter.ProductListAdapter
 import com.bs.ecommerce.product.adapter.SubCategoryAdapter
 import com.bs.ecommerce.product.model.ProductListModel
@@ -167,7 +166,7 @@ class ProductListFragment : BaseFragment() {
 
             for(i in sortOption.availableSortOptions) {
 
-                val tv = layoutInflater.inflate(R.layout.generic_attr_item, null) as TextView
+                val tv = layoutInflater.inflate(R.layout.custom_attribute_dropdown, null) as TextView
                 tv.text = i.text
                 tv.setCompoundDrawablesWithIntrinsicBounds(
                     0, 0,

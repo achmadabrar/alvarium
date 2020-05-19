@@ -8,12 +8,14 @@ import android.os.Bundle
 import android.view.View
 import android.widget.RelativeLayout
 import androidx.core.content.ContextCompat
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bs.ecommerce.R
 import com.bs.ecommerce.base.BaseFragment
 import com.bs.ecommerce.base.BaseViewModel
+import com.bs.ecommerce.cart.CartFragment
 import com.bs.ecommerce.home.FeaturedProductAdapter
 import com.bs.ecommerce.more.ProductReviewFragment
 import com.bs.ecommerce.networking.Api
@@ -27,9 +29,10 @@ import com.bs.ecommerce.product.model.data.ProductSummary
 import com.bs.ecommerce.product.viewModel.ProductDetailViewModel
 import com.bs.ecommerce.utils.*
 import com.google.android.material.bottomsheet.BottomSheetBehavior
+import kotlinx.android.synthetic.main.custom_attribute_bottom_sheet.view.*
 import kotlinx.android.synthetic.main.featured_product_layout.view.*
 import kotlinx.android.synthetic.main.fragment_product_detail.*
-import kotlinx.android.synthetic.main.other_attr_bottom_sheet.view.*
+import kotlinx.android.synthetic.main.product_availability_layout.view.*
 import kotlinx.android.synthetic.main.product_name_layout.view.*
 import kotlinx.android.synthetic.main.product_name_layout.view.tvProductName
 import kotlinx.android.synthetic.main.product_price_layout.view.*
@@ -163,17 +166,28 @@ class ProductDetailFragment : BaseFragment(), View.OnClickListener {
                         if (product.productPrice?.oldPrice == null) {
                             visibility = View.GONE
                         } else {
-                            text = product.productPrice?.oldPrice
+                            text = product.productPrice.oldPrice
                             paintFlags =
                                 productPriceLayout.tvOriginalPrice.paintFlags or Paint.STRIKE_THRU_TEXT_FLAG
                         }
                     }
 
+                    if (product.addToCart?.customerEntersPrice == true) {
+
+                        productPriceLayout.tvDiscountPrice.visibility = View.GONE
+                        productPriceLayout.priceInputLl.visibility = View.VISIBLE
+
+                        productPriceLayout.etPrice.hint = product.addToCart.customerEnteredPriceRange
+                    }
+
                     //productPriceLayout.tvDiscountPercent.text = "40% Off"
 
-                    tvAvailability.text = product.stockAvailability
+                    availabilityLayout.tvAvailability.text = product.stockAvailability
+                    availabilityLayout.deliveryMethod.visibility = if (product.isFreeShipping == true)
+                        View.VISIBLE else View.GONE
 
-                    productQuantityLayout.tvQuantity.text = "1"
+                    productQuantityLayout.tvQuantity.text =
+                        product.addToCart?.enteredQuantity?.toString() ?: "1"
 
                     // long description
                     val productDescLayout = vsProductDescLayout?.inflate()
@@ -196,10 +210,13 @@ class ProductDetailFragment : BaseFragment(), View.OnClickListener {
 
                     customAttributeManager?.attachAttributesToFragment()
 
-                    customAttributeManager?.setupProductPriceCalculation(
-                        product?.productPrice,
-                        productPriceLayout.tvDiscountPrice
-                    )
+                    // Price calculation not needed for Products with manual price input i.e (Donation)
+                    if (product.addToCart?.customerEntersPrice == false) {
+                        customAttributeManager?.setupProductPriceCalculation(
+                            product?.productPrice,
+                            productPriceLayout.tvDiscountPrice
+                        )
+                    }
 
 
                     // Rental Product
@@ -267,6 +284,13 @@ class ProductDetailFragment : BaseFragment(), View.OnClickListener {
                         val totalCartItems = response.data.totalShoppingCartProducts
                         updateTopCart(totalCartItems)
                         toast(response.message)
+
+                        if (gotoCartPage) {
+                            gotoCartPage = false
+
+                            if (lifecycle.currentState.isAtLeast(Lifecycle.State.RESUMED))
+                                replaceFragmentSafely(CartFragment())
+                        }
                     }
 
                 })
@@ -312,8 +336,8 @@ class ProductDetailFragment : BaseFragment(), View.OnClickListener {
 
             val dialog = DatePickerDialog(
                 requireContext(), DatePickerDialog.OnDateSetListener { _, y, m, d ->
-                    rentalProductLayout.etRentFrom.text = "$d / $m / $y"
-                    rentalProductLayout.etRentTo.text = "$d / $m / $y"
+                    rentalProductLayout.etRentFrom.text = TextUtils().getFormattedDate(d,m,y)
+                    rentalProductLayout.etRentTo.text = TextUtils().getFormattedDate(d,m,y)
 
                     (viewModel as ProductDetailViewModel).setRentDate(d, m, y, true)
                 },
@@ -447,6 +471,7 @@ class ProductDetailFragment : BaseFragment(), View.OnClickListener {
             }
         })*/
 
+        btnBuyNow.setOnClickListener(this)
         bottomSheetLayout.tvDone.setOnClickListener(this)
         productQuantityLayout.btnMinus.setOnClickListener(this)
         productQuantityLayout.btnPlus.setOnClickListener(this)
@@ -473,9 +498,27 @@ class ProductDetailFragment : BaseFragment(), View.OnClickListener {
         btnAddToWishList?.setOnClickListener {
             addToCartClickAction(productId, productQuantityLayout?.tvQuantity?.text.toString(), cart = false)
         }
+
+        btnBuyNow?.setOnClickListener {
+            (viewModel as ProductDetailViewModel).gotoCartPage = true
+            addToCartClickAction(productId, productQuantityLayout?.tvQuantity?.text.toString(), cart = true)
+        }
     }
 
     private fun addToCartClickAction(productId: Long, quantity: String, cart: Boolean) {
+
+        // Add manually entered price to Product model
+        val product = (viewModel as ProductDetailViewModel).productLiveData.value
+
+        if (product?.addToCart?.customerEntersPrice == true) {
+
+            val enteredPriceStr = EditTextUtils().showToastIfEmpty(productPriceLayout.etPrice) ?: return
+
+            (viewModel as ProductDetailViewModel)
+                .productLiveData.value?.addToCart
+                ?.customerEnteredPrice = enteredPriceStr.toDoubleOrNull()
+        }
+
         (viewModel as ProductDetailViewModel).addProductToCartModel(
             productId,
             quantity,

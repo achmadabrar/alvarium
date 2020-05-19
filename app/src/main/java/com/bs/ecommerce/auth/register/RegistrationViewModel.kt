@@ -11,7 +11,9 @@ class RegistrationViewModel  : BaseViewModel()
 {
 
     var getRegistrationResponseLD = MutableLiveData<GetRegistrationResponse>()
-    val actionSuccessLD = MutableLiveData<Boolean>()
+    val registrationSuccessLD = MutableLiveData<Boolean>()
+
+    var customerInfoUpdate = false
 
     fun getRegistrationVM(model: AuthModel)
     {
@@ -70,14 +72,14 @@ class RegistrationViewModel  : BaseViewModel()
                 isLoadingLD.postValue(false)
                 toast(data.message)
 
-                actionSuccessLD.value = true
+                registrationSuccessLD.value = true
                 //getRegistrationResponseLD.postValue(data)
             }
 
             override fun onRequestFailed(errorMessage: String)
             {
                 isLoadingLD.postValue(false)
-                actionSuccessLD.value = false
+                registrationSuccessLD.value = false
             }
         })
     }

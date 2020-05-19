@@ -88,6 +88,7 @@
         android:layout_marginEnd="5dp"
         android:src="@drawable/ic_heart"
         android:tint="@color/grayOrDark"
+        android:background="?android:attr/selectableItemBackground"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         android:contentDescription="@string/placeholder" />
