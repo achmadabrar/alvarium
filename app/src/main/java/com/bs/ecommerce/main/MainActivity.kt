@@ -3,7 +3,6 @@ package com.bs.ecommerce.main
 import android.os.Bundle
 import android.os.Handler
 import android.view.View
-import android.widget.Toolbar
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.core.view.GravityCompat
 import androidx.fragment.app.DialogFragment
@@ -14,7 +13,6 @@ import com.bs.ecommerce.R
 import com.bs.ecommerce.auth.customerInfo.CustomerInfoFragment
 import com.bs.ecommerce.base.BaseActivity
 import com.bs.ecommerce.base.BaseFragment
-import com.bs.ecommerce.cart.CartFragment
 import com.bs.ecommerce.home.category.CategoryFragment
 import com.bs.ecommerce.home.homepage.HomeFragment
 import com.bs.ecommerce.main.model.MainModelImpl
@@ -23,7 +21,6 @@ import com.bs.ecommerce.more.UserAccountFragment
 import com.bs.ecommerce.networking.NetworkUtil
 import com.bs.ecommerce.product.SearchFragment
 import com.bs.ecommerce.utils.createIfNotInBackStack
-import com.bs.ecommerce.utils.replaceFragmentSafely
 import com.bs.ecommerce.utils.toast
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import kotlinx.android.synthetic.main.activity_main.*
@@ -56,23 +53,26 @@ class MainActivity : BaseActivity()
 
         mainViewModel = ViewModelProvider(this).get(MainViewModel::class.java)
 
-
-        mainViewModel.getAppSettings(mainModel)
         setLiveDataListeners()
 
         initNavigationDrawer()
         setBottomNavigation()
 
-        if (savedInstanceState == null)
+        if (savedInstanceState == null) {
+            mainViewModel.getAppSettings(mainModel)
             initHomeFragment()
+        }
 
         setBackStackChangeListener()
     }
+
     private fun setLiveDataListeners()
     {
         mainViewModel.appSettingsLD.observe(this, Observer { settings ->
 
-            setAppSettings(settings)
+            settings.getContentIfNotHandled()?.let {
+                setAppSettings(it)
+            }
         })
 
     }

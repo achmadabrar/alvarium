@@ -83,7 +83,7 @@
             android:textSize="@dimen/tv_text_size_regular"
             android:maxLines="1"
             android:textStyle="bold"
-            android:text="Please enter your price:"
+            android:text="@string/please_enter_your_price"
             android:layout_marginBottom="5dp"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"

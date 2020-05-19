@@ -266,5 +266,6 @@
     <string name="password_mismatch">New passwords mismatched</string>
     <string name="change_password_underlined"><u>Change Password</u></string>
     <string name="customer_info_updated">Successfully Updated</string>
+    <string name="please_enter_your_price">Please enter your price</string>
 
 </resources>

@@ -11,13 +11,13 @@ import com.bs.ecommerce.common.RequestCompleteListener
 import com.bs.ecommerce.networking.Api
 import com.bs.ecommerce.product.model.ProductDetailModelImpl
 import com.bs.ecommerce.product.model.data.AddToWishListResponse
-import com.bs.ecommerce.utils.EventLD
 import com.bs.ecommerce.utils.MyApplication
+import com.bs.ecommerce.utils.OneTimeEvent
 
 
 open class BaseViewModel : ViewModel() {
     var isLoadingLD = MutableLiveData<Boolean>()
-    var addedToWishListLD = MutableLiveData<EventLD<Long>?>()
+    var addedToWishListLD = MutableLiveData<OneTimeEvent<Long>?>()
 
     var cartLD = MutableLiveData<CartRootData>()
 
@@ -51,7 +51,7 @@ open class BaseViewModel : ViewModel() {
                 override fun onRequestSuccess(data: AddToWishListResponse) {
 
                     if (data.redirectionModel?.redirectToDetailsPage == true) {
-                        addedToWishListLD.value = EventLD(productId) // goto product details page
+                        addedToWishListLD.value = OneTimeEvent(productId) // goto product details page
                     } else {
                         toast(MyApplication.mAppContext?.getString(R.string.succcessfully_added_to_wishlist))
                         addedToWishListLD.value = null // success. do nothing
