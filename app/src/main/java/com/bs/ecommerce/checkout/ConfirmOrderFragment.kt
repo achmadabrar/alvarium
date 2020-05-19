@@ -16,7 +16,6 @@ import com.bs.ecommerce.cart.model.CartModel
 import com.bs.ecommerce.cart.model.CartModelImpl
 import com.bs.ecommerce.cart.model.data.CartRootData
 import com.bs.ecommerce.utils.MyApplication
-import com.bs.ecommerce.utils.toast
 import kotlinx.android.synthetic.main.confirm_order_card.view.*
 import kotlinx.android.synthetic.main.fragment_confirm_order.*
 
@@ -89,7 +88,7 @@ class ConfirmOrderFragment : BaseFragment() {
     }
 
     private fun setData(cartData: CartRootData?) {
-        val cartAdapter = CartAdapter(cartData?.cart?.items ?: mutableListOf(), this, viewModel, model, isCheckout = true)
+        val cartAdapter = CartAdapter(cartData?.cart?.items ?: mutableListOf(), null, viewModel, model, isCheckout = true)
 
         checkoutProductList?.apply {
             setHasFixedSize(true)

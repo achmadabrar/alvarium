@@ -18,6 +18,7 @@ import com.bs.ecommerce.cart.model.data.OrderTotal
 import com.bs.ecommerce.checkout.CheckoutStepFragment
 import com.bs.ecommerce.networking.Api
 import com.bs.ecommerce.networking.common.KeyValueFormData
+import com.bs.ecommerce.product.ProductDetailFragment
 import com.bs.ecommerce.product.model.data.CheckoutAttribute
 import com.bs.ecommerce.utils.*
 import com.google.android.material.bottomsheet.BottomSheetBehavior
@@ -35,6 +36,7 @@ class CartFragment : BaseFragment() {
 
     private var customAttributeManager: CustomAttributeManager? = null
     private lateinit var bsBehavior: BottomSheetBehavior<*>
+    private lateinit var clickListener : ItemClickListener<CartProduct>
 
     private lateinit var model: CartModel
 
@@ -136,7 +138,7 @@ class CartFragment : BaseFragment() {
         cartproductRecyclerList?.setHasFixedSize(true)
         cartproductRecyclerList?.layoutManager = layoutManager
 
-        val cartAdapter = CartAdapter(items, this, viewModel, model)
+        val cartAdapter = CartAdapter(items, clickListener, viewModel, model)
 
         cartproductRecyclerList?.adapter = cartAdapter
     }
@@ -232,6 +234,20 @@ class CartFragment : BaseFragment() {
 
             if(couponCode.isNotEmpty())
                 (viewModel as CartViewModel).applyGiftCardVM(AddDiscountPostData(data = couponCode), model)
+        }
+
+        clickListener = object : ItemClickListener<CartProduct> {
+
+            override fun onClick(view: View, position: Int, data: CartProduct) {
+
+                when (view.id) {
+
+                    R.id.itemView ->
+                        data.productId?.let {
+                            replaceFragmentSafely(ProductDetailFragment.newInstance(it))
+                        }
+                }
+            }
         }
     }
 

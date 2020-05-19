@@ -92,22 +92,15 @@
                 android:textSize="@dimen/tv_text_size_large"
                 android:textStyle="bold" />
 
-
-            <LinearLayout
-                style="@style/RoundedSpinner"
-                android:id="@+id/changeLanguageSpinnerLayout"
-                android:layout_marginTop="8dp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
                 <androidx.appcompat.widget.AppCompatSpinner
                     android:id="@+id/changeLanguageSpinner"
+                    android:layout_marginTop="8dp"
+                    android:background="@drawable/settings_spinner_bg"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     tools:listitem="@layout/simple_spinner_item"
                     android:entries="@array/spinner_dummy_data"
                     android:textColor="@color/white" />
-            </LinearLayout>
         </LinearLayout>
     </androidx.cardview.widget.CardView>
 
@@ -138,21 +131,15 @@
                 android:textStyle="bold" />
 
 
-            <LinearLayout
-                style="@style/RoundedSpinner"
-                android:id="@+id/changeCurrencySpinnerLayout"
-                android:layout_marginTop="8dp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
                 <androidx.appcompat.widget.AppCompatSpinner
                     android:id="@+id/changeCurrencySpinner"
                     android:layout_width="match_parent"
+                    android:layout_marginTop="8dp"
+                    android:background="@drawable/settings_spinner_bg"
                     android:layout_height="wrap_content"
                     tools:listitem="@layout/simple_spinner_item"
                     android:entries="@array/spinner_dummy_data"
                     android:textColor="@color/white" />
-            </LinearLayout>
 
         </LinearLayout>
     </androidx.cardview.widget.CardView>

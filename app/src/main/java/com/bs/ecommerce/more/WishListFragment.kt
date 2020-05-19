@@ -15,6 +15,7 @@ import com.bs.ecommerce.more.adapter.WishListAdapter
 import com.bs.ecommerce.more.model.WishListModel
 import com.bs.ecommerce.more.model.WishListModelImpl
 import com.bs.ecommerce.more.viewmodel.WishListViewModel
+import com.bs.ecommerce.product.ProductDetailFragment
 import com.bs.ecommerce.product.model.data.WishListItem
 import com.bs.ecommerce.utils.ItemClickListener
 import com.bs.ecommerce.utils.RecyclerViewMargin
@@ -102,6 +103,11 @@ class WishListFragment : BaseFragment() {
                     R.id.btnAddToCart ->
                         (viewModel as WishListViewModel)
                             .moveItemToCart(data.id, model)
+
+                    R.id.itemView ->
+                        data.productId?.let {
+                            replaceFragmentSafely(ProductDetailFragment.newInstance(it))
+                        }
                 }
             }
         }

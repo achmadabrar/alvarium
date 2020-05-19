@@ -21,7 +21,7 @@ data class WishListItem(
     @SerializedName("Picture")
     val picture: PictureModel?,
     @SerializedName("ProductId")
-    val productId: Int?,
+    val productId: Long?,
     @SerializedName("ProductName")
     val productName: String?,
     @SerializedName("ProductSeName")

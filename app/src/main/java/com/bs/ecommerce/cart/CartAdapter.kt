@@ -7,17 +7,15 @@ import android.widget.Button
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
-import androidx.core.content.ContextCompat
-import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
 import com.bs.ecommerce.R
 import com.bs.ecommerce.auth.register.data.KeyValuePair
 import com.bs.ecommerce.base.BaseViewModel
 import com.bs.ecommerce.cart.model.CartModel
 import com.bs.ecommerce.cart.model.data.CartProduct
+import com.bs.ecommerce.utils.ItemClickListener
 import com.bs.ecommerce.utils.loadImg
 import com.bs.ecommerce.utils.show
-import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.cart_list_item.view.*
 import kotlinx.android.synthetic.main.product_price_layout.view.*
 import java.util.*
@@ -25,7 +23,7 @@ import java.util.*
 
 open class CartAdapter(
     productsList: List<CartProduct>,
-    fragment: Fragment,
+    private val clickListener: ItemClickListener<CartProduct>?,
     val viewModel: BaseViewModel,
     val model: CartModel,
     var isCheckout: Boolean = false
@@ -35,7 +33,6 @@ open class CartAdapter(
 
     lateinit var products: List<CartProduct>
     protected var mItemClickListener: OnItemClickListener? = null
-    lateinit var fragment: androidx.fragment.app.Fragment
 
     var holder: ProductSummaryHolder? = null// = (ProductSummaryHolder) bindViewHolder;
     lateinit var productModel: CartProduct
@@ -44,7 +41,6 @@ open class CartAdapter(
         try {
             this.products = ArrayList()
             (this.products as ArrayList<CartProduct>).addAll(productsList)
-            this.fragment = fragment
 
         } catch (ex: Exception) {
             ex.printStackTrace()
@@ -104,6 +100,8 @@ open class CartAdapter(
                 productModel = products[position]
                 holder = bindViewHolder
 
+                holder?.itemView?.id = R.id.itemView
+                holder?.itemView?.setOnClickListener { clickListener?.onClick(it, position, products[position]) }
 
                 holder?.productName!!.text = productModel.productName
                 holder?.productPrice!!.text = productModel.unitPrice
