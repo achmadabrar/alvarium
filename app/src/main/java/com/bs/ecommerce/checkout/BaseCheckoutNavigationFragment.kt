@@ -29,14 +29,12 @@ abstract class BaseCheckoutNavigationFragment : ToolbarLogoBaseFragment()
 
         viewModel  = ViewModelProvider(this).get(CheckoutAddressViewModel::class.java)
 
+
+        //if(!backNavigation)
         setLiveDataListeners()
 
+
         setAddressTabClickListener()
-
-
-       /* val csFragment = requireActivity().supportFragmentManager.findFragmentByTag(CheckoutStepFragment::class.java.simpleName)
-        if(csFragment is CheckoutStepFragment) csFragment.setBackStackChangeListener()*/
-
 
     }
 
@@ -158,4 +156,8 @@ abstract class BaseCheckoutNavigationFragment : ToolbarLogoBaseFragment()
     private fun isCurrentTabBilling() : Boolean
             = requireActivity().supportFragmentManager.findFragmentById(R.id.checkoutFragmentHolder) is BillingAddressFragment
 
+
+    companion object{
+        @JvmStatic var backNavigation = false
+    }
 }

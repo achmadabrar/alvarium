@@ -16,6 +16,12 @@ object CheckoutConstants
     @JvmStatic val SHIPPING_ADDRESS_TAB = 1
 
 
+    @JvmStatic val ADDRESS_TAB = 0
+    @JvmStatic val SHIPPING_TAB = 1
+    @JvmStatic val PAYMENT_TAB = 2
+    @JvmStatic val CONFIRM_TAB = 3
+
+
     @JvmStatic val CartPage = 0
     @JvmStatic val BillingAddress = 1
     @JvmStatic val ShippingAddress = 2

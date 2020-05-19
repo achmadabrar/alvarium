@@ -3,6 +3,7 @@ package com.bs.ecommerce.checkout
 import android.os.Bundle
 import android.view.View
 import android.widget.AdapterView
+import androidx.lifecycle.Observer
 import com.bs.ecommerce.checkout.model.data.CheckoutSaveResponse
 import com.bs.ecommerce.checkout.model.data.ShippingAddressModel
 import com.bs.ecommerce.checkout.model.data.Store
@@ -23,9 +24,16 @@ class ShippingAddressFragment : BaseCheckoutAddressFragment()
 
         addressTabLayout?.getTabAt(CheckoutConstants.SHIPPING_ADDRESS_TAB)?.select()
 
+/*        (viewModel as CheckoutAddressViewModel).saveResponseLD.observe(viewLifecycleOwner, Observer { response ->
+
+            initShippingLayout(response)
+        })*/
+
         initShippingLayout(MyApplication.checkoutSaveResponse)
 
         btnContinue?.setOnClickListener {
+
+            backNavigation = false
 
             if(storeCheckBox?.isChecked!!)
                 saveStoreData()

@@ -13,6 +13,7 @@ import com.bs.ecommerce.R
 import com.bs.ecommerce.auth.customerInfo.CustomerInfoFragment
 import com.bs.ecommerce.base.BaseActivity
 import com.bs.ecommerce.base.BaseFragment
+import com.bs.ecommerce.checkout.*
 import com.bs.ecommerce.home.category.CategoryFragment
 import com.bs.ecommerce.home.homepage.HomeFragment
 import com.bs.ecommerce.main.model.MainModelImpl
@@ -21,9 +22,12 @@ import com.bs.ecommerce.more.UserAccountFragment
 import com.bs.ecommerce.networking.NetworkUtil
 import com.bs.ecommerce.product.SearchFragment
 import com.bs.ecommerce.utils.createIfNotInBackStack
+import com.bs.ecommerce.utils.replaceFragmentSafely
+import com.bs.ecommerce.utils.showLog
 import com.bs.ecommerce.utils.toast
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.fragment_checkout_step.*
 
 
 class MainActivity : BaseActivity()
@@ -156,17 +160,49 @@ class MainActivity : BaseActivity()
 
     }
 
-    override fun onBackPressed() {
+    private fun goBackTo(fragment: BaseCheckoutNavigationFragment)
+    {
+        BaseCheckoutNavigationFragment.backNavigation = true
 
+        val csFragment = supportFragmentManager.findFragmentByTag(CheckoutStepFragment::class.java.simpleName)
+
+        val transaction = csFragment!!.childFragmentManager.beginTransaction()
+        transaction.addToBackStack(fragment.tag)
+        transaction.replace(R.id.checkoutFragmentHolder, fragment)
+        transaction.commit()
+        csFragment.childFragmentManager.executePendingTransactions()
+
+    }
+
+    private fun backPressedLogic()
+    {
         when {
-            drawerLayout.isDrawerOpen(GravityCompat.START) ->
-                drawerLayout.closeDrawer(GravityCompat.START)
+            drawerLayout.isDrawerOpen(GravityCompat.START) -> drawerLayout.closeDrawer(GravityCompat.START)
 
-            supportFragmentManager.backStackEntryCount > 0 ->
-                super.onBackPressed()
+            supportFragmentManager.backStackEntryCount > 0 -> super.onBackPressed()
 
             else -> handleAppExit()
         }
+    }
+    override fun onBackPressed()
+    {
+
+        if (supportFragmentManager.findFragmentById(R.id.checkoutFragmentHolder) is BaseCheckoutNavigationFragment)
+        {
+            /*"currentFragment".showLog(it.toString())
+            when(it)
+            {
+                is PaymentMethodFragment -> {
+                    goBackTo(ShippingMethodFragment())
+                    checkoutBottomNav?.menu?.getItem(CheckoutConstants.SHIPPING_TAB)?.isChecked = true
+                }
+            }*/
+        }
+        else
+            backPressedLogic()
+
+
+
     }
 
     private fun handleAppExit() {

@@ -7,6 +7,7 @@ import android.widget.ImageView
 import android.widget.RelativeLayout
 import android.widget.TextView
 import androidx.appcompat.widget.AppCompatRadioButton
+import androidx.lifecycle.Observer
 import com.bs.ecommerce.R
 import com.bs.ecommerce.base.BaseViewModel
 import com.bs.ecommerce.checkout.model.data.PaymentMethod
@@ -34,11 +35,19 @@ class PaymentMethodFragment : BaseCheckoutNavigationFragment() {
     {
         super.onViewCreated(view, savedInstanceState)
 
+/*        (viewModel as CheckoutAddressViewModel).paymentMethodModelLD.observe(viewLifecycleOwner, Observer { paymentMethodModel ->
+            addMethodRadioGroup(paymentMethodModel.paymentMethods)
+        })*/
+
         val paymentMethods = MyApplication.checkoutSaveResponse.data.paymentMethodModel.paymentMethods
 
+        //if(!backNavigation)
         addMethodRadioGroup(paymentMethods)
 
+
         btnContinue?.setOnClickListener {
+
+            backNavigation = false
 
             (viewModel as CheckoutAddressViewModel).savePaymentMethodVM(paymentMethodValue, model)
         }
