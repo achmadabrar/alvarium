@@ -43,6 +43,8 @@ abstract class BaseActivity : AppCompatActivity()
         if(savedInstanceState == null)
             resetAppTheme()
 
+        setContentView(getLayoutId())
+
         viewModel = createViewModel()
 
 
@@ -53,7 +55,6 @@ abstract class BaseActivity : AppCompatActivity()
 
         setLocale(false)
 
-        setContentView(getLayoutId())
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean
