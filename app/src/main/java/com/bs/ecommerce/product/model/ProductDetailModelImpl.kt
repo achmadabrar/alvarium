@@ -3,7 +3,6 @@ package com.bs.ecommerce.product.model
 import com.bs.ecommerce.auth.register.data.KeyValuePair
 import com.bs.ecommerce.common.RequestCompleteListener
 import com.bs.ecommerce.home.homepage.model.data.HomePageProductResponse
-import com.bs.ecommerce.networking.Api
 import com.bs.ecommerce.networking.RetroClient
 import com.bs.ecommerce.networking.common.KeyValueFormData
 import com.bs.ecommerce.product.model.data.AddToCartResponse
@@ -71,8 +70,8 @@ class ProductDetailModelImpl :
         val formValues: MutableList<KeyValuePair> = mutableListOf()
 
         formValues.add(KeyValuePair().apply {
-            key = Api.productReviewId
-            value = "addtocart_$productId.EnteredQuantity"
+            key = "addtocart_$productId.EnteredQuantity"
+            value = "1"
         })
 
         RetroClient.api.addToCartFromList(productId, cartType, KeyValueFormData(formValues))

@@ -9,7 +9,6 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bs.ecommerce.R
-import com.bs.ecommerce.base.BaseFragment
 import com.bs.ecommerce.base.BaseViewModel
 import com.bs.ecommerce.base.ToolbarLogoBaseFragment
 import com.bs.ecommerce.cart.model.CartModel
@@ -26,10 +25,7 @@ import com.bs.ecommerce.product.model.data.CategoryModel
 import com.bs.ecommerce.product.model.data.Manufacturer
 import com.bs.ecommerce.product.model.data.ProductSummary
 import com.bs.ecommerce.product.model.data.SubCategory
-import com.bs.ecommerce.utils.ItemClickListener
-import com.bs.ecommerce.utils.RecyclerViewMargin
-import com.bs.ecommerce.utils.replaceFragmentSafely
-import com.bs.ecommerce.utils.showLog
+import com.bs.ecommerce.utils.*
 import com.daimajia.slider.library.Indicators.PagerIndicator
 import com.daimajia.slider.library.SliderLayout
 import com.daimajia.slider.library.SliderTypes.BaseSliderView
@@ -39,11 +35,9 @@ import kotlinx.android.synthetic.main.featured_list_layout.view.*
 import kotlinx.android.synthetic.main.fragment_home.*
 import kotlinx.android.synthetic.main.home_fragment_bottomsheet.*
 import kotlinx.android.synthetic.main.home_fragment_bottomsheet.view.*
-import kotlinx.android.synthetic.main.home_page_banner.*
 import kotlinx.android.synthetic.main.home_page_banner.view.*
-import org.jetbrains.anko.doAsync
-import org.jetbrains.anko.uiThread
 import java.net.URL
+import kotlin.concurrent.thread
 
 
 class HomeFragment : ToolbarLogoBaseFragment() {
@@ -212,72 +206,41 @@ class HomeFragment : ToolbarLogoBaseFragment() {
 
         banner.visibility = View.VISIBLE
 
-        banner.view_pager_slider1?.removeAllSliders()
-        banner.view_pager_slider1?.setPresetIndicator(SliderLayout.PresetIndicators.Center_Bottom)
+        banner.view_pager_slider1?.apply {
+            removeAllSliders()
+            setPresetIndicator(SliderLayout.PresetIndicators.Center_Bottom)
+            setCustomIndicator(view!!.findViewById<View>(R.id.circle_indicator) as PagerIndicator)
+        }
 
         var biggestImageAR = 100000F
 
-        for (imageModel in sliderData.sliders) {
+        thread {
+            for ((i, imageModel) in sliderData.sliders.withIndex()) {
 
-            val textSliderView = DefaultSliderView(requireContext())
+                requireActivity().runOnUiThread {
+                    val textSliderView = DefaultSliderView(requireContext())
 
-            textSliderView.image(imageModel.imageUrl).scaleType =
-                BaseSliderView.ScaleType.CenterInside
+                    textSliderView.image(imageModel.imageUrl).scaleType =
+                        BaseSliderView.ScaleType.CenterInside
 
-            doAsync {
+                    banner.view_pager_slider1?.addSlider(textSliderView)
+                }
+
                 //Execute all the long running tasks here
                 val url = URL(imageModel.imageUrl)
                 val bitmap = BitmapFactory.decodeStream(url.openConnection().getInputStream())
 
-                uiThread {
+                val thisImageAR = (bitmap?.width!!.toFloat() / bitmap.height.toFloat())
 
-                    val thisImageAR = (bitmap?.width!!.toFloat() / bitmap.height.toFloat())
+                if (thisImageAR < biggestImageAR)
+                    biggestImageAR = thisImageAR
 
-                    if (thisImageAR < biggestImageAR)
-                        biggestImageAR = thisImageAR
-
-                    "testabc".showLog(thisImageAR.toString())
-
-                    slider?.setmAspectRatio(biggestImageAR)
-                    "testabc1".showLog(biggestImageAR.toString())
-
-                }
+                "banner_ar".showLog("ar of image $i: $thisImageAR, largest ar: $biggestImageAR")
             }
 
-            /*val bundle  =  bundleOf("isProduct" to imageModel.isProduct,
-                "ProdOrCatId" to imageModel.prodOrCatId)
-
-
-            textSliderView.bundle(bundle)
-
-            textSliderView.setOnSliderClickListener { slider ->
-
-                val bundle1 = slider.bundle
-
-                val isProduct = bundle1.getInt("isProduct")
-                val catOrProductId = bundle1.getInt("ProdOrCatId")
-
-                if (catOrProductId != 0)
-                {
-                    if (isProduct != 0)
-                    {
-                        ProductModel().apply {
-
-                            id = catOrProductId.toLong()
-                            name = ""
-                            ProductDetailFragment.productModel = this
-                        }
-                        replaceFragmentSafely(ProductDetailFragment(), R.id.container)
-                    }
-                    else
-                        replaceFragmentSafely(ProductListFragmentFor3_8.newInstance("Category", catOrProductId), R.id.container)
-
-                }
-            }*/
-
-            banner.view_pager_slider1?.addSlider(textSliderView)
-            banner.view_pager_slider1?.setCustomIndicator(view!!.findViewById<View>(R.id.circle_indicator) as PagerIndicator)
+            banner.slider?.setmAspectRatio(biggestImageAR)
         }
+
     }
 
     private fun populateFeaturedCategoryList(list: List<CategoryModel>) {
@@ -293,47 +256,48 @@ class HomeFragment : ToolbarLogoBaseFragment() {
         for (featuredCategory in list) {
             if (featuredCategory.products.isNullOrEmpty()) continue
 
-            val linearLayout = layoutInflater.inflate(
-                R.layout.featured_list_layout,
-                homePageRootView as RelativeLayout, false
-            )
+            inflateAsync(R.layout.featured_list_layout, homePageRootView as RelativeLayout) {
 
-            linearLayout.visibility = View.VISIBLE
-            linearLayout.tvTitle.text = featuredCategory.name
-            linearLayout.ivMore.visibility = if(featuredCategory.subCategories?.isNullOrEmpty() == true)
-                View.GONE else View.VISIBLE
+                    linearLayout ->
+
+                linearLayout.visibility = View.VISIBLE
+                linearLayout.tvTitle.text = featuredCategory.name
+                linearLayout.ivMore.visibility = if(featuredCategory.subCategories?.isNullOrEmpty() == true)
+                    View.GONE else View.VISIBLE
 
 
-            linearLayout.btnSeeAll.setOnClickListener {
+                linearLayout.btnSeeAll.setOnClickListener {
 
-                if (featuredCategory.id == null) return@setOnClickListener
+                    if (featuredCategory.id == null) return@setOnClickListener
 
-                replaceFragmentSafely(
-                    ProductListFragment.newInstance(
-                        featuredCategory.name ?: "",
-                        featuredCategory.id,
-                        ProductListFragment.GetBy.CATEGORY
+                    replaceFragmentSafely(
+                        ProductListFragment.newInstance(
+                            featuredCategory.name ?: "",
+                            featuredCategory.id,
+                            ProductListFragment.GetBy.CATEGORY
+                        )
                     )
-                )
+                }
+
+                linearLayout.ivMore.setOnClickListener {
+                    populateBottomSheet(featuredCategory.subCategories)
+                }
+
+                linearLayout.rvList.apply {
+                    setHasFixedSize(true)
+                    addItemDecoration(RecyclerViewMargin(15, 1, false))
+                    layoutManager = LinearLayoutManager(
+                        requireContext(), LinearLayoutManager.HORIZONTAL, false
+                    )
+
+                    adapter = FeaturedProductAdapter(
+                        featuredCategory.products, productClickListener
+                    )
+                }
+
+                featuredCategoryContainerLayout.addView(linearLayout)
             }
 
-            linearLayout.ivMore.setOnClickListener {
-                populateBottomSheet(featuredCategory.subCategories)
-            }
-
-            linearLayout.rvList.apply {
-                setHasFixedSize(true)
-                addItemDecoration(RecyclerViewMargin(15, 1, false))
-                layoutManager = LinearLayoutManager(
-                    requireContext(), LinearLayoutManager.HORIZONTAL, false
-                )
-
-                adapter = FeaturedProductAdapter(
-                    featuredCategory.products, productClickListener
-                )
-            }
-
-            featuredCategoryContainerLayout.addView(linearLayout)
         }
     }
 
@@ -397,7 +361,7 @@ class HomeFragment : ToolbarLogoBaseFragment() {
         bottomSheetLayout.subcategoryNameHolder.removeAllViews()
 
         for (item in subCategories) {
-            val v:View = layoutInflater.inflate(R.layout.item_home_bs_options, null, false)
+            val v:View = layoutInflater.inflate(R.layout.item_home_bs_options, homePageRootView as RelativeLayout, false)
 
             v.findViewById<TextView>(R.id.tvName).text = item.name
 
