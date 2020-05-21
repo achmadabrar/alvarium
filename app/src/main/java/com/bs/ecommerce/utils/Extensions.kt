@@ -16,12 +16,12 @@ import android.webkit.WebView
 import android.widget.*
 import androidx.annotation.AnimRes
 import androidx.annotation.IdRes
+import androidx.asynclayoutinflater.view.AsyncLayoutInflater
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentTransaction
 import com.bs.ecommerce.R
 import com.bs.ecommerce.base.BaseFragment
-import com.bs.ecommerce.checkout.BaseCheckoutNavigationFragment
-import com.bs.ecommerce.checkout.PaymentInfoFragment
 import com.bs.ecommerce.main.MainActivity
 import com.squareup.picasso.Picasso
 import java.util.*
@@ -36,6 +36,15 @@ fun <T1, T2> ifNotNull(value1: T1?, value2: T2?, bothNotNull: (T1, T2) -> (Unit)
 
 }
 
+fun Fragment.inflateAsync(resId: Int, parent: ViewGroup?, f: (v: View) -> Unit) {
+
+    val inflater = AsyncLayoutInflater(requireContext())
+
+    inflater.inflate(resId, parent) { inflatedView, _, _ ->
+        f(inflatedView)
+    }
+}
+
 fun Fragment.replaceFragmentSafely(
     fragment: Fragment,
     //tag: String,
@@ -48,6 +57,7 @@ fun Fragment.replaceFragmentSafely(
 ) {
     val ft = requireActivity().supportFragmentManager
         .beginTransaction()
+        .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
         .setCustomAnimations(enterAnimation, exitAnimation, popEnterAnimation, popExitAnimation)
         .replace(containerViewId, fragment, fragment::class.java.simpleName)
         .addToBackStack(fragment::class.java.simpleName)
