@@ -64,11 +64,7 @@ fun Fragment.replaceFragmentSafely(
 inline fun <reified T> MainActivity.createIfNotInBackStack(fragment: BaseFragment) {
     //val fragment = Class.forName(fragmentName).newInstance() as BaseFragment
 
-
-    if (supportFragmentManager.findFragmentById(R.id.checkoutFragmentHolder) is PaymentInfoFragment)
-        toast(getString(R.string.skip_payment_dialog))  //TODO will be a dialog
-
-    else if(supportFragmentManager.findFragmentById(R.id.layoutFrame) !is T) {
+    if(supportFragmentManager.findFragmentById(R.id.layoutFrame) !is T) {
 
         val backStateName: String = fragment::class.java.simpleName
 
