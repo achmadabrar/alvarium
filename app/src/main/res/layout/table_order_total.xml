@@ -133,4 +133,25 @@
 
     </LinearLayout>
 
+    <LinearLayout
+        android:id="@+id/pointsLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingTop="8dp"
+        android:paddingBottom="8dp"
+        android:weightSum="1"
+        android:visibility="gone">
+
+        <TextView
+            android:id="@+id/pointsKey"
+            android:text="@string/you_will_earn"
+            style="@style/orderTotalKeyTextViewStyle"/>
+
+        <TextView
+            android:id="@+id/tvPoints"
+            style="@style/orderTotalValueTextViewStyle"/>
+
+    </LinearLayout>
+
 </LinearLayout>

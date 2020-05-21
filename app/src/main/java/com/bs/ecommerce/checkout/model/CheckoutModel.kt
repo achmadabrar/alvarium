@@ -25,6 +25,6 @@ interface CheckoutModel
 
     fun savePaymentMethod(KeyValueFormData: KeyValueFormData, callback: RequestCompleteListener<CheckoutSaveResponse>)
 
-    fun getCheckoutConfirmInformation(callback: RequestCompleteListener<CheckoutSaveResponse>)
+    fun getCheckoutConfirmInformation(callback: RequestCompleteListener<ConfirmOrderResponse>)
 
 }

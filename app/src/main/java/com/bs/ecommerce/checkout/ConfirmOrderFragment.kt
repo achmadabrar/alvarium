@@ -4,24 +4,20 @@ import android.os.Bundle
 import android.view.View
 import android.widget.RelativeLayout
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bs.ecommerce.R
-import com.bs.ecommerce.base.BaseActivity
-import com.bs.ecommerce.base.BaseFragment
 import com.bs.ecommerce.base.BaseViewModel
 import com.bs.ecommerce.cart.CartAdapter
-import com.bs.ecommerce.cart.CartViewModel
-import com.bs.ecommerce.cart.model.CartModel
-import com.bs.ecommerce.cart.model.CartModelImpl
-import com.bs.ecommerce.cart.model.data.CartRootData
-import com.bs.ecommerce.utils.MyApplication
-import com.bs.ecommerce.utils.toast
+import com.bs.ecommerce.cart.GiftCardAdapter
+import com.bs.ecommerce.cart.model.data.CartInfoData
+import com.bs.ecommerce.cart.model.data.OrderReviewData
+import com.bs.ecommerce.cart.model.data.OrderTotal
+import com.bs.ecommerce.utils.showTextPendingCalculationOnCheckout
 import kotlinx.android.synthetic.main.confirm_order_card.view.*
 import kotlinx.android.synthetic.main.fragment_confirm_order.*
+import kotlinx.android.synthetic.main.table_order_total.*
 
-class ConfirmOrderFragment : BaseFragment() {
-    private lateinit var model: CartModel
+class ConfirmOrderFragment : BaseCheckoutNavigationFragment() {
 
     override fun getFragmentTitle() = R.string.title_shopping_cart
 
@@ -29,57 +25,35 @@ class ConfirmOrderFragment : BaseFragment() {
 
     override fun getRootLayout(): RelativeLayout = confirmOrderRootLayout
 
-    override fun createViewModel(): BaseViewModel = CartViewModel()
+    override fun createViewModel(): BaseViewModel = CheckoutViewModel()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        model = CartModelImpl(requireContext().applicationContext)
-        viewModel  = ViewModelProvider(this).get(CartViewModel::class.java)
+        (viewModel as CheckoutViewModel).getCheckoutConfirmInformationVM(model)
 
-        (viewModel as CartViewModel).getCartVM(model)
-
-        initView()
         setLiveDataListeners()
     }
+    override fun setLiveDataListeners() {
 
-    private fun initView() {
-        allLayoutExceptButton.visibility = View.VISIBLE
-        checkoutButton.visibility = View.VISIBLE
+        (viewModel as CheckoutViewModel).getConfirmOrderLD.observe(requireActivity(), Observer { getOrderData ->
 
-        shippingAddressCard.tvCardTitle.text = getString(R.string.shipping_address)
-        shippingAddressCard.tvCardDetails.text =
-            "Name: John Doe\nEmail: x@y.com\nAddress: Khilgaon, Tilpapata\nCity: Dhaka\nCountry: Bangladesh"
-        shippingAddressCard.ivCardThumb.visibility = View.GONE
+            confirmOrderRootLayout?.visibility = View.VISIBLE
 
-        billingAddressCard.tvCardTitle.text = getString(R.string.billing_address)
-        billingAddressCard.tvCardDetails.text =
-            "Name: John Doe\nEmail: x@y.com\nAddress: Khilgaon, Tilpapata\nCity: Dhaka\nCountry: Bangladesh"
-        billingAddressCard.ivCardThumb.visibility = View.GONE
+            showProductList(getOrderData.data.cart)
 
-        shippingMethodCard.tvCardTitle.text = "Shipping Method"
-        shippingMethodCard.tvCardDetails.text = "Grounded\nNot yet shippied"
-        shippingMethodCard.ivCardThumb.visibility = View.VISIBLE
+            showOtherViews(getOrderData.data.cart.orderReviewData)
 
-        paymentMethodCard.tvCardTitle.text = "Payment Method"
-        paymentMethodCard.tvCardDetails.text = "VISA\nPending"
-        paymentMethodCard.ivCardThumb.visibility = View.VISIBLE
-    }
+            populateOrderTotal(getOrderData.data.orderTotals)
 
-    private fun setLiveDataListeners() {
+            selectedAttributesCard.tvCardTitle.text = "Selected Attributes"
+            selectedAttributesCard.tvCardDetails.visibility = View.GONE
+            selectedAttributesCard.tvCardDetails2.text = getOrderData.data.selectedCheckoutAttributes
+            selectedAttributesCard.ivCardThumb.visibility = View.GONE
 
-        (viewModel as CartViewModel).cartLD.observe(requireActivity(), Observer { cartData ->
-
-            if (cartData.cart.items.isNotEmpty()) {
-                confirmOrderRootLayout?.visibility = View.VISIBLE
-
-                activity?.let { (it as BaseActivity).updateHotCount(MyApplication.myCartCounter) }
-
-                setData(cartData)
-            }
         })
 
-        (viewModel as CartViewModel).isLoadingLD.observe(requireActivity(), Observer { isShowLoader ->
+        (viewModel as CheckoutViewModel).isLoadingLD.observe(requireActivity(), Observer { isShowLoader ->
             if (isShowLoader)
                 showLoading()
             else
@@ -88,14 +62,143 @@ class ConfirmOrderFragment : BaseFragment() {
 
     }
 
-    private fun setData(cartData: CartRootData?) {
-        val cartAdapter = CartAdapter(cartData?.cart?.items ?: mutableListOf(), this, viewModel, model, isCheckout = true)
+    private fun showProductList(cartData: CartInfoData?) {
+        val cartAdapter = CartAdapter(cartData?.items ?: mutableListOf(), this, viewModel, isCheckout = true)
 
         checkoutProductList?.apply {
             setHasFixedSize(true)
             layoutManager =
                 LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
             adapter = cartAdapter
+        }
+    }
+
+    private fun showOtherViews(orderReviewData: OrderReviewData) {
+        allLayoutExceptButton?.visibility = View.VISIBLE
+        checkoutButton?.visibility = View.VISIBLE
+
+        if(orderReviewData.display)
+        {
+            with(orderReviewData.billingAddress)
+            {
+                billingAddressCard.tvCardTitle.text = getString(R.string.billing_address)
+                billingAddressCard.tvCardDetails.text = "$firstName $lastName"
+
+                billingAddressCard.tvCardDetails2.text =
+                    "Email: $email\nPhone: $phoneNumber \n$address1 \n$address2 \n$city\n$countryName"
+                billingAddressCard.ivCardThumb.visibility = View.GONE
+            }
+
+            if(orderReviewData.isShippable)
+            {
+                with(orderReviewData.shippingAddress)
+                {
+                    shippingAddressCard.tvCardTitle.text = getString(R.string.shipping_address)
+                    shippingAddressCard.tvCardDetails.text = "$firstName $lastName"
+
+                    shippingAddressCard.tvCardDetails2.text =
+                        "Email: $email\nPhone: $phoneNumber \n$address1 \n$address2 \n$city\n$countryName"
+                    shippingAddressCard.ivCardThumb.visibility = View.GONE
+                }
+            }
+            else
+                shippingAddressCard.visibility = View.GONE
+
+
+            if(orderReviewData.selectedPickupInStore)
+            {
+                with(orderReviewData.shippingAddress)
+                {
+                    pickupStoreCard.tvCardTitle.text = getString(R.string.store_pick_up)
+                    pickupStoreCard.tvCardDetails.text = "$firstName $lastName"
+
+                    pickupStoreCard.tvCardDetails2.text =
+                        "Email: $email\nPhone: $phoneNumber \n$address1 \n$address2 \n$city\n$countryName"
+                    pickupStoreCard.ivCardThumb.visibility = View.GONE
+                }
+            }
+            else
+                pickupStoreCard.visibility = View.GONE
+
+            shippingMethodCard.tvCardTitle.text = "Shipping Method"
+            shippingMethodCard.tvCardDetails.visibility = View.GONE
+            shippingMethodCard.tvCardDetails2.text = orderReviewData.shippingMethod ?: "No Shipping Method"
+            shippingMethodCard.ivCardThumb.visibility = View.VISIBLE
+
+            paymentMethodCard.tvCardTitle.text = "Payment Method"
+            paymentMethodCard.tvCardDetails.visibility = View.GONE
+            paymentMethodCard.tvCardDetails2.text = orderReviewData.paymentMethod ?: "No Payment Method"
+            paymentMethodCard.ivCardThumb.visibility = View.VISIBLE
+        }
+    }
+
+
+    private fun populateOrderTotal(orderTotalModel: OrderTotal)
+    {
+        with(orderTotalModel)
+        {
+            tvSubTotal?.text = subTotal
+            tvShippingCharge?.text = shipping
+
+
+            if (displayTax && tax != null)
+            {
+                if (displayTaxRates)
+                    taxRates?.get(0)?.rate?.let { taxKey?.text = "${getString(R.string.tax)} $it%" }
+
+                tvTax?.text = tax
+            }
+            else
+                taxLayout?.visibility = View.GONE
+
+            tvTotal?.text = orderTotal
+
+
+            if (orderTotalDiscount != null)
+            {
+                discountLayout?.visibility = View.VISIBLE
+                tvDiscount?.text = orderTotalDiscount
+                underDiscountDivider?.visibility = View.VISIBLE
+            }
+            else
+                discountLayout?.visibility = View.GONE
+
+            if (giftCards != null && giftCards!!.isNotEmpty())
+            {
+                giftCardLayout?.visibility = View.VISIBLE
+
+                underGiftCardDivider?.visibility = View.VISIBLE
+
+                val giftCardAdapter = GiftCardAdapter(activity!!, giftCards!!)
+                giftCardRecyclerList?.layoutManager = LinearLayoutManager(activity)
+                giftCardRecyclerList?.adapter = giftCardAdapter
+            }
+            else
+                giftCardLayout?.visibility = View.GONE
+
+            orderTotal?.let {
+
+                if (it.isEmpty())
+                    tvTotal?.showTextPendingCalculationOnCheckout()
+            } ?: tvTotal?.showTextPendingCalculationOnCheckout()
+
+
+            shipping?.let {
+
+                if (it.isEmpty())
+                    tvShippingCharge?.showTextPendingCalculationOnCheckout()
+            } ?: tvShippingCharge?.showTextPendingCalculationOnCheckout()
+
+
+            if (willEarnRewardPoints != null && willEarnRewardPoints != 0)
+            {
+                pointsLayout?.visibility = View.VISIBLE
+                tvPoints?.text = "$willEarnRewardPoints Points"
+                underDiscountDivider?.visibility = View.VISIBLE
+            }
+            else
+                pointsLayout?.visibility = View.GONE
+
         }
     }
 }

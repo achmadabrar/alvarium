@@ -2,14 +2,14 @@ package com.bs.ecommerce.more.viewmodel
 
 import androidx.lifecycle.MutableLiveData
 import com.bs.ecommerce.auth.register.data.KeyValuePair
-import com.bs.ecommerce.checkout.CheckoutAddressViewModel
+import com.bs.ecommerce.checkout.CheckoutViewModel
 import com.bs.ecommerce.common.RequestCompleteListener
 import com.bs.ecommerce.more.model.CustomerAddressModel
 import com.bs.ecommerce.product.model.data.AddressModel
 import com.bs.ecommerce.product.model.data.CustomerAddressData
 import com.bs.ecommerce.product.model.data.EditCustomerAddressData
 
-class AddressViewModel: CheckoutAddressViewModel() {
+class AddressViewModel: CheckoutViewModel() {
 
     val addressListLD = MutableLiveData<CustomerAddressData?>()
 

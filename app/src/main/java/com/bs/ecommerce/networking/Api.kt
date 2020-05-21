@@ -103,8 +103,8 @@ interface Api {
     @POST("checkout/savepaymentmethod")
     fun savePaymentMethodAPI(@Body postModel: KeyValueFormData): Call<CheckoutSaveResponse>
 
-    @GET("shoppingcart/checkoutorderinformation ")
-    fun getCheckoutConfirmInformationAPI(): Call<CheckoutSaveResponse>
+    @GET("checkout/confirmorder")
+    fun getCheckoutConfirmInformationAPI(): Call<ConfirmOrderResponse>
 
     @POST("shoppingcart/checkoutattributechange")
     fun updateCheckOutAttribute(@Body kvFormData: KeyValueFormData): Call<CartRootData>

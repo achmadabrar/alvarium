@@ -30,14 +30,14 @@ open class BaseCheckoutAddressFragment : BaseCheckoutNavigationFragment()
 
     override fun getRootLayout(): RelativeLayout = baseBillingRootLayout
 
-    override fun createViewModel(): BaseViewModel = CheckoutAddressViewModel()
+    override fun createViewModel(): BaseViewModel = CheckoutViewModel()
 
 
     override fun setLiveDataListeners() {
 
         super.setLiveDataListeners()
 
-        with(viewModel as CheckoutAddressViewModel)
+        with(viewModel as CheckoutViewModel)
         {
 
             stateListLD.observe(viewLifecycleOwner, Observer { stateList ->
@@ -137,7 +137,7 @@ open class BaseCheckoutAddressFragment : BaseCheckoutNavigationFragment()
                     stateProvinceIdByForm = ""
                     countryIdByForm = availableCountries!![position].value
 
-                    (viewModel as CheckoutAddressViewModel).getStatesByCountryVM(countryIdByForm!!, model)
+                    (viewModel as CheckoutViewModel).getStatesByCountryVM(countryIdByForm!!, model)
                 }
             }
 

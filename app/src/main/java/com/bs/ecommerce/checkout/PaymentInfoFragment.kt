@@ -35,7 +35,7 @@ class PaymentInfoFragment : BaseCheckoutNavigationFragment() {
 
     override fun getRootLayout(): RelativeLayout = paymentInfoRootLayout
 
-    override fun createViewModel(): BaseViewModel = CheckoutAddressViewModel()
+    override fun createViewModel(): BaseViewModel = CheckoutViewModel()
 
    /* override fun onBackPressed()
     {

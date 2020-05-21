@@ -45,11 +45,11 @@ data class OrderReviewData(
     @SerializedName("BillingAddress") var billingAddress: BillingAddress = BillingAddress(),
     @SerializedName("Display") var display: Boolean = false,
     @SerializedName("IsShippable") var isShippable: Boolean = false,
-    @SerializedName("PaymentMethod") var paymentMethod: Any = Any(),
+    @SerializedName("PaymentMethod") var paymentMethod: String = String(),
     @SerializedName("PickupAddress") var pickupAddress: PickupAddress = PickupAddress(),
     @SerializedName("SelectedPickupInStore") var selectedPickupInStore: Boolean = false,
     @SerializedName("ShippingAddress") var shippingAddress: ShippingAddress = ShippingAddress(),
-    @SerializedName("ShippingMethod") var shippingMethod: Any = Any()
+    @SerializedName("ShippingMethod") var shippingMethod: String = String()
 )
 
 data class BillingAddress(

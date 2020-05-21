@@ -106,6 +106,7 @@
     <string name="shipping">Shipping</string>
     <string name="discount">Discount</string>
     <string name="tax">Tax</string>
+    <string name="you_will_earn">You will earn</string>
     <string name="gift_card">Gift Card</string>
     <string name="total">Total</string>
     <string name="cart_empty">Cart Is Empty</string>
@@ -131,12 +132,13 @@
     <string name="fax">Fax</string>
     <string name="billing_address">Billing Address</string>
     <string name="shipping_address">Shipping Address</string>
+    <string name="store_pick_up">Store/Pickup</string>
     <string name="store">Store</string>
     <string name="confirm">Confirm</string>
     <string name="products">Products</string>
     <string name="pickup_point_address">Picup point address</string>
-    <string name="invoice">Invoice</string>
-    <string name="skip_payment_dialog">Are you sure you want to skip payment?</string>
+    <string name="invoice">Order Calculation</string>
+    <string name="exit_payment_dialog_query">Are you sure you want to exit from payment?</string>
 
     <!-- ProductDetails Fragment -->
     <string name="quantity">Quantity</string>

@@ -1,7 +1,7 @@
 package com.bs.ecommerce.main
 
 import androidx.lifecycle.MutableLiveData
-import com.bs.ecommerce.checkout.CheckoutAddressViewModel
+import com.bs.ecommerce.checkout.CheckoutViewModel
 import com.bs.ecommerce.common.RequestCompleteListener
 import com.bs.ecommerce.home.homepage.model.HomePageModel
 import com.bs.ecommerce.home.homepage.model.data.HomePageProductResponse
@@ -18,7 +18,7 @@ import com.bs.ecommerce.product.model.data.ProductSummary
 import com.bs.ecommerce.utils.showLog
 
 
-class MainViewModel : CheckoutAddressViewModel() {
+class MainViewModel : CheckoutViewModel() {
 
     var navDrawerCategoriesLD = MutableLiveData<List<Category>>()
     var allCategoriesFailureLD = MutableLiveData<List<String>>()

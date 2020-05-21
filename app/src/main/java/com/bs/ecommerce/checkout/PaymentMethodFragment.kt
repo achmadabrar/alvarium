@@ -29,13 +29,13 @@ class PaymentMethodFragment : BaseCheckoutNavigationFragment() {
 
     override fun getRootLayout(): RelativeLayout = shippingMethodRootLayout
 
-    override fun createViewModel(): BaseViewModel = CheckoutAddressViewModel()
+    override fun createViewModel(): BaseViewModel = CheckoutViewModel()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?)
     {
         super.onViewCreated(view, savedInstanceState)
 
-/*        (viewModel as CheckoutAddressViewModel).paymentMethodModelLD.observe(viewLifecycleOwner, Observer { paymentMethodModel ->
+/*        (viewModel as CheckoutViewModel).paymentMethodModelLD.observe(viewLifecycleOwner, Observer { paymentMethodModel ->
             addMethodRadioGroup(paymentMethodModel.paymentMethods)
         })*/
 
@@ -49,7 +49,7 @@ class PaymentMethodFragment : BaseCheckoutNavigationFragment() {
 
             backNavigation = false
 
-            (viewModel as CheckoutAddressViewModel).savePaymentMethodVM(paymentMethodValue, model)
+            (viewModel as CheckoutViewModel).savePaymentMethodVM(paymentMethodValue, model)
         }
     }
 

@@ -24,7 +24,7 @@ class ShippingAddressFragment : BaseCheckoutAddressFragment()
 
         addressTabLayout?.getTabAt(CheckoutConstants.SHIPPING_ADDRESS_TAB)?.select()
 
-/*        (viewModel as CheckoutAddressViewModel).saveResponseLD.observe(viewLifecycleOwner, Observer { response ->
+/*        (viewModel as CheckoutViewModel).saveResponseLD.observe(viewLifecycleOwner, Observer { response ->
 
             initShippingLayout(response)
         })*/
@@ -43,17 +43,17 @@ class ShippingAddressFragment : BaseCheckoutAddressFragment()
                 val newAddress = getAddressWithValidation(newAddress!!)
 
                 if(isValidInfo)
-                    (viewModel as CheckoutAddressViewModel).saveNewShippingVM(newAddress, model)
+                    (viewModel as CheckoutViewModel).saveNewShippingVM(newAddress, model)
             }
             else
-                (viewModel as CheckoutAddressViewModel)
+                (viewModel as CheckoutViewModel)
                     .saveShippingFromExistingAddressVM(type = CheckoutConstants.ShippingAddress, addressId = addressID, model = model)
         }
 
     }
     private fun saveStoreData()
     {
-        (viewModel as CheckoutAddressViewModel)
+        (viewModel as CheckoutViewModel)
             .saveShippingFromExistingAddressVM(type = CheckoutConstants.StorePickUp, addressId = addressID, model = model)
     }
 

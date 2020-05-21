@@ -206,12 +206,12 @@ class CheckoutModelImpl(private val context: Context): CheckoutModel
     }
 
 
-    override fun getCheckoutConfirmInformation(callback: RequestCompleteListener<CheckoutSaveResponse>)
+    override fun getCheckoutConfirmInformation(callback: RequestCompleteListener<ConfirmOrderResponse>)
     {
 
-        RetroClient.api.getCheckoutConfirmInformationAPI().enqueue(object : Callback<CheckoutSaveResponse>
+        RetroClient.api.getCheckoutConfirmInformationAPI().enqueue(object : Callback<ConfirmOrderResponse>
         {
-            override fun onResponse(call: Call<CheckoutSaveResponse>, response: Response<CheckoutSaveResponse>)
+            override fun onResponse(call: Call<ConfirmOrderResponse>, response: Response<ConfirmOrderResponse>)
             {
                 if (response.body() != null)
                     callback.onRequestSuccess(response.body()!!)
@@ -220,7 +220,7 @@ class CheckoutModelImpl(private val context: Context): CheckoutModel
             }
 
 
-            override fun onFailure(call: Call<CheckoutSaveResponse>, t: Throwable) {
+            override fun onFailure(call: Call<ConfirmOrderResponse>, t: Throwable) {
                 callback.onRequestFailed(t.localizedMessage!!)
             }
         })

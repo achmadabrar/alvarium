@@ -6,19 +6,19 @@
         android:id="@+id/menu_address"
         android:title="@string/address"
         android:icon="@drawable/ic_address"
-        app:showAsAction="never" />
+        app:showAsAction="never"/>
 
     <item
         android:id="@+id/menu_shipping"
         android:title="@string/step_shipping"
         android:icon="@drawable/ic_truck"
-        app:showAsAction="never" />
+        app:showAsAction="never"/>
 
     <item
         android:id="@+id/menu_payment"
         android:title="@string/payment"
         android:icon="@drawable/ic_payment"
-        app:showAsAction="never" />
+        app:showAsAction="never"/>
 
     <item
         android:id="@+id/menu_confirm"

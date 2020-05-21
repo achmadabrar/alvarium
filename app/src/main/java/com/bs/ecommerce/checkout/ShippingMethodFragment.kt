@@ -29,7 +29,7 @@ class ShippingMethodFragment : BaseCheckoutNavigationFragment() {
 
     override fun getRootLayout(): RelativeLayout = shippingMethodRootLayout
 
-    override fun createViewModel(): BaseViewModel = CheckoutAddressViewModel()
+    override fun createViewModel(): BaseViewModel = CheckoutViewModel()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?)
     {
@@ -43,7 +43,7 @@ class ShippingMethodFragment : BaseCheckoutNavigationFragment() {
         addMethodRadioGroup(shippingMethods)
 
 
-/*        (viewModel as CheckoutAddressViewModel).shippingMethodModelLD.observe(viewLifecycleOwner, Observer { shippingMethodModel ->
+/*        (viewModel as CheckoutViewModel).shippingMethodModelLD.observe(viewLifecycleOwner, Observer { shippingMethodModel ->
             addMethodRadioGroup(shippingMethodModel.shippingMethods)
 
         })*/
@@ -52,7 +52,7 @@ class ShippingMethodFragment : BaseCheckoutNavigationFragment() {
 
             backNavigation = false
 
-            (viewModel as CheckoutAddressViewModel).saveShippingMethodVM(shippingMethodValue, model)
+            (viewModel as CheckoutViewModel).saveShippingMethodVM(shippingMethodValue, model)
         }
 
     }

@@ -24,13 +24,13 @@ class CheckoutStepFragment : ToolbarLogoBaseFragment() {
 
     override fun getRootLayout(): RelativeLayout = checkoutStepRootLayout
 
-    override fun createViewModel(): BaseViewModel = CheckoutAddressViewModel()
+    override fun createViewModel(): BaseViewModel = CheckoutViewModel()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initView()
 
-        viewModel  = ViewModelProvider(this).get(CheckoutAddressViewModel::class.java)
+        viewModel  = ViewModelProvider(this).get(CheckoutViewModel::class.java)
     }
 
     private fun initView() {
@@ -41,21 +41,31 @@ class CheckoutStepFragment : ToolbarLogoBaseFragment() {
 
         checkoutBottomNav.setOnNavigationItemSelectedListener { item ->
 
-            if (requireActivity().supportFragmentManager.findFragmentById(R.id.checkoutFragmentHolder) is PaymentInfoFragment)
+/*            if (requireActivity().supportFragmentManager.findFragmentById(R.id.checkoutFragmentHolder) is PaymentInfoFragment)
             {
                 toast(getString(R.string.skip_payment_dialog))  //TODO will be a dialog
                 false
             }
             else
-            {
+            {*/
                 when (item.itemId) {
-                    R.id.menu_address -> replaceFragment(BillingAddressFragment())
-                    R.id.menu_shipping -> replaceFragment(ShippingMethodFragment())
-                    R.id.menu_payment -> replaceFragment(PaymentMethodFragment())
+                    R.id.menu_address -> {
+/*                        checkoutBottomNav.menu.findItem(R.id.menu_address).isEnabled = false
+                        checkoutBottomNav.menu.getItem(0).isEnabled = false*/
+                        replaceFragment(BillingAddressFragment())
+                    }
+                    R.id.menu_shipping -> {
+
+                        replaceFragment(ShippingMethodFragment())
+                    }
+                    R.id.menu_payment -> {
+
+                        replaceFragment(PaymentMethodFragment())
+                    }
                     R.id.menu_confirm -> replaceFragment(ConfirmOrderFragment())
                 }
                 true
-            }
+            //}
 
         }
     }

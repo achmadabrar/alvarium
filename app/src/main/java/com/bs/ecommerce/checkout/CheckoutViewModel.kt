@@ -11,7 +11,7 @@ import com.bs.ecommerce.networking.common.Data
 import com.bs.ecommerce.networking.common.ExistingAddress
 import com.bs.ecommerce.networking.common.KeyValueFormData
 
-open class CheckoutAddressViewModel : BaseViewModel()
+open class CheckoutViewModel : BaseViewModel()
 {
 
     var getBillingAddressLD = MutableLiveData<BillingAddressResponse>()
@@ -23,6 +23,8 @@ open class CheckoutAddressViewModel : BaseViewModel()
     var shippingMethodModelLD = MutableLiveData<ShippingMethodModel>()
 
     var paymentMethodModelLD = MutableLiveData<PaymentMethodModel>()
+
+    var getConfirmOrderLD = MutableLiveData<ConfirmOrderResponse>()
 
 
     private fun saveCheckoutData(data: CheckoutSaveResponse)
@@ -227,11 +229,12 @@ open class CheckoutAddressViewModel : BaseViewModel()
     {
         isLoadingLD.postValue(true)
 
-        model.getCheckoutConfirmInformation(object : RequestCompleteListener<CheckoutSaveResponse>
+        model.getCheckoutConfirmInformation(object : RequestCompleteListener<ConfirmOrderResponse>
         {
-            override fun onRequestSuccess(data: CheckoutSaveResponse)
+            override fun onRequestSuccess(data: ConfirmOrderResponse)
             {
                 isLoadingLD.postValue(false)
+                getConfirmOrderLD.postValue(data)
 
             }
 

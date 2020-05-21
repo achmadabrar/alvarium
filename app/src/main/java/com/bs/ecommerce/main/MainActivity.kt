@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.os.Handler
 import android.view.View
 import androidx.appcompat.app.ActionBarDrawerToggle
+import androidx.appcompat.app.AlertDialog
 import androidx.core.view.GravityCompat
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.FragmentManager
@@ -237,41 +238,66 @@ class MainActivity : BaseActivity()
         when (item.itemId) {
             R.id.bottom_nav_home -> {
 
-                // HomeFragment is never in backStack
-                // Pop all items from backStack will make HomeFragment visible
-                supportFragmentManager.popBackStack(
-                    null,
-                    FragmentManager.POP_BACK_STACK_INCLUSIVE
-                )
-
-                return@OnNavigationItemSelectedListener true
+                if(shouldNavigate())
+                {
+                    supportFragmentManager.popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE)
+                    return@OnNavigationItemSelectedListener true
+                }
             }
             R.id.bottom_nav_categories -> {
 
-                createIfNotInBackStack<CategoryFragment>(CategoryFragment())
-                return@OnNavigationItemSelectedListener true
+                if(shouldNavigate())
+                {
+                    createIfNotInBackStack<CategoryFragment>(CategoryFragment())
+                    return@OnNavigationItemSelectedListener true
+                }
+
             }
             R.id.bottom_nav_search -> {
+                if(shouldNavigate())
+                {
+                    createIfNotInBackStack<SearchFragment>(SearchFragment())
+                    return@OnNavigationItemSelectedListener true
+                }
 
-                createIfNotInBackStack<SearchFragment>(
-                    SearchFragment()
-                )
-                return@OnNavigationItemSelectedListener true
             }
             R.id.bottom_nav_account -> {
+                if(shouldNavigate())
+                {
+                    createIfNotInBackStack<UserAccountFragment>(UserAccountFragment())
+                    return@OnNavigationItemSelectedListener true
+                }
 
-                createIfNotInBackStack<UserAccountFragment>(
-                    UserAccountFragment()
-                )
-                return@OnNavigationItemSelectedListener true
             }
             R.id.bottom_nav_more -> {
+                if(shouldNavigate())
+                {
+                    createIfNotInBackStack<OptionsFragment>(OptionsFragment())
+                    return@OnNavigationItemSelectedListener true
+                }
 
-                createIfNotInBackStack<OptionsFragment>(OptionsFragment())
-                return@OnNavigationItemSelectedListener true
             }
         }
         false
+    }
+
+
+    private fun shouldNavigate() : Boolean
+    {
+        var flag = true
+        if (supportFragmentManager.findFragmentById(R.id.checkoutFragmentHolder) is PaymentInfoFragment)
+        {
+            val alertDialogBuilder = AlertDialog.Builder(this)
+            alertDialogBuilder.setTitle(R.string.app_name)
+            alertDialogBuilder.setMessage(getString(R.string.exit_payment_dialog_query))
+            alertDialogBuilder.setCancelable(false)
+            alertDialogBuilder.setPositiveButton("Let's exit") { arg0, arg -> arg0.dismiss(); flag = true }
+            alertDialogBuilder.setNegativeButton("No") { arg0, arg -> arg0.dismiss(); flag = false }
+            val alertDialog = alertDialogBuilder.create()
+            alertDialog.show()
+        }
+
+        return flag
     }
 
     fun closeDrawer() =  drawerLayout.closeDrawers()

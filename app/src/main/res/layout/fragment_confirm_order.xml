@@ -30,11 +30,19 @@
                 layout="@layout/confirm_order_card"/>
 
             <include
+                android:id="@+id/pickupStoreCard"
+                layout="@layout/confirm_order_card"/>
+
+            <include
                 android:id="@+id/shippingMethodCard"
                 layout="@layout/confirm_order_card"/>
 
             <include
                 android:id="@+id/paymentMethodCard"
+                layout="@layout/confirm_order_card"/>
+
+            <include
+                android:id="@+id/selectedAttributesCard"
                 layout="@layout/confirm_order_card"/>
 
 

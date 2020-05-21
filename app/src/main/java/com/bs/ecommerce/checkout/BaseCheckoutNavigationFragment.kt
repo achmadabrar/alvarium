@@ -14,6 +14,7 @@ import com.bs.ecommerce.utils.*
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayout.OnTabSelectedListener
 import kotlinx.android.synthetic.main.fragment_base_billing_adddress.*
+import kotlinx.android.synthetic.main.fragment_checkout_step.*
 
 
 abstract class BaseCheckoutNavigationFragment : ToolbarLogoBaseFragment()
@@ -27,7 +28,7 @@ abstract class BaseCheckoutNavigationFragment : ToolbarLogoBaseFragment()
 
         model = CheckoutModelImpl(activity?.applicationContext!!)
 
-        viewModel  = ViewModelProvider(this).get(CheckoutAddressViewModel::class.java)
+        viewModel  = ViewModelProvider(this).get(CheckoutViewModel::class.java)
 
 
         //if(!backNavigation)
@@ -40,7 +41,7 @@ abstract class BaseCheckoutNavigationFragment : ToolbarLogoBaseFragment()
 
     open fun setLiveDataListeners() {
 
-        with(viewModel as CheckoutAddressViewModel)
+        with(viewModel as CheckoutViewModel)
         {
 
             saveResponseLD.observe(viewLifecycleOwner, Observer { saveResponse ->

@@ -20,7 +20,7 @@ class BillingAddressFragment : BaseCheckoutAddressFragment()
 
         layoutCheckoutAddress?.visibility = View.VISIBLE
 
-        (viewModel as CheckoutAddressViewModel).getBillingFormVM(model)
+        (viewModel as CheckoutViewModel).getBillingFormVM(model)
 
         btnContinue?.setOnClickListener {
 
@@ -31,10 +31,10 @@ class BillingAddressFragment : BaseCheckoutAddressFragment()
                 val newAddress = getAddressWithValidation(newAddress!!)
 
                 if(isValidInfo)
-                    (viewModel as CheckoutAddressViewModel).saveNewBillingVM(newAddress, model)
+                    (viewModel as CheckoutViewModel).saveNewBillingVM(newAddress, model)
             }
             else
-                (viewModel as CheckoutAddressViewModel).saveExistingBillingVM(addressID, model, shipToSameAddressCheckBox.isChecked)
+                (viewModel as CheckoutViewModel).saveExistingBillingVM(addressID, model, shipToSameAddressCheckBox.isChecked)
         }
 
     }
@@ -44,7 +44,7 @@ class BillingAddressFragment : BaseCheckoutAddressFragment()
 
         super.setLiveDataListeners()
 
-        with(viewModel as CheckoutAddressViewModel)
+        with(viewModel as CheckoutViewModel)
         {
             getBillingAddressLD.observe(viewLifecycleOwner, Observer { getBilling ->
 
