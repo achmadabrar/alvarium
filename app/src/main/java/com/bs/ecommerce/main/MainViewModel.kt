@@ -15,6 +15,7 @@ import com.bs.ecommerce.networking.common.BaseResponse
 import com.bs.ecommerce.product.model.data.CategoryModel
 import com.bs.ecommerce.product.model.data.Manufacturer
 import com.bs.ecommerce.product.model.data.ProductSummary
+import com.bs.ecommerce.utils.OneTimeEvent
 import com.bs.ecommerce.utils.showLog
 
 
@@ -29,7 +30,7 @@ class MainViewModel : CheckoutViewModel() {
     var featuredCategoryLD = MutableLiveData<List<CategoryModel>>()
     var imageBannerLD = MutableLiveData<SliderData>()
 
-    var appSettingsLD = MutableLiveData<AppLandingData>()
+    var appSettingsLD = MutableLiveData<OneTimeEvent<AppLandingData>>()
 
     var testUrlSuccessLD = MutableLiveData<Boolean>()
 
@@ -137,7 +138,7 @@ class MainViewModel : CheckoutViewModel() {
             override fun onRequestSuccess(data: AppLandingSettingResponse) {
                 isLoadingLD.value = false
 
-                appSettingsLD.value = data.data
+                appSettingsLD.value = OneTimeEvent(data.data)
             }
 
             override fun onRequestFailed(errorMessage: String) {

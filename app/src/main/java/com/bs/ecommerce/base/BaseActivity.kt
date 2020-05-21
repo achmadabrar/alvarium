@@ -40,10 +40,8 @@ abstract class BaseActivity : AppCompatActivity()
 
         setTheme(R.style.Nop_Theme_Dark)
 
-        if (PrefSingleton.getPrefsBoolValue(PrefSingleton.IS_DARK_THEME))
-            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
-        else
-            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+        if(savedInstanceState == null)
+            resetAppTheme()
 
         setContentView(getLayoutId())
 
@@ -91,6 +89,13 @@ abstract class BaseActivity : AppCompatActivity()
                 goMenuItemFragment(CartFragment())
         }
         updateHotCount(MyApplication.myCartCounter)
+    }
+
+    fun resetAppTheme() {
+        if (PrefSingleton.getPrefsBoolValue(PrefSingleton.IS_DARK_THEME))
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+        else
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
     }
 
     fun updateHotCount(badgeCount: Int)

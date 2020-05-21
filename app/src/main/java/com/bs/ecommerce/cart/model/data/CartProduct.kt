@@ -1,13 +1,13 @@
 package com.bs.ecommerce.cart.model.data
 
 import com.google.gson.annotations.SerializedName
-import java.util.ArrayList
+import java.util.*
 
 class CartProduct
 {
     @SerializedName("Sku") var sku: Any? = null
 
-    @SerializedName("ProductId") var productId: Int? = null
+    @SerializedName("ProductId") var productId: Long? = null
 
     @SerializedName("ProductName") var productName: String? = null
 

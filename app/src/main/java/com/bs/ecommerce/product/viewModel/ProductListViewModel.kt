@@ -7,9 +7,8 @@ import com.bs.ecommerce.base.BaseViewModel
 import com.bs.ecommerce.common.RequestCompleteListener
 import com.bs.ecommerce.networking.Api
 import com.bs.ecommerce.product.model.ProductListModel
-import com.bs.ecommerce.product.model.data.*
 import com.bs.ecommerce.product.model.SearchModel
-import com.bs.ecommerce.product.model.data.SearchParam
+import com.bs.ecommerce.product.model.data.*
 import java.util.*
 
 class ProductListViewModel : BaseViewModel() {
@@ -161,7 +160,7 @@ class ProductListViewModel : BaseViewModel() {
 
         isLoadingLD.value = true
 
-        val map = queryMapLD.value ?: HashMap<String, String>()
+        val map = /*queryMapLD.value ?:*/ HashMap<String, String>()
 
 
         val uri = Uri.parse(filterUrl)

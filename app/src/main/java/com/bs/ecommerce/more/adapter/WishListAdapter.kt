@@ -31,6 +31,10 @@ class WishListAdapter(
         val item = list[position]
 
         with(holder.itemView) {
+
+            id = R.id.itemView
+            setOnClickListener { clickListener.onClick(it, position, item) }
+
             tvProductName.text = item.productName
             tvProductPrice.text = item.subTotal
 

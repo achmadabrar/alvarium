@@ -58,23 +58,26 @@ class MainActivity : BaseActivity()
 
         mainViewModel = ViewModelProvider(this).get(MainViewModel::class.java)
 
-
-        mainViewModel.getAppSettings(mainModel)
         setLiveDataListeners()
 
         initNavigationDrawer()
         setBottomNavigation()
 
-        if (savedInstanceState == null)
+        if (savedInstanceState == null) {
+            mainViewModel.getAppSettings(mainModel)
             initHomeFragment()
+        }
 
         setBackStackChangeListener()
     }
+
     private fun setLiveDataListeners()
     {
         mainViewModel.appSettingsLD.observe(this, Observer { settings ->
 
-            setAppSettings(settings)
+            settings.getContentIfNotHandled()?.let {
+                setAppSettings(it)
+            }
         })
 
     }

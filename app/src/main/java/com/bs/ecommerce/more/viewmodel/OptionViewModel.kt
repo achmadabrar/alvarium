@@ -26,7 +26,7 @@ class OptionViewModel : BaseViewModel() {
 
         data.add(AppOptions(R.string.title_checkout, R.drawable.ic_my_order))
 
-        data.add(AppOptions(R.string.placeholder, R.drawable.ic_placeholder))
+        // data.add(AppOptions(R.string.placeholder, R.drawable.ic_placeholder))
 
         optionsLD.postValue(data)
     }

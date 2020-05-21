@@ -5,6 +5,7 @@ import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.view.ViewGroup
 import android.widget.LinearLayout
 import android.widget.RelativeLayout
 import android.widget.TextView
@@ -25,6 +26,7 @@ import kotlinx.android.synthetic.main.product_filter_option_for_color.view.*
 
 class ProductFilterFragment : BaseFragment() {
     private val logTag = "nop_" + this::class.java.simpleName
+    private var viewGroup: ViewGroup? = null
 
     override fun getLayoutId(): Int = R.layout.fragment_product_filter
 
@@ -74,7 +76,7 @@ class ProductFilterFragment : BaseFragment() {
 
         if (priceRange.isNotEmpty()) {
 
-            val view = layoutInflater.inflate(R.layout.product_filter_option, null) as LinearLayout
+            val view = layoutInflater.inflate(R.layout.product_filter_option, viewGroup) as LinearLayout
             view.tvTitle.text = getString(R.string.filter_by_price)
 
             for (i in priceRange) {
@@ -96,7 +98,7 @@ class ProductFilterFragment : BaseFragment() {
                 }
 
                 rl.setOnClickListener {
-                    if (parentFragment is SearchFragment && !i.selected)
+                    if (parentFragment is ProductListFragment && !i.selected)
                         (parentFragment as ProductListFragment).applyFilter(i.filterUrl)
 
                     else if (parentFragment is SearchFragment && i.selected)
@@ -124,7 +126,7 @@ class ProductFilterFragment : BaseFragment() {
 
         if(mMap.isNullOrEmpty()) return
 
-        val view = layoutInflater.inflate(R.layout.product_applied_filter, null) as LinearLayout
+        val view = layoutInflater.inflate(R.layout.product_applied_filter, viewGroup) as LinearLayout
 
         val title = StringBuilder()
         var clearFilterUrl: String? = null
@@ -153,8 +155,8 @@ class ProductFilterFragment : BaseFragment() {
 
     private fun color(tmp: Map.Entry<String, MutableList<FilterItems>>): View {
         val view =
-            layoutInflater.inflate(R.layout.product_filter_option_for_color, null) as LinearLayout
-        view.tvTitle.text = "Filter By ${tmp.key}"
+            layoutInflater.inflate(R.layout.product_filter_option_for_color, viewGroup) as LinearLayout
+        view.tvTitle.text = getString(R.string.filter_by_attr, tmp.key)
 
         for (i in tmp.value) {
             val rb = layoutInflater.inflate(
@@ -185,7 +187,7 @@ class ProductFilterFragment : BaseFragment() {
     }
 
     private fun allExColor(tmp: Map.Entry<String, MutableList<FilterItems>>): View {
-        val view = layoutInflater.inflate(R.layout.product_filter_option, null) as LinearLayout
+        val view = layoutInflater.inflate(R.layout.product_filter_option, viewGroup) as LinearLayout
         view.tvTitle.text = getString(R.string.filter_by_attr, tmp.key)
 
         for (i in tmp.value) {

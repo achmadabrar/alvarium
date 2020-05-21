@@ -8,12 +8,16 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.bs.ecommerce.R
 import com.bs.ecommerce.base.BaseActivity
+import com.bs.ecommerce.main.MainActivity
 import com.bs.ecommerce.main.MainViewModel
 import com.bs.ecommerce.main.model.MainModelImpl
 import com.bs.ecommerce.main.model.data.CurrencyNavSelector
 import com.bs.ecommerce.main.model.data.LanguageNavSelector
 import com.bs.ecommerce.more.viewmodel.BaseUrlChangeFragment
-import com.bs.ecommerce.utils.*
+import com.bs.ecommerce.utils.Language
+import com.bs.ecommerce.utils.PrefSingleton
+import com.bs.ecommerce.utils.hideKeyboard
+import com.bs.ecommerce.utils.toast
 import kotlinx.android.synthetic.main.fragment_settings.*
 import java.util.*
 
@@ -58,9 +62,9 @@ class SettingsFragment: BaseUrlChangeFragment() {
     {
         mainViewModel.appSettingsLD.observe(viewLifecycleOwner, Observer { settings ->
 
-            setLanguageDropdown(settings.languageNavSelector)
+            setLanguageDropdown(settings.peekContent().languageNavSelector)
 
-            setCurrencyDropdown(settings.currencyNavSelector)
+            setCurrencyDropdown(settings.peekContent().currencyNavSelector)
 
 
             languageCardView?.visibility = View.VISIBLE
@@ -256,12 +260,13 @@ class SettingsFragment: BaseUrlChangeFragment() {
         switchTheme.isChecked = PrefSingleton.getPrefsBoolValue(PrefSingleton.IS_DARK_THEME)
 
         switchTheme.setOnCheckedChangeListener { _, isChecked ->
-            toast("Current theme: ".plus(if(isChecked) "Dark" else "Light"))
+            //toast("Current theme: ".plus(if(isChecked) "Dark" else "Light"))
 
             PrefSingleton.setPrefs(PrefSingleton.IS_DARK_THEME, isChecked)
 
             // Switch Theme
-            requireActivity().recreate()
+            //requireActivity().recreate()
+            (requireActivity() as MainActivity).resetAppTheme()
         }
     }
 

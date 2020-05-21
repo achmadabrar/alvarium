@@ -23,8 +23,12 @@ import kotlinx.android.synthetic.main.product_price_layout.view.*
 import java.util.*
 
 
-open class CartAdapter(productsList: List<CartProduct>, fragment: Fragment, val viewModel: BaseViewModel,
-                       var model: CartModel? = null, var isCheckout: Boolean = false
+open class CartAdapter(
+    productsList: List<CartProduct>,
+    fragment: Fragment,
+    val viewModel: BaseViewModel,
+    val model: CartModel,
+    var isCheckout: Boolean = false
 )
 
     : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
@@ -87,7 +91,7 @@ open class CartAdapter(productsList: List<CartProduct>, fragment: Fragment, val 
 
         keyValuePairList.add(KeyValuePair(key = key, value = value))
 
-        (viewModel as CartViewModel).updateCartData(keyValuePairList, model!!)
+        (viewModel as CartViewModel).updateCartData(keyValuePairList, model)
     }
 
     override fun onBindViewHolder(
