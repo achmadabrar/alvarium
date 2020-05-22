@@ -106,7 +106,7 @@ class WishListFragment : BaseFragment() {
 
                     R.id.itemView ->
                         data.productId?.let {
-                            replaceFragmentSafely(ProductDetailFragment.newInstance(it))
+                            replaceFragmentSafely(ProductDetailFragment.newInstance(it, data.productName))
                         }
                 }
             }

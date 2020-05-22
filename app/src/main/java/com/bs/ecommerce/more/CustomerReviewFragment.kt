@@ -142,7 +142,9 @@ class CustomerReviewFragment : BaseFragment() {
 
                 setOnClickListener {
                     if (item.productId != null)
-                        replaceFragmentSafely(ProductDetailFragment.newInstance(item.productId.toLong()))
+                        replaceFragmentSafely(ProductDetailFragment.newInstance(
+                            item.productId.toLong(), item.productName)
+                        )
                 }
             }
         }

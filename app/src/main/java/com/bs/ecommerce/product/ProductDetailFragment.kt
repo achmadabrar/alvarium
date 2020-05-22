@@ -82,20 +82,24 @@ class ProductDetailFragment : BaseFragment(), View.OnClickListener {
                 getProductDetail(productId, model)
 
                 getRelatedProducts(
-                    productId,
-                    resources.getDimensionPixelSize(R.dimen.product_item_size),
-                    model
+                    productId, resources.getDimensionPixelSize(R.dimen.product_item_size), model
                 )
 
                 getSimilarProducts(
-                    productId,
-                    resources.getDimensionPixelSize(R.dimen.product_item_size),
-                    model
+                    productId, resources.getDimensionPixelSize(R.dimen.product_item_size), model
                 )
             }
         }
 
         setLiveDataListeners()
+    }
+
+    override fun onResume() {
+        super.onResume()
+
+        arguments?.getString(PRODUCT_NAME)?.let {
+            activity?.title = it
+        }
     }
 
     private fun setLiveDataListeners() {
@@ -312,8 +316,8 @@ class ProductDetailFragment : BaseFragment(), View.OnClickListener {
                 })
 
             viewModel.addedToWishListLD.observe(viewLifecycleOwner, Observer { action ->
-                action?.getContentIfNotHandled()?.let { prodId ->
-                    replaceFragmentSafely(newInstance(prodId))
+                action?.getContentIfNotHandled()?.let { product ->
+                    replaceFragmentSafely(newInstance(product.id?.toLong() ?: -1L, product.name))
                 }
                 blockingLoader.hideDialog()
             })
@@ -483,10 +487,10 @@ class ProductDetailFragment : BaseFragment(), View.OnClickListener {
                 when(view.id) {
 
                     R.id.itemView ->
-                        replaceFragmentSafely(newInstance(data.id.toLong()))
+                        replaceFragmentSafely(newInstance(data.id.toLong(), data.name))
 
                     R.id.ivAddToFav ->
-                        addProductToWishList(data.id.toLong())
+                        addProductToWishList(data)
                 }
             }
         }
@@ -542,12 +546,15 @@ class ProductDetailFragment : BaseFragment(), View.OnClickListener {
     companion object {
         @JvmStatic
         private val PRODUCT_ID = "productId"
+        @JvmStatic
+        private val PRODUCT_NAME = "productName"
 
         @JvmStatic
-        fun newInstance(productId: Long): ProductDetailFragment {
+        fun newInstance(productId: Long, productName: String?): ProductDetailFragment {
             val fragment = ProductDetailFragment()
             val args = Bundle()
             args.putLong(PRODUCT_ID, productId)
+            args.putString(PRODUCT_NAME, productName)
             fragment.arguments = args
             return fragment
         }

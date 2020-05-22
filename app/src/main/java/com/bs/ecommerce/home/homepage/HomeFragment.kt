@@ -101,10 +101,10 @@ class HomeFragment : ToolbarLogoBaseFragment() {
                 when(view.id) {
 
                     R.id.itemView ->
-                        replaceFragmentSafely(ProductDetailFragment.newInstance(data.id.toLong()))
+                        replaceFragmentSafely(ProductDetailFragment.newInstance(data.id.toLong(), data.name))
 
                     R.id.ivAddToFav ->
-                        addProductToWishList(data.id.toLong())
+                        addProductToWishList(data)
                 }
             }
         }
@@ -189,8 +189,9 @@ class HomeFragment : ToolbarLogoBaseFragment() {
 
         viewModel.addedToWishListLD.observe(viewLifecycleOwner, Observer { action ->
 
-            action?.getContentIfNotHandled()?.let { prodId ->
-                replaceFragmentSafely(ProductDetailFragment.newInstance(prodId))
+            action?.getContentIfNotHandled()?.let { product ->
+                replaceFragmentSafely(ProductDetailFragment.newInstance(
+                    product.id?.toLong() ?: -1L, product.name))
             }
 
             blockingLoader.hideDialog()
@@ -200,13 +201,13 @@ class HomeFragment : ToolbarLogoBaseFragment() {
     private fun populateBanner(sliderData: SliderData) {
 
         if (sliderData.isEnabled == false || sliderData.sliders.isNullOrEmpty()) {
-            banner.visibility = View.GONE
+            banner?.visibility = View.GONE
             return
         }
 
-        banner.visibility = View.VISIBLE
+        banner?.visibility = View.VISIBLE
 
-        banner.view_pager_slider1?.apply {
+        banner?.view_pager_slider1?.apply {
             removeAllSliders()
             setPresetIndicator(SliderLayout.PresetIndicators.Center_Bottom)
             setCustomIndicator(view!!.findViewById<View>(R.id.circle_indicator) as PagerIndicator)
@@ -223,7 +224,7 @@ class HomeFragment : ToolbarLogoBaseFragment() {
                     textSliderView.image(imageModel.imageUrl).scaleType =
                         BaseSliderView.ScaleType.CenterInside
 
-                    banner.view_pager_slider1?.addSlider(textSliderView)
+                    banner?.view_pager_slider1?.addSlider(textSliderView)
                 }
 
                 //Execute all the long running tasks here
@@ -238,14 +239,14 @@ class HomeFragment : ToolbarLogoBaseFragment() {
                 "banner_ar".showLog("ar of image $i: $thisImageAR, largest ar: $biggestImageAR")
             }
 
-            banner.slider?.setmAspectRatio(biggestImageAR)
+            banner?.slider?.setmAspectRatio(biggestImageAR)
         }
 
     }
 
     private fun populateFeaturedCategoryList(list: List<CategoryModel>) {
         if (list.isNullOrEmpty()) {
-            featuredCategoryContainerLayout.visibility = View.GONE
+            featuredCategoryContainerLayout?.visibility = View.GONE
             return
         }
 
@@ -295,7 +296,7 @@ class HomeFragment : ToolbarLogoBaseFragment() {
                     )
                 }
 
-                featuredCategoryContainerLayout.addView(linearLayout)
+                featuredCategoryContainerLayout?.addView(linearLayout)
             }
 
         }

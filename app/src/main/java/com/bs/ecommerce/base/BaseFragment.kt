@@ -12,13 +12,12 @@ import androidx.annotation.LayoutRes
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
 import com.bs.ecommerce.R
-import com.bs.ecommerce.cart.CartViewModel
 import com.bs.ecommerce.cart.model.data.CartProduct
 import com.bs.ecommerce.customViews.ContentLoadingDialog
 import com.bs.ecommerce.more.barcode.BarCodeCaptureFragment
 import com.bs.ecommerce.networking.NetworkUtil
+import com.bs.ecommerce.product.model.data.ProductSummary
 import com.bs.ecommerce.utils.*
 import com.pnikosis.materialishprogress.ProgressWheel
 
@@ -65,11 +64,14 @@ abstract class BaseFragment : Fragment()
         return rootView
     }
 
+    fun setCustomToolbarTitle(title: String) {
+        activity?.title = title
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?)
     {
         super.onViewCreated(view, savedInstanceState)
 
-        activity?.title = getString(getFragmentTitle())
 
         requireActivity().supportFragmentManager.findFragmentById(R.id.layoutFrame)?.let {
 
@@ -99,9 +101,12 @@ abstract class BaseFragment : Fragment()
     }
 
 
-    open fun addProductToWishList(productId: Long) {
+    open fun addProductToWishList(product: ProductSummary) {
+
+        if (product.id == null) return
+
         blockingLoader.showDialog()
-        viewModel.addToWishList(productId)
+        viewModel.addToWishList(product)
     }
 
 

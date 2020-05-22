@@ -78,6 +78,14 @@ class ProductListFragment : BaseFragment() {
         setLiveDataListeners()
     }
 
+    override fun onResume() {
+        super.onResume()
+
+        arguments?.getString(CATEGORY_NAME)?.let {
+            activity?.title = it
+        }
+    }
+
     private fun getProducts(resetFilters: Boolean) {
         if (getBy == GetBy.CATEGORY.name)
             (viewModel as ProductListViewModel).getProductByCategory(
@@ -121,10 +129,11 @@ class ProductListFragment : BaseFragment() {
                 when(view.id) {
 
                     R.id.itemView ->
-                        replaceFragmentSafely(ProductDetailFragment.newInstance(data.id.toLong()))
+                        replaceFragmentSafely(ProductDetailFragment.newInstance(
+                            data.id.toLong(), data.name))
 
                     R.id.ivAddToFav ->
-                        addProductToWishList(data.id.toLong())
+                        addProductToWishList(data)
                 }
             }
         }
@@ -232,8 +241,9 @@ class ProductListFragment : BaseFragment() {
         })
 
         viewModel.addedToWishListLD.observe(viewLifecycleOwner, Observer { action ->
-            action?.getContentIfNotHandled()?.let { prodId ->
-                replaceFragmentSafely(ProductDetailFragment.newInstance(prodId))
+            action?.getContentIfNotHandled()?.let { product ->
+                replaceFragmentSafely(ProductDetailFragment.newInstance(
+                    product.id?.toLong() ?: -1L, product.name))
             }
             blockingLoader.hideDialog()
         })
