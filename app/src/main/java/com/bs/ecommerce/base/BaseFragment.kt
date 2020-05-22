@@ -72,6 +72,7 @@ abstract class BaseFragment : Fragment()
     {
         super.onViewCreated(view, savedInstanceState)
 
+        activity?.title = getString(getFragmentTitle())
 
         requireActivity().supportFragmentManager.findFragmentById(R.id.layoutFrame)?.let {
 
