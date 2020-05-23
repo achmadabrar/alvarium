@@ -56,7 +56,7 @@ class BarCodeCaptureFragment : BaseFragment()
 
 
             if(result.text.toString().isNumeric())
-                replaceFragmentSafely(ProductDetailFragment.newInstance(result.text.toLong()))
+                replaceFragmentSafely(ProductDetailFragment.newInstance(result.text.toLong(), null))
             else
                 toast(getString(R.string.invalid_barcode))
         }

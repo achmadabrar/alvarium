@@ -7,14 +7,12 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bs.ecommerce.R
-import com.bs.ecommerce.main.MainViewModel
-import com.bs.ecommerce.base.BaseFragment
 import com.bs.ecommerce.base.ToolbarLogoBaseFragment
+import com.bs.ecommerce.main.MainViewModel
 import com.bs.ecommerce.main.model.MainModel
 import com.bs.ecommerce.main.model.MainModelImpl
 import com.bs.ecommerce.main.model.data.Category
 import kotlinx.android.synthetic.main.category_left.*
-import kotlinx.android.synthetic.main.category_left.categoryRootLayout
 
 
 class CategoryFragment : ToolbarLogoBaseFragment()
@@ -40,9 +38,10 @@ class CategoryFragment : ToolbarLogoBaseFragment()
         {
             mainModel = MainModelImpl(activity?.applicationContext!!)
 
-            mainViewModel = ViewModelProvider(this).get(MainViewModel::class.java)
+            mainViewModel = ViewModelProvider(requireActivity()).get(MainViewModel::class.java)
 
-            mainViewModel.getNavDrawerCategoryList(mainModel)
+            if(mainViewModel.navDrawerCategoriesLD.value.isNullOrEmpty())
+                mainViewModel.getNavDrawerCategoryList(mainModel)
 
             categorySwipeRefresh.setOnRefreshListener {
                 categorySwipeRefresh.isRefreshing = false

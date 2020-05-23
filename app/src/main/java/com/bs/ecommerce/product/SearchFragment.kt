@@ -104,7 +104,7 @@ class SearchFragment : BaseFragment() {
 
                 if (data.id == null) return
 
-                replaceFragmentSafely(ProductDetailFragment.newInstance(data.id.toLong()))
+                replaceFragmentSafely(ProductDetailFragment.newInstance(data.id.toLong(), data.name))
             }
         }
 
