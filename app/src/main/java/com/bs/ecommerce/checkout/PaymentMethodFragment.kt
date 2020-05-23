@@ -39,7 +39,7 @@ class PaymentMethodFragment : BaseCheckoutNavigationFragment() {
             addMethodRadioGroup(paymentMethodModel.paymentMethods)
         })*/
 
-        val paymentMethods = MyApplication.checkoutSaveResponse.data.paymentMethodModel.paymentMethods
+        val paymentMethods = MyApplication.checkoutSaveResponse.data.paymentMethodModel!!.paymentMethods
 
         //if(!backNavigation)
         addMethodRadioGroup(paymentMethods)

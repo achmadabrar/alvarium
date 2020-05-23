@@ -185,7 +185,7 @@ open class CheckoutViewModel : BaseViewModel()
         {
             override fun onRequestSuccess(data: CheckoutSaveResponse)
             {
-                with(data.data.paymentMethodModel)
+                with(data.data.paymentMethodModel!!)
                 {
                     if(displayRewardPoints)
                     {

@@ -11,6 +11,7 @@ import com.bs.ecommerce.base.ToolbarLogoBaseFragment
 import com.bs.ecommerce.checkout.model.CheckoutModel
 import com.bs.ecommerce.checkout.model.CheckoutModelImpl
 import com.bs.ecommerce.main.MainViewModel
+import com.bs.ecommerce.utils.MyApplication
 import com.bs.ecommerce.utils.showLog
 import com.bs.ecommerce.utils.toast
 import kotlinx.android.synthetic.main.fragment_checkout_step.*
@@ -52,19 +53,34 @@ class CheckoutStepFragment : ToolbarLogoBaseFragment() {
                     R.id.menu_address -> {
 /*                        checkoutBottomNav.menu.findItem(R.id.menu_address).isEnabled = false
                         checkoutBottomNav.menu.getItem(0).isEnabled = false*/
+
+
                         replaceFragment(BillingAddressFragment())
                     }
                     R.id.menu_shipping -> {
 
-                        replaceFragment(ShippingMethodFragment())
+                        if(MyApplication.checkoutSaveResponse.data.shippingMethodModel != null)
+                            replaceFragment(ShippingMethodFragment())
+                        else
+                        {
+                            toast("Please complete previous step")
+                             return@setOnNavigationItemSelectedListener false
+                        }
+
                     }
                     R.id.menu_payment -> {
 
-                        replaceFragment(PaymentMethodFragment())
+                        if(MyApplication.checkoutSaveResponse.data.paymentMethodModel != null)
+                            replaceFragment(PaymentMethodFragment())
+                        else
+                        {
+                            toast("Please complete previous step")
+                            return@setOnNavigationItemSelectedListener false
+                        }
                     }
                     R.id.menu_confirm -> replaceFragment(ConfirmOrderFragment())
                 }
-                true
+            return@setOnNavigationItemSelectedListener true
             //}
 
         }

@@ -39,6 +39,11 @@ abstract class BaseCheckoutNavigationFragment : ToolbarLogoBaseFragment()
 
     }
 
+    private fun setSkippedSteps()
+    {
+
+    }
+
     open fun setLiveDataListeners() {
 
         with(viewModel as CheckoutViewModel)
@@ -56,9 +61,40 @@ abstract class BaseCheckoutNavigationFragment : ToolbarLogoBaseFragment()
                     {
                         CheckoutConstants.ShippingAddress ->
                         {
+
+                           /* if(saveResponse.data.nextStep > 0)
+                            {
+                                val previousStep = saveResponse.data.nextStep - 1
+
+                                for(anyStep in 0 until 7)
+                                {
+                                    if(previousStep == anyStep)
+                                    {
+                                        when(previousStep)
+                                        {
+
+
+                                            CheckoutConstants.ShippingAddress
+                                            CheckoutConstants.ShippingMethod
+                                            CheckoutConstants.PaymentMethod
+                                            CheckoutConstants.PaymentInfo
+                                             CheckoutConstants.ConfirmOrder
+                                            CheckoutConstants.RedirectToGateway
+
+                                        }
+                                    }
+
+                                }
+                            }
+
+
+
+*/
+
+
                             MyApplication.checkoutSaveResponse.data.shippingAddressModel = saveResponse.data.shippingAddressModel
 
-                            toast("Billing Address added Successfully")
+                            //toast("Billing Address added Successfully")
 
                             replaceFragmentWithoutSavingState(ShippingAddressFragment())
                         }
@@ -66,7 +102,7 @@ abstract class BaseCheckoutNavigationFragment : ToolbarLogoBaseFragment()
                         {
                             MyApplication.checkoutSaveResponse.data.shippingMethodModel = saveResponse.data.shippingMethodModel
 
-                            toast("Shipping Address added Successfully")
+                            //toast("Shipping Address added Successfully")
 
                             replaceFragmentWithoutSavingState(ShippingMethodFragment())
                         }
@@ -74,13 +110,13 @@ abstract class BaseCheckoutNavigationFragment : ToolbarLogoBaseFragment()
                         {
                             MyApplication.checkoutSaveResponse.data.paymentMethodModel = saveResponse.data.paymentMethodModel
 
-                            toast("Shipping Method added Successfully")
+                            //toast("Shipping Method added Successfully")
 
                             replaceFragmentWithoutSavingState(PaymentMethodFragment())
                         }
                         CheckoutConstants.PaymentInfo -> {
 
-                            toast("Payment Method added Successfully")
+                            //toast("Payment Method added Successfully")
 
                             replaceFragmentWithoutSavingState(PaymentInfoFragment())
                         }

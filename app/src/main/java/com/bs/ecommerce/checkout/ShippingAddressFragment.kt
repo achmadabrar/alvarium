@@ -60,12 +60,12 @@ class ShippingAddressFragment : BaseCheckoutAddressFragment()
     private fun initShippingLayout(saveResponse: CheckoutSaveResponse)
     {
 
-        with(saveResponse.data.shippingAddressModel)
+        with(saveResponse.data.shippingAddressModel!!)
         {
 
             newAddress = shippingNewAddress
 
-            if(saveResponse.data.shippingAddressModel.allowPickupInStore)
+            if(this.allowPickupInStore)
                 storeLayout?.visibility = View.VISIBLE
             else
                 storeLayout?.visibility = View.GONE
@@ -89,7 +89,7 @@ class ShippingAddressFragment : BaseCheckoutAddressFragment()
                     existingAddressLayout?.visibility = View.VISIBLE
                 }
             }
-            showShippingAddressUI(saveResponse.data.shippingAddressModel)
+            showShippingAddressUI(saveResponse.data.shippingAddressModel!!)
         }
 
     }
@@ -118,7 +118,7 @@ class ShippingAddressFragment : BaseCheckoutAddressFragment()
         {
             override fun onItemSelected(parent: AdapterView<*>, view: View?, position: Int, id: Long)
             {
-                storeId = MyApplication.checkoutSaveResponse!!.data.shippingAddressModel.pickupPoints[position].id
+                storeId = MyApplication.checkoutSaveResponse!!.data.shippingAddressModel!!.pickupPoints[position].id
             }
 
             override fun onNothingSelected(parent: AdapterView<*>)

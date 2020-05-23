@@ -37,7 +37,7 @@ class ShippingMethodFragment : BaseCheckoutNavigationFragment() {
 
         checkoutBottomNav?.menu?.getItem(CheckoutConstants.SHIPPING_TAB)?.isChecked = true
 
-        val shippingMethods = MyApplication.checkoutSaveResponse.data.shippingMethodModel.shippingMethods
+        val shippingMethods = MyApplication.checkoutSaveResponse.data.shippingMethodModel!!.shippingMethods
 
         //if(!backNavigation)
         addMethodRadioGroup(shippingMethods)
