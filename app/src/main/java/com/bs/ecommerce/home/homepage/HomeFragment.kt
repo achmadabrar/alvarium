@@ -66,23 +66,30 @@ class HomeFragment : ToolbarLogoBaseFragment() {
 
         viewModel = ViewModelProvider(requireActivity()).get(MainViewModel::class.java)
 
-        callCart()
 
-        if (!viewCreated) {
-            model = HomePageModelImpl(requireContext())
+        if(requireActivity().isOnline())
+        {
+            callCart()
 
-            (viewModel as MainViewModel).apply {
-                getFeaturedProducts(model)
-                getCategoryListWithProducts(model)
-                getManufactures(model)
-                getBannerImages(model)
-                getBestSellingProducts(model)
+            if (!viewCreated) {
+                model = HomePageModelImpl(requireContext())
+
+                (viewModel as MainViewModel).apply {
+                    getFeaturedProducts(model)
+                    getCategoryListWithProducts(model)
+                    getManufactures(model)
+                    getBannerImages(model)
+                    getBestSellingProducts(model)
+                }
+
+                initComponents()
             }
 
-            initComponents()
+            setLiveDataListeners()
         }
+        else
+            showInternetDisconnectedDialog()
 
-        setLiveDataListeners()
 
     }
     private fun callCart()
@@ -110,15 +117,24 @@ class HomeFragment : ToolbarLogoBaseFragment() {
         }
 
         swipeRefreshLayout.setOnRefreshListener {
-            swipeRefreshLayout.isRefreshing = false
 
-            (viewModel as MainViewModel).apply {
-                getFeaturedProducts(model)
-                getCategoryListWithProducts(model)
-                getManufactures(model)
-                getBestSellingProducts(model)
-                getCartVM(cartModel)
+            if(requireActivity().isOnline())
+            {
+                swipeRefreshLayout.isRefreshing = false
+
+                (viewModel as MainViewModel).apply {
+                    getFeaturedProducts(model)
+                    getCategoryListWithProducts(model)
+                    getManufactures(model)
+                    getBestSellingProducts(model)
+                    getCartVM(cartModel)
+                }
             }
+            else
+                showInternetDisconnectedDialog()
+
+
+
         }
 
         featuredProductLayout?.rvList?.apply {

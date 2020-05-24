@@ -5,6 +5,7 @@ package com.bs.ecommerce.utils
 import android.app.Activity
 import android.content.Context
 import android.graphics.Color
+import android.net.ConnectivityManager
 import android.os.Build
 import android.util.Log
 import android.util.Patterns
@@ -272,4 +273,10 @@ fun TextView?.showTextPendingCalculationOnCheckout()
     this?.textSize = 13F
     this?.maxLines = 2
     this?.setTextColor(Color.RED)
+}
+
+fun Context.isOnline(): Boolean {
+    val cm = this.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+    val networkInfo = cm.activeNetworkInfo
+    return networkInfo?.isConnectedOrConnecting ?: false
 }

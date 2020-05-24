@@ -2,12 +2,20 @@ package com.bs.ecommerce.base
 
 import android.Manifest
 import android.app.AlertDialog
+import android.app.Dialog
+import android.content.Context
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Bundle
+import android.os.Handler
+import android.provider.Settings
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.WindowManager
+import android.widget.LinearLayout
 import android.widget.RelativeLayout
+import android.widget.TextView
 import androidx.annotation.LayoutRes
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
@@ -15,6 +23,7 @@ import androidx.fragment.app.Fragment
 import com.bs.ecommerce.R
 import com.bs.ecommerce.cart.model.data.CartProduct
 import com.bs.ecommerce.customViews.ContentLoadingDialog
+import com.bs.ecommerce.main.MainActivity
 import com.bs.ecommerce.more.barcode.BarCodeCaptureFragment
 import com.bs.ecommerce.networking.NetworkUtil
 import com.bs.ecommerce.product.model.data.ProductSummary
@@ -190,6 +199,36 @@ abstract class BaseFragment : Fragment()
         prefObject.setCustomerInfo(PrefSingleton.CUSTOMER_INFO, null)
         //LoginManager.getInstance().logOut()
         requireActivity().invalidateOptionsMenu()
+    }
+
+    fun showInternetDisconnectedDialog() {
+        val dialog = Dialog(activity!!, android.R.style.Theme_Black_NoTitleBar_Fullscreen)
+        dialog.setContentView(R.layout.custom_dialog_internet_disconnect)
+
+        dialog.window?.setLayout(
+            WindowManager.LayoutParams.MATCH_PARENT,
+            WindowManager.LayoutParams.MATCH_PARENT)
+
+        val buttonSetting = dialog.findViewById<View>(R.id.button_setting) as TextView
+        val buttonTryAgain = dialog.findViewById<View>(R.id.linearTryAgain) as LinearLayout
+
+        buttonSetting.setOnClickListener { sentWifiSettings(activity) }
+
+        buttonTryAgain.setOnClickListener {
+
+            dialog.dismiss()
+            // set delay for smooth animation
+            val handler = Handler()
+            handler.postDelayed({
+                startActivity(Intent(activity, MainActivity::class.java))
+                activity?.finish()
+            }, 500)
+        }
+
+        dialog.show()
+    }
+    private fun sentWifiSettings(context: Context?) {
+        context?.startActivity(Intent(Settings.ACTION_WIFI_SETTINGS))
     }
 
 
