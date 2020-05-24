@@ -1,10 +1,12 @@
 package com.bs.ecommerce.main
 
-import android.app.Activity
-import android.content.Intent
+import android.animation.ValueAnimator
+import android.content.res.Configuration
 import android.os.Bundle
 import android.os.Handler
+import android.util.Log
 import android.view.View
+import android.view.animation.DecelerateInterpolator
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AlertDialog
 import androidx.core.view.GravityCompat
@@ -14,7 +16,6 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.bs.ecommerce.R
 import com.bs.ecommerce.auth.customerInfo.CustomerInfoFragment
-import com.bs.ecommerce.base.BaseActivity
 import com.bs.ecommerce.base.BaseFragment
 import com.bs.ecommerce.checkout.*
 import com.bs.ecommerce.fcm.MessagingService
@@ -31,13 +32,13 @@ import com.bs.ecommerce.utils.*
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.messaging.FirebaseMessaging
 import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.fragment_checkout_step.*
 
 
-class MainActivity : PrivacyPolicyDialogActivity()
+class MainActivity : PrivacyPolicyDialogActivity(), View.OnClickListener
 {
 
     lateinit var toolbarTop : androidx.appcompat.widget.Toolbar
+    lateinit var toggle: ActionBarDrawerToggle
 
     private lateinit var mainModel: MainModelImpl
     private lateinit var mainViewModel: MainViewModel
@@ -150,28 +151,25 @@ class MainActivity : PrivacyPolicyDialogActivity()
     }
 
 
+    private fun setArrowIconInDrawer()
+    {
+        toggle.isDrawerIndicatorEnabled = false
+
+        supportActionBar?.setHomeAsUpIndicator(R.drawable.ic_arrow_back)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+    }
+
     private fun initNavigationDrawer()
     {
         toolbarTop = findViewById(R.id.appToolbar)
         setSupportActionBar(toolbarTop)
 
 
-        val toggle = object : ActionBarDrawerToggle(this, drawerLayout, toolbarTop, R.string.app_name, R.string.app_name)
+        toggle = object : ActionBarDrawerToggle(this, drawerLayout, toolbarTop, R.string.app_name, R.string.app_name)
         {
             override fun onDrawerClosed(drawerView: View)
             {
                 super.onDrawerClosed(drawerView)
-
-                /*supportFragmentManager.findFragmentById(R.id.layoutFrame)?.let {
-
-                    when(it)
-                    {
-                        is HomeFragment -> title = getString(R.string.title_home_page)
-                        is CartFragment -> title = getString(R.string.title_shopping_cart)
-                        is OptionsFragment -> title = getString(R.string.title_more)
-                        is CustomerInfoFragment -> title = getString(R.string.title_customer_info)
-                    }
-                }*/
 
                 invalidateOptionsMenu()
                 syncState()
@@ -180,8 +178,6 @@ class MainActivity : PrivacyPolicyDialogActivity()
             override fun onDrawerOpened(drawerView: View)
             {
                 super.onDrawerOpened(drawerView)
-
-                //title = getString(R.string.title_category)
 
                 invalidateOptionsMenu()
                 syncState()
@@ -192,13 +188,94 @@ class MainActivity : PrivacyPolicyDialogActivity()
         drawerLayout.addDrawerListener(toggle)
 
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        (toggle as ActionBarDrawerToggle).syncState()
+        toggle.syncState()
+        toolbarTop.setNavigationOnClickListener(this)
+
+        supportFragmentManager.addOnBackStackChangedListener{
+
+            if (supportFragmentManager.backStackEntryCount > 0)
+                setArrowIconInDrawer()
+            else
+            {
+                toggle.isDrawerIndicatorEnabled = true
+                setAnimationOnDrawerIcon()
+            }
+
+            hideKeyboard()
+        }
 
         val navFragment = CategoryFragment()
         supportFragmentManager.beginTransaction()
             .add(R.id.layoutDrawer, navFragment)
             .commit()
 
+    }
+
+    private fun setAnimationOnDrawerIcon()
+    {
+        val anim = ValueAnimator.ofFloat(1F, 0F)
+
+        anim.addUpdateListener { valueAnimator ->
+
+            val slideOffset = valueAnimator.animatedValue as Float
+            toggle.onDrawerSlide(drawerLayout, slideOffset)
+        }
+        anim.interpolator = DecelerateInterpolator()
+        anim.duration = 800
+        anim.start()
+
+    }
+
+    override fun onConfigurationChanged(newConfig: Configuration)
+    {
+        super.onConfigurationChanged(newConfig)
+        toggle.onConfigurationChanged(newConfig)
+    }
+
+    override fun onPostCreate(savedInstanceState: Bundle?)
+    {
+        super.onPostCreate(savedInstanceState)
+        toggle.syncState()
+    }
+
+    override fun onClick(v: View)
+
+            = shouldDisplayHomeUp()
+
+
+    fun shouldDisplayHomeUp()
+    {
+        Log.d("clicking", "yes")
+
+        if (supportActionBar != null)
+        {
+            if (shouldOpenDrawer())
+            {
+                if (drawerLayout.isDrawerOpen(GravityCompat.START))
+                    drawerLayout.closeDrawers()
+                else
+                    drawerLayout.openDrawer(GravityCompat.START)
+            }
+            else if (supportFragmentManager.backStackEntryCount > 0)
+            {
+                setArrowIconInDrawer()
+                onBackPressed()
+                shouldOpenDrawer()
+            }
+            else
+                toggle.isDrawerIndicatorEnabled = true
+        }
+    }
+
+    private fun shouldOpenDrawer(): Boolean
+    {
+        if (supportFragmentManager.backStackEntryCount == 0)
+        {
+            toggle.isDrawerIndicatorEnabled = true
+            return true
+        }
+        else
+            return false
     }
 
     private fun goBackTo(fragment: BaseCheckoutNavigationFragment)
