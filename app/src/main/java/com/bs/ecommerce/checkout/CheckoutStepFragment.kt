@@ -1,5 +1,7 @@
 package com.bs.ecommerce.checkout
 
+import android.app.Activity
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.RelativeLayout
@@ -42,46 +44,42 @@ class CheckoutStepFragment : ToolbarLogoBaseFragment() {
 
         checkoutBottomNav.setOnNavigationItemSelectedListener { item ->
 
-/*            if (requireActivity().supportFragmentManager.findFragmentById(R.id.checkoutFragmentHolder) is PaymentInfoFragment)
-            {
-                toast(getString(R.string.skip_payment_dialog))  //TODO will be a dialog
-                false
-            }
-            else
-            {*/
-                when (item.itemId) {
-                    R.id.menu_address -> {
-/*                        checkoutBottomNav.menu.findItem(R.id.menu_address).isEnabled = false
-                        checkoutBottomNav.menu.getItem(0).isEnabled = false*/
+            when (item.itemId) {
+                R.id.menu_address -> {
 
-
+                    if(childFragmentManager.findFragmentById(R.id.checkoutFragmentHolder) !is BillingAddressFragment)
                         replaceFragment(BillingAddressFragment())
-                    }
-                    R.id.menu_shipping -> {
-
-                        if(MyApplication.checkoutSaveResponse.data.shippingMethodModel != null)
-                            replaceFragment(ShippingMethodFragment())
-                        else
-                        {
-                            toast("Please complete previous step")
-                             return@setOnNavigationItemSelectedListener false
-                        }
-
-                    }
-                    R.id.menu_payment -> {
-
-                        if(MyApplication.checkoutSaveResponse.data.paymentMethodModel != null)
-                            replaceFragment(PaymentMethodFragment())
-                        else
-                        {
-                            toast("Please complete previous step")
-                            return@setOnNavigationItemSelectedListener false
-                        }
-                    }
-                    R.id.menu_confirm -> replaceFragment(ConfirmOrderFragment())
                 }
-            return@setOnNavigationItemSelectedListener true
-            //}
+                R.id.menu_shipping -> {
+
+                    if(MyApplication.checkoutSaveResponse.data.shippingMethodModel != null &&
+                        childFragmentManager.findFragmentById(R.id.checkoutFragmentHolder) !is ShippingMethodFragment)
+                        replaceFragment(ShippingMethodFragment())
+                    else
+                    {
+                        toast("Please complete previous step")
+                         return@setOnNavigationItemSelectedListener false
+                    }
+
+                }
+                R.id.menu_payment -> {
+
+                    if(MyApplication.checkoutSaveResponse.data.paymentMethodModel != null &&
+                        childFragmentManager.findFragmentById(R.id.checkoutFragmentHolder) !is PaymentMethodFragment)
+                        replaceFragment(PaymentMethodFragment())
+                    else
+                    {
+                        toast("Please complete previous step")
+                        return@setOnNavigationItemSelectedListener false
+                    }
+                }
+                R.id.menu_confirm -> //replaceFragment(ConfirmOrderFragment())
+                {
+                    toast("Please complete previous step")
+                    return@setOnNavigationItemSelectedListener false
+                }
+            }
+        return@setOnNavigationItemSelectedListener true
 
         }
     }

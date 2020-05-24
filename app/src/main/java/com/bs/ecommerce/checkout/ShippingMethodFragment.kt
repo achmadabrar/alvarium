@@ -39,7 +39,6 @@ class ShippingMethodFragment : BaseCheckoutNavigationFragment() {
 
         val shippingMethods = MyApplication.checkoutSaveResponse.data.shippingMethodModel!!.shippingMethods
 
-        //if(!backNavigation)
         addMethodRadioGroup(shippingMethods)
 
 
@@ -92,7 +91,7 @@ class ShippingMethodFragment : BaseCheckoutNavigationFragment() {
         else
             radioButton.isChecked = false
 
-        description.text = Html.fromHtml(method.description)
+        method.description?.let {  description.text = Html.fromHtml(it) }
 
         radioGridGroup.addView(eachCheckLayout)
 

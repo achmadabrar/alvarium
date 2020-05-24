@@ -32,5 +32,9 @@ object CheckoutConstants
     @JvmStatic val ConfirmOrder = 6
     @JvmStatic val RedirectToGateway = 7
     @JvmStatic val Completed = 8
+
+
+    var PAYMENT_INFO_RESULT = 1
+    var NEXT_STEP_AFTER_PAYMENT_INFO = "NEXT_STEP_AFTER_PAYMENT_INFO"
 }
 
