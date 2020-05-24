@@ -11,10 +11,9 @@ import com.bs.ecommerce.main.model.data.AppLandingData
 import com.bs.ecommerce.main.model.data.AppLandingSettingResponse
 import com.bs.ecommerce.main.model.data.Category
 import com.bs.ecommerce.main.model.data.CategoryTreeResponse
+import com.bs.ecommerce.more.model.TopicModel
 import com.bs.ecommerce.networking.common.BaseResponse
-import com.bs.ecommerce.product.model.data.CategoryModel
-import com.bs.ecommerce.product.model.data.Manufacturer
-import com.bs.ecommerce.product.model.data.ProductSummary
+import com.bs.ecommerce.product.model.data.*
 import com.bs.ecommerce.utils.OneTimeEvent
 import com.bs.ecommerce.utils.showLog
 
@@ -35,6 +34,30 @@ class MainViewModel : CheckoutViewModel() {
     var testUrlSuccessLD = MutableLiveData<Boolean>()
 
     private val logTag: String = "nop_" + this::class.java.simpleName
+
+
+    var topicLD = MutableLiveData<TopicData?>()
+
+    fun fetchTopic(sysName: String, model: TopicModel) {
+
+        isLoadingLD.value = true
+
+        model.getTopicBySystemName(sysName, object: RequestCompleteListener<TopicResponse> {
+
+            override fun onRequestSuccess(data: TopicResponse) {
+                isLoadingLD.value = false
+
+                if(data.data != null)
+                    topicLD.value = data.data
+            }
+
+            override fun onRequestFailed(errorMessage: String) {
+                isLoadingLD.value = false
+                toast(errorMessage)
+            }
+
+        })
+    }
 
 
     fun getFeaturedProducts(model: HomePageModel) {

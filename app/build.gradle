@@ -3,6 +3,16 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 
 android {
+
+    signingConfigs {
+        nopstation {
+            keyAlias 'nopStation'
+            keyPassword '159753246'
+            storeFile file('/Users/rarahat/Desktop/BS_Android_Projects/nopstation-kotlin/app/playstore_info/nopstation/keystore.jks')
+            storePassword '159753246'
+        }
+    }
+
     compileSdkVersion 29
     buildToolsVersion "29.0.2"
     defaultConfig {
@@ -24,6 +34,27 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    bundle {
+        language {
+            // Specifies that the app bundle should not support
+            // configuration APKs for language resources. These
+            // resources are instead packaged with each base and
+            // dynamic feature APK.
+            enableSplit = false
+        }
+    }
+
+    flavorDimensions "app"
+    productFlavors {
+        flavorNopStation {
+            applicationId "com.bs.ecommerce.nopstation"
+            versionCode 2000008
+            versionName "2.0.8"
+            dimension "app"
+            signingConfig signingConfigs.nopstation
         }
     }
 
@@ -115,31 +146,30 @@ dependencies {
     //barcode
     implementation 'com.journeyapps:zxing-android-embedded:4.0.0'
 
+    implementation 'com.afollestad.material-dialogs:core:0.9.6.0'
+
+    //firebase
+    implementation 'com.google.firebase:firebase-core:17.4.2'
+    implementation 'com.google.firebase:firebase-messaging:20.2.0'
+
 
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
 }
 
+apply plugin: 'com.google.gms.google-services'
 
 def getNstKey() {
     Properties properties = new Properties()
     properties.load(project.rootProject.file('local.properties').newDataInputStream())
-
     String nst = properties.getProperty("NST_KEY")
-/*    if(nst == null)
-        throw new GradleException("Add 'nst' field at local.properties file.")*/
-
     return nst
 }
 def getSecret() {
     Properties properties = new Properties()
     properties.load(project.rootProject.file('local.properties').newDataInputStream())
-
     String secret = properties.getProperty("NST_SECRET")
-    /*if(secret == null)
-        throw new GradleException("Add 'secret' field at local.properties file.")
-*/
     return secret
 }
 
@@ -147,10 +177,6 @@ def getSecret() {
 def getBaseUrl() {
     Properties properties = new Properties()
     properties.load(project.rootProject.file('local.properties').newDataInputStream())
-
     String baseUrl = properties.getProperty("base_url")
-    /*if(baseUrl==null)
-        throw new GradleException("Add 'base_url' field at local.properties file.")*/
-
     return baseUrl
 }

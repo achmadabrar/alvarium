@@ -7,6 +7,7 @@ import androidx.multidex.MultiDexApplication
 import com.bs.ecommerce.checkout.model.data.CheckoutSaveResponse
 import com.facebook.FacebookSdk
 import com.facebook.appevents.AppEventsLogger
+import com.google.firebase.FirebaseApp
 import com.pixplicity.easyprefs.library.Prefs
 
 
@@ -21,6 +22,8 @@ class MyApplication : MultiDexApplication()
 
     override fun onCreate() {
         super.onCreate()
+
+        FirebaseApp.initializeApp(this)
 
         FacebookSdk.sdkInitialize(applicationContext)
         AppEventsLogger.activateApp(this)

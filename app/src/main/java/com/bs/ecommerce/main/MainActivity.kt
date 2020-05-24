@@ -17,23 +17,24 @@ import com.bs.ecommerce.auth.customerInfo.CustomerInfoFragment
 import com.bs.ecommerce.base.BaseActivity
 import com.bs.ecommerce.base.BaseFragment
 import com.bs.ecommerce.checkout.*
+import com.bs.ecommerce.fcm.MessagingService
 import com.bs.ecommerce.home.category.CategoryFragment
 import com.bs.ecommerce.home.homepage.HomeFragment
 import com.bs.ecommerce.main.model.MainModelImpl
 import com.bs.ecommerce.more.OptionsFragment
 import com.bs.ecommerce.more.UserAccountFragment
 import com.bs.ecommerce.networking.NetworkUtil
+import com.bs.ecommerce.product.ProductDetailFragment
+import com.bs.ecommerce.product.ProductListFragment
 import com.bs.ecommerce.product.SearchFragment
-import com.bs.ecommerce.utils.createIfNotInBackStack
-import com.bs.ecommerce.utils.replaceFragmentSafely
-import com.bs.ecommerce.utils.showLog
-import com.bs.ecommerce.utils.toast
+import com.bs.ecommerce.utils.*
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.firebase.messaging.FirebaseMessaging
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_checkout_step.*
 
 
-class MainActivity : BaseActivity()
+class MainActivity : PrivacyPolicyDialogActivity()
 {
 
     lateinit var toolbarTop : androidx.appcompat.widget.Toolbar
@@ -60,6 +61,10 @@ class MainActivity : BaseActivity()
 
         mainViewModel = ViewModelProvider(this).get(MainViewModel::class.java)
 
+        setFirebaseTopic()
+
+        setNotificationBundleToDynamicLink()
+
         setLiveDataListeners()
 
         initNavigationDrawer()
@@ -72,6 +77,39 @@ class MainActivity : BaseActivity()
 
         setBackStackChangeListener()
     }
+
+    private fun setFirebaseTopic()
+    {
+        if (!prefObject.getPrefsBoolValue(PrefSingleton.FIRST_RUN))
+        {
+            FirebaseMessaging.getInstance().subscribeToTopic("/topics/all")
+            FirebaseMessaging.getInstance().subscribeToTopic("/topics/android")
+            prefObject.setPrefs(PrefSingleton.FIRST_RUN, true)
+        }
+    }
+    private fun setNotificationBundleToDynamicLink()
+    {
+        val bundle = intent.extras
+
+        if (bundle != null)
+        {
+            val itemType = Integer.valueOf(bundle.getString(MessagingService.ITEM_TYPE, "0"))
+            val itemId = Integer.valueOf(bundle.getString(MessagingService.ITEM_ID, "0"))
+
+            if (itemType == MessagingService.ITEM_PRODUCT)
+            {
+                gotoFragment(ProductDetailFragment.newInstance(itemId.toLong(), ""))
+            }
+            else if (itemType == MessagingService.ITEM_CATEGORY)
+            {
+                gotoFragment(ProductListFragment.newInstance("", itemId, ProductListFragment.GetBy.CATEGORY))
+            }
+        }
+    }
+
+    private fun gotoFragment(fragment: androidx.fragment.app.Fragment)
+
+            = supportFragmentManager.beginTransaction().replace(R.id.container, fragment).addToBackStack(null).commit()
 
     private fun setLiveDataListeners()
     {
