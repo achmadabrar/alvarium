@@ -15,13 +15,20 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <androidx.recyclerview.widget.RecyclerView
+<!--        <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/expandList"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            tools:listitem="@layout/item_category"
-            tools:itemCount="10"
-            android:nestedScrollingEnabled="false"/>
+            android:nestedScrollingEnabled="false"/>-->
+
+        <com.bs.ecommerce.customViews.CustomExpandableListView
+            android:id="@+id/expandList"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:nestedScrollingEnabled="false"
+            android:divider="?attr/fragmentBackGroundColor"
+            android:childDivider="?attr/fragmentBackGroundColor"/>
+
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
 </RelativeLayout>

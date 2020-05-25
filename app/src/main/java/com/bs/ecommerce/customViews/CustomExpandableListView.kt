@@ -4,14 +4,13 @@ import android.content.Context
 import android.util.AttributeSet
 import android.view.View
 import android.widget.ExpandableListView
-import android.widget.ListView
 
 /**
  * Created by BS-182 on 8/8/2017.
  */
 
 
-class CustomList : ExpandableListView
+class CustomExpandableListView : ExpandableListView
 {
 
     constructor(context: Context) : super(context) {}

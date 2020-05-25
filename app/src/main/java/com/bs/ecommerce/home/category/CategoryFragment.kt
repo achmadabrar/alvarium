@@ -2,6 +2,7 @@ package com.bs.ecommerce.home.category
 
 import android.os.Bundle
 import android.view.View
+import android.widget.ExpandableListView
 import android.widget.RelativeLayout
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -73,8 +74,20 @@ class CategoryFragment : ToolbarLogoBaseFragment()
 
     private fun showList(categoryList: List<Category>)
     {
-        expandList?.layoutManager = LinearLayoutManager(activity)
-        expandList?.adapter = CategoryListAdapter(activity!!, categoryList, this)
+        /*expandList?.layoutManager = LinearLayoutManager(activity)
+        expandList?.adapter = CategoryListAdapter(activity!!, categoryList, this)*/
+
+        expandList?.setAdapter(CategoryListAdapterExpandable(requireActivity(), categoryList, this))
+        expandList?.setGroupIndicator(null)
+
+        // code for collapse all group except selected one
+        var lastExpandedPosition = -1
+        expandList?.setOnGroupExpandListener { groupPosition ->
+            if (lastExpandedPosition != -1 && groupPosition != lastExpandedPosition) {
+                expandList.collapseGroup(lastExpandedPosition)
+            }
+            lastExpandedPosition = groupPosition
+        }
     }
 
 

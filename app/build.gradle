@@ -51,8 +51,8 @@ android {
     productFlavors {
         flavorNopStation {
             applicationId "com.bs.ecommerce.nopstation"
-            versionCode 2000008
-            versionName "2.0.8"
+            versionCode 1000000
+            versionName "1.0.0"
             dimension "app"
             signingConfig signingConfigs.nopstation
         }

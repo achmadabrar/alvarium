@@ -17,6 +17,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.bs.ecommerce.R
 import com.bs.ecommerce.auth.customerInfo.CustomerInfoFragment
 import com.bs.ecommerce.base.BaseFragment
+import com.bs.ecommerce.cart.CartFragment
 import com.bs.ecommerce.checkout.*
 import com.bs.ecommerce.fcm.MessagingService
 import com.bs.ecommerce.home.category.CategoryFragment
@@ -110,7 +111,7 @@ class MainActivity : PrivacyPolicyDialogActivity(), View.OnClickListener
 
     private fun gotoFragment(fragment: androidx.fragment.app.Fragment)
 
-            = supportFragmentManager.beginTransaction().replace(R.id.container, fragment).addToBackStack(null).commit()
+            = supportFragmentManager.beginTransaction().replace(R.id.layoutFrame, fragment).addToBackStack(null).commit()
 
     private fun setLiveDataListeners()
     {
@@ -292,35 +293,21 @@ class MainActivity : PrivacyPolicyDialogActivity(), View.OnClickListener
 
     }
 
-    private fun backPressedLogic()
+    override fun onBackPressed()
     {
         when {
+            supportFragmentManager.findFragmentById(R.id.checkoutFragmentHolder) is BaseCheckoutNavigationFragment ->
+                supportFragmentManager.beginTransaction()
+                    .replace(R.id.layoutFrame, CartFragment())
+                    .addToBackStack(CartFragment::class.java.simpleName)
+                    .commit()
+
             drawerLayout.isDrawerOpen(GravityCompat.START) -> drawerLayout.closeDrawer(GravityCompat.START)
 
             supportFragmentManager.backStackEntryCount > 0 -> super.onBackPressed()
 
             else -> handleAppExit()
         }
-    }
-    override fun onBackPressed()
-    {
-
-        if (supportFragmentManager.findFragmentById(R.id.checkoutFragmentHolder) is BaseCheckoutNavigationFragment)
-        {
-            /*"currentFragment".showLog(it.toString())
-            when(it)
-            {
-                is PaymentMethodFragment -> {
-                    goBackTo(ShippingMethodFragment())
-                    checkoutBottomNav?.menu?.getItem(CheckoutConstants.SHIPPING_TAB)?.isChecked = true
-                }
-            }*/
-        }
-        else
-            backPressedLogic()
-
-
-
     }
 
     private fun handleAppExit() {

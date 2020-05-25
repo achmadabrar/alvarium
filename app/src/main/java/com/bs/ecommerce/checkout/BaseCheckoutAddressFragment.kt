@@ -56,15 +56,6 @@ open class BaseCheckoutAddressFragment : BaseCheckoutNavigationFragment()
 
                 stateSpinnerLayout?.visibility = View.VISIBLE
             })
-
-            isLoadingLD.observe(viewLifecycleOwner, Observer { isShowLoader ->
-
-                if (isShowLoader)
-                    showLoading()
-                else
-                    hideLoading()
-            })
-
         }
     }
 
