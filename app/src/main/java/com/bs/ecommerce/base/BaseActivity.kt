@@ -17,6 +17,7 @@ import com.bs.ecommerce.cart.CartFragment
 import com.bs.ecommerce.main.model.data.AppLandingData
 import com.bs.ecommerce.networking.NetworkConstants
 import com.bs.ecommerce.utils.*
+import com.ice.restring.Restring
 import java.util.*
 
 
@@ -198,10 +199,12 @@ abstract class BaseActivity : AppCompatActivity()
     override fun attachBaseContext(newBase: Context)
     {
         super.attachBaseContext(updateBaseContextLocale(newBase))
+//        super.attachBaseContext(Restring.wrapContext(newBase))
     }
 
     private fun updateBaseContextLocale(context : Context) : Context
     {
+        var retContext: Context
 
         var preferredLanguage = prefObject.getPrefs(PrefSingleton.CURRENT_LANGUAGE)
 
@@ -224,12 +227,15 @@ abstract class BaseActivity : AppCompatActivity()
             Locale.setDefault(preferredLocale)
         }
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
-        {
-            return updateResourcesLocale(context, locale)
+        retContext = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            updateResourcesLocale(context, locale)
+        } else {
+            updateResourcesLocaleLegacy(context, locale)
         }
 
-        return updateResourcesLocaleLegacy(context, locale)
+        retContext = Restring.wrapContext(retContext)
+
+        return retContext
     }
 
 

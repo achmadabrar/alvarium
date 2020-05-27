@@ -33,6 +33,13 @@
     <string name="title_reviews">Product Review</string>
     <string name="title_reward_points">Reward Points</string>
 
+    <!-- Bottom Navigation Menu  -->
+    <string name="home_nav_home">Home</string>
+    <string name="home_nav_categories">Categories</string>
+    <string name="home_nav_search">Search</string>
+    <string name="home_nav_more">More</string>
+    <string name="home_nav_account">Account</string>
+
     <!-- Barcode Fragment  -->
     <string name="place_barcode_in_camera">Put barcode here to Scan instantly</string>
     <string name="invalid_barcode">Invalid Product code </string>
