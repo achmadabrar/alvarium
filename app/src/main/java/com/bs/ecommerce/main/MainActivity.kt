@@ -130,6 +130,7 @@ class MainActivity : PrivacyPolicyDialogActivity(), View.OnClickListener
     private fun setBackStackChangeListener() {
         supportFragmentManager.addOnBackStackChangedListener {
 
+            // highlight selected bottom navigation item
             val topFragment = supportFragmentManager.findFragmentById(R.id.layoutFrame)
             var topFragmentName = ""
 
@@ -148,6 +149,16 @@ class MainActivity : PrivacyPolicyDialogActivity(), View.OnClickListener
 
             if(bottomNavPosition >= 0)
                 navigation?.menu?.getItem(bottomNavPosition)?.isChecked = true
+
+            // set back button
+            if (supportFragmentManager.backStackEntryCount > 0) {
+                setArrowIconInDrawer()
+            } else {
+                toggle.isDrawerIndicatorEnabled = true
+                setAnimationOnDrawerIcon()
+            }
+
+            hideKeyboard()
         }
     }
 
@@ -192,20 +203,7 @@ class MainActivity : PrivacyPolicyDialogActivity(), View.OnClickListener
         toggle.syncState()
         toolbarTop.setNavigationOnClickListener(this)
 
-        supportFragmentManager.addOnBackStackChangedListener{
-
-            if (supportFragmentManager.backStackEntryCount > 0)
-                setArrowIconInDrawer()
-            else
-            {
-                toggle.isDrawerIndicatorEnabled = true
-                setAnimationOnDrawerIcon()
-            }
-
-            hideKeyboard()
-        }
-
-        val navFragment = CategoryFragment()
+        val navFragment = CategoryFragment.newInstance(isNavDrawer = true)
         supportFragmentManager.beginTransaction()
             .add(R.id.layoutDrawer, navFragment)
             .commit()

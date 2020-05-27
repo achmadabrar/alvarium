@@ -54,6 +54,14 @@ class CategoryFragment : ToolbarLogoBaseFragment()
 
     }
 
+    override fun onResume() {
+        super.onResume()
+
+        arguments?.getBoolean(IS_NAV_DRAWER)?.let {
+            if(it) hideTopLogo()
+        }
+    }
+
     private fun setLiveDataListeners() {
 
         mainViewModel.navDrawerCategoriesLD.observe(viewLifecycleOwner, Observer { categoryList ->
@@ -91,4 +99,19 @@ class CategoryFragment : ToolbarLogoBaseFragment()
     }
 
 
+    companion object {
+        @JvmStatic
+        private val IS_NAV_DRAWER = "isNavDrawer"
+
+        @JvmStatic
+        fun newInstance(isNavDrawer: Boolean): CategoryFragment {
+            val fragment = CategoryFragment()
+
+            fragment.arguments = Bundle().apply {
+                putBoolean(IS_NAV_DRAWER, isNavDrawer)
+            }
+
+            return fragment
+        }
+    }
 }
