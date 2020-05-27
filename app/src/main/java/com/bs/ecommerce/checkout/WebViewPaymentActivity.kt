@@ -1,6 +1,5 @@
 package com.bs.ecommerce.checkout
 
-import android.R.attr.data
 import android.content.Intent
 import android.graphics.Bitmap
 import android.os.Bundle
@@ -9,7 +8,6 @@ import android.webkit.WebViewClient
 import androidx.lifecycle.ViewModelProvider
 import com.bs.ecommerce.R
 import com.bs.ecommerce.base.BaseActivity
-import com.bs.ecommerce.main.MainActivity
 import com.bs.ecommerce.main.MainViewModel
 import com.bs.ecommerce.networking.NetworkUtil
 import com.bs.ecommerce.utils.showLog
@@ -17,9 +15,11 @@ import kotlinx.android.synthetic.main.activity_payment_toolbar.*
 import kotlinx.android.synthetic.main.fragment_payment_info.*
 
 
-class PaymentInfoActivity : BaseActivity()
+class WebViewPaymentActivity : BaseActivity()
 {
-    override fun getLayoutId(): Int = R.layout.activity_payment_info
+    var nextStep = 0
+
+    override fun getLayoutId(): Int = R.layout.activity_webview_payment
 
     override fun createViewModel(): MainViewModel = ViewModelProvider(this).get(MainViewModel::class.java)
 
@@ -27,10 +27,22 @@ class PaymentInfoActivity : BaseActivity()
     {
         super.onCreate(savedInstanceState)
 
-        setWebView()
 
         intent?.extras?.let {
-            paymentInfoTitle?.text = it.getString(CheckoutConstants.PAYMENT_INFO_NAME)
+
+            when(it.getInt(CheckoutConstants.CHECKOUT_STEP))
+            {
+                CheckoutConstants.PaymentInfo ->
+                {
+                    toolbarTitle?.text = it.getString(CheckoutConstants.PAYMENT_INFO_NAME)
+                    setWebView(CheckoutConstants.PaymentInfoUrl)
+                }
+                CheckoutConstants.RedirectToGateway ->
+                {
+                    toolbarTitle?.text = "Online Payment"
+                    setWebView(CheckoutConstants.RedirectUrl)
+                }
+            }
         }
 
 
@@ -48,15 +60,28 @@ class PaymentInfoActivity : BaseActivity()
 
     override fun onBackPressed() {
 
-        val intent = Intent()
-        intent.putExtra(CheckoutConstants.NEXT_STEP_AFTER_PAYMENT_INFO, CheckoutConstants.ConfirmOrder)
-        setResult(RESULT_OK, intent)
 
-        super.onBackPressed()
+        if(nextStep == CheckoutConstants.CartPage)
+            startActivity(Intent(this, ResultActivity::class.java)
+                .putExtra(CheckoutConstants.CHECKOUT_STEP, CheckoutConstants.Completed)
+                .putExtra(CheckoutConstants.ORDER_ID, "10")
+            )
+
+        else
+        {
+            val intent = Intent()
+            intent.putExtra(CheckoutConstants.NEXT_STEP_AFTER_PAYMENT_INFO, nextStep)
+            setResult(RESULT_OK, intent)
+
+            super.onBackPressed()
+        }
+
+
+
 
     }
 
-    private fun setWebView()
+    private fun setWebView(webViewUrl: String)
     {
         paymentInfoWebView?.settings?.javaScriptEnabled = true
         paymentInfoWebView?.settings?.domStorageEnabled = true
@@ -69,7 +94,7 @@ class PaymentInfoActivity : BaseActivity()
             override fun onPageStarted(view: WebView, url: String, favicon: Bitmap?)
             {
                 super.onPageStarted(view, url, favicon)
-                "WebView".showLog("onPageStarted\tyour current url when webpage loading..$url")
+                "WebView".showLog("onPageStarted\t $url")
 
                 /*if(url.contains(NetworkConstants.SITE_URL) && needToCheckUrl)
                 {
@@ -79,7 +104,7 @@ class PaymentInfoActivity : BaseActivity()
 
             override fun onPageFinished(view: WebView, url: String)
             {
-                "WebView".showLog("onPageFinished\tyour current url when webpage loading.. finish$url")
+                "WebView".showLog("onPageFinished\t $url")
 
                 /*if(url.contains(NetworkConstants.SITE_URL) && !needToCheckUrl)
                 {
@@ -91,11 +116,21 @@ class PaymentInfoActivity : BaseActivity()
 
             override fun shouldOverrideUrlLoading(view: WebView, url: String): Boolean
             {
-                view.loadUrl(CheckoutConstants.PaymentInfoUrl, NetworkUtil.headers)
+
+                "WebView".showLog("shouldOverrideUrlLoading $url")
+
+                if(url.contains("/step/"))
+                {
+                    nextStep = url[url.lastIndex].toString().toInt()
+                    "webview_step".showLog(nextStep.toString())
+                    onBackPressed()
+                }
+                view.loadUrl(webViewUrl, NetworkUtil.headers)
+                //view.postUrl(CheckoutConstants.PaymentInfoUrl, NetworkUtil.headers.entries.toString().toByteArray(charset = Charsets.UTF_8))
                 return false
             }
         }
-        paymentInfoWebView?.loadUrl(CheckoutConstants.PaymentInfoUrl, NetworkUtil.headers)
+        paymentInfoWebView?.loadUrl(webViewUrl, NetworkUtil.headers)
     }
 
 }

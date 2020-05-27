@@ -40,8 +40,9 @@
         <activity android:name="com.facebook.FacebookActivity"
             android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"
             android:label="@string/app_name" />
-        <activity android:name=".checkout.PaymentInfoActivity"
+        <activity android:name=".checkout.WebViewPaymentActivity"
             android:parentActivityName=".main.MainActivity"/>
+        <activity android:name=".checkout.ResultActivity" />
 
         <service android:name=".fcm.MessagingService">
             <intent-filter>

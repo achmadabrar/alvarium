@@ -83,7 +83,10 @@ class CartFragment : BaseFragment() {
             {
 
                 toast(getString(R.string.cart_empty))
-                requireActivity().supportFragmentManager.popBackStackImmediate()
+                try {
+                    requireActivity().supportFragmentManager.popBackStackImmediate()
+                } catch (e: IllegalArgumentException) {
+                }
 
             }
 

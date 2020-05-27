@@ -225,4 +225,23 @@ class CheckoutModelImpl(private val context: Context): CheckoutModel
             }
         })
     }
+    override fun submitConfirmOrder(callback: RequestCompleteListener<CheckoutSaveResponse>)
+    {
+
+        RetroClient.api.submitConfirmOrderAPI().enqueue(object : Callback<CheckoutSaveResponse>
+        {
+            override fun onResponse(call: Call<CheckoutSaveResponse>, response: Response<CheckoutSaveResponse>)
+            {
+                if (response.body() != null)
+                    callback.onRequestSuccess(response.body()!!)
+                else
+                    callback.onRequestFailed(response.message())
+            }
+
+
+            override fun onFailure(call: Call<CheckoutSaveResponse>, t: Throwable) {
+                callback.onRequestFailed(t.localizedMessage!!)
+            }
+        })
+    }
 }

@@ -43,6 +43,7 @@
 
             <include
                 android:id="@+id/selectedAttributesCard"
+                android:visibility="gone"
                 layout="@layout/confirm_order_card"/>
 
 

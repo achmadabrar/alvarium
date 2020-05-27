@@ -53,8 +53,12 @@ class ConfirmOrderFragment : BaseCheckoutNavigationFragment() {
         }
 
         setLiveDataListeners()
+
+        checkoutButton?.setOnClickListener {   (viewModel as CheckoutViewModel).submitConfirmOrderVM(model) }
     }
-    override fun setLiveDataListeners() {
+    override fun setLiveDataListeners()
+    {
+        super.setLiveDataListeners()
 
         (viewModel as CheckoutViewModel).getConfirmOrderLD.observe(requireActivity(), Observer { getOrderData ->
 
@@ -66,10 +70,15 @@ class ConfirmOrderFragment : BaseCheckoutNavigationFragment() {
 
             populateOrderTotal(getOrderData.data.orderTotals)
 
-            selectedAttributesCard.tvCardTitle.text = "Selected Attributes"
-            selectedAttributesCard.tvCardDetails.visibility = View.GONE
-            selectedAttributesCard.tvCardDetails2.text = getOrderData.data.selectedCheckoutAttributes
-            selectedAttributesCard.ivCardThumb.visibility = View.GONE
+
+            if(getOrderData.data.selectedCheckoutAttributes.isNotEmpty())
+            {
+                selectedAttributesCard.visibility = View.VISIBLE
+                selectedAttributesCard.tvCardTitle.text = "Selected Attributes"
+                selectedAttributesCard.tvCardDetails.visibility = View.GONE
+                selectedAttributesCard.tvCardDetails2.text = getOrderData.data.selectedCheckoutAttributes
+                selectedAttributesCard.ivCardThumb.visibility = View.GONE
+            }
 
         })
 

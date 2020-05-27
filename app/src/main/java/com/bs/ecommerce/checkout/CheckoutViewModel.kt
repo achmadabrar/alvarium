@@ -245,4 +245,19 @@ open class CheckoutViewModel : BaseViewModel()
         })
     }
 
+    fun submitConfirmOrderVM(model: CheckoutModel)
+    {
+        isLoadingLD.postValue(true)
+
+        model.submitConfirmOrder(object : RequestCompleteListener<CheckoutSaveResponse>
+        {
+            override fun onRequestSuccess(data: CheckoutSaveResponse) = saveCheckoutData(data)
+
+            override fun onRequestFailed(errorMessage: String)
+            {
+                isLoadingLD.postValue(false)
+            }
+        })
+    }
+
 }
