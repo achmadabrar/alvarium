@@ -54,13 +54,13 @@ class CategoryFragment : ToolbarLogoBaseFragment()
 
     }
 
-    override fun onResume() {
+    /*override fun onResume() {
         super.onResume()
 
         arguments?.getBoolean(IS_NAV_DRAWER)?.let {
             if(it) hideTopLogo()
         }
-    }
+    }*/
 
     private fun setLiveDataListeners() {
 
