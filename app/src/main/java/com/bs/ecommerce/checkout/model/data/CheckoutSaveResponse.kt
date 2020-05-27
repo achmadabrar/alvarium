@@ -31,7 +31,7 @@ data class ConfirmModel(
 
 data class PaymentInfoModel(
     @SerializedName("DisplayOrderTotals") var displayOrderTotals: Boolean = false,
-    @SerializedName("PaymentViewComponentName") var paymentViewComponentName: Any = Any()
+    @SerializedName("PaymentViewComponentName") var paymentViewComponentName: String = String()
 )
 
 data class PaymentMethodModel(

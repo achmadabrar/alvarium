@@ -1,6 +1,7 @@
 package com.bs.ecommerce.checkout
 
 import android.app.Activity
+import android.app.AlertDialog
 import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
@@ -94,10 +95,19 @@ abstract class BaseCheckoutNavigationFragment : ToolbarLogoBaseFragment()
             CheckoutConstants.PaymentInfo -> {
 
                 //replaceFragmentWithoutSavingState(PaymentInfoFragment())
-                startActivityForResult(Intent(requireActivity(), PaymentInfoActivity::class.java), CheckoutConstants.PAYMENT_INFO_RESULT)
-            }
 
+                saveResponse?.data?.paymentInfoModel?.let {
+
+                    startActivityForResult(
+                        Intent(requireActivity(), PaymentInfoActivity::class.java)
+                            .putExtra(CheckoutConstants.PAYMENT_INFO_NAME, it.paymentViewComponentName),
+                        CheckoutConstants.PAYMENT_INFO_RESULT)
+                }
+
+            }
             CheckoutConstants.ConfirmOrder -> replaceFragmentWithoutSavingState(ConfirmOrderFragment())
+
+            CheckoutConstants.Completed -> showConfirmationDialogBox(10)
         }
     }
 
@@ -188,6 +198,20 @@ abstract class BaseCheckoutNavigationFragment : ToolbarLogoBaseFragment()
                 findFragmentByTag(CheckoutStepFragment::class.java.simpleName)
 
         if(csFragment is CheckoutStepFragment) csFragment.updateBottomNavItem(fragment)
+    }
+
+
+    private fun showConfirmationDialogBox(orderId: Long)
+    {
+        val builder = AlertDialog.Builder(activity)
+
+        builder.setMessage(getString(R.string.order_number_is) + " " + orderId)
+            .setTitle(getString(R.string.your_order_is_confirm))
+
+        builder.setNeutralButton(getString(R.string.ok)) { _, _ -> requireActivity().supportFragmentManager.popBackStack() }
+
+        val dialog = builder.create()
+        dialog.show()
     }
 
     private fun isCurrentTabShipping() : Boolean

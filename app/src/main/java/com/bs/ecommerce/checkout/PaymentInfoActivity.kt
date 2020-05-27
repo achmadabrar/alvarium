@@ -29,6 +29,12 @@ class PaymentInfoActivity : BaseActivity()
 
         setWebView()
 
+        intent?.extras?.let {
+            paymentInfoTitle?.text = it.getString(CheckoutConstants.PAYMENT_INFO_NAME)
+        }
+
+
+
         back_arrow?.setOnClickListener {
 
             if(paymentInfoWebView?.canGoBack()!!)

@@ -140,6 +140,11 @@
     <string name="invoice">Order Calculation</string>
     <string name="exit_payment_dialog_query">Are you sure you want to exit from payment?</string>
 
+    <!--Confirm Order Dialog-->
+    <string name="order_number_is">Order Number is</string>
+    <string name="your_order_is_confirm">Your Order is Confirmed</string>
+    <string name="ok">OK</string>
+
     <!-- ProductDetails Fragment -->
     <string name="quantity">Quantity</string>
     <string name="select_quantity">Select Quantity</string>
