@@ -1,18 +1,21 @@
 package com.bs.ecommerce.home.category
 
 import android.content.Context
+import android.graphics.Typeface
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.BaseExpandableListAdapter
 import android.widget.TextView
 import androidx.appcompat.widget.AppCompatImageView
+import androidx.core.content.res.ResourcesCompat
 import com.bs.ecommerce.R
 import com.bs.ecommerce.main.MainActivity
 import com.bs.ecommerce.main.model.data.SecondSubcategory
 import com.bs.ecommerce.main.model.data.Subcategory
 import com.bs.ecommerce.product.ProductListFragment
 import com.bs.ecommerce.utils.loadImg
+
 
 /**
  * Created by bs206 on 3/16/18.
@@ -72,6 +75,12 @@ class SubCategoryListAdapter(private val context: Context, private val categorie
         }
         else
         {
+
+            val typeface = ResourcesCompat.getFont(context, R.font.montserrat_regular)
+            text.setTypeface(typeface, Typeface.BOLD)
+
+            logo.visibility = View.GONE
+
             expandableIcon.visibility = View.VISIBLE
             if (isExpanded)
                 expandableIcon.setImageResource(R.drawable.ic_list_collapse)

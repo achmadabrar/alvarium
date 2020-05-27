@@ -50,7 +50,7 @@ android {
     flavorDimensions "app"
     productFlavors {
         flavorNopStation {
-            applicationId "com.bs.ecommerce.nopstation"
+            applicationId "com.bs.ecommerce.nopstationv2"
             versionCode 1000000
             versionName "1.0.0"
             dimension "app"
