@@ -44,6 +44,7 @@ class HomeFragment : ToolbarLogoBaseFragment() {
 
     private lateinit var model: HomePageModel
     private lateinit var cartModel: CartModel
+    private var observeLiveDataChange = true
 
     private lateinit var productClickListener: ItemClickListener<ProductSummary>
 
@@ -83,6 +84,9 @@ class HomeFragment : ToolbarLogoBaseFragment() {
                 }
 
                 initComponents()
+                observeLiveDataChange = true
+            } else {
+                observeLiveDataChange = false
             }
 
             setLiveDataListeners()
@@ -123,6 +127,8 @@ class HomeFragment : ToolbarLogoBaseFragment() {
                 swipeRefreshLayout.isRefreshing = false
 
                 (viewModel as MainViewModel).apply {
+                    observeLiveDataChange = true
+
                     getFeaturedProducts(model)
                     getCategoryListWithProducts(model)
                     getManufactures(model)
@@ -173,26 +179,26 @@ class HomeFragment : ToolbarLogoBaseFragment() {
 
         viewModel.featuredProductListLD.observe(viewLifecycleOwner,
             Observer { list ->
-                populateFeaturedProductList(list)
+                if(observeLiveDataChange) populateFeaturedProductList(list)
             })
 
         viewModel.manufacturerListLD.observe(viewLifecycleOwner, Observer { list ->
-            populateManufacturerList(list)
+            if(observeLiveDataChange) populateManufacturerList(list)
         })
 
 
         viewModel.featuredCategoryLD.observe(viewLifecycleOwner, Observer { list ->
-            populateFeaturedCategoryList(list)
+            if(observeLiveDataChange) populateFeaturedCategoryList(list)
         })
 
 
         viewModel.bestSellingProductLD.observe(viewLifecycleOwner, Observer { list ->
-            populateBestSellingProductList(list)
+            if(observeLiveDataChange) populateBestSellingProductList(list)
         })
 
 
         viewModel.imageBannerLD.observe(viewLifecycleOwner, Observer { sliderData ->
-            populateBanner(sliderData)
+            if(observeLiveDataChange) populateBanner(sliderData)
         })
 
 

@@ -41,9 +41,11 @@
         android:layout_below="@id/tvProductName"
         android:layout_marginStart="3dp"
         android:maxLines="1"
+        android:ellipsize="end"
         android:textColor="@color/red"
         android:textSize="11sp"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/ivAddToFav"
         app:layout_constraintTop_toBottomOf="@id/tvProductName"
         tools:text="@string/placeholder_price" />
 

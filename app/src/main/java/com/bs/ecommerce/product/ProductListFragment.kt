@@ -204,7 +204,7 @@ class ProductListFragment : BaseFragment() {
             initSubcategoryPopupWindow(data.subCategories)
 
             llButtonHolder.visibility =
-                if (data.subCategories.isNullOrEmpty()) View.VISIBLE else View.GONE
+                if (data.subCategories.isNullOrEmpty()) View.VISIBLE else View.INVISIBLE
 
             populateSortOptions(data.pagingFilteringContext)
         })
