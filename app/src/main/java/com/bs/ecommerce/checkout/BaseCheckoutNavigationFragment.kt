@@ -93,11 +93,31 @@ abstract class BaseCheckoutNavigationFragment : ToolbarLogoBaseFragment()
             }
             CheckoutConstants.PaymentInfo -> {
 
-                //replaceFragmentWithoutSavingState(PaymentInfoFragment())
-                startActivityForResult(Intent(requireActivity(), PaymentInfoActivity::class.java), CheckoutConstants.PAYMENT_INFO_RESULT)
+                saveResponse?.data?.paymentInfoModel?.let {
+
+                    startActivityForResult(
+                        Intent(requireActivity(), WebViewPaymentActivity::class.java)
+                            .putExtra(CheckoutConstants.CHECKOUT_STEP, CheckoutConstants.PaymentInfo)
+                            .putExtra(CheckoutConstants.PAYMENT_INFO_NAME, it.paymentViewComponentName),
+                        CheckoutConstants.PAYMENT_INFO_RESULT)
+                }
+
             }
 
+            CheckoutConstants.RedirectToGateway ->
+                startActivity(Intent(requireActivity(), WebViewPaymentActivity::class.java)
+                    .putExtra(CheckoutConstants.CHECKOUT_STEP, CheckoutConstants.RedirectToGateway)
+                )
+
             CheckoutConstants.ConfirmOrder -> replaceFragmentWithoutSavingState(ConfirmOrderFragment())
+
+            CheckoutConstants.Completed ->
+                startActivity(Intent(requireActivity(), ResultActivity::class.java)
+                        .putExtra(CheckoutConstants.CHECKOUT_STEP, CheckoutConstants.Completed)
+                        .putExtra(CheckoutConstants.ORDER_ID, "10")
+                )
+
+
         }
     }
 

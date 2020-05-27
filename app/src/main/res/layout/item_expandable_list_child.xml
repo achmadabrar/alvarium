@@ -2,15 +2,13 @@
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="32dp"
+    android:layout_height="24dp"
     android:background="?attr/fragmentBackGroundColor"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_centerVertical="true"
     android:orientation="horizontal"
-    android:paddingBottom="3dp"
     android:paddingEnd="15dp"
-    android:paddingStart="46dp"
-    android:paddingTop="3dp">
+    android:paddingStart="46dp">
 
     <TextView
         android:id="@+id/textView_name"

@@ -6,13 +6,11 @@ import android.widget.RelativeLayout
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.bs.ecommerce.R
-import com.bs.ecommerce.base.BaseFragment
 import com.bs.ecommerce.base.BaseViewModel
 import com.bs.ecommerce.base.ToolbarLogoBaseFragment
 import com.bs.ecommerce.checkout.CheckoutStepFragment
 import com.bs.ecommerce.more.settings.SettingsFragment
 import com.bs.ecommerce.more.viewmodel.OptionViewModel
-import com.bs.ecommerce.product.ProductDetailFragment
 import com.bs.ecommerce.utils.replaceFragmentSafely
 import kotlinx.android.synthetic.main.fragment_options.*
 import kotlinx.android.synthetic.main.options_layout.view.*
@@ -72,6 +70,10 @@ class OptionsFragment : ToolbarLogoBaseFragment() {
 
                         R.string.title_checkout ->
                             replaceFragmentSafely(CheckoutStepFragment())
+/*                        startActivityForResult(
+                            Intent(requireActivity(), PaymentInfoActivity::class.java)
+                                .putExtra(CheckoutConstants.PAYMENT_INFO_NAME, "Test"),
+                            CheckoutConstants.PAYMENT_INFO_RESULT)*/
 
                         R.string.placeholder ->
                             replaceFragmentSafely(RewardPointFragment())
