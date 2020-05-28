@@ -43,7 +43,7 @@ data class PaymentMethodModel(
     @SerializedName("UseRewardPoints") var useRewardPoints: Boolean = false
 )
 data class PaymentMethod(
-    @SerializedName("Description") var description: String = "",
+    @SerializedName("Description") var description: String? = "",
     @SerializedName("Fee") var fee: Any = Any(),
     @SerializedName("LogoUrl") var logoUrl: String = "",
     @SerializedName("Name") var name: String = "",
@@ -84,7 +84,7 @@ data class ShippingMethodModel(
 
 
 data class ShippingMethod(
-    @SerializedName("Description") var description: String = "",
+    @SerializedName("Description") var description: String? = "",
     @SerializedName("Fee") var fee: String = "",
     @SerializedName("Name") var name: String = "",
     @SerializedName("Selected") var selected: Boolean = false,

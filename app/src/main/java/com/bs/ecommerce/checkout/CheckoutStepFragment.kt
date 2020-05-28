@@ -64,36 +64,40 @@ class CheckoutStepFragment : ToolbarLogoBaseFragment() {
             when (item.itemId) {
                 R.id.menu_address -> {
 
-                    goToBillingAddressPage()
-
+                    if(checkoutBottomNav?.menu?.getItem(CheckoutConstants.ADDRESS_TAB)?.isChecked!!)
+                        return@setOnNavigationItemSelectedListener false
+                    else
+                        goToBillingAddressPage()
                 }
                 R.id.menu_shipping -> {
 
-                    if(MyApplication.checkoutSaveResponse?.data?.shippingMethodModel != null /*&&
-                        childFragmentManager.findFragmentById(R.id.checkoutFragmentHolder) !is ShippingMethodFragment*/
-                    )
-                        replaceFragment(ShippingMethodFragment())
-                    else
+                    if(MyApplication.checkoutSaveResponse?.data?.shippingMethodModel == null)
                     {
-                        toast("Please complete previous step")
-                         return@setOnNavigationItemSelectedListener false
+                        toast(getString(R.string.please_complete_previous_step))
+                        return@setOnNavigationItemSelectedListener false
                     }
+                    else if(checkoutBottomNav?.menu?.getItem(CheckoutConstants.SHIPPING_TAB)?.isChecked!!)
+                        return@setOnNavigationItemSelectedListener false
+                    else
+                        replaceFragment(ShippingMethodFragment())
+
 
                 }
                 R.id.menu_payment -> {
 
-                    if(MyApplication.checkoutSaveResponse?.data?.paymentMethodModel != null /*&&
-                        childFragmentManager.findFragmentById(R.id.checkoutFragmentHolder) !is PaymentMethodFragment*/)
-                        replaceFragment(PaymentMethodFragment())
-                    else
+                    if(MyApplication.checkoutSaveResponse?.data?.paymentMethodModel == null)
                     {
-                        toast("Please complete previous step")
+                        toast(getString(R.string.please_complete_previous_step))
                         return@setOnNavigationItemSelectedListener false
                     }
+                    else if(checkoutBottomNav?.menu?.getItem(CheckoutConstants.PAYMENT_TAB)?.isChecked!!)
+                        return@setOnNavigationItemSelectedListener false
+                    else
+                        replaceFragment(PaymentMethodFragment())
                 }
                 R.id.menu_confirm ->
                 {
-                    toast("Please complete previous step")
+                    toast(getString(R.string.please_complete_previous_step))
                     return@setOnNavigationItemSelectedListener false
                 }
             }

@@ -68,7 +68,7 @@ abstract class BaseCheckoutNavigationFragment : ToolbarLogoBaseFragment()
             {
                 saveResponse?.data?.shippingAddressModel?.let {
 
-                    MyApplication.checkoutSaveResponse!!.data.shippingAddressModel = it
+                    MyApplication.checkoutSaveResponse?.data?.shippingAddressModel = it
 
                     replaceFragmentWithoutSavingState(ShippingAddressFragment())
                 }
@@ -77,7 +77,7 @@ abstract class BaseCheckoutNavigationFragment : ToolbarLogoBaseFragment()
             {
                 saveResponse?.data?.shippingMethodModel?.let {
 
-                    MyApplication.checkoutSaveResponse!!.data.shippingMethodModel = it
+                    MyApplication.checkoutSaveResponse?.data?.shippingMethodModel = it
 
                     replaceFragmentWithoutSavingState(ShippingMethodFragment())
                 }
@@ -86,7 +86,7 @@ abstract class BaseCheckoutNavigationFragment : ToolbarLogoBaseFragment()
             {
                 saveResponse?.data?.paymentMethodModel?.let {
 
-                    MyApplication.checkoutSaveResponse!!.data.paymentMethodModel = it
+                    MyApplication.checkoutSaveResponse?.data?.paymentMethodModel = it
 
                     replaceFragmentWithoutSavingState(PaymentMethodFragment())
                 }
@@ -169,7 +169,7 @@ abstract class BaseCheckoutNavigationFragment : ToolbarLogoBaseFragment()
                 }
                 else
                 {
-                    toast("Please complete previous step")
+                    toast(getString(R.string.please_complete_previous_step))
                     Handler().post {   addressTabLayout?.getTabAt(CheckoutConstants.BILLING_ADDRESS_TAB)?.select()  }
                 }
             }
