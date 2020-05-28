@@ -37,20 +37,25 @@ class PaymentMethodFragment : BaseCheckoutNavigationFragment() {
     {
         super.onViewCreated(view, savedInstanceState)
 
-        with(MyApplication.checkoutSaveResponse?.data?.paymentMethodModel!!.paymentMethods)
-        {
+        MyApplication.checkoutSaveResponse?.data?.paymentMethodModel?.paymentMethods?.let {
 
-            addMethodRadioGroup(this)
+            with(it)
+            {
 
-            btnContinue?.setOnClickListener {
-                (viewModel as CheckoutViewModel).savePaymentMethodVM(paymentMethodValue, model)
+                addMethodRadioGroup(this)
 
-                for(i in this.indices)
-                {
-                    this[i].selected = this[i].name.equals(name)
+                btnContinue?.setOnClickListener {
+                    (viewModel as CheckoutViewModel).savePaymentMethodVM(paymentMethodValue, model)
+
+                    for(i in this.indices)
+                    {
+                        this[i].selected = this[i].name == name
+                    }
                 }
             }
         }
+
+
     }
 
     private fun addMethodRadioGroup(paymentMethods: List<PaymentMethod>?)

@@ -28,8 +28,6 @@ class ShippingAddressFragment : BaseCheckoutAddressFragment()
 
         btnContinue?.setOnClickListener {
 
-            backNavigation = false
-
             if(storeCheckBox?.isChecked!!)
                 saveStoreData()
 
