@@ -24,11 +24,6 @@ class ShippingAddressFragment : BaseCheckoutAddressFragment()
 
         addressTabLayout?.getTabAt(CheckoutConstants.SHIPPING_ADDRESS_TAB)?.select()
 
-/*        (viewModel as CheckoutViewModel).saveResponseLD.observe(viewLifecycleOwner, Observer { response ->
-
-            initShippingLayout(response)
-        })*/
-
         initShippingLayout(MyApplication.checkoutSaveResponse)
 
         btnContinue?.setOnClickListener {

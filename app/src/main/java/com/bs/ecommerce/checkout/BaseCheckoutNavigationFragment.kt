@@ -142,13 +142,7 @@ abstract class BaseCheckoutNavigationFragment : ToolbarLogoBaseFragment()
 
             })
 
-            isLoadingLD.observe(viewLifecycleOwner, Observer { isShowLoader ->
-
-                if (isShowLoader)
-                    showLoading()
-                else
-                    hideLoading()
-            })
+            isLoadingLD.observe(viewLifecycleOwner, Observer { isShowLoader -> showHideLoader(isShowLoader) })
         }
     }
 
@@ -164,7 +158,10 @@ abstract class BaseCheckoutNavigationFragment : ToolbarLogoBaseFragment()
 
             CheckoutConstants.SHIPPING_ADDRESS_TAB ->
             {
-                if (CheckoutStepFragment.isBillingAddressSubmitted)
+                if (CheckoutStepFragment.isBillingAddressSubmitted &&
+                    MyApplication.getBillingResponse?.data?.shippingRequired!! &&
+                    MyApplication.checkoutSaveResponse.data.shippingAddressModel != null
+                )
                 {
                     if(!isCurrentTabShipping())
                         replaceFragmentWithoutSavingState(ShippingAddressFragment())

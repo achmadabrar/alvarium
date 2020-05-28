@@ -37,7 +37,6 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@id/addressTabLayout"
-        layout="@layout/fragment_billing_address"
-        android:visibility="gone"/>
+        layout="@layout/fragment_billing_address" />
 
 </RelativeLayout>

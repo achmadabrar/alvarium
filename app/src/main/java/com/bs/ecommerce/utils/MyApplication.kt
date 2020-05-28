@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.ContextWrapper
 import androidx.multidex.MultiDex
 import androidx.multidex.MultiDexApplication
+import com.bs.ecommerce.checkout.model.data.BillingAddressResponse
 import com.bs.ecommerce.checkout.model.data.CheckoutSaveResponse
 import com.facebook.FacebookSdk
 import com.facebook.appevents.AppEventsLogger
@@ -64,10 +65,10 @@ class MyApplication : MultiDexApplication()
         fun setCartCounter(counter: Int)
         {
             myCartCounter = counter
-            //BaseActivity.updateHotCount(counter)
         }
 
         var checkoutSaveResponse : CheckoutSaveResponse = CheckoutSaveResponse()
+        var getBillingResponse : BillingAddressResponse? = BillingAddressResponse()
     }
 
 }

@@ -5,6 +5,7 @@ import android.view.View
 import androidx.lifecycle.Observer
 import com.bs.ecommerce.checkout.model.data.BillingAddressResponse
 import com.bs.ecommerce.networking.NetworkConstants
+import com.bs.ecommerce.utils.MyApplication
 import kotlinx.android.synthetic.main.fragment_base_billing_adddress.*
 import kotlinx.android.synthetic.main.fragment_billing_address.*
 
@@ -18,9 +19,7 @@ class BillingAddressFragment : BaseCheckoutAddressFragment()
 
         addressTabLayout?.getTabAt(CheckoutConstants.BILLING_ADDRESS_TAB)?.select()
 
-        layoutCheckoutAddress?.visibility = View.VISIBLE
-
-        (viewModel as CheckoutViewModel).getBillingFormVM(model)
+        newAddress = MyApplication.getBillingResponse?.data?.billingAddress?.billingNewAddress!!
 
         btnContinue?.setOnClickListener {
 
@@ -37,38 +36,26 @@ class BillingAddressFragment : BaseCheckoutAddressFragment()
                 (viewModel as CheckoutViewModel).saveExistingBillingVM(addressID, model, shipToSameAddressCheckBox.isChecked)
         }
 
+        showBillingAddressUI(MyApplication.getBillingResponse!!)
     }
 
-
-    override fun setLiveDataListeners() {
-
-        super.setLiveDataListeners()
-
-        with(viewModel as CheckoutViewModel)
-        {
-            getBillingAddressLD.observe(viewLifecycleOwner, Observer { getBilling ->
-
-                newAddress = getBilling.data.billingAddress.billingNewAddress
-
-                showBillingAddressUI(getBilling)
-
-            })
-
-
-        }
-    }
-    protected fun showBillingAddressUI(billingAddressResponse: BillingAddressResponse)
+    private fun showBillingAddressUI(billingAddressResponse: BillingAddressResponse)
     {
         with(billingAddressResponse.data.billingAddress)
         {
-            if(this.existingAddresses.isNotEmpty())
-                createAddressDropdown(this.existingAddresses)
-            else
+
+            if(shipToSameAddressAllowed)
+            {
+                shipToSameAddressCheckBox?.visibility = View.VISIBLE
+
+                if(shipToSameAddress)
+                    shipToSameAddressCheckBox.isChecked = true
+            }
+
+            if(this.existingAddresses.isEmpty() || newAddressPreselected)
                 createNewAddressLayout(this.billingNewAddress)
-
-            layoutCheckoutAddress?.visibility = View.VISIBLE
-
-            shipToSameAddressCheckBox?.visibility = View.VISIBLE
+            else
+                createAddressDropdown(this.existingAddresses)
 
         }
     }

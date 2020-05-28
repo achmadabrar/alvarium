@@ -1,10 +1,9 @@
 package com.bs.ecommerce.checkout
 
-import android.app.Activity
-import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.RelativeLayout
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.bs.ecommerce.R
 import com.bs.ecommerce.base.BaseFragment
@@ -12,7 +11,6 @@ import com.bs.ecommerce.base.BaseViewModel
 import com.bs.ecommerce.base.ToolbarLogoBaseFragment
 import com.bs.ecommerce.checkout.model.CheckoutModel
 import com.bs.ecommerce.checkout.model.CheckoutModelImpl
-import com.bs.ecommerce.main.MainViewModel
 import com.bs.ecommerce.utils.MyApplication
 import com.bs.ecommerce.utils.showLog
 import com.bs.ecommerce.utils.toast
@@ -20,6 +18,9 @@ import kotlinx.android.synthetic.main.fragment_checkout_step.*
 
 
 class CheckoutStepFragment : ToolbarLogoBaseFragment() {
+
+
+    private lateinit var model: CheckoutModel
 
     override fun getFragmentTitle() = R.string.title_shopping_cart
 
@@ -29,26 +30,48 @@ class CheckoutStepFragment : ToolbarLogoBaseFragment() {
 
     override fun createViewModel(): BaseViewModel = CheckoutViewModel()
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?)
+    {
         super.onViewCreated(view, savedInstanceState)
-        initView()
+
+        model = CheckoutModelImpl(activity?.applicationContext!!)
 
         viewModel  = ViewModelProvider(this).get(CheckoutViewModel::class.java)
+
+        (viewModel as CheckoutViewModel).getBillingFormVM(model)
+
+        initView()
+
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        MyApplication.getBillingResponse = null
     }
 
     private fun initView() {
 
-        BaseCheckoutNavigationFragment.backNavigation = false
+        with(viewModel as CheckoutViewModel)
+        {
+            getBillingAddressLD.observe(viewLifecycleOwner, Observer { getBilling ->
 
-        replaceFragment(BillingAddressFragment())
+                MyApplication.getBillingResponse = getBilling
+                goToBillingAddressPage()
+
+            })
+
+            isLoadingLD.observe(viewLifecycleOwner, Observer { isShowLoader -> showHideLoader(isShowLoader) })
+        }
+
+        BaseCheckoutNavigationFragment.backNavigation = false
 
         checkoutBottomNav.setOnNavigationItemSelectedListener { item ->
 
             when (item.itemId) {
                 R.id.menu_address -> {
 
-                    if(childFragmentManager.findFragmentById(R.id.checkoutFragmentHolder) !is BillingAddressFragment)
-                        replaceFragment(BillingAddressFragment())
+                    goToBillingAddressPage()
+
                 }
                 R.id.menu_shipping -> {
 
@@ -73,7 +96,7 @@ class CheckoutStepFragment : ToolbarLogoBaseFragment() {
                         return@setOnNavigationItemSelectedListener false
                     }
                 }
-                R.id.menu_confirm -> //replaceFragment(ConfirmOrderFragment())
+                R.id.menu_confirm ->
                 {
                     toast("Please complete previous step")
                     return@setOnNavigationItemSelectedListener false
@@ -82,6 +105,12 @@ class CheckoutStepFragment : ToolbarLogoBaseFragment() {
         return@setOnNavigationItemSelectedListener true
 
         }
+    }
+
+    private fun goToBillingAddressPage()
+    {
+        if(!MyApplication.getBillingResponse?.data?.disableBillingAddressCheckoutStep!!)
+            replaceFragment(BillingAddressFragment())
     }
 
     fun updateBottomNavItem(fragment: BaseFragment) {

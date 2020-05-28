@@ -91,6 +91,14 @@ abstract class BaseFragment : Fragment()
 
     }
 
+    protected fun showHideLoader(toShow: Boolean)
+    {
+        if (toShow)
+            showLoading()
+        else
+            hideLoading()
+    }
+
     protected fun updateCartItemCounter(cartList: List<CartProduct>) : Int
     {
         var totalItems = 0
