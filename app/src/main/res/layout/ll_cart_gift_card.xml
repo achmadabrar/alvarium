@@ -15,6 +15,7 @@
         android:layout_weight=".60"
         android:autofillHints="Username"
         android:hint="@string/cart_enter_gift_card_code"
+        android:layout_marginTop="0dp"
         android:imeOptions="actionDone"
         android:textSize="@dimen/tv_text_size_regular"
         android:inputType="text" />

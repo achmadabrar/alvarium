@@ -6,52 +6,64 @@
     android:layout_height="match_parent"
     android:background="?attr/fragmentBackGroundColor">
 
-    <EditText
-        android:id="@+id/etName"
-        style="@style/RoundedEditText"
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/fragment_margin"
-        android:layout_marginTop="10dp"
-        android:layout_marginEnd="@dimen/fragment_margin"
-        android:background="@drawable/rounded_background_slight"
-        android:drawableEnd="@drawable/ic_star_formular"
-        android:hint="@string/hint_name"
-        android:imeOptions="actionNext"
-        android:inputType="textPersonName|textCapWords|textNoSuggestions" />
+        android:layout_height="match_parent"
+        android:layout_above="@id/btnSubmit">
 
-    <EditText
-        android:id="@+id/etEmail"
-        style="@style/RoundedEditText"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/etName"
-        android:layout_marginStart="@dimen/fragment_margin"
-        android:layout_marginTop="10dp"
-        android:layout_marginEnd="@dimen/fragment_margin"
-        android:background="@drawable/rounded_background_slight"
-        android:drawableEnd="@drawable/ic_star_formular"
-        android:hint="@string/hint_email"
-        android:imeOptions="actionNext"
-        android:inputType="textEmailAddress" />
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
-    <EditText
-        android:id="@+id/etEnquiry"
-        style="@style/RoundedEditText"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/etEmail"
-        android:layout_marginStart="@dimen/fragment_margin"
-        android:layout_marginTop="10dp"
-        android:layout_marginEnd="@dimen/fragment_margin"
-        android:background="@drawable/rounded_background_slight"
-        android:drawableEnd="@drawable/ic_star_formular"
-        android:gravity="top"
-        android:hint="@string/hint_enquiry"
-        android:imeOptions="actionNext"
-        android:inputType="textMultiLine"
-        android:maxLines="10"
-        android:minLines="3" />
+            <EditText
+                android:id="@+id/etName"
+                style="@style/RoundedEditText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/fragment_margin"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="@dimen/fragment_margin"
+                android:background="@drawable/rounded_background_slight"
+                android:drawableEnd="@drawable/ic_star_formular"
+                android:hint="@string/hint_name"
+                android:imeOptions="actionNext"
+                android:inputType="textPersonName|textCapWords|textNoSuggestions" />
+
+            <EditText
+                android:id="@+id/etEmail"
+                style="@style/RoundedEditText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/etName"
+                android:layout_marginStart="@dimen/fragment_margin"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="@dimen/fragment_margin"
+                android:background="@drawable/rounded_background_slight"
+                android:drawableEnd="@drawable/ic_star_formular"
+                android:hint="@string/hint_email"
+                android:imeOptions="actionNext"
+                android:inputType="textEmailAddress" />
+
+            <EditText
+                android:id="@+id/etEnquiry"
+                style="@style/RoundedEditText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/etEmail"
+                android:layout_marginStart="@dimen/fragment_margin"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="@dimen/fragment_margin"
+                android:background="@drawable/rounded_background_slight"
+                android:drawableEnd="@drawable/ic_star_formular"
+                android:gravity="top"
+                android:hint="@string/hint_enquiry"
+                android:imeOptions="actionNext"
+                android:inputType="textMultiLine"
+                android:maxLines="10"
+                android:minLines="3" />
+
+        </RelativeLayout>
+    </androidx.core.widget.NestedScrollView>
 
     <Button
         android:id="@+id/btnSubmit"
@@ -59,7 +71,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:layout_marginTop="5dp"
         android:text="@string/submit"
         android:visibility="visible"
         tools:visibility="visible" />
