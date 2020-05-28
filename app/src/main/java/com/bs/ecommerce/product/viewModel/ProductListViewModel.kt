@@ -20,7 +20,6 @@ class ProductListViewModel : BaseViewModel() {
     var appliedFilterLD = MutableLiveData<MutableMap<String, MutableList<FilterItems>>>()
     var priceRangeLD = MutableLiveData<PriceRangeFilter?>()
 
-    var toastMessageLD = MutableLiveData("")
     var filterVisibilityLD = MutableLiveData<Boolean>()
 
     private var pageNumber = 0
@@ -51,7 +50,7 @@ class ProductListViewModel : BaseViewModel() {
 
             override fun onRequestFailed(errorMessage: String) {
                 isLoadingLD.value = false
-                toastMessageLD.value = errorMessage
+                toast(errorMessage)
             }
 
         })
@@ -80,14 +79,12 @@ class ProductListViewModel : BaseViewModel() {
 
                 override fun onRequestFailed(errorMessage: String) {
                     isLoadingLD.value = false
-                    toastMessageLD.value = errorMessage
+                    toast(errorMessage)
                 }
             })
     }
 
     fun searchProduct(query: String, resetFilters: Boolean, model: SearchModel) {
-
-        shouldAppend = !resetFilters
 
         if (isLoadingLD.value == true) {
             return
@@ -96,6 +93,8 @@ class ProductListViewModel : BaseViewModel() {
         if(!resetFilters && searchResultLD.value?.pagingFilteringContext?.hasNextPage == false) {
             return
         }
+
+        shouldAppend = !resetFilters
 
         searchParam.apply {
             if(resetFilters) clear()
@@ -147,7 +146,7 @@ class ProductListViewModel : BaseViewModel() {
 
             override fun onRequestFailed(errorMessage: String) {
                 isLoadingLD.postValue(false)
-                toastMessageLD.postValue(errorMessage)
+                toast(errorMessage)
             }
 
         })
@@ -192,7 +191,7 @@ class ProductListViewModel : BaseViewModel() {
 
             override fun onRequestFailed(errorMessage: String) {
                 isLoadingLD.value = false
-                toastMessageLD.value = errorMessage
+                toast(errorMessage)
             }
 
         })

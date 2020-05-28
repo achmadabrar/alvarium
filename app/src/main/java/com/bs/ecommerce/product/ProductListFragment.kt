@@ -6,7 +6,10 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.view.ViewTreeObserver
-import android.widget.*
+import android.widget.LinearLayout
+import android.widget.ListPopupWindow
+import android.widget.RelativeLayout
+import android.widget.TextView
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.lifecycle.Observer
@@ -223,10 +226,6 @@ class ProductListFragment : BaseFragment() {
                 hideLoading()
         })
 
-        viewModel.toastMessageLD.observe(viewLifecycleOwner, Observer { message ->
-            if (message.isNotEmpty())
-                Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
-        })
 
         viewModel.filterVisibilityLD.observe(viewLifecycleOwner, Observer { show ->
 

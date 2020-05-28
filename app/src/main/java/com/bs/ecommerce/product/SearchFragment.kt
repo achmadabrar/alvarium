@@ -43,6 +43,7 @@ class SearchFragment : BaseFragment() {
 
     private lateinit var productListAdapter: ProductListAdapter
     private lateinit var bsBehavior: BottomSheetBehavior<*>
+    private var observeLiveDataChange = true
 
     private var searchView: SearchView? = null
 
@@ -66,8 +67,10 @@ class SearchFragment : BaseFragment() {
 
             model = SearchModelImpl()
             viewModel = ViewModelProviders.of(this).get(ProductListViewModel::class.java)
+            observeLiveDataChange = true
 
         } else {
+            observeLiveDataChange = false
             (viewModel as ProductListViewModel).shouldAppend = false
         }
 
@@ -126,6 +129,7 @@ class SearchFragment : BaseFragment() {
                 if (totalItemCount > 0 && endHasBeenReached) {
                     Log.d("nop_", "last item of Product list is visible")
 
+                    observeLiveDataChange = true
                     (viewModel as ProductListViewModel).searchProduct(query, false, model)
                 }
             }
@@ -143,7 +147,7 @@ class SearchFragment : BaseFragment() {
 
         viewModel.searchResultLD.observe(viewLifecycleOwner, Observer { searchResult ->
 
-            productListAdapter.addData(searchResult.products, viewModel.shouldAppend)
+            if(observeLiveDataChange) productListAdapter.addData(searchResult.products, viewModel.shouldAppend)
 
             llButtonHolder.visibility =
                 if (searchResult.noResults == false) View.VISIBLE else View.GONE
@@ -160,10 +164,6 @@ class SearchFragment : BaseFragment() {
                 hideLoading()
         })
 
-        viewModel.toastMessageLD.observe(viewLifecycleOwner, Observer { message ->
-            if (message.isNotEmpty())
-                Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
-        })
 
         viewModel.filterVisibilityLD.observe(viewLifecycleOwner, Observer { show ->
 
@@ -246,6 +246,7 @@ class SearchFragment : BaseFragment() {
             query = it.query.toString()
 
             if (query.length > 2) {
+                observeLiveDataChange = true
                 (viewModel as ProductListViewModel).searchProduct(query, true, model)
             } else
                 toast(R.string.search_limit)
@@ -281,6 +282,7 @@ class SearchFragment : BaseFragment() {
     }
 
     fun applyFilter(filterUrl: String?) {
+        observeLiveDataChange = true
         (viewModel as ProductListViewModel).applySearchFilter(filterUrl, model)
 
         bsBehavior.state = BottomSheetBehavior.STATE_COLLAPSED
