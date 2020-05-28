@@ -7,7 +7,6 @@ import android.view.View
 import android.widget.RelativeLayout
 import android.widget.TextView
 import androidx.appcompat.widget.AppCompatRadioButton
-import androidx.lifecycle.Observer
 import com.bs.ecommerce.R
 import com.bs.ecommerce.base.BaseViewModel
 import com.bs.ecommerce.checkout.model.data.ShippingMethod
@@ -22,6 +21,7 @@ class ShippingMethodFragment : BaseCheckoutNavigationFragment() {
 
     private lateinit var methodSelectionProcess: MethodSelectionProcess
     private var shippingMethodValue = ""
+    private var name = ""
 
     override fun getFragmentTitle() = R.string.title_shopping_cart
 
@@ -35,20 +35,25 @@ class ShippingMethodFragment : BaseCheckoutNavigationFragment() {
     {
         super.onViewCreated(view, savedInstanceState)
 
-        checkoutBottomNav?.menu?.getItem(CheckoutConstants.SHIPPING_TAB)?.isChecked = true
+        //checkoutBottomNav?.menu?.getItem(CheckoutConstants.SHIPPING_TAB)?.isChecked = true
 
-        val shippingMethodModel = MyApplication.checkoutSaveResponse?.data?.shippingMethodModel!!
+        with(MyApplication.checkoutSaveResponse?.data?.shippingMethodModel!!.shippingMethods)
+        {
 
-        addMethodRadioGroup(shippingMethodModel.shippingMethods)
+            addMethodRadioGroup(this)
 
-        btnContinue?.setOnClickListener {
+            btnContinue?.setOnClickListener {
+                (viewModel as CheckoutViewModel).saveShippingMethodVM(shippingMethodValue, model)
 
-            backNavigation = false
-
-            (viewModel as CheckoutViewModel).saveShippingMethodVM(shippingMethodValue, model)
+                for(i in this.indices)
+                {
+                    this[i].selected = this[i].name.equals(name)
+                }
+            }
         }
 
     }
+
     private fun addMethodRadioGroup(shippingMethods: List<ShippingMethod>?)
     {
         methodSelectionProcess = MethodSelectionProcess(radioGridGroup!!)
@@ -58,6 +63,12 @@ class ShippingMethodFragment : BaseCheckoutNavigationFragment() {
             for (method in shippingMethods)
                 generateRadioButton(method)
         }
+    }
+
+    private fun setMethodValue(method: ShippingMethod)
+    {
+        shippingMethodValue = method.name + "___" + method.shippingRateComputationMethodSystemName
+        name = method.name
     }
 
     private fun generateRadioButton(method: ShippingMethod)
@@ -80,7 +91,7 @@ class ShippingMethodFragment : BaseCheckoutNavigationFragment() {
         if (isPreselected(method))
         {
             radioButton.isChecked = true
-            shippingMethodValue = method.name + "___" + method.shippingRateComputationMethodSystemName
+            setMethodValue(method)
         }
         else
             radioButton.isChecked = false
@@ -92,8 +103,10 @@ class ShippingMethodFragment : BaseCheckoutNavigationFragment() {
         radioButton.setOnCheckedChangeListener { buttonView, isChecked ->
             if (isChecked)
             {
-                shippingMethodValue = method.name + "___" + method.shippingRateComputationMethodSystemName
-                Handler().post {  methodSelectionProcess.resetRadioButton(buttonView.id) }
+                Handler().post {
+                    methodSelectionProcess.resetRadioButton(buttonView.id)
+                    setMethodValue(method)
+                }
             }
         }
 

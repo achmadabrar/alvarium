@@ -2,6 +2,7 @@ package com.bs.ecommerce.checkout
 
 import android.os.Bundle
 import android.os.Handler
+import android.text.Html
 import android.view.View
 import android.widget.ImageView
 import android.widget.RelativeLayout
@@ -22,6 +23,7 @@ class PaymentMethodFragment : BaseCheckoutNavigationFragment() {
 
     private lateinit var methodSelectionProcess: MethodSelectionProcess
     private var paymentMethodValue = ""
+    private var name = ""
 
     override fun getFragmentTitle() = R.string.title_shopping_cart
 
@@ -35,21 +37,19 @@ class PaymentMethodFragment : BaseCheckoutNavigationFragment() {
     {
         super.onViewCreated(view, savedInstanceState)
 
-/*        (viewModel as CheckoutViewModel).paymentMethodModelLD.observe(viewLifecycleOwner, Observer { paymentMethodModel ->
-            addMethodRadioGroup(paymentMethodModel.paymentMethods)
-        })*/
+        with(MyApplication.checkoutSaveResponse?.data?.paymentMethodModel!!.paymentMethods)
+        {
 
-        val paymentMethods = MyApplication.checkoutSaveResponse?.data?.paymentMethodModel!!.paymentMethods
+            addMethodRadioGroup(this)
 
-        //if(!backNavigation)
-        addMethodRadioGroup(paymentMethods)
+            btnContinue?.setOnClickListener {
+                (viewModel as CheckoutViewModel).savePaymentMethodVM(paymentMethodValue, model)
 
-
-        btnContinue?.setOnClickListener {
-
-            backNavigation = false
-
-            (viewModel as CheckoutViewModel).savePaymentMethodVM(paymentMethodValue, model)
+                for(i in this.indices)
+                {
+                    this[i].selected = this[i].name.equals(name)
+                }
+            }
         }
     }
 
@@ -62,6 +62,12 @@ class PaymentMethodFragment : BaseCheckoutNavigationFragment() {
             for (method in paymentMethods)
                 generateRadioButton(method)
         }
+    }
+
+    private fun setMethodValue(method: PaymentMethod)
+    {
+        paymentMethodValue = method.paymentMethodSystemName
+        name = method.name
     }
 
     private fun generateRadioButton(method: PaymentMethod)
@@ -83,12 +89,12 @@ class PaymentMethodFragment : BaseCheckoutNavigationFragment() {
         if (isPreselected(method))
         {
             radioButton.isChecked = true
-            paymentMethodValue = method.paymentMethodSystemName
+            setMethodValue(method)
         }
         else
             radioButton.isChecked = false
 
-        //description.text = Html.fromHtml(method.description)
+        method.description?.let {  description.text = Html.fromHtml(it) }
 
         radioGridGroup.addView(eachCheckLayout)
 
@@ -96,7 +102,10 @@ class PaymentMethodFragment : BaseCheckoutNavigationFragment() {
             if (isChecked)
             {
                 paymentMethodValue = method.paymentMethodSystemName
-                Handler().post {  methodSelectionProcess.resetRadioButton(buttonView.id) }
+                Handler().post {
+                    methodSelectionProcess.resetRadioButton(buttonView.id)
+                    setMethodValue(method)
+                }
             }
         }
 
