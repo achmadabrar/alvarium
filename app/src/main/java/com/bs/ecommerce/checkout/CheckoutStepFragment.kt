@@ -41,12 +41,6 @@ class CheckoutStepFragment : ToolbarLogoBaseFragment() {
         (viewModel as CheckoutViewModel).getBillingFormVM(model)
 
         initView()
-
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        MyApplication.getBillingResponse = null
     }
 
     private fun initView() {
@@ -75,8 +69,9 @@ class CheckoutStepFragment : ToolbarLogoBaseFragment() {
                 }
                 R.id.menu_shipping -> {
 
-                    if(MyApplication.checkoutSaveResponse.data.shippingMethodModel != null &&
-                        childFragmentManager.findFragmentById(R.id.checkoutFragmentHolder) !is ShippingMethodFragment)
+                    if(MyApplication.checkoutSaveResponse?.data?.shippingMethodModel != null /*&&
+                        childFragmentManager.findFragmentById(R.id.checkoutFragmentHolder) !is ShippingMethodFragment*/
+                    )
                         replaceFragment(ShippingMethodFragment())
                     else
                     {
@@ -87,8 +82,8 @@ class CheckoutStepFragment : ToolbarLogoBaseFragment() {
                 }
                 R.id.menu_payment -> {
 
-                    if(MyApplication.checkoutSaveResponse.data.paymentMethodModel != null &&
-                        childFragmentManager.findFragmentById(R.id.checkoutFragmentHolder) !is PaymentMethodFragment)
+                    if(MyApplication.checkoutSaveResponse?.data?.paymentMethodModel != null /*&&
+                        childFragmentManager.findFragmentById(R.id.checkoutFragmentHolder) !is PaymentMethodFragment*/)
                         replaceFragment(PaymentMethodFragment())
                     else
                     {

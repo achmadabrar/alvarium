@@ -67,7 +67,7 @@ class MyApplication : MultiDexApplication()
             myCartCounter = counter
         }
 
-        var checkoutSaveResponse : CheckoutSaveResponse = CheckoutSaveResponse()
+        var checkoutSaveResponse : CheckoutSaveResponse? = CheckoutSaveResponse()
         var getBillingResponse : BillingAddressResponse? = BillingAddressResponse()
     }
 

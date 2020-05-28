@@ -295,10 +295,16 @@ class MainActivity : PrivacyPolicyDialogActivity(), View.OnClickListener
     {
         when {
             supportFragmentManager.findFragmentById(R.id.checkoutFragmentHolder) is BaseCheckoutNavigationFragment ->
+            {
                 supportFragmentManager.beginTransaction()
                     .replace(R.id.layoutFrame, CartFragment())
                     .addToBackStack(CartFragment::class.java.simpleName)
                     .commit()
+
+                MyApplication.getBillingResponse = null
+                MyApplication.checkoutSaveResponse = null
+            }
+
 
             drawerLayout.isDrawerOpen(GravityCompat.START) -> drawerLayout.closeDrawer(GravityCompat.START)
 

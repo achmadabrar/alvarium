@@ -68,7 +68,7 @@ abstract class BaseCheckoutNavigationFragment : ToolbarLogoBaseFragment()
             {
                 saveResponse?.data?.shippingAddressModel?.let {
 
-                    MyApplication.checkoutSaveResponse.data.shippingAddressModel = it
+                    MyApplication.checkoutSaveResponse!!.data.shippingAddressModel = it
 
                     replaceFragmentWithoutSavingState(ShippingAddressFragment())
                 }
@@ -77,7 +77,7 @@ abstract class BaseCheckoutNavigationFragment : ToolbarLogoBaseFragment()
             {
                 saveResponse?.data?.shippingMethodModel?.let {
 
-                    MyApplication.checkoutSaveResponse.data.shippingMethodModel = it
+                    MyApplication.checkoutSaveResponse!!.data.shippingMethodModel = it
 
                     replaceFragmentWithoutSavingState(ShippingMethodFragment())
                 }
@@ -86,7 +86,7 @@ abstract class BaseCheckoutNavigationFragment : ToolbarLogoBaseFragment()
             {
                 saveResponse?.data?.paymentMethodModel?.let {
 
-                    MyApplication.checkoutSaveResponse.data.paymentMethodModel = it
+                    MyApplication.checkoutSaveResponse!!.data.paymentMethodModel = it
 
                     replaceFragmentWithoutSavingState(PaymentMethodFragment())
                 }
@@ -160,7 +160,7 @@ abstract class BaseCheckoutNavigationFragment : ToolbarLogoBaseFragment()
             {
                 if (CheckoutStepFragment.isBillingAddressSubmitted &&
                     MyApplication.getBillingResponse?.data?.shippingRequired!! &&
-                    MyApplication.checkoutSaveResponse.data.shippingAddressModel != null
+                    MyApplication.checkoutSaveResponse?.data?.shippingAddressModel != null
                 )
                 {
                     if(!isCurrentTabShipping())
