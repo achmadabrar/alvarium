@@ -71,6 +71,8 @@ abstract class BaseCheckoutNavigationFragment : ToolbarLogoBaseFragment()
                     MyApplication.checkoutSaveResponse?.data?.shippingAddressModel = it
 
                     replaceFragmentWithoutSavingState(ShippingAddressFragment())
+
+                    MyApplication.previouslySelectedTab = R.id.menu_address
                 }
             }
             CheckoutConstants.ShippingMethod ->
@@ -80,6 +82,8 @@ abstract class BaseCheckoutNavigationFragment : ToolbarLogoBaseFragment()
                     MyApplication.checkoutSaveResponse?.data?.shippingMethodModel = it
 
                     replaceFragmentWithoutSavingState(ShippingMethodFragment())
+
+                    MyApplication.previouslySelectedTab = R.id.menu_shipping
                 }
             }
             CheckoutConstants.PaymentMethod ->
@@ -89,6 +93,8 @@ abstract class BaseCheckoutNavigationFragment : ToolbarLogoBaseFragment()
                     MyApplication.checkoutSaveResponse?.data?.paymentMethodModel = it
 
                     replaceFragmentWithoutSavingState(PaymentMethodFragment())
+
+                    MyApplication.previouslySelectedTab = R.id.menu_payment
                 }
             }
             CheckoutConstants.PaymentInfo -> {
@@ -213,8 +219,4 @@ abstract class BaseCheckoutNavigationFragment : ToolbarLogoBaseFragment()
     private fun isCurrentTabBilling() : Boolean
             = requireActivity().supportFragmentManager.findFragmentById(R.id.checkoutFragmentHolder) is BillingAddressFragment
 
-
-    companion object{
-        @JvmStatic var backNavigation = false
-    }
 }

@@ -69,6 +69,8 @@ class MyApplication : MultiDexApplication()
 
         var checkoutSaveResponse : CheckoutSaveResponse? = CheckoutSaveResponse()
         var getBillingResponse : BillingAddressResponse? = BillingAddressResponse()
+
+        var previouslySelectedTab = 0
     }
 
 }

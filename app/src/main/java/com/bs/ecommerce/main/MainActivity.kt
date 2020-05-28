@@ -277,20 +277,6 @@ class MainActivity : PrivacyPolicyDialogActivity(), View.OnClickListener
             return false
     }
 
-    private fun goBackTo(fragment: BaseCheckoutNavigationFragment)
-    {
-        BaseCheckoutNavigationFragment.backNavigation = true
-
-        val csFragment = supportFragmentManager.findFragmentByTag(CheckoutStepFragment::class.java.simpleName)
-
-        val transaction = csFragment!!.childFragmentManager.beginTransaction()
-        transaction.addToBackStack(fragment.tag)
-        transaction.replace(R.id.checkoutFragmentHolder, fragment)
-        transaction.commit()
-        csFragment.childFragmentManager.executePendingTransactions()
-
-    }
-
     override fun onBackPressed()
     {
         when {
@@ -303,6 +289,7 @@ class MainActivity : PrivacyPolicyDialogActivity(), View.OnClickListener
 
                 MyApplication.getBillingResponse = null
                 MyApplication.checkoutSaveResponse = null
+                MyApplication.previouslySelectedTab = 0
             }
 
 

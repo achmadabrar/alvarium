@@ -57,8 +57,6 @@ class CheckoutStepFragment : ToolbarLogoBaseFragment() {
             isLoadingLD.observe(viewLifecycleOwner, Observer { isShowLoader -> showHideLoader(isShowLoader) })
         }
 
-        BaseCheckoutNavigationFragment.backNavigation = false
-
         checkoutBottomNav.setOnNavigationItemSelectedListener { item ->
 
             when (item.itemId) {
@@ -68,10 +66,18 @@ class CheckoutStepFragment : ToolbarLogoBaseFragment() {
                         return@setOnNavigationItemSelectedListener false
                     else
                         goToBillingAddressPage()
+
                 }
                 R.id.menu_shipping -> {
 
-                    if(MyApplication.checkoutSaveResponse?.data?.shippingMethodModel == null)
+                    val prohibitedList = listOf(R.id.menu_address)
+
+                    if(prohibitedList.contains(MyApplication.previouslySelectedTab))
+                    {
+                        toast(getString(R.string.please_complete_previous_step))
+                        return@setOnNavigationItemSelectedListener false
+                    }
+                    else if(MyApplication.checkoutSaveResponse?.data?.shippingMethodModel == null)
                     {
                         toast(getString(R.string.please_complete_previous_step))
                         return@setOnNavigationItemSelectedListener false
@@ -81,10 +87,16 @@ class CheckoutStepFragment : ToolbarLogoBaseFragment() {
                     else
                         replaceFragment(ShippingMethodFragment())
 
-
                 }
                 R.id.menu_payment -> {
 
+                    val prohibitedList = listOf(R.id.menu_address, R.id.menu_shipping)
+
+                    if(prohibitedList.contains(MyApplication.previouslySelectedTab))
+                    {
+                        toast(getString(R.string.please_complete_previous_step))
+                        return@setOnNavigationItemSelectedListener false
+                    }
                     if(MyApplication.checkoutSaveResponse?.data?.paymentMethodModel == null)
                     {
                         toast(getString(R.string.please_complete_previous_step))
@@ -101,7 +113,8 @@ class CheckoutStepFragment : ToolbarLogoBaseFragment() {
                     return@setOnNavigationItemSelectedListener false
                 }
             }
-        return@setOnNavigationItemSelectedListener true
+            MyApplication.previouslySelectedTab = item.itemId
+            return@setOnNavigationItemSelectedListener true
 
         }
     }

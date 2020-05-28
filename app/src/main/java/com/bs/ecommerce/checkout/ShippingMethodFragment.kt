@@ -35,19 +35,19 @@ class ShippingMethodFragment : BaseCheckoutNavigationFragment() {
     {
         super.onViewCreated(view, savedInstanceState)
 
-        //checkoutBottomNav?.menu?.getItem(CheckoutConstants.SHIPPING_TAB)?.isChecked = true
+        MyApplication.checkoutSaveResponse?.data?.shippingMethodModel?.shippingMethods?.let {
 
-        with(MyApplication.checkoutSaveResponse?.data?.shippingMethodModel!!.shippingMethods)
-        {
+            with(it)
+            {
+                addMethodRadioGroup(this)
 
-            addMethodRadioGroup(this)
+                btnContinue?.setOnClickListener {
+                    (viewModel as CheckoutViewModel).saveShippingMethodVM(shippingMethodValue, model)
 
-            btnContinue?.setOnClickListener {
-                (viewModel as CheckoutViewModel).saveShippingMethodVM(shippingMethodValue, model)
-
-                for(i in this.indices)
-                {
-                    this[i].selected = this[i].name.equals(name)
+                    for(i in this.indices)
+                    {
+                        this[i].selected = this[i].name == name
+                    }
                 }
             }
         }
