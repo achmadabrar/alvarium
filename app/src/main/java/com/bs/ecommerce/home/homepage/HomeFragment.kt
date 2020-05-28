@@ -75,13 +75,7 @@ class HomeFragment : ToolbarLogoBaseFragment() {
             if (!viewCreated) {
                 model = HomePageModelImpl(requireContext())
 
-                (viewModel as MainViewModel).apply {
-                    getFeaturedProducts(model)
-                    getCategoryListWithProducts(model)
-                    getManufactures(model)
-                    getBannerImages(model)
-                    getBestSellingProducts(model)
-                }
+                (viewModel as MainViewModel).getAllLandingPageProducts(model)
 
                 initComponents()
                 observeLiveDataChange = true
@@ -129,11 +123,7 @@ class HomeFragment : ToolbarLogoBaseFragment() {
                 (viewModel as MainViewModel).apply {
                     observeLiveDataChange = true
 
-                    getFeaturedProducts(model)
-                    getCategoryListWithProducts(model)
-                    getManufactures(model)
-                    getBestSellingProducts(model)
-                    getCartVM(cartModel)
+                    getAllLandingPageProducts(model)
                 }
             }
             else
@@ -202,7 +192,7 @@ class HomeFragment : ToolbarLogoBaseFragment() {
         })
 
 
-        viewModel.isLoadingLD.observe(viewLifecycleOwner, Observer { isShowLoader ->
+        viewModel.homePageLoader.observe(viewLifecycleOwner, Observer { isShowLoader ->
             if (isShowLoader)
                 showLoading()
             else

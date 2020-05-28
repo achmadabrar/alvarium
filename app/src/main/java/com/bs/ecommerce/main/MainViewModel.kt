@@ -1,5 +1,6 @@
 package com.bs.ecommerce.main
 
+import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import com.bs.ecommerce.checkout.CheckoutViewModel
 import com.bs.ecommerce.common.RequestCompleteListener
@@ -16,6 +17,7 @@ import com.bs.ecommerce.networking.common.BaseResponse
 import com.bs.ecommerce.product.model.data.*
 import com.bs.ecommerce.utils.OneTimeEvent
 import com.bs.ecommerce.utils.showLog
+import java.util.concurrent.atomic.AtomicInteger
 
 
 class MainViewModel : CheckoutViewModel() {
@@ -35,8 +37,32 @@ class MainViewModel : CheckoutViewModel() {
 
     private val logTag: String = "nop_" + this::class.java.simpleName
 
+    private var count: AtomicInteger = AtomicInteger(0)
+    var homePageLoader = MutableLiveData<Boolean>()
 
     var topicLD = MutableLiveData<TopicData?>()
+
+    fun getAllLandingPageProducts(model: HomePageModel) {
+
+        Log.d("nop_", "called getAllLandingPageProducts ${count.get()}")
+
+        homePageLoader.value = true
+
+        getFeaturedProducts(model)
+        getCategoryListWithProducts(model)
+        getManufactures(model)
+        getBannerImages(model)
+        getBestSellingProducts(model)
+    }
+
+    private fun hideLoader() {
+        val serviceCalled = count.incrementAndGet()
+
+        if(serviceCalled == 4) {
+            homePageLoader.value = false
+            count = AtomicInteger(0)
+        }
+    }
 
     fun fetchTopic(sysName: String, model: TopicModel) {
 
@@ -62,17 +88,14 @@ class MainViewModel : CheckoutViewModel() {
 
     fun getFeaturedProducts(model: HomePageModel) {
 
-        isLoadingLD.value = true
-
         model.getFeaturedProducts(object : RequestCompleteListener<HomePageProductResponse> {
             override fun onRequestSuccess(data: HomePageProductResponse) {
-                isLoadingLD.value = false
-
+                hideLoader()
                 featuredProductListLD.value = data.homePageProductList ?: listOf()
             }
 
             override fun onRequestFailed(errorMessage: String) {
-                isLoadingLD.value = false
+                hideLoader()
                 allCategoriesFailureLD.value = listOf()
             }
         })
@@ -94,10 +117,12 @@ class MainViewModel : CheckoutViewModel() {
     fun getBestSellingProducts(model: HomePageModel) {
         model.fetchBestSellingProducts(object : RequestCompleteListener<HomePageProductResponse> {
             override fun onRequestSuccess(data: HomePageProductResponse) {
+                hideLoader()
                 bestSellingProductLD.value = data.homePageProductList ?: listOf()
             }
 
             override fun onRequestFailed(errorMessage: String) {
+                hideLoader()
                 bestSellingProductLD.value = listOf()
                 logTag.showLog(errorMessage)
             }
@@ -108,10 +133,12 @@ class MainViewModel : CheckoutViewModel() {
     fun getManufactures(model: HomePageModel) {
         model.fetchManufacturers(object : RequestCompleteListener<List<Manufacturer>> {
             override fun onRequestSuccess(data: List<Manufacturer>) {
+                hideLoader()
                 manufacturerListLD.value = data
             }
 
             override fun onRequestFailed(errorMessage: String) {
+                hideLoader()
                 manufacturerListLD.value = listOf()
                 logTag.showLog(errorMessage)
             }
@@ -121,10 +148,12 @@ class MainViewModel : CheckoutViewModel() {
     fun getBannerImages(model: HomePageModel) {
         model.fetchBannerImages(object : RequestCompleteListener<SliderData> {
             override fun onRequestSuccess(data: SliderData) {
+                hideLoader()
                 imageBannerLD.value = data
             }
 
             override fun onRequestFailed(errorMessage: String) {
+                hideLoader()
                 logTag.showLog(errorMessage)
             }
 
