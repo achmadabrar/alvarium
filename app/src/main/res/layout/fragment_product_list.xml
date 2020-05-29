@@ -45,7 +45,7 @@
             tools:visibility="visible">
 
             <LinearLayout
-                android:id="@+id/btnBrand"
+                android:id="@+id/btnSortBy"
                 android:background="@drawable/rect_background_ripple"
                 android:backgroundTint="@color/product_list_btn_bg"
                 android:layout_width="0dp"
@@ -140,14 +140,5 @@
 
         </androidx.drawerlayout.widget.DrawerLayout>
     </RelativeLayout>
-
-    <include
-        android:id="@+id/bottomSheetLayout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        layout="@layout/sort_option_bottom_sheet"
-        app:behavior_hideable="true"
-        app:behavior_peekHeight="0dp"
-        app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior"/>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

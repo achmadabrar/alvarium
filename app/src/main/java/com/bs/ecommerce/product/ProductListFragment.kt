@@ -29,9 +29,8 @@ import com.bs.ecommerce.product.model.data.SubCategory
 import com.bs.ecommerce.product.viewModel.ProductListViewModel
 import com.bs.ecommerce.utils.ItemClickListener
 import com.bs.ecommerce.utils.replaceFragmentSafely
-import com.google.android.material.bottomsheet.BottomSheetBehavior
+import com.google.android.material.bottomsheet.BottomSheetDialog
 import kotlinx.android.synthetic.main.fragment_product_list.*
-import kotlinx.android.synthetic.main.sort_option_bottom_sheet.view.*
 import kotlin.math.floor
 
 
@@ -45,7 +44,11 @@ class ProductListFragment : BaseFragment() {
     private lateinit var subcategoryPopupWindow: ListPopupWindow
     private lateinit var productClickListener: ItemClickListener<ProductSummary>
     private lateinit var productListAdapter: ProductListAdapter
-    private lateinit var bsBehavior: BottomSheetBehavior<*>
+
+    private val sortOptionDialog: BottomSheetDialog by lazy {
+        BottomSheetDialog(requireContext(), R.style.BsDialog)
+    }
+
 
     override fun getFragmentTitle() = R.string.title_register
 
@@ -109,19 +112,15 @@ class ProductListFragment : BaseFragment() {
                     drawerLayout?.closeDrawers()
                 }
                 false -> {
-                    bsBehavior.state = BottomSheetBehavior.STATE_COLLAPSED
+                    sortOptionDialog.hide()
                     drawerLayout?.openDrawer(GravityCompat.END)
                 }
             }
         }
 
-        btnBrand.setOnClickListener {
-            if(bsBehavior.state == BottomSheetBehavior.STATE_EXPANDED) {
-                bsBehavior.state = BottomSheetBehavior.STATE_COLLAPSED
-            } else {
-                drawerLayout?.closeDrawers()
-                bsBehavior.state = BottomSheetBehavior.STATE_EXPANDED
-            }
+        btnSortBy.setOnClickListener {
+            drawerLayout?.closeDrawers()
+            sortOptionDialog.show()
         }
 
         productClickListener = object : ItemClickListener<ProductSummary> {
@@ -140,8 +139,6 @@ class ProductListFragment : BaseFragment() {
                 }
             }
         }
-
-        bsBehavior = BottomSheetBehavior.from(bottomSheetLayout)
 
         productListAdapter = ProductListAdapter(
             productClickListener
@@ -172,7 +169,7 @@ class ProductListFragment : BaseFragment() {
 
     private fun populateSortOptions(sortOption: PagingFilteringContext?) {
 
-        bottomSheetLayout.sortOptionHolder.removeAllViews()
+        val sortOptionHolder:LinearLayout = layoutInflater.inflate(R.layout.sort_option_bottom_sheet, null, false) as LinearLayout
 
         if(sortOption?.allowProductSorting == true && !sortOption.availableSortOptions.isNullOrEmpty()) {
 
@@ -185,16 +182,19 @@ class ProductListFragment : BaseFragment() {
                     if (i.selected == true) R.drawable.ic_tic_mark else R.drawable.transparent_tic_mark,
                     0
                 )
-                bottomSheetLayout.sortOptionHolder.addView(tv)
+                sortOptionHolder.addView(tv)
 
                 tv.setOnClickListener {
+                    sortOptionDialog.hide()
                     applyFilter(i.value)
                 }
             }
         } else {
-            btnBrand.visibility = View.GONE
+            btnSortBy.visibility = View.GONE
             btn_vertical_divider.visibility = View.GONE
         }
+
+        sortOptionDialog.setContentView(sortOptionHolder)
     }
 
     private fun setLiveDataListeners() {
@@ -215,8 +215,10 @@ class ProductListFragment : BaseFragment() {
         viewModel.manufacturerLD.observe(viewLifecycleOwner, Observer { manufacturer ->
             productListAdapter.addData(manufacturer.products, viewModel.shouldAppend)
 
-            llButtonHolder.visibility = View.VISIBLE
-            btnBrand.visibility = View.GONE
+            llButtonHolder.visibility = if (manufacturer.products.isNullOrEmpty())
+                View.INVISIBLE else View.VISIBLE
+
+            populateSortOptions(manufacturer.pagingFilteringContext)
         })
 
         viewModel.isLoadingLD.observe(viewLifecycleOwner, Observer { isShowLoader ->
@@ -333,7 +335,7 @@ class ProductListFragment : BaseFragment() {
     fun applyFilter(filterUrl: String?) {
         (viewModel as ProductListViewModel).applyFilter(categoryId.toLong(), filterUrl, model)
 
-        bsBehavior.state = BottomSheetBehavior.STATE_COLLAPSED
+        sortOptionDialog.hide()
         drawerLayout?.closeDrawers()
 
         // remove existing filters from view

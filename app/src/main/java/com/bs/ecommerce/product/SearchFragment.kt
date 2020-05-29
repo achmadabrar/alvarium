@@ -7,7 +7,6 @@ import android.view.*
 import android.widget.LinearLayout
 import android.widget.RelativeLayout
 import android.widget.TextView
-import android.widget.Toast
 import androidx.appcompat.widget.SearchView
 import androidx.core.view.GravityCompat
 import androidx.core.view.MenuItemCompat
@@ -30,9 +29,8 @@ import com.bs.ecommerce.utils.ItemClickListener
 import com.bs.ecommerce.utils.MyApplication
 import com.bs.ecommerce.utils.replaceFragmentSafely
 import com.bs.ecommerce.utils.toast
-import com.google.android.material.bottomsheet.BottomSheetBehavior
+import com.google.android.material.bottomsheet.BottomSheetDialog
 import kotlinx.android.synthetic.main.fragment_product_list.*
-import kotlinx.android.synthetic.main.sort_option_bottom_sheet.view.*
 import kotlin.math.floor
 
 class SearchFragment : BaseFragment() {
@@ -42,10 +40,12 @@ class SearchFragment : BaseFragment() {
     private lateinit var productClickListener: ItemClickListener<ProductSummary>
 
     private lateinit var productListAdapter: ProductListAdapter
-    private lateinit var bsBehavior: BottomSheetBehavior<*>
-    private var observeLiveDataChange = true
-
     private var searchView: SearchView? = null
+    private val sortOptionDialog: BottomSheetDialog by lazy {
+        BottomSheetDialog(requireContext(), R.style.BsDialog)
+    }
+
+    private var observeLiveDataChange = true
 
     override fun getFragmentTitle() = R.string.title_search
 
@@ -87,19 +87,15 @@ class SearchFragment : BaseFragment() {
                     drawerLayout?.closeDrawers()
                 }
                 false -> {
-                    bsBehavior.state = BottomSheetBehavior.STATE_COLLAPSED
+                    sortOptionDialog.hide()
                     drawerLayout?.openDrawer(GravityCompat.END)
                 }
             }
         }
 
-        btnBrand.setOnClickListener {
-            if(bsBehavior.state == BottomSheetBehavior.STATE_EXPANDED) {
-                bsBehavior.state = BottomSheetBehavior.STATE_COLLAPSED
-            } else {
-                drawerLayout?.closeDrawers()
-                bsBehavior.state = BottomSheetBehavior.STATE_EXPANDED
-            }
+        btnSortBy.setOnClickListener {
+            drawerLayout?.closeDrawers()
+            sortOptionDialog.show()
         }
 
         productClickListener = object : ItemClickListener<ProductSummary> {
@@ -110,8 +106,6 @@ class SearchFragment : BaseFragment() {
                 replaceFragmentSafely(ProductDetailFragment.newInstance(data.id.toLong(), data.name))
             }
         }
-
-        bsBehavior = BottomSheetBehavior.from(bottomSheetLayout)
 
         productListAdapter = ProductListAdapter(
             productClickListener
@@ -256,7 +250,7 @@ class SearchFragment : BaseFragment() {
 
     private fun populateSortOptions(sortOption: PagingFilteringContext?) {
 
-        bottomSheetLayout.sortOptionHolder.removeAllViews()
+        val sortOptionHolder:LinearLayout = layoutInflater.inflate(R.layout.sort_option_bottom_sheet, null, false) as LinearLayout
 
         if(sortOption?.allowProductSorting == true && !sortOption.availableSortOptions.isNullOrEmpty()) {
 
@@ -269,23 +263,26 @@ class SearchFragment : BaseFragment() {
                     if (i.selected == true) R.drawable.ic_tic_mark else R.drawable.transparent_tic_mark,
                     0
                 )
-                bottomSheetLayout.sortOptionHolder.addView(tv)
+                sortOptionHolder.addView(tv)
 
                 tv.setOnClickListener {
+                    sortOptionDialog.hide()
                     applyFilter(i.value)
                 }
             }
         } else {
-            btnBrand.visibility = View.GONE
+            btnSortBy.visibility = View.GONE
             btn_vertical_divider.visibility = View.GONE
         }
+
+        sortOptionDialog.setContentView(sortOptionHolder)
     }
 
     fun applyFilter(filterUrl: String?) {
         observeLiveDataChange = true
         (viewModel as ProductListViewModel).applySearchFilter(filterUrl, model)
 
-        bsBehavior.state = BottomSheetBehavior.STATE_COLLAPSED
+        sortOptionDialog.hide()
         drawerLayout?.closeDrawers()
 
         // remove existing filters from view
