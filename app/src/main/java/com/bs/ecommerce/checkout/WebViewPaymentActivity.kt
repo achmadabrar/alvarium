@@ -11,6 +11,7 @@ import com.bs.ecommerce.base.BaseActivity
 import com.bs.ecommerce.main.MainViewModel
 import com.bs.ecommerce.networking.NetworkUtil
 import com.bs.ecommerce.utils.showLog
+import com.bs.ecommerce.utils.toast
 import kotlinx.android.synthetic.main.activity_payment_toolbar.*
 import kotlinx.android.synthetic.main.fragment_payment_info.*
 
@@ -123,6 +124,7 @@ class WebViewPaymentActivity : BaseActivity()
                 {
                     nextStep = url[url.lastIndex].toString().toInt()
                     "webview_step".showLog(nextStep.toString())
+                    //toast(nextStep.toString())
                     onBackPressed()
                 }
                 view.loadUrl(webViewUrl, NetworkUtil.headers)

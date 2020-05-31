@@ -272,7 +272,7 @@ fun TextView?.showTextPendingCalculationOnCheckout()
     this?.setText(R.string.calculated_during_checkout)
     this?.textSize = 13F
     this?.maxLines = 2
-    this?.setTextColor(Color.RED)
+    this?.setTextColor(ContextCompat.getColor(context, R.color.pink))
 }
 
 fun Context.isOnline(): Boolean {
