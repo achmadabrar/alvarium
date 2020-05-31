@@ -30,7 +30,8 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".main.MainActivity"/>
+        <activity android:name=".main.MainActivity"
+            android:windowSoftInputMode="adjustResize"/>
         <activity android:name=".product.FullScreenImageActivity"/>
 
 

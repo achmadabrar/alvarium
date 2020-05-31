@@ -23,6 +23,7 @@
             android:id="@+id/detailsScrollview"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_marginBottom="6dp"
             android:layout_above="@+id/addtoCartLayout">
 
             <LinearLayout
@@ -110,6 +111,17 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="5dp"
                     android:orientation="vertical" />
+
+                <include layout="@layout/horizontal_divider" />
+
+                <ViewStub
+                    android:id="@+id/vsGiftCardLayout"
+                    android:inflatedId="@+id/giftCardLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:layout="@layout/product_gift_card_layout"
+                    tools:visibility="visible" />
 
                 <include layout="@layout/horizontal_divider" />
 

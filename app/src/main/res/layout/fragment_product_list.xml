@@ -118,6 +118,8 @@
                 android:layout_height="match_parent"
                 app:spanCount="2"
                 tools:itemCount="5"
+                android:paddingBottom="60dp"
+                android:clipToPadding="false"
                 tools:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
                 tools:listitem="@layout/item_product_for_gridlayout" />
 
@@ -140,5 +142,17 @@
 
         </androidx.drawerlayout.widget.DrawerLayout>
     </RelativeLayout>
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fabPageSize"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_margin="10dp"
+        android:src="@android:drawable/ic_menu_sort_by_size"
+        android:visibility="gone"
+        app:backgroundTint="@color/gray"
+        app:fabCustomSize="50dp"
+        tools:visibility="visible" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

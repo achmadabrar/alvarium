@@ -1,5 +1,6 @@
 package com.bs.ecommerce.utils
 
+import android.app.DatePickerDialog
 import android.content.Context
 import android.content.res.ColorStateList
 import android.graphics.Color
@@ -57,7 +58,9 @@ class CustomAttributeManager(
 
                 AttributeControlType.ColorSquares -> colorSelectionAttr(attr)
 
-                AttributeControlType.TextBox -> textInputAttr(attr)
+                AttributeControlType.TextBox, AttributeControlType.MultilineTextbox -> textInputAttr(attr)
+
+                AttributeControlType.Datepicker -> datePickerAttr(attr)
 
                 else -> genericAttributes(attr)
             }
@@ -196,6 +199,49 @@ class CustomAttributeManager(
                 // radioGroup.removeAllViews()
                 attributeValueHolder.removeAllViews()
             }
+        }
+
+        inflatedViews[attr.id] = layout
+    }
+
+    private fun datePickerAttr(attr: CustomAttribute) {
+
+        val layout = layoutInflater.inflate(R.layout.custom_attribute_date_picker, viewGroup)
+        layout.tag = attr.id
+
+        val tvDatePicker = layout.findViewById<TextView>(R.id.tvDatePicker)
+        tvDatePicker.hint = attr.textPrompt ?: attr.name
+        tvDatePicker.setCompoundDrawablesWithIntrinsicBounds(
+            0, 0, if (attr.isRequired) R.drawable.ic_star_formular else 0, 0
+        )
+
+        val calender: Calendar = Calendar.getInstance()
+        val dialog = DatePickerDialog(
+            context, DatePickerDialog.OnDateSetListener { _, y, m, d ->
+                tvDatePicker.text = TextUtils().getFormattedDate(d,m,y)
+
+                // TODO save to attr control value
+
+                /*  product_attribute_16_day=2
+                    product_attribute_16_month=1
+                    product_attribute_16_year=2020  */
+
+                val value = AttributeControlValue()
+                value.id = -1 * attr.attributeControlType!!
+
+                value.name = "$d-$m-$y"
+                setAttrSelected(
+                    attr.id, value,
+                    isSelected = true,
+                    multipleSelection = false
+                )
+            },
+            calender.get(Calendar.YEAR), calender.get(Calendar.MONTH),
+            calender.get(Calendar.DAY_OF_MONTH)
+        )
+
+        tvDatePicker.setOnClickListener{
+            dialog.show()
         }
 
         inflatedViews[attr.id] = layout
@@ -424,7 +470,7 @@ class CustomAttributeManager(
                 {
                     val keyValuePair = KeyValuePair()
                     keyValuePair.key = "${productAttributePrefix}_${key}"
-                    keyValuePair.value = if(attribute.id == -1) attribute.name!! else attribute.id.toString()
+                    keyValuePair.value = if(attribute.id <= -1) attribute.name!! else attribute.id.toString() // -1 for textAttr & -2 for datePickerAttr
                     allKeyValueList.add(keyValuePair)
 
                     "key_value".showLog(" Key : $key    values: ${keyValuePair.value}")

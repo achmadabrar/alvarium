@@ -28,9 +28,11 @@ import com.bs.ecommerce.product.model.data.ProductSummary
 import com.bs.ecommerce.product.model.data.SubCategory
 import com.bs.ecommerce.product.viewModel.ProductListViewModel
 import com.bs.ecommerce.utils.ItemClickListener
+import com.bs.ecommerce.utils.PrefSingleton
 import com.bs.ecommerce.utils.replaceFragmentSafely
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import kotlinx.android.synthetic.main.fragment_product_list.*
+import kotlinx.android.synthetic.main.sort_option_bottom_sheet.view.*
 import kotlin.math.floor
 
 
@@ -48,7 +50,8 @@ class ProductListFragment : BaseFragment() {
     private val sortOptionDialog: BottomSheetDialog by lazy {
         BottomSheetDialog(requireContext(), R.style.BsDialog)
     }
-
+    
+    private lateinit var pageSizeDialog: BottomSheetDialog
 
     override fun getFragmentTitle() = R.string.title_register
 
@@ -169,6 +172,42 @@ class ProductListFragment : BaseFragment() {
 
     private fun populateSortOptions(sortOption: PagingFilteringContext?) {
 
+        pageSizeDialog = BottomSheetDialog(requireContext(), R.style.BsDialog)
+
+        val pageSizeHolder:LinearLayout = layoutInflater.inflate(R.layout.sort_option_bottom_sheet, null, false) as LinearLayout
+        pageSizeHolder.sortOptionBsTitle.text = getString(R.string.items_per_page)
+        
+        // page size selection
+        if(sortOption?.allowCustomersToSelectPageSize== true && !sortOption.pageSizeOptions.isNullOrEmpty()) {
+            fabPageSize.visibility = View.VISIBLE
+
+            for(i in sortOption.pageSizeOptions) {
+
+                val tv = layoutInflater.inflate(R.layout.custom_attribute_dropdown, null) as TextView
+                tv.text = i.text
+                tv.setCompoundDrawablesWithIntrinsicBounds(
+                    0, 0,
+                    if (i.selected == true) R.drawable.ic_tic_mark else R.drawable.transparent_tic_mark,
+                    0
+                )
+                pageSizeHolder.addView(tv)
+
+                tv.setOnClickListener {
+                    PrefSingleton.setPageSize(i.text)
+
+                    pageSizeDialog.hide()
+                    applyFilter(i.value)
+                }
+            }
+
+            pageSizeDialog.setContentView(pageSizeHolder)
+
+            fabPageSize.setOnClickListener {
+                pageSizeDialog.show()
+            }
+        }
+        
+        // sort option selection
         val sortOptionHolder:LinearLayout = layoutInflater.inflate(R.layout.sort_option_bottom_sheet, null, false) as LinearLayout
 
         if(sortOption?.allowProductSorting == true && !sortOption.availableSortOptions.isNullOrEmpty()) {
@@ -333,7 +372,8 @@ class ProductListFragment : BaseFragment() {
     }
 
     fun applyFilter(filterUrl: String?) {
-        (viewModel as ProductListViewModel).applyFilter(categoryId.toLong(), filterUrl, model)
+        (viewModel as ProductListViewModel).applyFilter(categoryId.toLong(),
+            filterUrl, model, getBy == GetBy.MANUFACTURER.name)
 
         sortOptionDialog.hide()
         drawerLayout?.closeDrawers()

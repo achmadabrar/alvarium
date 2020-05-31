@@ -12,7 +12,7 @@
         android:paddingBottom="10dp"
         tools:text="@string/placeholder"
         android:textColor="?attr/primaryTextColor"
-        android:textSize="@dimen/tv_text_size_regular"
+        android:textSize="@dimen/tv_text_size_semi_large"
         android:textStyle="bold" />
 
    <!-- <TextView

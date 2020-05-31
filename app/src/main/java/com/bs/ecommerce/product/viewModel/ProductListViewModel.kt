@@ -9,6 +9,7 @@ import com.bs.ecommerce.networking.Api
 import com.bs.ecommerce.product.model.ProductListModel
 import com.bs.ecommerce.product.model.SearchModel
 import com.bs.ecommerce.product.model.data.*
+import com.bs.ecommerce.utils.PrefSingleton
 import java.util.*
 
 class ProductListViewModel : BaseViewModel() {
@@ -37,7 +38,7 @@ class ProductListViewModel : BaseViewModel() {
 
         isLoadingLD.value = true
 
-        model.fetchProducts(catId, getQueryMap(resetFilters), object : RequestCompleteListener<CategoryModel> {
+        model.fetchProducts(catId, getQueryMap(true, resetFilters), object : RequestCompleteListener<CategoryModel> {
             override fun onRequestSuccess(data: CategoryModel) {
                 isLoadingLD.value = false
 
@@ -58,7 +59,7 @@ class ProductListViewModel : BaseViewModel() {
 
     fun getProductByManufacturer(manufacturerId: Long, resetFilters: Boolean, model: ProductListModel) {
         // don't call if already loading
-        if (isLoadingLD.value == true || productLiveData.value?.pagingFilteringContext?.hasNextPage == false) {
+        if (isLoadingLD.value == true || manufacturerLD.value?.pagingFilteringContext?.hasNextPage == false) {
             return
         }
 
@@ -66,7 +67,7 @@ class ProductListViewModel : BaseViewModel() {
 
         model.fetchProductsByManufacturer(
             manufacturerId,
-            getQueryMap(resetFilters),
+            getQueryMap(false, resetFilters),
             object : RequestCompleteListener<Manufacturer> {
                 override fun onRequestSuccess(data: Manufacturer) {
                     isLoadingLD.value = false
@@ -152,7 +153,7 @@ class ProductListViewModel : BaseViewModel() {
         })
     }
 
-    fun applyFilter(catId: Long, filterUrl: String?, model: ProductListModel) {
+    fun applyFilter(catId: Long, filterUrl: String?, model: ProductListModel, manufacturer: Boolean) {
 
         if (filterUrl.isNullOrEmpty()) return
         if (isLoadingLD.value == true) return
@@ -172,34 +173,57 @@ class ProductListViewModel : BaseViewModel() {
         }
 
         map[Api.qs_page_number] = 1.toString()
-        map[Api.qs_page_size] = Api.DEFAULT_PAGE_SIZE.toString()
+        map[Api.qs_page_size] = PrefSingleton.getPageSize().toString()
 
         queryMapLD.value = map
 
         shouldAppend = false
 
-        model.fetchProducts(catId, map, object : RequestCompleteListener<CategoryModel> {
-            override fun onRequestSuccess(data: CategoryModel) {
-                isLoadingLD.value = false
+        if (manufacturer) {
+            model.fetchProductsByManufacturer(
+                catId,
+                map,
+                object : RequestCompleteListener<Manufacturer> {
+                    override fun onRequestSuccess(data: Manufacturer) {
+                        isLoadingLD.value = false
+                        manufacturerLD.value = data
 
-                productLiveData.value = data
+                        preparePriceFilter(data.pagingFilteringContext)
+                        prepareFilterAttribute(data.pagingFilteringContext)
+                        setFilterVisibility(data.pagingFilteringContext)
+                    }
 
-                preparePriceFilter(data.pagingFilteringContext)
-                prepareFilterAttribute(data.pagingFilteringContext)
-                setFilterVisibility(data.pagingFilteringContext)
-            }
+                    override fun onRequestFailed(errorMessage: String) {
+                        isLoadingLD.value = false
+                        toast(errorMessage)
+                    }
+                })
+        } else {
+            model.fetchProducts(catId, map, object : RequestCompleteListener<CategoryModel> {
+                override fun onRequestSuccess(data: CategoryModel) {
+                    isLoadingLD.value = false
 
-            override fun onRequestFailed(errorMessage: String) {
-                isLoadingLD.value = false
-                toast(errorMessage)
-            }
+                    productLiveData.value = data
 
-        })
+                    preparePriceFilter(data.pagingFilteringContext)
+                    prepareFilterAttribute(data.pagingFilteringContext)
+                    setFilterVisibility(data.pagingFilteringContext)
+                }
+
+                override fun onRequestFailed(errorMessage: String) {
+                    isLoadingLD.value = false
+                    toast(errorMessage)
+                }
+
+            })
+        }
     }
 
-    private fun getQueryMap(resetFilters: Boolean): MutableMap<String, String> {
+    private fun getQueryMap(getProdByProdId: Boolean, resetFilters: Boolean): MutableMap<String, String> {
         // calculate next page to load
-        val currentPage = productLiveData.value?.pagingFilteringContext?.pageNumber ?: 0
+        val currentPage = if(getProdByProdId) productLiveData.value?.pagingFilteringContext?.pageNumber ?: 0
+            else manufacturerLD.value?.pagingFilteringContext?.pageNumber ?: 0
+
         pageNumber = currentPage + 1
 
         // whether or not the new data should be added with existing data
@@ -214,7 +238,7 @@ class ProductListViewModel : BaseViewModel() {
 
         // applying default query params
         map[Api.qs_page_number] = pageNumber.toString()
-        map[Api.qs_page_size] = Api.DEFAULT_PAGE_SIZE.toString()
+        map[Api.qs_page_size] = PrefSingleton.getPageSize().toString()
 
         queryMapLD.value = map
 

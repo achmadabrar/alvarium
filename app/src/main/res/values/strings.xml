@@ -286,5 +286,9 @@
     <string name="customer_info_updated">Successfully Updated</string>
     <string name="please_enter_your_price">Please enter your price</string>
     <string name="continue_with_facebook">Continue with Facebook</string>
+    <string name="hint_recipient_name">Recipient\'s Name</string>
+    <string name="hint_your_name">Your Name</string>
+    <string name="hint_message">Message</string>
+    <string name="items_per_page">Display items per page</string>
 
 </resources>

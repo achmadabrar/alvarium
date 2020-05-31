@@ -5,19 +5,19 @@ import com.google.gson.annotations.SerializedName
 
 data class GiftCard(
     @SerializedName("CustomProperties")
-    val customProperties: CustomProperties?,
+    var customProperties: CustomProperties?,
     @SerializedName("GiftCardType")
-    val giftCardType: Int?,
+    var giftCardType: Int?,
     @SerializedName("IsGiftCard")
-    val isGiftCard: Boolean?,
+    var isGiftCard: Boolean?,
     @SerializedName("Message")
-    val message: String?,
+    var message: String?,
     @SerializedName("RecipientEmail")
-    val recipientEmail: String?,
+    var recipientEmail: String?,
     @SerializedName("RecipientName")
-    val recipientName: String?,
+    var recipientName: String?,
     @SerializedName("SenderEmail")
-    val senderEmail: String?,
+    var senderEmail: String?,
     @SerializedName("SenderName")
-    val senderName: String?
+    var senderName: String?
 )

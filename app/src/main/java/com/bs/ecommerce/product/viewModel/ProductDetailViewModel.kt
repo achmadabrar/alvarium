@@ -127,6 +127,26 @@ class ProductDetailViewModel : BaseViewModel() {
             })
         }
 
+        // Add gift card info
+        productLiveData.value?.giftCard?.let {
+
+            if (it.isGiftCard == true) {
+                formValues.add(KeyValuePair().apply {
+                    key = Api.getKeyForGiftCardMessage(productId)
+                    value = it.message ?: ""
+                })
+
+                formValues.add(KeyValuePair().apply {
+                    key = Api.getKeyForGiftCardSender(productId)
+                    value = it.senderName ?: ""
+                })
+
+                formValues.add(KeyValuePair().apply {
+                    key = Api.getKeyForGiftCardRecipient(productId)
+                    value = it.recipientName ?: ""
+                })
+            }
+        }
 
         keyValueFormData.formValues = formValues
 

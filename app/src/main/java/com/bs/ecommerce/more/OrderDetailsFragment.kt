@@ -200,7 +200,7 @@ class OrderDetailsFragment : BaseFragment() {
             holder.itemView.tvProductName.text = item.productName
 
             holder.itemView.tv1.text =
-                getString(R.string.price).plus(": ").plus(item.unitPrice).plus("\t")
+                getString(R.string.price).plus(": ").plus(item.unitPrice).plus("  ")
                     .plus(getString(R.string.quantity)).plus(": ").plus(item.quantity).plus("\n")
                     .plus(getString(R.string.total)).plus(": ").plus(item.subTotal)
         }

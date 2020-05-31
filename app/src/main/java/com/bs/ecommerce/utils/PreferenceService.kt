@@ -2,9 +2,9 @@ package com.bs.ecommerce.utils
 
 
 import com.bs.ecommerce.auth.register.data.CustomerInfo
+import com.bs.ecommerce.networking.Api
 import com.google.gson.Gson
 import com.pixplicity.easyprefs.library.Prefs
-import java.lang.Exception
 
 
 object PrefSingleton
@@ -31,6 +31,18 @@ object PrefSingleton
     fun setPrefs(key: String, value: Int)
     {
         Prefs.putInt(key, value)
+    }
+
+    fun getPageSize() : Int {
+        //return Prefs.contains(PAGE_SIZE)
+        return   Prefs.getInt(PAGE_SIZE, Api.DEFAULT_PAGE_SIZE)
+    }
+
+    fun setPageSize(str: String?) {
+        if(!str.isNullOrEmpty() && str.isNumeric())
+            Prefs.putInt(PAGE_SIZE, str.toInt())
+        else
+            Prefs.putInt(PAGE_SIZE, Api.DEFAULT_PAGE_SIZE)
     }
 
     fun setCustomerInfo(key: String, value: CustomerInfo?) {
@@ -73,5 +85,6 @@ object PrefSingleton
     var NST = "nst"
     var DeviceID = "DEVICE_UNIQUE_ID"
     var CUSTOMER_INFO = "CUSTOMER_INFO"
+    var PAGE_SIZE = "PAGE_SIZE"
 
 }

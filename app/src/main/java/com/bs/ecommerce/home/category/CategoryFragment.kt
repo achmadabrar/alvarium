@@ -2,13 +2,12 @@ package com.bs.ecommerce.home.category
 
 import android.os.Bundle
 import android.view.View
-import android.widget.ExpandableListView
 import android.widget.RelativeLayout
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.bs.ecommerce.R
-import com.bs.ecommerce.base.ToolbarLogoBaseFragment
+import com.bs.ecommerce.base.BaseFragment
+import com.bs.ecommerce.main.MainActivity
 import com.bs.ecommerce.main.MainViewModel
 import com.bs.ecommerce.main.model.MainModel
 import com.bs.ecommerce.main.model.MainModelImpl
@@ -16,7 +15,7 @@ import com.bs.ecommerce.main.model.data.Category
 import kotlinx.android.synthetic.main.category_left.*
 
 
-class CategoryFragment : ToolbarLogoBaseFragment()
+class CategoryFragment : BaseFragment()
 {
 
     private lateinit var mainModel: MainModel
@@ -54,13 +53,20 @@ class CategoryFragment : ToolbarLogoBaseFragment()
 
     }
 
-    /*override fun onResume() {
+    override fun onResume() {
         super.onResume()
 
+        // Don't show logo if this fragment is launched from LeftDrawer
+        // Show toolbar logo if this fragment is launched from BottomNav
         arguments?.getBoolean(IS_NAV_DRAWER)?.let {
-            if(it) hideTopLogo()
-        }
-    }*/
+            if(!it) showTopLogo()
+        } ?: showTopLogo()
+    }
+
+    override fun onStop() {
+        super.onStop()
+        hideTopLogo()
+    }
 
     private fun setLiveDataListeners() {
 
@@ -96,6 +102,15 @@ class CategoryFragment : ToolbarLogoBaseFragment()
             }
             lastExpandedPosition = groupPosition
         }
+    }
+
+    private fun hideTopLogo() {
+        (activity as MainActivity).toolbarTop.logo = null
+    }
+
+    private fun showTopLogo() {
+        activity?.title = ""
+        (activity as MainActivity).toolbarTop.setLogo(R.drawable.ic_nopstation_logo)
     }
 
 

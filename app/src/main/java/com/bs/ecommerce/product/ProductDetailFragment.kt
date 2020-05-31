@@ -33,6 +33,7 @@ import kotlinx.android.synthetic.main.custom_attribute_bottom_sheet.view.*
 import kotlinx.android.synthetic.main.featured_product_layout.view.*
 import kotlinx.android.synthetic.main.fragment_product_detail.*
 import kotlinx.android.synthetic.main.product_availability_layout.view.*
+import kotlinx.android.synthetic.main.product_gift_card_layout.*
 import kotlinx.android.synthetic.main.product_name_layout.view.*
 import kotlinx.android.synthetic.main.product_name_layout.view.tvProductName
 import kotlinx.android.synthetic.main.product_price_layout.view.*
@@ -223,6 +224,12 @@ class ProductDetailFragment : BaseFragment(), View.OnClickListener {
                     }
 
 
+                    // Gift Card
+                    if(product.giftCard?.isGiftCard == true) {
+                        populateGiftCardSection()
+                    }
+
+
                     // Rental Product
                     if(product.isRental == true) {
                         populateRentalProductSection(product)
@@ -323,6 +330,12 @@ class ProductDetailFragment : BaseFragment(), View.OnClickListener {
             })
         }
 
+    }
+
+    private fun populateGiftCardSection() {
+        if(vsGiftCardLayout == null) return
+
+        vsGiftCardLayout.inflate()
     }
 
     @SuppressLint("SetTextI18n")
@@ -521,6 +534,16 @@ class ProductDetailFragment : BaseFragment(), View.OnClickListener {
             (viewModel as ProductDetailViewModel)
                 .productLiveData.value?.addToCart
                 ?.customerEnteredPrice = enteredPriceStr.toDoubleOrNull()
+        }
+
+
+        if (product?.giftCard?.isGiftCard == true) {
+            (viewModel as ProductDetailViewModel)
+                .productLiveData.value?.giftCard?.apply{
+                    senderName = EditTextUtils().getString(etYourName)
+                    recipientName = EditTextUtils().getString(etRecipientName)
+                    message = EditTextUtils().getString(etMessage)
+                }
         }
 
         (viewModel as ProductDetailViewModel).addProductToCartModel(

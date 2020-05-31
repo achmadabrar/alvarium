@@ -464,6 +464,10 @@ interface Api {
         const val addressAttributePrefix = "address_attribute"
         const val customerAttributePrefix = "customer_attribute"
 
+        fun getKeyForGiftCardMessage(productId: Long): String = "giftcard_$productId.Message"
+        fun getKeyForGiftCardSender(productId: Long): String = "giftcard_$productId.SenderName"
+        fun getKeyForGiftCardRecipient(productId: Long): String = "giftcard_$productId.RecipientName"
+
         const val topicAboutUs = "AboutUs"
         const val topicPrivacyPolicy = "PrivacyInfo"
 
