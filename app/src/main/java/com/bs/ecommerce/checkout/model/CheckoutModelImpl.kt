@@ -13,7 +13,7 @@ import retrofit2.Callback
 import retrofit2.Response
 
 
-class CheckoutModelImpl(private val context: Context): CheckoutModel
+class CheckoutModelImpl : CheckoutModel
 {
 
     override fun getBillingForm(callback: RequestCompleteListener<BillingAddressResponse>)

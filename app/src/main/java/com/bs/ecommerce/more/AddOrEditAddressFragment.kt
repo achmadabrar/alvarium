@@ -106,7 +106,7 @@ class AddOrEditAddressFragment : BaseFragment() {
                 // load states for selected country
                 if (data.value != "0") {
                     (viewModel as AddressViewModel).getStatesByCountryVM(
-                        data.value, CheckoutModelImpl(requireContext())
+                        data.value, CheckoutModelImpl()
                     )
                 }
             }

@@ -10,7 +10,7 @@ data class SaveBillingData(
     @SerializedName("BillingAddressModel") var billingAddressModel: BillingAddress = BillingAddress(),
     @SerializedName("ConfirmModel") var confirmModel: ConfirmModel = ConfirmModel(),
     @SerializedName("NextStep") var nextStep: Int = 0,
-    @SerializedName("PaymentInfoModel") var paymentInfoModel: PaymentInfoModel = PaymentInfoModel(),
+    @SerializedName("PaymentInfoModel") var paymentInfoModel: PaymentInfoModel? = PaymentInfoModel(),
 
     var paymentMethodSkipped: Boolean = false,
     @SerializedName("PaymentMethodModel") var paymentMethodModel: PaymentMethodModel? = null,
