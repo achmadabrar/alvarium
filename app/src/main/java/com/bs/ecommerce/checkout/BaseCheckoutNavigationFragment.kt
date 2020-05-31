@@ -29,7 +29,7 @@ abstract class BaseCheckoutNavigationFragment : ToolbarLogoBaseFragment()
     {
         super.onViewCreated(view, savedInstanceState)
 
-        model = CheckoutModelImpl(activity?.applicationContext!!)
+        model = CheckoutModelImpl()
 
         viewModel  = ViewModelProvider(this).get(CheckoutViewModel::class.java)
 
@@ -66,7 +66,7 @@ abstract class BaseCheckoutNavigationFragment : ToolbarLogoBaseFragment()
         {
             CheckoutConstants.ShippingAddress ->
             {
-                saveResponse?.data?.shippingAddressModel?.let {
+                saveResponse!!.data.shippingAddressModel?.let {
 
                     MyApplication.checkoutSaveResponse?.data?.shippingAddressModel = it
 
@@ -77,7 +77,7 @@ abstract class BaseCheckoutNavigationFragment : ToolbarLogoBaseFragment()
             }
             CheckoutConstants.ShippingMethod ->
             {
-                saveResponse?.data?.shippingMethodModel?.let {
+                saveResponse!!.data.shippingMethodModel?.let {
 
                     MyApplication.checkoutSaveResponse?.data?.shippingMethodModel = it
 
@@ -88,7 +88,7 @@ abstract class BaseCheckoutNavigationFragment : ToolbarLogoBaseFragment()
             }
             CheckoutConstants.PaymentMethod ->
             {
-                saveResponse?.data?.paymentMethodModel?.let {
+                saveResponse!!.data.paymentMethodModel?.let {
 
                     MyApplication.checkoutSaveResponse?.data?.paymentMethodModel = it
 
@@ -99,7 +99,7 @@ abstract class BaseCheckoutNavigationFragment : ToolbarLogoBaseFragment()
             }
             CheckoutConstants.PaymentInfo -> {
 
-                saveResponse?.data?.paymentInfoModel?.let {
+                saveResponse!!.data.paymentInfoModel?.let {
 
                     startActivityForResult(
                         Intent(requireActivity(), WebViewPaymentActivity::class.java)

@@ -5,7 +5,6 @@ import com.bs.ecommerce.auth.login.data.ForgotPasswordResponse
 import com.bs.ecommerce.auth.login.data.LoginPostData
 import com.bs.ecommerce.auth.login.data.LoginResponse
 import com.bs.ecommerce.auth.register.data.GetRegistrationResponse
-import com.bs.ecommerce.cart.model.data.AddDiscountPostData
 import com.bs.ecommerce.cart.model.data.CartResponse
 import com.bs.ecommerce.cart.model.data.CartRootData
 import com.bs.ecommerce.checkout.model.data.*
@@ -59,10 +58,13 @@ interface Api {
 
 
     @POST("shoppingcart/applydiscountcoupon")
-    fun applyDiscountCoupon(@Body request: AddDiscountPostData): Call<CartResponse>
+    fun applyDiscountCoupon(@Body request: KeyValueFormData): Call<CartResponse>
+
+    @POST("shoppingcart/removediscountcoupon")
+    fun removeDiscountCoupon(@Body request: KeyValueFormData): Call<CartResponse>
 
     @POST("shoppingcart/applygiftcard")
-    fun applyGiftCardCoupon(@Body request: AddDiscountPostData): Call<CartResponse>
+    fun applyGiftCardCoupon(@Body request: KeyValueFormData): Call<CartResponse>
 
 
     @POST("customer/login") fun postLoginAPI(@Body loginPostData: LoginPostData): Call<LoginResponse>

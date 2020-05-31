@@ -1,10 +1,8 @@
 package com.bs.ecommerce.cart
 
-import androidx.lifecycle.MutableLiveData
 import com.bs.ecommerce.auth.register.data.KeyValuePair
 import com.bs.ecommerce.base.BaseViewModel
 import com.bs.ecommerce.cart.model.CartModel
-import com.bs.ecommerce.cart.model.data.AddDiscountPostData
 import com.bs.ecommerce.cart.model.data.CartResponse
 import com.bs.ecommerce.cart.model.data.CartRootData
 import com.bs.ecommerce.common.RequestCompleteListener
@@ -14,6 +12,9 @@ class CartViewModel : BaseViewModel()
 {
 
     private var dynamicAttributeUpdated = false
+
+    private var DISCOUNT_KEY = "discountcouponcode"
+    private var GIFT_CARD_KEY = "giftcardcouponcode"
 
     fun updateCartData(allKeyValueList: List<KeyValuePair>, model: CartModel)
     {
@@ -64,12 +65,11 @@ class CartViewModel : BaseViewModel()
         })
     }
 
-    fun applyCouponVM(discount : AddDiscountPostData, model: CartModel)
+    fun applyCouponVM(code : String, model: CartModel)
     {
-
         isLoadingLD.value = true
 
-        model.applyCouponModel(discount, object : RequestCompleteListener<CartResponse>
+        model.applyCouponModel(KeyValueFormData(listOf(KeyValuePair(DISCOUNT_KEY, code))), object : RequestCompleteListener<CartResponse>
         {
             override fun onRequestSuccess(data: CartResponse)
             {
@@ -85,12 +85,32 @@ class CartViewModel : BaseViewModel()
         })
     }
 
-    fun applyGiftCardVM(discount : AddDiscountPostData, model: CartModel)
+    fun removeCouponVM(code : String, model: CartModel)
     {
-
         isLoadingLD.value = true
 
-        model.applyGiftCardModel(discount, object : RequestCompleteListener<CartResponse>
+        model.removeCouponModel(KeyValueFormData(listOf(KeyValuePair(DISCOUNT_KEY, code))), object : RequestCompleteListener<CartResponse>
+        {
+            override fun onRequestSuccess(data: CartResponse)
+            {
+                isLoadingLD.value = false
+
+                cartLD.value = data.cartRootData
+            }
+
+            override fun onRequestFailed(errorMessage: String)
+            {
+                isLoadingLD.value = false
+            }
+        })
+    }
+
+
+    fun applyGiftCardVM(code : String, model: CartModel)
+    {
+        isLoadingLD.value = true
+
+        model.applyGiftCardModel(KeyValueFormData(listOf(KeyValuePair(GIFT_CARD_KEY, code))), object : RequestCompleteListener<CartResponse>
         {
             override fun onRequestSuccess(data: CartResponse)
             {

@@ -11,7 +11,6 @@ import com.bs.ecommerce.base.BaseFragment
 import com.bs.ecommerce.base.BaseViewModel
 import com.bs.ecommerce.cart.model.CartModel
 import com.bs.ecommerce.cart.model.CartModelImpl
-import com.bs.ecommerce.cart.model.data.AddDiscountPostData
 import com.bs.ecommerce.cart.model.data.CartProduct
 import com.bs.ecommerce.cart.model.data.CartRootData
 import com.bs.ecommerce.cart.model.data.OrderTotal
@@ -54,7 +53,7 @@ class CartFragment : BaseFragment() {
         super.onViewCreated(view, savedInstanceState)
 
         if (!viewCreated) {
-            model = CartModelImpl(activity?.applicationContext!!)
+            model = CartModelImpl()
 
             viewModel = ViewModelProvider(this).get(CartViewModel::class.java)
 
@@ -69,43 +68,33 @@ class CartFragment : BaseFragment() {
 
     private fun setLiveDataListeners() {
 
-        (viewModel as CartViewModel).cartLD.observe(viewLifecycleOwner, Observer { cartRootData ->
+        with(viewModel as CartViewModel)
+        {
+            cartLD.observe(viewLifecycleOwner, Observer { cartRootData ->
 
-            if(cartRootData.cart.items.isNotEmpty())
-            {
-                cartRootLayout?.visibility = View.VISIBLE
+                if(cartRootData.cart.items.isNotEmpty())
+                {
+                    cartRootLayout?.visibility = View.VISIBLE
 
-                tvTotalItem?.text = getString(R.string.cart_items_count, updateCartItemCounter(cartRootData.cart.items))
+                    tvTotalItem?.text = getString(R.string.cart_items_count, updateCartItemCounter(cartRootData.cart.items))
 
-                setData(cartRootData)
-            }
-            else
-            {
-
-                toast(getString(R.string.cart_empty))
-                try {
-                    requireActivity().supportFragmentManager.popBackStackImmediate()
-                } catch (e: IllegalArgumentException) {
+                    setData(cartRootData)
                 }
+                else
+                {
+                    toast(getString(R.string.cart_empty))
+                    requireActivity().supportFragmentManager.popBackStackImmediate()
+                }
+            })
+            isLoadingLD.observe(viewLifecycleOwner, Observer { isShowLoader -> showHideLoader(isShowLoader) })
+        }
 
-            }
-
-        })
-
-        (viewModel as CartViewModel).isLoadingLD.observe(viewLifecycleOwner, Observer { isShowLoader ->
-
-            if (isShowLoader)
-                showLoading()
-            else
-                hideLoading()
-        })
 
     }
 
 
     private fun setData(cartRootData: CartRootData)
     {
-        //MyApplication.setCartCounter(cartProductListResponse.count)
         cartInfoLinearLayout?.visibility = View.VISIBLE
 
         populateProductList(cartRootData.cart.items)
@@ -157,17 +146,28 @@ class CartFragment : BaseFragment() {
 
                 if(appliedDiscountsWithCodes.isNotEmpty())
                 {
-                    discountKey?.text = "${getString(R.string.discount)} (${appliedDiscountsWithCodes[0].couponCode})"
+                    appliedDiscountLayout?.visibility = View.VISIBLE
+
+                    val appliedCode = appliedDiscountsWithCodes[0].couponCode
+
+                    discountKey?.text = "${getString(R.string.discount)} ($appliedCode)"
+                    appliedDiscountText?.text = "${getString(R.string.entered_code)} $appliedCode"
+
+                    removeDiscountButton?.setOnClickListener {
+                        (viewModel as CartViewModel).removeCouponVM(appliedCode, model)
+                    }
                 }
 
-                if(messages.isNotEmpty())
-                    etCartCoupon?.setText(messages[0])
+                if(isApplied)
+                {
+                    if(messages.isNotEmpty())
+                        toast(messages[0])
+                }
             }
             else
                 ll_cart_coupon?.visibility = View.GONE
 
-            if(messages.isNotEmpty())
-                toast(messages[0])
+
         }
 
         with(cartRootData.cart.giftCardBox)
@@ -176,8 +176,19 @@ class CartFragment : BaseFragment() {
             {
                 ll_cart_gift_card?.visibility = View.VISIBLE
 
-/*                if(message.isNotEmpty())
-                    etGiftCode?.setText(message)*/
+                if(cartRootData.orderTotals.giftCards!!.isNotEmpty())
+                {
+                    appliedGiftCardLayout?.visibility = View.VISIBLE
+
+                    val appliedCode = cartRootData.orderTotals.giftCards!![0].couponCode
+
+                    appliedGiftCardCodeText?.text = "${getString(R.string.entered_code)} $appliedCode"
+
+                    removeGiftCardButton?.setOnClickListener {
+                        (viewModel as CartViewModel).removeCouponVM(appliedCode!!, model)
+                    }
+                }
+
             }
             else
                 ll_cart_gift_card?.visibility = View.GONE
@@ -228,7 +239,10 @@ class CartFragment : BaseFragment() {
             val couponCode = etCartCoupon.text.toString().trim()
 
             if(couponCode.isNotEmpty())
-                (viewModel as CartViewModel).applyCouponVM(AddDiscountPostData(data = couponCode), model)
+            {
+                (viewModel as CartViewModel).applyCouponVM(couponCode, model)
+                requireActivity().hideKeyboard()
+            }
         }
 
         btnAddGiftCode?.setOnClickListener {
@@ -236,7 +250,11 @@ class CartFragment : BaseFragment() {
             val couponCode = etGiftCode.text.toString().trim()
 
             if(couponCode.isNotEmpty())
-                (viewModel as CartViewModel).applyGiftCardVM(AddDiscountPostData(data = couponCode), model)
+            {
+                (viewModel as CartViewModel).applyGiftCardVM(couponCode, model)
+                requireActivity().hideKeyboard()
+            }
+
         }
 
         clickListener = object : ItemClickListener<CartProduct> {
@@ -282,10 +300,10 @@ class CartFragment : BaseFragment() {
             tvTotal?.text = orderTotal
 
 
-            if (orderTotalDiscount != null)
+            if (subTotalDiscount != null)
             {
                 discountLayout?.visibility = View.VISIBLE
-                tvDiscount?.text = orderTotalDiscount
+                tvDiscount?.text = subTotalDiscount
                 underDiscountDivider?.visibility = View.VISIBLE
             }
             else

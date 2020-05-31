@@ -34,7 +34,7 @@ class CheckoutStepFragment : ToolbarLogoBaseFragment() {
     {
         super.onViewCreated(view, savedInstanceState)
 
-        model = CheckoutModelImpl(activity?.applicationContext!!)
+        model = CheckoutModelImpl()
 
         viewModel  = ViewModelProvider(this).get(CheckoutViewModel::class.java)
 
@@ -130,7 +130,6 @@ class CheckoutStepFragment : ToolbarLogoBaseFragment() {
         val bottomNavPosition = when (fragment) {
             is ShippingMethodFragment -> CheckoutConstants.SHIPPING_TAB
             is PaymentMethodFragment -> CheckoutConstants.PAYMENT_TAB
-            is PaymentInfoFragment -> CheckoutConstants.PAYMENT_TAB
             is ConfirmOrderFragment -> CheckoutConstants.CONFIRM_TAB
             else -> 0
         }

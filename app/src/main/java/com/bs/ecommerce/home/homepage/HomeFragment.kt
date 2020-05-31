@@ -92,7 +92,7 @@ class HomeFragment : ToolbarLogoBaseFragment() {
     }
     private fun callCart()
     {
-        cartModel = CartModelImpl(requireContext())
+        cartModel = CartModelImpl()
         (viewModel as MainViewModel).getCartVM(cartModel)
     }
 

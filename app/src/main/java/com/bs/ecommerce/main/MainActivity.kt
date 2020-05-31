@@ -237,15 +237,10 @@ class MainActivity : PrivacyPolicyDialogActivity(), View.OnClickListener
         toggle.syncState()
     }
 
-    override fun onClick(v: View)
+    override fun onClick(v: View) = shouldDisplayHomeUp()
 
-            = shouldDisplayHomeUp()
-
-
-    fun shouldDisplayHomeUp()
+    private fun shouldDisplayHomeUp()
     {
-        Log.d("clicking", "yes")
-
         if (supportActionBar != null)
         {
             if (shouldOpenDrawer())
@@ -287,8 +282,8 @@ class MainActivity : PrivacyPolicyDialogActivity(), View.OnClickListener
                     .addToBackStack(CartFragment::class.java.simpleName)
                     .commit()
 
-                MyApplication.getBillingResponse = null
-                MyApplication.checkoutSaveResponse = null
+                //MyApplication.getBillingResponse = null
+                //MyApplication.checkoutSaveResponse = null
                 MyApplication.previouslySelectedTab = 0
             }
 
@@ -336,66 +331,34 @@ class MainActivity : PrivacyPolicyDialogActivity(), View.OnClickListener
         when (item.itemId) {
             R.id.bottom_nav_home -> {
 
-                if(shouldNavigate())
-                {
-                    supportFragmentManager.popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE)
-                    return@OnNavigationItemSelectedListener true
-                }
+                supportFragmentManager.popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE)
+                return@OnNavigationItemSelectedListener true
             }
             R.id.bottom_nav_categories -> {
 
-                if(shouldNavigate())
-                {
-                    createIfNotInBackStack<CategoryFragment>(CategoryFragment())
-                    return@OnNavigationItemSelectedListener true
-                }
-
+                createIfNotInBackStack<CategoryFragment>(CategoryFragment())
+                return@OnNavigationItemSelectedListener true
             }
             R.id.bottom_nav_search -> {
-                if(shouldNavigate())
-                {
-                    createIfNotInBackStack<SearchFragment>(SearchFragment())
-                    return@OnNavigationItemSelectedListener true
-                }
 
+                createIfNotInBackStack<SearchFragment>(SearchFragment())
+                return@OnNavigationItemSelectedListener true
             }
             R.id.bottom_nav_account -> {
-                if(shouldNavigate())
-                {
-                    createIfNotInBackStack<UserAccountFragment>(UserAccountFragment())
-                    return@OnNavigationItemSelectedListener true
-                }
+
+                createIfNotInBackStack<UserAccountFragment>(UserAccountFragment())
+                return@OnNavigationItemSelectedListener true
 
             }
             R.id.bottom_nav_more -> {
-                if(shouldNavigate())
-                {
-                    createIfNotInBackStack<OptionsFragment>(OptionsFragment())
-                    return@OnNavigationItemSelectedListener true
-                }
+
+                createIfNotInBackStack<OptionsFragment>(OptionsFragment())
+                return@OnNavigationItemSelectedListener true
+
 
             }
         }
         false
-    }
-
-
-    private fun shouldNavigate() : Boolean
-    {
-        var flag = true
-        if (supportFragmentManager.findFragmentById(R.id.checkoutFragmentHolder) is PaymentInfoFragment)
-        {
-            val alertDialogBuilder = AlertDialog.Builder(this)
-            alertDialogBuilder.setTitle(R.string.app_name)
-            alertDialogBuilder.setMessage(getString(R.string.exit_payment_dialog_query))
-            alertDialogBuilder.setCancelable(false)
-            alertDialogBuilder.setPositiveButton("Let's exit") { arg0, arg -> arg0.dismiss(); flag = true }
-            alertDialogBuilder.setNegativeButton("No") { arg0, arg -> arg0.dismiss(); flag = false }
-            val alertDialog = alertDialogBuilder.create()
-            alertDialog.show()
-        }
-
-        return flag
     }
 
     fun closeDrawer() =  drawerLayout.closeDrawers()

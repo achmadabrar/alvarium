@@ -68,13 +68,6 @@ class OptionsFragment : ToolbarLogoBaseFragment() {
                         R.string.title_contact_us ->
                             replaceFragmentSafely(ContactUsFragment())
 
-                        R.string.title_checkout ->
-                            replaceFragmentSafely(CheckoutStepFragment())
-/*                        startActivityForResult(
-                            Intent(requireActivity(), PaymentInfoActivity::class.java)
-                                .putExtra(CheckoutConstants.PAYMENT_INFO_NAME, "Test"),
-                            CheckoutConstants.PAYMENT_INFO_RESULT)*/
-
                         R.string.placeholder ->
                             replaceFragmentSafely(RewardPointFragment())
                     }
