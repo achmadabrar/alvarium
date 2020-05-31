@@ -54,8 +54,7 @@
                     android:id="@+id/existingAddressSpinner"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    tools:listitem="@layout/simple_spinner_item"
-                    android:entries="@array/spinner_dummy_data"
+                    android:background="@drawable/checkout_spinner_bg"
                     android:textColor="@color/white" />
             </LinearLayout>
 

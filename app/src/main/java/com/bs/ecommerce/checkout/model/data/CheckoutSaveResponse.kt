@@ -10,16 +10,18 @@ data class SaveBillingData(
     @SerializedName("BillingAddressModel") var billingAddressModel: BillingAddress = BillingAddress(),
     @SerializedName("ConfirmModel") var confirmModel: ConfirmModel = ConfirmModel(),
     @SerializedName("NextStep") var nextStep: Int = 0,
+    @SerializedName("CompletedModel") var completedModel: CompletedModel? = CompletedModel(),
     @SerializedName("PaymentInfoModel") var paymentInfoModel: PaymentInfoModel? = PaymentInfoModel(),
-
-    var paymentMethodSkipped: Boolean = false,
     @SerializedName("PaymentMethodModel") var paymentMethodModel: PaymentMethodModel? = null,
-
-    var shippingAddressSkipped: Boolean = false,
     @SerializedName("ShippingAddressModel") var shippingAddressModel: ShippingAddressModel? = null,
-
-    var shippingMethodSkipped: Boolean = false,
     @SerializedName("ShippingMethodModel") var shippingMethodModel: ShippingMethodModel? = null
+)
+
+
+data class CompletedModel(
+    @SerializedName("CustomOrderNumber") var customOrderNumber: Any = Any(),
+    @SerializedName("OnePageCheckoutEnabled") var onePageCheckoutEnabled: Boolean = false,
+    @SerializedName("OrderId") var orderId: Int = 0
 )
 
 data class ConfirmModel(

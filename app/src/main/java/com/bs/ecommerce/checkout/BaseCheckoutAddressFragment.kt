@@ -10,6 +10,7 @@ import com.bs.ecommerce.utils.*
 import kotlinx.android.synthetic.main.address_form.*
 import kotlinx.android.synthetic.main.fragment_base_billing_adddress.*
 import kotlinx.android.synthetic.main.fragment_billing_address.*
+import java.util.logging.Handler
 
 
 open class BaseCheckoutAddressFragment : BaseCheckoutNavigationFragment()
@@ -67,8 +68,8 @@ open class BaseCheckoutAddressFragment : BaseCheckoutNavigationFragment()
 
         countryNameList?.let {  populateCountrySpinner(countryNameList, address.availableCountries)  }
 
+        android.os.Handler().post {  newAddressLayout?.visibility = View.VISIBLE    }
 
-        newAddressLayout?.visibility = View.VISIBLE
     }
 
 
@@ -76,7 +77,7 @@ open class BaseCheckoutAddressFragment : BaseCheckoutNavigationFragment()
     {
         val addressList = mutableListOf<String>()
         addressList.addAll(existingAddresses.map { "${it.firstName}, ${it.lastName}, ${it.address1},${it.city},${it.countryName}" })
-        addressList.add("New Address")
+        addressList.add(getString(R.string.new_address))
 
         existingAddressSpinner?.adapter = createSpinnerAdapter(addressList)
 

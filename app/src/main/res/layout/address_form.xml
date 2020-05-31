@@ -34,7 +34,8 @@
         <androidx.appcompat.widget.AppCompatSpinner
             android:id="@+id/countrySpinner"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:background="@drawable/checkout_spinner_bg"/>
     </LinearLayout>
 
     <LinearLayout
@@ -48,7 +49,8 @@
         <androidx.appcompat.widget.AppCompatSpinner
             android:id="@+id/stateSpinner"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:background="@drawable/checkout_spinner_bg"/>
     </LinearLayout>
 
     <EditText

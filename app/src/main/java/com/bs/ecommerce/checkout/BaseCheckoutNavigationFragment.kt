@@ -120,7 +120,7 @@ abstract class BaseCheckoutNavigationFragment : ToolbarLogoBaseFragment()
             CheckoutConstants.Completed ->
                 startActivity(Intent(requireActivity(), ResultActivity::class.java)
                         .putExtra(CheckoutConstants.CHECKOUT_STEP, CheckoutConstants.Completed)
-                        .putExtra(CheckoutConstants.ORDER_ID, "10")
+                        .putExtra(CheckoutConstants.ORDER_ID, saveResponse!!.data.completedModel!!.orderId)
                 )
 
 
@@ -141,7 +141,7 @@ abstract class BaseCheckoutNavigationFragment : ToolbarLogoBaseFragment()
                 {
                     CheckoutStepFragment.isBillingAddressSubmitted = true
 
-                    toast(saveResponse.message.toString())
+                    saveResponse.message?.let { toast(it) }
 
                     goToNextStep(saveResponse)
                 }

@@ -128,6 +128,12 @@
     <string name="returning_customer">Returning Customer?</string>
     <string name="checkout_title">Checkout as a guest or Register</string>
     <string name="checkout_as_guest">Checkout as Guest</string>
+
+
+
+    <!--Checkout-->
+
+    <string name="new_address">New Address</string>
     <string name="address">Address</string>
     <string name="step_shipping">Shipping</string>
     <string name="payment">Payment</string>
@@ -144,11 +150,15 @@
     <string name="store">Store</string>
     <string name="confirm">Confirm</string>
     <string name="products">Products</string>
-    <string name="pickup_point_address">Picup point address</string>
+    <string name="pickup_point_address">Pickup point address</string>
     <string name="invoice">Order Calculation</string>
-    <string name="exit_payment_dialog_query">Are you sure you want to exit from payment?</string>
 
     <string name="please_complete_previous_step">Please complete previous step</string>
+
+
+
+
+
 
     <!--Confirm Order Dialog-->
     <string name="order_number_is">Order Number is</string>
