@@ -286,13 +286,20 @@ abstract class BaseActivity : AppCompatActivity()
         }
     }
 
-    fun showCompleteDialogBox(orderId: Int)
+    fun showOrderCompleteDialog(orderId: Int = 0, canHaveOrderId: Boolean = true)
     {
+        var msg = ""
+
+        if(canHaveOrderId)
+            msg = getString(R.string.order_number_is) + " " + orderId
+        else
+            msg = "Press Ok to Exit"
+
         MaterialDialog(this).show {
 
             title(R.string.your_order_is_confirm)
 
-            message(null, getString(R.string.order_number_is) + " " + orderId)
+            message(null, msg)
 
             positiveButton(R.string.ok) {
                 finish()

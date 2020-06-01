@@ -63,7 +63,8 @@ class WebViewPaymentActivity : BaseActivity()
 
 
         if(nextStep == CheckoutConstants.Completed)
-            showCompleteDialogBox(10)
+            showOrderCompleteDialog(canHaveOrderId = false)
+
             /*startActivity(Intent(this, ResultActivity::class.java)
                 .putExtra(CheckoutConstants.CHECKOUT_STEP, CheckoutConstants.Completed)
                 .putExtra(CheckoutConstants.ORDER_ID, "10")
@@ -128,12 +129,17 @@ class WebViewPaymentActivity : BaseActivity()
                     //toast(nextStep.toString())
                     onBackPressed()
                 }
-                view.loadUrl(webViewUrl, NetworkUtil.headers)
+                if(url.contains("/checkout/completed") || url.contains("/orderdetails"))
+                    showOrderCompleteDialog(canHaveOrderId = false)
+
+
+                //view.loadUrl(webViewUrl, NetworkUtil.headers)
                 //view.postUrl(CheckoutConstants.PaymentInfoUrl, NetworkUtil.headers.entries.toString().toByteArray(charset = Charsets.UTF_8))
                 return false
             }
         }
         paymentInfoWebView?.loadUrl(webViewUrl, NetworkUtil.headers)
+        "WebViewHeaders".showLog("${NetworkUtil.headers}")
     }
 
 }

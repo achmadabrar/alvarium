@@ -125,7 +125,7 @@ abstract class BaseCheckoutNavigationFragment : ToolbarLogoBaseFragment()
             CheckoutConstants.ConfirmOrder -> replaceFragmentWithoutSavingState(ConfirmOrderFragment())
 
             CheckoutConstants.Completed ->
-                (activity as BaseActivity).showCompleteDialogBox(saveResponse!!.data.completedModel!!.orderId)
+                (activity as BaseActivity).showOrderCompleteDialog(saveResponse!!.data.completedModel!!.orderId)
 
             /*startActivity(Intent(requireActivity(), ResultActivity::class.java)
                         .putExtra(CheckoutConstants.CHECKOUT_STEP, CheckoutConstants.Completed)
