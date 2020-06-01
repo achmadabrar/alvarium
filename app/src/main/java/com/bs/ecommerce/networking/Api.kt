@@ -263,30 +263,12 @@ interface Api {
     @GET("order/customerrewardpoints")
     fun getRewardPoints(@Query("pageNumber") page: Int) : Call<RewardPointResponse>
 
-/*    @POST("setcurrency/{id}")
-    fun setCurrency(@Path("id") id: Long): Call<LanguageResponse>
+    // Common
 
-    @get:GET("getcurrency")
-    val getCurrency : Call<GetCurrencyResponse>
+    @GET("common/getstringresources/{languageId}")
+    fun getStringResource(@Path("languageId") language: Int) : Call<StringResourceResponse>
 
-
-    @POST("SetLanguage/{id}")
-    fun setLanguage(@Path("id") id: Long): Call<LanguageResponse>
-
-    @get:GET("GetLanguage")
-    val getLanguage : Call<GetLanguageResponse>
-
-
-    @get:GET("v1/categories")
-    val newCategory: Call<CategoryNewResponse>
-
-    @get:GET("categories")
-    val category: Call<CategoryResponse>
-
-    @get:GET("catalog/homepagecategorieswithproduct")
-    val homePageCategoriesWithProduct: Call<FeaturedCategoryResponse>
-
-    @get:GET("ShoppingCart")
+/*  @get:GET("ShoppingCart")
     val shoppingCart: Call<CartProductListResponse>
 
     @get:GET("ShoppingCart/OrderTotal")
@@ -322,33 +304,10 @@ interface Api {
     @POST("AppStart")
     fun initApp(@Body appStartRequest: AppStartRequest): Call<AppThemeResponse>
 
-    @GET("homepagebanner")
-    fun getHomePageBanner(@Query(queryString) query: String): Call<HomePageBannerResponse>
-
-    @GET("homepagecategories")
-    fun getHomePageCategories(@Query(queryString) query: String): Call<HomePageCategoryResponse>
-
-    @GET("homepageproducts")
-    fun getHomePageProducts(@Query(queryString) query: String): Call<HomePageProductResponse>
-
-    @GET("homepagemanufacture")
-    fun getHomePageManufacturer(@Query(queryString) query: String): Call<HomePageManufacturerResponse>
 
     @GET("categoryfeaturedproductandsubcategory/{id}")
     fun getCategoryFeaturedProductAndSubcategory(@Path("id") id: Long): Call<CategoryFeaturedProductAndSubcategoryResponse>
 
-    @GET("productdetails/{id}")
-    fun getProductDetails(@Path("id") id: Long): Call<ProductDetailResponse>
-
-
-
-    @POST("ProductDetailsPagePrice/{productId}")
-    fun getUpdatedPrice(@Path("productId") id: Long, @Body list: List<KeyValuePair>): Call<PriceResponse>
-
-    // Get shopping cart
-
-    @GET("productdetails/{id}")
-    fun getCartItemProductDetailResponse(@Path("id") id: Long, @QueryMap options: Map<String, String>): Call<ProductDetailResponse>
 
     @POST("ShoppingCart/ApplyDiscountCoupon")
     fun applyDiscountCoupon(@Body request: DiscountCouponRequest): Call<DiscountCouponApplyResponse>
@@ -356,21 +315,11 @@ interface Api {
     @POST("ShoppingCart/ApplyGiftCard")
     fun applyDiscount(@Body request: AddGiftRequest): Call<AddGiftVoucherResponse>
 
-
     @GET("ShoppingCart/RemoveDiscountCoupon")
     fun removeDiscountCoupon(): Call<BaseResponse>
 
     @POST("ShoppingCart/applycheckoutattribute")
     fun applyCheckoutAttribute(@Body list: List<KeyValuePair>): Call<OrderTotalResponse>
-
-    @GET("customer/attributes")
-    fun getCustomerAttribute(): Call<CustomerAtrributeResponse>
-
-    @POST("customer/attributes")
-    fun applyCustomerAttribute(@Body list: List<KeyValuePair>): Call<ShoppingCartCheckoutAttributeApplyResponse>
-
-    @GET("country/getstatesbycountryid/{countryId}")
-    fun getStates(@Path("countryId") id: String): Call<StateListResponse>
 
     @POST("checkout/checkoutsaveadress/1") fun saveBillingAddress(@Body list: List<KeyValuePair>): Call<BillingAddressSaveResponse>
 
@@ -392,31 +341,14 @@ interface Api {
     @POST("checkout/checkoutsavepaymentmethod")
     fun saveCheckoutPaymentMethod(@Body valuePost: ValuePost): Call<PaymentMethodSaveResponse>
 
-    @POST("login") fun performLogin(@Body loginData: LoginData): Call<LoginResponse>
-
-    @POST("customer/register")
-    fun preformRegistration(@Body customerRegistrationInfo: CustomerRegistrationInfo): Call<RegistrationResponse>
-
     @GET("checkout/checkoutcomplete")
     fun confirmCheckout(): Call<CheckoutConfirmResponse>
 
     @POST("checkout/checkpaypalaccount")
     fun confirmPayPalCheckout(@Body request: PaypalCheckoutRequest): Call<ConfirmPayPalCheckoutResponse>
 
-    @POST("customer/address/edit/{id}")
-    fun editAddress(@Path("id") id: Int, @Body list: List<KeyValuePair>): Call<EditAddressResponse>
-
-    @POST("customer/address/add")
-    fun addAddress(@Body keyValuePairs: List<KeyValuePair>): Call<AddAddressResponse>
-
-    @GET("customer/address/remove/{id}")
-    fun removeCustomerAddresses(@Path("id") id: Int): Call<RemoveCustomerAddressResponse>
-
     @GET("order/reorder/{id}")
     fun getReOrder(@Path("id") id: Int): Call<ReOrderResponse>
-
-    @POST("customer/changepass")
-    fun changePassword(@Body changePassword: ChangePasswordModel): Call<ChangePasswordResponse>
 
     @POST("facebookLogin")
     fun loginUsingFaceBook(@Body facebookLogin: FacebookLogin): Call<LoginResponse>
@@ -431,10 +363,7 @@ interface Api {
     fun addAllItemsToCartFromWishList(@Body keyValuePairs: List<KeyValuePair>): Call<WishListProductResponse>
 
     @POST("checkout/checkauthorizepayment")
-    fun checkAuthorizePayment(@Body authorizePayment: AuthorizePayment): Call<ConfirmAutorizeDotNetCheckoutResponse>
-
-    @POST("catalog/search")
-    fun searchProduct(@Body q: Search, @QueryMap options : Map<String, String>): Call<ProductsResponse>*/
+    fun checkAuthorizePayment(@Body authorizePayment: AuthorizePayment): Call<ConfirmAutorizeDotNetCheckoutResponse>*/
 
 
     companion object

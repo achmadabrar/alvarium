@@ -227,6 +227,7 @@ class SettingsFragment: BaseUrlChangeFragment() {
         if(languageBeChangedTo.isNotEmpty())
         {
             prefObject.setPrefs(PrefSingleton.CURRENT_LANGUAGE, languageBeChangedTo)
+            prefObject.setPrefs(PrefSingleton.CURRENT_LANGUAGE_ID, languageId)
 
             mainViewModel.changeLanguage(languageId, model = mainModel)
 
