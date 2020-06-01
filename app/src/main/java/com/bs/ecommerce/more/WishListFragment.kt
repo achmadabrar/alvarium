@@ -34,7 +34,7 @@ class WishListFragment : BaseFragment() {
 
     override fun createViewModel(): BaseViewModel = WishListViewModel()
 
-    override fun getFragmentTitle(): Int = R.string.title_wishlist
+    override fun getFragmentTitle(): Int = R.string.title_wishlist // DbHelper.getString(Const.ACCOUNT_WISHLIST)
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

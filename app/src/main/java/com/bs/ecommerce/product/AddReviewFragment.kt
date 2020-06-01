@@ -8,8 +8,10 @@ import android.view.WindowManager
 import android.widget.LinearLayout
 import androidx.fragment.app.DialogFragment
 import com.bs.ecommerce.R
+import com.bs.ecommerce.db.DbHelper
 import com.bs.ecommerce.more.ProductReviewFragment
 import com.bs.ecommerce.product.model.data.AddProductReview
+import com.bs.ecommerce.utils.Const
 import com.bs.ecommerce.utils.EditTextUtils
 import kotlinx.android.synthetic.main.fragment_add_review.*
 import kotlin.math.roundToInt
@@ -41,6 +43,11 @@ class AddReviewFragment : DialogFragment() {
     }
 
     private fun setupView() {
+        etReviewTitle.hint = DbHelper.getString(Const.REVIEW_TITLE)
+        etReviewText.hint = DbHelper.getString(Const.REVIEW_TEXT)
+        tvRating.text = DbHelper.getString(Const.REVIEW_RATING)
+        btnSubmit.text = DbHelper.getString(Const.REVIEW_SUBMIT_BTN)
+
         btnSubmit.setOnClickListener { submitIfFormIsValid() }
 
         // set minimum rating to 1 star
@@ -53,8 +60,11 @@ class AddReviewFragment : DialogFragment() {
     private fun submitIfFormIsValid() {
         val etUtil = EditTextUtils()
 
-        val title = etUtil.showToastIfEmpty(etReviewTitle) ?: return
-        val review = etUtil.showToastIfEmpty(etReviewText) ?: return
+        val title = etUtil.showToastIfEmpty(etReviewTitle,
+            DbHelper.getString(Const.REVIEW_TITLE_REQ)) ?: return
+        val review = etUtil.showToastIfEmpty(etReviewText,
+            DbHelper.getString(Const.REVIEW_TEXT_REQ)) ?: return
+
         val rating: Int = ratingBar.rating.roundToInt()
 
         if (parentFragment != null && parentFragment is ProductReviewFragment) {

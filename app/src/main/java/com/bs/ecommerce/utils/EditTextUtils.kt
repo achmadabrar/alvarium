@@ -49,7 +49,7 @@ class EditTextUtils {
          else return 0
     }
 
-    fun showToastIfEmpty(et: EditText, msg:String = ""): String? {
+    fun showToastIfEmpty(et: EditText, msg: String): String? {
         val userInput = et.text.toString().trim()
 
         return if (userInput.isEmpty()) {

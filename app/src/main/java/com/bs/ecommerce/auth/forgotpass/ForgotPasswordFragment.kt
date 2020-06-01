@@ -11,14 +11,17 @@ import com.bs.ecommerce.auth.AuthModel
 import com.bs.ecommerce.auth.AuthModelImpl
 import com.bs.ecommerce.base.BaseFragment
 import com.bs.ecommerce.base.BaseViewModel
+import com.bs.ecommerce.db.DbHelper
+import com.bs.ecommerce.utils.Const
 import com.bs.ecommerce.utils.isEmailValid
+import com.bs.ecommerce.utils.toast
 import kotlinx.android.synthetic.main.fragment_forgot_password.*
 
 class ForgotPasswordFragment : BaseFragment() {
 
     private lateinit var model: AuthModel
 
-    override fun getFragmentTitle() = R.string.title_forgot_password
+    override fun getFragmentTitle() = R.string.title_forgot_password // DbHelper.getString(Const.TITLE_FORGOT_PASS)
 
     override fun getLayoutId(): Int = R.layout.fragment_forgot_password
 
@@ -41,6 +44,9 @@ class ForgotPasswordFragment : BaseFragment() {
     }
 
     private fun setupView() {
+        etEmail.hint = DbHelper.getString(Const.FORGOT_PASS_EMAIL)
+        btnSendEmail.text = DbHelper.getString(Const.FORGOT_PASS_BTN)
+
         btnSendEmail.setOnClickListener {
 
             val email = etEmail.text.toString().trim()
@@ -48,10 +54,7 @@ class ForgotPasswordFragment : BaseFragment() {
             if (email.isEmailValid()) {
                 (viewModel as PasswordViewModel).requestForgetPassword(email, model)
             } else {
-                val toastMsg =
-                    "${etEmail.hint} ${requireContext().getString(R.string.reg_hint_is_required)}"
-
-                Toast.makeText(context, toastMsg, Toast.LENGTH_SHORT).show()
+                toast(DbHelper.getString(Const.FORGOT_PASS_EMAIL_REQ))
             }
         }
     }
