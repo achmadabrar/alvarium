@@ -15,6 +15,7 @@ import com.bs.ecommerce.cart.model.data.CartProduct
 import com.bs.ecommerce.cart.model.data.CartRootData
 import com.bs.ecommerce.cart.model.data.OrderTotal
 import com.bs.ecommerce.checkout.CheckoutStepFragment
+import com.bs.ecommerce.db.DbHelper
 import com.bs.ecommerce.networking.Api
 import com.bs.ecommerce.networking.common.KeyValueFormData
 import com.bs.ecommerce.product.ProductDetailFragment
@@ -24,6 +25,7 @@ import com.google.android.material.bottomsheet.BottomSheetBehavior
 import kotlinx.android.synthetic.main.custom_attribute_bottom_sheet.*
 import kotlinx.android.synthetic.main.custom_attribute_bottom_sheet.view.*
 import kotlinx.android.synthetic.main.fragment_cart.*
+import kotlinx.android.synthetic.main.home_fragment_bottomsheet.*
 import kotlinx.android.synthetic.main.ll_cart_coupon.*
 import kotlinx.android.synthetic.main.ll_cart_gift_card.*
 import kotlinx.android.synthetic.main.ll_cart_title.*
@@ -39,7 +41,7 @@ class CartFragment : BaseFragment() {
 
     private lateinit var model: CartModel
 
-    override fun getFragmentTitle() = R.string.title_shopping_cart
+    override fun getFragmentTitle() = R.string.title_shopping_cart //DbHelper.getString(Const.SHOPPING_CART_TITLE)
 
     override fun getLayoutId(): Int = R.layout.fragment_cart
 
@@ -76,7 +78,7 @@ class CartFragment : BaseFragment() {
                 {
                     cartRootLayout?.visibility = View.VISIBLE
 
-                    tvTotalItem?.text = getString(R.string.cart_items_count, updateCartItemCounter(cartRootData.cart.items))
+                    tvTotalItem?.text = "${updateCartItemCounter(cartRootData.cart.items)} ${DbHelper.getString(Const.ITEMS)}"
 
                     setData(cartRootData)
                 }
@@ -200,8 +202,30 @@ class CartFragment : BaseFragment() {
 
     }
 
+    private fun setLanguageStrings()
+    {
+        productsTitle?.text = DbHelper.getString(Const.PRODUCTS)
+
+        etCartCoupon?.hint = DbHelper.getString(Const.ENTER_YOUR_COUPON)
+        btnApplyCoupon?.text = DbHelper.getString(Const.APPLY_COUPON)
+
+        etGiftCode?.hint = DbHelper.getString(Const.ENTER_GIFT_CARD)
+        btnAddGiftCode?.text = DbHelper.getString(Const.ADD_GIFT_CARD)
+
+        subTotalKey?.text = DbHelper.getString(Const.SUB_TOTAL)
+        shippingKey?.text = DbHelper.getString(Const.SHIPPING)
+        taxKey?.text = DbHelper.getString(Const.TAX)
+        discountKey?.text = DbHelper.getString(Const.DISCOUNT)
+        totalKey?.text = DbHelper.getString(Const.TOTAL)
+
+        btnCheckOut?.text = DbHelper.getString(Const.CHECKOUT)
+
+    }
+
     private fun initView()
     {
+        setLanguageStrings()
+
         focusStealerCart?.requestFocus()
 
         bsBehavior = BottomSheetBehavior.from(bottomSheetLayoutCart)
