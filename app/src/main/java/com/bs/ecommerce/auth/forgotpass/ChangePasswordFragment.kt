@@ -11,6 +11,8 @@ import com.bs.ecommerce.auth.AuthModelImpl
 import com.bs.ecommerce.auth.login.data.ChangePasswordModel
 import com.bs.ecommerce.base.BaseFragment
 import com.bs.ecommerce.base.BaseViewModel
+import com.bs.ecommerce.db.DbHelper
+import com.bs.ecommerce.utils.Const
 import com.bs.ecommerce.utils.EditTextUtils
 import com.bs.ecommerce.utils.toast
 import kotlinx.android.synthetic.main.fragment_change_password.*
@@ -19,7 +21,7 @@ class ChangePasswordFragment : BaseFragment() {
 
     private lateinit var model: AuthModel
 
-    override fun getFragmentTitle() = R.string.title_change_password
+    override fun getFragmentTitle() = R.string.title_change_password // DbHelper.getString(Const.TITLE_CHANGE_PASS)
 
     override fun getLayoutId(): Int = R.layout.fragment_change_password
 
@@ -31,6 +33,7 @@ class ChangePasswordFragment : BaseFragment() {
         super.onViewCreated(view, savedInstanceState)
 
         if(!viewCreated) {
+            initView()
 
             model = AuthModelImpl()
             viewModel = ViewModelProvider(this).get(PasswordViewModel::class.java)
@@ -39,6 +42,13 @@ class ChangePasswordFragment : BaseFragment() {
         }
 
         setLiveDataObserver()
+    }
+
+    private fun initView() {
+        etOldPassword.hint = DbHelper.getString(Const.CHANGE_PASS_OLD)
+        etNewPassword.hint = DbHelper.getString(Const.CHANGE_PASS_NEW)
+        etConfirmPassword.hint = DbHelper.getString(Const.CHANGE_PASS_CONFIRM)
+        btnDone.text = DbHelper.getString(Const.CHANGE_PASS_BTN)
     }
 
     private fun setupView(changePasswordModel: ChangePasswordModel) {
@@ -82,12 +92,15 @@ class ChangePasswordFragment : BaseFragment() {
 
         val etUtils = EditTextUtils()
 
-        val old = etUtils.showToastIfEmpty(etOldPassword) ?: return null
-        val new = etUtils.showToastIfEmpty(etNewPassword) ?: return null
-        val confirmNew = etUtils.showToastIfEmpty(etConfirmPassword) ?: return null
+        val old = etUtils.showToastIfEmpty(etOldPassword,
+            DbHelper.getString(Const.CHANGE_PASS_OLD_REQ)) ?: return null
+        val new = etUtils.showToastIfEmpty(etNewPassword,
+            DbHelper.getString(Const.CHANGE_PASS_NEW_REQ)) ?: return null
+        val confirmNew = etUtils.showToastIfEmpty(etConfirmPassword,
+            DbHelper.getString(Const.CHANGE_PASS_CONFIRM_REQ)) ?: return null
 
         if(new != confirmNew) {
-            toast(R.string.password_mismatch)
+            toast(DbHelper.getString(Const.CHANGE_PASS_MISMATCH))
             return null
         }
 

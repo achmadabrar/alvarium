@@ -12,10 +12,12 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bs.ecommerce.R
 import com.bs.ecommerce.base.BaseFragment
 import com.bs.ecommerce.base.BaseViewModel
+import com.bs.ecommerce.db.DbHelper
 import com.bs.ecommerce.more.model.OrderModel
 import com.bs.ecommerce.more.model.OrderModelImpl
 import com.bs.ecommerce.more.viewmodel.OrderViewModel
 import com.bs.ecommerce.product.model.data.Order
+import com.bs.ecommerce.utils.Const
 import com.bs.ecommerce.utils.TextUtils
 import com.bs.ecommerce.utils.replaceFragmentSafely
 import com.bs.ecommerce.utils.showLog
@@ -26,7 +28,7 @@ import java.lang.ref.WeakReference
 class OrderHistoryFragment : BaseFragment() {
     private lateinit var model: OrderModel
 
-    override fun getFragmentTitle() = R.string.title_orders
+    override fun getFragmentTitle() = R.string.title_orders // DbHelper.getString(Const.ACCOUNT_ORDERS)
 
     override fun getLayoutId(): Int = R.layout.fragment_customer_order
 
@@ -39,6 +41,7 @@ class OrderHistoryFragment : BaseFragment() {
 
         if (!viewCreated) {
             "nop_".showLog("creating view")
+            tvNoData.text = DbHelper.getString(Const.COMMON_NO_DATA)
 
             model = OrderModelImpl()
             viewModel = ViewModelProvider(this).get(OrderViewModel::class.java)
@@ -106,9 +109,9 @@ class OrderHistoryFragment : BaseFragment() {
             val order = list[position]
 
             holder.itemView.tvOrderNumber.text =
-                getString(R.string.order_number).plus(order.customOrderNumber)
+                DbHelper.getString(Const.ORDER_NUMBER).plus(" ").plus(order.customOrderNumber)
 
-            holder.itemView.tvOrderDate.text = getString(R.string.order_date).plus(
+            holder.itemView.tvOrderDate.text = DbHelper.getString(Const.ORDER_DATE).plus(" ").plus(
                 TextUtils().tzTimeConverter(
                     order.createdOn,
                     WeakReference(requireContext())
@@ -116,10 +119,10 @@ class OrderHistoryFragment : BaseFragment() {
             )
 
             holder.itemView.tvOrderStatus.text =
-                getString(R.string.order_status).plus(order.orderStatus)
+                DbHelper.getString(Const.ORDER_STATUS).plus(" ").plus(order.orderStatus)
 
             holder.itemView.tvOrderTotal.text =
-                getString(R.string.order_total).plus(order.orderTotal)
+                DbHelper.getString(Const.ORDER_TOTAL).plus(" ").plus(order.orderTotal)
 
             holder.itemView.setOnClickListener {
                 if (order.id != null)

@@ -25,7 +25,7 @@
         android:textSize="@dimen/tv_text_size_regular"
         tools:visibility="visible"
         android:visibility="gone"
-        android:text="@string/no_data_found"/>
+        tools:text="@string/no_data_found"/>
 
     <Button
         android:id="@+id/btnAddReview"
@@ -34,7 +34,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:background="@drawable/rect_background_ripple"
-        android:text="@string/write_your_own_review"
+        tools:text="@string/write_your_own_review"
         android:visibility="gone"
         tools:visibility="visible"/>
 

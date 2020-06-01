@@ -23,6 +23,7 @@ import androidx.fragment.app.Fragment
 import com.bs.ecommerce.R
 import com.bs.ecommerce.cart.model.data.CartProduct
 import com.bs.ecommerce.customViews.ContentLoadingDialog
+import com.bs.ecommerce.db.DbHelper
 import com.bs.ecommerce.main.MainActivity
 import com.bs.ecommerce.more.barcode.BarCodeCaptureFragment
 import com.bs.ecommerce.networking.NetworkUtil
@@ -184,15 +185,16 @@ abstract class BaseFragment : Fragment()
     {
         val builder = AlertDialog.Builder(requireActivity())
 
-        builder.setMessage(R.string.are_you_sure_logout).setTitle(R.string.log_out)
+        builder.setMessage(DbHelper.getString(Const.ACCOUNT_LOGOUT_CONFIRM))
+            .setTitle(DbHelper.getString(Const.ACCOUNT_LOGOUT))
 
-        builder.setPositiveButton(R.string.yes) { _, _ ->
+        builder.setPositiveButton(DbHelper.getString(Const.COMMON_YES)) { _, _ ->
             performLogout()
 
             // update UI
             onClickListener.onClick(rootView)
         }
-        builder.setNegativeButton(R.string.no) { dialog, _ -> dialog.dismiss() }
+        builder.setNegativeButton(DbHelper.getString(Const.COMMON_NO)) { dialog, _ -> dialog.dismiss() }
 
         val dialog = builder.create()
         dialog.show()

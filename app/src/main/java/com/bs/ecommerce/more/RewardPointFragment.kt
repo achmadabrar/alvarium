@@ -12,10 +12,12 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bs.ecommerce.R
 import com.bs.ecommerce.base.BaseFragment
 import com.bs.ecommerce.base.BaseViewModel
+import com.bs.ecommerce.db.DbHelper
 import com.bs.ecommerce.more.model.RewardPointModel
 import com.bs.ecommerce.more.model.RewardPointModelImpl
 import com.bs.ecommerce.more.viewmodel.RewardPointViewModel
 import com.bs.ecommerce.product.model.data.RewardPoint
+import com.bs.ecommerce.utils.Const
 import com.bs.ecommerce.utils.RecyclerViewMargin
 import com.bs.ecommerce.utils.TextUtils
 import kotlinx.android.synthetic.main.fragment_reward_point.*
@@ -26,7 +28,7 @@ class RewardPointFragment : BaseFragment() {
 
     private lateinit var model: RewardPointModel
 
-    override fun getFragmentTitle() = R.string.title_reward_points
+    override fun getFragmentTitle() = R.string.title_reward_points // DbHelper.getString(Const.ACCOUNT_REWARD_POINT)
 
     override fun getLayoutId(): Int = R.layout.fragment_reward_point
 
@@ -56,9 +58,15 @@ class RewardPointFragment : BaseFragment() {
 
             rewardPointLD.observe(viewLifecycleOwner, Observer { rewardPoint ->
 
-                tvRewardBalance.text = getString(R.string.reward_summary,
-                    rewardPoint.rewardPointsBalance, rewardPoint.rewardPointsAmount,
-                    rewardPoint.minimumRewardPointsBalance, rewardPoint.minimumRewardPointsAmount)
+                val text1 = DbHelper.getString(Const.REWARD_POINT_BALANCE_CURRENT)
+                    .replace("{0}", rewardPoint.rewardPointsBalance.toString())
+                    .replace("({1})", rewardPoint.rewardPointsAmount.toString())
+
+                val text2 = DbHelper.getString(Const.REWARD_POINT_BALANCE_MIN)
+                    .replace("{0}", rewardPoint.minimumRewardPointsBalance.toString())
+                    .replace("({1})", rewardPoint.minimumRewardPointsAmount.toString())
+
+                tvRewardBalance.text = text1.plus("\n").plus(text2)
                 rewardBalanceCardView.visibility = View.VISIBLE
 
 
@@ -83,6 +91,7 @@ class RewardPointFragment : BaseFragment() {
     }
 
     private fun setupView() {
+        tvNoData.text = DbHelper.getString(Const.REWARD_NO_HISTORY)
 
         val mLayoutManager = LinearLayoutManager(
             requireContext(), LinearLayoutManager.VERTICAL, false
@@ -114,6 +123,11 @@ class RewardPointFragment : BaseFragment() {
             val item = list[position]
 
             holder.itemView.apply {
+                tvRpDate.text = DbHelper.getString(Const.REWARD_POINT_DATE)
+                tvRpEndDate.text = DbHelper.getString(Const.REWARD_POINT_END_DATE)
+                tvRpMsg.text = DbHelper.getString(Const.REWARD_POINT_MSG)
+                tvRpPoint.text = DbHelper.getString(Const.REWARD_POINT_)
+                tvRpPointBlns.text = DbHelper.getString(Const.REWARD_POINT_BALANCE)
 
                 tvPoints?.text = item.points?.toString()
                 tvBalance?.text = item.pointsBalance

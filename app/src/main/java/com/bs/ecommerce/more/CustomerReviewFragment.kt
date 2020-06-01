@@ -12,11 +12,13 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bs.ecommerce.R
 import com.bs.ecommerce.base.BaseFragment
 import com.bs.ecommerce.base.BaseViewModel
+import com.bs.ecommerce.db.DbHelper
 import com.bs.ecommerce.more.model.ReviewModel
 import com.bs.ecommerce.more.model.ReviewModelImpl
 import com.bs.ecommerce.more.viewmodel.ReviewViewModel
 import com.bs.ecommerce.product.ProductDetailFragment
 import com.bs.ecommerce.product.model.data.ProductReview
+import com.bs.ecommerce.utils.Const
 import com.bs.ecommerce.utils.RecyclerViewMargin
 import com.bs.ecommerce.utils.replaceFragmentSafely
 import com.bs.ecommerce.utils.showLog
@@ -80,6 +82,7 @@ class CustomerReviewFragment : BaseFragment() {
     }
 
     private fun setupView() {
+        tvNoData.text = DbHelper.getString(Const.COMMON_NO_DATA)
 
         val mLayoutManager = LinearLayoutManager(
             requireContext(), LinearLayoutManager.VERTICAL, false

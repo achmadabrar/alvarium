@@ -24,6 +24,6 @@
         android:textSize="@dimen/tv_text_size_regular"
         tools:visibility="visible"
         android:visibility="gone"
-        android:text="@string/no_data_found"/>
+        tools:text="@string/no_data_found"/>
 
 </RelativeLayout>

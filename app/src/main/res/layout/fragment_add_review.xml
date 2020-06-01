@@ -17,7 +17,7 @@
         android:layout_marginEnd="@dimen/fragment_margin"
         android:background="@drawable/rounded_background_slight"
         android:drawableEnd="@drawable/ic_star_formular"
-        android:hint="@string/review_title"
+        tools:hint="@string/review_title"
         android:imeOptions="actionNext"
         android:inputType="textCapSentences"
         app:layout_constraintTop_toTopOf="parent" />
@@ -33,7 +33,7 @@
         android:background="@drawable/rounded_background_slight"
         android:drawableEnd="@drawable/ic_star_formular"
         android:gravity="top"
-        android:hint="@string/review_text"
+        tools:hint="@string/review_text"
         android:imeOptions="actionNext"
         android:inputType="textMultiLine"
         android:maxLines="10"
@@ -48,7 +48,7 @@
         android:layout_marginTop="20dp"
         android:layout_marginEnd="10dp"
         android:layout_marginBottom="5dp"
-        android:text="@string/your_rating"
+        tools:text="@string/your_rating"
         android:textColor="?attr/primaryTextColor"
         android:textSize="@dimen/tv_text_size_semi_large"
         app:layout_constraintTop_toBottomOf="@id/etReviewText" />
@@ -84,7 +84,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_marginTop="15dp"
-        android:text="@string/submit"
+        tools:text="@string/submit"
         android:visibility="visible"
         app:layout_constraintTop_toBottomOf="@id/ratingBar"
         tools:visibility="visible" />

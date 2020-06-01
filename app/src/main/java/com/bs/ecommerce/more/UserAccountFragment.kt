@@ -12,6 +12,7 @@ import com.bs.ecommerce.base.BaseViewModel
 import com.bs.ecommerce.base.ToolbarLogoBaseFragment
 import com.bs.ecommerce.cart.CartFragment
 import com.bs.ecommerce.db.DbHelper
+import com.bs.ecommerce.utils.Const
 import com.bs.ecommerce.utils.PrefSingleton
 import com.bs.ecommerce.utils.replaceFragmentSafely
 import kotlinx.android.synthetic.main.fragment_user_account.*
@@ -46,7 +47,7 @@ class UserAccountFragment: ToolbarLogoBaseFragment() {
 
         accInfoLayout.apply {
             ivOptionIcon.setImageResource(R.drawable.app_bottom_icon_account)
-            tvOptionName.text = DbHelper.getString("account.info")
+            tvOptionName.text = DbHelper.getString(Const.ACCOUNT_INFO)
             setOnClickListener { clickAction(CustomerInfoFragment()) }
         }
 
@@ -58,13 +59,13 @@ class UserAccountFragment: ToolbarLogoBaseFragment() {
 
         wishListLayout.apply {
             ivOptionIcon.setImageResource(R.drawable.ic_heart)
-            tvOptionName.text = DbHelper.getString("wishlist")
+            tvOptionName.text = DbHelper.getString(Const.ACCOUNT_WISHLIST)
             setOnClickListener { clickAction(WishListFragment()) }
         }
 
         orderLayout.apply {
             ivOptionIcon.setImageResource(R.drawable.ic_my_order)
-            tvOptionName.text = DbHelper.getString("account.customerorders")
+            tvOptionName.text = DbHelper.getString(Const.ACCOUNT_ORDERS)
             setOnClickListener { clickAction(OrderHistoryFragment()) }
         }
 
@@ -76,13 +77,13 @@ class UserAccountFragment: ToolbarLogoBaseFragment() {
 
         rewardPointsLayout.apply {
             ivOptionIcon.setImageResource(R.drawable.ic_reward_points)
-            tvOptionName.text = DbHelper.getString("account.rewardpoints")
+            tvOptionName.text = DbHelper.getString(Const.ACCOUNT_REWARD_POINT)
             setOnClickListener { clickAction(RewardPointFragment()) }
         }
 
         reviewLayout.apply {
             ivOptionIcon.setImageResource(R.drawable.ic_review)
-            tvOptionName.text = DbHelper.getString("reviews")
+            tvOptionName.text = DbHelper.getString(Const.ACCOUNT_MY_REVIEW)
             setOnClickListener { clickAction(CustomerReviewFragment()) }
         }
 
@@ -90,9 +91,9 @@ class UserAccountFragment: ToolbarLogoBaseFragment() {
             ivOptionIcon.setImageResource(R.drawable.ic_login)
 
             tvOptionName.text = if(prefObject.getPrefsBoolValue(PrefSingleton.IS_LOGGED_IN))
-                DbHelper.getString("activitylog.publicstore.logout")
+                DbHelper.getString(Const.ACCOUNT_LOGOUT)
             else
-                DbHelper.getString("activitylog.publicstore.login")
+                DbHelper.getString(Const.ACCOUNT_LOGIN)
 
             tvOptionName.gravity = Gravity.CENTER
             tvOptionName.setTextColor(resources.getColor(R.color.red))
