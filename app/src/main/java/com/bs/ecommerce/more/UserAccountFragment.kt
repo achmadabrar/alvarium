@@ -11,6 +11,7 @@ import com.bs.ecommerce.base.BaseFragment
 import com.bs.ecommerce.base.BaseViewModel
 import com.bs.ecommerce.base.ToolbarLogoBaseFragment
 import com.bs.ecommerce.cart.CartFragment
+import com.bs.ecommerce.db.DbHelper
 import com.bs.ecommerce.utils.PrefSingleton
 import com.bs.ecommerce.utils.replaceFragmentSafely
 import kotlinx.android.synthetic.main.fragment_user_account.*
@@ -45,43 +46,43 @@ class UserAccountFragment: ToolbarLogoBaseFragment() {
 
         accInfoLayout.apply {
             ivOptionIcon.setImageResource(R.drawable.app_bottom_icon_account)
-            tvOptionName.text = getString(R.string.account_info)
+            tvOptionName.text = DbHelper.getString("account.info")
             setOnClickListener { clickAction(CustomerInfoFragment()) }
         }
 
         addressLayout.apply {
             ivOptionIcon.setImageResource(R.drawable.app_bottom_icon_home)
-            tvOptionName.text = getString(R.string.title_my_addresses)
+            tvOptionName.text = DbHelper.getString("account.customeraddresses")
             setOnClickListener { clickAction(CustomerAddressFragment()) }
         }
 
         wishListLayout.apply {
             ivOptionIcon.setImageResource(R.drawable.ic_heart)
-            tvOptionName.text = getString(R.string.title_wishlist)
+            tvOptionName.text = DbHelper.getString("wishlist")
             setOnClickListener { clickAction(WishListFragment()) }
         }
 
         orderLayout.apply {
             ivOptionIcon.setImageResource(R.drawable.ic_my_order)
-            tvOptionName.text = getString(R.string.my_orders)
+            tvOptionName.text = DbHelper.getString("account.customerorders")
             setOnClickListener { clickAction(OrderHistoryFragment()) }
         }
 
         cartLayout.apply {
             ivOptionIcon.setImageResource(R.drawable.app_icon_cart)
-            tvOptionName.text = getString(R.string.shopping_cart)
+            tvOptionName.text = DbHelper.getString("account.shoppingcart")
             setOnClickListener { clickAction(CartFragment()) }
         }
 
         rewardPointsLayout.apply {
             ivOptionIcon.setImageResource(R.drawable.ic_reward_points)
-            tvOptionName.text = getString(R.string.title_reward_points)
+            tvOptionName.text = DbHelper.getString("account.rewardpoints")
             setOnClickListener { clickAction(RewardPointFragment()) }
         }
 
         reviewLayout.apply {
             ivOptionIcon.setImageResource(R.drawable.ic_review)
-            tvOptionName.text = getString(R.string.title_my_reviews)
+            tvOptionName.text = DbHelper.getString("reviews")
             setOnClickListener { clickAction(CustomerReviewFragment()) }
         }
 
@@ -89,9 +90,9 @@ class UserAccountFragment: ToolbarLogoBaseFragment() {
             ivOptionIcon.setImageResource(R.drawable.ic_login)
 
             tvOptionName.text = if(prefObject.getPrefsBoolValue(PrefSingleton.IS_LOGGED_IN))
-                getString(R.string.log_out)
+                DbHelper.getString("activitylog.publicstore.logout")
             else
-                getString(R.string.login)
+                DbHelper.getString("activitylog.publicstore.login")
 
             tvOptionName.gravity = Gravity.CENTER
             tvOptionName.setTextColor(resources.getColor(R.color.red))

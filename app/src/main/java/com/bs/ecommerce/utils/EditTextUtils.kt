@@ -2,7 +2,6 @@ package com.bs.ecommerce.utils
 
 import android.widget.EditText
 import android.widget.Toast
-import com.bs.ecommerce.R
 
 /**
  * Created by bs206 on 3/15/18.
@@ -50,14 +49,14 @@ class EditTextUtils {
          else return 0
     }
 
-    fun showToastIfEmpty(et: EditText): String? {
+    fun showToastIfEmpty(et: EditText, msg:String = ""): String? {
         val userInput = et.text.toString().trim()
 
         return if (userInput.isEmpty()) {
 
             Toast.makeText(
                 et.context,
-                "${et.hint} ${et.context.getString(R.string.reg_hint_is_required)}",
+                msg,
                 Toast.LENGTH_SHORT
             ).show()
 

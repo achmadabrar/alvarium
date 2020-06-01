@@ -16,11 +16,15 @@ interface StrResourceDao {
     @Insert
     fun insertString(vararg strings: StrResource)
 
-    @Query("SELECT * FROM StrResource WHERE languageId IS (:langId) AND `key` IS (:key) LIMIT 1")
-    fun getString(key: String, langId: Int): StrResource?
+//    @Query("SELECT * FROM StrResource WHERE languageId IS (:langId) AND `key` IS (:key) LIMIT 1")
+    @Query("SELECT * FROM StrResource WHERE `key` IS (:key) LIMIT 1")
+    fun getString(key: String): StrResource?
 
     @Query("DELETE FROM StrResource WHERE languageId IS (:langId)")
-    fun deleteAllStrings(langId: Int)
+    fun deleteAllStringsById(langId: Int)
+
+    @Query("DELETE FROM StrResource")
+    fun deleteAllStrings()
 
     @Query("SELECT * FROM StrResource WHERE languageId IS (:langId) LIMIT 1")
     fun isLanguageDownloaded(langId: Int) : StrResource?

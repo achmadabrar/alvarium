@@ -5,17 +5,18 @@ import android.content.Intent
 import android.text.Selection
 import android.widget.RelativeLayout
 import androidx.lifecycle.Observer
-
 import com.bs.ecommerce.R
 import com.bs.ecommerce.base.BaseFragment
 import com.bs.ecommerce.base.BaseViewModel
+import com.bs.ecommerce.db.DbHelper
 import com.bs.ecommerce.main.MainActivity
 import com.bs.ecommerce.main.MainViewModel
 import com.bs.ecommerce.main.model.MainModel
 import com.bs.ecommerce.networking.NetworkConstants
-
 import com.bs.ecommerce.networking.NetworkUtil
-import com.bs.ecommerce.utils.*
+import com.bs.ecommerce.utils.PrefSingleton
+import com.bs.ecommerce.utils.hideKeyboard
+import com.bs.ecommerce.utils.toast
 import kotlinx.android.synthetic.main.fragment_settings.*
 
 
@@ -45,7 +46,7 @@ abstract class BaseUrlChangeFragment : BaseFragment()
         if(newBaseUrlEditTextFromSettings?.text?.length!! > 10)
             testApiCall()
         else
-            toast(getString(R.string.url_is_required))
+            toast(DbHelper.getString("nopstation.webapi.settings.invalidurl"))
             //newBaseUrlEditTextFromSettings?.error = getString(R.string.url_is_required)
 
     }

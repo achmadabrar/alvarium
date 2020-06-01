@@ -15,7 +15,7 @@ class StringResourceModelImpl:  StringResourceModel{
         callback: RequestCompleteListener<StringResourceResponse>
     ) {
 
-        RetroClient.api.getStringResource(1).enqueue(object : Callback<StringResourceResponse> {
+        RetroClient.api.getStringResource(languageId).enqueue(object : Callback<StringResourceResponse> {
 
             override fun onFailure(call: Call<StringResourceResponse>, t: Throwable) {
                 Log.e("nop_", "got getStringResource failed", t)

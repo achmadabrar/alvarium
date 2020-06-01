@@ -8,7 +8,6 @@ import androidx.lifecycle.ViewModelProvider
 import com.bs.ecommerce.R
 import com.bs.ecommerce.base.BaseViewModel
 import com.bs.ecommerce.base.ToolbarLogoBaseFragment
-import com.bs.ecommerce.checkout.CheckoutStepFragment
 import com.bs.ecommerce.more.settings.SettingsFragment
 import com.bs.ecommerce.more.viewmodel.OptionViewModel
 import com.bs.ecommerce.utils.replaceFragmentSafely
@@ -46,7 +45,7 @@ class OptionsFragment : ToolbarLogoBaseFragment() {
                 val optionView = layoutInflater.inflate(R.layout.options_layout, null)
                 optionView.tag = i.nameResId
 
-                optionView.tvOptionName.text = getString(i.nameResId)
+                optionView.tvOptionName.text = i.nameString
                 optionView.ivOptionIcon.setImageResource(i.iconResId)
 
                 optionView.setOnClickListener {
@@ -67,9 +66,6 @@ class OptionsFragment : ToolbarLogoBaseFragment() {
 
                         R.string.title_contact_us ->
                             replaceFragmentSafely(ContactUsFragment())
-
-                        R.string.placeholder ->
-                            replaceFragmentSafely(RewardPointFragment())
                     }
                 }
 

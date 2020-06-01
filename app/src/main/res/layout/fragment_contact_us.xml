@@ -25,7 +25,7 @@
                 android:layout_marginEnd="@dimen/fragment_margin"
                 android:background="@drawable/rounded_background_slight"
                 android:drawableEnd="@drawable/ic_star_formular"
-                android:hint="@string/hint_name"
+                tools:hint="@string/hint_name"
                 android:imeOptions="actionNext"
                 android:inputType="textPersonName|textCapWords|textNoSuggestions" />
 
@@ -40,7 +40,7 @@
                 android:layout_marginEnd="@dimen/fragment_margin"
                 android:background="@drawable/rounded_background_slight"
                 android:drawableEnd="@drawable/ic_star_formular"
-                android:hint="@string/hint_email"
+                tools:hint="@string/hint_email"
                 android:imeOptions="actionNext"
                 android:inputType="textEmailAddress" />
 
@@ -56,7 +56,7 @@
                 android:background="@drawable/rounded_background_slight"
                 android:drawableEnd="@drawable/ic_star_formular"
                 android:gravity="top"
-                android:hint="@string/hint_enquiry"
+                tools:hint="@string/hint_enquiry"
                 android:imeOptions="actionNext"
                 android:inputType="textMultiLine"
                 android:maxLines="10"
@@ -71,7 +71,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:text="@string/submit"
+        tools:text="@string/submit"
         android:visibility="visible"
         tools:visibility="visible" />
 

@@ -16,6 +16,7 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.children
 import com.bs.ecommerce.R
 import com.bs.ecommerce.auth.register.data.KeyValuePair
+import com.bs.ecommerce.db.DbHelper
 import com.bs.ecommerce.networking.common.KeyValueFormData
 import com.bs.ecommerce.product.model.data.AttributeControlValue
 import com.bs.ecommerce.product.model.data.CustomAttribute
@@ -86,9 +87,9 @@ class CustomAttributeManager(
         val radioGroup = RadioGroup(context)
 
         tvName.text = attr.name
-        tvDesc.text = attr.description ?: "Select your ${attr.name}"
+        tvDesc.text = attr.description ?: DbHelper.getString("common.select").plus(" ${attr.name}")
         tvSelectedAttr.text =
-            attr.values.find { it.isPreSelected }?.name ?: context.getString(R.string.select)
+            attr.values.find { it.isPreSelected }?.name ?: DbHelper.getString("common.select")
 
         layout.setOnClickListener {
             if (bsBehavior.state != BottomSheetBehavior.STATE_EXPANDED) {
@@ -292,7 +293,7 @@ class CustomAttributeManager(
         val tvDesc = colorSelectionLayout.findViewById<TextView>(R.id.tvLayoutSubTitle)
 
         tvName.text = attr.name
-        tvDesc.text = attr.description ?: context.getString(R.string.select_color)
+        //tvDesc.text = attr.description ?: DbHelper.getString("common.select"_color)
         colorSelectionProcess = ColorSelectionProcess(colorSelectionLayout.radioGridGroup)
 
         for (x in attr.values) {
@@ -336,7 +337,7 @@ class CustomAttributeManager(
         val tvDesc = sizeSelectionLayout.findViewById<TextView>(R.id.tvLayoutSubTitle)
 
         tvName.text = attr.name
-        tvDesc.text = attr.description ?: context.getString(R.string.select_size)
+        //tvDesc.text = attr.description ?: DbHelper.getString("common.select")
         sizeSelectionProcess = ColorSelectionProcess(sizeSelectionLayout.radioGridGroup)
 
         for (x in attr.values) {
@@ -419,7 +420,7 @@ class CustomAttributeManager(
             val selectedAttr = selectedAttributes[i]
 
             if (selectedAttr.isNullOrEmpty()) {
-                textView?.text = context.getString(R.string.select)
+                textView?.text = DbHelper.getString("common.select")
             } else {
                 textView?.text = selectedAttributes[i]?.get(0)?.name
             }

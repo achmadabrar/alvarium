@@ -10,6 +10,7 @@ import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.bs.ecommerce.R
+import com.bs.ecommerce.auth.AuthModel
 import com.bs.ecommerce.auth.AuthModelImpl
 import com.bs.ecommerce.auth.forgotpass.ForgotPasswordFragment
 import com.bs.ecommerce.auth.login.data.FacebookLogin
@@ -18,7 +19,7 @@ import com.bs.ecommerce.auth.login.data.LoginPostData
 import com.bs.ecommerce.auth.register.RegisterFragment
 import com.bs.ecommerce.base.BaseFragment
 import com.bs.ecommerce.base.BaseViewModel
-import com.bs.ecommerce.auth.AuthModel
+import com.bs.ecommerce.db.DbHelper
 import com.bs.ecommerce.networking.NetworkUtil
 import com.bs.ecommerce.utils.*
 import com.facebook.*
@@ -51,12 +52,23 @@ class LoginFragment : BaseFragment()
 
         viewModel  = ViewModelProvider(this).get(LoginViewModel::class.java)
 
-        //initView()
+        initView()
         initFacebookSdk()
 
         setButtonClickListeners()
 
         setLiveDataListeners()
+    }
+
+    private fun initView() {
+        loginUsernameEditText.hint = DbHelper.getString(Const.LOGIN_EMAIL)
+        loginPasswordEditText.hint = DbHelper.getString(Const.LOGIN_PASS)
+        loginButton.text = DbHelper.getString(Const.LOGIN_LOGIN_BTN)
+
+        tvNewCustomer.text = DbHelper.getString(Const.LOGIN_NEW_CUSTOMER)
+        tvForgotPassword.text = DbHelper.getString(Const.LOGIN_FORGOT_PASS)
+        tvLoginOr.text = DbHelper.getString(Const.LOGIN_OR)
+        fbLoginButton.text = DbHelper.getString(Const.LOGIN_LOGIN_WITH_FB)
     }
 
     private fun setButtonClickListeners()
@@ -86,11 +98,12 @@ class LoginFragment : BaseFragment()
             if(loginUsernameEditText?.text.isEmailValid())
                 (viewModel as LoginViewModel).postLoginVM(LoginPostData(LoginData(email = loginUsernameEditText?.text.toString(), password = loginPasswordEditText?.text?.toString().toString())), model)
             else
-                toast(getString(R.string.enter_valid_email))
+                toast(DbHelper.getString(Const.ENTER_VALID_EMAIL))
         }
         else
         {
-            toast(getString(R.string.username_password_require))
+            toast(DbHelper.getString(Const.LOGIN_EMAIL_REQ))
+            toast(DbHelper.getString(Const.LOGIN_PASS_REQ))
         }
     }
 

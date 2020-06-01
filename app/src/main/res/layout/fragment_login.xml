@@ -65,7 +65,7 @@
                         android:layout_height="@dimen/btn_height"
                         android:autofillHints="Username"
                         android:drawableEnd="@drawable/ic_user"
-                        android:hint="@string/login_usrname"
+                        tools:hint="@string/login_usrname"
                         android:imeOptions="actionNext"
                         android:inputType="textEmailAddress|text" />
 
@@ -87,7 +87,7 @@
                         style="@style/RoundedEditText"
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/btn_height"
-                        android:hint="@string/login_password"
+                        tools:hint="@string/login_password"
                         android:imeOptions="actionDone"
                         android:inputType="textPassword" />
                 </com.google.android.material.textfield.TextInputLayout>

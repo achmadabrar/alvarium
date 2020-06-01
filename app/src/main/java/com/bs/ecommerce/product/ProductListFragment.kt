@@ -19,6 +19,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bs.ecommerce.R
 import com.bs.ecommerce.base.BaseFragment
 import com.bs.ecommerce.base.BaseViewModel
+import com.bs.ecommerce.db.DbHelper
 import com.bs.ecommerce.product.adapter.ProductListAdapter
 import com.bs.ecommerce.product.adapter.SubCategoryAdapter
 import com.bs.ecommerce.product.model.ProductListModel
@@ -109,6 +110,7 @@ class ProductListFragment : BaseFragment() {
     private fun initView() {
         calculateAutomaticGridColumn()
 
+        btnFilter.findViewById<TextView>(R.id.tvFilter).text = DbHelper.getString("filtering.filter")
         btnFilter.setOnClickListener {
             when (drawerLayout.isDrawerOpen(GravityCompat.END)) {
                 true -> {
@@ -121,6 +123,7 @@ class ProductListFragment : BaseFragment() {
             }
         }
 
+        btnSortBy.findViewById<TextView>(R.id.tvSortBy).text = DbHelper.getString("catalog.orderby")
         btnSortBy.setOnClickListener {
             drawerLayout?.closeDrawers()
             sortOptionDialog.show()
@@ -175,7 +178,7 @@ class ProductListFragment : BaseFragment() {
         pageSizeDialog = BottomSheetDialog(requireContext(), R.style.BsDialog)
 
         val pageSizeHolder:LinearLayout = layoutInflater.inflate(R.layout.sort_option_bottom_sheet, null, false) as LinearLayout
-        pageSizeHolder.sortOptionBsTitle.text = getString(R.string.items_per_page)
+        pageSizeHolder.sortOptionBsTitle.text = DbHelper.getString("filtering.itemsperpage")
         
         // page size selection
         if(sortOption?.allowCustomersToSelectPageSize== true && !sortOption.pageSizeOptions.isNullOrEmpty()) {
@@ -209,6 +212,7 @@ class ProductListFragment : BaseFragment() {
         
         // sort option selection
         val sortOptionHolder:LinearLayout = layoutInflater.inflate(R.layout.sort_option_bottom_sheet, null, false) as LinearLayout
+        sortOptionHolder.findViewById<TextView>(R.id.sortOptionBsTitle)?.text = DbHelper.getString("catalog.orderby")
 
         if(sortOption?.allowProductSorting == true && !sortOption.availableSortOptions.isNullOrEmpty()) {
 

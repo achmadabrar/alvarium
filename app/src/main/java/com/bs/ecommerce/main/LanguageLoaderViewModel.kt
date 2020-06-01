@@ -11,6 +11,7 @@ import com.bs.ecommerce.main.model.MainModelImpl
 import com.bs.ecommerce.main.model.data.AppLandingSettingResponse
 import com.bs.ecommerce.product.model.data.StringResourceResponse
 import com.bs.ecommerce.utils.MyApplication
+import com.bs.ecommerce.utils.showLog
 
 class LanguageLoaderViewModel: BaseViewModel() {
 
@@ -24,6 +25,7 @@ class LanguageLoaderViewModel: BaseViewModel() {
                 override fun onRequestSuccess(data: AppLandingSettingResponse) {
 
                     val id = data.data.languageNavSelector.currentLanguageId
+                    "lang_".showLog("Language ID: $id")
 
                     StringResourceModelImpl().getStringResource(
                         id,
@@ -31,6 +33,7 @@ class LanguageLoaderViewModel: BaseViewModel() {
                             override fun onRequestSuccess(data: StringResourceResponse) {
                                 // TODO save to local DB. delete previous one
                                 // val temp = mutableListOf<StrResource>()
+                                AppDatabase.getInstance().deleteAllStrings()
 
                                 for(i in data.stringResource) {
                                     //temp.add(StrResource(i.key, i.value, id))

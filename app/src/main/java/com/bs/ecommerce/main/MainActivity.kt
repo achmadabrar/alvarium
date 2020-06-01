@@ -4,6 +4,7 @@ import android.animation.ValueAnimator
 import android.content.res.Configuration
 import android.os.Bundle
 import android.os.Handler
+import android.view.Menu
 import android.view.View
 import android.view.animation.DecelerateInterpolator
 import androidx.appcompat.app.ActionBarDrawerToggle
@@ -147,7 +148,7 @@ class MainActivity : PrivacyPolicyDialogActivity(), View.OnClickListener
             }
 
             if(bottomNavPosition >= 0)
-                navigation?.menu?.getItem(bottomNavPosition)?.isChecked = true
+                mainBottomNav?.menu?.getItem(bottomNavPosition)?.isChecked = true
 
             // set back button
             if (supportFragmentManager.backStackEntryCount > 0) {
@@ -300,7 +301,7 @@ class MainActivity : PrivacyPolicyDialogActivity(), View.OnClickListener
             super.onBackPressed()
             return
         } else {
-            toast(R.string.back_button_click_msg)
+            toast(DbHelper.getString("home.pressagaintoexit"))
         }
 
 
@@ -318,19 +319,16 @@ class MainActivity : PrivacyPolicyDialogActivity(), View.OnClickListener
 
     private fun setBottomNavigation()
     {
-        navigation?.onNavigationItemSelectedListener = mOnNavigationItemSelectedListener
-        navigation?.enableAnimation(false)
-        navigation?.enableShiftingMode(false)
-        //navigation?.enableItemShiftingMode(false)
-        navigation?.setTextSize(11.0f)
-        navigation?.setIconSize(28.0f)
+        mainBottomNav?.apply{
+            menu.clear()
 
-        navigation?.apply {
-            bottomNavigationItemViews[0]?.setTitle(DbHelper.getString("common.home"))
-            bottomNavigationItemViews[1]?.setTitle(DbHelper.getString("common.category"))
-            bottomNavigationItemViews[2]?.setTitle(DbHelper.getString("common.search"))
-            bottomNavigationItemViews[3]?.setTitle(DbHelper.getString("pagetitle.account"))
-            bottomNavigationItemViews[4]?.setTitle(DbHelper.getString("common.more"))
+            menu.add(Menu.NONE, R.id.bottom_nav_home, 0, DbHelper.getString("common.home")).setIcon(R.drawable.app_bottom_icon_home)
+            menu.add(Menu.NONE, R.id.bottom_nav_categories, 1, DbHelper.getString("common.category")).setIcon(R.drawable.app_bottom_icon_categories)
+            menu.add(Menu.NONE, R.id.bottom_nav_search, 2, DbHelper.getString("common.search")).setIcon(R.drawable.app_bottom_icon_search)
+            menu.add(Menu.NONE, R.id.bottom_nav_account, 3, DbHelper.getString("pagetitle.account")).setIcon(R.drawable.app_bottom_icon_account)
+            menu.add(Menu.NONE, R.id.bottom_nav_more, 4, DbHelper.getString("common.more")).setIcon(R.drawable.app_bottom_icon_more)
+
+            setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener)
         }
     }
 

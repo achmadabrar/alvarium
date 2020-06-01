@@ -2,8 +2,12 @@ package com.bs.ecommerce.customViews
 
 import android.app.Dialog
 import android.content.Context
+import android.view.View
 import android.view.Window
 import com.bs.ecommerce.R
+import com.bs.ecommerce.db.DbHelper
+import kotlinx.android.synthetic.main.custom_loading_layout.view.*
+import org.jetbrains.anko.layoutInflater
 
 
 class ContentLoadingDialog(private val context: Context) {
@@ -11,11 +15,15 @@ class ContentLoadingDialog(private val context: Context) {
     var dialog: Dialog? = null
 
     fun showDialog() {
+
+        val view: View = context.layoutInflater.inflate(R.layout.custom_loading_layout, null, false)
+        view.tvPleaseWait?.text = DbHelper.getString("common.pleasewait")
+
         dialog = Dialog(context)
         dialog?.requestWindowFeature(Window.FEATURE_NO_TITLE)
         dialog?.window?.setBackgroundDrawableResource(android.R.color.transparent)
         dialog?.setCancelable(false)
-        dialog?.setContentView(R.layout.custom_loading_layout)
+        dialog?.setContentView(view)
 
         //ivLoaderGif.loadImg()
 

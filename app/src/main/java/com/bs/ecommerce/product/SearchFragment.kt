@@ -18,6 +18,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bs.ecommerce.R
 import com.bs.ecommerce.base.BaseFragment
 import com.bs.ecommerce.base.BaseViewModel
+import com.bs.ecommerce.db.DbHelper
 import com.bs.ecommerce.main.MainActivity
 import com.bs.ecommerce.product.adapter.ProductListAdapter
 import com.bs.ecommerce.product.model.SearchModel
@@ -81,6 +82,9 @@ class SearchFragment : BaseFragment() {
     private fun initView() {
         calculateAutomaticGridColumn()
 
+        tvNoProduct.text = DbHelper.getString("search.noresultstext")
+
+        btnFilter.findViewById<TextView>(R.id.tvFilter).text = DbHelper.getString("filtering.filter")
         btnFilter.setOnClickListener {
             when (drawerLayout.isDrawerOpen(GravityCompat.END)) {
                 true -> {
@@ -93,6 +97,7 @@ class SearchFragment : BaseFragment() {
             }
         }
 
+        btnSortBy.findViewById<TextView>(R.id.tvSortBy).text = DbHelper.getString("catalog.orderby")
         btnSortBy.setOnClickListener {
             drawerLayout?.closeDrawers()
             sortOptionDialog.show()
@@ -190,11 +195,7 @@ class SearchFragment : BaseFragment() {
                 MenuItemCompat.SHOW_AS_ACTION_COLLAPSE_ACTION_VIEW or MenuItemCompat.SHOW_AS_ACTION_ALWAYS)
             MenuItemCompat.setActionView(item, searchView)
 
-            searchView?.queryHint = getString(R.string.title_search)
-            /*if (productListAdapter == null)
-                searchView?.queryHint = getString(R.string.title_search)
-            else
-                searchView?.queryHint = MyApplication.searchQuery*/
+            searchView?.queryHint = DbHelper.getString("pagetitle.search")
 
             searchView?.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
                 override fun onQueryTextSubmit(query: String): Boolean {
@@ -243,7 +244,7 @@ class SearchFragment : BaseFragment() {
                 observeLiveDataChange = true
                 (viewModel as ProductListViewModel).searchProduct(query, true, model)
             } else
-                toast(R.string.search_limit)
+                toast(DbHelper.getString("search.searchtermminimumlengthisncharacters"))
 
         }
     }
@@ -251,6 +252,7 @@ class SearchFragment : BaseFragment() {
     private fun populateSortOptions(sortOption: PagingFilteringContext?) {
 
         val sortOptionHolder:LinearLayout = layoutInflater.inflate(R.layout.sort_option_bottom_sheet, null, false) as LinearLayout
+        sortOptionHolder.findViewById<TextView>(R.id.sortOptionBsTitle)?.text = DbHelper.getString("catalog.orderby")
 
         if(sortOption?.allowProductSorting == true && !sortOption.availableSortOptions.isNullOrEmpty()) {
 

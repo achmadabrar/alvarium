@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import com.bs.ecommerce.auth.register.data.KeyValuePair
 import com.bs.ecommerce.base.BaseViewModel
 import com.bs.ecommerce.common.RequestCompleteListener
+import com.bs.ecommerce.db.DbHelper
 import com.bs.ecommerce.home.homepage.model.data.HomePageProductResponse
 import com.bs.ecommerce.networking.Api
 import com.bs.ecommerce.networking.common.KeyValueFormData
@@ -191,7 +192,7 @@ class ProductDetailViewModel : BaseViewModel() {
         if(quantityLiveData.value!! > 1) {
             quantityLiveData.setValue(quantityLiveData.value?.minus(1))
         } else {
-            toast("Invalid quantity")
+            toast(DbHelper.getString("shoppingcart.quantityshouldpositive"))
         }
     }
 

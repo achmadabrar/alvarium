@@ -33,9 +33,10 @@
                     android:padding="15dp">
 
                     <TextView
+                        android:id="@+id/labelChangeUrl"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="@string/test_your_api"
+                        tools:text="@string/test_your_api"
                         android:textColor="?attr/primaryTextColor"
                         android:textSize="@dimen/tv_text_size_large"
                         android:textStyle="bold" />
@@ -59,7 +60,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:backgroundTint="@color/settings_btn_bg"
-                        android:text="@string/test"
+                        tools:text="@string/test"
                         android:textColor="@color/white" />
 
 
@@ -68,7 +69,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:backgroundTint="@color/settings_btn_bg"
-                        android:text="@string/set_default"
+                        tools:text="@string/set_default"
                         android:textAllCaps="true"
                         android:textColor="@color/white" />
 
@@ -93,9 +94,10 @@
                     android:orientation="vertical">
 
                     <TextView
+                        android:id="@+id/labelLanguage"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="@string/select_language"
+                        tools:text="@string/select_language"
                         android:textColor="?attr/primaryTextColor"
                         android:textSize="@dimen/tv_text_size_large"
                         android:textStyle="bold" />
@@ -129,9 +131,10 @@
                     android:orientation="vertical">
 
                     <TextView
+                        android:id="@+id/labelCurrency"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="@string/select_currency"
+                        tools:text="@string/select_currency"
                         android:textColor="?attr/primaryTextColor"
                         android:textSize="@dimen/tv_text_size_large"
                         android:textStyle="bold" />
@@ -169,7 +172,7 @@
                         android:id="@+id/switchTheme"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="@string/select_theme"
+                        tools:text="@string/select_theme"
                         android:textStyle="bold"
                         android:textColor="?attr/primaryTextColor"
                         android:textSize="@dimen/tv_text_size_large"/>

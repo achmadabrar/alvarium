@@ -8,6 +8,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.bs.ecommerce.R
 import com.bs.ecommerce.base.BaseActivity
+import com.bs.ecommerce.db.DbHelper
 import com.bs.ecommerce.main.MainActivity
 import com.bs.ecommerce.main.MainViewModel
 import com.bs.ecommerce.main.model.MainModelImpl
@@ -41,6 +42,8 @@ class SettingsFragment: BaseUrlChangeFragment() {
     {
         super.onViewCreated(view, savedInstanceState)
 
+        initView()
+
         mainModel = MainModelImpl(activity?.applicationContext!!)
 
         mainViewModel = ViewModelProvider(this).get(MainViewModel::class.java)
@@ -56,6 +59,16 @@ class SettingsFragment: BaseUrlChangeFragment() {
 
         enableThemeSwitchOption()
 
+    }
+
+    fun initView() {
+        labelChangeUrl.text = DbHelper.getString("nopstation.webapi.settings.nopcommerceurl")
+        labelLanguage.text = DbHelper.getString("nopstation.webapi.settings.language")
+        labelCurrency.text = DbHelper.getString("nopstation.webapi.settings.currency")
+        switchTheme.text = DbHelper.getString("nopstation.webapi.settings.darktheme")
+
+        testUrlBtnFromSettings.text = DbHelper.getString("nopstation.webapi.settings.test")
+        mainUrlBtnFromSettings.text = DbHelper.getString("nopstation.webapi.settings.setdefault")
     }
 
     private fun setLiveDataListeners()

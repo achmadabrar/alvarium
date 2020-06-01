@@ -15,9 +15,7 @@ class DbHelper {
 
 
         fun getString(key: String): String {
-            val temp = AppDatabase.getInstance().getString(key,
-                currentLanguageId
-            )
+            val temp = AppDatabase.getInstance().getString(key)
 
             return temp?.value ?: key
         }

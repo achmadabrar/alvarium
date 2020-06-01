@@ -24,8 +24,8 @@
                 android:layout_height="0dp"
                 android:layout_weight="1"/>
 
-            <com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx
-                android:id="@+id/navigation"
+            <com.google.android.material.bottomnavigation.BottomNavigationView
+                android:id="@+id/mainBottomNav"
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
                 android:layout_gravity="bottom"
@@ -35,6 +35,7 @@
                 app:itemIconTint="@color/color_change_bottom"
                 app:itemTextColor="@color/color_change_bottom"
                 app:menu="@menu/navigation"
+                app:labelVisibilityMode="labeled"
                 app:itemTextAppearanceActive="@style/BottomNavigationViewTextStyle"
                 app:itemTextAppearanceInactive="@style/BottomNavigationViewTextStyle"/>
         </LinearLayout>

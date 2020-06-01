@@ -15,10 +15,11 @@
         android:orientation="vertical">
 
         <TextView
+            android:id="@+id/tvQuantityTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="start"
-            android:text="@string/quantity"
+            tools:text="@string/quantity"
             android:textColor="?attr/primaryTextColor"
             android:textSize="@dimen/tv_text_size_regular"
             android:textStyle="bold" />
@@ -28,7 +29,7 @@
             android:layout_height="wrap_content"
             android:gravity="start"
             android:maxLines="1"
-            android:text="@string/select_quantity"
+            tools:text="@string/select_quantity"
             android:textColor="@color/gray"
             android:textSize="@dimen/tv_text_size_small" />
     </LinearLayout>

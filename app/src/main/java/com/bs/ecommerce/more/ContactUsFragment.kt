@@ -8,12 +8,13 @@ import androidx.lifecycle.ViewModelProvider
 import com.bs.ecommerce.R
 import com.bs.ecommerce.base.BaseFragment
 import com.bs.ecommerce.base.BaseViewModel
+import com.bs.ecommerce.db.DbHelper
 import com.bs.ecommerce.more.model.CommonModel
 import com.bs.ecommerce.more.model.CommonModelImpl
 import com.bs.ecommerce.more.viewmodel.ContactUsViewModel
 import com.bs.ecommerce.product.model.data.ContactUsData
+import com.bs.ecommerce.utils.Const
 import com.bs.ecommerce.utils.EditTextUtils
-import com.bs.ecommerce.utils.TextUtils
 import com.bs.ecommerce.utils.isEmailValid
 import com.bs.ecommerce.utils.toast
 import kotlinx.android.synthetic.main.fragment_contact_us.*
@@ -67,18 +68,29 @@ class ContactUsFragment: BaseFragment() {
     }
 
     private fun setupView() {
+
+        etName.hint = DbHelper.getString("contactus.fullname.hint")
+        etEmail.hint = DbHelper.getString("contactus.email.hint")
+        etEnquiry.hint = DbHelper.getString("contactus.enquiry.hint")
+
+        btnSubmit.text = DbHelper.getString("contactus.button")
         btnSubmit.setOnClickListener { submitIfFormIsValid() }
     }
 
     private fun submitIfFormIsValid() {
         val etUtil = EditTextUtils()
 
-        val name = etUtil.showToastIfEmpty(etName) ?: return
-        val email = etUtil.showToastIfEmpty(etEmail) ?: return
-        val enquiry = etUtil.showToastIfEmpty(etEnquiry) ?: return
+        val name = etUtil.showToastIfEmpty(etName,
+            DbHelper.getString("contactus.fullname.required")) ?: return
+
+        val email = etUtil.showToastIfEmpty(etEmail,
+            DbHelper.getString("contactvendor.email.required")) ?: return
+
+        val enquiry = etUtil.showToastIfEmpty(etEnquiry,
+            DbHelper.getString("contactus.enquiry.required")) ?: return
 
         if(!email.isEmailValid()) {
-            toast(getString(R.string.enter_valid_email))
+            toast(DbHelper.getString(Const.ENTER_VALID_EMAIL))
             return
         }
 

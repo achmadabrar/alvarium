@@ -16,6 +16,7 @@ import com.bs.ecommerce.R
 import com.bs.ecommerce.base.BaseFragment
 import com.bs.ecommerce.base.BaseViewModel
 import com.bs.ecommerce.cart.CartFragment
+import com.bs.ecommerce.db.DbHelper
 import com.bs.ecommerce.home.FeaturedProductAdapter
 import com.bs.ecommerce.more.ProductReviewFragment
 import com.bs.ecommerce.networking.Api
@@ -32,8 +33,10 @@ import com.google.android.material.bottomsheet.BottomSheetBehavior
 import kotlinx.android.synthetic.main.custom_attribute_bottom_sheet.view.*
 import kotlinx.android.synthetic.main.featured_product_layout.view.*
 import kotlinx.android.synthetic.main.fragment_product_detail.*
+import kotlinx.android.synthetic.main.fragment_product_detail.view.*
 import kotlinx.android.synthetic.main.product_availability_layout.view.*
 import kotlinx.android.synthetic.main.product_gift_card_layout.*
+import kotlinx.android.synthetic.main.product_gift_card_layout.view.*
 import kotlinx.android.synthetic.main.product_name_layout.view.*
 import kotlinx.android.synthetic.main.product_name_layout.view.tvProductName
 import kotlinx.android.synthetic.main.product_price_layout.view.*
@@ -64,7 +67,7 @@ class ProductDetailFragment : BaseFragment(), View.OnClickListener {
         super.onViewCreated(view, savedInstanceState)
 
         if(arguments?.getLong(PRODUCT_ID)==null) {
-            toast(R.string.invalid_id)
+            toast(DbHelper.getString("nopstation.webapi.sliders.fields.entityid.invalidproduct"))
             requireActivity().supportFragmentManager.popBackStack()
             return
         }
@@ -154,9 +157,9 @@ class ProductDetailFragment : BaseFragment(), View.OnClickListener {
                     productRatingLayout.ratingBar.rating =
                         (product.productReviewOverview?.ratingSum ?: 0).toFloat()
 
-                    productRatingLayout.tvReviewCount.text = getString(
-                        R.string.n_reviews, product.productReviewOverview?.totalReviews ?: 0
-                    )
+                    productRatingLayout.tvReviewCount.text = (product.productReviewOverview?.totalReviews ?: 0)
+                        .toString().plus(" ")
+                        .plus(DbHelper.getString("reviews"))
 
                     productRatingLayout.setOnClickListener {
 
@@ -187,16 +190,19 @@ class ProductDetailFragment : BaseFragment(), View.OnClickListener {
 
                     //productPriceLayout.tvDiscountPercent.text = "40% Off"
 
+                    availabilityLayout.tvAvailabilityTitle.text = DbHelper.getString("products.availability")
                     availabilityLayout.tvAvailability.text = product.stockAvailability
+                    availabilityLayout.deliveryMethod.text = DbHelper.getString("products.freeshipping")
                     availabilityLayout.deliveryMethod.visibility = if (product.isFreeShipping == true)
                         View.VISIBLE else View.GONE
 
+                    productQuantityLayout.tvQuantityTitle.text = DbHelper.getString("products.tierprices.quantity")
                     productQuantityLayout.tvQuantity.text =
                         product.addToCart?.enteredQuantity?.toString() ?: "1"
 
                     // long description
                     val productDescLayout = vsProductDescLayout?.inflate()
-                    productDescLayout?.tvProductName?.text = getString(R.string.description)
+                    productDescLayout?.tvProductName?.text = DbHelper.getString("account.vendorinfo.description")
                     product.fullDescription?.let {
                         productDescLayout?.tvProductDescription?.show(
                             it,
@@ -268,7 +274,7 @@ class ProductDetailFragment : BaseFragment(), View.OnClickListener {
                 Observer { isInvalid ->
 
                     if (isInvalid) {
-                        toast(getString(R.string.invalid_barcode))
+                        toast(DbHelper.getString("nopstation.webapi.sliders.fields.entityid.invalidproduct"))
                         requireActivity().supportFragmentManager.popBackStackImmediate()
                     }
 
@@ -335,7 +341,11 @@ class ProductDetailFragment : BaseFragment(), View.OnClickListener {
     private fun populateGiftCardSection() {
         if(vsGiftCardLayout == null) return
 
-        vsGiftCardLayout.inflate()
+        val view = vsGiftCardLayout.inflate()
+
+        view.etRecipientName.hint = DbHelper.getString("products.giftcard.recipientname")
+        view.etYourName.hint = DbHelper.getString("products.giftcard.sendername")
+        view.etMessage.hint = DbHelper.getString("products.giftcard.message")
     }
 
     @SuppressLint("SetTextI18n")
@@ -344,11 +354,13 @@ class ProductDetailFragment : BaseFragment(), View.OnClickListener {
 
         val rentalProductLayout = vsRentalProduct.inflate()
 
-        btnBuyNow.text = getString(R.string.rent_now)
+        btnBuyNow.text = DbHelper.getString("shoppingcart.rentnow")
         hd13.visibility = View.VISIBLE
 
         val calender: Calendar = Calendar.getInstance()
 
+        rentalProductLayout.tvLayoutTitle.text = DbHelper.getString("shoppingcart.rent")
+        rentalProductLayout.etRentFrom.hint = DbHelper.getString("shoppingcart.rental.enterstartdate")
         rentalProductLayout.etRentFrom.setOnClickListener{
 
             val dialog = DatePickerDialog(
@@ -366,6 +378,7 @@ class ProductDetailFragment : BaseFragment(), View.OnClickListener {
             dialog.show()
         }
 
+        rentalProductLayout.etRentTo.hint = DbHelper.getString("shoppingcart.rental.enterenddate")
         rentalProductLayout.etRentTo.setOnClickListener{
 
             if (rentalProductLayout.etRentFrom.text.isNullOrEmpty()) {
@@ -393,7 +406,7 @@ class ProductDetailFragment : BaseFragment(), View.OnClickListener {
 
         val associatedProductLayout = vsAssociatedProduct.inflate()
 
-        associatedProductLayout.tvProductName.text = getString(R.string.associated_product)
+        associatedProductLayout.tvProductName.text = ""
 
         associatedProductLayout.rvFeaturedProduct.apply {
             layoutManager =
@@ -430,7 +443,7 @@ class ProductDetailFragment : BaseFragment(), View.OnClickListener {
 
         val featuredProductLayout = vsRelatedProduct.inflate()
 
-        featuredProductLayout.tvProductName.text = getString(R.string.related_products)
+        featuredProductLayout.tvProductName.text = DbHelper.getString("products.relatedproducts")
 
         featuredProductLayout.rvFeaturedProduct.apply {
             layoutManager =
@@ -450,7 +463,7 @@ class ProductDetailFragment : BaseFragment(), View.OnClickListener {
 
         val similarProductLayout = vsSimilarProduct.inflate()
 
-        similarProductLayout.tvProductName.text = getString(R.string.people_also_purchase)
+        similarProductLayout.tvProductName.text = DbHelper.getString("products.alsopurchased")
 
         similarProductLayout.rvFeaturedProduct.apply {
             layoutManager =
@@ -489,6 +502,8 @@ class ProductDetailFragment : BaseFragment(), View.OnClickListener {
         })*/
 
         btnBuyNow.setOnClickListener(this)
+
+        bottomSheetLayout.tvDone.text = DbHelper.getString("common.done")
         bottomSheetLayout.tvDone.setOnClickListener(this)
         productQuantityLayout.btnMinus.setOnClickListener(this)
         productQuantityLayout.btnPlus.setOnClickListener(this)
@@ -508,18 +523,22 @@ class ProductDetailFragment : BaseFragment(), View.OnClickListener {
             }
         }
 
+        btnAddToCart.text = DbHelper.getString("shoppingcart.addtocart")
         btnAddToCart?.setOnClickListener {
             addToCartClickAction(productId, productQuantityLayout?.tvQuantity?.text.toString(), cart = true)
         }
 
+        btnAddToWishList?.tvLabel?.text = DbHelper.getString("shoppingcart.addtowishlist")
         btnAddToWishList?.setOnClickListener {
             addToCartClickAction(productId, productQuantityLayout?.tvQuantity?.text.toString(), cart = false)
         }
 
+        btnBuyNow.text = DbHelper.getString("shoppingcart.buynow")
         btnBuyNow?.setOnClickListener {
             (viewModel as ProductDetailViewModel).gotoCartPage = true
             addToCartClickAction(productId, productQuantityLayout?.tvQuantity?.text.toString(), cart = true)
         }
+
     }
 
     private fun addToCartClickAction(productId: Long, quantity: String, cart: Boolean) {
@@ -529,7 +548,9 @@ class ProductDetailFragment : BaseFragment(), View.OnClickListener {
 
         if (product?.addToCart?.customerEntersPrice == true) {
 
-            val enteredPriceStr = EditTextUtils().showToastIfEmpty(productPriceLayout.etPrice) ?: return
+            productPriceLayout.labelEnterPrice.text = DbHelper.getString(Const.ENTER_PRICE)
+            val enteredPriceStr = EditTextUtils().showToastIfEmpty(productPriceLayout.etPrice,
+                DbHelper.getString(Const.ENTER_PRICE_REQ)) ?: return
 
             (viewModel as ProductDetailViewModel)
                 .productLiveData.value?.addToCart
