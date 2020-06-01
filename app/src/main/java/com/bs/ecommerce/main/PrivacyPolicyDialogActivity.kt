@@ -1,10 +1,11 @@
 package com.bs.ecommerce.main
 
+import android.content.Intent
 import android.util.Log
 import android.webkit.WebView
 import androidx.lifecycle.Observer
-import com.afollestad.materialdialogs.DialogAction
 import com.afollestad.materialdialogs.MaterialDialog
+import com.afollestad.materialdialogs.customview.customView
 import com.bs.ecommerce.R
 import com.bs.ecommerce.base.BaseActivity
 import com.bs.ecommerce.more.model.TopicModel
@@ -12,6 +13,7 @@ import com.bs.ecommerce.more.model.TopicModelImpl
 import com.bs.ecommerce.networking.Api
 import com.bs.ecommerce.utils.AcceptPolicyPreference
 import com.bs.ecommerce.utils.MyApplication
+import com.bs.ecommerce.utils.showLog
 
 abstract class PrivacyPolicyDialogActivity : BaseActivity()
 {
@@ -49,43 +51,37 @@ abstract class PrivacyPolicyDialogActivity : BaseActivity()
     {
 
         val webViewDialog = WebView(this)
-
         webViewDialog.settings.defaultFontSize = 10
-
 
         webViewDialog.loadDataWithBaseURL("", mHtmlString,
                 "text/html",
                 "UTF-8",
                 "")
 
-        MaterialDialog.Builder(this)
-                .title("Please Read This Before Continue")
-                .positiveText("I Read & I Accept")
-                .positiveColorRes(R.color.colorPrimaryDark)
-                //.negativeText(R.string.disagree)
-                //.checkBoxPrompt("I Understand & Accept", false, null)
-                .onAny{
-                    materialDialog: MaterialDialog, dialogAction: DialogAction ->
+        MaterialDialog(this).show {
 
-                    prefManager.isFirstTimeLaunch = false
+            title(null, "Please Read This Before Continue")
 
-                    if(prefManager.isInstanceIdReceived)
-                    {
-                        MyApplication.fcm_token?.let {
+            customView(null, webViewDialog, true)
 
-                            //sendRegistrationToServer(MyApplication.fcm_token)
-                            Log.v("rahat_fcm", "Registered\t" + MyApplication.fcm_token)
+            positiveButton(null, "I Read & I Accept") {
 
-                        }
+                prefManager.isFirstTimeLaunch = false
 
+                if(prefManager.isInstanceIdReceived)
+                {
+                    MyApplication.fcm_token?.let {
+                        //sendRegistrationToServer(MyApplication.fcm_token)
+                        "rahat_fcm".showLog("Registered\t" + MyApplication.fcm_token)
                     }
 
-
                 }
-                .canceledOnTouchOutside(false)
-                .cancelable(false)
-                .customView(webViewDialog, false)
-                .show()
+            }
+            cancelable(false)
+            cancelOnTouchOutside(false)
+
+        }
+
     }
 
 

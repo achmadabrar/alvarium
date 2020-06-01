@@ -66,6 +66,7 @@ class OptionsFragment : ToolbarLogoBaseFragment() {
 
                         R.string.title_contact_us ->
                             replaceFragmentSafely(ContactUsFragment())
+
                     }
                 }
 

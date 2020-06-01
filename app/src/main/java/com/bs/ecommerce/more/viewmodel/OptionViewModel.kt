@@ -29,4 +29,13 @@ class OptionViewModel : BaseViewModel() {
 
         optionsLD.postValue(data)
     }
+    /*fun changeLogInText()
+    {
+        //val data = optionsLD.value as MutableList<AppOptions>
+
+        (optionsLD.value as MutableList<AppOptions>).remove(AppOptions(R.string.login, R.drawable.ic_login))
+
+        (optionsLD.value as MutableList<AppOptions>).add(AppOptions(R.string.log_out, R.drawable.ic_login))
+
+    }*/
 }

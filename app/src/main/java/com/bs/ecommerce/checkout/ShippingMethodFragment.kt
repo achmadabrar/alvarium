@@ -21,7 +21,6 @@ class ShippingMethodFragment : BaseCheckoutNavigationFragment() {
 
     private lateinit var methodSelectionProcess: MethodSelectionProcess
     private var shippingMethodValue = ""
-    private var name = ""
 
     override fun getFragmentTitle() = R.string.title_shopping_cart
 
@@ -35,18 +34,18 @@ class ShippingMethodFragment : BaseCheckoutNavigationFragment() {
     {
         super.onViewCreated(view, savedInstanceState)
 
-        MyApplication.checkoutSaveResponse?.data?.shippingMethodModel?.shippingMethods?.let {
+        MyApplication.checkoutSaveResponse?.data?.shippingMethodModel?.let {
 
             with(it)
             {
-                addMethodRadioGroup(this)
+                addMethodRadioGroup(shippingMethods)
 
                 btnContinue?.setOnClickListener {
                     (viewModel as CheckoutViewModel).saveShippingMethodVM(shippingMethodValue, model)
 
-                    for(i in this.indices)
+                    for(i in shippingMethods.indices)
                     {
-                        this[i].selected = this[i].name == name
+                        shippingMethods[i].selected = shippingMethods[i].name == methodName
                     }
                 }
             }
@@ -68,7 +67,7 @@ class ShippingMethodFragment : BaseCheckoutNavigationFragment() {
     private fun setMethodValue(method: ShippingMethod)
     {
         shippingMethodValue = method.name + "___" + method.shippingRateComputationMethodSystemName
-        name = method.name
+        methodName = method.name
     }
 
     private fun generateRadioButton(method: ShippingMethod)

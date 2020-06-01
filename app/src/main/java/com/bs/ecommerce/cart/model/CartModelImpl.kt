@@ -75,7 +75,6 @@ class CartModelImpl: CartModel
 
     override fun removeCouponModel(keyValueFormData: KeyValueFormData, callback: RequestCompleteListener<CartResponse>)
     {
-
         RetroClient.api.removeDiscountCoupon(keyValueFormData).enqueue(object : Callback<CartResponse>
         {
             override fun onResponse(call: Call<CartResponse>, response: Response<CartResponse>)
@@ -97,6 +96,24 @@ class CartModelImpl: CartModel
     {
 
         RetroClient.api.applyGiftCardCoupon(keyValueFormData).enqueue(object : Callback<CartResponse>
+        {
+            override fun onResponse(call: Call<CartResponse>, response: Response<CartResponse>)
+            {
+                if (response.body() != null)
+                    callback.onRequestSuccess(response.body()!!)
+                else
+                    callback.onRequestFailed(response.message())
+            }
+
+
+            override fun onFailure(call: Call<CartResponse>, t: Throwable) {
+                callback.onRequestFailed(t.localizedMessage!!)
+            }
+        })
+    }
+    override fun removeGiftCardModel(keyValueFormData: KeyValueFormData, callback: RequestCompleteListener<CartResponse>)
+    {
+        RetroClient.api.removeGiftCardCoupon(keyValueFormData).enqueue(object : Callback<CartResponse>
         {
             override fun onResponse(call: Call<CartResponse>, response: Response<CartResponse>)
             {

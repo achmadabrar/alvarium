@@ -183,18 +183,7 @@ open class CheckoutViewModel : BaseViewModel()
 
         model.saveShippingMethod(KeyValueFormData(formValues), object : RequestCompleteListener<CheckoutSaveResponse>
         {
-            override fun onRequestSuccess(data: CheckoutSaveResponse)
-            {
-                with(data.data.paymentMethodModel!!)
-                {
-                    if(displayRewardPoints)
-                    {
-                        this.paymentMethods.add(PaymentMethod(description = "", fee = rewardPointsBalance, logoUrl = "", name = "Reward Points", paymentMethodSystemName = "", selected = false ))
-                    }
-                    shippingMethodModelLD.postValue(data.data.shippingMethodModel)
-                }
-                saveCheckoutData(data)
-            }
+            override fun onRequestSuccess(data: CheckoutSaveResponse) = saveCheckoutData(data)
 
             override fun onRequestFailed(errorMessage: String)
             {

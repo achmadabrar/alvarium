@@ -23,7 +23,6 @@ class PaymentMethodFragment : BaseCheckoutNavigationFragment() {
 
     private lateinit var methodSelectionProcess: MethodSelectionProcess
     private var paymentMethodValue = ""
-    private var name = ""
 
     override fun getFragmentTitle() = R.string.title_shopping_cart
 
@@ -37,19 +36,28 @@ class PaymentMethodFragment : BaseCheckoutNavigationFragment() {
     {
         super.onViewCreated(view, savedInstanceState)
 
-        MyApplication.checkoutSaveResponse?.data?.paymentMethodModel?.paymentMethods?.let {
+        MyApplication.checkoutSaveResponse?.data?.paymentMethodModel?.let {
 
             with(it)
             {
+                if(displayRewardPoints)
+                {
+                    rewardPointCheckBox.visibility = View.VISIBLE
+                    rewardPointCheckBox.text = "Use my reward points, " +
+                            "${it.rewardPointsBalance} reward points (${it.rewardPointsAmount}) available for this order"
 
-                addMethodRadioGroup(this)
+                    useRewardPoints = rewardPointCheckBox.isChecked
+
+                }
+
+                addMethodRadioGroup(paymentMethods)
 
                 btnContinue?.setOnClickListener {
                     (viewModel as CheckoutViewModel).savePaymentMethodVM(paymentMethodValue, model)
 
-                    for(i in this.indices)
+                    for(i in paymentMethods.indices)
                     {
-                        this[i].selected = this[i].name == name
+                        paymentMethods[i].selected = paymentMethods[i].name == methodName
                     }
                 }
             }
@@ -72,7 +80,7 @@ class PaymentMethodFragment : BaseCheckoutNavigationFragment() {
     private fun setMethodValue(method: PaymentMethod)
     {
         paymentMethodValue = method.paymentMethodSystemName
-        name = method.name
+        methodName = method.name
     }
 
     private fun generateRadioButton(method: PaymentMethod)

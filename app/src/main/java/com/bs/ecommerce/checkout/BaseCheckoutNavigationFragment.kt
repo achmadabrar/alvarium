@@ -1,18 +1,23 @@
 package com.bs.ecommerce.checkout
 
 import android.app.Activity
+import android.app.AlertDialog
 import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
+import android.util.Log
 import android.view.View
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import com.afollestad.materialdialogs.MaterialDialog
 import com.bs.ecommerce.R
+import com.bs.ecommerce.base.BaseActivity
 import com.bs.ecommerce.base.BaseFragment
 import com.bs.ecommerce.base.ToolbarLogoBaseFragment
 import com.bs.ecommerce.checkout.model.CheckoutModel
 import com.bs.ecommerce.checkout.model.CheckoutModelImpl
 import com.bs.ecommerce.checkout.model.data.CheckoutSaveResponse
+import com.bs.ecommerce.main.MainActivity
 import com.bs.ecommerce.utils.MyApplication
 import com.bs.ecommerce.utils.toast
 import com.google.android.material.tabs.TabLayout
@@ -22,6 +27,8 @@ import kotlinx.android.synthetic.main.fragment_base_billing_adddress.*
 
 abstract class BaseCheckoutNavigationFragment : ToolbarLogoBaseFragment()
 {
+
+    var methodName = ""
 
     protected lateinit var model: CheckoutModel
 
@@ -104,7 +111,7 @@ abstract class BaseCheckoutNavigationFragment : ToolbarLogoBaseFragment()
                     startActivityForResult(
                         Intent(requireActivity(), WebViewPaymentActivity::class.java)
                             .putExtra(CheckoutConstants.CHECKOUT_STEP, CheckoutConstants.PaymentInfo)
-                            .putExtra(CheckoutConstants.PAYMENT_INFO_NAME, it.paymentViewComponentName),
+                            .putExtra(CheckoutConstants.PAYMENT_INFO_NAME, methodName),
                         CheckoutConstants.PAYMENT_INFO_RESULT)
                 }
 
@@ -118,15 +125,16 @@ abstract class BaseCheckoutNavigationFragment : ToolbarLogoBaseFragment()
             CheckoutConstants.ConfirmOrder -> replaceFragmentWithoutSavingState(ConfirmOrderFragment())
 
             CheckoutConstants.Completed ->
-                startActivity(Intent(requireActivity(), ResultActivity::class.java)
+                (activity as BaseActivity).showOrderCompleteDialog(saveResponse!!.data.completedModel!!.orderId)
+
+            /*startActivity(Intent(requireActivity(), ResultActivity::class.java)
                         .putExtra(CheckoutConstants.CHECKOUT_STEP, CheckoutConstants.Completed)
                         .putExtra(CheckoutConstants.ORDER_ID, saveResponse!!.data.completedModel!!.orderId)
-                )
+                )*/
 
 
         }
     }
-
 
     open fun setLiveDataListeners() {
 
@@ -140,8 +148,6 @@ abstract class BaseCheckoutNavigationFragment : ToolbarLogoBaseFragment()
                 else
                 {
                     CheckoutStepFragment.isBillingAddressSubmitted = true
-
-                    saveResponse.message?.let { toast(it) }
 
                     goToNextStep(saveResponse)
                 }
