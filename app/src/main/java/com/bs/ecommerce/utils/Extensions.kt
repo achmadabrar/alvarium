@@ -23,6 +23,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
 import com.bs.ecommerce.R
 import com.bs.ecommerce.base.BaseFragment
+import com.bs.ecommerce.db.DbHelper
 import com.bs.ecommerce.main.MainActivity
 import com.squareup.picasso.Picasso
 import java.util.*
@@ -269,7 +270,7 @@ fun String.isNumeric(): Boolean
 
 fun TextView?.showTextPendingCalculationOnCheckout()
 {
-    this?.setText(R.string.calculated_during_checkout)
+    this?.text = DbHelper.getString(Const.CALCULATED_DURING_CHECKOUT)
     this?.textSize = 13F
     this?.maxLines = 2
     this?.setTextColor(ContextCompat.getColor(context, R.color.pink))

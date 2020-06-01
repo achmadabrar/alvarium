@@ -1,6 +1,7 @@
 package com.bs.ecommerce.checkout
 
 import android.os.Bundle
+import android.view.Menu
 import android.view.View
 import android.widget.RelativeLayout
 import androidx.lifecycle.Observer
@@ -11,9 +12,12 @@ import com.bs.ecommerce.base.BaseViewModel
 import com.bs.ecommerce.base.ToolbarLogoBaseFragment
 import com.bs.ecommerce.checkout.model.CheckoutModel
 import com.bs.ecommerce.checkout.model.CheckoutModelImpl
+import com.bs.ecommerce.db.DbHelper
+import com.bs.ecommerce.utils.Const
 import com.bs.ecommerce.utils.MyApplication
 import com.bs.ecommerce.utils.showLog
 import com.bs.ecommerce.utils.toast
+import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_checkout_step.*
 
 
@@ -41,6 +45,21 @@ class CheckoutStepFragment : ToolbarLogoBaseFragment() {
         (viewModel as CheckoutViewModel).getBillingFormVM(model)
 
         initView()
+
+        setTopNavigation()
+    }
+
+    private fun setTopNavigation()
+    {
+        checkoutBottomNav?.apply{
+            menu.clear()
+
+            menu.add(Menu.NONE, R.id.menu_address, 0, DbHelper.getString(Const.ADDRESS_TAB)).setIcon(R.drawable.ic_address)
+            menu.add(Menu.NONE, R.id.menu_shipping, 1, DbHelper.getString(Const.SHIPPING_TAB)).setIcon(R.drawable.ic_truck)
+            menu.add(Menu.NONE, R.id.menu_payment, 2, DbHelper.getString(Const.PAYMENT_TAB)).setIcon(R.drawable.ic_payment)
+            menu.add(Menu.NONE, R.id.menu_confirm, 3, DbHelper.getString(Const.CONFIRM_TAB)).setIcon(R.drawable.ic_check_circle)
+
+        }
     }
 
     private fun initView() {
