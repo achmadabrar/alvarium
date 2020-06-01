@@ -4,11 +4,9 @@ import android.animation.ValueAnimator
 import android.content.res.Configuration
 import android.os.Bundle
 import android.os.Handler
-import android.util.Log
 import android.view.View
 import android.view.animation.DecelerateInterpolator
 import androidx.appcompat.app.ActionBarDrawerToggle
-import androidx.appcompat.app.AlertDialog
 import androidx.core.view.GravityCompat
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.FragmentManager
@@ -18,7 +16,8 @@ import com.bs.ecommerce.R
 import com.bs.ecommerce.auth.customerInfo.CustomerInfoFragment
 import com.bs.ecommerce.base.BaseFragment
 import com.bs.ecommerce.cart.CartFragment
-import com.bs.ecommerce.checkout.*
+import com.bs.ecommerce.checkout.BaseCheckoutNavigationFragment
+import com.bs.ecommerce.db.DbHelper
 import com.bs.ecommerce.fcm.MessagingService
 import com.bs.ecommerce.home.category.CategoryFragment
 import com.bs.ecommerce.home.homepage.HomeFragment
@@ -325,6 +324,14 @@ class MainActivity : PrivacyPolicyDialogActivity(), View.OnClickListener
         //navigation?.enableItemShiftingMode(false)
         navigation?.setTextSize(11.0f)
         navigation?.setIconSize(28.0f)
+
+        navigation?.apply {
+            bottomNavigationItemViews[0]?.setTitle(DbHelper.getString("common.home"))
+            bottomNavigationItemViews[1]?.setTitle(DbHelper.getString("common.category"))
+            bottomNavigationItemViews[2]?.setTitle(DbHelper.getString("common.search"))
+            bottomNavigationItemViews[3]?.setTitle(DbHelper.getString("pagetitle.account"))
+            bottomNavigationItemViews[4]?.setTitle(DbHelper.getString("common.more"))
+        }
     }
 
     private val mOnNavigationItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener { item ->

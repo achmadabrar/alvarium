@@ -173,6 +173,7 @@ abstract class BaseActivity : AppCompatActivity()
         if(languageToLoad.isNotEmpty())
         {
             prefObject.setPrefs(PrefSingleton.CURRENT_LANGUAGE, languageToLoad)
+            prefObject.setPrefs(PrefSingleton.CURRENT_LANGUAGE_ID, currentLanguageId)
 
             "languageSet".showLog("Language got in ApplandingSettings :: $languageToLoad")
 
@@ -212,7 +213,7 @@ abstract class BaseActivity : AppCompatActivity()
         {
             preferredLanguage = Language.ENGLISH
             prefObject.setPrefs(PrefSingleton.CURRENT_LANGUAGE, preferredLanguage)
-
+            prefObject.setPrefs(PrefSingleton.CURRENT_LANGUAGE_ID, 1)
         }
         val locale = Locale(preferredLanguage)
         Locale.setDefault(locale)
@@ -264,6 +265,7 @@ abstract class BaseActivity : AppCompatActivity()
         if (TextUtils.isEmpty(preferredLanguage)) {
             preferredLanguage = Language.ENGLISH
             prefObject.setPrefs(PrefSingleton.CURRENT_LANGUAGE, preferredLanguage)
+            prefObject.setPrefs(PrefSingleton.CURRENT_LANGUAGE_ID, 1)
         }
 
         val current = Locale.getDefault()

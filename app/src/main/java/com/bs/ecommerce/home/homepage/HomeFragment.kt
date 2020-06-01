@@ -13,6 +13,7 @@ import com.bs.ecommerce.base.BaseViewModel
 import com.bs.ecommerce.base.ToolbarLogoBaseFragment
 import com.bs.ecommerce.cart.model.CartModel
 import com.bs.ecommerce.cart.model.CartModelImpl
+import com.bs.ecommerce.db.DbHelper
 import com.bs.ecommerce.home.FeaturedProductAdapter
 import com.bs.ecommerce.home.ManufacturerListAdapter
 import com.bs.ecommerce.home.homepage.model.HomePageModel
@@ -321,7 +322,7 @@ class HomeFragment : ToolbarLogoBaseFragment() {
         }
 
         featuredProductLayout?.visibility = View.VISIBLE
-        featuredProductLayout?.tvTitle?.text = getString(R.string.featured_products)
+        featuredProductLayout?.tvTitle?.text = DbHelper.getString("homepage.products")
         featuredProductLayout?.btnSeeAll?.visibility = View.GONE
 
         featuredProductLayout?.rvList?.adapter = FeaturedProductAdapter(list, productClickListener)
@@ -335,7 +336,7 @@ class HomeFragment : ToolbarLogoBaseFragment() {
         }
 
         bestSellingLayout.visibility = View.VISIBLE
-        bestSellingLayout.tvTitle.text = getString(R.string.best_selling)
+        bestSellingLayout.tvTitle.text = DbHelper.getString("bestsellers")
         bestSellingLayout.btnSeeAll.visibility = View.GONE
 
         bestSellingLayout?.rvList?.adapter = FeaturedProductAdapter(list, productClickListener)
@@ -349,7 +350,7 @@ class HomeFragment : ToolbarLogoBaseFragment() {
 
         featuredManufacturerLayout?.visibility = View.VISIBLE
         featuredManufacturerLayout?.divider?.visibility = View.INVISIBLE
-        featuredManufacturerLayout?.tvTitle?.text = getString(R.string.featured_manufacturer)
+        featuredManufacturerLayout?.tvTitle?.text = DbHelper.getString("manufacturers")
         featuredManufacturerLayout?.btnSeeAll?.visibility = View.GONE
 
         val itemClickListener = object : ItemClickListener<Manufacturer> {
