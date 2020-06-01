@@ -18,5 +18,7 @@ interface CartModel
 
     fun applyGiftCardModel(keyValueFormData: KeyValueFormData, callback: RequestCompleteListener<CartResponse>)
 
+    fun removeGiftCardModel(keyValueFormData: KeyValueFormData, callback: RequestCompleteListener<CartResponse>)
+
     fun applyCheckoutAttributes(list: List<KeyValuePair>, callback: RequestCompleteListener<CartRootData>)
 }

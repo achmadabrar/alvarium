@@ -154,15 +154,14 @@ class CartFragment : BaseFragment() {
                     appliedDiscountText?.text = "${getString(R.string.entered_code)} $appliedCode"
 
                     removeDiscountButton?.setOnClickListener {
-                        (viewModel as CartViewModel).removeCouponVM(appliedCode, model)
+                        (viewModel as CartViewModel).removeCouponVM(appliedDiscountsWithCodes[0].id, appliedCode, model)
                     }
                 }
+                else
+                    appliedDiscountLayout?.visibility = View.GONE
 
-                if(isApplied)
-                {
-                    if(messages.isNotEmpty())
-                        toast(messages[0])
-                }
+                if(messages.isNotEmpty())
+                    toast(messages[0])
             }
             else
                 ll_cart_coupon?.visibility = View.GONE
@@ -176,7 +175,7 @@ class CartFragment : BaseFragment() {
             {
                 ll_cart_gift_card?.visibility = View.VISIBLE
 
-                if(cartRootData.orderTotals.giftCards!!.isNotEmpty())
+                if(cartRootData.orderTotals.giftCards?.isNotEmpty()!!)
                 {
                     appliedGiftCardLayout?.visibility = View.VISIBLE
 
@@ -185,15 +184,17 @@ class CartFragment : BaseFragment() {
                     appliedGiftCardCodeText?.text = "${getString(R.string.entered_code)} $appliedCode"
 
                     removeGiftCardButton?.setOnClickListener {
-                        (viewModel as CartViewModel).removeCouponVM(appliedCode!!, model)
+                        (viewModel as CartViewModel).removeGiftCardVM(cartRootData.orderTotals.giftCards!![0].id!!.toInt(), appliedCode!!, model)
                     }
                 }
+                else
+                    appliedGiftCardLayout?.visibility = View.GONE
 
             }
             else
                 ll_cart_gift_card?.visibility = View.GONE
 
-            if(message != null)
+            if(message != null && message?.isNotEmpty()!!)
                 toast(message.toString())
         }
 

@@ -16,6 +16,9 @@ class CartViewModel : BaseViewModel()
     private var DISCOUNT_KEY = "discountcouponcode"
     private var GIFT_CARD_KEY = "giftcardcouponcode"
 
+    private var REMOVE_DISCOUNT_KEY = "removediscount-"
+    private var REMOVE_GIFT_CARD_KEY = "removegiftcard-"
+
     fun updateCartData(allKeyValueList: List<KeyValuePair>, model: CartModel)
     {
 
@@ -85,11 +88,11 @@ class CartViewModel : BaseViewModel()
         })
     }
 
-    fun removeCouponVM(code : String, model: CartModel)
+    fun removeCouponVM(discountId : Int, code : String, model: CartModel)
     {
         isLoadingLD.value = true
 
-        model.removeCouponModel(KeyValueFormData(listOf(KeyValuePair(DISCOUNT_KEY, code))), object : RequestCompleteListener<CartResponse>
+        model.removeCouponModel(KeyValueFormData(listOf(KeyValuePair("${REMOVE_DISCOUNT_KEY}$discountId", code))), object : RequestCompleteListener<CartResponse>
         {
             override fun onRequestSuccess(data: CartResponse)
             {
@@ -111,6 +114,25 @@ class CartViewModel : BaseViewModel()
         isLoadingLD.value = true
 
         model.applyGiftCardModel(KeyValueFormData(listOf(KeyValuePair(GIFT_CARD_KEY, code))), object : RequestCompleteListener<CartResponse>
+        {
+            override fun onRequestSuccess(data: CartResponse)
+            {
+                isLoadingLD.value = false
+
+                cartLD.value = data.cartRootData
+            }
+
+            override fun onRequestFailed(errorMessage: String)
+            {
+                isLoadingLD.value = false
+            }
+        })
+    }
+    fun removeGiftCardVM(discountId : Int, code : String, model: CartModel)
+    {
+        isLoadingLD.value = true
+
+        model.removeGiftCardModel(KeyValueFormData(listOf(KeyValuePair("${REMOVE_GIFT_CARD_KEY}$discountId", code))), object : RequestCompleteListener<CartResponse>
         {
             override fun onRequestSuccess(data: CartResponse)
             {

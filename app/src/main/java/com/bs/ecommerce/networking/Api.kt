@@ -66,6 +66,9 @@ interface Api {
     @POST("shoppingcart/applygiftcard")
     fun applyGiftCardCoupon(@Body request: KeyValueFormData): Call<CartResponse>
 
+    @POST("shoppingcart/removegiftcardcode")
+    fun removeGiftCardCoupon(@Body request: KeyValueFormData): Call<CartResponse>
+
 
     @POST("customer/login") fun postLoginAPI(@Body loginPostData: LoginPostData): Call<LoginResponse>
 
