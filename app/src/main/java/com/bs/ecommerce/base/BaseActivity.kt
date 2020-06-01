@@ -1,6 +1,7 @@
 package com.bs.ecommerce.base
 
 import android.content.Context
+import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import android.text.TextUtils
@@ -11,9 +12,11 @@ import android.widget.TextView
 import androidx.annotation.LayoutRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
+import com.afollestad.materialdialogs.MaterialDialog
 import com.bs.ecommerce.R
 import com.bs.ecommerce.auth.login.LoginFragment
 import com.bs.ecommerce.cart.CartFragment
+import com.bs.ecommerce.main.MainActivity
 import com.bs.ecommerce.main.model.data.AppLandingData
 import com.bs.ecommerce.networking.NetworkConstants
 import com.bs.ecommerce.utils.*
@@ -279,6 +282,25 @@ abstract class BaseActivity : AppCompatActivity()
 
             if (recreate)
                 recreate()
+
+        }
+    }
+
+    fun showCompleteDialogBox(orderId: Int)
+    {
+        MaterialDialog(this).show {
+
+            title(R.string.your_order_is_confirm)
+
+            message(null, getString(R.string.order_number_is) + " " + orderId)
+
+            positiveButton(R.string.ok) {
+                finish()
+                startActivity(Intent(applicationContext, MainActivity::class.java))
+            }
+
+            cancelable(false)
+            cancelOnTouchOutside(false)
 
         }
     }

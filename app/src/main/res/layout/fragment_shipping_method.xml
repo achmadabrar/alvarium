@@ -3,7 +3,8 @@
     android:id="@+id/shippingMethodRootLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="?attr/fragmentBackGroundColor">
+    android:background="?attr/fragmentBackGroundColor"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <ScrollView
         android:layout_width="match_parent"
@@ -17,6 +18,18 @@
             android:layout_marginStart="@dimen/fragment_margin"
             android:layout_marginEnd="@dimen/fragment_margin"
             android:orientation="vertical">
+
+            <CheckBox
+                android:id="@+id/rewardPointCheckBox"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="16dp"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:checked="false"
+                android:textColor="@color/radiobutton_text"
+                android:visibility="gone"
+                tools:visibility="visible"/>
 
             <com.bs.ecommerce.customViews.RadioGridGroupforReyMaterial
                 xmlns:app="http://schemas.android.com/apk/res-auto"

@@ -24,19 +24,7 @@ class OptionViewModel : BaseViewModel() {
 
         data.add(AppOptions(R.string.title_contact_us, R.drawable.ic_settings))
 
-        data.add(AppOptions(R.string.title_checkout, R.drawable.ic_my_order))
-
-        // data.add(AppOptions(R.string.placeholder, R.drawable.ic_placeholder))
 
         optionsLD.postValue(data)
     }
-    /*fun changeLogInText()
-    {
-        //val data = optionsLD.value as MutableList<AppOptions>
-
-        (optionsLD.value as MutableList<AppOptions>).remove(AppOptions(R.string.login, R.drawable.ic_login))
-
-        (optionsLD.value as MutableList<AppOptions>).add(AppOptions(R.string.log_out, R.drawable.ic_login))
-
-    }*/
 }

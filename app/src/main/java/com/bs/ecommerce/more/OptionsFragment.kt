@@ -1,17 +1,21 @@
 package com.bs.ecommerce.more
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.RelativeLayout
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import com.afollestad.materialdialogs.MaterialDialog
 import com.bs.ecommerce.R
 import com.bs.ecommerce.base.BaseViewModel
 import com.bs.ecommerce.base.ToolbarLogoBaseFragment
 import com.bs.ecommerce.checkout.CheckoutStepFragment
+import com.bs.ecommerce.main.MainActivity
 import com.bs.ecommerce.more.settings.SettingsFragment
 import com.bs.ecommerce.more.viewmodel.OptionViewModel
 import com.bs.ecommerce.utils.replaceFragmentSafely
+import com.bs.ecommerce.utils.toast
 import kotlinx.android.synthetic.main.fragment_options.*
 import kotlinx.android.synthetic.main.options_layout.view.*
 
@@ -68,8 +72,6 @@ class OptionsFragment : ToolbarLogoBaseFragment() {
                         R.string.title_contact_us ->
                             replaceFragmentSafely(ContactUsFragment())
 
-                        R.string.placeholder ->
-                            replaceFragmentSafely(RewardPointFragment())
                     }
                 }
 

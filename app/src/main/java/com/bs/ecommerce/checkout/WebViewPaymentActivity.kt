@@ -63,10 +63,11 @@ class WebViewPaymentActivity : BaseActivity()
 
 
         if(nextStep == CheckoutConstants.Completed)
-            startActivity(Intent(this, ResultActivity::class.java)
+            showCompleteDialogBox(10)
+            /*startActivity(Intent(this, ResultActivity::class.java)
                 .putExtra(CheckoutConstants.CHECKOUT_STEP, CheckoutConstants.Completed)
                 .putExtra(CheckoutConstants.ORDER_ID, "10")
-            )
+            )*/
 
         else
         {
