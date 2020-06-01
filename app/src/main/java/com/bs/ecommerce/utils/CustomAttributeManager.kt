@@ -87,9 +87,9 @@ class CustomAttributeManager(
         val radioGroup = RadioGroup(context)
 
         tvName.text = attr.name
-        tvDesc.text = attr.description ?: DbHelper.getString("common.select").plus(" ${attr.name}")
+        tvDesc.text = attr.description ?: DbHelper.getString(Const.COMMON_SELECT).plus(" ${attr.name}")
         tvSelectedAttr.text =
-            attr.values.find { it.isPreSelected }?.name ?: DbHelper.getString("common.select")
+            attr.values.find { it.isPreSelected }?.name ?: DbHelper.getString(Const.COMMON_SELECT)
 
         layout.setOnClickListener {
             if (bsBehavior.state != BottomSheetBehavior.STATE_EXPANDED) {
@@ -420,7 +420,7 @@ class CustomAttributeManager(
             val selectedAttr = selectedAttributes[i]
 
             if (selectedAttr.isNullOrEmpty()) {
-                textView?.text = DbHelper.getString("common.select")
+                textView?.text = DbHelper.getString(Const.COMMON_SELECT)
             } else {
                 textView?.text = selectedAttributes[i]?.get(0)?.name
             }

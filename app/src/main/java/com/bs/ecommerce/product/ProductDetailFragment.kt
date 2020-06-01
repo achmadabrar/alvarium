@@ -354,7 +354,7 @@ class ProductDetailFragment : BaseFragment(), View.OnClickListener {
 
         val rentalProductLayout = vsRentalProduct.inflate()
 
-        btnBuyNow.text = DbHelper.getString("shoppingcart.rentnow")
+        btnBuyNow.text = DbHelper.getString(Const.PRODUCT_BTN_RENT_NOW)
         hd13.visibility = View.VISIBLE
 
         val calender: Calendar = Calendar.getInstance()
@@ -503,7 +503,7 @@ class ProductDetailFragment : BaseFragment(), View.OnClickListener {
 
         btnBuyNow.setOnClickListener(this)
 
-        bottomSheetLayout.tvDone.text = DbHelper.getString("common.done")
+        bottomSheetLayout.tvDone.text = DbHelper.getString(Const.COMMON_DONE)
         bottomSheetLayout.tvDone.setOnClickListener(this)
         productQuantityLayout.btnMinus.setOnClickListener(this)
         productQuantityLayout.btnPlus.setOnClickListener(this)
@@ -533,7 +533,7 @@ class ProductDetailFragment : BaseFragment(), View.OnClickListener {
             addToCartClickAction(productId, productQuantityLayout?.tvQuantity?.text.toString(), cart = false)
         }
 
-        btnBuyNow.text = DbHelper.getString("shoppingcart.buynow")
+        btnBuyNow.text = DbHelper.getString(Const.PRODUCT_BTN_BUY_NOW)
         btnBuyNow?.setOnClickListener {
             (viewModel as ProductDetailViewModel).gotoCartPage = true
             addToCartClickAction(productId, productQuantityLayout?.tvQuantity?.text.toString(), cart = true)

@@ -301,7 +301,7 @@ class MainActivity : PrivacyPolicyDialogActivity(), View.OnClickListener
             super.onBackPressed()
             return
         } else {
-            toast(DbHelper.getString("home.pressagaintoexit"))
+            toast(DbHelper.getString(Const.COMMON_AGAIN_PRESS_TO_EXIT))
         }
 
 
@@ -322,11 +322,11 @@ class MainActivity : PrivacyPolicyDialogActivity(), View.OnClickListener
         mainBottomNav?.apply{
             menu.clear()
 
-            menu.add(Menu.NONE, R.id.bottom_nav_home, 0, DbHelper.getString("common.home")).setIcon(R.drawable.app_bottom_icon_home)
-            menu.add(Menu.NONE, R.id.bottom_nav_categories, 1, DbHelper.getString("common.category")).setIcon(R.drawable.app_bottom_icon_categories)
-            menu.add(Menu.NONE, R.id.bottom_nav_search, 2, DbHelper.getString("common.search")).setIcon(R.drawable.app_bottom_icon_search)
-            menu.add(Menu.NONE, R.id.bottom_nav_account, 3, DbHelper.getString("pagetitle.account")).setIcon(R.drawable.app_bottom_icon_account)
-            menu.add(Menu.NONE, R.id.bottom_nav_more, 4, DbHelper.getString("common.more")).setIcon(R.drawable.app_bottom_icon_more)
+            menu.add(Menu.NONE, R.id.bottom_nav_home, 0, DbHelper.getString(Const.HOME_NAV_HOME)).setIcon(R.drawable.app_bottom_icon_home)
+            menu.add(Menu.NONE, R.id.bottom_nav_categories, 1, DbHelper.getString(Const.HOME_NAV_CATEGORY)).setIcon(R.drawable.app_bottom_icon_categories)
+            menu.add(Menu.NONE, R.id.bottom_nav_search, 2, DbHelper.getString(Const.HOME_NAV_SEARCH)).setIcon(R.drawable.app_bottom_icon_search)
+            menu.add(Menu.NONE, R.id.bottom_nav_account, 3, DbHelper.getString(Const.HOME_NAV_ACCOUNT)).setIcon(R.drawable.app_bottom_icon_account)
+            menu.add(Menu.NONE, R.id.bottom_nav_more, 4, DbHelper.getString(Const.HOME_NAV_MORE)).setIcon(R.drawable.app_bottom_icon_more)
 
             setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener)
         }

@@ -28,6 +28,7 @@ import com.bs.ecommerce.product.model.data.PagingFilteringContext
 import com.bs.ecommerce.product.model.data.ProductSummary
 import com.bs.ecommerce.product.model.data.SubCategory
 import com.bs.ecommerce.product.viewModel.ProductListViewModel
+import com.bs.ecommerce.utils.Const
 import com.bs.ecommerce.utils.ItemClickListener
 import com.bs.ecommerce.utils.PrefSingleton
 import com.bs.ecommerce.utils.replaceFragmentSafely
@@ -110,7 +111,7 @@ class ProductListFragment : BaseFragment() {
     private fun initView() {
         calculateAutomaticGridColumn()
 
-        btnFilter.findViewById<TextView>(R.id.tvFilter).text = DbHelper.getString("filtering.filter")
+        btnFilter.findViewById<TextView>(R.id.tvFilter).text = DbHelper.getString(Const.FILTER)
         btnFilter.setOnClickListener {
             when (drawerLayout.isDrawerOpen(GravityCompat.END)) {
                 true -> {
@@ -178,7 +179,7 @@ class ProductListFragment : BaseFragment() {
         pageSizeDialog = BottomSheetDialog(requireContext(), R.style.BsDialog)
 
         val pageSizeHolder:LinearLayout = layoutInflater.inflate(R.layout.sort_option_bottom_sheet, null, false) as LinearLayout
-        pageSizeHolder.sortOptionBsTitle.text = DbHelper.getString("filtering.itemsperpage")
+        pageSizeHolder.sortOptionBsTitle.text = ""
         
         // page size selection
         if(sortOption?.allowCustomersToSelectPageSize== true && !sortOption.pageSizeOptions.isNullOrEmpty()) {

@@ -158,7 +158,7 @@ class HomeFragment : ToolbarLogoBaseFragment() {
             addItemDecoration(RecyclerViewMargin(15, 1, false))
         }
 
-        tvCloseBs.text = DbHelper.getString("common.done")
+        tvCloseBs.text = DbHelper.getString(Const.COMMON_DONE)
         tvCloseBs.setOnClickListener {
             bsBehavior.state = BottomSheetBehavior.STATE_COLLAPSED
         }
@@ -279,7 +279,7 @@ class HomeFragment : ToolbarLogoBaseFragment() {
                 linearLayout.tvTitle.text = featuredCategory.name
                 linearLayout.ivMore.visibility = if(featuredCategory.subCategories?.isNullOrEmpty() == true)
                     View.GONE else View.VISIBLE
-                linearLayout.btnSeeAll?.text = DbHelper.getString("home.seeall")
+                linearLayout.btnSeeAll?.text = DbHelper.getString(Const.COMMON_SEE_ALL)
 
 
                 linearLayout.btnSeeAll.setOnClickListener {
@@ -326,7 +326,7 @@ class HomeFragment : ToolbarLogoBaseFragment() {
         featuredProductLayout?.visibility = View.VISIBLE
         featuredProductLayout?.tvTitle?.text = DbHelper.getString("homepage.products")
         featuredProductLayout?.btnSeeAll?.visibility = View.GONE
-        featuredProductLayout?.btnSeeAll?.text = DbHelper.getString("home.seeall")
+        featuredProductLayout?.btnSeeAll?.text = DbHelper.getString(Const.COMMON_SEE_ALL)
 
         featuredProductLayout?.rvList?.adapter = FeaturedProductAdapter(list, productClickListener)
 
@@ -341,7 +341,7 @@ class HomeFragment : ToolbarLogoBaseFragment() {
         bestSellingLayout.visibility = View.VISIBLE
         bestSellingLayout.tvTitle.text = DbHelper.getString("bestsellers")
         bestSellingLayout.btnSeeAll.visibility = View.GONE
-        bestSellingLayout?.btnSeeAll?.text = DbHelper.getString("home.seeall")
+        bestSellingLayout?.btnSeeAll?.text = DbHelper.getString(Const.COMMON_SEE_ALL)
 
         bestSellingLayout?.rvList?.adapter = FeaturedProductAdapter(list, productClickListener)
     }
@@ -356,7 +356,7 @@ class HomeFragment : ToolbarLogoBaseFragment() {
         featuredManufacturerLayout?.divider?.visibility = View.INVISIBLE
         featuredManufacturerLayout?.tvTitle?.text = DbHelper.getString("manufacturers")
         featuredManufacturerLayout?.btnSeeAll?.visibility = View.GONE
-        featuredManufacturerLayout?.btnSeeAll?.text = DbHelper.getString("home.seeall")
+        featuredManufacturerLayout?.btnSeeAll?.text = DbHelper.getString(Const.COMMON_SEE_ALL)
 
         val itemClickListener = object : ItemClickListener<Manufacturer> {
             override fun onClick(view: View, position: Int, data: Manufacturer) {

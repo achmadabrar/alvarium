@@ -26,10 +26,7 @@ import com.bs.ecommerce.product.model.SearchModelImpl
 import com.bs.ecommerce.product.model.data.PagingFilteringContext
 import com.bs.ecommerce.product.model.data.ProductSummary
 import com.bs.ecommerce.product.viewModel.ProductListViewModel
-import com.bs.ecommerce.utils.ItemClickListener
-import com.bs.ecommerce.utils.MyApplication
-import com.bs.ecommerce.utils.replaceFragmentSafely
-import com.bs.ecommerce.utils.toast
+import com.bs.ecommerce.utils.*
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import kotlinx.android.synthetic.main.fragment_product_list.*
 import kotlin.math.floor
@@ -84,7 +81,7 @@ class SearchFragment : BaseFragment() {
 
         tvNoProduct.text = DbHelper.getString("search.noresultstext")
 
-        btnFilter.findViewById<TextView>(R.id.tvFilter).text = DbHelper.getString("filtering.filter")
+        btnFilter.findViewById<TextView>(R.id.tvFilter).text = DbHelper.getString(Const.FILTER)
         btnFilter.setOnClickListener {
             when (drawerLayout.isDrawerOpen(GravityCompat.END)) {
                 true -> {
