@@ -8,6 +8,8 @@ import android.view.ViewGroup
 import android.widget.TextView
 import com.bs.ecommerce.R
 import com.bs.ecommerce.cart.model.data.GiftCard
+import com.bs.ecommerce.db.DbHelper
+import com.bs.ecommerce.utils.Const
 import java.util.ArrayList
 
 class GiftCardAdapter(context: Context, giftCardList: List<GiftCard>) : androidx.recyclerview.widget.RecyclerView.Adapter<GiftCardAdapter.ItemHolder>() {
@@ -42,11 +44,9 @@ class GiftCardAdapter(context: Context, giftCardList: List<GiftCard>) : androidx
         val giftCard = giftCardList!![position]
         holder.gift_card_amount.text = giftCard.amount
 
-        holder.gift_card_number.text = context.getString(R.string.gift_card).apply {
+        holder.gift_card_number.text = DbHelper.getString(Const.GIFT_CARD).apply {
             if(!giftCard.remaining.isNullOrEmpty())
-                plus(giftCard.remaining)
-                    .plus(" ")
-                    .plus(context.getString(R.string.remaining))
+                    DbHelper.getStringWithNumber(Const.GIFT_CARD_REMAINING, giftCard.remaining!!)
         }
     }
 

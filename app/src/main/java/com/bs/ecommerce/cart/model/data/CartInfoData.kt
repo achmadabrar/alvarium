@@ -42,17 +42,17 @@ data class GiftCardBox(
 
 
 data class OrderReviewData(
-    @SerializedName("BillingAddress") var billingAddress: BillingAddress = BillingAddress(),
+    @SerializedName("BillingAddress") var billingAddress: OrderReviewAddressModel = OrderReviewAddressModel(),
     @SerializedName("Display") var display: Boolean = false,
     @SerializedName("IsShippable") var isShippable: Boolean = false,
     @SerializedName("PaymentMethod") var paymentMethod: String = String(),
-    @SerializedName("PickupAddress") var pickupAddress: PickupAddress = PickupAddress(),
+    @SerializedName("PickupAddress") var pickupAddress: OrderReviewAddressModel = OrderReviewAddressModel(),
     @SerializedName("SelectedPickupInStore") var selectedPickupInStore: Boolean = false,
-    @SerializedName("ShippingAddress") var shippingAddress: ShippingAddress = ShippingAddress(),
+    @SerializedName("ShippingAddress") var shippingAddress: OrderReviewAddressModel = OrderReviewAddressModel(),
     @SerializedName("ShippingMethod") var shippingMethod: String = String()
 )
 
-data class BillingAddress(
+data class OrderReviewAddressModel(
     @SerializedName("Address1") var address1: Any = Any(),
     @SerializedName("Address2") var address2: Any = Any(),
     @SerializedName("AvailableCountries") var availableCountries: List<Any> = listOf(),
@@ -95,6 +95,7 @@ data class BillingAddress(
 
 
 
+/*
 data class PickupAddress(
     @SerializedName("Address1") var address1: Any = Any(),
     @SerializedName("Address2") var address2: Any = Any(),
@@ -175,4 +176,4 @@ data class ShippingAddress(
     @SerializedName("ZipPostalCode") var zipPostalCode: Any = Any(),
     @SerializedName("ZipPostalCodeEnabled") var zipPostalCodeEnabled: Boolean = false,
     @SerializedName("ZipPostalCodeRequired") var zipPostalCodeRequired: Boolean = false
-)
+)*/

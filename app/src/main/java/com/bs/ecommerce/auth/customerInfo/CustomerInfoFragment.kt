@@ -19,7 +19,7 @@ class CustomerInfoFragment : RegisterFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        saveBtn.text = getString(R.string.save)
+        saveBtn.text = DbHelper.getString(Const.SAVE_BUTTON)
 
         if (!viewCreated) {
             (viewModel as RegistrationViewModel).getCustomerInfoVM(model)

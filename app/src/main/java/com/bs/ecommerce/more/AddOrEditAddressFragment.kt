@@ -78,6 +78,8 @@ class AddOrEditAddressFragment : BaseFragment() {
             //dynamicAttributeView?.onBottomSheetClose()
         }
 
+        btnSave?.text = DbHelper.getString(Const.SAVE_BUTTON)
+
         btnSave.setOnClickListener {
             val userAddress: AddressModel? = (viewModel as AddressViewModel).addressLD.value
 
@@ -135,7 +137,7 @@ class AddOrEditAddressFragment : BaseFragment() {
             resetFormLD.observe(viewLifecycleOwner, Observer { resetForm ->
 
                 if (resetForm && lifecycle.currentState.isAtLeast(Lifecycle.State.RESUMED)) {
-                    toast(if (isEditMode) R.string.address_update_succss else R.string.address_saved)
+                    toast(if (isEditMode) DbHelper.getString(Const.ADDRESS_UPDATED_SUCCESSFULLY) else DbHelper.getString(Const.ADDRESS_SAVED_SUCCESSFULLY))
 
                     // Update address list to show changes
                     // FIXME Bad Practice. Inter fragment communication should be done with interface. Replace ASAP

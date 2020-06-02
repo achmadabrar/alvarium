@@ -9,10 +9,7 @@ import com.bs.ecommerce.R
 import com.bs.ecommerce.base.BaseViewModel
 import com.bs.ecommerce.cart.CartAdapter
 import com.bs.ecommerce.cart.GiftCardAdapter
-import com.bs.ecommerce.cart.model.data.CartInfoData
-import com.bs.ecommerce.cart.model.data.CartProduct
-import com.bs.ecommerce.cart.model.data.OrderReviewData
-import com.bs.ecommerce.cart.model.data.OrderTotal
+import com.bs.ecommerce.cart.model.data.*
 import com.bs.ecommerce.db.DbHelper
 import com.bs.ecommerce.product.ProductDetailFragment
 import com.bs.ecommerce.utils.Const
@@ -54,10 +51,24 @@ class ConfirmOrderFragment : BaseCheckoutNavigationFragment() {
             }
         }
 
+        setStrings()
+
         setLiveDataListeners()
 
         checkoutButton?.setOnClickListener {   (viewModel as CheckoutViewModel).submitConfirmOrderVM(model) }
     }
+
+
+    private fun setStrings()
+    {
+        tvProductsTitle?.text = DbHelper.getString(Const.PRODUCTS)
+        tvOrderCalculation?.text = DbHelper.getString(Const.ORDER_CALCULATION)
+        pointsKey?.text = DbHelper.getString(Const.WILL_EARN)
+        checkoutButton?.text = DbHelper.getString(Const.CONFIRM_BUTTON)
+    }
+
+
+
     override fun setLiveDataListeners()
     {
         super.setLiveDataListeners()
@@ -76,7 +87,7 @@ class ConfirmOrderFragment : BaseCheckoutNavigationFragment() {
             if(getOrderData.data.selectedCheckoutAttributes.isNotEmpty())
             {
                 selectedAttributesCard.visibility = View.VISIBLE
-                selectedAttributesCard.tvCardTitle.text = "Selected Attributes"
+                selectedAttributesCard.tvCardTitle.text = DbHelper.getString(Const.SELECTED_ATTRIBUTES)
                 selectedAttributesCard.tvCardDetails.visibility = View.GONE
                 selectedAttributesCard.tvCardDetails2.text = getOrderData.data.selectedCheckoutAttributes
                 selectedAttributesCard.ivCardThumb.visibility = View.GONE
@@ -84,12 +95,7 @@ class ConfirmOrderFragment : BaseCheckoutNavigationFragment() {
 
         })
 
-        (viewModel as CheckoutViewModel).isLoadingLD.observe(requireActivity(), Observer { isShowLoader ->
-            if (isShowLoader)
-                showLoading()
-            else
-                hideLoading()
-        })
+        (viewModel as CheckoutViewModel).isLoadingLD.observe(requireActivity(), Observer { isShowLoader -> showHideLoader(isShowLoader) })
 
     }
 
@@ -104,6 +110,14 @@ class ConfirmOrderFragment : BaseCheckoutNavigationFragment() {
         }
     }
 
+    private fun getDetailAddress(address: OrderReviewAddressModel) : String
+    {
+        with(address)
+        {
+            return "${DbHelper.getString(Const.EMAIL)}: $email\n${DbHelper.getString(Const.PHONE)}: $phoneNumber \n$address1 \n$address2 \n$city\n$countryName"
+        }
+    }
+
     private fun showOtherViews(orderReviewData: OrderReviewData) {
         allLayoutExceptButton?.visibility = View.VISIBLE
         checkoutButton?.visibility = View.VISIBLE
@@ -112,11 +126,9 @@ class ConfirmOrderFragment : BaseCheckoutNavigationFragment() {
         {
             with(orderReviewData.billingAddress)
             {
-                billingAddressCard.tvCardTitle.text = getString(R.string.billing_address)
+                billingAddressCard.tvCardTitle.text = DbHelper.getString(Const.BILLING_ADDRESS_TAB)
                 billingAddressCard.tvCardDetails.text = "$firstName $lastName"
-
-                billingAddressCard.tvCardDetails2.text =
-                    "Email: $email\nPhone: $phoneNumber \n$address1 \n$address2 \n$city\n$countryName"
+                billingAddressCard.tvCardDetails2.text = getDetailAddress(this)
                 billingAddressCard.ivCardThumb.visibility = View.GONE
             }
 
@@ -124,11 +136,9 @@ class ConfirmOrderFragment : BaseCheckoutNavigationFragment() {
             {
                 with(orderReviewData.shippingAddress)
                 {
-                    shippingAddressCard.tvCardTitle.text = getString(R.string.shipping_address)
+                    shippingAddressCard.tvCardTitle.text = DbHelper.getString(Const.SHIPPING_ADDRESS_TAB)
                     shippingAddressCard.tvCardDetails.text = "$firstName $lastName"
-
-                    shippingAddressCard.tvCardDetails2.text =
-                        "Email: $email\nPhone: $phoneNumber \n$address1 \n$address2 \n$city\n$countryName"
+                    shippingAddressCard.tvCardDetails2.text = getDetailAddress(this)
                     shippingAddressCard.ivCardThumb.visibility = View.GONE
                 }
             }
@@ -140,23 +150,22 @@ class ConfirmOrderFragment : BaseCheckoutNavigationFragment() {
             {
                 with(orderReviewData.shippingAddress)
                 {
-                    pickupStoreCard.tvCardTitle.text = getString(R.string.store_pick_up)
+                    pickupStoreCard.tvCardTitle.text = DbHelper.getString(Const.PICK_UP_POINT_ADDRESS)
                     pickupStoreCard.tvCardDetails.text = "$firstName $lastName"
 
-                    pickupStoreCard.tvCardDetails2.text =
-                        "Email: $email\nPhone: $phoneNumber \n$address1 \n$address2 \n$city\n$countryName"
+                    pickupStoreCard.tvCardDetails2.text = getDetailAddress(this)
                     pickupStoreCard.ivCardThumb.visibility = View.GONE
                 }
             }
             else
                 pickupStoreCard.visibility = View.GONE
 
-            shippingMethodCard.tvCardTitle.text = "Shipping Method"
+            shippingMethodCard.tvCardTitle.text = DbHelper.getString(Const.SHIPPING_METHOD)
             shippingMethodCard.tvCardDetails.visibility = View.GONE
             shippingMethodCard.tvCardDetails2.text = orderReviewData.shippingMethod ?: "No Shipping Method"
             shippingMethodCard.ivCardThumb.visibility = View.VISIBLE
 
-            paymentMethodCard.tvCardTitle.text = "Payment Method"
+            paymentMethodCard.tvCardTitle.text = DbHelper.getString(Const.PAYMENT_METHOD)
             paymentMethodCard.tvCardDetails.visibility = View.GONE
             paymentMethodCard.tvCardDetails2.text = orderReviewData.paymentMethod ?: "No Payment Method"
             paymentMethodCard.ivCardThumb.visibility = View.VISIBLE
@@ -175,7 +184,7 @@ class ConfirmOrderFragment : BaseCheckoutNavigationFragment() {
             if (displayTax && tax != null)
             {
                 if (displayTaxRates)
-                    taxRates?.get(0)?.rate?.let { taxKey?.text = "${getString(R.string.tax)} $it%" }
+                    taxRates?.get(0)?.rate?.let { taxKey?.text = "${DbHelper.getString(Const.TAX)} $it%" }
 
                 tvTax?.text = tax
             }
@@ -224,7 +233,7 @@ class ConfirmOrderFragment : BaseCheckoutNavigationFragment() {
             if (willEarnRewardPoints != null && willEarnRewardPoints != 0)
             {
                 pointsLayout?.visibility = View.VISIBLE
-                tvPoints?.text = "$willEarnRewardPoints Points"
+                tvPoints?.text = DbHelper.getStringWithNumber(Const.POINTS, willEarnRewardPoints!!)
                 underDiscountDivider?.visibility = View.VISIBLE
             }
             else

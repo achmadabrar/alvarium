@@ -17,12 +17,16 @@ import com.bs.ecommerce.base.ToolbarLogoBaseFragment
 import com.bs.ecommerce.checkout.model.CheckoutModel
 import com.bs.ecommerce.checkout.model.CheckoutModelImpl
 import com.bs.ecommerce.checkout.model.data.CheckoutSaveResponse
+import com.bs.ecommerce.db.DbHelper
 import com.bs.ecommerce.main.MainActivity
+import com.bs.ecommerce.utils.Const
 import com.bs.ecommerce.utils.MyApplication
 import com.bs.ecommerce.utils.toast
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayout.OnTabSelectedListener
 import kotlinx.android.synthetic.main.fragment_base_billing_adddress.*
+import kotlinx.android.synthetic.main.fragment_confirm_order.*
+import kotlinx.android.synthetic.main.fragment_shipping_method.*
 
 
 abstract class BaseCheckoutNavigationFragment : ToolbarLogoBaseFragment()
@@ -43,6 +47,8 @@ abstract class BaseCheckoutNavigationFragment : ToolbarLogoBaseFragment()
         setLiveDataListeners()
 
         setAddressTabClickListener()
+
+        btnContinue?.text = DbHelper.getString(Const.CONTINUE)
 
     }
 

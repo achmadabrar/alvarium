@@ -44,8 +44,10 @@ class PaymentMethodFragment : BaseCheckoutNavigationFragment() {
                 if(displayRewardPoints)
                 {
                     rewardPointCheckBox.visibility = View.VISIBLE
-                    rewardPointCheckBox.text = "Use my reward points, " +
-                            "${it.rewardPointsBalance} reward points (${it.rewardPointsAmount}) available for this order"
+
+                    rewardPointCheckBox.text = DbHelper.getString(Const.USE_REWARD_POINTS)
+                        .replace("{0}", it.rewardPointsBalance.toString())
+                        .replace("{1}", it.rewardPointsAmount.toString())
 
                     useRewardPoints = rewardPointCheckBox.isChecked
 

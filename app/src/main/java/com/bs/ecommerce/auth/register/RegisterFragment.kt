@@ -79,7 +79,7 @@ open class RegisterFragment : ToolbarLogoBaseFragment(), View.OnClickListener
 
             initView()
 
-            hideTextPanels()
+            saveBtn?.text = DbHelper.getString(Const.REGISTER_BUTTON)
             initEditButtonsAction()
 
             model = AuthModelImpl()
@@ -153,41 +153,63 @@ open class RegisterFragment : ToolbarLogoBaseFragment(), View.OnClickListener
 
     private fun setViewsInitially(data: GetRegisterData)
     {
+        cbNewsletter?.text = DbHelper.getString(Const.NEWSLETTER)
+        tvChangePassword?.text = DbHelper.getString(Const.CHANGE_PASSWORD)
+        tvOptions?.text = DbHelper.getString(Const.OPTIONS)
+        tvGender?.text = DbHelper.getString(Const.GENDER)
+        genderMaleRadioButton?.text = DbHelper.getString(Const.GENDER_MALE)
+        genderFemaleRadioButton?.text = DbHelper.getString(Const.GENDER_FEMALE)
+
         with(data)
         {
 
-            customerFirstNameEditText?.showOrHideOrRequired(isEnabledParam = true, isRequired =   false, value = firstName)
+            customerFirstNameEditText?.showOrHideOrRequired(isEnabledParam = true, isRequired =   false, value = firstName,
+                hintText = DbHelper.getString(Const.FIRST_NAME))
 
-            customerLastNameEditText?.showOrHideOrRequired(isEnabledParam = true, isRequired =   false, value = lastName)
+            customerLastNameEditText?.showOrHideOrRequired(isEnabledParam = true, isRequired =   false, value = lastName,
+                hintText = DbHelper.getString(Const.LAST_NAME))
 
-            emailEditText?.showOrHideOrRequired(isEnabledParam = true, isRequired =   true, value = email)
+            emailEditText?.showOrHideOrRequired(isEnabledParam = true, isRequired =   true, value = email,
+                hintText = DbHelper.getString(Const.EMAIL))
 
-            enterPasswordEditText?.showOrHideOrRequired(isEnabledParam = showPasswordField, isRequired =   showPasswordField)
+            enterPasswordEditText?.showOrHideOrRequired(isEnabledParam = showPasswordField, isRequired =   showPasswordField,
+                hintText = DbHelper.getString(Const.ENTER_PASSWORD))
 
-            confirmPasswordEditText?.showOrHideOrRequired(isEnabledParam = showPasswordField, isRequired =   showPasswordField)
+            confirmPasswordEditText?.showOrHideOrRequired(isEnabledParam = showPasswordField, isRequired =   showPasswordField,
+                hintText = DbHelper.getString(Const.CONFIRM_PASSWORD))
 
             dateOfBirthTextView?.showOrHideOrRequired(isEnabledParam = dateOfBirthEnabled, isRequired =   dateOfBirthRequired,
-                value = TextUtils().getFormattedDate(dateOfBirthDay, dateOfBirthMonth, dateOfBirthYear))
+                value = TextUtils().getFormattedDate(dateOfBirthDay, dateOfBirthMonth, dateOfBirthYear), hintText = DbHelper.getString(Const.DATE_OF_BIRTH))
 
-            usernameEditText?.showOrHideOrRequired(isEnabledParam = usernamesEnabled, isRequired =   false, value = username)
+            usernameEditText?.showOrHideOrRequired(isEnabledParam = usernamesEnabled, isRequired =   false, value = username,
+                hintText = DbHelper.getString(Const.USERNAME))
 
-            companyInfoEditText?.showOrHideOrRequired(isEnabledParam = companyEnabled, isRequired =   companyRequired, value = company)
+            companyInfoEditText?.showOrHideOrRequired(isEnabledParam = companyEnabled, isRequired =   companyRequired, value = company,
+                 hintText = DbHelper.getString(Const.COMPANY))
 
-            streetAddressEditText?.showOrHideOrRequired(isEnabledParam = streetAddressEnabled, isRequired =   streetAddressRequired, value = streetAddress)
+            streetAddressEditText?.showOrHideOrRequired(isEnabledParam = streetAddressEnabled, isRequired =   streetAddressRequired, value = streetAddress,
+                hintText = DbHelper.getString(Const.STREET_ADDRESS))
 
-            streetAddress2EditText?.showOrHideOrRequired(isEnabledParam = streetAddress2Enabled, isRequired =   streetAddress2Required, value = streetAddress2)
+            streetAddress2EditText?.showOrHideOrRequired(isEnabledParam = streetAddress2Enabled, isRequired =   streetAddress2Required, value = streetAddress2,
+                hintText = DbHelper.getString(Const.STREET_ADDRESS_2))
 
-            zipOrPostalCodeEditText?.showOrHideOrRequired(isEnabledParam = zipPostalCodeEnabled, isRequired =   zipPostalCodeRequired, value = zipPostalCode)
+            zipOrPostalCodeEditText?.showOrHideOrRequired(isEnabledParam = zipPostalCodeEnabled, isRequired =   zipPostalCodeRequired, value = zipPostalCode,
+                hintText = DbHelper.getString(Const.ZIP_CODE))
 
-            cityEditText?.showOrHideOrRequired(isEnabledParam = cityEnabled, isRequired =   cityRequired, value = city)
+            cityEditText?.showOrHideOrRequired(isEnabledParam = cityEnabled, isRequired =   cityRequired, value = city,
+                hintText = DbHelper.getString(Const.CITY))
 
-            countryEditText?.showOrHideOrRequired(isEnabledParam = countryEnabled, isRequired =   countryRequired, value = county)
+            countryEditText?.showOrHideOrRequired(isEnabledParam = countryEnabled, isRequired =   countryRequired, value = county,
+                hintText = DbHelper.getString(Const.SELECT_COUNTRY))
 
-            stateProvinceEditText?.showOrHideOrRequired(isEnabledParam = stateProvinceEnabled, isRequired =   stateProvinceRequired)
+            stateProvinceEditText?.showOrHideOrRequired(isEnabledParam = stateProvinceEnabled, isRequired =   stateProvinceRequired,
+                hintText = DbHelper.getString(Const.STATE_PROVINCE))
 
-            phoneEditText?.showOrHideOrRequired(isEnabledParam = phoneEnabled, isRequired =   phoneRequired, value = phone)
+            phoneEditText?.showOrHideOrRequired(isEnabledParam = phoneEnabled, isRequired =   phoneRequired, value = phone,
+                hintText = DbHelper.getString(Const.PHONE))
 
-            faxEditText?.showOrHideOrRequired(isEnabledParam = faxEnabled, isRequired =   faxRequired, value = fax)
+            faxEditText?.showOrHideOrRequired(isEnabledParam = faxEnabled, isRequired =   faxRequired, value = fax,
+                hintText = DbHelper.getString(Const.FAX))
 
 
 
@@ -224,14 +246,6 @@ open class RegisterFragment : ToolbarLogoBaseFragment(), View.OnClickListener
         rootScrollView?.visibility = View.VISIBLE
 
     }
-
-    private fun hideTextPanels()
-    {
-        saveBtn?.text = getString(R.string.register_new)
-/*        saveBtn.isEnabled = false
-        saveBtn?.setBackgroundColor(ContextCompat.getColor(activity!!, R.color.browser_actions_bg_grey))*/
-    }
-
 
     private fun initEditButtonsAction()
     {

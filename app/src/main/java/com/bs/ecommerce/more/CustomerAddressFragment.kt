@@ -80,6 +80,9 @@ class CustomerAddressFragment : BaseFragment() {
 
     private fun setupView() {
 
+
+        btnAddNew?.text = DbHelper.getString(Const.ADD_NEW_ADDRESS)
+
         val clickListener = object : ItemClickListener<AddressModel> {
             override fun onClick(view: View, position: Int, data: AddressModel) {
 
@@ -119,7 +122,7 @@ class CustomerAddressFragment : BaseFragment() {
 
         AlertDialog.Builder(requireActivity()).apply {
 
-            setMessage(R.string.confirm_address_delete).setTitle(R.string.delete_address)
+            setMessage(DbHelper.getString(Const.CONFIRM_DELETE_ADDRESS)).setTitle(DbHelper.getString(Const.DELETE_ADDRESS))
 
             setPositiveButton(R.string.yes) { _, _ ->
                 (viewModel as AddressViewModel).deleteAddress(data, position, model)
