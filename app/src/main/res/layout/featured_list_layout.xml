@@ -13,7 +13,6 @@
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        android:layout_toStartOf="@id/btnSeeAll"
         android:paddingBottom="10dp"
         android:maxLines="1"
         android:ellipsize="end"
@@ -22,7 +21,8 @@
         android:textStyle="bold"
         tools:text="@string/placeholder"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"/>
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/btnSeeAll"/>
 
     <ImageView
         android:id="@+id/ivMore"

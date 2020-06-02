@@ -221,12 +221,6 @@ class CustomAttributeManager(
             context, DatePickerDialog.OnDateSetListener { _, y, m, d ->
                 tvDatePicker.text = TextUtils().getFormattedDate(d,m,y)
 
-                // TODO save to attr control value
-
-                /*  product_attribute_16_day=2
-                    product_attribute_16_month=1
-                    product_attribute_16_year=2020  */
-
                 val value = AttributeControlValue()
                 value.id = -1 * attr.attributeControlType!!
 
@@ -469,12 +463,29 @@ class CustomAttributeManager(
             {
                 for(attribute in valueList)
                 {
-                    val keyValuePair = KeyValuePair()
-                    keyValuePair.key = "${productAttributePrefix}_${key}"
-                    keyValuePair.value = if(attribute.id <= -1) attribute.name!! else attribute.id.toString() // -1 for textAttr & -2 for datePickerAttr
-                    allKeyValueList.add(keyValuePair)
 
-                    "key_value".showLog(" Key : $key    values: ${keyValuePair.value}")
+                    if(attribute.id == -1 * AttributeControlType.Datepicker) {
+                        val times = attribute.name?.splitToSequence("-")?.filter { it.isNotEmpty() }?.toList()
+
+                        val day = times?.get(0) ?: "1"
+                        val month = times?.get(1) ?: "1"
+                        val year = times?.get(2) ?: "1970"
+
+                        allKeyValueList.add(KeyValuePair("${productAttributePrefix}_${key}_day", day))
+                        allKeyValueList.add(KeyValuePair("${productAttributePrefix}_${key}_month", month))
+                        allKeyValueList.add(KeyValuePair("${productAttributePrefix}_${key}_year", year))
+
+                    } else if (attribute.id == -1) { // -1 for textAttr & -2 for datePickerAttr
+                        allKeyValueList.add(KeyValuePair("${productAttributePrefix}_${key}", attribute.name ?: ""))
+
+                    } else {
+                        val keyValuePair = KeyValuePair()
+
+                        keyValuePair.key = "${productAttributePrefix}_${key}"
+                        keyValuePair.value = attribute.id.toString()
+                        allKeyValueList.add(keyValuePair)
+                    }
+
                 }
             }
         }

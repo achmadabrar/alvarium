@@ -17,7 +17,7 @@ import com.bs.ecommerce.utils.ItemClickListener
 import com.bs.ecommerce.utils.loadImg
 import com.bs.ecommerce.utils.show
 import kotlinx.android.synthetic.main.cart_list_item.view.*
-import kotlinx.android.synthetic.main.product_price_layout.view.*
+import kotlinx.android.synthetic.main.product_price_layout_for_list.view.*
 import java.util.*
 
 
