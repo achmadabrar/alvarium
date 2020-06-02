@@ -88,7 +88,7 @@
             android:id="@+id/btnAddToCart"
             style="@style/RoundedButtonTiny_1"
             android:layout_marginStart="5dp"
-            android:text="@string/add_to_cart"
+            tools:text="@string/add_to_cart"
             app:layout_constraintTop_toBottomOf="@id/tvCustomAttribute"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toEndOf="@id/ivProductThumb" />

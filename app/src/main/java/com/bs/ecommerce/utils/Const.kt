@@ -73,6 +73,8 @@ class Const {
         val ORDER_TOTAL = "account.customerorders.ordertotal"
         val ORDER_DATE = "account.customerorders.orderdate"
 
+        val CATALOG_ITEMS_PER_PAGE = "catalog.pagesize.label"
+
         val MORE_SCAN_BARCODE = "nopstation.webapi.scanbarcode"
         val MORE_SETTINGS = "nopstation.webapi.settings"
         val MORE_PRIVACY_POLICY = "nopstation.webapi.privacypolicy"
@@ -98,6 +100,10 @@ class Const {
         val PRODUCT_BUY_DISABLED = "shoppingcart.buyingdisabled"
         val PRODUCT_BTN_ADDTOCART = "shoppingcart.addtocart"
         val PRODUCT_BTN_ADDTO_WISHLIST = "shoppingcart.addtowishlist"
+
+
+        val WISHLIST_NO_ITEM = "wishlist.cartisempty"
+        val WISHLIST_ADD_ALL_TO_CART = "nopstation.webapi.wishlist.addall"
 
         val COMMON_NO_DATA = "nopstation.webapi.common.nodata"
         val COMMON_SEE_ALL = "nopstation.webapi.home.seeall"

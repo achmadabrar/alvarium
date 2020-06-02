@@ -9,7 +9,7 @@ import com.bs.ecommerce.product.model.data.ProductDetail
 import com.bs.ecommerce.utils.ItemClickListener
 import com.bs.ecommerce.utils.loadImg
 import kotlinx.android.synthetic.main.item_associated_product.view.*
-import kotlinx.android.synthetic.main.product_price_layout.view.*
+import kotlinx.android.synthetic.main.product_price_layout_for_list.view.*
 import kotlinx.android.synthetic.main.qunatity_button.view.*
 
 

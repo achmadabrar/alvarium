@@ -64,6 +64,9 @@
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/btn_height"
                         android:autofillHints="Username"
+                        android:layout_gravity="start"
+                        android:textDirection="locale"
+                        android:textAlignment="viewStart"
                         android:drawableEnd="@drawable/ic_user"
                         tools:hint="@string/login_usrname"
                         android:imeOptions="actionNext"
@@ -88,6 +91,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/btn_height"
                         tools:hint="@string/login_password"
+                        android:textDirection="locale"
+                        android:textAlignment="viewStart"
                         android:imeOptions="actionDone"
                         android:inputType="textPassword" />
                 </com.google.android.material.textfield.TextInputLayout>

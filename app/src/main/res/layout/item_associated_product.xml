@@ -51,7 +51,7 @@
 
         <include
             android:id="@+id/productPriceLayout"
-            layout="@layout/product_price_layout"
+            layout="@layout/product_price_layout_for_list"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"

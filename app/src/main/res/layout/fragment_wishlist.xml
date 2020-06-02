@@ -25,7 +25,7 @@
         android:textSize="@dimen/tv_text_size_regular"
         tools:visibility="visible"
         android:visibility="gone"
-        android:text="@string/no_items_in_your_wishlist"/>
+        tools:text="@string/no_items_in_your_wishlist"/>
 
     <Button
         android:id="@+id/btnAddAllToCart"
@@ -35,7 +35,7 @@
         android:layout_alignParentBottom="true"
         android:background="@drawable/rect_background_ripple"
         android:text="@string/add_all_items_to_cart"
-        android:textColor="@color/white"
+        tools:textColor="@color/white"
         android:visibility="gone"
         tools:visibility="visible" />
 
