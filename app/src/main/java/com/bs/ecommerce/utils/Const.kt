@@ -112,6 +112,8 @@ class Const {
         val SUB_TOTAL = "shoppingcart.totals.subtotal"
         val SHIPPING = "shoppingcart.totals.shipping"
         val DISCOUNT = "shoppingcart.totals.subtotaldiscount"
+        val GIFT_CARD = "shoppingcart.totals.giftcardinfo"
+        val GIFT_CARD_REMAINING = "shoppingcart.totals.giftcardinfo.remaining"
         val TAX = "shoppingcart.totals.tax"
         val TOTAL = "shoppingcart.totals.ordertotal"
 
@@ -121,6 +123,16 @@ class Const {
 
 
         val CALCULATED_DURING_CHECKOUT = "shoppingcart.totals.calculatedduringcheckout"
+
+
+        // GUEST CHECOUT DIALOG
+
+        val CHECKOUT_AS_GUEST_TITLE = "account.login.checkoutasguestorregister"
+        val CHECKOUT_AS_GUEST = "account.login.checkoutasguest"
+        val REGISTER_AND_SAVE_TIME = "nopstation.webapi.registersavetime"
+        val CREATE_ACCOUNT_LONG_TEXT = "nopstation.webapi.creatingaccountlongtext"
+        val RETURNING_CUSTOMER = "nopstation.webapi.returningcustomer"
+
 
 
 
@@ -135,8 +147,11 @@ class Const {
 
         val SHIP_TO_SAME_ADDRESS = "checkout.shiptosameaddress"
 
-
         val NEW_ADDRESS = "checkout.newaddress"
+
+        //Payment method
+        val USE_REWARD_POINTS = "checkout.userewardpoints"
+
 
         val FIRST_NAME = "address.fields.firstname"
         val LAST_NAME = "address.fields.lastname"
@@ -148,6 +163,23 @@ class Const {
         val ADDRESS_2 = "address.fields.address2"
         val EMAIL = "address.fields.email"
 
+
+
+        val GENDER = "account.fields.gender"
+        val GENDER_MALE = "account.fields.gender.male"
+        val GENDER_FEMALE = "account.fields.gender.female"
+
+
+        val ENTER_PASSWORD = "nopstation.webapi.account.fields.enterpassword"
+        val CONFIRM_PASSWORD = "account.fields.confirmpassword"
+        val OPTIONS = "account.options"
+        val CHANGE_PASSWORD = "account.changepassword"
+        val NEWSLETTER = "account.fields.newsletter"
+
+        val DATE_OF_BIRTH = "account.fields.dateofbirth"
+
+        val USERNAME = "account.fields.username"
+
         val SELECT_COUNTRY = "address.selectcountry"
 
         val SELECT_STATE = "address.selectstate"
@@ -155,12 +187,36 @@ class Const {
         val STATE_PROVINCE = "address.fields.stateprovince"
         val ZIP_CODE = "address.fields.zippostalcode"
 
+        val ADD_NEW_ADDRESS = "account.customeraddresses.addnew"
+
+        val ADDRESS_UPDATED_SUCCESSFULLY = "nopstation.webapi.address.fields.addressupdated"
+        val ADDRESS_SAVED_SUCCESSFULLY = "nopstation.webapi.address.fields.addresssaved"
+
+
+        val CONFIRM_DELETE_ADDRESS = "nopstation.webapi.address.fields.confirmdeleteaddress"
+        val DELETE_ADDRESS = "nopstation.webapi.address.fields.deleteaddress"
+
         val STREET_ADDRESS = "account.fields.streetaddress"
         val STREET_ADDRESS_2 = "account.fields.streetaddress2"
 
+
         val IS_REQUIRED = "nopstation.webapi.common.isrequired"
 
+
+        //Confirm Order
+        val PICK_UP_POINT_ADDRESS = "order.pickupaddress"
+        val SHIPPING_METHOD = "checkout.shippingmethod"
+        val PAYMENT_METHOD = "checkout.paymentmethod"
+        val SELECTED_ATTRIBUTES = "nopstation.webapi.checkout.selectedattributes"
+        val ORDER_CALCULATION = "nopstation.webapi.checkout.ordercalculation"
+        val WILL_EARN = "shoppingcart.totals.rewardpoints.willearn"
+        val POINTS = "shoppingcart.totals.rewardpoints.willearn.point"
+        val QUANTITY = "order.product(s).quantity"
+
         val CONTINUE = "common.continue"
+        val REGISTER_BUTTON = "account.register.button"
+        val SAVE_BUTTON = "common.save"
+        val CONFIRM_BUTTON = "checkout.confirmbutton"
     }
 
 }

@@ -316,7 +316,7 @@ class CartFragment : BaseFragment() {
             if (displayTax && tax != null)
             {
                 if (displayTaxRates)
-                    taxRates?.get(0)?.rate?.let { taxKey?.text = "${getString(R.string.tax)} $it%" }
+                    taxRates?.get(0)?.rate?.let { taxKey?.text = "${DbHelper.getString(Const.TAX)} $it%" }
 
                 tvTax?.text = tax
             }

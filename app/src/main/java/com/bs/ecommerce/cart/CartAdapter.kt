@@ -13,6 +13,8 @@ import com.bs.ecommerce.auth.register.data.KeyValuePair
 import com.bs.ecommerce.base.BaseViewModel
 import com.bs.ecommerce.cart.model.CartModel
 import com.bs.ecommerce.cart.model.data.CartProduct
+import com.bs.ecommerce.db.DbHelper
+import com.bs.ecommerce.utils.Const
 import com.bs.ecommerce.utils.ItemClickListener
 import com.bs.ecommerce.utils.loadImg
 import com.bs.ecommerce.utils.show
@@ -117,7 +119,7 @@ open class CartAdapter(
                     holder?.quantityLayout?.visibility = View.GONE
 
                     holder?.quantityForCheckout?.visibility = View.VISIBLE
-                    holder?.quantityForCheckout?.text = "Quantity:  ${productModel.quantity}"
+                    holder?.quantityForCheckout?.text = "${DbHelper.getString(Const.QUANTITY)}  ${productModel.quantity}"
                 }
 
                 if(productModel.attributeInfo.isNotEmpty())

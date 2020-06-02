@@ -21,7 +21,7 @@ data class OrderTotal(
     @SerializedName("SubTotalDiscount") var subTotalDiscount: String? = null,
     @SerializedName("Tax") var tax: String? = null,
     @SerializedName("TaxRates") var taxRates: List<TaxRate>? = null,
-    @SerializedName("WillEarnRewardPoints") var willEarnRewardPoints: Int = 0
+    @SerializedName("WillEarnRewardPoints") var willEarnRewardPoints: Int? = 0
 )
 
 

@@ -9,6 +9,7 @@ import android.widget.Toast
 import com.bs.ecommerce.R
 import com.bs.ecommerce.checkout.model.data.AvailableCountry
 import com.bs.ecommerce.checkout.model.data.AvailableState
+import com.bs.ecommerce.db.DbHelper
 import com.bs.ecommerce.product.model.data.AddressModel
 import kotlinx.android.synthetic.main.address_form.view.*
 
@@ -54,66 +55,77 @@ class AddressFormUtil(private val form: View, private val context: Context) {
             form.etFirstName?.showOrHideOrRequired(
                 isEnabledParam = true,
                 isRequired = false,
-                value = firstName
+                value = firstName,
+                hintText = DbHelper.getString(Const.FIRST_NAME)
             )
 
             form.etLastName?.showOrHideOrRequired(
                 isEnabledParam = true,
                 isRequired = false,
-                value = lastName
+                value = lastName,
+                hintText = DbHelper.getString(Const.LAST_NAME)
             )
 
             form.etEmail?.showOrHideOrRequired(
                 isEnabledParam = true,
                 isRequired = true,
-                value = email
+                value = email,
+                hintText = DbHelper.getString(Const.EMAIL)
             )
 
             form.etCompanyName?.showOrHideOrRequired(
                 isEnabledParam = companyEnabled == true,
                 isRequired = companyRequired == true,
-                value = company
+                value = company,
+                hintText = DbHelper.getString(Const.COMPANY)
             )
 
-            form.etStateProvince?.showOrHideOrRequired(
+/*            form.etStateProvince?.showOrHideOrRequired(
                 isEnabledParam = stateProvinceEnabled == true,
-                isRequired = false
-            )
+                isRequired = false,
+                hintText = DbHelper.getString(Const.STATE_PROVINCE)
+            )*/
 
             form.etCity?.showOrHideOrRequired(
                 isEnabledParam = cityEnabled == true,
                 isRequired = cityRequired == true,
-                value = city
+                value = city,
+                hintText = DbHelper.getString(Const.CITY)
             )
 
             form.etStreetAddress?.showOrHideOrRequired(
                 isEnabledParam = streetAddressEnabled == true,
                 isRequired = streetAddressRequired == true,
-                value = address1
+                value = address1,
+                hintText = DbHelper.getString(Const.STREET_ADDRESS)
             )
 
             form.etStreetAddress2?.showOrHideOrRequired(
                 isEnabledParam = streetAddress2Enabled == true,
                 isRequired = streetAddress2Required == true,
-                value = address2
+                value = address2,
+                hintText = DbHelper.getString(Const.STREET_ADDRESS_2)
             )
 
             form.etZipCode?.showOrHideOrRequired(
                 isEnabledParam = zipPostalCodeEnabled == true,
                 isRequired = zipPostalCodeRequired == true,
-                value = zipPostalCode
+                value = zipPostalCode,
+                hintText = DbHelper.getString(Const.ZIP_CODE)
             )
 
             form.etPhone?.showOrHideOrRequired(
                 isEnabledParam = phoneEnabled == true,
                 isRequired = phoneRequired == true,
-                value = phoneNumber
+                value = phoneNumber,
+                hintText = DbHelper.getString(Const.PHONE)
             )
 
             form.etFax?.showOrHideOrRequired(
                 isEnabledParam = faxEnabled == true,
                 isRequired = faxRequired == true,
-                value = faxNumber
+                value = faxNumber,
+                hintText = DbHelper.getString(Const.FAX)
             )
 
         }
@@ -170,7 +182,7 @@ class AddressFormUtil(private val form: View, private val context: Context) {
 
             if (countryEnabled==true && countryId == 0) {
                 isValidForm = false
-                val toastMsg = "Country ${context.getString(R.string.reg_hint_is_required)}"
+                val toastMsg = "Country ${DbHelper.getString(Const.IS_REQUIRED)}"
 
                 Toast.makeText(context, toastMsg, Toast.LENGTH_SHORT).show()
             }
@@ -218,7 +230,7 @@ class AddressFormUtil(private val form: View, private val context: Context) {
     private fun showValidation(editText: EditText, isRequired: Boolean?) {
         if (isRequired == true) {
             isValidForm = false
-            val toastMsg = "${editText.hint} ${context.getString(R.string.reg_hint_is_required)}"
+            val toastMsg = "${editText.hint} ${DbHelper.getString(Const.IS_REQUIRED)}"
 
             Toast.makeText(context, toastMsg, Toast.LENGTH_SHORT).show()
         } else {

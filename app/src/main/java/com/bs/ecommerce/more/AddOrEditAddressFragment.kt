@@ -11,16 +11,14 @@ import com.bs.ecommerce.base.BaseFragment
 import com.bs.ecommerce.base.BaseViewModel
 import com.bs.ecommerce.checkout.model.CheckoutModelImpl
 import com.bs.ecommerce.checkout.model.data.AvailableCountry
+import com.bs.ecommerce.db.DbHelper
 import com.bs.ecommerce.more.model.CustomerAddressModel
 import com.bs.ecommerce.more.model.CustomerAddressModelImpl
 import com.bs.ecommerce.more.viewmodel.AddressViewModel
 import com.bs.ecommerce.networking.Api
 import com.bs.ecommerce.networking.common.KeyValueFormData
 import com.bs.ecommerce.product.model.data.AddressModel
-import com.bs.ecommerce.utils.AddressFormUtil
-import com.bs.ecommerce.utils.CustomAttributeManager
-import com.bs.ecommerce.utils.ItemClickListener
-import com.bs.ecommerce.utils.toast
+import com.bs.ecommerce.utils.*
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import kotlinx.android.synthetic.main.custom_attribute_bottom_sheet.*
 import kotlinx.android.synthetic.main.custom_attribute_bottom_sheet.view.*
@@ -80,6 +78,8 @@ class AddOrEditAddressFragment : BaseFragment() {
             //dynamicAttributeView?.onBottomSheetClose()
         }
 
+        btnSave?.text = DbHelper.getString(Const.SAVE_BUTTON)
+
         btnSave.setOnClickListener {
             val userAddress: AddressModel? = (viewModel as AddressViewModel).addressLD.value
 
@@ -137,7 +137,7 @@ class AddOrEditAddressFragment : BaseFragment() {
             resetFormLD.observe(viewLifecycleOwner, Observer { resetForm ->
 
                 if (resetForm && lifecycle.currentState.isAtLeast(Lifecycle.State.RESUMED)) {
-                    toast(if (isEditMode) R.string.address_update_succss else R.string.address_saved)
+                    toast(if (isEditMode) DbHelper.getString(Const.ADDRESS_UPDATED_SUCCESSFULLY) else DbHelper.getString(Const.ADDRESS_SAVED_SUCCESSFULLY))
 
                     // Update address list to show changes
                     // FIXME Bad Practice. Inter fragment communication should be done with interface. Replace ASAP

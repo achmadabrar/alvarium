@@ -9,7 +9,9 @@ import com.bs.ecommerce.auth.login.LoginFragment
 import com.bs.ecommerce.auth.register.RegisterFragment
 import com.bs.ecommerce.base.BaseFragment
 import com.bs.ecommerce.checkout.CheckoutStepFragment
+import com.bs.ecommerce.db.DbHelper
 import com.bs.ecommerce.main.MainActivity
+import com.bs.ecommerce.utils.Const
 import com.bs.ecommerce.utils.replaceFragmentSafely
 import kotlinx.android.synthetic.main.guest_checkout_dialog_fragment.*
 
@@ -41,6 +43,18 @@ class GuestCheckoutFragment : DialogFragment(), View.OnClickListener {
             newCustomerCheckoutLayout?.visibility = View.GONE
         else
             guestCheckoutLayout?.visibility = View.GONE*/
+
+
+        checkoutAsGuestOrRegisterTitle?.text = DbHelper.getString(Const.CHECKOUT_AS_GUEST_TITLE)
+        registerAndSaveTime?.text = DbHelper.getString(Const.REGISTER_AND_SAVE_TIME)
+        byCreatingAccount?.text = DbHelper.getString(Const.CREATE_ACCOUNT_LONG_TEXT)
+
+        btnGuestCheckout?.text = DbHelper.getString(Const.CHECKOUT_AS_GUEST)
+        btnRegister?.text = DbHelper.getString(Const.REGISTER_BUTTON)
+        returningCustomer?.text = DbHelper.getString(Const.RETURNING_CUSTOMER)
+        btnLogin?.text = DbHelper.getString(Const.LOGIN_LOGIN_BTN)
+
+
 
 
         btnGuestCheckout.setOnClickListener(this)

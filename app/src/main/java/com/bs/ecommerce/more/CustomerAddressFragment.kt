@@ -10,11 +10,13 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.bs.ecommerce.R
 import com.bs.ecommerce.base.BaseFragment
 import com.bs.ecommerce.base.BaseViewModel
+import com.bs.ecommerce.db.DbHelper
 import com.bs.ecommerce.more.adapter.AddressListAdapter
 import com.bs.ecommerce.more.model.CustomerAddressModel
 import com.bs.ecommerce.more.model.CustomerAddressModelImpl
 import com.bs.ecommerce.more.viewmodel.AddressViewModel
 import com.bs.ecommerce.product.model.data.AddressModel
+import com.bs.ecommerce.utils.Const
 import com.bs.ecommerce.utils.ItemClickListener
 import com.bs.ecommerce.utils.RecyclerViewMargin
 import com.bs.ecommerce.utils.replaceFragmentSafely
@@ -78,6 +80,9 @@ class CustomerAddressFragment : BaseFragment() {
 
     private fun setupView() {
 
+
+        btnAddNew?.text = DbHelper.getString(Const.ADD_NEW_ADDRESS)
+
         val clickListener = object : ItemClickListener<AddressModel> {
             override fun onClick(view: View, position: Int, data: AddressModel) {
 
@@ -117,7 +122,7 @@ class CustomerAddressFragment : BaseFragment() {
 
         AlertDialog.Builder(requireActivity()).apply {
 
-            setMessage(R.string.confirm_address_delete).setTitle(R.string.delete_address)
+            setMessage(DbHelper.getString(Const.CONFIRM_DELETE_ADDRESS)).setTitle(DbHelper.getString(Const.DELETE_ADDRESS))
 
             setPositiveButton(R.string.yes) { _, _ ->
                 (viewModel as AddressViewModel).deleteAddress(data, position, model)

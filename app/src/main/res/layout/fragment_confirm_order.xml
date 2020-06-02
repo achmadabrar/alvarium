@@ -61,6 +61,7 @@
                     android:orientation="vertical">
 
                     <TextView
+                        android:id="@+id/tvProductsTitle"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:background="@color/confirm_order_card_title_bg"
@@ -96,6 +97,7 @@
                     android:orientation="vertical">
 
                     <TextView
+                        android:id="@+id/tvOrderCalculation"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:background="@color/confirm_order_card_title_bg"

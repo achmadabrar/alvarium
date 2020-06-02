@@ -14,6 +14,8 @@ import com.bs.ecommerce.base.BaseViewModel
 import com.bs.ecommerce.checkout.model.data.PaymentMethod
 import com.bs.ecommerce.customViews.CheckableLinearLayout
 import com.bs.ecommerce.customViews.MethodSelectionProcess
+import com.bs.ecommerce.db.DbHelper
+import com.bs.ecommerce.utils.Const
 import com.bs.ecommerce.utils.MyApplication
 import com.bs.ecommerce.utils.loadImg
 import kotlinx.android.synthetic.main.fragment_shipping_method.*
@@ -43,8 +45,10 @@ class PaymentMethodFragment : BaseCheckoutNavigationFragment() {
                 if(displayRewardPoints)
                 {
                     rewardPointCheckBox.visibility = View.VISIBLE
-                    rewardPointCheckBox.text = "Use my reward points, " +
-                            "${it.rewardPointsBalance} reward points (${it.rewardPointsAmount}) available for this order"
+
+                    rewardPointCheckBox.text = DbHelper.getString(Const.USE_REWARD_POINTS)
+                        .replace("{0}", it.rewardPointsBalance.toString())
+                        .replace("{1}", it.rewardPointsAmount.toString())
 
                     useRewardPoints = rewardPointCheckBox.isChecked
 
