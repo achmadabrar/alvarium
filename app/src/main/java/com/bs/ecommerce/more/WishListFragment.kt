@@ -11,16 +11,14 @@ import com.bs.ecommerce.R
 import com.bs.ecommerce.base.BaseFragment
 import com.bs.ecommerce.base.BaseViewModel
 import com.bs.ecommerce.cart.CartFragment
+import com.bs.ecommerce.db.DbHelper
 import com.bs.ecommerce.more.adapter.WishListAdapter
 import com.bs.ecommerce.more.model.WishListModel
 import com.bs.ecommerce.more.model.WishListModelImpl
 import com.bs.ecommerce.more.viewmodel.WishListViewModel
 import com.bs.ecommerce.product.ProductDetailFragment
 import com.bs.ecommerce.product.model.data.WishListItem
-import com.bs.ecommerce.utils.ItemClickListener
-import com.bs.ecommerce.utils.RecyclerViewMargin
-import com.bs.ecommerce.utils.replaceFragmentSafely
-import com.bs.ecommerce.utils.showLog
+import com.bs.ecommerce.utils.*
 import kotlinx.android.synthetic.main.fragment_wishlist.*
 
 class WishListFragment : BaseFragment() {
@@ -34,7 +32,7 @@ class WishListFragment : BaseFragment() {
 
     override fun createViewModel(): BaseViewModel = WishListViewModel()
 
-    override fun getFragmentTitle(): Int = R.string.title_wishlist // DbHelper.getString(Const.ACCOUNT_WISHLIST)
+    override fun getFragmentTitle() = DbHelper.getString(Const.ACCOUNT_WISHLIST)
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

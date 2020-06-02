@@ -21,7 +21,7 @@ class ChangePasswordFragment : BaseFragment() {
 
     private lateinit var model: AuthModel
 
-    override fun getFragmentTitle() = R.string.title_change_password // DbHelper.getString(Const.TITLE_CHANGE_PASS)
+    override fun getFragmentTitle() = DbHelper.getString(Const.TITLE_CHANGE_PASS)
 
     override fun getLayoutId(): Int = R.layout.fragment_change_password
 

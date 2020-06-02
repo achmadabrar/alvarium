@@ -8,12 +8,13 @@ import android.widget.ImageView
 import android.widget.RelativeLayout
 import android.widget.TextView
 import androidx.appcompat.widget.AppCompatRadioButton
-import androidx.lifecycle.Observer
 import com.bs.ecommerce.R
 import com.bs.ecommerce.base.BaseViewModel
 import com.bs.ecommerce.checkout.model.data.PaymentMethod
 import com.bs.ecommerce.customViews.CheckableLinearLayout
 import com.bs.ecommerce.customViews.MethodSelectionProcess
+import com.bs.ecommerce.db.DbHelper
+import com.bs.ecommerce.utils.Const
 import com.bs.ecommerce.utils.MyApplication
 import com.bs.ecommerce.utils.loadImg
 import kotlinx.android.synthetic.main.fragment_shipping_method.*
@@ -24,7 +25,7 @@ class PaymentMethodFragment : BaseCheckoutNavigationFragment() {
     private lateinit var methodSelectionProcess: MethodSelectionProcess
     private var paymentMethodValue = ""
 
-    override fun getFragmentTitle() = R.string.title_shopping_cart
+    override fun getFragmentTitle() = DbHelper.getString(Const.SHOPPING_CART_TITLE)
 
     override fun getLayoutId(): Int = R.layout.fragment_shipping_method
 

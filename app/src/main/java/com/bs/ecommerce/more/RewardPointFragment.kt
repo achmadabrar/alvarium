@@ -28,7 +28,7 @@ class RewardPointFragment : BaseFragment() {
 
     private lateinit var model: RewardPointModel
 
-    override fun getFragmentTitle() = R.string.title_reward_points // DbHelper.getString(Const.ACCOUNT_REWARD_POINT)
+    override fun getFragmentTitle() = DbHelper.getString(Const.ACCOUNT_REWARD_POINT)
 
     override fun getLayoutId(): Int = R.layout.fragment_reward_point
 

@@ -11,16 +11,14 @@ import com.bs.ecommerce.base.BaseFragment
 import com.bs.ecommerce.base.BaseViewModel
 import com.bs.ecommerce.checkout.model.CheckoutModelImpl
 import com.bs.ecommerce.checkout.model.data.AvailableCountry
+import com.bs.ecommerce.db.DbHelper
 import com.bs.ecommerce.more.model.CustomerAddressModel
 import com.bs.ecommerce.more.model.CustomerAddressModelImpl
 import com.bs.ecommerce.more.viewmodel.AddressViewModel
 import com.bs.ecommerce.networking.Api
 import com.bs.ecommerce.networking.common.KeyValueFormData
 import com.bs.ecommerce.product.model.data.AddressModel
-import com.bs.ecommerce.utils.AddressFormUtil
-import com.bs.ecommerce.utils.CustomAttributeManager
-import com.bs.ecommerce.utils.ItemClickListener
-import com.bs.ecommerce.utils.toast
+import com.bs.ecommerce.utils.*
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import kotlinx.android.synthetic.main.custom_attribute_bottom_sheet.*
 import kotlinx.android.synthetic.main.custom_attribute_bottom_sheet.view.*
@@ -44,7 +42,7 @@ class AddOrEditAddressFragment : BaseFragment() {
 
     override fun createViewModel(): BaseViewModel = AddressViewModel()
 
-    override fun getFragmentTitle(): Int = R.string.title_addresses
+    override fun getFragmentTitle() = DbHelper.getString(Const.ACCOUNT_CUSTOMER_ADDRESS)
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

@@ -54,7 +54,7 @@ class ProductDetailFragment : BaseFragment(), View.OnClickListener {
     private lateinit var listItemClickListener: ItemClickListener<ProductSummary>
     private var customAttributeManager: CustomAttributeManager? = null
 
-    override fun getFragmentTitle() = R.string.title_product
+    override fun getFragmentTitle() = arguments?.getString(PRODUCT_NAME, "") ?: ""
 
     override fun getLayoutId(): Int = R.layout.fragment_product_detail
 

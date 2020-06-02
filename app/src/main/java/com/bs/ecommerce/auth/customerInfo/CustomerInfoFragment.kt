@@ -6,13 +6,15 @@ import android.view.View
 import com.bs.ecommerce.R
 import com.bs.ecommerce.auth.register.RegisterFragment
 import com.bs.ecommerce.auth.register.RegistrationViewModel
+import com.bs.ecommerce.db.DbHelper
 import com.bs.ecommerce.networking.Api
 import com.bs.ecommerce.networking.common.KeyValueFormData
+import com.bs.ecommerce.utils.Const
 import kotlinx.android.synthetic.main.fragment_registration.*
 
 
 class CustomerInfoFragment : RegisterFragment() {
-    override fun getFragmentTitle() = R.string.title_customer_info
+    override fun getFragmentTitle() = DbHelper.getString(Const.ACCOUNT_INFO)
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

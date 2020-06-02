@@ -12,9 +12,9 @@ import com.bs.ecommerce.base.BaseViewModel
 import com.bs.ecommerce.checkout.model.data.ShippingMethod
 import com.bs.ecommerce.customViews.CheckableLinearLayout
 import com.bs.ecommerce.customViews.MethodSelectionProcess
+import com.bs.ecommerce.db.DbHelper
+import com.bs.ecommerce.utils.Const
 import com.bs.ecommerce.utils.MyApplication
-import com.bs.ecommerce.utils.showLog
-import kotlinx.android.synthetic.main.fragment_checkout_step.*
 import kotlinx.android.synthetic.main.fragment_shipping_method.*
 
 class ShippingMethodFragment : BaseCheckoutNavigationFragment() {
@@ -22,7 +22,7 @@ class ShippingMethodFragment : BaseCheckoutNavigationFragment() {
     private lateinit var methodSelectionProcess: MethodSelectionProcess
     private var shippingMethodValue = ""
 
-    override fun getFragmentTitle() = R.string.title_shopping_cart
+    override fun getFragmentTitle() = DbHelper.getString(Const.SHOPPING_CART_TITLE)
 
     override fun getLayoutId(): Int = R.layout.fragment_shipping_method
 

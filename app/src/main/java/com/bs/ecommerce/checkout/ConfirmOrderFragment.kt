@@ -13,7 +13,9 @@ import com.bs.ecommerce.cart.model.data.CartInfoData
 import com.bs.ecommerce.cart.model.data.CartProduct
 import com.bs.ecommerce.cart.model.data.OrderReviewData
 import com.bs.ecommerce.cart.model.data.OrderTotal
+import com.bs.ecommerce.db.DbHelper
 import com.bs.ecommerce.product.ProductDetailFragment
+import com.bs.ecommerce.utils.Const
 import com.bs.ecommerce.utils.ItemClickListener
 import com.bs.ecommerce.utils.replaceFragmentSafely
 import com.bs.ecommerce.utils.showTextPendingCalculationOnCheckout
@@ -25,7 +27,7 @@ class ConfirmOrderFragment : BaseCheckoutNavigationFragment() {
 
     private lateinit var clickListener : ItemClickListener<CartProduct>
 
-    override fun getFragmentTitle() = R.string.title_shopping_cart
+    override fun getFragmentTitle() = DbHelper.getString(Const.SHOPPING_CART_TITLE)
 
     override fun getLayoutId(): Int = R.layout.fragment_confirm_order
 

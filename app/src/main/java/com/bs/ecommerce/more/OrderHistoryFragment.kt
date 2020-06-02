@@ -28,7 +28,7 @@ import java.lang.ref.WeakReference
 class OrderHistoryFragment : BaseFragment() {
     private lateinit var model: OrderModel
 
-    override fun getFragmentTitle() = R.string.title_orders // DbHelper.getString(Const.ACCOUNT_ORDERS)
+    override fun getFragmentTitle() = DbHelper.getString(Const.ACCOUNT_ORDERS)
 
     override fun getLayoutId(): Int = R.layout.fragment_customer_order
 

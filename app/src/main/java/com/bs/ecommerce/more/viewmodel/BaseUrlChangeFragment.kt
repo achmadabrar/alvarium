@@ -26,7 +26,7 @@ abstract class BaseUrlChangeFragment : BaseFragment()
     lateinit var mainModel: MainModel
     lateinit var mainViewModel: MainViewModel
 
-    abstract override fun getFragmentTitle(): Int
+    abstract override fun getFragmentTitle(): String
 
     override fun getLayoutId(): Int = R.layout.fragment_settings
 

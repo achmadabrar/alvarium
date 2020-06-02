@@ -8,15 +8,17 @@ import androidx.lifecycle.ViewModelProvider
 import com.bs.ecommerce.R
 import com.bs.ecommerce.base.BaseViewModel
 import com.bs.ecommerce.base.ToolbarLogoBaseFragment
+import com.bs.ecommerce.db.DbHelper
 import com.bs.ecommerce.more.settings.SettingsFragment
 import com.bs.ecommerce.more.viewmodel.OptionViewModel
+import com.bs.ecommerce.utils.Const
 import com.bs.ecommerce.utils.replaceFragmentSafely
 import kotlinx.android.synthetic.main.fragment_options.*
 import kotlinx.android.synthetic.main.options_layout.view.*
 
 class OptionsFragment : ToolbarLogoBaseFragment() {
 
-    override fun getFragmentTitle() = R.string.title_more
+    override fun getFragmentTitle() = DbHelper.getString(Const.HOME_NAV_MORE)
 
     override fun getLayoutId(): Int = R.layout.fragment_options
 

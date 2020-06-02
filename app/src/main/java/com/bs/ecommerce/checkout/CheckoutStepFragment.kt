@@ -17,7 +17,6 @@ import com.bs.ecommerce.utils.Const
 import com.bs.ecommerce.utils.MyApplication
 import com.bs.ecommerce.utils.showLog
 import com.bs.ecommerce.utils.toast
-import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_checkout_step.*
 
 
@@ -26,7 +25,7 @@ class CheckoutStepFragment : ToolbarLogoBaseFragment() {
 
     private lateinit var model: CheckoutModel
 
-    override fun getFragmentTitle() = R.string.title_shopping_cart
+    override fun getFragmentTitle() = DbHelper.getString(Const.SHOPPING_CART_TITLE)
 
     override fun getLayoutId(): Int = R.layout.fragment_checkout_step
 

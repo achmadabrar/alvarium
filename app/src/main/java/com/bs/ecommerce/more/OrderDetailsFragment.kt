@@ -13,11 +13,13 @@ import com.bs.ecommerce.R
 import com.bs.ecommerce.base.BaseFragment
 import com.bs.ecommerce.base.BaseViewModel
 import com.bs.ecommerce.cart.GiftCardAdapter
+import com.bs.ecommerce.db.DbHelper
 import com.bs.ecommerce.more.model.OrderModel
 import com.bs.ecommerce.more.model.OrderModelImpl
 import com.bs.ecommerce.more.viewmodel.OrderViewModel
 import com.bs.ecommerce.product.model.data.Item
 import com.bs.ecommerce.product.model.data.OrderDetailsData
+import com.bs.ecommerce.utils.Const
 import com.bs.ecommerce.utils.RecyclerViewMargin
 import com.bs.ecommerce.utils.TextUtils
 import com.bs.ecommerce.utils.toast
@@ -30,7 +32,7 @@ import java.lang.ref.WeakReference
 class OrderDetailsFragment : BaseFragment() {
     private lateinit var model: OrderModel
 
-    override fun getFragmentTitle() = R.string.title_order_details
+    override fun getFragmentTitle() = DbHelper.getString(Const.TITLE_ORDER_DETAILS)
 
     override fun getLayoutId(): Int = R.layout.fragment_customer_order_detail
 

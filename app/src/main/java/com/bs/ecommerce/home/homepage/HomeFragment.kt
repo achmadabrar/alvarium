@@ -54,7 +54,7 @@ class HomeFragment : ToolbarLogoBaseFragment() {
     }
 
 
-    override fun getFragmentTitle() =  R.string.title_home_page
+    override fun getFragmentTitle() =  DbHelper.getString(Const.HOME_NAV_HOME)
 
     override fun getLayoutId(): Int = R.layout.fragment_home
 

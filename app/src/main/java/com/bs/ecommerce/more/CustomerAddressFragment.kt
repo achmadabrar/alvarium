@@ -10,11 +10,13 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.bs.ecommerce.R
 import com.bs.ecommerce.base.BaseFragment
 import com.bs.ecommerce.base.BaseViewModel
+import com.bs.ecommerce.db.DbHelper
 import com.bs.ecommerce.more.adapter.AddressListAdapter
 import com.bs.ecommerce.more.model.CustomerAddressModel
 import com.bs.ecommerce.more.model.CustomerAddressModelImpl
 import com.bs.ecommerce.more.viewmodel.AddressViewModel
 import com.bs.ecommerce.product.model.data.AddressModel
+import com.bs.ecommerce.utils.Const
 import com.bs.ecommerce.utils.ItemClickListener
 import com.bs.ecommerce.utils.RecyclerViewMargin
 import com.bs.ecommerce.utils.replaceFragmentSafely
@@ -31,7 +33,7 @@ class CustomerAddressFragment : BaseFragment() {
 
     override fun createViewModel(): BaseViewModel = AddressViewModel()
 
-    override fun getFragmentTitle(): Int = R.string.title_addresses
+    override fun getFragmentTitle() = DbHelper.getString(Const.ACCOUNT_CUSTOMER_ADDRESS)
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

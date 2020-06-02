@@ -7,11 +7,13 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.bs.ecommerce.R
 import com.bs.ecommerce.base.BaseFragment
+import com.bs.ecommerce.db.DbHelper
 import com.bs.ecommerce.main.MainActivity
 import com.bs.ecommerce.main.MainViewModel
 import com.bs.ecommerce.main.model.MainModel
 import com.bs.ecommerce.main.model.MainModelImpl
 import com.bs.ecommerce.main.model.data.Category
+import com.bs.ecommerce.utils.Const
 import kotlinx.android.synthetic.main.category_left.*
 
 
@@ -21,7 +23,7 @@ class CategoryFragment : BaseFragment()
     private lateinit var mainModel: MainModel
     private lateinit var mainViewModel: MainViewModel
 
-    override fun getFragmentTitle() = R.string.title_category
+    override fun getFragmentTitle() = DbHelper.getString(Const.HOME_NAV_CATEGORY)
 
     override fun getLayoutId(): Int = R.layout.category_left
 

@@ -3,7 +3,6 @@ package com.bs.ecommerce.auth.forgotpass
 import android.os.Bundle
 import android.view.View
 import android.widget.RelativeLayout
-import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.bs.ecommerce.R
@@ -21,7 +20,7 @@ class ForgotPasswordFragment : BaseFragment() {
 
     private lateinit var model: AuthModel
 
-    override fun getFragmentTitle() = R.string.title_forgot_password // DbHelper.getString(Const.TITLE_FORGOT_PASS)
+    override fun getFragmentTitle() = DbHelper.getString(Const.TITLE_FORGOT_PASS)
 
     override fun getLayoutId(): Int = R.layout.fragment_forgot_password
 

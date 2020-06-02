@@ -33,7 +33,7 @@ class SettingsFragment: BaseUrlChangeFragment() {
     private var languageId: Int = -1
     private var currencyCode: String? = ""
 
-    override fun getFragmentTitle() = R.string.title_settings
+    override fun getFragmentTitle() = DbHelper.getString(Const.MORE_SETTINGS)
 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?)

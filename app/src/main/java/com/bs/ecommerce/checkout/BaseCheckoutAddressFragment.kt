@@ -18,7 +18,6 @@ import com.bs.ecommerce.utils.toast
 import kotlinx.android.synthetic.main.address_form.*
 import kotlinx.android.synthetic.main.fragment_base_billing_adddress.*
 import kotlinx.android.synthetic.main.fragment_billing_address.*
-import kotlinx.android.synthetic.main.ll_cart_title.*
 
 
 open class BaseCheckoutAddressFragment : BaseCheckoutNavigationFragment()
@@ -33,7 +32,7 @@ open class BaseCheckoutAddressFragment : BaseCheckoutNavigationFragment()
 
     protected var addressID: Long = 0
 
-    override fun getFragmentTitle() = R.string.title_shopping_cart
+    override fun getFragmentTitle() = DbHelper.getString(Const.SHOPPING_CART_TITLE)
 
     override fun getLayoutId(): Int = R.layout.fragment_base_billing_adddress
 
