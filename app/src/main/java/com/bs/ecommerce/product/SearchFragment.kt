@@ -45,7 +45,7 @@ class SearchFragment : BaseFragment() {
 
     private var observeLiveDataChange = true
 
-    override fun getFragmentTitle() = R.string.title_search
+    override fun getFragmentTitle() = DbHelper.getString(Const.HOME_NAV_SEARCH)
 
     override fun getLayoutId(): Int = R.layout.fragment_product_list
 

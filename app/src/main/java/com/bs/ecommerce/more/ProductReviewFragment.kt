@@ -28,7 +28,7 @@ class ProductReviewFragment : BaseFragment() {
 
     private lateinit var model: ReviewModel
 
-    override fun getFragmentTitle() = R.string.title_reviews
+    override fun getFragmentTitle() = DbHelper.getString(Const.TITLE_REVIEW)
 
     override fun getLayoutId(): Int = R.layout.fragment_product_review
 

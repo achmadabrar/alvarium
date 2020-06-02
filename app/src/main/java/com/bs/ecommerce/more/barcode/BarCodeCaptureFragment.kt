@@ -11,7 +11,9 @@ import com.bs.ecommerce.R
 import com.bs.ecommerce.auth.register.RegistrationViewModel
 import com.bs.ecommerce.base.BaseFragment
 import com.bs.ecommerce.base.BaseViewModel
+import com.bs.ecommerce.db.DbHelper
 import com.bs.ecommerce.product.ProductDetailFragment
+import com.bs.ecommerce.utils.Const
 import com.bs.ecommerce.utils.isNumeric
 import com.bs.ecommerce.utils.replaceFragmentSafely
 import com.bs.ecommerce.utils.toast
@@ -26,7 +28,7 @@ import kotlinx.android.synthetic.main.fragment_barcode_capture.*
 
 class BarCodeCaptureFragment : BaseFragment()
 {
-    override fun getFragmentTitle() = R.string.title_scan_barcode
+    override fun getFragmentTitle() = DbHelper.getString(Const.MORE_SCAN_BARCODE)
 
     override fun getLayoutId(): Int = R.layout.fragment_barcode_capture
 

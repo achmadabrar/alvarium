@@ -55,7 +55,7 @@ class ProductListFragment : BaseFragment() {
     
     private lateinit var pageSizeDialog: BottomSheetDialog
 
-    override fun getFragmentTitle() = R.string.title_register
+    override fun getFragmentTitle() = arguments?.getString(CATEGORY_NAME, "") ?: ""
 
     override fun getLayoutId(): Int = R.layout.fragment_product_list
 

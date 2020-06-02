@@ -14,7 +14,7 @@ import kotlinx.android.synthetic.main.fragment_registration.*
 
 
 class CustomerInfoFragment : RegisterFragment() {
-    override fun getFragmentTitle() = R.string.title_customer_info
+    override fun getFragmentTitle() = DbHelper.getString(Const.ACCOUNT_INFO)
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

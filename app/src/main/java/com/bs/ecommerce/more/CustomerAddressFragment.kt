@@ -33,7 +33,7 @@ class CustomerAddressFragment : BaseFragment() {
 
     override fun createViewModel(): BaseViewModel = AddressViewModel()
 
-    override fun getFragmentTitle(): Int = R.string.title_addresses
+    override fun getFragmentTitle() = DbHelper.getString(Const.ACCOUNT_CUSTOMER_ADDRESS)
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

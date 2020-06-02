@@ -36,7 +36,7 @@ class LoginFragment : BaseFragment()
 
     private lateinit var model: AuthModel
 
-    override fun getFragmentTitle() = R.string.title_login
+    override fun getFragmentTitle() = DbHelper.getString(Const.ACCOUNT_LOGIN)
 
     override fun getLayoutId(): Int = R.layout.fragment_login
 

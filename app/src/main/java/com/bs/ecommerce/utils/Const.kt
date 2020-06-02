@@ -7,6 +7,7 @@ class Const {
         val TITLE_CHANGE_PASS = "account.changepassword"
         val TITLE_REGISTER = "pagetitle.register"
         val TITLE_REVIEW = "reviews"
+        val TITLE_ORDER_DETAILS = "pagetitle.orderdetails"
 
         val HOME_NAV_HOME = "common.home"
         val HOME_NAV_CATEGORY = "nopstation.webapi.common.category"
@@ -72,8 +73,16 @@ class Const {
         val ORDER_TOTAL = "account.customerorders.ordertotal"
         val ORDER_DATE = "account.customerorders.orderdate"
 
+        val MORE_SCAN_BARCODE = "nopstation.webapi.scanbarcode"
+        val MORE_SETTINGS = "nopstation.webapi.settings"
+        val MORE_PRIVACY_POLICY = "nopstation.webapi.privacypolicy"
+        val MORE_ABOUT_US = "nopstation.webapi.aboutus"
+        val MORE_CONTACT_US = "contactus"
+
         val ACCOUNT_MY_REVIEW = "account.customerproductreviews"
         val ACCOUNT_INFO = "nopstation.webapi.account.info"
+        val ACCOUNT_CUSTOMER_ADDRESS = "account.customeraddresses"
+        val ACCOUNT_SHOPPING_CART = "account.shoppingcart"
         val ACCOUNT_REWARD_POINT = "account.rewardpoints"
         val ACCOUNT_LOGIN = "activitylog.publicstore.login"
         val ACCOUNT_LOGOUT = "activitylog.publicstore.logout"
@@ -85,6 +94,10 @@ class Const {
 
         val PRODUCT_BTN_BUY_NOW = "nopstation.webapi.shoppingcart.buynow"
         val PRODUCT_BTN_RENT_NOW = "nopstation.webapi.shoppingcart.rentnow"
+        val PRODUCT_WISHLIST_DISABLED = "shoppingcart.wishlistdisabled"
+        val PRODUCT_BUY_DISABLED = "shoppingcart.buyingdisabled"
+        val PRODUCT_BTN_ADDTOCART = "shoppingcart.addtocart"
+        val PRODUCT_BTN_ADDTO_WISHLIST = "shoppingcart.addtowishlist"
 
         val COMMON_NO_DATA = "nopstation.webapi.common.nodata"
         val COMMON_SEE_ALL = "nopstation.webapi.home.seeall"

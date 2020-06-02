@@ -47,7 +47,7 @@ abstract class BaseFragment : Fragment()
 
     abstract fun createViewModel(): BaseViewModel
 
-    abstract fun getFragmentTitle(): Int
+    abstract fun getFragmentTitle(): String
 
     override fun onCreate(savedInstanceState: Bundle?)
     {
@@ -82,7 +82,7 @@ abstract class BaseFragment : Fragment()
     {
         super.onViewCreated(view, savedInstanceState)
 
-        activity?.title = getString(getFragmentTitle()) //getFragmentTitle()
+        activity?.title = getFragmentTitle()
 
         requireActivity().supportFragmentManager.findFragmentById(R.id.layoutFrame)?.let {
 

@@ -27,7 +27,7 @@ class UserAccountFragment: ToolbarLogoBaseFragment() {
 
     override fun createViewModel(): BaseViewModel = BaseViewModel()
 
-    override fun getFragmentTitle(): Int = R.string.my_account
+    override fun getFragmentTitle() = DbHelper.getString(Const.HOME_NAV_ACCOUNT)
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -53,7 +53,7 @@ class UserAccountFragment: ToolbarLogoBaseFragment() {
 
         addressLayout.apply {
             ivOptionIcon.setImageResource(R.drawable.app_bottom_icon_home)
-            tvOptionName.text = DbHelper.getString("account.customeraddresses")
+            tvOptionName.text = DbHelper.getString(Const.ACCOUNT_CUSTOMER_ADDRESS)
             setOnClickListener { clickAction(CustomerAddressFragment()) }
         }
 
@@ -71,7 +71,7 @@ class UserAccountFragment: ToolbarLogoBaseFragment() {
 
         cartLayout.apply {
             ivOptionIcon.setImageResource(R.drawable.app_icon_cart)
-            tvOptionName.text = DbHelper.getString("account.shoppingcart")
+            tvOptionName.text = DbHelper.getString(Const.ACCOUNT_SHOPPING_CART)
             setOnClickListener { clickAction(CartFragment()) }
         }
 

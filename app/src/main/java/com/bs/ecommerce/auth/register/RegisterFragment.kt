@@ -14,7 +14,6 @@ import com.bs.ecommerce.auth.customerInfo.CustomerInfoFragment
 import com.bs.ecommerce.auth.forgotpass.ChangePasswordFragment
 import com.bs.ecommerce.auth.register.data.GetRegisterData
 import com.bs.ecommerce.auth.register.data.GetRegistrationResponse
-import com.bs.ecommerce.base.BaseFragment
 import com.bs.ecommerce.base.BaseViewModel
 import com.bs.ecommerce.base.ToolbarLogoBaseFragment
 import com.bs.ecommerce.db.DbHelper
@@ -28,7 +27,7 @@ import java.util.*
 
 open class RegisterFragment : ToolbarLogoBaseFragment(), View.OnClickListener
 {
-    override fun getFragmentTitle() = R.string.title_register
+    override fun getFragmentTitle() = DbHelper.getString(Const.TITLE_REGISTER)
 
     override fun getLayoutId(): Int = R.layout.fragment_registration
 

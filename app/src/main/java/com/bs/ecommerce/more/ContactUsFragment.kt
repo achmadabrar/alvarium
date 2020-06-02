@@ -29,7 +29,7 @@ class ContactUsFragment: BaseFragment() {
 
     override fun createViewModel(): BaseViewModel = ContactUsViewModel()
 
-    override fun getFragmentTitle(): Int = R.string.title_contact_us
+    override fun getFragmentTitle() = DbHelper.getString(Const.MORE_CONTACT_US)
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
