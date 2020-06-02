@@ -179,7 +179,7 @@ class ProductListFragment : BaseFragment() {
         pageSizeDialog = BottomSheetDialog(requireContext(), R.style.BsDialog)
 
         val pageSizeHolder:LinearLayout = layoutInflater.inflate(R.layout.sort_option_bottom_sheet, null, false) as LinearLayout
-        pageSizeHolder.sortOptionBsTitle.text = ""
+        pageSizeHolder.sortOptionBsTitle.text = DbHelper.getString(Const.CATALOG_ITEMS_PER_PAGE)
         
         // page size selection
         if(sortOption?.allowCustomersToSelectPageSize== true && !sortOption.pageSizeOptions.isNullOrEmpty()) {

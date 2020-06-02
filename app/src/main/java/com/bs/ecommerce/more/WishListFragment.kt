@@ -84,6 +84,9 @@ class WishListFragment : BaseFragment() {
 
     private fun initView() {
 
+        tvNoData.text = DbHelper.getString(Const.WISHLIST_NO_ITEM)
+        btnAddAllToCart.text = DbHelper.getString(Const.WISHLIST_ADD_ALL_TO_CART)
+
         btnAddAllToCart.setOnClickListener {
             (viewModel as WishListViewModel).moveAllItemsToCart(model)
         }
