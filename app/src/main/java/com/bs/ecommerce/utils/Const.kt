@@ -94,6 +94,10 @@ class Const {
 
         val PRODUCT_BTN_BUY_NOW = "nopstation.webapi.shoppingcart.buynow"
         val PRODUCT_BTN_RENT_NOW = "nopstation.webapi.shoppingcart.rentnow"
+        val PRODUCT_WISHLIST_DISABLED = "shoppingcart.wishlistdisabled"
+        val PRODUCT_BUY_DISABLED = "shoppingcart.buyingdisabled"
+        val PRODUCT_BTN_ADDTOCART = "shoppingcart.addtocart"
+        val PRODUCT_BTN_ADDTO_WISHLIST = "shoppingcart.addtowishlist"
 
         val COMMON_NO_DATA = "nopstation.webapi.common.nodata"
         val COMMON_SEE_ALL = "nopstation.webapi.home.seeall"

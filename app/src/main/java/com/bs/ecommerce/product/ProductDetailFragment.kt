@@ -501,8 +501,6 @@ class ProductDetailFragment : BaseFragment(), View.OnClickListener {
             }
         })*/
 
-        btnBuyNow.setOnClickListener(this)
-
         bottomSheetLayout.tvDone.text = DbHelper.getString(Const.COMMON_DONE)
         bottomSheetLayout.tvDone.setOnClickListener(this)
         productQuantityLayout.btnMinus.setOnClickListener(this)
@@ -523,18 +521,34 @@ class ProductDetailFragment : BaseFragment(), View.OnClickListener {
             }
         }
 
-        btnAddToCart.text = DbHelper.getString("shoppingcart.addtocart")
+        btnAddToCart.text = DbHelper.getString(Const.PRODUCT_BTN_ADDTOCART)
         btnAddToCart?.setOnClickListener {
+            if((viewModel as ProductDetailViewModel).productLiveData.value?.addToCart?.disableBuyButton == true) {
+                toast(DbHelper.getString(Const.PRODUCT_BUY_DISABLED))
+                return@setOnClickListener
+            }
+
             addToCartClickAction(productId, productQuantityLayout?.tvQuantity?.text.toString(), cart = true)
         }
 
-        btnAddToWishList?.tvLabel?.text = DbHelper.getString("shoppingcart.addtowishlist")
+        btnAddToWishList?.tvLabel?.text = DbHelper.getString(Const.PRODUCT_BTN_ADDTO_WISHLIST)
         btnAddToWishList?.setOnClickListener {
+            if((viewModel as ProductDetailViewModel).productLiveData.value?.addToCart?.disableWishlistButton == true) {
+                toast(DbHelper.getString(Const.PRODUCT_WISHLIST_DISABLED))
+                return@setOnClickListener
+            }
+
             addToCartClickAction(productId, productQuantityLayout?.tvQuantity?.text.toString(), cart = false)
         }
 
         btnBuyNow.text = DbHelper.getString(Const.PRODUCT_BTN_BUY_NOW)
         btnBuyNow?.setOnClickListener {
+
+            if((viewModel as ProductDetailViewModel).productLiveData.value?.addToCart?.disableBuyButton == true) {
+                toast(DbHelper.getString(Const.PRODUCT_BUY_DISABLED))
+                return@setOnClickListener
+            }
+
             (viewModel as ProductDetailViewModel).gotoCartPage = true
             addToCartClickAction(productId, productQuantityLayout?.tvQuantity?.text.toString(), cart = true)
         }
