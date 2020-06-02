@@ -11,15 +11,16 @@ import com.bs.ecommerce.main.model.MainModelImpl
 import com.bs.ecommerce.main.model.data.AppLandingSettingResponse
 import com.bs.ecommerce.product.model.data.StringResourceResponse
 import com.bs.ecommerce.utils.MyApplication
+import com.bs.ecommerce.utils.OneTimeEvent
 import com.bs.ecommerce.utils.showLog
 
 class LanguageLoaderViewModel: BaseViewModel() {
 
-    var isLanguageLoaded = MutableLiveData<Boolean>()
-    var showLoader = MutableLiveData<Boolean>()
+    var isLanguageLoaded = MutableLiveData<OneTimeEvent<Boolean>>()
+    var showLoader = MutableLiveData<OneTimeEvent<Boolean>>()
 
     fun downloadLanguage(languageId: Int?) {
-        showLoader.value = true
+        showLoader.value = OneTimeEvent(true)
 
         if(languageId!=null) {
             getLanguageResourceById(languageId)
@@ -42,8 +43,8 @@ class LanguageLoaderViewModel: BaseViewModel() {
                 }
 
                 override fun onRequestFailed(errorMessage: String) {
-                    isLanguageLoaded.value = false
-                    showLoader.value = false
+                    isLanguageLoaded.value = OneTimeEvent(false)
+                    showLoader.value = OneTimeEvent(false)
                 }
             })
     }
@@ -54,32 +55,26 @@ class LanguageLoaderViewModel: BaseViewModel() {
             id,
             object : RequestCompleteListener<StringResourceResponse> {
                 override fun onRequestSuccess(data: StringResourceResponse) {
-                    // TODO save to local DB. delete previous one
-                    // val temp = mutableListOf<StrResource>()
+                    // save to local DB. delete previous one
+                    val temp = mutableListOf<StrResource>()
+
                     AppDatabase.getInstance().deleteAllStrings()
 
                     for(i in data.stringResource) {
-                        //temp.add(StrResource(i.key, i.value, id))
-                        AppDatabase.getInstance().insertString(
-                            StrResource(
-                                i.key,
-                                i.value,
-                                id
-                            )
-                        )
+                        temp.add(StrResource(i.key, i.value, id))
                     }
 
                     DbHelper.currentLanguageId = id
 
-                    // AppDatabase.getInstance().stringDao().insertAll(temp)
+                    AppDatabase.getInstance().insertAll(temp)
 
-                    isLanguageLoaded.value = true
-                    showLoader.value = false
+                    isLanguageLoaded.value = OneTimeEvent(true)
+                    showLoader.value = OneTimeEvent(false)
                 }
 
                 override fun onRequestFailed(errorMessage: String) {
-                    isLanguageLoaded.value = false
-                    showLoader.value = false
+                    isLanguageLoaded.value = OneTimeEvent(false)
+                    showLoader.value = OneTimeEvent(false)
                 }
 
             })

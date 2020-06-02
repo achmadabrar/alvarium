@@ -38,9 +38,9 @@ class SplashScreenActivity : BaseActivity()
 
         (viewModel as LanguageLoaderViewModel).isLanguageLoaded.observe(this, androidx.lifecycle.Observer { loaded ->
 
-            "lang_".showLog("Download success? $loaded")
+            "lang_".showLog("Download success? ${loaded.peekContent()}")
 
-            if(loaded) {
+            if(loaded.getContentIfNotHandled() == true) {
                 startActivity(Intent(this@SplashScreenActivity, MainActivity::class.java))
                 finish()
             } else {

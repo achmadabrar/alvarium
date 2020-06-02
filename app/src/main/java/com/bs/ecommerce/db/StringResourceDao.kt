@@ -2,6 +2,7 @@ package com.bs.ecommerce.db
 
 import androidx.room.Dao
 import androidx.room.Insert
+import androidx.room.OnConflictStrategy
 import androidx.room.Query
 
 @Dao
@@ -10,14 +11,14 @@ interface StrResourceDao {
     @Query("SELECT * FROM StrResource")
     fun getAll(): List<StrResource>
 
-    /*@Insert
-    fun insertAll(vararg strings: List<StrResource>)*/
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    fun insertAll(order: List<StrResource>)
 
     @Insert
     fun insertString(vararg strings: StrResource)
 
 //    @Query("SELECT * FROM StrResource WHERE languageId IS (:langId) AND `key` IS (:key) LIMIT 1")
-    @Query("SELECT * FROM StrResource WHERE `key` IS (:key) LIMIT 1")
+    @Query("SELECT * FROM StrResource WHERE `key` GLOB (:key) LIMIT 1")
     fun getString(key: String): StrResource?
 
     @Query("DELETE FROM StrResource WHERE languageId IS (:langId)")

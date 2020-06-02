@@ -9,31 +9,29 @@ import androidx.lifecycle.ViewModelProvider
 import com.bs.ecommerce.R
 import com.bs.ecommerce.base.BaseActivity
 import com.bs.ecommerce.db.DbHelper
+import com.bs.ecommerce.main.LanguageLoaderViewModel
 import com.bs.ecommerce.main.MainActivity
 import com.bs.ecommerce.main.MainViewModel
 import com.bs.ecommerce.main.model.MainModelImpl
 import com.bs.ecommerce.main.model.data.CurrencyNavSelector
 import com.bs.ecommerce.main.model.data.LanguageNavSelector
 import com.bs.ecommerce.more.viewmodel.BaseUrlChangeFragment
-import com.bs.ecommerce.utils.Language
-import com.bs.ecommerce.utils.PrefSingleton
-import com.bs.ecommerce.utils.hideKeyboard
-import com.bs.ecommerce.utils.toast
+import com.bs.ecommerce.utils.*
 import kotlinx.android.synthetic.main.fragment_settings.*
 import java.util.*
 
 class SettingsFragment: BaseUrlChangeFragment() {
 
 
-    //lateinit var response: GetLanguageResponse
+    lateinit var languageViewModel: LanguageLoaderViewModel
 
-    var currencyGetResponse: CurrencyNavSelector? = null
-    var languageGetResponse: LanguageNavSelector? = null
+    private var currencyGetResponse: CurrencyNavSelector? = null
+    private var languageGetResponse: LanguageNavSelector? = null
 
 
 
-    protected var languageCode: String? = ""
-    protected var currencyCode: String? = ""
+    private var languageId: Int = -1
+    private var currencyCode: String? = ""
 
     override fun getFragmentTitle() = R.string.title_settings
 
@@ -47,6 +45,7 @@ class SettingsFragment: BaseUrlChangeFragment() {
         mainModel = MainModelImpl(activity?.applicationContext!!)
 
         mainViewModel = ViewModelProvider(this).get(MainViewModel::class.java)
+        languageViewModel = ViewModelProvider(this).get(LanguageLoaderViewModel::class.java)
 
         mainViewModel.getAppSettings(mainModel)
 
@@ -62,13 +61,16 @@ class SettingsFragment: BaseUrlChangeFragment() {
     }
 
     fun initView() {
-        labelChangeUrl.text = DbHelper.getString("nopstation.webapi.settings.nopcommerceurl")
-        labelLanguage.text = DbHelper.getString("nopstation.webapi.settings.language")
-        labelCurrency.text = DbHelper.getString("nopstation.webapi.settings.currency")
-        switchTheme.text = DbHelper.getString("nopstation.webapi.settings.darktheme")
+        // to avoid auto keyboard popup
+        focusStealer.requestFocus()
 
-        testUrlBtnFromSettings.text = DbHelper.getString("nopstation.webapi.settings.test")
-        mainUrlBtnFromSettings.text = DbHelper.getString("nopstation.webapi.settings.setdefault")
+        labelChangeUrl.text = DbHelper.getString(Const.SETTINGS_URL)
+        labelLanguage.text = DbHelper.getString(Const.SETTINGS_LANGUAGE)
+        labelCurrency.text = DbHelper.getString(Const.SETTINGS_CURRENCY)
+        switchTheme.text = DbHelper.getString(Const.SETTINGS_THEME)
+
+        testUrlBtnFromSettings.text = DbHelper.getString(Const.SETTINGS_BTN_TEST)
+        mainUrlBtnFromSettings.text = DbHelper.getString(Const.SETTINGS_BTN_SET_DEFAULT)
     }
 
     private fun setLiveDataListeners()
@@ -84,6 +86,19 @@ class SettingsFragment: BaseUrlChangeFragment() {
             currencyCardView?.visibility = View.VISIBLE
         })
 
+        languageViewModel.isLanguageLoaded.observe(viewLifecycleOwner, Observer { loaded ->
+
+            if(languageId!=-1 && loaded.getContentIfNotHandled() == true) {
+                "lang_".showLog("Download success? ${loaded.peekContent()}")
+
+                changeLanguage(languageId)
+            }
+        })
+
+        languageViewModel.showLoader.observe(viewLifecycleOwner, Observer { show ->
+            if(show.getContentIfNotHandled() == true) blockingLoader.showDialog()
+            else blockingLoader.hideDialog()
+        })
     }
 
     private fun setLanguageDropdown(languageNavSelector: LanguageNavSelector)
@@ -107,7 +122,7 @@ class SettingsFragment: BaseUrlChangeFragment() {
 
             val currentLanguageName = prefObject.getPrefs(PrefSingleton.CURRENT_LANGUAGE)
 
-            nameList.add("Current Language : " +  prefObject.getPrefs(PrefSingleton.CURRENT_LANGUAGE))
+            nameList.add(prefObject.getPrefs(PrefSingleton.CURRENT_LANGUAGE))
 
             for (data in availableLanguages)
             {
@@ -143,7 +158,7 @@ class SettingsFragment: BaseUrlChangeFragment() {
 
             val currentCurrencyName = prefObject.getPrefs(PrefSingleton.CURRENT_CURRENCY)
 
-            nameList.add("Current Currency : " +  prefObject.getPrefs(PrefSingleton.CURRENT_CURRENCY))
+            nameList.add(prefObject.getPrefs(PrefSingleton.CURRENT_CURRENCY))
 
             for (currency in availableCurrencies)
             {
@@ -178,9 +193,10 @@ class SettingsFragment: BaseUrlChangeFragment() {
                 {
                     currencyCode = languageNameList[position - 1]
 
-                    val languageId = languageIdList[position - 1]
+                    languageId = languageIdList[position - 1]
 
-                    changeLanguage(languageId)
+                    // download language strings
+                    languageViewModel.downloadLanguage(languageId)
                 }
             }
 
@@ -248,9 +264,10 @@ class SettingsFragment: BaseUrlChangeFragment() {
         }
         else
             toast("Error Changing Language")
-        
+
 
     }
+
     private fun changeCurrency(currencyId : Int)
     {
         currencyGetResponse?.let {

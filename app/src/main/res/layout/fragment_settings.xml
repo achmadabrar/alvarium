@@ -8,6 +8,14 @@
     android:background="@color/settings_fragment_bg"
     android:animateLayoutChanges="true">
 
+    <!--focusStealer, to avoid EditTexts grabbing focus-->
+    <View
+        android:id="@+id/focusStealer"
+        android:layout_width="0px"
+        android:layout_height="0px"
+        android:focusable="true"
+        android:focusableInTouchMode="true" />
+
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -157,6 +165,7 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/currencyCardView"
                 android:layout_marginTop="15dp"
+                android:layout_marginBottom="10dp"
                 app:cardBackgroundColor="@color/settings_card_bg"
                 app:cardCornerRadius="5dp"
                 android:visibility="gone"
