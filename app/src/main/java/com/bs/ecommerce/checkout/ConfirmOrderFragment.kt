@@ -24,7 +24,7 @@ class ConfirmOrderFragment : BaseCheckoutNavigationFragment() {
 
     private lateinit var clickListener : ItemClickListener<CartProduct>
 
-    override fun getFragmentTitle() = R.string.title_shopping_cart
+    override fun getFragmentTitle() = DbHelper.getString(Const.SHOPPING_CART_TITLE)
 
     override fun getLayoutId(): Int = R.layout.fragment_confirm_order
 
