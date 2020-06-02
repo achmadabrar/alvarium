@@ -78,13 +78,13 @@ class CartFragment : BaseFragment() {
                 {
                     cartRootLayout?.visibility = View.VISIBLE
 
-                    tvTotalItem?.text = "${updateCartItemCounter(cartRootData.cart.items)} ${DbHelper.getString(Const.ITEMS)}"
+                    tvTotalItem?.text = DbHelper.getStringWithNumber(Const.ITEMS, updateCartItemCounter(cartRootData.cart.items))
 
                     setData(cartRootData)
                 }
                 else
                 {
-                    toast(getString(R.string.cart_empty))
+                    toast(DbHelper.getString(Const.CART_EMPTY))
                     requireActivity().supportFragmentManager.popBackStackImmediate()
                 }
             })
@@ -93,7 +93,6 @@ class CartFragment : BaseFragment() {
 
 
     }
-
 
     private fun setData(cartRootData: CartRootData)
     {
@@ -153,7 +152,7 @@ class CartFragment : BaseFragment() {
                     val appliedCode = appliedDiscountsWithCodes[0].couponCode
 
                     discountKey?.text = "${getString(R.string.discount)} ($appliedCode)"
-                    appliedDiscountText?.text = "${getString(R.string.entered_code)} $appliedCode"
+                    appliedDiscountText?.text = DbHelper.getStringWithNumber(Const.ENTERED_COUPON_CODE, appliedCode)
 
                     removeDiscountButton?.setOnClickListener {
                         (viewModel as CartViewModel).removeCouponVM(appliedDiscountsWithCodes[0].id, appliedCode, model)
@@ -183,10 +182,12 @@ class CartFragment : BaseFragment() {
 
                     val appliedCode = cartRootData.orderTotals.giftCards!![0].couponCode
 
-                    appliedGiftCardCodeText?.text = "${getString(R.string.entered_code)} $appliedCode"
+                    appliedGiftCardCodeText?.text = DbHelper.getStringWithNumber(Const.ENTERED_COUPON_CODE, appliedCode!!)
+
+
 
                     removeGiftCardButton?.setOnClickListener {
-                        (viewModel as CartViewModel).removeGiftCardVM(cartRootData.orderTotals.giftCards!![0].id!!.toInt(), appliedCode!!, model)
+                        (viewModel as CartViewModel).removeGiftCardVM(cartRootData.orderTotals.giftCards!![0].id!!.toInt(), appliedCode, model)
                     }
                 }
                 else

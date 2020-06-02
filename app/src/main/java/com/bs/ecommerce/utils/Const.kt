@@ -95,38 +95,72 @@ class Const {
         val COMMON_YES = "common.yes"
         val COMMON_NO = "common.no"
 
-        val PREFIX  = ""
 
         //SHOPPING CART
-        val SHOPPING_CART_TITLE = "${PREFIX}pagetitle.shoppingcart"
+        val SHOPPING_CART_TITLE = "pagetitle.shoppingcart"
 
-        val PRODUCTS = "${PREFIX}shoppingcart.product(s)"
-        val ITEMS = "${PREFIX}shoppingcart.mini.items"
-        val ENTER_YOUR_COUPON = "${PREFIX}shoppingcart.discountcouponcode.tooltip"
-        val ENTER_GIFT_CARD = "${PREFIX}shoppingcart.giftcardcouponcode.tooltip"
+        val PRODUCTS = "shoppingcart.product(s)"
+        val ITEMS = "shoppingcart.mini.items"
+        val ENTER_YOUR_COUPON = "shoppingcart.discountcouponcode.tooltip"
+        val ENTER_GIFT_CARD = "shoppingcart.giftcardcouponcode.tooltip"
 
-        val APPLY_COUPON = "${PREFIX}shoppingcart.discountcouponcode.button"
-        val ADD_GIFT_CARD = "${PREFIX}shoppingcart.giftcardcouponcode.button"
+        val APPLY_COUPON = "shoppingcart.discountcouponcode.button"
+        val ADD_GIFT_CARD = "shoppingcart.giftcardcouponcode.button"
 
-        val SUB_TOTAL = "${PREFIX}shoppingcart.totals.subtotal"
-        val SHIPPING = "${PREFIX}shoppingcart.totals.shipping"
-        val DISCOUNT = "${PREFIX}shoppingcart.totals.subtotaldiscount"
-        val TAX = "${PREFIX}shoppingcart.totals.tax"
-        val TOTAL = "${PREFIX}shoppingcart.totals.ordertotal"
+        val ENTERED_COUPON_CODE = "shoppingcart.discountcouponcode.currentcode"
 
-        val CHECKOUT = "${PREFIX}checkout.button"
+        val SUB_TOTAL = "shoppingcart.totals.subtotal"
+        val SHIPPING = "shoppingcart.totals.shipping"
+        val DISCOUNT = "shoppingcart.totals.subtotaldiscount"
+        val TAX = "shoppingcart.totals.tax"
+        val TOTAL = "shoppingcart.totals.ordertotal"
+
+        val CART_EMPTY = "shoppingcart.cartisempty"
+        val CHECKOUT = "checkout.button"
 
 
 
-        val CALCULATED_DURING_CHECKOUT = "${PREFIX}shoppingcart.totals.calculatedduringcheckout"
+        val CALCULATED_DURING_CHECKOUT = "shoppingcart.totals.calculatedduringcheckout"
 
 
 
         //CHECKOUT
-        val ADDRESS_TAB = "${PREFIX}checkout.progress.address"
-        val SHIPPING_TAB = "${PREFIX}checkout.progress.shipping"
-        val PAYMENT_TAB = "${PREFIX}checkout.progress.payment"
-        val CONFIRM_TAB = "${PREFIX}checkout.progress.confirm"
+        val ADDRESS_TAB = "checkout.progress.address"
+        val SHIPPING_TAB = "checkout.progress.shipping"
+        val PAYMENT_TAB = "checkout.progress.payment"
+        val CONFIRM_TAB = "checkout.progress.confirm"
+
+        val BILLING_ADDRESS_TAB = "checkout.billingaddress"
+        val SHIPPING_ADDRESS_TAB = "checkout.shippingaddress"
+
+        val SHIP_TO_SAME_ADDRESS = "checkout.shiptosameaddress"
+
+
+        val NEW_ADDRESS = "checkout.newaddress"
+
+        val FIRST_NAME = "address.fields.firstname"
+        val LAST_NAME = "address.fields.lastname"
+        val COMPANY = "address.fields.company"
+        val CITY = "address.fields.city"
+        val PHONE = "address.fields.phonenumber"
+        val FAX = "address.fields.fax"
+        val ADDRESS_1 = "address.fields.address1"
+        val ADDRESS_2 = "address.fields.address2"
+        val EMAIL = "address.fields.email"
+
+        val SELECT_COUNTRY = "address.selectcountry"
+
+        val SELECT_STATE = "address.selectstate"
+
+        val STATE_PROVINCE = "address.fields.stateprovince"
+        val ZIP_CODE = "address.fields.zippostalcode"
+
+        val STREET_ADDRESS = "account.fields.streetaddress"
+        val STREET_ADDRESS_2 = "account.fields.streetaddress2"
+
+        val IS_REQUIRED = "nopstation.webapi.common.isrequired"
+
+        val CONTINUE = "common.continue"
     }
 
 }
