@@ -63,7 +63,8 @@
         android:id="@+id/etStateProvince"
         style="@style/RoundedEditText"
         android:hint="@string/reg_hint_state"
-        android:inputType="textCapWords" />
+        android:inputType="textCapWords"
+        android:visibility="gone"/>
 
     <EditText
         android:id="@+id/etCity"

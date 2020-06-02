@@ -161,7 +161,7 @@ fun Activity.hideKeyboard(): Boolean {
     return false
 }
 
-fun EditText?.showOrHideOrRequired(isEnabledParam: Boolean = false, isRequired: Boolean = false, value: String? = null)
+fun EditText?.showOrHideOrRequired(isEnabledParam: Boolean = false, isRequired: Boolean = false, value: String? = null, hintText :String? = null)
 {
     if(this != null)
     {
@@ -175,6 +175,9 @@ fun EditText?.showOrHideOrRequired(isEnabledParam: Boolean = false, isRequired: 
 
         if(value != null && value.isNotEmpty())
             this.setText(value)
+
+        if(hint != null)
+            this.hint = hintText
     }
 
 

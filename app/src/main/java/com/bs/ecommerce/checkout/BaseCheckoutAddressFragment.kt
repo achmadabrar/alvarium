@@ -1,16 +1,24 @@
 package com.bs.ecommerce.checkout
 
 import android.view.View
-import android.widget.*
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
+import android.widget.EditText
+import android.widget.RelativeLayout
 import androidx.lifecycle.Observer
 import com.bs.ecommerce.R
 import com.bs.ecommerce.base.BaseViewModel
-import com.bs.ecommerce.checkout.model.data.*
-import com.bs.ecommerce.utils.*
+import com.bs.ecommerce.checkout.model.data.AddressModel
+import com.bs.ecommerce.checkout.model.data.AvailableCountry
+import com.bs.ecommerce.db.DbHelper
+import com.bs.ecommerce.utils.Const
+import com.bs.ecommerce.utils.isEmailValid
+import com.bs.ecommerce.utils.showOrHideOrRequired
+import com.bs.ecommerce.utils.toast
 import kotlinx.android.synthetic.main.address_form.*
 import kotlinx.android.synthetic.main.fragment_base_billing_adddress.*
 import kotlinx.android.synthetic.main.fragment_billing_address.*
-import java.util.logging.Handler
+import kotlinx.android.synthetic.main.ll_cart_title.*
 
 
 open class BaseCheckoutAddressFragment : BaseCheckoutNavigationFragment()
@@ -43,7 +51,12 @@ open class BaseCheckoutAddressFragment : BaseCheckoutNavigationFragment()
 
             stateListLD.observe(viewLifecycleOwner, Observer { stateList ->
 
-                stateSpinner?.adapter = createSpinnerAdapter(stateList.map { it.name })
+                val stateListToShow= mutableListOf<String>()
+                stateListToShow.add(DbHelper.getString(Const.SELECT_STATE))
+
+                stateListToShow.addAll(stateList.map { it.name } as MutableList<String>)
+
+                stateSpinner?.adapter = createSpinnerAdapter(stateListToShow)
 
                 stateSpinner?.onItemSelectedListener = object : AdapterView.OnItemSelectedListener
                 {
@@ -58,7 +71,21 @@ open class BaseCheckoutAddressFragment : BaseCheckoutNavigationFragment()
                 stateSpinnerLayout?.visibility = View.VISIBLE
             })
         }
+        setLanguageStrings()
     }
+
+    private fun setLanguageStrings()
+    {
+        addressTabLayout?.getTabAt(CheckoutConstants.BILLING_ADDRESS_TAB)?.text = DbHelper.getString(Const.BILLING_ADDRESS_TAB)
+        addressTabLayout?.getTabAt(CheckoutConstants.SHIPPING_ADDRESS_TAB)?.text = DbHelper.getString(Const.SHIPPING_ADDRESS_TAB)
+
+        shipToSameAddressCheckBox?.text = DbHelper.getString(Const.SHIP_TO_SAME_ADDRESS)
+
+        btnContinue?.text = DbHelper.getString(Const.CONTINUE)
+
+    }
+
+
 
     protected fun createNewAddressLayout(address: AddressModel)
     {
@@ -77,7 +104,7 @@ open class BaseCheckoutAddressFragment : BaseCheckoutNavigationFragment()
     {
         val addressList = mutableListOf<String>()
         addressList.addAll(existingAddresses.map { "${it.firstName}, ${it.lastName}, ${it.address1},${it.city},${it.countryName}" })
-        addressList.add(getString(R.string.new_address))
+        addressList.add(DbHelper.getString(Const.NEW_ADDRESS))
 
         existingAddressSpinner?.adapter = createSpinnerAdapter(addressList)
 
@@ -145,30 +172,35 @@ open class BaseCheckoutAddressFragment : BaseCheckoutNavigationFragment()
         with(newAddress)
         {
 
-            etFirstName?.showOrHideOrRequired(isEnabledParam = true, isRequired =   false, value = firstName)
+            etFirstName?.showOrHideOrRequired(isEnabledParam = true, isRequired =   false, value = firstName,
+                hintText = DbHelper.getString(Const.FIRST_NAME))
 
-            etLastName?.showOrHideOrRequired(isEnabledParam = true, isRequired =   false, value = lastName)
+            etLastName?.showOrHideOrRequired(isEnabledParam = true, isRequired =   false, value = lastName,
+                    hintText = DbHelper.getString(Const.LAST_NAME))
 
-            etEmail?.showOrHideOrRequired(isEnabledParam = true, isRequired =   true, value = email)
+            etEmail?.showOrHideOrRequired(isEnabledParam = true, isRequired =   true, value = email,
+                hintText = DbHelper.getString(Const.EMAIL))
 
-            etCompanyName?.showOrHideOrRequired(isEnabledParam = companyEnabled, isRequired =   companyRequired)
+            etCompanyName?.showOrHideOrRequired(isEnabledParam = companyEnabled, isRequired =   companyRequired,
+                hintText = DbHelper.getString(Const.COMPANY))
 
-            etStateProvince?.showOrHideOrRequired(isEnabledParam = stateProvinceEnabled, isRequired =   false)
+            etCity?.showOrHideOrRequired(isEnabledParam = cityEnabled, isRequired =   cityRequired,
+                hintText = DbHelper.getString(Const.CITY))
 
-            etCity?.showOrHideOrRequired(isEnabledParam = cityEnabled, isRequired =   cityRequired)
+            etStreetAddress?.showOrHideOrRequired(isEnabledParam = streetAddressEnabled, isRequired =   streetAddressRequired,
+                hintText = DbHelper.getString(Const.STREET_ADDRESS))
 
-            etStreetAddress?.showOrHideOrRequired(isEnabledParam = streetAddressEnabled, isRequired =   streetAddressRequired)
+            etStreetAddress2?.showOrHideOrRequired(isEnabledParam = streetAddress2Enabled, isRequired =   streetAddress2Required,
+                hintText = DbHelper.getString(Const.STREET_ADDRESS_2))
 
-            etStreetAddress2?.showOrHideOrRequired(isEnabledParam = streetAddress2Enabled, isRequired =   streetAddress2Required)
+            etZipCode?.showOrHideOrRequired(isEnabledParam = zipPostalCodeEnabled, isRequired =   zipPostalCodeRequired,
+                hintText = DbHelper.getString(Const.ZIP_CODE))
 
-            etZipCode?.showOrHideOrRequired(isEnabledParam = zipPostalCodeEnabled, isRequired =   zipPostalCodeRequired)
+            etPhone?.showOrHideOrRequired(isEnabledParam = phoneEnabled, isRequired =   phoneRequired,
+                hintText = DbHelper.getString(Const.PHONE))
 
-            etPhone?.showOrHideOrRequired(isEnabledParam = phoneEnabled, isRequired =   phoneRequired)
-
-            etFax?.showOrHideOrRequired(isEnabledParam = faxEnabled, isRequired =   faxRequired)
-
-            etZipCode?.showOrHideOrRequired(isEnabledParam = zipPostalCodeEnabled, isRequired =   zipPostalCodeRequired)
-
+            etFax?.showOrHideOrRequired(isEnabledParam = faxEnabled, isRequired =   faxRequired,
+                hintText = DbHelper.getString(Const.FAX))
 
         }
 
@@ -182,7 +214,7 @@ open class BaseCheckoutAddressFragment : BaseCheckoutNavigationFragment()
         if(isRequired)
         {
             isValidInfo = false
-            toast("${editText.hint} ${getString(R.string.reg_hint_is_required)}" )
+            toast("${editText.hint} ${DbHelper.getString(Const.IS_REQUIRED)}" )
         }
         else
             isValidInfo = true
@@ -223,7 +255,7 @@ open class BaseCheckoutAddressFragment : BaseCheckoutNavigationFragment()
             if(countyRequired && countryIdByForm.isEmpty())
             {
                 isValidInfo = false
-                toast("Country ${getString(R.string.reg_hint_is_required)}" )
+                toast("Country ${DbHelper.getString(Const.IS_REQUIRED)}" )
             }
 
             stateProvinceId = stateProvinceIdByForm

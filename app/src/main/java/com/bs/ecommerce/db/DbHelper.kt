@@ -19,5 +19,9 @@ class DbHelper {
 
             return temp?.value ?: key
         }
+        fun getStringWithNumber(key: String, number: Int): String = getString(key).replace("{0}", number.toString())
+
+        fun getStringWithNumber(key: String, number: String): String = getString(key).replace("{0}", number)
+
     }
 }
