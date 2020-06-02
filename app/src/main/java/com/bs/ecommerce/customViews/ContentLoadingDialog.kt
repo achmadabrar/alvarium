@@ -6,6 +6,7 @@ import android.view.View
 import android.view.Window
 import com.bs.ecommerce.R
 import com.bs.ecommerce.db.DbHelper
+import com.bs.ecommerce.utils.Const
 import kotlinx.android.synthetic.main.custom_loading_layout.view.*
 import org.jetbrains.anko.layoutInflater
 
@@ -17,7 +18,7 @@ class ContentLoadingDialog(private val context: Context) {
     fun showDialog() {
 
         val view: View = context.layoutInflater.inflate(R.layout.custom_loading_layout, null, false)
-        view.tvPleaseWait?.text = DbHelper.getString("common.pleasewait")
+        view.tvPleaseWait?.text = DbHelper.getString(Const.COMMON_PLEASE_WAIT)
 
         dialog = Dialog(context)
         dialog?.requestWindowFeature(Window.FEATURE_NO_TITLE)

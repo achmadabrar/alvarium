@@ -16,8 +16,19 @@ import com.bs.ecommerce.utils.showLog
 class LanguageLoaderViewModel: BaseViewModel() {
 
     var isLanguageLoaded = MutableLiveData<Boolean>()
+    var showLoader = MutableLiveData<Boolean>()
 
     fun downloadLanguage(languageId: Int?) {
+        showLoader.value = true
+
+        if(languageId!=null) {
+            getLanguageResourceById(languageId)
+        } else {
+            getLanguageIdFromAppSettings()
+        }
+    }
+
+    private fun getLanguageIdFromAppSettings() {
 
         MainModelImpl(MyApplication.mAppContext!!).getAppLandingSettings(
             object : RequestCompleteListener<AppLandingSettingResponse> {
@@ -27,42 +38,50 @@ class LanguageLoaderViewModel: BaseViewModel() {
                     val id = data.data.languageNavSelector.currentLanguageId
                     "lang_".showLog("Language ID: $id")
 
-                    StringResourceModelImpl().getStringResource(
-                        id,
-                        object : RequestCompleteListener<StringResourceResponse> {
-                            override fun onRequestSuccess(data: StringResourceResponse) {
-                                // TODO save to local DB. delete previous one
-                                // val temp = mutableListOf<StrResource>()
-                                AppDatabase.getInstance().deleteAllStrings()
-
-                                for(i in data.stringResource) {
-                                    //temp.add(StrResource(i.key, i.value, id))
-                                    AppDatabase.getInstance().insertString(
-                                        StrResource(
-                                            i.key,
-                                            i.value,
-                                            id
-                                        )
-                                    )
-                                }
-
-                                DbHelper.currentLanguageId = id
-
-                                // AppDatabase.getInstance().stringDao().insertAll(temp)
-
-                                isLanguageLoaded.value = true
-                            }
-
-                            override fun onRequestFailed(errorMessage: String) {
-                                isLanguageLoaded.value = false
-                            }
-
-                        })
+                    getLanguageResourceById(id)
                 }
 
                 override fun onRequestFailed(errorMessage: String) {
                     isLanguageLoaded.value = false
+                    showLoader.value = false
                 }
+            })
+    }
+
+    private fun getLanguageResourceById(id: Int) {
+
+        StringResourceModelImpl().getStringResource(
+            id,
+            object : RequestCompleteListener<StringResourceResponse> {
+                override fun onRequestSuccess(data: StringResourceResponse) {
+                    // TODO save to local DB. delete previous one
+                    // val temp = mutableListOf<StrResource>()
+                    AppDatabase.getInstance().deleteAllStrings()
+
+                    for(i in data.stringResource) {
+                        //temp.add(StrResource(i.key, i.value, id))
+                        AppDatabase.getInstance().insertString(
+                            StrResource(
+                                i.key,
+                                i.value,
+                                id
+                            )
+                        )
+                    }
+
+                    DbHelper.currentLanguageId = id
+
+                    // AppDatabase.getInstance().stringDao().insertAll(temp)
+
+                    isLanguageLoaded.value = true
+                    showLoader.value = false
+                }
+
+                override fun onRequestFailed(errorMessage: String) {
+                    isLanguageLoaded.value = false
+                    showLoader.value = false
+                }
+
             })
     }
 }
