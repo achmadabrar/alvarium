@@ -8,10 +8,12 @@ import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.customview.customView
 import com.bs.ecommerce.R
 import com.bs.ecommerce.base.BaseActivity
+import com.bs.ecommerce.db.DbHelper
 import com.bs.ecommerce.more.model.TopicModel
 import com.bs.ecommerce.more.model.TopicModelImpl
 import com.bs.ecommerce.networking.Api
 import com.bs.ecommerce.utils.AcceptPolicyPreference
+import com.bs.ecommerce.utils.Const
 import com.bs.ecommerce.utils.MyApplication
 import com.bs.ecommerce.utils.showLog
 
@@ -60,11 +62,11 @@ abstract class PrivacyPolicyDialogActivity : BaseActivity()
 
         MaterialDialog(this).show {
 
-            title(null, "Please Read This Before Continue")
+            title(null, DbHelper.getString(Const.READ_BEFORE_CONTINUE))
 
             customView(null, webViewDialog, true)
 
-            positiveButton(null, "I Read & I Accept") {
+            positiveButton(null, DbHelper.getString(Const.I_READ_I_ACCEPT)) {
 
                 prefManager.isFirstTimeLaunch = false
 

@@ -360,6 +360,14 @@ class CartFragment : BaseFragment() {
                     tvShippingCharge?.showTextPendingCalculationOnCheckout()
             } ?: tvShippingCharge?.showTextPendingCalculationOnCheckout()
 
+            if (willEarnRewardPoints != null && willEarnRewardPoints != 0)
+            {
+                pointsLayout?.visibility = View.VISIBLE
+                tvPoints?.text = DbHelper.getStringWithNumber(Const.POINTS, willEarnRewardPoints!!)
+                underDiscountDivider?.visibility = View.VISIBLE
+            }
+            else
+                pointsLayout?.visibility = View.GONE
 
         }
     }

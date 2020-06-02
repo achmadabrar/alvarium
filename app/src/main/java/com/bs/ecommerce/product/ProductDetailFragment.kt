@@ -66,8 +66,8 @@ class ProductDetailFragment : BaseFragment(), View.OnClickListener {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        if(arguments?.getLong(PRODUCT_ID)==null) {
-            toast(DbHelper.getString("nopstation.webapi.sliders.fields.entityid.invalidproduct"))
+        if(arguments?.getLong(PRODUCT_ID) == null) {
+            toast(DbHelper.getString(Const.INVALID_PRODUCT))
             requireActivity().supportFragmentManager.popBackStack()
             return
         }

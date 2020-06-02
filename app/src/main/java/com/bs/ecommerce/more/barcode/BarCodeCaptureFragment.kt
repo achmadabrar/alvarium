@@ -60,7 +60,7 @@ class BarCodeCaptureFragment : BaseFragment()
             if(result.text.toString().isNumeric())
                 replaceFragmentSafely(ProductDetailFragment.newInstance(result.text.toLong(), null))
             else
-                toast(getString(R.string.invalid_barcode))
+                toast(DbHelper.getString(Const.INVALID_PRODUCT))
         }
 
         override fun possibleResultPoints(resultPoints: List<ResultPoint>) {}
@@ -74,7 +74,7 @@ class BarCodeCaptureFragment : BaseFragment()
         barcodeView.initializeFromIntent(activity?.intent)
         barcodeView.decodeContinuous(callback)
 
-        barcodeView.setStatusText(getString(R.string.place_barcode_in_camera))
+        //barcodeView.setStatusText(getString(R.string.place_barcode_in_camera))
 
         beepManager = BeepManager(activity)
         beepManager?.isVibrateEnabled = true

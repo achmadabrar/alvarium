@@ -219,12 +219,21 @@ abstract class BaseFragment : Fragment()
             WindowManager.LayoutParams.MATCH_PARENT,
             WindowManager.LayoutParams.MATCH_PARENT)
 
+
+        val tvNoInternet = dialog.findViewById<View>(R.id.tvNoInternet) as TextView
+        tvNoInternet.text = DbHelper.getString(Const.NO_INTERNET)
+
         val buttonSetting = dialog.findViewById<View>(R.id.button_setting) as TextView
-        val buttonTryAgain = dialog.findViewById<View>(R.id.linearTryAgain) as LinearLayout
+        buttonSetting.text = DbHelper.getString(Const.SETTINGS)
+
+        val buttonTryAgain = dialog.findViewById<View>(R.id.btnTryAgain) as TextView
+        buttonTryAgain.text = DbHelper.getString(Const.TRY_AGAIN)
+
+        val tryAgainLayout = dialog.findViewById<View>(R.id.linearTryAgain) as LinearLayout
 
         buttonSetting.setOnClickListener { sentWifiSettings(activity) }
 
-        buttonTryAgain.setOnClickListener {
+        tryAgainLayout.setOnClickListener {
 
             dialog.dismiss()
             // set delay for smooth animation

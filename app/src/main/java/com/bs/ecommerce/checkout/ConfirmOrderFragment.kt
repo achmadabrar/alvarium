@@ -114,7 +114,7 @@ class ConfirmOrderFragment : BaseCheckoutNavigationFragment() {
     {
         with(address)
         {
-            return "${DbHelper.getString(Const.EMAIL)}: $email\n${DbHelper.getString(Const.PHONE)}: $phoneNumber \n$address1 \n$address2 \n$city\n$countryName"
+            return "${DbHelper.getString(Const.EMAIL)}: $email\n${DbHelper.getString(Const.PHONE)}: $phoneNumber\n$address1\n$address2\n$city\n$countryName"
         }
     }
 
@@ -162,12 +162,12 @@ class ConfirmOrderFragment : BaseCheckoutNavigationFragment() {
 
             shippingMethodCard.tvCardTitle.text = DbHelper.getString(Const.SHIPPING_METHOD)
             shippingMethodCard.tvCardDetails.visibility = View.GONE
-            shippingMethodCard.tvCardDetails2.text = orderReviewData.shippingMethod ?: "No Shipping Method"
+            shippingMethodCard.tvCardDetails2.text = orderReviewData.shippingMethod ?: ""
             shippingMethodCard.ivCardThumb.visibility = View.VISIBLE
 
             paymentMethodCard.tvCardTitle.text = DbHelper.getString(Const.PAYMENT_METHOD)
             paymentMethodCard.tvCardDetails.visibility = View.GONE
-            paymentMethodCard.tvCardDetails2.text = orderReviewData.paymentMethod ?: "No Payment Method"
+            paymentMethodCard.tvCardDetails2.text = orderReviewData.paymentMethod ?: ""
             paymentMethodCard.ivCardThumb.visibility = View.VISIBLE
         }
     }

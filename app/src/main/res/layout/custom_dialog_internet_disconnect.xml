@@ -13,6 +13,7 @@
         android:orientation="vertical">
 
         <TextView
+            android:id="@+id/tvNoInternet"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
@@ -40,7 +41,7 @@
                 android:id="@+id/linearTryAgain"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginRight="10dp"
+                android:layout_marginEnd="10dp"
                 android:background="@drawable/rounded_button_red_background"
                 android:gravity="center"
                 android:padding="8dp">
@@ -51,9 +52,10 @@
                     android:src="@drawable/ic_restart" />-->
 
                 <TextView
+                    android:id="@+id/btnTryAgain"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="5dp"
+                    android:layout_marginStart="5dp"
                     android:text="Try Again"
                     android:textColor="@color/white" />
 
@@ -63,7 +65,7 @@
                 android:id="@+id/button_setting"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
+                android:layout_marginStart="10dp"
                 android:background="@drawable/rounded_button_red_background"
                 android:gravity="center"
                 android:padding="8dp"

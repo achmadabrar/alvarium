@@ -16,6 +16,7 @@ import com.afollestad.materialdialogs.MaterialDialog
 import com.bs.ecommerce.R
 import com.bs.ecommerce.auth.login.LoginFragment
 import com.bs.ecommerce.cart.CartFragment
+import com.bs.ecommerce.db.DbHelper
 import com.bs.ecommerce.main.MainActivity
 import com.bs.ecommerce.main.model.data.AppLandingData
 import com.bs.ecommerce.networking.NetworkConstants
@@ -291,17 +292,17 @@ abstract class BaseActivity : AppCompatActivity()
         var msg = ""
 
         if(canHaveOrderId)
-            msg = getString(R.string.order_number_is) + " " + orderId
+            msg =  "${DbHelper.getString(Const.ORDER_PROCESSED)}\n${DbHelper.getString(Const.ORDER_NUMBER)}: $orderId"
         else
-            msg = "Press Ok to Exit"
+            msg = DbHelper.getString(Const.ORDER_PROCESSED)
 
         MaterialDialog(this).show {
 
-            title(R.string.your_order_is_confirm)
+            title(null, DbHelper.getString(Const.THANK_YOU))
 
             message(null, msg)
 
-            positiveButton(R.string.ok) {
+            positiveButton(null, DbHelper.getString(Const.CONTINUE)) {
                 finish()
                 startActivity(Intent(applicationContext, MainActivity::class.java))
             }

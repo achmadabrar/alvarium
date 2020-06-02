@@ -230,6 +230,22 @@ class Const {
         val REGISTER_BUTTON = "account.register.button"
         val SAVE_BUTTON = "common.save"
         val CONFIRM_BUTTON = "checkout.confirmbutton"
+
+
+        // Barcode
+        val INVALID_PRODUCT = "nopstation.webapi.sliders.fields.entityid.invalidproduct"
+
+        //Order Complete Dialog
+
+        val ORDER_PROCESSED = "checkout.yourorderhasbeensuccessfullyprocessed"
+        val THANK_YOU = "checkout.thankyou"
+
+        val NO_INTERNET = "nopstation.webapi.nointernet"
+        val SETTINGS = "plugin.nopstation.theme.crimson.settings"
+        val TRY_AGAIN = "nopstation.webapi.tryagain"
+
+        val READ_BEFORE_CONTINUE = "nopstation.webapi.readbeforecontinue"
+        val I_READ_I_ACCEPT = "nopstation.webapi.accept"
     }
 
 }

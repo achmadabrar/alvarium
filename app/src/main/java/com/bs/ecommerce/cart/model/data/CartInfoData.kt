@@ -53,8 +53,8 @@ data class OrderReviewData(
 )
 
 data class OrderReviewAddressModel(
-    @SerializedName("Address1") var address1: Any = Any(),
-    @SerializedName("Address2") var address2: Any = Any(),
+    @SerializedName("Address1") var address1: String? = "",
+    @SerializedName("Address2") var address2: String? = "",
     @SerializedName("AvailableCountries") var availableCountries: List<Any> = listOf(),
     @SerializedName("AvailableStates") var availableStates: List<Any> = listOf(),
     @SerializedName("City") var city: Any = Any(),
