@@ -21,7 +21,6 @@ import com.bs.ecommerce.main.MainActivity
 import com.bs.ecommerce.main.model.data.AppLandingData
 import com.bs.ecommerce.networking.NetworkConstants
 import com.bs.ecommerce.utils.*
-import com.ice.restring.Restring
 import java.util.*
 
 
@@ -209,8 +208,6 @@ abstract class BaseActivity : AppCompatActivity()
 
     private fun updateBaseContextLocale(context : Context) : Context
     {
-        var retContext: Context
-
         var preferredLanguage = prefObject.getPrefs(PrefSingleton.CURRENT_LANGUAGE)
 
         if (TextUtils.isEmpty(preferredLanguage))
@@ -232,15 +229,12 @@ abstract class BaseActivity : AppCompatActivity()
             Locale.setDefault(preferredLocale)
         }
 
-        retContext = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+        return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
             updateResourcesLocale(context, locale)
         } else {
             updateResourcesLocaleLegacy(context, locale)
         }
 
-        retContext = Restring.wrapContext(retContext)
-
-        return retContext
     }
 
 
