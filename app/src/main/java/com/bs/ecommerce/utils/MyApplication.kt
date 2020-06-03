@@ -9,8 +9,6 @@ import com.bs.ecommerce.checkout.model.data.CheckoutSaveResponse
 import com.facebook.FacebookSdk
 import com.facebook.appevents.AppEventsLogger
 import com.google.firebase.FirebaseApp
-import com.ice.restring.Restring
-import com.ice.restring.RestringConfig
 import com.pixplicity.easyprefs.library.Prefs
 
 
@@ -38,14 +36,6 @@ class MyApplication : MultiDexApplication()
             .setPrefsName(packageName)
             .setUseDefaultSharedPreference(true)
             .build()
-
-        Restring.init(
-            applicationContext,
-            RestringConfig.Builder()
-                .persist(true) // Set this to false to prevent saving into shared preferences.
-                .stringsLoader(SampleStringsLoader())
-                .build()
-        )
 
         mAppContext = this.applicationContext
     }
