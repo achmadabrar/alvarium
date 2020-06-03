@@ -153,6 +153,7 @@ dependencies {
     //firebase
     implementation 'com.google.firebase:firebase-core:17.4.2'
     implementation 'com.google.firebase:firebase-messaging:20.2.0'
+    implementation 'com.google.firebase:firebase-crashlytics:17.0.0'
 
     // Dynamically change string.xml values
     implementation 'com.ice.restring:restring:1.0.0'
@@ -163,6 +164,7 @@ dependencies {
 }
 
 apply plugin: 'com.google.gms.google-services'
+apply plugin: 'com.google.firebase.crashlytics'
 
 def getNstKey() {
     Properties properties = new Properties()

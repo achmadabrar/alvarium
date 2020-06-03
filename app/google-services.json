@@ -10,6 +10,35 @@
       "client_info": {
         "mobilesdk_app_id": "1:570678951937:android:b2a2f7e5f04d6940634000",
         "android_client_info": {
+          "package_name": "com.bs.ecommerce.nopstation"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "570678951937-59fiama41mk4u7p38aadscpavadbhrnt.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBLQhfDj1meS7hxva5HAyF-FoJm3fC6TpA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "570678951937-59fiama41mk4u7p38aadscpavadbhrnt.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:570678951937:android:0f66c8388e309000634000",
+        "android_client_info": {
           "package_name": "com.bs.ecommerce.nopstationv2"
         }
       },
