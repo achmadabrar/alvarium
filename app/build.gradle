@@ -9,7 +9,7 @@ android {
         nopstation {
             keyAlias 'nopStation'
             keyPassword '159753246'
-            storeFile file('/Users/rarahat/Desktop/BS_Android_Projects/nopstation-kotlin/app/playstore_info/nopstation/keystore.jks')
+            storeFile file('/Users/rarahat/Desktop/NopStation Projects/NopStation_MVVM/app/playstore_info/v2_keystore.jks')
             storePassword '159753246'
         }
     }
