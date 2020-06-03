@@ -101,7 +101,7 @@ class CartFragment : BaseFragment() {
 
         populateDiscountAndGiftCard(cartRootData)
 
-        populateOrderTotal(cartRootData.orderTotals)
+        populateOrderTable(cartRootData.orderTotals)
 
         populateDynamicAttributes(cartRootData.cart.checkoutAttributes)
 
@@ -212,12 +212,6 @@ class CartFragment : BaseFragment() {
         etGiftCode?.hint = DbHelper.getString(Const.ENTER_GIFT_CARD)
         btnAddGiftCode?.text = DbHelper.getString(Const.ADD_GIFT_CARD)
 
-        subTotalKey?.text = DbHelper.getString(Const.SUB_TOTAL)
-        shippingKey?.text = DbHelper.getString(Const.SHIPPING)
-        taxKey?.text = DbHelper.getString(Const.TAX)
-        discountKey?.text = DbHelper.getString(Const.DISCOUNT)
-        totalKey?.text = DbHelper.getString(Const.TOTAL)
-
         btnCheckOut?.text = DbHelper.getString(Const.CHECKOUT)
 
     }
@@ -300,76 +294,6 @@ class CartFragment : BaseFragment() {
     private fun showCheckOutOptionsDialogFragment() {
         val newFragment = GuestCheckoutFragment()
         newFragment.show(requireActivity().supportFragmentManager, "dialog")
-    }
-
-
-
-    private fun populateOrderTotal(orderTotalModel: OrderTotal)
-    {
-        with(orderTotalModel)
-        {
-            tvSubTotal?.text = subTotal
-            tvShippingCharge?.text = shipping
-
-
-            if (displayTax && tax != null)
-            {
-                if (displayTaxRates)
-                    taxRates?.get(0)?.rate?.let { taxKey?.text = "${DbHelper.getString(Const.TAX)} $it%" }
-
-                tvTax?.text = tax
-            }
-            else
-                taxLayout?.visibility = View.GONE
-
-            tvTotal?.text = orderTotal
-
-
-            if (subTotalDiscount != null)
-            {
-                discountLayout?.visibility = View.VISIBLE
-                tvDiscount?.text = subTotalDiscount
-                underDiscountDivider?.visibility = View.VISIBLE
-            }
-            else
-                discountLayout?.visibility = View.GONE
-
-            if (giftCards != null && giftCards!!.isNotEmpty())
-            {
-                giftCardLayout?.visibility = View.VISIBLE
-
-                underGiftCardDivider?.visibility = View.VISIBLE
-
-                val giftCardAdapter = GiftCardAdapter(activity!!, giftCards!!)
-                giftCardRecyclerList?.layoutManager = LinearLayoutManager(activity)
-                giftCardRecyclerList?.adapter = giftCardAdapter
-            }
-            else
-                giftCardLayout?.visibility = View.GONE
-
-            orderTotal?.let {
-
-                if (it.isEmpty())
-                    tvTotal?.showTextPendingCalculationOnCheckout()
-            } ?: tvTotal?.showTextPendingCalculationOnCheckout()
-
-
-            shipping?.let {
-
-                if (it.isEmpty())
-                    tvShippingCharge?.showTextPendingCalculationOnCheckout()
-            } ?: tvShippingCharge?.showTextPendingCalculationOnCheckout()
-
-            if (willEarnRewardPoints != null && willEarnRewardPoints != 0)
-            {
-                pointsLayout?.visibility = View.VISIBLE
-                tvPoints?.text = DbHelper.getStringWithNumber(Const.POINTS, willEarnRewardPoints!!)
-                underDiscountDivider?.visibility = View.VISIBLE
-            }
-            else
-                pointsLayout?.visibility = View.GONE
-
-        }
     }
 
 }

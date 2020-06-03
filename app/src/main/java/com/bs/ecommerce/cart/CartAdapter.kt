@@ -108,7 +108,7 @@ open class CartAdapter(
                 holder?.productName!!.text = productModel.productName
                 holder?.productPrice!!.text = productModel.unitPrice
                 //holder?.productShortdescription!!.visibility = View.GONE
-                holder?.productQuantity!!.text = productModel.quantity.toString()
+
 
                 holder?.productImage?.loadImg(productModel.picture?.imageUrl)
 
@@ -121,6 +121,8 @@ open class CartAdapter(
                     holder?.quantityForCheckout?.visibility = View.VISIBLE
                     holder?.quantityForCheckout?.text = "${DbHelper.getString(Const.QUANTITY)}  ${productModel.quantity}"
                 }
+                else
+                    holder?.productQuantity!!.text = productModel.quantity.toString()
 
                 if(productModel.attributeInfo.isNotEmpty())
                 {

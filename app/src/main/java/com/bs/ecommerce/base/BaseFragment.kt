@@ -20,8 +20,11 @@ import androidx.annotation.LayoutRes
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.bs.ecommerce.R
+import com.bs.ecommerce.cart.GiftCardAdapter
 import com.bs.ecommerce.cart.model.data.CartProduct
+import com.bs.ecommerce.cart.model.data.OrderTotal
 import com.bs.ecommerce.customViews.ContentLoadingDialog
 import com.bs.ecommerce.db.DbHelper
 import com.bs.ecommerce.main.MainActivity
@@ -30,6 +33,7 @@ import com.bs.ecommerce.networking.NetworkUtil
 import com.bs.ecommerce.product.model.data.ProductSummary
 import com.bs.ecommerce.utils.*
 import com.pnikosis.materialishprogress.ProgressWheel
+import kotlinx.android.synthetic.main.table_order_total.*
 
 
 abstract class BaseFragment : Fragment()
@@ -248,6 +252,80 @@ abstract class BaseFragment : Fragment()
     }
     private fun sentWifiSettings(context: Context?) {
         context?.startActivity(Intent(Settings.ACTION_WIFI_SETTINGS))
+    }
+
+
+    protected fun populateOrderTable(orderTotalModel: OrderTotal)
+    {
+        subTotalKey?.text = DbHelper.getString(Const.SUB_TOTAL)
+        shippingKey?.text = DbHelper.getString(Const.SHIPPING)
+        taxKey?.text = DbHelper.getString(Const.TAX)
+        discountKey?.text = DbHelper.getString(Const.DISCOUNT)
+        totalKey?.text = DbHelper.getString(Const.TOTAL)
+
+        with(orderTotalModel)
+        {
+            tvSubTotal?.text = subTotal
+            tvShippingCharge?.text = shipping
+
+
+            if (displayTax && tax != null)
+            {
+                if (displayTaxRates)
+                    taxRates?.get(0)?.rate?.let { taxKey?.text = "${DbHelper.getString(Const.TAX)} $it%" }
+
+                tvTax?.text = tax
+            }
+            else
+                taxLayout?.visibility = View.GONE
+
+            tvTotal?.text = orderTotal
+
+            if (subTotalDiscount != null)
+            {
+                discountLayout?.visibility = View.VISIBLE
+                tvDiscount?.text = subTotalDiscount
+                underDiscountDivider?.visibility = View.VISIBLE
+            }
+            else
+                discountLayout?.visibility = View.GONE
+
+            if (giftCards != null && giftCards!!.isNotEmpty())
+            {
+                giftCardLayout?.visibility = View.VISIBLE
+
+                underGiftCardDivider?.visibility = View.VISIBLE
+
+                val giftCardAdapter = GiftCardAdapter(activity!!, giftCards!!)
+                giftCardRecyclerList?.layoutManager = LinearLayoutManager(activity)
+                giftCardRecyclerList?.adapter = giftCardAdapter
+            }
+            else
+                giftCardLayout?.visibility = View.GONE
+
+            orderTotal?.let {
+
+                if (it.isEmpty())
+                    tvTotal?.showTextPendingCalculationOnCheckout()
+            } ?: tvTotal?.showTextPendingCalculationOnCheckout()
+
+
+            shipping?.let {
+
+                if (it.isEmpty())
+                    tvShippingCharge?.showTextPendingCalculationOnCheckout()
+            } ?: tvShippingCharge?.showTextPendingCalculationOnCheckout()
+
+            if (willEarnRewardPoints != null && willEarnRewardPoints != 0)
+            {
+                pointsLayout?.visibility = View.VISIBLE
+                pointsKey?.text = DbHelper.getString(Const.WILL_EARN)
+                tvPoints?.text = DbHelper.getStringWithNumber(Const.POINTS, willEarnRewardPoints!!)
+                underDiscountDivider?.visibility = View.VISIBLE
+            }
+            else
+                pointsLayout?.visibility = View.GONE
+        }
     }
 
 

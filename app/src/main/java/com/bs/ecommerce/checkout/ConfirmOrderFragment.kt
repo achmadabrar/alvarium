@@ -63,7 +63,6 @@ class ConfirmOrderFragment : BaseCheckoutNavigationFragment() {
     {
         tvProductsTitle?.text = DbHelper.getString(Const.PRODUCTS)
         tvOrderCalculation?.text = DbHelper.getString(Const.ORDER_CALCULATION)
-        pointsKey?.text = DbHelper.getString(Const.WILL_EARN)
         checkoutButton?.text = DbHelper.getString(Const.CONFIRM_BUTTON)
     }
 
@@ -81,7 +80,7 @@ class ConfirmOrderFragment : BaseCheckoutNavigationFragment() {
 
             showOtherViews(getOrderData.data.cart.orderReviewData)
 
-            populateOrderTotal(getOrderData.data.orderTotals)
+            populateOrderTable(getOrderData.data.orderTotals)
 
 
             if(getOrderData.data.selectedCheckoutAttributes.isNotEmpty())
@@ -114,7 +113,16 @@ class ConfirmOrderFragment : BaseCheckoutNavigationFragment() {
     {
         with(address)
         {
-            return "${DbHelper.getString(Const.EMAIL)}: $email\n${DbHelper.getString(Const.PHONE)}: $phoneNumber\n$address1\n$address2\n$city\n$countryName"
+            var address2show = ""
+            address2?.let {  address2show  = "${it}\n" }
+
+            var cityShow = ""
+            city?.let {  cityShow  = "${it}\n" }
+
+            var countryShow = ""
+            countryName?.let {  countryShow  = "${it}\n" }
+
+            return "${DbHelper.getString(Const.EMAIL)}: $email\n${DbHelper.getString(Const.PHONE)}: $phoneNumber\n$address1\n$address2show$cityShow$countryShow"
         }
     }
 
@@ -169,76 +177,6 @@ class ConfirmOrderFragment : BaseCheckoutNavigationFragment() {
             paymentMethodCard.tvCardDetails.visibility = View.GONE
             paymentMethodCard.tvCardDetails2.text = orderReviewData.paymentMethod ?: ""
             paymentMethodCard.ivCardThumb.visibility = View.VISIBLE
-        }
-    }
-
-
-    private fun populateOrderTotal(orderTotalModel: OrderTotal)
-    {
-        with(orderTotalModel)
-        {
-            tvSubTotal?.text = subTotal
-            tvShippingCharge?.text = shipping
-
-
-            if (displayTax && tax != null)
-            {
-                if (displayTaxRates)
-                    taxRates?.get(0)?.rate?.let { taxKey?.text = "${DbHelper.getString(Const.TAX)} $it%" }
-
-                tvTax?.text = tax
-            }
-            else
-                taxLayout?.visibility = View.GONE
-
-            tvTotal?.text = orderTotal
-
-
-            if (orderTotalDiscount != null)
-            {
-                discountLayout?.visibility = View.VISIBLE
-                tvDiscount?.text = orderTotalDiscount
-                underDiscountDivider?.visibility = View.VISIBLE
-            }
-            else
-                discountLayout?.visibility = View.GONE
-
-            if (giftCards != null && giftCards!!.isNotEmpty())
-            {
-                giftCardLayout?.visibility = View.VISIBLE
-
-                underGiftCardDivider?.visibility = View.VISIBLE
-
-                val giftCardAdapter = GiftCardAdapter(activity!!, giftCards!!)
-                giftCardRecyclerList?.layoutManager = LinearLayoutManager(activity)
-                giftCardRecyclerList?.adapter = giftCardAdapter
-            }
-            else
-                giftCardLayout?.visibility = View.GONE
-
-            orderTotal?.let {
-
-                if (it.isEmpty())
-                    tvTotal?.showTextPendingCalculationOnCheckout()
-            } ?: tvTotal?.showTextPendingCalculationOnCheckout()
-
-
-            shipping?.let {
-
-                if (it.isEmpty())
-                    tvShippingCharge?.showTextPendingCalculationOnCheckout()
-            } ?: tvShippingCharge?.showTextPendingCalculationOnCheckout()
-
-
-            if (willEarnRewardPoints != null && willEarnRewardPoints != 0)
-            {
-                pointsLayout?.visibility = View.VISIBLE
-                tvPoints?.text = DbHelper.getStringWithNumber(Const.POINTS, willEarnRewardPoints!!)
-                underDiscountDivider?.visibility = View.VISIBLE
-            }
-            else
-                pointsLayout?.visibility = View.GONE
-
         }
     }
 }
