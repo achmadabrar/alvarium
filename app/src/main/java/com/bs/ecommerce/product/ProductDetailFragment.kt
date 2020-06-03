@@ -176,16 +176,16 @@ class ProductDetailFragment : BaseFragment(), View.OnClickListener {
                         } else {
                             text = product.productPrice.oldPrice
                             paintFlags =
-                                productPriceLayout.tvOriginalPrice?.paintFlags!! or Paint.STRIKE_THRU_TEXT_FLAG
+                                productPriceLayout?.tvOriginalPrice?.paintFlags!! or Paint.STRIKE_THRU_TEXT_FLAG
                         }
                     }
 
                     if (product.addToCart?.customerEntersPrice == true) {
 
-                        productPriceLayout.tvDiscountPrice?.visibility = View.GONE
-                        productPriceLayout.priceInputLl?.visibility = View.VISIBLE
+                        productPriceLayout?.tvDiscountPrice?.visibility = View.GONE
+                        productPriceLayout?.priceInputLl?.visibility = View.VISIBLE
 
-                        productPriceLayout.etPrice?.hint = product.addToCart.customerEnteredPriceRange
+                        productPriceLayout?.etPrice?.hint = product.addToCart.customerEnteredPriceRange
                     }
 
                     //productPriceLayout.tvDiscountPercent.text = "40% Off"

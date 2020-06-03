@@ -208,6 +208,8 @@ class Const {
 
         val ADD_NEW_ADDRESS = "account.customeraddresses.addnew"
 
+        val UPDATED_SUCCESSFULLY = "nopstation.webapi.updated"
+
         val ADDRESS_UPDATED_SUCCESSFULLY = "nopstation.webapi.address.fields.addressupdated"
         val ADDRESS_SAVED_SUCCESSFULLY = "nopstation.webapi.address.fields.addresssaved"
 

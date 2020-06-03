@@ -123,7 +123,7 @@ open class RegisterFragment : ToolbarLogoBaseFragment(), View.OnClickListener
 
                         prefObject.setCustomerInfo(PrefSingleton.CUSTOMER_INFO, oldData)
 
-                        toast(getRegistrationResponse.message ?: getString(R.string.customer_info_updated))
+                        toast(getRegistrationResponse.message ?: DbHelper.getString(Const.UPDATED_SUCCESSFULLY))
 
                         customerInfoUpdate = false
                     }
@@ -294,7 +294,7 @@ open class RegisterFragment : ToolbarLogoBaseFragment(), View.OnClickListener
         if(isRequired)
         {
             isValidInfo = false
-            toast("${editText.hint} ${getString(R.string.reg_hint_is_required)}" )
+            toast("${editText.hint} ${DbHelper.getString(Const.IS_REQUIRED)}" )
         }
 
     }

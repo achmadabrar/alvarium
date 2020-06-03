@@ -8,15 +8,14 @@
     android:addStatesFromChildren="true"
     android:background="@drawable/rounded_background_slight"
     android:backgroundTint="?attr/primaryListItemBg"
+    android:gravity="center"
     android:orientation="vertical">
 
     <androidx.appcompat.widget.AppCompatRadioButton
         android:id="@+id/rb_shippingChoice"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="15dp"
         android:padding="5dp"
-        android:layout_marginStart="5dp"
         android:checked="true"
         android:gravity="center_vertical"
         android:button="@drawable/custom_radio_button"
@@ -29,8 +28,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_marginStart="8dp"
-        android:layout_marginEnd="4dp"
+        android:gravity="center"
         android:textStyle="bold"
         android:textColor="?attr/primaryTextColor"
         tools:text="@string/placeholder" />

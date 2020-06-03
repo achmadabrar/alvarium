@@ -55,8 +55,9 @@
                 android:id="@+id/addressLayout"
                 layout="@layout/item_user_account"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/user_account_section_gap" />
+                android:layout_height="wrap_content" />
+
+           <!-- android:layout_marginBottom="@dimen/user_account_section_gap"-->
 
             <include
                 android:id="@+id/wishListLayout"
@@ -74,15 +75,13 @@
                 android:id="@+id/rewardPointsLayout"
                 layout="@layout/item_user_account"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/user_account_section_gap" />
+                android:layout_height="wrap_content" />
 
             <include
                 android:id="@+id/reviewLayout"
                 layout="@layout/item_user_account"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/user_account_section_gap" />
+                android:layout_height="wrap_content" />
 
             <include
                 android:id="@+id/loginLayout"
