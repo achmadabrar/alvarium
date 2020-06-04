@@ -1,5 +1,6 @@
 package com.bs.ecommerce.more.settings
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.AdapterView
@@ -8,6 +9,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.bs.ecommerce.R
 import com.bs.ecommerce.base.BaseActivity
+import com.bs.ecommerce.checkout.WebViewPaymentActivity
 import com.bs.ecommerce.db.DbHelper
 import com.bs.ecommerce.main.LanguageLoaderViewModel
 import com.bs.ecommerce.main.MainActivity
@@ -267,9 +269,8 @@ class SettingsFragment: BaseUrlChangeFragment() {
         prefObject.setPrefs(PrefSingleton.CURRENT_LANGUAGE, languageBehaviour)
         prefObject.setPrefs(PrefSingleton.CURRENT_LANGUAGE_ID, languageId)
 
-
-        (activity as BaseActivity).setLocale(true)
-
+        requireActivity().finish()
+        startActivity(Intent(requireActivity().applicationContext, MainActivity::class.java))
     }
 
     private fun changeCurrency(currencyId : Int)

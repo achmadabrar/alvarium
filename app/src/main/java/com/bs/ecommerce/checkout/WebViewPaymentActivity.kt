@@ -8,9 +8,11 @@ import android.webkit.WebViewClient
 import androidx.lifecycle.ViewModelProvider
 import com.bs.ecommerce.R
 import com.bs.ecommerce.base.BaseActivity
+import com.bs.ecommerce.db.DbHelper
 import com.bs.ecommerce.main.MainViewModel
 import com.bs.ecommerce.networking.NetworkConstants
 import com.bs.ecommerce.networking.NetworkUtil
+import com.bs.ecommerce.utils.Const
 import com.bs.ecommerce.utils.showLog
 import com.bs.ecommerce.utils.toast
 import kotlinx.android.synthetic.main.activity_payment_toolbar.*
@@ -43,7 +45,7 @@ class WebViewPaymentActivity : BaseActivity()
                 }
                 CheckoutConstants.RedirectToGateway ->
                 {
-                    toolbarTitle?.text = "Online Payment"
+                    toolbarTitle?.text = DbHelper.getString(Const.ONLINE_PAYMENT)
                     setWebView(CheckoutConstants.RedirectUrl)
                 }
             }
