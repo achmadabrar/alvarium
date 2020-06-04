@@ -157,6 +157,8 @@ class Const {
 
 
         //CHECKOUT
+        const val PLEASE_COMPLETE_PREVIOUS_STEP = "nopstation.webapi.checkout.completepreviousstep"
+
         const val ADDRESS_TAB = "checkout.progress.address"
         const val SHIPPING_TAB = "checkout.progress.shipping"
         const val PAYMENT_TAB = "checkout.progress.payment"

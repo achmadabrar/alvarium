@@ -77,13 +77,13 @@ class SettingsFragment: BaseUrlChangeFragment() {
     {
         mainViewModel.appSettingsLD.observe(viewLifecycleOwner, Observer { settings ->
 
-            setLanguageDropdown(settings.peekContent().languageNavSelector)
+            settings.peekContent()?.let {
+                setLanguageDropdown(it.languageNavSelector)
+                setCurrencyDropdown(it.currencyNavSelector)
 
-            setCurrencyDropdown(settings.peekContent().currencyNavSelector)
-
-
-            languageCardView?.visibility = View.VISIBLE
-            currencyCardView?.visibility = View.VISIBLE
+                languageCardView?.visibility = View.VISIBLE
+                currencyCardView?.visibility = View.VISIBLE
+            }
         })
 
         languageViewModel.isLanguageLoaded.observe(viewLifecycleOwner, Observer { loaded ->

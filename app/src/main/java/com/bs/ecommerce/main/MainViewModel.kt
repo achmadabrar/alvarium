@@ -4,6 +4,9 @@ import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import com.bs.ecommerce.checkout.CheckoutViewModel
 import com.bs.ecommerce.common.RequestCompleteListener
+import com.bs.ecommerce.db.AppDatabase
+import com.bs.ecommerce.db.DbHelper
+import com.bs.ecommerce.db.StrResource
 import com.bs.ecommerce.home.homepage.model.HomePageModel
 import com.bs.ecommerce.home.homepage.model.data.HomePageProductResponse
 import com.bs.ecommerce.home.homepage.model.data.SliderData
@@ -31,7 +34,8 @@ class MainViewModel : CheckoutViewModel() {
     var featuredCategoryLD = MutableLiveData<List<CategoryModel>>()
     var imageBannerLD = MutableLiveData<SliderData>()
 
-    var appSettingsLD = MutableLiveData<OneTimeEvent<AppLandingData>>()
+    var appSettingsLD = MutableLiveData<OneTimeEvent<AppLandingData?>>()
+    var showLoader = MutableLiveData<OneTimeEvent<Boolean>>()
 
     var testUrlSuccessLD = MutableLiveData<Boolean>()
 
@@ -182,22 +186,47 @@ class MainViewModel : CheckoutViewModel() {
         })
     }
 
-    fun getAppSettings(model: MainModel) {
-
-        isLoadingLD.value = true
-
-        model.getAppLandingSettings(object : RequestCompleteListener<AppLandingSettingResponse> {
-            override fun onRequestSuccess(data: AppLandingSettingResponse) {
-                isLoadingLD.value = false
-
-                appSettingsLD.value = OneTimeEvent(data.data)
-            }
-
-            override fun onRequestFailed(errorMessage: String) {
-                isLoadingLD.value = false
-            }
-        })
+    fun setAppSettings(data: AppLandingData) {
+        appSettingsLD.value = OneTimeEvent(data)
     }
+
+    fun getAppSettings(model: MainModel, saveLanguage: Boolean = true) {
+
+        model.getAppLandingSettings(
+            object : RequestCompleteListener<AppLandingSettingResponse> {
+
+                override fun onRequestSuccess(data: AppLandingSettingResponse) {
+
+                    val id = data.data.languageNavSelector.currentLanguageId
+                    "lang_".showLog("Language ID: $id")
+
+                    //getLanguageResourceById(id)
+
+                    if(saveLanguage) {
+                        val temp = mutableListOf<StrResource>()
+
+                        AppDatabase.getInstance().deleteAllStrings()
+
+                        for(i in data.data.stringResources) {
+                            temp.add(StrResource(i.key, i.value, id))
+                        }
+
+                        DbHelper.currentLanguageId = id
+
+                        AppDatabase.getInstance().insertAll(temp)
+                    }
+
+                    appSettingsLD.value = OneTimeEvent(data.data)
+                    showLoader.value = OneTimeEvent(false)
+                }
+
+                override fun onRequestFailed(errorMessage: String) {
+                    appSettingsLD.value = OneTimeEvent(null)
+                    showLoader.value = OneTimeEvent(false)
+                }
+            })
+    }
+
 
 
     fun changeLanguage(languageId : Int, model: MainModel) {

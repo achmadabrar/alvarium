@@ -11,7 +11,6 @@ import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.core.view.GravityCompat
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.FragmentManager
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.bs.ecommerce.R
 import com.bs.ecommerce.auth.customerInfo.CustomerInfoFragment
@@ -23,6 +22,7 @@ import com.bs.ecommerce.fcm.MessagingService
 import com.bs.ecommerce.home.category.CategoryFragment
 import com.bs.ecommerce.home.homepage.HomeFragment
 import com.bs.ecommerce.main.model.MainModelImpl
+import com.bs.ecommerce.main.model.data.AppLandingData
 import com.bs.ecommerce.more.OptionsFragment
 import com.bs.ecommerce.more.UserAccountFragment
 import com.bs.ecommerce.networking.NetworkUtil
@@ -67,13 +67,20 @@ class MainActivity : PrivacyPolicyDialogActivity(), View.OnClickListener
 
         setNotificationBundleToDynamicLink()
 
-        setLiveDataListeners()
+        //setLiveDataListeners()
 
         initNavigationDrawer()
         setBottomNavigation()
 
         if (savedInstanceState == null) {
-            mainViewModel.getAppSettings(mainModel)
+
+            intent?.getParcelableExtra<AppLandingData>(KEY_APP_SETTINGS)?.let {
+                mainViewModel.setAppSettings(it)
+                setAppSettings(it)
+                intent = null
+            }
+
+            //mainViewModel.getAppSettings(mainModel)
             initHomeFragment()
         }
 
@@ -113,7 +120,7 @@ class MainActivity : PrivacyPolicyDialogActivity(), View.OnClickListener
 
             = supportFragmentManager.beginTransaction().replace(R.id.layoutFrame, fragment).addToBackStack(null).commit()
 
-    private fun setLiveDataListeners()
+    /*private fun setLiveDataListeners()
     {
         mainViewModel.appSettingsLD.observe(this, Observer { settings ->
 
@@ -122,7 +129,7 @@ class MainActivity : PrivacyPolicyDialogActivity(), View.OnClickListener
             }
         })
 
-    }
+    }*/
 
     /**
      * Changes bottomNavigationView selected item, based on the name of top fragment in backStack
@@ -387,5 +394,10 @@ class MainActivity : PrivacyPolicyDialogActivity(), View.OnClickListener
         }
         
         dialog.dismiss()
+    }
+
+    companion object {
+        @JvmStatic
+        val KEY_APP_SETTINGS = "KEY_APP_SETTINGS"
     }
 }

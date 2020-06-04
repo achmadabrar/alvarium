@@ -2,12 +2,13 @@ package com.bs.ecommerce.main
 
 import android.content.Intent
 import android.os.Bundle
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.bs.ecommerce.BuildConfig
 import com.bs.ecommerce.R
 import com.bs.ecommerce.base.BaseActivity
 import com.bs.ecommerce.base.BaseViewModel
-import com.bs.ecommerce.db.DbHelper
+import com.bs.ecommerce.main.model.MainModelImpl
 import com.bs.ecommerce.networking.NetworkUtil
 import com.bs.ecommerce.utils.PrefSingleton
 import com.bs.ecommerce.utils.showLog
@@ -28,53 +29,58 @@ class SplashScreenActivity : BaseActivity()
 
     override fun getLayoutId(): Int = R.layout.activity_splash_screen
 
-    override fun createViewModel(): BaseViewModel? = LanguageLoaderViewModel()
+    override fun createViewModel(): BaseViewModel? = MainViewModel()
 
     override fun onCreate(savedInstanceState: Bundle?)
     {
         super.onCreate(savedInstanceState)
 
-        viewModel = ViewModelProvider(this).get(LanguageLoaderViewModel::class.java)
+        viewModel = ViewModelProvider(this).get(MainViewModel::class.java)
 
-        (viewModel as LanguageLoaderViewModel).isLanguageLoaded.observe(this, androidx.lifecycle.Observer { loaded ->
-
-            "lang_".showLog("Download success? ${loaded.peekContent()}")
-
-            if(loaded.getContentIfNotHandled() == true) {
-                startActivity(Intent(this@SplashScreenActivity, MainActivity::class.java))
-                finish()
-            } else {
-                finish()
-            }
-        })
-
+        observeLiveData()
         initializeData()
     }
 
 
-    private fun startMainActivity()
-    {
-        val currentLanguageId = PrefSingleton.getPrefsIntValue(PrefSingleton.CURRENT_LANGUAGE_ID)
+    private fun observeLiveData() {
 
-        if(currentLanguageId == -1 || !DbHelper.isLanguageLoaded(currentLanguageId)) {
+        (viewModel as MainViewModel).apply {
 
-            "lang_".showLog("No language is loaded. Downloading...")
+            appSettingsLD.observe(this@SplashScreenActivity, Observer { appSettings ->
 
-            (viewModel as LanguageLoaderViewModel).downloadLanguage(null)
-        } else {
-            DbHelper.currentLanguageId = currentLanguageId
-            "lang_".showLog("Language already loaded. Current language: $currentLanguageId")
+                appSettings.getContentIfNotHandled()?.let {
 
-            startActivity(Intent(this@SplashScreenActivity, MainActivity::class.java))
-            finish()
+                    if(it.stringResources.isNullOrEmpty()) {
+                        "lang_".showLog("Download success: false")
+                        finish()
+                    } else {
+                        "lang_".showLog("Download success: true")
+
+                        /*if(it.andriodForceUpdate == true && !it.playStoreUrl.isNullOrEmpty()) {
+                            // TODO handle force update here
+                        } else {
+                            startActivity(Intent(this@SplashScreenActivity, MainActivity::class.java))
+                            finish()
+                        }*/
+
+                        // removing language resources before adding to intent
+                        // we don't need this huge data on MainActivity
+                        it.stringResources = listOf()
+
+                        val mainActivityIntent = Intent(this@SplashScreenActivity, MainActivity::class.java)
+                        mainActivityIntent.putExtra(MainActivity.KEY_APP_SETTINGS, it)
+
+                        startActivity(mainActivityIntent)
+                        finish()
+                    }
+                }
+            })
         }
     }
 
 
     private fun initializeData()
     {
-        //Picasso.with(this).load(R.drawable.splash).into(backgroundImageview)
-
         var compactJws: String? = null
         try
         {
@@ -92,8 +98,7 @@ class SplashScreenActivity : BaseActivity()
         prefObject.setPrefs(PrefSingleton.NST, compactJws!!)
         NetworkUtil.nst = compactJws
 
-        //startThreadAndGoMainActivity()        // TODO for older+common implementation
-        startMainActivity()                     // TODO for cleaner implementation
+        (viewModel as MainViewModel).getAppSettings(MainModelImpl(applicationContext), true)
     }
 
 }
