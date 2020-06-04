@@ -13,7 +13,7 @@
 
 
     <androidx.appcompat.widget.AppCompatImageView
-        android:id="@+id/hotlist_bell"
+        android:id="@+id/counterIcon"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
@@ -23,7 +23,7 @@
         android:tint="?attr/toolbarTextColor" />
 
     <TextView
-        android:id="@+id/hotlist_hot"
+        android:id="@+id/counterText"
         android:layout_width="wrap_content"
         android:layout_height="16dp"
         android:background="@drawable/rounded_square"

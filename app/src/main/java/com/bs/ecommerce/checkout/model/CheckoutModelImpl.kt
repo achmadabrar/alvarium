@@ -1,7 +1,5 @@
 package com.bs.ecommerce.checkout.model
 
-import android.content.Context
-import com.bs.ecommerce.cart.model.data.CartResponse
 import com.bs.ecommerce.checkout.model.data.*
 import com.bs.ecommerce.networking.RetroClient
 import com.bs.ecommerce.common.RequestCompleteListener
@@ -62,20 +60,8 @@ class CheckoutModelImpl : CheckoutModel
         RetroClient.api.saveNewBillingAPI(billingAddress).enqueue(object : Callback<CheckoutSaveResponse>
         {
             override fun onResponse(call: Call<CheckoutSaveResponse>, response: Response<CheckoutSaveResponse>)
-            {
-                if (response.body() != null)
-                    callback.onRequestSuccess(response.body()!!)
 
-                else if (response.code() == 300 || response.code() == 400 || response.code() == 500)
-                {
-                    val gson = GsonBuilder().create()
-                    val errorBody = gson.fromJson(response.errorBody()!!.string(), CheckoutSaveResponse::class.java)
-
-                    callback.onRequestSuccess(errorBody as CheckoutSaveResponse)
-                }
-                else
-                    callback.onRequestFailed(response.message())
-            }
+                    = checkoutCommonCallback(callback, response)
 
 
             override fun onFailure(call: Call<CheckoutSaveResponse>, t: Throwable) {
@@ -89,20 +75,8 @@ class CheckoutModelImpl : CheckoutModel
         RetroClient.api.saveExistingBillingAPI(postModel).enqueue(object : Callback<CheckoutSaveResponse>
         {
             override fun onResponse(call: Call<CheckoutSaveResponse>, response: Response<CheckoutSaveResponse>)
-            {
-                if (response.body() != null)
-                    callback.onRequestSuccess(response.body()!!)
 
-                else if (response.code() == 300 || response.code() == 400 || response.code() == 500)
-                {
-                    val gson = GsonBuilder().create()
-                    val errorBody = gson.fromJson(response.errorBody()!!.string(), CheckoutSaveResponse::class.java)
-
-                    callback.onRequestSuccess(errorBody as CheckoutSaveResponse)
-                }
-                else
-                    callback.onRequestFailed(response.message())
-            }
+                    = checkoutCommonCallback(callback, response)
 
 
             override fun onFailure(call: Call<CheckoutSaveResponse>, t: Throwable) {
@@ -116,20 +90,8 @@ class CheckoutModelImpl : CheckoutModel
         RetroClient.api.saveNewShippingAPI(shippingAddress).enqueue(object : Callback<CheckoutSaveResponse>
         {
             override fun onResponse(call: Call<CheckoutSaveResponse>, response: Response<CheckoutSaveResponse>)
-            {
-                if (response.body() != null)
-                    callback.onRequestSuccess(response.body()!!)
 
-                else if (response.code() == 300 || response.code() == 400 || response.code() == 500)
-                {
-                    val gson = GsonBuilder().create()
-                    val errorBody = gson.fromJson(response.errorBody()!!.string(), CheckoutSaveResponse::class.java)
-
-                    callback.onRequestSuccess(errorBody as CheckoutSaveResponse)
-                }
-                else
-                    callback.onRequestFailed(response.message())
-            }
+                    = checkoutCommonCallback(callback, response)
 
 
             override fun onFailure(call: Call<CheckoutSaveResponse>, t: Throwable) {
@@ -143,21 +105,8 @@ class CheckoutModelImpl : CheckoutModel
         RetroClient.api.saveExistingShippingAPI(postModel).enqueue(object : Callback<CheckoutSaveResponse>
         {
             override fun onResponse(call: Call<CheckoutSaveResponse>, response: Response<CheckoutSaveResponse>)
-            {
-                if (response.body() != null)
-                    callback.onRequestSuccess(response.body()!!)
 
-                else if (response.code() == 300 || response.code() == 400 || response.code() == 500)
-                {
-                    val gson = GsonBuilder().create()
-                    val errorBody = gson.fromJson(response.errorBody()!!.string(), CheckoutSaveResponse::class.java)
-
-                    callback.onRequestSuccess(errorBody as CheckoutSaveResponse)
-                }
-                else
-                    callback.onRequestFailed(response.message())
-            }
-
+                    = checkoutCommonCallback(callback, response)
 
             override fun onFailure(call: Call<CheckoutSaveResponse>, t: Throwable) {
                 callback.onRequestFailed(t.localizedMessage!!)
@@ -171,13 +120,8 @@ class CheckoutModelImpl : CheckoutModel
         RetroClient.api.saveShippingMethodAPI(KeyValueFormData).enqueue(object : Callback<CheckoutSaveResponse>
         {
             override fun onResponse(call: Call<CheckoutSaveResponse>, response: Response<CheckoutSaveResponse>)
-            {
-                if (response.body() != null)
-                    callback.onRequestSuccess(response.body()!!)
-                else
-                    callback.onRequestFailed(response.message())
-            }
 
+                    = checkoutCommonCallback(callback, response)
 
             override fun onFailure(call: Call<CheckoutSaveResponse>, t: Throwable) {
                 callback.onRequestFailed(t.localizedMessage!!)
@@ -191,12 +135,8 @@ class CheckoutModelImpl : CheckoutModel
         RetroClient.api.savePaymentMethodAPI(KeyValueFormData).enqueue(object : Callback<CheckoutSaveResponse>
         {
             override fun onResponse(call: Call<CheckoutSaveResponse>, response: Response<CheckoutSaveResponse>)
-            {
-                if (response.body() != null)
-                    callback.onRequestSuccess(response.body()!!)
-                else
-                    callback.onRequestFailed(response.message())
-            }
+
+                    = checkoutCommonCallback(callback, response)
 
 
             override fun onFailure(call: Call<CheckoutSaveResponse>, t: Throwable) {
@@ -231,17 +171,43 @@ class CheckoutModelImpl : CheckoutModel
         RetroClient.api.submitConfirmOrderAPI().enqueue(object : Callback<CheckoutSaveResponse>
         {
             override fun onResponse(call: Call<CheckoutSaveResponse>, response: Response<CheckoutSaveResponse>)
-            {
-                if (response.body() != null)
-                    callback.onRequestSuccess(response.body()!!)
-                else
-                    callback.onRequestFailed(response.message())
-            }
+
+                    = checkoutCommonCallback(callback, response)
 
 
             override fun onFailure(call: Call<CheckoutSaveResponse>, t: Throwable) {
                 callback.onRequestFailed(t.localizedMessage!!)
             }
         })
+    }
+    override fun completeOrder(callback: RequestCompleteListener<CheckoutSaveResponse>)
+    {
+
+        RetroClient.api.completeOrderAPI().enqueue(object : Callback<CheckoutSaveResponse>
+        {
+            override fun onResponse(call: Call<CheckoutSaveResponse>, response: Response<CheckoutSaveResponse>)
+
+                = checkoutCommonCallback(callback, response)
+
+            override fun onFailure(call: Call<CheckoutSaveResponse>, t: Throwable) {
+                callback.onRequestFailed(t.localizedMessage!!)
+            }
+        })
+    }
+
+    private fun checkoutCommonCallback(callback: RequestCompleteListener<CheckoutSaveResponse>, response: Response<CheckoutSaveResponse>)
+    {
+        if (response.body() != null)
+            callback.onRequestSuccess(response.body()!!)
+
+        else if (response.code() == 300 || response.code() == 400 || response.code() == 500)
+        {
+            val gson = GsonBuilder().create()
+            val errorBody = gson.fromJson(response.errorBody()!!.string(), CheckoutSaveResponse::class.java)
+
+            callback.onRequestSuccess(errorBody as CheckoutSaveResponse)
+        }
+        else
+            callback.onRequestFailed(response.message())
     }
 }

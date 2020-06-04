@@ -92,12 +92,12 @@ class CheckoutStepFragment : ToolbarLogoBaseFragment() {
 
                     if(prohibitedList.contains(MyApplication.previouslySelectedTab))
                     {
-                        toast(getString(R.string.please_complete_previous_step))
+                        toast(DbHelper.getString(Const.PLEASE_COMPLETE_PREVIOUS_STEP))
                         return@setOnNavigationItemSelectedListener false
                     }
                     else if(MyApplication.checkoutSaveResponse?.data?.shippingMethodModel == null)
                     {
-                        toast(getString(R.string.please_complete_previous_step))
+                        toast(DbHelper.getString(Const.PLEASE_COMPLETE_PREVIOUS_STEP))
                         return@setOnNavigationItemSelectedListener false
                     }
                     else if(checkoutBottomNav?.menu?.getItem(CheckoutConstants.SHIPPING_TAB)?.isChecked!!)
@@ -112,12 +112,12 @@ class CheckoutStepFragment : ToolbarLogoBaseFragment() {
 
                     if(prohibitedList.contains(MyApplication.previouslySelectedTab))
                     {
-                        toast(getString(R.string.please_complete_previous_step))
+                        toast(DbHelper.getString(Const.PLEASE_COMPLETE_PREVIOUS_STEP))
                         return@setOnNavigationItemSelectedListener false
                     }
                     if(MyApplication.checkoutSaveResponse?.data?.paymentMethodModel == null)
                     {
-                        toast(getString(R.string.please_complete_previous_step))
+                        toast(DbHelper.getString(Const.PLEASE_COMPLETE_PREVIOUS_STEP))
                         return@setOnNavigationItemSelectedListener false
                     }
                     else if(checkoutBottomNav?.menu?.getItem(CheckoutConstants.PAYMENT_TAB)?.isChecked!!)
@@ -127,7 +127,7 @@ class CheckoutStepFragment : ToolbarLogoBaseFragment() {
                 }
                 R.id.menu_confirm ->
                 {
-                    toast(getString(R.string.please_complete_previous_step))
+                    toast(DbHelper.getString(Const.PLEASE_COMPLETE_PREVIOUS_STEP))
                     return@setOnNavigationItemSelectedListener false
                 }
             }

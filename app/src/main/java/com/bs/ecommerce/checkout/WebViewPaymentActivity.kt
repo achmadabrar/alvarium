@@ -9,6 +9,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.bs.ecommerce.R
 import com.bs.ecommerce.base.BaseActivity
 import com.bs.ecommerce.main.MainViewModel
+import com.bs.ecommerce.networking.NetworkConstants
 import com.bs.ecommerce.networking.NetworkUtil
 import com.bs.ecommerce.utils.showLog
 import com.bs.ecommerce.utils.toast
@@ -19,6 +20,8 @@ import kotlinx.android.synthetic.main.fragment_payment_info.*
 class WebViewPaymentActivity : BaseActivity()
 {
     var nextStep = 0
+
+    var needToCheckUrl = false
 
     override fun getLayoutId(): Int = R.layout.activity_webview_payment
 
@@ -62,8 +65,12 @@ class WebViewPaymentActivity : BaseActivity()
     override fun onBackPressed() {
 
 
-        if(nextStep == CheckoutConstants.Completed)
+        if(nextStep == CheckoutConstants.Completed ||
+            intent?.extras?.getInt(CheckoutConstants.CHECKOUT_STEP) == CheckoutConstants.RedirectToGateway)
+        {
             showOrderCompleteDialog(canHaveOrderId = false)
+        }
+
 
             /*startActivity(Intent(this, ResultActivity::class.java)
                 .putExtra(CheckoutConstants.CHECKOUT_STEP, CheckoutConstants.Completed)
@@ -99,21 +106,21 @@ class WebViewPaymentActivity : BaseActivity()
                 super.onPageStarted(view, url, favicon)
                 "WebView".showLog("onPageStarted\t $url")
 
-                /*if(url.contains(NetworkConstants.SITE_URL) && needToCheckUrl)
+                if(url.contains(NetworkConstants.SITE_URL) && needToCheckUrl)
                 {
                     "WebView".showLog("2nd time ${NetworkConstants.SITE_URL}. returning home")
-                }*/
+                }
             }
 
             override fun onPageFinished(view: WebView, url: String)
             {
                 "WebView".showLog("onPageFinished\t $url")
 
-                /*if(url.contains(NetworkConstants.SITE_URL) && !needToCheckUrl)
+                if(url.contains(NetworkConstants.SITE_URL) && !needToCheckUrl)
                 {
                     needToCheckUrl = true
                     "WebView".showLog("first time ${NetworkConstants.SITE_URL}. ignoring")
-                }*/
+                }
                 super.onPageFinished(view, url)
             }
 

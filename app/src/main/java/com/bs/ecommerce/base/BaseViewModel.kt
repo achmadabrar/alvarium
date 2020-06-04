@@ -38,10 +38,6 @@ open class BaseViewModel : ViewModel() {
         })
     }
 
-    override fun onCleared() {
-        super.onCleared()
-    }
-
     fun addToWishList(product: ProductSummary) {
 
         val model = ProductDetailModelImpl()

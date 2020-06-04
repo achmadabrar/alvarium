@@ -131,6 +131,10 @@ abstract class BaseCheckoutNavigationFragment : ToolbarLogoBaseFragment()
             CheckoutConstants.ConfirmOrder -> replaceFragmentWithoutSavingState(ConfirmOrderFragment())
 
             CheckoutConstants.Completed ->
+                (viewModel as CheckoutViewModel).submitCompleteOrderVM(model)
+
+
+            CheckoutConstants.CartPage ->
                 (activity as BaseActivity).showOrderCompleteDialog(saveResponse!!.data.completedModel!!.orderId)
 
             /*startActivity(Intent(requireActivity(), ResultActivity::class.java)
@@ -187,7 +191,7 @@ abstract class BaseCheckoutNavigationFragment : ToolbarLogoBaseFragment()
                 }
                 else
                 {
-                    toast(getString(R.string.please_complete_previous_step))
+                    toast(DbHelper.getString(Const.PLEASE_COMPLETE_PREVIOUS_STEP))
                     Handler().post {   addressTabLayout?.getTabAt(CheckoutConstants.BILLING_ADDRESS_TAB)?.select()  }
                 }
             }

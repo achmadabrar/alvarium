@@ -71,7 +71,7 @@ class HomeFragment : ToolbarLogoBaseFragment() {
 
         if(requireActivity().isOnline())
         {
-            callCart()
+            setCurrentCartItemCounterOnTopView()
 
             if (!viewCreated) {
                 model = HomePageModelImpl(requireContext())
@@ -90,11 +90,6 @@ class HomeFragment : ToolbarLogoBaseFragment() {
             showInternetDisconnectedDialog()
 
 
-    }
-    private fun callCart()
-    {
-        cartModel = CartModelImpl()
-        (viewModel as MainViewModel).getCartVM(cartModel)
     }
 
     private fun initComponents() {

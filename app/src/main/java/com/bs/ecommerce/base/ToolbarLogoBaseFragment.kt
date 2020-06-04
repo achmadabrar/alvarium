@@ -21,13 +21,13 @@ abstract class ToolbarLogoBaseFragment : BaseFragment()
 
     protected fun hideTopLogo() {
         //(activity as MainActivity).toolbarTop.logo = null
-        (activity as MainActivity).topLogoLayout.visibility = View.GONE
+        (activity as MainActivity).topLogoLayout?.visibility = View.GONE
     }
 
     protected fun showTopLogo() {
         activity?.title = ""
         //(activity as MainActivity).toolbarTop.setLogo(R.drawable.ic_nopstation_logo)
-        (activity as MainActivity).topLogoLayout.visibility = View.VISIBLE
+        (activity as MainActivity).topLogoLayout?.visibility = View.VISIBLE
     }
 
 }

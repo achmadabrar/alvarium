@@ -29,4 +29,6 @@ interface CheckoutModel
 
     fun submitConfirmOrder(callback: RequestCompleteListener<CheckoutSaveResponse>)
 
+    fun completeOrder(callback: RequestCompleteListener<CheckoutSaveResponse>)
+
 }

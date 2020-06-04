@@ -20,9 +20,12 @@ import androidx.annotation.LayoutRes
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bs.ecommerce.R
 import com.bs.ecommerce.cart.GiftCardAdapter
+import com.bs.ecommerce.cart.model.CartModel
+import com.bs.ecommerce.cart.model.CartModelImpl
 import com.bs.ecommerce.cart.model.data.CartProduct
 import com.bs.ecommerce.cart.model.data.OrderTotal
 import com.bs.ecommerce.customViews.ContentLoadingDialog
@@ -102,6 +105,14 @@ abstract class BaseFragment : Fragment()
             showLoading()
         else
             hideLoading()
+    }
+
+    protected fun setCurrentCartItemCounterOnTopView()
+    {
+        val cartModel = CartModelImpl()
+        viewModel.getCartVM(cartModel)
+
+        viewModel.cartLD.observe(viewLifecycleOwner, Observer { cartRootData -> updateCartItemCounter(cartRootData.cart.items) })
     }
 
     protected fun updateCartItemCounter(cartList: List<CartProduct>) : Int

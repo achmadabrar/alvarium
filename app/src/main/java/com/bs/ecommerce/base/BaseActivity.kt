@@ -31,7 +31,7 @@ abstract class BaseActivity : AppCompatActivity()
 
     protected var viewModel: BaseViewModel? = null
 
-    var ui_hot: TextView? = null
+    private var counterText: TextView? = null
 
     @LayoutRes
     abstract fun getLayoutId(): Int
@@ -81,11 +81,11 @@ abstract class BaseActivity : AppCompatActivity()
     }
 
 
-    fun setOrRefreshCurtMenuItem(menu: Menu)
+    private fun setOrRefreshCurtMenuItem(menu: Menu)
     {
-        val menu_hotlist = menu.findItem(R.id.menu_cart).actionView
-        ui_hot = menu_hotlist.findViewById<View>(R.id.hotlist_hot) as TextView
-        menu_hotlist.setOnClickListener {
+        val cartCounterView = menu.findItem(R.id.menu_cart).actionView
+        counterText = cartCounterView.findViewById<View>(R.id.counterText) as TextView
+        cartCounterView.setOnClickListener {
 
             //closeLeftDrawer()
 
@@ -104,14 +104,14 @@ abstract class BaseActivity : AppCompatActivity()
 
     fun updateHotCount(badgeCount: Int)
     {
-        if (ui_hot == null) return
+        if (counterText == null) return
         runOnUiThread {
             if (badgeCount == 0)
-                ui_hot?.visibility = View.INVISIBLE
+                counterText?.visibility = View.INVISIBLE
             else
             {
-                ui_hot?.visibility = View.VISIBLE
-                ui_hot?.text = java.lang.Long.toString(badgeCount.toLong())
+                counterText?.visibility = View.VISIBLE
+                counterText?.text = java.lang.Long.toString(badgeCount.toLong())
             }
         }
     }

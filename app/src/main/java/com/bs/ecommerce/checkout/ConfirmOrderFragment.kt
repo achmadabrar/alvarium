@@ -9,8 +9,11 @@ import com.bs.ecommerce.R
 import com.bs.ecommerce.base.BaseViewModel
 import com.bs.ecommerce.cart.CartAdapter
 import com.bs.ecommerce.cart.GiftCardAdapter
+import com.bs.ecommerce.cart.model.CartModel
+import com.bs.ecommerce.cart.model.CartModelImpl
 import com.bs.ecommerce.cart.model.data.*
 import com.bs.ecommerce.db.DbHelper
+import com.bs.ecommerce.main.MainViewModel
 import com.bs.ecommerce.product.ProductDetailFragment
 import com.bs.ecommerce.utils.Const
 import com.bs.ecommerce.utils.ItemClickListener
@@ -55,9 +58,11 @@ class ConfirmOrderFragment : BaseCheckoutNavigationFragment() {
 
         setLiveDataListeners()
 
-        checkoutButton?.setOnClickListener {   (viewModel as CheckoutViewModel).submitConfirmOrderVM(model) }
+        checkoutButton?.setOnClickListener {
+            (viewModel as CheckoutViewModel).submitConfirmOrderVM(model)
+            setCurrentCartItemCounterOnTopView()
+        }
     }
-
 
     private fun setStrings()
     {
@@ -72,29 +77,33 @@ class ConfirmOrderFragment : BaseCheckoutNavigationFragment() {
     {
         super.setLiveDataListeners()
 
-        (viewModel as CheckoutViewModel).getConfirmOrderLD.observe(requireActivity(), Observer { getOrderData ->
+        with(viewModel as CheckoutViewModel)
+        {
+            getConfirmOrderLD.observe(viewLifecycleOwner, Observer { getOrderData ->
 
-            confirmOrderRootLayout?.visibility = View.VISIBLE
+                confirmOrderRootLayout?.visibility = View.VISIBLE
 
-            showProductList(getOrderData.data.cart)
+                showProductList(getOrderData.data.cart)
 
-            showOtherViews(getOrderData.data.cart.orderReviewData)
+                showOtherViews(getOrderData.data.cart.orderReviewData)
 
-            populateOrderTable(getOrderData.data.orderTotals)
+                populateOrderTable(getOrderData.data.orderTotals)
 
 
-            if(getOrderData.data.selectedCheckoutAttributes.isNotEmpty())
-            {
-                selectedAttributesCard.visibility = View.VISIBLE
-                selectedAttributesCard.tvCardTitle.text = DbHelper.getString(Const.SELECTED_ATTRIBUTES)
-                selectedAttributesCard.tvCardDetails.visibility = View.GONE
-                selectedAttributesCard.tvCardDetails2.text = getOrderData.data.selectedCheckoutAttributes
-                selectedAttributesCard.ivCardThumb.visibility = View.GONE
-            }
+                if(getOrderData.data.selectedCheckoutAttributes.isNotEmpty())
+                {
+                    selectedAttributesCard.visibility = View.VISIBLE
+                    selectedAttributesCard.tvCardTitle.text = DbHelper.getString(Const.SELECTED_ATTRIBUTES)
+                    selectedAttributesCard.tvCardDetails.visibility = View.GONE
+                    selectedAttributesCard.tvCardDetails2.text = getOrderData.data.selectedCheckoutAttributes
+                    selectedAttributesCard.ivCardThumb.visibility = View.GONE
+                }
 
-        })
+            })
 
-        (viewModel as CheckoutViewModel).isLoadingLD.observe(requireActivity(), Observer { isShowLoader -> showHideLoader(isShowLoader) })
+            isLoadingLD.observe(viewLifecycleOwner, Observer { isShowLoader -> showHideLoader(isShowLoader) })
+        }
+
 
     }
 
