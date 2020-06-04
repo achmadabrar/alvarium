@@ -126,7 +126,7 @@ class LoginFragment : BaseFragment()
 
                     "token".showLog("token: " + NetworkUtil.token)
 
-                    toast(getString(R.string.login_successful))
+                    toast(DbHelper.getString(Const.LOGIN_LOGIN_SUCCESS))
 
                     // HomeFragment is never in backStack
                     // Pop all items from backStack will make HomeFragment visible

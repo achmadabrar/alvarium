@@ -58,6 +58,7 @@ class Const {
         const val LOGIN_LOGIN_BTN = "account.login.loginbutton"
         const val LOGIN_OR = "nopstation.webapi.login.or"
         const val LOGIN_LOGIN_WITH_FB = "nopstation.webapi.loginwithfb"
+        const val LOGIN_LOGIN_SUCCESS = "nopstation.webapi.loginsuccess"
 
         const val REWARD_NO_HISTORY = "rewardpoints.nohistory"
         const val REWARD_POINT_DATE = "rewardpoints.fields.createddate"
@@ -245,6 +246,8 @@ class Const {
         const val REGISTER_BUTTON = "account.register.button"
         const val SAVE_BUTTON = "common.save"
         const val CONFIRM_BUTTON = "checkout.confirmbutton"
+
+        const val ONLINE_PAYMENT = "nopstation.webapi.checkout.onlinepayment"
 
 
         // Barcode

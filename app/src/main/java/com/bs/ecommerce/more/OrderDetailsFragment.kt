@@ -24,7 +24,13 @@ import com.bs.ecommerce.utils.RecyclerViewMargin
 import com.bs.ecommerce.utils.TextUtils
 import com.bs.ecommerce.utils.toast
 import kotlinx.android.synthetic.main.confirm_order_card.view.*
+import kotlinx.android.synthetic.main.fragment_confirm_order.*
 import kotlinx.android.synthetic.main.fragment_customer_order_detail.*
+import kotlinx.android.synthetic.main.fragment_customer_order_detail.billingAddressCard
+import kotlinx.android.synthetic.main.fragment_customer_order_detail.checkoutProductList
+import kotlinx.android.synthetic.main.fragment_customer_order_detail.paymentMethodCard
+import kotlinx.android.synthetic.main.fragment_customer_order_detail.shippingAddressCard
+import kotlinx.android.synthetic.main.fragment_customer_order_detail.shippingMethodCard
 import kotlinx.android.synthetic.main.item_order_details.view.*
 import kotlinx.android.synthetic.main.table_order_total.*
 import java.lang.ref.WeakReference
@@ -79,39 +85,39 @@ class OrderDetailsFragment : BaseFragment() {
     }
 
     private fun initView(data: OrderDetailsData) {
-        val orderDetails = getString(R.string.order_date)
+        val orderDetails = DbHelper.getString(Const.ORDER_DATE)
             .plus(
                 TextUtils().tzTimeConverter(
                     data.createdOn,
                     WeakReference(requireContext())
                 )
-            ).plus("\n").plus(getString(R.string.order_status)).plus(data.orderStatus).plus("\n")
+            ).plus("\n").plus(DbHelper.getString(Const.ORDER_STATUS)).plus(data.orderStatus).plus("\n")
             .plus(
-                getString(R.string.order_total)
+                DbHelper.getString(Const.ORDER_TOTAL)
             ).plus(data.orderTotal)
 
-        orderDetailsCard.tvCardTitle.text = getString(R.string.order_details)
-        orderDetailsCard.tvCardDetails.text = getString(R.string.order_number).plus(data.customOrderNumber)
+        orderDetailsCard.tvCardTitle.text = DbHelper.getString(Const.TITLE_ORDER_DETAILS)
+        orderDetailsCard.tvCardDetails.text = DbHelper.getString(Const.ORDER_NUMBER).plus(data.customOrderNumber)
         orderDetailsCard.tvCardDetails2.text = orderDetails
 
-        shippingAddressCard.tvCardTitle.text = getString(R.string.shipping_address)
+        shippingAddressCard.tvCardTitle.text = DbHelper.getString(Const.SHIPPING_ADDRESS_TAB)
         shippingAddressCard.tvCardDetails.text = data.shippingAddress?.firstName.plus(" ").plus(data.shippingAddress?.lastName)
         shippingAddressCard.tvCardDetails2.text = TextUtils().getFormattedAddress(
             data.shippingAddress, WeakReference(requireContext())
         )
 
-        billingAddressCard.tvCardTitle.text = getString(R.string.billing_address)
+        billingAddressCard.tvCardTitle.text = DbHelper.getString(Const.BILLING_ADDRESS_TAB)
         billingAddressCard.tvCardDetails.text = data.billingAddress?.firstName.plus(" ").plus(data.billingAddress?.lastName)
         billingAddressCard.tvCardDetails2.text = TextUtils().getFormattedAddress(
             data.billingAddress, WeakReference(requireContext())
         )
 
-        shippingMethodCard.tvCardTitle.text = getString(R.string.shipping_method)
+        shippingMethodCard.tvCardTitle.text = DbHelper.getString(Const.SHIPPING_METHOD)
         shippingMethodCard.tvCardDetails.text = data.shippingMethod
         shippingMethodCard.tvCardDetails2.text = data.shippingStatus
         shippingMethodCard.ivCardThumb.visibility = View.VISIBLE
 
-        paymentMethodCard.tvCardTitle.text = getString(R.string.payment_method)
+        paymentMethodCard.tvCardTitle.text = DbHelper.getString(Const.PAYMENT_METHOD)
         paymentMethodCard.tvCardDetails.text = data.paymentMethod
         paymentMethodCard.tvCardDetails2.text = data.paymentMethodStatus
         paymentMethodCard.ivCardThumb.visibility = View.VISIBLE
@@ -131,6 +137,17 @@ class OrderDetailsFragment : BaseFragment() {
     }
 
     private fun populateOrderTotal(data: OrderDetailsData) {
+
+        subTotalKey?.text = DbHelper.getString(Const.SUB_TOTAL)
+        shippingKey?.text = DbHelper.getString(Const.SHIPPING)
+        taxKey?.text = DbHelper.getString(Const.TAX)
+        discountKey?.text = DbHelper.getString(Const.DISCOUNT)
+        totalKey?.text = DbHelper.getString(Const.TOTAL)
+
+        tvProductsTitleOfOrderPage?.text = DbHelper.getString(Const.PRODUCTS)
+        tvOrderCalculationOfOrderPage?.text = DbHelper.getString(Const.ORDER_CALCULATION)
+
+
         with(data) {
             
             tvSubTotal?.text = orderSubtotal
@@ -138,10 +155,9 @@ class OrderDetailsFragment : BaseFragment() {
 
 
             if (displayTax==true && tax != null) {
+
                 if (displayTaxRates == true)
-                    taxRates?.get(0)?.rate?.let {
-                        taxKey?.text = getString(R.string.tax).plus(it).plus("%s")
-                    }
+                    taxRates?.get(0)?.rate?.let { taxKey?.text = "${DbHelper.getString(Const.TAX)} $it%" }
 
                 tvTax?.text = tax
             } else
@@ -169,12 +185,12 @@ class OrderDetailsFragment : BaseFragment() {
                 giftCardLayout?.visibility = View.GONE
 
             if (orderTotal.isNullOrEmpty()) {
-                tvTotal?.setText(R.string.calculated_during_checkout)
+                tvTotal?.setText(DbHelper.getString(Const.CALCULATED_DURING_CHECKOUT))
                 tvTotal?.setTextColor(android.graphics.Color.RED)
             }
 
             if (orderShipping.isNullOrEmpty()) {
-                tvTotal?.setText(R.string.calculated_during_checkout)
+                tvTotal?.setText(DbHelper.getString(Const.CALCULATED_DURING_CHECKOUT))
                 tvTotal?.setTextColor(android.graphics.Color.RED)
             }
         }

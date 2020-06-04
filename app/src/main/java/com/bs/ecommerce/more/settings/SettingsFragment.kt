@@ -1,5 +1,6 @@
 package com.bs.ecommerce.more.settings
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.AdapterView
@@ -8,6 +9,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.bs.ecommerce.R
 import com.bs.ecommerce.base.BaseActivity
+import com.bs.ecommerce.checkout.WebViewPaymentActivity
 import com.bs.ecommerce.db.DbHelper
 import com.bs.ecommerce.main.LanguageLoaderViewModel
 import com.bs.ecommerce.main.MainActivity
@@ -28,6 +30,10 @@ class SettingsFragment: BaseUrlChangeFragment() {
     private var currencyGetResponse: CurrencyNavSelector? = null
     private var languageGetResponse: LanguageNavSelector? = null
 
+
+    private var rtl = false
+
+    private var isLanguageChanged = false
 
 
     private var languageId: Int = -1
@@ -78,11 +84,21 @@ class SettingsFragment: BaseUrlChangeFragment() {
         mainViewModel.appSettingsLD.observe(viewLifecycleOwner, Observer { settings ->
 
             settings.peekContent()?.let {
-                setLanguageDropdown(it.languageNavSelector)
-                setCurrencyDropdown(it.currencyNavSelector)
 
                 languageCardView?.visibility = View.VISIBLE
                 currencyCardView?.visibility = View.VISIBLE
+
+                if(isLanguageChanged)
+                {
+                    rtl = it.rtl
+                    changeLanguage(languageId)
+                }
+                else
+                {
+                    setLanguageDropdown(it.languageNavSelector)
+                    setCurrencyDropdown(it.currencyNavSelector)
+                }
+
             }
         })
 
@@ -91,9 +107,20 @@ class SettingsFragment: BaseUrlChangeFragment() {
             if(languageId!=-1 && loaded.getContentIfNotHandled() == true) {
                 "lang_".showLog("Download success? ${loaded.peekContent()}")
 
-                changeLanguage(languageId)
+                mainViewModel.changeLanguage(languageId, model = mainModel)
             }
         })
+
+        mainViewModel.languageChangeSuccessLD.observe(viewLifecycleOwner, Observer { isChanged ->
+
+            if(isChanged)
+            {
+                isLanguageChanged = true
+                mainViewModel.getAppSettings(mainModel)
+            }
+
+        })
+
 
         languageViewModel.showLoader.observe(viewLifecycleOwner, Observer { show ->
             if(show.getContentIfNotHandled() == true) blockingLoader.showDialog()
@@ -231,41 +258,19 @@ class SettingsFragment: BaseUrlChangeFragment() {
 
     private fun changeLanguage(languageId : Int)
     {
-        var languageBeChangedTo = ""
+        var languageBehaviour = ""
 
-        for(languages in languageGetResponse!!.availableLanguages)
-        {
-            if(languages.id == languageId)
-            {
-                languageBeChangedTo = when(languages.name)
-                {
-                    Language.ENGLISH_AVAILABLE ->  Language.ENGLISH
-
-                    Language.ITALIAN_AVAILABLE ->  Language.ITALIAN
-
-                    Language.ARABIC_AVAILABLE_IN_ENGLISH -> Language.ARABIC
-
-                    Language.ARABIC_AVAILABLE_IN_ARABIC ->  Language.ARABIC
-
-                    else -> ""
-                }
-
-            }
-        }
-
-        if(languageBeChangedTo.isNotEmpty())
-        {
-            prefObject.setPrefs(PrefSingleton.CURRENT_LANGUAGE, languageBeChangedTo)
-            prefObject.setPrefs(PrefSingleton.CURRENT_LANGUAGE_ID, languageId)
-
-            mainViewModel.changeLanguage(languageId, model = mainModel)
-
-            (activity as BaseActivity).setLocale(true)
-        }
+        if(rtl)
+            languageBehaviour = Language.ARABIC
         else
-            toast("Error Changing Language")
+            languageBehaviour = Language.ENGLISH
 
 
+        prefObject.setPrefs(PrefSingleton.CURRENT_LANGUAGE, languageBehaviour)
+        prefObject.setPrefs(PrefSingleton.CURRENT_LANGUAGE_ID, languageId)
+
+        requireActivity().finish()
+        startActivity(Intent(requireActivity().applicationContext, MainActivity::class.java))
     }
 
     private fun changeCurrency(currencyId : Int)
