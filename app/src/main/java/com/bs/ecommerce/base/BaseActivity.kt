@@ -148,42 +148,21 @@ abstract class BaseActivity : AppCompatActivity()
 
     private fun setAppLanguageFromLanding(settings: AppLandingData)
     {
-        val languageList = settings.languageNavSelector.availableLanguages
-        val currentLanguageId = settings.languageNavSelector.currentLanguageId
+        val languageId = settings.languageNavSelector.currentLanguageId
 
-        var languageToLoad = ""
+        var languageBehaviour = ""
 
-        for (availableLanguage in languageList)
-        {
-            if (availableLanguage.id == currentLanguageId)
-            {
-                "languageSet".showLog("Language got in CategoryNew :: ${currentLanguageId}")
-
-                languageToLoad = when(availableLanguage.name)
-                {
-                    Language.ENGLISH_AVAILABLE ->  Language.ENGLISH
-
-                    Language.ITALIAN_AVAILABLE ->  Language.ITALIAN
-
-                    Language.ARABIC_AVAILABLE_IN_ENGLISH -> Language.ARABIC
-
-                    Language.ARABIC_AVAILABLE_IN_ARABIC ->  Language.ARABIC
-
-                    else -> ""
-                }
-            }
-        }
-        if(languageToLoad.isNotEmpty())
-        {
-            prefObject.setPrefs(PrefSingleton.CURRENT_LANGUAGE, languageToLoad)
-            prefObject.setPrefs(PrefSingleton.CURRENT_LANGUAGE_ID, currentLanguageId)
-
-            "languageSet".showLog("Language got in ApplandingSettings :: $languageToLoad")
-
-            setLocale(true)
-        }
+        if(settings.rtl)
+            languageBehaviour = Language.ARABIC
         else
-            toast("Error Changing Language")
+            languageBehaviour = Language.ENGLISH
+
+
+        prefObject.setPrefs(PrefSingleton.CURRENT_LANGUAGE, languageBehaviour)
+        prefObject.setPrefs(PrefSingleton.CURRENT_LANGUAGE_ID, languageId)
+
+
+        setLocale(true)
     }
 
     private fun setAppCurrencyFromLanding(settings: AppLandingData)
@@ -203,19 +182,12 @@ abstract class BaseActivity : AppCompatActivity()
     override fun attachBaseContext(newBase: Context)
     {
         super.attachBaseContext(updateBaseContextLocale(newBase))
-//        super.attachBaseContext(Restring.wrapContext(newBase))
     }
 
     private fun updateBaseContextLocale(context : Context) : Context
     {
-        var preferredLanguage = prefObject.getPrefs(PrefSingleton.CURRENT_LANGUAGE)
+        val preferredLanguage = prefObject.getPrefs(PrefSingleton.CURRENT_LANGUAGE)
 
-        if (TextUtils.isEmpty(preferredLanguage))
-        {
-            preferredLanguage = Language.ENGLISH
-            prefObject.setPrefs(PrefSingleton.CURRENT_LANGUAGE, preferredLanguage)
-            prefObject.setPrefs(PrefSingleton.CURRENT_LANGUAGE_ID, 1)
-        }
         val locale = Locale(preferredLanguage)
         Locale.setDefault(locale)
 
@@ -259,12 +231,7 @@ abstract class BaseActivity : AppCompatActivity()
 
     fun setLocale(recreate: Boolean)
     {
-        var preferredLanguage = prefObject.getPrefs(PrefSingleton.CURRENT_LANGUAGE)
-        if (TextUtils.isEmpty(preferredLanguage)) {
-            preferredLanguage = Language.ENGLISH
-            prefObject.setPrefs(PrefSingleton.CURRENT_LANGUAGE, preferredLanguage)
-            prefObject.setPrefs(PrefSingleton.CURRENT_LANGUAGE_ID, 1)
-        }
+        val preferredLanguage = prefObject.getPrefs(PrefSingleton.CURRENT_LANGUAGE)
 
         val current = Locale.getDefault()
         val currentLanguage = current.language
