@@ -4,7 +4,6 @@ package com.bs.ecommerce.utils
 
 import android.app.Activity
 import android.content.Context
-import android.graphics.Color
 import android.net.ConnectivityManager
 import android.os.Build
 import android.util.Log
@@ -116,16 +115,25 @@ fun ViewGroup.inflate(layoutId: Int, attachToRoot: Boolean = false): View =
     LayoutInflater.from(context).inflate(layoutId, this, attachToRoot)
 
 
-fun ImageView.loadImg(imageUrl: String?) {
+fun ImageView.loadImg(imageUrl: String?, placeHolder: Int? = R.drawable.ic_placeholder) {
     if (imageUrl.isNullOrEmpty()) {
-        Picasso.with(context).load(R.drawable.ic_placeholder).into(this)
+        if(placeHolder!=null) Picasso.with(context).load(placeHolder).into(this)
     } else {
-        Picasso.with(context)
-            .load(imageUrl)
-            .placeholder(R.drawable.ic_placeholder)
-            .fit()
-            .centerInside()
-            .into(this)
+
+        if(placeHolder!=null) {
+            Picasso.with(context)
+                .load(imageUrl)
+                .placeholder(R.drawable.ic_placeholder)
+                .fit()
+                .centerInside()
+                .into(this)
+        } else {
+            Picasso.with(context)
+                .load(imageUrl)
+                .fit()
+                .centerInside()
+                .into(this)
+        }
     }
 }
 

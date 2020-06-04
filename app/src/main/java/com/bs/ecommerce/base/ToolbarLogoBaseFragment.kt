@@ -1,13 +1,27 @@
 package com.bs.ecommerce.base
 
+import android.os.Bundle
 import android.view.View
-import com.bs.ecommerce.R
+import androidx.lifecycle.ViewModelProvider
 import com.bs.ecommerce.main.MainActivity
+import com.bs.ecommerce.main.MainViewModel
+import com.bs.ecommerce.utils.loadImg
 import kotlinx.android.synthetic.main.toolbar.*
+import kotlinx.android.synthetic.main.toolbar.view.*
 
 
 abstract class ToolbarLogoBaseFragment : BaseFragment()
 {
+
+    var logoUrl = ""
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        val mainViewModel = ViewModelProvider(requireActivity()).get(MainViewModel::class.java)
+        logoUrl = mainViewModel.appSettingsLD.value?.peekContent()?.logoUrl ?: ""
+    }
+
     override fun onStop() {
         super.onStop()
         hideTopLogo()
@@ -26,8 +40,8 @@ abstract class ToolbarLogoBaseFragment : BaseFragment()
 
     protected fun showTopLogo() {
         activity?.title = ""
-        //(activity as MainActivity).toolbarTop.setLogo(R.drawable.ic_nopstation_logo)
         (activity as MainActivity).topLogoLayout?.visibility = View.VISIBLE
+        (activity as MainActivity).topLogoLayout?.topLogo?.loadImg(logoUrl, null)
     }
 
 }

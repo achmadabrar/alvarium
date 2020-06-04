@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/updateAppRootLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="?attr/fragmentBackGroundColor">
+
+    <TextView
+        android:id="@+id/tvMessage"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="15dp"
+        android:layout_centerInParent="true"
+        android:textSize="@dimen/tv_text_size_large"
+        android:textColor="?attr/primaryTextColor"
+        android:textAlignment="center"
+        tools:text="@string/placeholder_long"/>
+
+    <ImageView
+        android:id="@+id/iv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:scaleType="fitCenter"
+        android:layout_above="@id/tvMessage"
+        android:layout_centerHorizontal="true"
+        android:src="@drawable/ic_update_app"
+        android:contentDescription="@string/placeholder" />
+
+    <Button
+        android:id="@+id/btnUpdate"
+        style="@style/RectangularButtonRegular"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:layout_marginTop="15dp"
+        android:layout_below="@id/tvMessage"
+        android:paddingStart="5dp"
+        android:paddingEnd="5dp"
+        tools:text="@string/placeholder" />
+</RelativeLayout>

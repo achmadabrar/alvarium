@@ -1,5 +1,7 @@
 package com.bs.ecommerce.main
 
+import android.content.Context
+import android.content.pm.PackageInfo
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import com.bs.ecommerce.checkout.CheckoutViewModel
@@ -263,6 +265,38 @@ class MainViewModel : CheckoutViewModel() {
                 toast(errorMessage)
             }
         })
+    }
+
+    fun isUpdateNeeded(context: Context, it: AppLandingData): Boolean {
+
+        if(it.andriodForceUpdate == true
+            && !it.playStoreUrl.isNullOrEmpty()
+            && !it.androidVersion.isNullOrEmpty()) {
+
+            try {
+                val pInfo: PackageInfo = context.packageManager.getPackageInfo(context.packageName, 0)
+                val installedVersionName = pInfo.versionName
+
+                val v1 = installedVersionName.split(".")
+                val v2 = it.androidVersion!!.split(".")
+
+                return when {
+                    v2[0].toInt() > v1[0].toInt() -> {
+                        true
+                    }
+                    v2[1].toInt() > v1[1].toInt() -> {
+                        true
+                    }
+                    else -> v2[2].toInt() > v1[2].toInt()
+                }
+
+            } catch (e: Exception) {
+                e.printStackTrace()
+                return false
+            }
+        } else {
+            return false
+        }
     }
 
 }

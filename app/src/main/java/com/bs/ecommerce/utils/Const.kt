@@ -106,6 +106,10 @@ class Const {
         const val WISHLIST_NO_ITEM = "wishlist.cartisempty"
         const val WISHLIST_ADD_ALL_TO_CART = "nopstation.webapi.wishlist.addall"
 
+        const val APP_UPDATE_MSG = "nopstation.webapi.update.msg"
+        const val APP_UPDATE_BTN = "nopstation.webapi.update.label"
+
+        const val COMMON_SOMETHING_WENT_WRONG = "nopstation.webapi.common.somethingwrong"
         const val COMMON_NO_DATA = "nopstation.webapi.common.nodata"
         const val COMMON_SEE_ALL = "nopstation.webapi.home.seeall"
         const val COMMON_DONE = "nopstation.webapi.common.done"

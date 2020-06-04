@@ -9,6 +9,7 @@ import com.bs.ecommerce.R
 import com.bs.ecommerce.base.BaseActivity
 import com.bs.ecommerce.base.BaseViewModel
 import com.bs.ecommerce.main.model.MainModelImpl
+import com.bs.ecommerce.more.UpdateAppFragment
 import com.bs.ecommerce.networking.NetworkUtil
 import com.bs.ecommerce.utils.PrefSingleton
 import com.bs.ecommerce.utils.showLog
@@ -17,8 +18,7 @@ import io.jsonwebtoken.SignatureAlgorithm
 import java.io.UnsupportedEncodingException
 
 
-class SplashScreenActivity : BaseActivity()
-{
+class SplashScreenActivity : BaseActivity() {
 
 /*    private val NST_KEY = "bm9wU3RhdGlvblRva2Vu"
     private val NST_SECRET = "bm9wS2V5"*/
@@ -31,8 +31,7 @@ class SplashScreenActivity : BaseActivity()
 
     override fun createViewModel(): BaseViewModel? = MainViewModel()
 
-    override fun onCreate(savedInstanceState: Bundle?)
-    {
+    override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         viewModel = ViewModelProvider(this).get(MainViewModel::class.java)
@@ -50,28 +49,32 @@ class SplashScreenActivity : BaseActivity()
 
                 appSettings.getContentIfNotHandled()?.let {
 
-                    if(it.stringResources.isNullOrEmpty()) {
+                    if (it.stringResources.isNullOrEmpty()) {
                         "lang_".showLog("Download success: false")
                         finish()
                     } else {
                         "lang_".showLog("Download success: true")
 
-                        /*if(it.andriodForceUpdate == true && !it.playStoreUrl.isNullOrEmpty()) {
-                            // TODO handle force update here
+                        val updateNeeded =
+                            (viewModel as MainViewModel).isUpdateNeeded(applicationContext, it)
+
+                        if (updateNeeded) {
+                            supportFragmentManager.beginTransaction()
+                                .add(R.id.fragmentHolder, UpdateAppFragment.newInstance(it.playStoreUrl ?: ""))
+                                .commit()
+
                         } else {
-                            startActivity(Intent(this@SplashScreenActivity, MainActivity::class.java))
+                            // removing language resources before adding to intent
+                            // we don't need this huge data on MainActivity
+                            it.stringResources = listOf()
+
+                            val mainActivityIntent =
+                                Intent(this@SplashScreenActivity, MainActivity::class.java)
+                            mainActivityIntent.putExtra(MainActivity.KEY_APP_SETTINGS, it)
+
+                            startActivity(mainActivityIntent)
                             finish()
-                        }*/
-
-                        // removing language resources before adding to intent
-                        // we don't need this huge data on MainActivity
-                        it.stringResources = listOf()
-
-                        val mainActivityIntent = Intent(this@SplashScreenActivity, MainActivity::class.java)
-                        mainActivityIntent.putExtra(MainActivity.KEY_APP_SETTINGS, it)
-
-                        startActivity(mainActivityIntent)
-                        finish()
+                        }
                     }
                 }
             })
@@ -79,17 +82,14 @@ class SplashScreenActivity : BaseActivity()
     }
 
 
-    private fun initializeData()
-    {
+    private fun initializeData() {
         var compactJws: String? = null
-        try
-        {
+        try {
             compactJws = Jwts.builder()
                 .claim("NST_KEY", NST_KEY)
-                .signWith(SignatureAlgorithm.HS512, NST_SECRET.toByteArray(charset("UTF-8"))).compact()
-        }
-        catch (e: UnsupportedEncodingException)
-        {
+                .signWith(SignatureAlgorithm.HS512, NST_SECRET.toByteArray(charset("UTF-8")))
+                .compact()
+        } catch (e: UnsupportedEncodingException) {
             e.printStackTrace()
         }
 
