@@ -83,15 +83,23 @@ class ProductDetailFragment : BaseFragment(), View.OnClickListener {
 
             (viewModel as ProductDetailViewModel).apply {
 
-                getProductDetail(productId, model)
+                if(arguments?.getBoolean(ASSOCIATED_PRODUCT) == true) {
 
-                getRelatedProducts(
-                    productId, resources.getDimensionPixelSize(R.dimen.product_item_size), model
-                )
+                    setAssociatedProduct(associatedProduct)
+                    associatedProduct = null
 
-                getSimilarProducts(
-                    productId, resources.getDimensionPixelSize(R.dimen.product_item_size), model
-                )
+                } else {
+
+                    getProductDetail(productId, model)
+
+                    getRelatedProducts(
+                        productId, resources.getDimensionPixelSize(R.dimen.product_item_size), model
+                    )
+
+                    getSimilarProducts(
+                        productId, resources.getDimensionPixelSize(R.dimen.product_item_size), model
+                    )
+                }
             }
         }
 
@@ -127,9 +135,9 @@ class ProductDetailFragment : BaseFragment(), View.OnClickListener {
                     imageSlider?.circle_indicator?.setViewPager(imageSlider.view_pager_slider)
 
                     imageSlider?.circle_indicator?.pageColor =
-                        ContextCompat.getColor(activity!!, R.color.white)
+                        ContextCompat.getColor(requireContext(), R.color.white)
                     imageSlider?.circle_indicator?.fillColor =
-                        ContextCompat.getColor(activity!!, R.color.darkOrGray)
+                        ContextCompat.getColor(requireContext(), R.color.darkOrGray)
 
                     detailsSliderAdapter.setOnSliderClickListener(object :
                         DetailsSliderAdapter.OnSliderClickListener {
@@ -164,7 +172,9 @@ class ProductDetailFragment : BaseFragment(), View.OnClickListener {
                     productRatingLayout.setOnClickListener {
 
                         if(product.productReviewOverview?.allowCustomerReviews == true) {
-                            replaceFragmentSafely(ProductReviewFragment.newInstance(product.id!!))
+                            product.id?.let {
+                                replaceFragmentSafely(ProductReviewFragment.newInstance(it))
+                            }
                         }
                     }
 
@@ -175,8 +185,7 @@ class ProductDetailFragment : BaseFragment(), View.OnClickListener {
                             visibility = View.GONE
                         } else {
                             text = product.productPrice.oldPrice
-                            paintFlags =
-                                productPriceLayout?.tvOriginalPrice?.paintFlags!! or Paint.STRIKE_THRU_TEXT_FLAG
+                            paintFlags = Paint.STRIKE_THRU_TEXT_FLAG
                         }
                     }
 
@@ -201,13 +210,16 @@ class ProductDetailFragment : BaseFragment(), View.OnClickListener {
                         product.addToCart?.enteredQuantity?.toString() ?: "1"
 
                     // long description
-                    val productDescLayout = vsProductDescLayout?.inflate()
-                    productDescLayout?.tvProductName?.text = DbHelper.getString("account.vendorinfo.description")
-                    product.fullDescription?.let {
-                        productDescLayout?.tvProductDescription?.show(
-                            it,
-                            R.color.fragment_background
-                        )
+                    if(product?.fullDescription?.isEmpty() == false) {
+                        val productDescLayout = vsProductDescLayout?.inflate()
+                        productDescLayout?.tvProductName?.text = DbHelper.getString("account.vendorinfo.description")
+                        product.fullDescription.let {
+                            productDescLayout?.tvProductDescription?.show(
+                                it,
+                                R.color.fragment_background
+                            )
+                        }
+                        hd14.visibility = View.VISIBLE
                     }
 
                     // setup product attributes
@@ -242,10 +254,9 @@ class ProductDetailFragment : BaseFragment(), View.OnClickListener {
                     }
 
                     // Associated Product
-                    val isGroupProduct = product.associatedProducts?.isNotEmpty() ?: false
 
-                    if(isGroupProduct) {
-                        populateAssociatedProductList(product.associatedProducts!!)
+                    if(product.associatedProducts?.isNotEmpty() == true) {
+                        populateAssociatedProductList(product.associatedProducts)
 
                         // Hide unrelated layouts
                         productPriceLayout.visibility = View.GONE
@@ -346,6 +357,8 @@ class ProductDetailFragment : BaseFragment(), View.OnClickListener {
         view.etRecipientName.hint = DbHelper.getString("products.giftcard.recipientname")
         view.etYourName.hint = DbHelper.getString("products.giftcard.sendername")
         view.etMessage.hint = DbHelper.getString("products.giftcard.message")
+
+        hd15.visibility = View.VISIBLE
     }
 
     @SuppressLint("SetTextI18n")
@@ -406,7 +419,7 @@ class ProductDetailFragment : BaseFragment(), View.OnClickListener {
 
         val associatedProductLayout = vsAssociatedProduct.inflate()
 
-        associatedProductLayout.tvProductName.text = ""
+        associatedProductLayout.tvProductName.text = DbHelper.getString(Const.PRODUCT_GROUPED_PRODUCT)
 
         associatedProductLayout.rvFeaturedProduct.apply {
             layoutManager =
@@ -415,20 +428,22 @@ class ProductDetailFragment : BaseFragment(), View.OnClickListener {
             //addItemDecoration(RecyclerViewMargin(5, 1, isVertical = true))
             setHasFixedSize(true)
 
-            val clickListener = object: ItemClickListener<ProductDetail> {
+            val clickListener = object : ItemClickListener<ProductDetail> {
                 override fun onClick(view: View, position: Int, data: ProductDetail) {
 
-                    when(view.id) {
+                    when (view.id) {
                         R.id.itemView ->
-                            toast(data.name ?: "")
+                            replaceFragmentSafely(newInstance(data))
 
-                        R.id.ivAddToWishList ->
-                            addToCartClickAction(data.id!!, data.quantity.toString(), cart = false)
-
-                        R.id.ivAddToCart ->
-                            addToCartClickAction(data.id!!, data.quantity.toString(), cart = true)
+                        R.id.ivAddToWishList, R.id.ivAddToCart ->
+                            if(data.productAttributes.isNullOrEmpty()) {
+                                addToCartClickAction(data.id ?: -1,
+                                    data.addToCart?.enteredQuantity?.toString() ?: "1",
+                                    cart = view.id == R.id.ivAddToCart)
+                            } else {
+                                replaceFragmentSafely(newInstance(data))
+                            }
                     }
-
                 }
             }
 
@@ -606,6 +621,11 @@ class ProductDetailFragment : BaseFragment(), View.OnClickListener {
         private val PRODUCT_ID = "productId"
         @JvmStatic
         private val PRODUCT_NAME = "productName"
+        @JvmStatic
+        private val ASSOCIATED_PRODUCT = "associatedProduct"
+
+        @JvmStatic
+        private var associatedProduct: ProductDetail? = null
 
         @JvmStatic
         fun newInstance(productId: Long, productName: String?): ProductDetailFragment {
@@ -614,6 +634,22 @@ class ProductDetailFragment : BaseFragment(), View.OnClickListener {
             args.putLong(PRODUCT_ID, productId)
             args.putString(PRODUCT_NAME, productName)
             fragment.arguments = args
+            return fragment
+        }
+
+        @JvmStatic
+        fun newInstance(product: ProductDetail): ProductDetailFragment {
+
+            associatedProduct = product
+
+            val fragment = ProductDetailFragment()
+
+            fragment.arguments = Bundle().apply {
+                putBoolean(ASSOCIATED_PRODUCT, true)
+                putLong(PRODUCT_ID, product.id ?: -1)
+                putString(PRODUCT_NAME, product.name)
+            }
+
             return fragment
         }
     }

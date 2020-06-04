@@ -88,8 +88,12 @@ class CustomAttributeManager(
 
         tvName.text = attr.name
         tvDesc.text = attr.description ?: DbHelper.getString(Const.COMMON_SELECT).plus(" ${attr.name}")
+        // preselect requied attributes
         tvSelectedAttr.text =
-            attr.values.find { it.isPreSelected }?.name ?: DbHelper.getString(Const.COMMON_SELECT)
+            attr.values.find { it.isPreSelected }?.name ?: 
+                    if(attr.isRequired && !attr.values.isNullOrEmpty())
+                        attr.values[0].name
+                    else DbHelper.getString(Const.COMMON_SELECT)
 
         layout.setOnClickListener {
             if (bsBehavior.state != BottomSheetBehavior.STATE_EXPANDED) {
@@ -372,17 +376,24 @@ class CustomAttributeManager(
             attr.values = attr.values.sortedBy { !it.isPreSelected }
 
             val list = mutableListOf<AttributeControlValue>()
+            var hasPreSelectedItem = false
 
             for (value in attr.values) {
                 if (value.isPreSelected) {
                     list.add(value)
+                    hasPreSelectedItem = true
 
                     if (attr.attributeControlType != AttributeControlType.Checkboxes)
                         break
                 }
             }
 
-             selectedAttributes[attr.id] = list
+            // preselect requied attributes
+            if(!hasPreSelectedItem && attr.isRequired && !attr.values.isNullOrEmpty()) {
+                list.add(attr.values[0])
+            }
+
+            selectedAttributes[attr.id] = list
         }
     }
 

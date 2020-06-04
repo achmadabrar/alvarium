@@ -3,257 +3,258 @@ package com.bs.ecommerce.utils
 class Const {
 
     companion object {
-        val TITLE_FORGOT_PASS = "account.passwordrecovery"
-        val TITLE_CHANGE_PASS = "account.changepassword"
-        val TITLE_REGISTER = "pagetitle.register"
-        val TITLE_REVIEW = "reviews"
-        val TITLE_ORDER_DETAILS = "pagetitle.orderdetails"
+        const val TITLE_FORGOT_PASS = "account.passwordrecovery"
+        const val TITLE_CHANGE_PASS = "account.changepassword"
+        const val TITLE_REGISTER = "pagetitle.register"
+        const val TITLE_REVIEW = "reviews"
+        const val TITLE_ORDER_DETAILS = "pagetitle.orderdetails"
 
-        val HOME_NAV_HOME = "common.home"
-        val HOME_NAV_CATEGORY = "nopstation.webapi.common.category"
-        val HOME_NAV_SEARCH = "common.search"
-        val HOME_NAV_ACCOUNT = "pagetitle.account"
-        val HOME_NAV_MORE = "nopstation.webapi.common.more"
+        const val HOME_NAV_HOME = "common.home"
+        const val HOME_NAV_CATEGORY = "nopstation.webapi.common.category"
+        const val HOME_NAV_SEARCH = "common.search"
+        const val HOME_NAV_ACCOUNT = "pagetitle.account"
+        const val HOME_NAV_MORE = "nopstation.webapi.common.more"
 
-        val CHANGE_PASS_BTN = "account.changepassword.button"
-        val CHANGE_PASS_OLD = "account.changepassword.fields.oldpassword"
-        val CHANGE_PASS_OLD_REQ = "account.changepassword.fields.oldpassword.required"
-        val CHANGE_PASS_NEW = "account.changepassword.fields.newpassword"
-        val CHANGE_PASS_NEW_REQ = "account.changepassword.fields.confirmnewpassword.required"
-        val CHANGE_PASS_CONFIRM = "account.changepassword.fields.confirmnewpassword"
-        val CHANGE_PASS_CONFIRM_REQ = "account.changepassword.fields.confirmnewpassword.required"
-        val CHANGE_PASS_MISMATCH = "account.changepassword.fields.newpassword.enteredpasswordsdonotmatch"
+        const val CHANGE_PASS_BTN = "account.changepassword.button"
+        const val CHANGE_PASS_OLD = "account.changepassword.fields.oldpassword"
+        const val CHANGE_PASS_OLD_REQ = "account.changepassword.fields.oldpassword.required"
+        const val CHANGE_PASS_NEW = "account.changepassword.fields.newpassword"
+        const val CHANGE_PASS_NEW_REQ = "account.changepassword.fields.confirmnewpassword.required"
+        const val CHANGE_PASS_CONFIRM = "account.changepassword.fields.confirmnewpassword"
+        const val CHANGE_PASS_CONFIRM_REQ = "account.changepassword.fields.confirmnewpassword.required"
+        const val CHANGE_PASS_MISMATCH = "account.changepassword.fields.newpassword.enteredpasswordsdonotmatch"
 
-        val FORGOT_PASS_BTN = "account.passwordrecovery.changepasswordbutton"
-        val FORGOT_PASS_EMAIL = "account.passwordrecovery.email"
-        val FORGOT_PASS_EMAIL_REQ = "account.passwordrecovery.email.required"
+        const val FORGOT_PASS_BTN = "account.passwordrecovery.changepasswordbutton"
+        const val FORGOT_PASS_EMAIL = "account.passwordrecovery.email"
+        const val FORGOT_PASS_EMAIL_REQ = "account.passwordrecovery.email.required"
 
-        val REVIEW_WRITE = "reviews.write"
-        val REVIEW_HELPFUL = "reviews.helpfulness.washelpful?"
-        val REVIEW_TITLE = "reviews.fields.title"
-        val REVIEW_TITLE_REQ = "reviews.fields.title.required"
-        val REVIEW_TEXT = "reviews.fields.reviewtext"
-        val REVIEW_TEXT_REQ = "reviews.fields.reviewtext.required"
-        val REVIEW_SUBMIT_BTN = "reviews.submitbutton"
-        val REVIEW_RATING = "reviews.fields.rating"
+        const val REVIEW_WRITE = "reviews.write"
+        const val REVIEW_HELPFUL = "reviews.helpfulness.washelpful?"
+        const val REVIEW_TITLE = "reviews.fields.title"
+        const val REVIEW_TITLE_REQ = "reviews.fields.title.required"
+        const val REVIEW_TEXT = "reviews.fields.reviewtext"
+        const val REVIEW_TEXT_REQ = "reviews.fields.reviewtext.required"
+        const val REVIEW_SUBMIT_BTN = "reviews.submitbutton"
+        const val REVIEW_RATING = "reviews.fields.rating"
 
-        val SETTINGS_URL = "nopstation.webapi.settings.nopcommerceurl"
-        val SETTINGS_LANGUAGE = "nopstation.webapi.settings.language"
-        val SETTINGS_CURRENCY = "nopstation.webapi.settings.currency"
-        val SETTINGS_THEME = "nopstation.webapi.settings.darktheme"
-        val SETTINGS_BTN_TEST = "nopstation.webapi.settings.test"
-        val SETTINGS_BTN_SET_DEFAULT = "nopstation.webapi.settings.setdefault"
+        const val SETTINGS_URL = "nopstation.webapi.settings.nopcommerceurl"
+        const val SETTINGS_LANGUAGE = "nopstation.webapi.settings.language"
+        const val SETTINGS_CURRENCY = "nopstation.webapi.settings.currency"
+        const val SETTINGS_THEME = "nopstation.webapi.settings.darktheme"
+        const val SETTINGS_BTN_TEST = "nopstation.webapi.settings.test"
+        const val SETTINGS_BTN_SET_DEFAULT = "nopstation.webapi.settings.setdefault"
 
-        val ENTER_VALID_EMAIL = "nopstation.webapi.common.entervalidemail"
-        val ENTER_PRICE = "nopstation.webapi.shoppingcart.donation.enterprice"
-        val ENTER_PRICE_REQ = "nopstation.webapi.shoppingcart.donation.enterprice.required"
-
-
-        val LOGIN_EMAIL = "account.login.fields.email"
-        val LOGIN_EMAIL_REQ = "account.login.fields.email.required"
-        val LOGIN_PASS = "account.login.fields.password"
-        val LOGIN_PASS_REQ = "nopstation.webapi.login.password.required"
-        val LOGIN_NEW_CUSTOMER = "account.login.newcustomer"
-        val LOGIN_FORGOT_PASS = "account.login.forgotpassword"
-        val LOGIN_LOGIN_BTN = "account.login.loginbutton"
-        val LOGIN_OR = "nopstation.webapi.login.or"
-        val LOGIN_LOGIN_WITH_FB = "nopstation.webapi.loginwithfb"
-
-        val REWARD_NO_HISTORY = "rewardpoints.nohistory"
-        val REWARD_POINT_DATE = "rewardpoints.fields.createddate"
-        val REWARD_POINT_END_DATE = "rewardpoints.fields.enddate"
-        val REWARD_POINT_MSG = "rewardpoints.fields.message"
-        val REWARD_POINT_ = "rewardpoints.fields.points"
-        val REWARD_POINT_BALANCE = "rewardpoints.fields.pointsbalance"
-        val REWARD_POINT_BALANCE_MIN = "rewardpoints.minimumbalance"
-        val REWARD_POINT_BALANCE_CURRENT = "rewardpoints.currentbalance"
-
-        val ORDER_NUMBER = "account.customerorders.ordernumber"
-        val ORDER_STATUS = "account.customerorders.orderstatus"
-        val ORDER_TOTAL = "account.customerorders.ordertotal"
-        val ORDER_DATE = "account.customerorders.orderdate"
-
-        val CATALOG_ITEMS_PER_PAGE = "catalog.pagesize.label"
-
-        val MORE_SCAN_BARCODE = "nopstation.webapi.scanbarcode"
-        val MORE_SETTINGS = "nopstation.webapi.settings"
-        val MORE_PRIVACY_POLICY = "nopstation.webapi.privacypolicy"
-        val MORE_ABOUT_US = "nopstation.webapi.aboutus"
-        val MORE_CONTACT_US = "contactus"
-
-        val ACCOUNT_MY_REVIEW = "account.customerproductreviews"
-        val ACCOUNT_INFO = "nopstation.webapi.account.info"
-        val ACCOUNT_CUSTOMER_ADDRESS = "account.customeraddresses"
-        val ACCOUNT_SHOPPING_CART = "account.shoppingcart"
-        val ACCOUNT_REWARD_POINT = "account.rewardpoints"
-        val ACCOUNT_LOGIN = "activitylog.publicstore.login"
-        val ACCOUNT_LOGOUT = "activitylog.publicstore.logout"
-        val ACCOUNT_LOGOUT_CONFIRM = "nopstation.webapi.account.logoutconfirmation"
-        val ACCOUNT_ORDERS = "account.customerorders"
-        val ACCOUNT_WISHLIST = "wishlist"
-
-        val FILTER = "nopstation.webapi.filtering.filter"
-
-        val PRODUCT_BTN_BUY_NOW = "nopstation.webapi.shoppingcart.buynow"
-        val PRODUCT_BTN_RENT_NOW = "nopstation.webapi.shoppingcart.rentnow"
-        val PRODUCT_WISHLIST_DISABLED = "shoppingcart.wishlistdisabled"
-        val PRODUCT_BUY_DISABLED = "shoppingcart.buyingdisabled"
-        val PRODUCT_BTN_ADDTOCART = "shoppingcart.addtocart"
-        val PRODUCT_BTN_ADDTO_WISHLIST = "shoppingcart.addtowishlist"
+        const val ENTER_VALID_EMAIL = "nopstation.webapi.common.enterconst val idemail"
+        const val ENTER_PRICE = "nopstation.webapi.shoppingcart.donation.enterprice"
+        const val ENTER_PRICE_REQ = "nopstation.webapi.shoppingcart.donation.enterprice.required"
 
 
-        val WISHLIST_NO_ITEM = "wishlist.cartisempty"
-        val WISHLIST_ADD_ALL_TO_CART = "nopstation.webapi.wishlist.addall"
+        const val LOGIN_EMAIL = "account.login.fields.email"
+        const val LOGIN_EMAIL_REQ = "account.login.fields.email.required"
+        const val LOGIN_PASS = "account.login.fields.password"
+        const val LOGIN_PASS_REQ = "nopstation.webapi.login.password.required"
+        const val LOGIN_NEW_CUSTOMER = "account.login.newcustomer"
+        const val LOGIN_FORGOT_PASS = "account.login.forgotpassword"
+        const val LOGIN_LOGIN_BTN = "account.login.loginbutton"
+        const val LOGIN_OR = "nopstation.webapi.login.or"
+        const val LOGIN_LOGIN_WITH_FB = "nopstation.webapi.loginwithfb"
 
-        val COMMON_NO_DATA = "nopstation.webapi.common.nodata"
-        val COMMON_SEE_ALL = "nopstation.webapi.home.seeall"
-        val COMMON_DONE = "nopstation.webapi.common.done"
-        val COMMON_PLEASE_WAIT = "nopstation.webapi.common.pleasewait"
-        val COMMON_SELECT = "nopstation.webapi.common.select"
-        val COMMON_AGAIN_PRESS_TO_EXIT = "nopstation.webapi.home.pressagaintoexit"
-        val COMMON_YES = "common.yes"
-        val COMMON_NO = "common.no"
+        const val REWARD_NO_HISTORY = "rewardpoints.nohistory"
+        const val REWARD_POINT_DATE = "rewardpoints.fields.createddate"
+        const val REWARD_POINT_END_DATE = "rewardpoints.fields.enddate"
+        const val REWARD_POINT_MSG = "rewardpoints.fields.message"
+        const val REWARD_POINT_ = "rewardpoints.fields.points"
+        const val REWARD_POINT_BALANCE = "rewardpoints.fields.pointsbalance"
+        const val REWARD_POINT_BALANCE_MIN = "rewardpoints.minimumbalance"
+        const val REWARD_POINT_BALANCE_CURRENT = "rewardpoints.currentbalance"
+
+        const val ORDER_NUMBER = "account.customerorders.ordernumber"
+        const val ORDER_STATUS = "account.customerorders.orderstatus"
+        const val ORDER_TOTAL = "account.customerorders.ordertotal"
+        const val ORDER_DATE = "account.customerorders.orderdate"
+
+        const val CATALOG_ITEMS_PER_PAGE = "catalog.pagesize.label"
+
+        const val MORE_SCAN_BARCODE = "nopstation.webapi.scanbarcode"
+        const val MORE_SETTINGS = "nopstation.webapi.settings"
+        const val MORE_PRIVACY_POLICY = "nopstation.webapi.privacypolicy"
+        const val MORE_ABOUT_US = "nopstation.webapi.aboutus"
+        const val MORE_CONTACT_US = "contactus"
+
+        const val ACCOUNT_MY_REVIEW = "account.customerproductreviews"
+        const val ACCOUNT_INFO = "nopstation.webapi.account.info"
+        const val ACCOUNT_CUSTOMER_ADDRESS = "account.customeraddresses"
+        const val ACCOUNT_SHOPPING_CART = "account.shoppingcart"
+        const val ACCOUNT_REWARD_POINT = "account.rewardpoints"
+        const val ACCOUNT_LOGIN = "activitylog.publicstore.login"
+        const val ACCOUNT_LOGOUT = "activitylog.publicstore.logout"
+        const val ACCOUNT_LOGOUT_CONFIRM = "nopstation.webapi.account.logoutconfirmation"
+        const val ACCOUNT_ORDERS = "account.customerorders"
+        const val ACCOUNT_WISHLIST = "wishlist"
+
+        const val FILTER = "nopstation.webapi.filtering.filter"
+
+        const val PRODUCT_GROUPED_PRODUCT = "enums.nop.core.domain.catalog.producttype.groupedproduct"
+        const val PRODUCT_BTN_BUY_NOW = "nopstation.webapi.shoppingcart.buynow"
+        const val PRODUCT_BTN_RENT_NOW = "nopstation.webapi.shoppingcart.rentnow"
+        const val PRODUCT_WISHLIST_DISABLED = "shoppingcart.wishlistdisabled"
+        const val PRODUCT_BUY_DISABLED = "shoppingcart.buyingdisabled"
+        const val PRODUCT_BTN_ADDTOCART = "shoppingcart.addtocart"
+        const val PRODUCT_BTN_ADDTO_WISHLIST = "shoppingcart.addtowishlist"
+
+
+        const val WISHLIST_NO_ITEM = "wishlist.cartisempty"
+        const val WISHLIST_ADD_ALL_TO_CART = "nopstation.webapi.wishlist.addall"
+
+        const val COMMON_NO_DATA = "nopstation.webapi.common.nodata"
+        const val COMMON_SEE_ALL = "nopstation.webapi.home.seeall"
+        const val COMMON_DONE = "nopstation.webapi.common.done"
+        const val COMMON_PLEASE_WAIT = "nopstation.webapi.common.pleasewait"
+        const val COMMON_SELECT = "nopstation.webapi.common.select"
+        const val COMMON_AGAIN_PRESS_TO_EXIT = "nopstation.webapi.home.pressagaintoexit"
+        const val COMMON_YES = "common.yes"
+        const val COMMON_NO = "common.no"
 
 
         //SHOPPING CART
-        val SHOPPING_CART_TITLE = "pagetitle.shoppingcart"
+        const val SHOPPING_CART_TITLE = "pagetitle.shoppingcart"
 
-        val PRODUCTS = "shoppingcart.product(s)"
-        val ITEMS = "shoppingcart.mini.items"
-        val ENTER_YOUR_COUPON = "shoppingcart.discountcouponcode.tooltip"
-        val ENTER_GIFT_CARD = "shoppingcart.giftcardcouponcode.tooltip"
+        const val PRODUCTS = "shoppingcart.product(s)"
+        const val ITEMS = "shoppingcart.mini.items"
+        const val ENTER_YOUR_COUPON = "shoppingcart.discountcouponcode.tooltip"
+        const val ENTER_GIFT_CARD = "shoppingcart.giftcardcouponcode.tooltip"
 
-        val APPLY_COUPON = "shoppingcart.discountcouponcode.button"
-        val ADD_GIFT_CARD = "shoppingcart.giftcardcouponcode.button"
+        const val APPLY_COUPON = "shoppingcart.discountcouponcode.button"
+        const val ADD_GIFT_CARD = "shoppingcart.giftcardcouponcode.button"
 
-        val ENTERED_COUPON_CODE = "shoppingcart.discountcouponcode.currentcode"
+        const val ENTERED_COUPON_CODE = "shoppingcart.discountcouponcode.currentcode"
 
-        val SUB_TOTAL = "shoppingcart.totals.subtotal"
-        val SHIPPING = "shoppingcart.totals.shipping"
-        val DISCOUNT = "shoppingcart.totals.subtotaldiscount"
-        val GIFT_CARD = "shoppingcart.totals.giftcardinfo"
-        val GIFT_CARD_REMAINING = "shoppingcart.totals.giftcardinfo.remaining"
-        val TAX = "shoppingcart.totals.tax"
-        val TOTAL = "shoppingcart.totals.ordertotal"
+        const val SUB_TOTAL = "shoppingcart.totals.subtotal"
+        const val SHIPPING = "shoppingcart.totals.shipping"
+        const val DISCOUNT = "shoppingcart.totals.subtotaldiscount"
+        const val GIFT_CARD = "shoppingcart.totals.giftcardinfo"
+        const val GIFT_CARD_REMAINING = "shoppingcart.totals.giftcardinfo.remaining"
+        const val TAX = "shoppingcart.totals.tax"
+        const val TOTAL = "shoppingcart.totals.ordertotal"
 
-        val CART_EMPTY = "shoppingcart.cartisempty"
-        val CHECKOUT = "checkout.button"
+        const val CART_EMPTY = "shoppingcart.cartisempty"
+        const val CHECKOUT = "checkout.button"
 
 
 
-        val CALCULATED_DURING_CHECKOUT = "shoppingcart.totals.calculatedduringcheckout"
+        const val CALCULATED_DURING_CHECKOUT = "shoppingcart.totals.calculatedduringcheckout"
 
 
         // GUEST CHECOUT DIALOG
 
-        val CHECKOUT_AS_GUEST_TITLE = "account.login.checkoutasguestorregister"
-        val CHECKOUT_AS_GUEST = "account.login.checkoutasguest"
-        val REGISTER_AND_SAVE_TIME = "nopstation.webapi.registersavetime"
-        val CREATE_ACCOUNT_LONG_TEXT = "nopstation.webapi.creatingaccountlongtext"
-        val RETURNING_CUSTOMER = "nopstation.webapi.returningcustomer"
+        const val CHECKOUT_AS_GUEST_TITLE = "account.login.checkoutasguestorregister"
+        const val CHECKOUT_AS_GUEST = "account.login.checkoutasguest"
+        const val REGISTER_AND_SAVE_TIME = "nopstation.webapi.registersavetime"
+        const val CREATE_ACCOUNT_LONG_TEXT = "nopstation.webapi.creatingaccountlongtext"
+        const val RETURNING_CUSTOMER = "nopstation.webapi.returningcustomer"
 
 
 
 
         //CHECKOUT
-        val ADDRESS_TAB = "checkout.progress.address"
-        val SHIPPING_TAB = "checkout.progress.shipping"
-        val PAYMENT_TAB = "checkout.progress.payment"
-        val CONFIRM_TAB = "checkout.progress.confirm"
+        const val ADDRESS_TAB = "checkout.progress.address"
+        const val SHIPPING_TAB = "checkout.progress.shipping"
+        const val PAYMENT_TAB = "checkout.progress.payment"
+        const val CONFIRM_TAB = "checkout.progress.confirm"
 
-        val BILLING_ADDRESS_TAB = "checkout.billingaddress"
-        val SHIPPING_ADDRESS_TAB = "checkout.shippingaddress"
+        const val BILLING_ADDRESS_TAB = "checkout.billingaddress"
+        const val SHIPPING_ADDRESS_TAB = "checkout.shippingaddress"
 
-        val SHIP_TO_SAME_ADDRESS = "checkout.shiptosameaddress"
+        const val SHIP_TO_SAME_ADDRESS = "checkout.shiptosameaddress"
 
-        val NEW_ADDRESS = "checkout.newaddress"
+        const val NEW_ADDRESS = "checkout.newaddress"
 
         //Payment method
-        val USE_REWARD_POINTS = "checkout.userewardpoints"
+        const val USE_REWARD_POINTS = "checkout.userewardpoints"
 
 
-        val FIRST_NAME = "address.fields.firstname"
-        val LAST_NAME = "address.fields.lastname"
-        val COMPANY = "address.fields.company"
-        val CITY = "address.fields.city"
-        val PHONE = "address.fields.phonenumber"
-        val FAX = "address.fields.fax"
-        val ADDRESS_1 = "address.fields.address1"
-        val ADDRESS_2 = "address.fields.address2"
-        val EMAIL = "address.fields.email"
+        const val FIRST_NAME = "address.fields.firstname"
+        const val LAST_NAME = "address.fields.lastname"
+        const val COMPANY = "address.fields.company"
+        const val CITY = "address.fields.city"
+        const val PHONE = "address.fields.phonenumber"
+        const val FAX = "address.fields.fax"
+        const val ADDRESS_1 = "address.fields.address1"
+        const val ADDRESS_2 = "address.fields.address2"
+        const val EMAIL = "address.fields.email"
 
 
 
-        val GENDER = "account.fields.gender"
-        val GENDER_MALE = "account.fields.gender.male"
-        val GENDER_FEMALE = "account.fields.gender.female"
+        const val GENDER = "account.fields.gender"
+        const val GENDER_MALE = "account.fields.gender.male"
+        const val GENDER_FEMALE = "account.fields.gender.female"
 
 
-        val ENTER_PASSWORD = "nopstation.webapi.account.fields.enterpassword"
-        val CONFIRM_PASSWORD = "account.fields.confirmpassword"
-        val OPTIONS = "account.options"
-        val CHANGE_PASSWORD = "account.changepassword"
-        val NEWSLETTER = "account.fields.newsletter"
+        const val ENTER_PASSWORD = "nopstation.webapi.account.fields.enterpassword"
+        const val CONFIRM_PASSWORD = "account.fields.confirmpassword"
+        const val OPTIONS = "account.options"
+        const val CHANGE_PASSWORD = "account.changepassword"
+        const val NEWSLETTER = "account.fields.newsletter"
 
-        val DATE_OF_BIRTH = "account.fields.dateofbirth"
+        const val DATE_OF_BIRTH = "account.fields.dateofbirth"
 
-        val USERNAME = "account.fields.username"
+        const val USERNAME = "account.fields.username"
 
-        val SELECT_COUNTRY = "address.selectcountry"
+        const val SELECT_COUNTRY = "address.selectcountry"
 
-        val SELECT_STATE = "address.selectstate"
+        const val SELECT_STATE = "address.selectstate"
 
-        val STATE_PROVINCE = "address.fields.stateprovince"
-        val ZIP_CODE = "address.fields.zippostalcode"
+        const val STATE_PROVINCE = "address.fields.stateprovince"
+        const val ZIP_CODE = "address.fields.zippostalcode"
 
-        val ADD_NEW_ADDRESS = "account.customeraddresses.addnew"
+        const val ADD_NEW_ADDRESS = "account.customeraddresses.addnew"
 
-        val UPDATED_SUCCESSFULLY = "nopstation.webapi.updated"
+        const val UPDATED_SUCCESSFULLY = "nopstation.webapi.updated"
 
-        val ADDRESS_UPDATED_SUCCESSFULLY = "nopstation.webapi.address.fields.addressupdated"
-        val ADDRESS_SAVED_SUCCESSFULLY = "nopstation.webapi.address.fields.addresssaved"
-
-
-        val CONFIRM_DELETE_ADDRESS = "nopstation.webapi.address.fields.confirmdeleteaddress"
-        val DELETE_ADDRESS = "nopstation.webapi.address.fields.deleteaddress"
-
-        val STREET_ADDRESS = "account.fields.streetaddress"
-        val STREET_ADDRESS_2 = "account.fields.streetaddress2"
+        const val ADDRESS_UPDATED_SUCCESSFULLY = "nopstation.webapi.address.fields.addressupdated"
+        const val ADDRESS_SAVED_SUCCESSFULLY = "nopstation.webapi.address.fields.addresssaved"
 
 
-        val IS_REQUIRED = "nopstation.webapi.common.isrequired"
+        const val CONFIRM_DELETE_ADDRESS = "nopstation.webapi.address.fields.confirmdeleteaddress"
+        const val DELETE_ADDRESS = "nopstation.webapi.address.fields.deleteaddress"
+
+        const val STREET_ADDRESS = "account.fields.streetaddress"
+        const val STREET_ADDRESS_2 = "account.fields.streetaddress2"
+
+
+        const val IS_REQUIRED = "nopstation.webapi.common.isrequired"
 
 
         //Confirm Order
-        val PICK_UP_POINT_ADDRESS = "order.pickupaddress"
-        val SHIPPING_METHOD = "checkout.shippingmethod"
-        val PAYMENT_METHOD = "checkout.paymentmethod"
-        val SELECTED_ATTRIBUTES = "nopstation.webapi.checkout.selectedattributes"
-        val ORDER_CALCULATION = "nopstation.webapi.checkout.ordercalculation"
-        val WILL_EARN = "shoppingcart.totals.rewardpoints.willearn"
-        val POINTS = "shoppingcart.totals.rewardpoints.willearn.point"
-        val QUANTITY = "order.product(s).quantity"
+        const val PICK_UP_POINT_ADDRESS = "order.pickupaddress"
+        const val SHIPPING_METHOD = "checkout.shippingmethod"
+        const val PAYMENT_METHOD = "checkout.paymentmethod"
+        const val SELECTED_ATTRIBUTES = "nopstation.webapi.checkout.selectedattributes"
+        const val ORDER_CALCULATION = "nopstation.webapi.checkout.ordercalculation"
+        const val WILL_EARN = "shoppingcart.totals.rewardpoints.willearn"
+        const val POINTS = "shoppingcart.totals.rewardpoints.willearn.point"
+        const val QUANTITY = "order.product(s).quantity"
 
-        val CONTINUE = "common.continue"
-        val REGISTER_BUTTON = "account.register.button"
-        val SAVE_BUTTON = "common.save"
-        val CONFIRM_BUTTON = "checkout.confirmbutton"
+        const val CONTINUE = "common.continue"
+        const val REGISTER_BUTTON = "account.register.button"
+        const val SAVE_BUTTON = "common.save"
+        const val CONFIRM_BUTTON = "checkout.confirmbutton"
 
 
         // Barcode
-        val INVALID_PRODUCT = "nopstation.webapi.sliders.fields.entityid.invalidproduct"
+        const val INVALID_PRODUCT = "nopstation.webapi.sliders.fields.entityid.inconst val idproduct"
 
         //Order Complete Dialog
 
-        val ORDER_PROCESSED = "checkout.yourorderhasbeensuccessfullyprocessed"
-        val THANK_YOU = "checkout.thankyou"
+        const val ORDER_PROCESSED = "checkout.yourorderhasbeensuccessfullyprocessed"
+        const val THANK_YOU = "checkout.thankyou"
 
-        val NO_INTERNET = "nopstation.webapi.nointernet"
-        val SETTINGS = "plugin.nopstation.theme.crimson.settings"
-        val TRY_AGAIN = "nopstation.webapi.tryagain"
+        const val NO_INTERNET = "nopstation.webapi.nointernet"
+        const val SETTINGS = "plugin.nopstation.theme.crimson.settings"
+        const val TRY_AGAIN = "nopstation.webapi.tryagain"
 
-        val READ_BEFORE_CONTINUE = "nopstation.webapi.readbeforecontinue"
-        val I_READ_I_ACCEPT = "nopstation.webapi.accept"
+        const val READ_BEFORE_CONTINUE = "nopstation.webapi.readbeforecontinue"
+        const val I_READ_I_ACCEPT = "nopstation.webapi.accept"
     }
 
 }

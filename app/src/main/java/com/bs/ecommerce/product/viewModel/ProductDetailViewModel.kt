@@ -56,6 +56,11 @@ class ProductDetailViewModel : BaseViewModel() {
         })
     }
 
+    fun setAssociatedProduct(product: ProductDetail?) {
+        productLiveData.value = product
+        quantityLiveData.value = product?.addToCart?.enteredQuantity ?: 1
+    }
+
     fun getRelatedProducts(prodId: Long, thumbnailSizePx: Int, model: ProductDetailModel) {
 
         model.getRelatedProducts(prodId, thumbnailSizePx, object: RequestCompleteListener<HomePageProductResponse> {

@@ -217,7 +217,7 @@ open class CartAdapter(
             //itemView.tvAttribute1.text = "Color: Black"
             itemView.tvAttribute2.text = "Size: XL"
             itemView.tvOriginalPrice.text = "$100"
-            itemView.tvOriginalPrice.paintFlags = itemView.tvOriginalPrice.paintFlags or Paint.STRIKE_THRU_TEXT_FLAG
+            itemView.tvOriginalPrice.paintFlags = Paint.STRIKE_THRU_TEXT_FLAG
 
             removeItem.setOnClickListener(this)
             //swipeLayout.getSurfaceView().setOnClickListener(this);

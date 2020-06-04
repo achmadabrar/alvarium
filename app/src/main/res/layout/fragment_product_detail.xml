@@ -123,7 +123,10 @@
                     android:layout="@layout/product_gift_card_layout"
                     tools:visibility="visible" />
 
-                <include layout="@layout/horizontal_divider" />
+                <include
+                    android:id="@+id/hd15"
+                    layout="@layout/horizontal_divider"
+                    android:visibility="invisible"/>
 
                 <ViewStub
                     android:id="@+id/vsProductDescLayout"
@@ -133,7 +136,10 @@
                     android:layout="@layout/product_name_layout"
                     tools:visibility="visible" />
 
-                <include layout="@layout/horizontal_divider" />
+                <include
+                    android:id="@+id/hd14"
+                    layout="@layout/horizontal_divider"
+                    android:visibility="invisible"/>
 
                 <ViewStub
                     android:id="@+id/vsAssociatedProduct"

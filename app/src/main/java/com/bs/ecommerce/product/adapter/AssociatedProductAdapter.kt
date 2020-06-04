@@ -58,20 +58,21 @@ class AssociatedProductAdapter(
             tvProductName?.text = productModel.name
             tvDiscountPrice?.text = productModel.productPrice?.price
             tvOriginalPrice?.text = productModel.productPrice?.oldPrice
-            tvItemQuantity?.text = "1"
+            tvItemQuantity?.text = productModel.addToCart?.enteredQuantity?.toString() ?: "1"
             ivProductThumb?.loadImg(productModel.defaultPictureModel?.imageUrl)
 
             setOnClickListener {
+                productModel.addToCart?.enteredQuantity = getQuantity(productModel.id)
                 clickListener?.onClick(it, position, productModel)
             }
 
             ivAddToCart.setOnClickListener {
-                productModel.quantity = getQuantity(productModel.id)
+                productModel.addToCart?.enteredQuantity = getQuantity(productModel.id)
                 clickListener?.onClick(ivAddToCart, position, productModel)
             }
 
             ivAddToWishList.setOnClickListener {
-                productModel.quantity = getQuantity(productModel.id)
+                productModel.addToCart?.enteredQuantity = getQuantity(productModel.id)
                 clickListener?.onClick(ivAddToWishList, position, productModel)
             }
 

@@ -3,9 +3,6 @@ package com.bs.ecommerce.product.model.data
 import com.google.gson.annotations.SerializedName
 
 data class ProductDetail(
-    // this property is not in Response body
-    var quantity: Int = 1,
-
     @SerializedName("AddToCart")
     val addToCart: AddToCart?,
     @SerializedName("AssociatedProducts")
