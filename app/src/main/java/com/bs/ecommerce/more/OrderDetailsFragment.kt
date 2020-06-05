@@ -24,13 +24,7 @@ import com.bs.ecommerce.utils.RecyclerViewMargin
 import com.bs.ecommerce.utils.TextUtils
 import com.bs.ecommerce.utils.toast
 import kotlinx.android.synthetic.main.confirm_order_card.view.*
-import kotlinx.android.synthetic.main.fragment_confirm_order.*
 import kotlinx.android.synthetic.main.fragment_customer_order_detail.*
-import kotlinx.android.synthetic.main.fragment_customer_order_detail.billingAddressCard
-import kotlinx.android.synthetic.main.fragment_customer_order_detail.checkoutProductList
-import kotlinx.android.synthetic.main.fragment_customer_order_detail.paymentMethodCard
-import kotlinx.android.synthetic.main.fragment_customer_order_detail.shippingAddressCard
-import kotlinx.android.synthetic.main.fragment_customer_order_detail.shippingMethodCard
 import kotlinx.android.synthetic.main.item_order_details.view.*
 import kotlinx.android.synthetic.main.table_order_total.*
 import java.lang.ref.WeakReference
@@ -53,9 +47,9 @@ class OrderDetailsFragment : BaseFragment() {
             val orderId = arguments?.getInt(ORDER_ID)
 
             if (orderId == null) {
-                toast(R.string.invalid_id)
+                toast(DbHelper.getString(Const.COMMON_SOMETHING_WENT_WRONG))
 
-                requireActivity().supportFragmentManager.popBackStackImmediate()
+                //requireActivity().supportFragmentManager.popBackStackImmediate()
                 return
             }
 
@@ -185,12 +179,12 @@ class OrderDetailsFragment : BaseFragment() {
                 giftCardLayout?.visibility = View.GONE
 
             if (orderTotal.isNullOrEmpty()) {
-                tvTotal?.setText(DbHelper.getString(Const.CALCULATED_DURING_CHECKOUT))
+                tvTotal?.text = DbHelper.getString(Const.CALCULATED_DURING_CHECKOUT)
                 tvTotal?.setTextColor(android.graphics.Color.RED)
             }
 
             if (orderShipping.isNullOrEmpty()) {
-                tvTotal?.setText(DbHelper.getString(Const.CALCULATED_DURING_CHECKOUT))
+                tvTotal?.text = DbHelper.getString(Const.CALCULATED_DURING_CHECKOUT)
                 tvTotal?.setTextColor(android.graphics.Color.RED)
             }
         }
@@ -218,9 +212,9 @@ class OrderDetailsFragment : BaseFragment() {
             holder.itemView.tvProductName.text = item.productName
 
             holder.itemView.tv1.text =
-                getString(R.string.price).plus(": ").plus(item.unitPrice).plus("  ")
-                    .plus(getString(R.string.quantity)).plus(": ").plus(item.quantity).plus("\n")
-                    .plus(getString(R.string.total)).plus(": ").plus(item.subTotal)
+                DbHelper.getString(Const.ORDER_PRICE).plus(": ").plus(item.unitPrice).plus("  ")
+                DbHelper.getString(Const.ORDER_QUANTITY).plus(": ").plus(item.quantity).plus("\n")
+                DbHelper.getString(Const.ORDER_TOTAL_).plus(": ").plus(item.subTotal)
         }
     }
 

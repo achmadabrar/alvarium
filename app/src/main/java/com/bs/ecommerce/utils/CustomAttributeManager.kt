@@ -86,6 +86,9 @@ class CustomAttributeManager(
         val tvSelectedAttr = layout.findViewById<TextView>(R.id.tvSelectedAttr)
         val radioGroup = RadioGroup(context)
 
+        if (attr.isRequired)
+            tvName?.setDrawableEnd(R.drawable.ic_star_formular)
+
         tvName.text = attr.name
         tvDesc.text = attr.description ?: DbHelper.getString(Const.COMMON_SELECT).plus(" ${attr.name}")
         // preselect requied attributes
@@ -143,11 +146,10 @@ class CustomAttributeManager(
                             val tv =
                                 layoutInflater.inflate(R.layout.custom_attribute_dropdown, viewGroup) as TextView
                             tv.text = label
-                            tv.setCompoundDrawablesWithIntrinsicBounds(
-                                0, 0,
-                                if (selected) R.drawable.ic_tic_mark else R.drawable.transparent_tic_mark,
-                                0
-                            )
+
+                            if (selected) tv?.setDrawableEnd(R.drawable.ic_tic_mark)
+                            else tv?.setDrawableEnd(R.drawable.transparent_tic_mark)
+
                             attributeValueHolder.addView(tv)
 
                             tv.setOnClickListener { v ->
@@ -158,12 +160,8 @@ class CustomAttributeManager(
                                 )
 
                                 for (ii in attributeValueHolder.children) {
-                                    (ii as TextView).setCompoundDrawablesWithIntrinsicBounds(
-                                        0, 0, R.drawable.transparent_tic_mark, 0
-                                    )
-                                    (v as TextView).setCompoundDrawablesWithIntrinsicBounds(
-                                        0, 0, R.drawable.ic_tic_mark, 0
-                                    )
+                                    (ii as TextView).setDrawableEnd(R.drawable.transparent_tic_mark)
+                                    (v as TextView).setDrawableEnd(R.drawable.ic_tic_mark)
                                 }
                             }
                         }
