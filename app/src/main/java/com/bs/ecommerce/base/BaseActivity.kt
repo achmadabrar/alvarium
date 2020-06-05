@@ -277,7 +277,7 @@ abstract class BaseActivity : AppCompatActivity(), ConnectivityReceiver.Connecti
 
     private fun updateResourcesLocale(context : Context, locale : Locale ) : Context
     {
-        val configuration = context.getResources().getConfiguration()
+        val configuration = context.resources.configuration
         configuration.setLocale(locale)
         return context.createConfigurationContext(configuration)
     }
@@ -330,6 +330,7 @@ abstract class BaseActivity : AppCompatActivity(), ConnectivityReceiver.Connecti
             positiveButton(null, DbHelper.getString(Const.CONTINUE)) {
                 finish()
                 startActivity(Intent(applicationContext, MainActivity::class.java))
+                    //.putExtra(MainActivity.KEY_APP_SETTINGS, it))
             }
 
             cancelable(false)

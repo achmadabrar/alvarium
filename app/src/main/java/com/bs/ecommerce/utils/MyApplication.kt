@@ -61,6 +61,7 @@ class MyApplication : MultiDexApplication()
         var getBillingResponse : BillingAddressResponse? = BillingAddressResponse()
 
         var previouslySelectedTab = 0
+        var logoUrl = ""
     }
 
 }
