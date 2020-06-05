@@ -14,6 +14,7 @@ import com.bs.ecommerce.product.model.data.AddToCartResponse
 import com.bs.ecommerce.product.model.data.ProductDetail
 import com.bs.ecommerce.product.model.data.ProductDetailResponse
 import com.bs.ecommerce.product.model.data.ProductSummary
+import com.bs.ecommerce.utils.OneTimeEvent
 import com.bs.ecommerce.utils.TextUtils
 import com.bs.ecommerce.utils.showLog
 import java.util.*
@@ -29,7 +30,7 @@ class ProductDetailViewModel : BaseViewModel() {
 
     var isInvalidProductLD = MutableLiveData<Boolean>()
 
-    var addToCartResponseLD = MutableLiveData<AddToCartResponse>()
+    var addToCartResponseLD = MutableLiveData<OneTimeEvent<AddToCartResponse>>()
 
     var gotoCartPage = false
     var rentDateFrom: Long? = null
@@ -179,7 +180,7 @@ class ProductDetailViewModel : BaseViewModel() {
             {
                 isLoadingLD.value = false
 
-                addToCartResponseLD.value = data
+                addToCartResponseLD.value = OneTimeEvent(data)
             }
 
             override fun onRequestFailed(errorMessage: String)

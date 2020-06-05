@@ -73,6 +73,9 @@ class Const {
         const val ORDER_STATUS = "account.customerorders.orderstatus"
         const val ORDER_TOTAL = "account.customerorders.ordertotal"
         const val ORDER_DATE = "account.customerorders.orderdate"
+        const val ORDER_PRICE = "order.product(s).price"
+        const val ORDER_QUANTITY = "order.product(s).quantity"
+        const val ORDER_TOTAL_ = "order.product(s).sku"
 
         const val CATALOG_ITEMS_PER_PAGE = "catalog.pagesize.label"
 

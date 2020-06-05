@@ -37,11 +37,12 @@
 
         <ImageView
             android:id="@+id/icRemoveItem"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="@dimen/cross_icon_size"
+            android:layout_height="@dimen/cross_icon_size"
             android:contentDescription="@string/placeholder"
             android:padding="5dp"
             android:src="@drawable/ic_cross"
+            android:tint="?attr/primaryIconTint"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 

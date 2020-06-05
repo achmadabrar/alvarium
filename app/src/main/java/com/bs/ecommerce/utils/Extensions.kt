@@ -4,6 +4,7 @@ package com.bs.ecommerce.utils
 
 import android.app.Activity
 import android.content.Context
+import android.content.res.Configuration
 import android.net.ConnectivityManager
 import android.os.Build
 import android.util.Log
@@ -285,6 +286,16 @@ fun TextView?.showTextPendingCalculationOnCheckout()
     this?.textSize = 13F
     this?.maxLines = 2
     this?.setTextColor(ContextCompat.getColor(context, R.color.pink))
+}
+
+fun TextView.setDrawableEnd(resId: Int) {
+    val config: Configuration = resources.configuration
+
+    if (config.layoutDirection == View.LAYOUT_DIRECTION_RTL) {
+        setCompoundDrawablesWithIntrinsicBounds(resId, 0, 0, 0)
+    } else {
+        setCompoundDrawablesWithIntrinsicBounds(0, 0, resId, 0)
+    }
 }
 
 fun Context.isOnline(): Boolean {

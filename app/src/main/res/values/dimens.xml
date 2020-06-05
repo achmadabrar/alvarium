@@ -13,6 +13,7 @@
     <dimen name="cardCornerRadius">0dp</dimen>
     <dimen name="product_thumbnail_cart">120dp</dimen>
     <dimen name="product_item_size">165dp</dimen>
+    <dimen name="cross_icon_size">23dp</dimen>
 
     <dimen name="tv_text_size_large">18sp</dimen>
     <dimen name="tv_text_size_semi_large">16.5sp</dimen>
