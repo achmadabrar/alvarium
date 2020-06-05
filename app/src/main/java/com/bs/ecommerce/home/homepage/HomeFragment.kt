@@ -44,7 +44,6 @@ import kotlin.concurrent.thread
 class HomeFragment : ToolbarLogoBaseFragment() {
 
     private lateinit var model: HomePageModel
-    private lateinit var cartModel: CartModel
     private var observeLiveDataChange = true
 
     private lateinit var productClickListener: ItemClickListener<ProductSummary>
@@ -68,28 +67,20 @@ class HomeFragment : ToolbarLogoBaseFragment() {
 
         viewModel = ViewModelProvider(requireActivity()).get(MainViewModel::class.java)
 
+        setCurrentCartItemCounterOnTopView()
 
-        if(requireActivity().isOnline())
-        {
-            setCurrentCartItemCounterOnTopView()
+        if (!viewCreated) {
+            model = HomePageModelImpl(requireContext())
 
-            if (!viewCreated) {
-                model = HomePageModelImpl(requireContext())
+            (viewModel as MainViewModel).getAllLandingPageProducts(model)
 
-                (viewModel as MainViewModel).getAllLandingPageProducts(model)
-
-                initComponents()
-                observeLiveDataChange = true
-            } else {
-                observeLiveDataChange = false
-            }
-
-            setLiveDataListeners()
+            initComponents()
+            observeLiveDataChange = true
+        } else {
+            observeLiveDataChange = false
         }
-        else
-            showInternetDisconnectedDialog()
 
-
+        setLiveDataListeners()
     }
 
     private fun initComponents() {
@@ -112,21 +103,13 @@ class HomeFragment : ToolbarLogoBaseFragment() {
 
         swipeRefreshLayout.setOnRefreshListener {
 
-            if(requireActivity().isOnline())
-            {
-                swipeRefreshLayout.isRefreshing = false
+            swipeRefreshLayout.isRefreshing = false
 
-                (viewModel as MainViewModel).apply {
-                    observeLiveDataChange = true
+            (viewModel as MainViewModel).apply {
+                observeLiveDataChange = true
 
-                    getAllLandingPageProducts(model)
-                }
+                getAllLandingPageProducts(model)
             }
-            else
-                showInternetDisconnectedDialog()
-
-
-
         }
 
         featuredProductLayout?.rvList?.apply {
@@ -160,51 +143,48 @@ class HomeFragment : ToolbarLogoBaseFragment() {
     }
 
     private fun setLiveDataListeners() {
-        val viewModel = (viewModel as MainViewModel)
 
-        viewModel.cartLD.observe(viewLifecycleOwner, Observer { cartRootData -> updateCartItemCounter(cartRootData.cart.items) })
+        with(viewModel as MainViewModel)
+        {
+            cartLD.observe(viewLifecycleOwner, Observer { cartRootData -> updateCartItemCounter(cartRootData.cart.items) })
 
-        viewModel.featuredProductListLD.observe(viewLifecycleOwner,
-            Observer { list ->
-                if(observeLiveDataChange) populateFeaturedProductList(list)
+            featuredProductListLD.observe(viewLifecycleOwner,
+                Observer { list ->
+                    if(observeLiveDataChange) populateFeaturedProductList(list)
+                })
+
+            manufacturerListLD.observe(viewLifecycleOwner, Observer { list ->
+                if(observeLiveDataChange) populateManufacturerList(list)
             })
 
-        viewModel.manufacturerListLD.observe(viewLifecycleOwner, Observer { list ->
-            if(observeLiveDataChange) populateManufacturerList(list)
-        })
+            featuredCategoryLD.observe(viewLifecycleOwner, Observer { list ->
+                if(observeLiveDataChange) populateFeaturedCategoryList(list)
+            })
 
 
-        viewModel.featuredCategoryLD.observe(viewLifecycleOwner, Observer { list ->
-            if(observeLiveDataChange) populateFeaturedCategoryList(list)
-        })
+            bestSellingProductLD.observe(viewLifecycleOwner, Observer { list ->
+                if(observeLiveDataChange) populateBestSellingProductList(list)
+            })
 
 
-        viewModel.bestSellingProductLD.observe(viewLifecycleOwner, Observer { list ->
-            if(observeLiveDataChange) populateBestSellingProductList(list)
-        })
+            imageBannerLD.observe(viewLifecycleOwner, Observer { sliderData ->
+                if(observeLiveDataChange) populateBanner(sliderData)
+            })
+
+            homePageLoader.observe(viewLifecycleOwner, Observer { isShowLoader -> showHideLoader(isShowLoader) })
+
+            addedToWishListLD.observe(viewLifecycleOwner, Observer { action ->
+
+                action?.getContentIfNotHandled()?.let { product ->
+                    replaceFragmentSafely(ProductDetailFragment.newInstance(
+                        product.id?.toLong() ?: -1L, product.name))
+                }
+
+                blockingLoader.hideDialog()
+            })
+        }
 
 
-        viewModel.imageBannerLD.observe(viewLifecycleOwner, Observer { sliderData ->
-            if(observeLiveDataChange) populateBanner(sliderData)
-        })
-
-
-        viewModel.homePageLoader.observe(viewLifecycleOwner, Observer { isShowLoader ->
-            if (isShowLoader)
-                showLoading()
-            else
-                hideLoading()
-        })
-
-        viewModel.addedToWishListLD.observe(viewLifecycleOwner, Observer { action ->
-
-            action?.getContentIfNotHandled()?.let { product ->
-                replaceFragmentSafely(ProductDetailFragment.newInstance(
-                    product.id?.toLong() ?: -1L, product.name))
-            }
-
-            blockingLoader.hideDialog()
-        })
     }
 
     private fun populateBanner(sliderData: SliderData) {

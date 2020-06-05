@@ -228,11 +228,7 @@ class CartFragment : BaseFragment() {
                 if (newState == BottomSheetBehavior.STATE_COLLAPSED) {
                     logTag.showLog("bs collapsed")
 
-                    (viewModel as CartViewModel).calculateCostWithUpdatedAttributes(
-                        customAttributeManager
-                            ?.getFormData(Api.checkOutAttributePrefix) ?: KeyValueFormData(),
-                        model
-                    )
+                    submitCheckoutAttributes()
                 }
             }
 
@@ -240,6 +236,8 @@ class CartFragment : BaseFragment() {
         })
 
         btnCheckOut.setOnClickListener {
+
+            submitCheckoutAttributes()
 
             if (prefObject.getPrefsBoolValue(PrefSingleton.IS_LOGGED_IN)) {
                 replaceFragmentSafely(CheckoutStepFragment())
@@ -294,6 +292,15 @@ class CartFragment : BaseFragment() {
     private fun showCheckOutOptionsDialogFragment() {
         val newFragment = GuestCheckoutFragment()
         newFragment.show(requireActivity().supportFragmentManager, "dialog")
+    }
+
+
+    private fun submitCheckoutAttributes()
+    {
+        (viewModel as CartViewModel).calculateCostWithUpdatedAttributes(
+            customAttributeManager
+                ?.getFormData(Api.checkOutAttributePrefix) ?: KeyValueFormData(),
+            model)
     }
 
 }

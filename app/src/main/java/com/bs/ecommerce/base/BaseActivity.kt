@@ -1,13 +1,20 @@
 package com.bs.ecommerce.base
 
+import android.app.Dialog
 import android.content.Context
 import android.content.Intent
+import android.content.IntentFilter
+import android.net.ConnectivityManager
 import android.os.Build
 import android.os.Bundle
+import android.os.Handler
+import android.provider.Settings
 import android.text.TextUtils
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import android.view.WindowManager
+import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.annotation.LayoutRes
 import androidx.appcompat.app.AppCompatActivity
@@ -18,13 +25,14 @@ import com.bs.ecommerce.auth.login.LoginFragment
 import com.bs.ecommerce.cart.CartFragment
 import com.bs.ecommerce.db.DbHelper
 import com.bs.ecommerce.main.MainActivity
+import com.bs.ecommerce.main.SplashScreenActivity
 import com.bs.ecommerce.main.model.data.AppLandingData
 import com.bs.ecommerce.networking.NetworkConstants
 import com.bs.ecommerce.utils.*
 import java.util.*
 
 
-abstract class BaseActivity : AppCompatActivity()
+abstract class BaseActivity : AppCompatActivity(), ConnectivityReceiver.ConnectivityReceiverListener
 {
 
     val prefObject = PrefSingleton
@@ -41,6 +49,8 @@ abstract class BaseActivity : AppCompatActivity()
     override fun onCreate(savedInstanceState: Bundle?)
     {
         super.onCreate(savedInstanceState)
+
+        registerReceiver(ConnectivityReceiver(), IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION))
 
         setTheme(R.style.Nop_Theme_Dark)
 
@@ -59,6 +69,61 @@ abstract class BaseActivity : AppCompatActivity()
 
         setLocale(false)
 
+    }
+
+    override fun onNetworkConnectionChanged(isConnected: Boolean) {
+        if(!isConnected)
+            showInternetDisconnectedDialog()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        ConnectivityReceiver.connectivityReceiverListener = this
+    }
+
+    private fun showInternetDisconnectedDialog() {
+        val dialog = Dialog(this, android.R.style.Theme_Black_NoTitleBar_Fullscreen)
+        dialog.setContentView(R.layout.custom_dialog_internet_disconnect)
+
+        dialog.window?.setLayout(
+            WindowManager.LayoutParams.MATCH_PARENT,
+            WindowManager.LayoutParams.MATCH_PARENT)
+
+
+        val tvNoInternet = dialog.findViewById<View>(R.id.tvNoInternet) as TextView
+
+        if(Const.NO_INTERNET != DbHelper.getString(Const.NO_INTERNET))
+            tvNoInternet.text = DbHelper.getString(Const.NO_INTERNET)
+
+        val buttonSetting = dialog.findViewById<View>(R.id.button_setting) as TextView
+
+        if(Const.SETTINGS != DbHelper.getString(Const.SETTINGS))
+            buttonSetting.text = DbHelper.getString(Const.SETTINGS)
+
+        val buttonTryAgain = dialog.findViewById<View>(R.id.btnTryAgain) as TextView
+
+        if(Const.TRY_AGAIN != DbHelper.getString(Const.TRY_AGAIN))
+            buttonTryAgain.text = DbHelper.getString(Const.TRY_AGAIN)
+
+        val tryAgainLayout = dialog.findViewById<View>(R.id.linearTryAgain) as LinearLayout
+
+        buttonSetting.setOnClickListener { sentWifiSettings(this) }
+
+        tryAgainLayout.setOnClickListener {
+
+            dialog.dismiss()
+            // set delay for smooth animation
+            val handler = Handler()
+            handler.postDelayed({
+                startActivity(Intent(applicationContext, SplashScreenActivity::class.java))
+                finish()
+            }, 500)
+        }
+
+        dialog.show()
+    }
+    private fun sentWifiSettings(context: Context?) {
+        context?.startActivity(Intent(Settings.ACTION_WIFI_SETTINGS))
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean
@@ -244,7 +309,6 @@ abstract class BaseActivity : AppCompatActivity()
 
             if (recreate)
                 recreate()
-
         }
     }
 

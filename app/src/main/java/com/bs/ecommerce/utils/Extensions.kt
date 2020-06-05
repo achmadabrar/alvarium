@@ -286,9 +286,3 @@ fun TextView?.showTextPendingCalculationOnCheckout()
     this?.maxLines = 2
     this?.setTextColor(ContextCompat.getColor(context, R.color.pink))
 }
-
-fun Context.isOnline(): Boolean {
-    val cm = this.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
-    val networkInfo = cm.activeNetworkInfo
-    return networkInfo?.isConnectedOrConnecting ?: false
-}

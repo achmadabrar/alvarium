@@ -226,45 +226,6 @@ abstract class BaseFragment : Fragment()
         requireActivity().invalidateOptionsMenu()
     }
 
-    fun showInternetDisconnectedDialog() {
-        val dialog = Dialog(activity!!, android.R.style.Theme_Black_NoTitleBar_Fullscreen)
-        dialog.setContentView(R.layout.custom_dialog_internet_disconnect)
-
-        dialog.window?.setLayout(
-            WindowManager.LayoutParams.MATCH_PARENT,
-            WindowManager.LayoutParams.MATCH_PARENT)
-
-
-        val tvNoInternet = dialog.findViewById<View>(R.id.tvNoInternet) as TextView
-        tvNoInternet.text = DbHelper.getString(Const.NO_INTERNET)
-
-        val buttonSetting = dialog.findViewById<View>(R.id.button_setting) as TextView
-        buttonSetting.text = DbHelper.getString(Const.SETTINGS)
-
-        val buttonTryAgain = dialog.findViewById<View>(R.id.btnTryAgain) as TextView
-        buttonTryAgain.text = DbHelper.getString(Const.TRY_AGAIN)
-
-        val tryAgainLayout = dialog.findViewById<View>(R.id.linearTryAgain) as LinearLayout
-
-        buttonSetting.setOnClickListener { sentWifiSettings(activity) }
-
-        tryAgainLayout.setOnClickListener {
-
-            dialog.dismiss()
-            // set delay for smooth animation
-            val handler = Handler()
-            handler.postDelayed({
-                startActivity(Intent(activity, MainActivity::class.java))
-                activity?.finish()
-            }, 500)
-        }
-
-        dialog.show()
-    }
-    private fun sentWifiSettings(context: Context?) {
-        context?.startActivity(Intent(Settings.ACTION_WIFI_SETTINGS))
-    }
-
 
     protected fun populateOrderTable(orderTotalModel: OrderTotal)
     {

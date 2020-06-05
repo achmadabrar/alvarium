@@ -9,12 +9,12 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.bs.ecommerce.R
 import com.bs.ecommerce.base.BaseActivity
-import com.bs.ecommerce.checkout.WebViewPaymentActivity
 import com.bs.ecommerce.db.DbHelper
 import com.bs.ecommerce.main.LanguageLoaderViewModel
 import com.bs.ecommerce.main.MainActivity
 import com.bs.ecommerce.main.MainViewModel
 import com.bs.ecommerce.main.model.MainModelImpl
+import com.bs.ecommerce.main.model.data.AppLandingData
 import com.bs.ecommerce.main.model.data.CurrencyNavSelector
 import com.bs.ecommerce.main.model.data.LanguageNavSelector
 import com.bs.ecommerce.more.viewmodel.BaseUrlChangeFragment
@@ -91,7 +91,7 @@ class SettingsFragment: BaseUrlChangeFragment() {
                 if(isLanguageChanged)
                 {
                     rtl = it.rtl
-                    changeLanguage(languageId)
+                    changeLanguage(languageId, settings)
                 }
                 else
                 {
@@ -121,6 +121,7 @@ class SettingsFragment: BaseUrlChangeFragment() {
 
         })
 
+        mainViewModel.isLoadingLD.observe(viewLifecycleOwner, Observer { isShowLoader -> showHideLoader(isShowLoader) })
 
         languageViewModel.showLoader.observe(viewLifecycleOwner, Observer { show ->
             if(show.getContentIfNotHandled() == true) blockingLoader.showDialog()
@@ -256,7 +257,7 @@ class SettingsFragment: BaseUrlChangeFragment() {
 
     }
 
-    private fun changeLanguage(languageId : Int)
+    private fun changeLanguage(languageId: Int, appSettings: OneTimeEvent<AppLandingData?>)
     {
         var languageBehaviour = ""
 
@@ -269,8 +270,17 @@ class SettingsFragment: BaseUrlChangeFragment() {
         prefObject.setPrefs(PrefSingleton.CURRENT_LANGUAGE, languageBehaviour)
         prefObject.setPrefs(PrefSingleton.CURRENT_LANGUAGE_ID, languageId)
 
-        requireActivity().finish()
-        startActivity(Intent(requireActivity().applicationContext, MainActivity::class.java))
+        //(activity as BaseActivity).setLocale(true)
+
+        appSettings.getContentIfNotHandled()?.let {
+
+            requireActivity().finish()
+            startActivity(
+                Intent(requireActivity().applicationContext, MainActivity::class.java)
+                    .putExtra(MainActivity.KEY_APP_SETTINGS, it)
+
+            )
+        }
     }
 
     private fun changeCurrency(currencyId : Int)

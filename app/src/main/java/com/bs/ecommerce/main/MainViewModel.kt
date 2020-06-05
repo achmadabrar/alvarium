@@ -66,7 +66,7 @@ class MainViewModel : CheckoutViewModel() {
     private fun hideLoader() {
         val serviceCalled = count.incrementAndGet()
 
-        if(serviceCalled == 4) {
+        if(serviceCalled == 5) {
             homePageLoader.value = false
             count = AtomicInteger(0)
         }
@@ -113,11 +113,13 @@ class MainViewModel : CheckoutViewModel() {
         model.fetchHomePageCategoryList(object : RequestCompleteListener<List<CategoryModel>> {
             override fun onRequestSuccess(data: List<CategoryModel>) {
                 featuredCategoryLD.value = data
+                hideLoader()
             }
 
             override fun onRequestFailed(errorMessage: String) {
                 featuredCategoryLD.value = listOf()
                 toast(errorMessage)
+                hideLoader()
             }
         })
     }
@@ -196,10 +198,14 @@ class MainViewModel : CheckoutViewModel() {
 
     fun getAppSettings(model: MainModel, saveLanguage: Boolean = true) {
 
+        isLoadingLD.value = true
+
         model.getAppLandingSettings(
             object : RequestCompleteListener<AppLandingSettingResponse> {
 
                 override fun onRequestSuccess(data: AppLandingSettingResponse) {
+
+                    isLoadingLD.value = false
 
                     val id = data.data.languageNavSelector.currentLanguageId
                     "lang_".showLog("Language ID: $id")
@@ -227,6 +233,7 @@ class MainViewModel : CheckoutViewModel() {
                 override fun onRequestFailed(errorMessage: String) {
                     appSettingsLD.value = OneTimeEvent(null)
                     showLoader.value = OneTimeEvent(false)
+                    isLoadingLD.value = false
                 }
             })
     }

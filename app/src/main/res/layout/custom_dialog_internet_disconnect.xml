@@ -46,16 +46,13 @@
                 android:gravity="center"
                 android:padding="8dp">
 
-<!--                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/ic_restart" />-->
 
                 <TextView
                     android:id="@+id/btnTryAgain"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="5dp"
+                    android:maxLines="3"
                     android:text="Try Again"
                     android:textColor="@color/white" />
 
