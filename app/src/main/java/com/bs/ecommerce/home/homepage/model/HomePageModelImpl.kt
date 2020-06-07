@@ -34,7 +34,7 @@ class HomePageModelImpl(private val context: Context) : HomePageModel {
 
 
                 override fun onFailure(call: Call<HomePageProductResponse>, t: Throwable) {
-                    callback.onRequestFailed(t.localizedMessage!!)
+                    callback.onRequestFailed(t.localizedMessage ?: "Something went wrong")
                 }
             })
 

@@ -11,8 +11,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.bs.ecommerce.R
 import com.bs.ecommerce.base.BaseViewModel
 import com.bs.ecommerce.base.ToolbarLogoBaseFragment
-import com.bs.ecommerce.cart.model.CartModel
-import com.bs.ecommerce.cart.model.CartModelImpl
 import com.bs.ecommerce.db.DbHelper
 import com.bs.ecommerce.home.FeaturedProductAdapter
 import com.bs.ecommerce.home.ManufacturerListAdapter
@@ -158,7 +156,11 @@ class HomeFragment : ToolbarLogoBaseFragment() {
             })
 
             featuredCategoryLD.observe(viewLifecycleOwner, Observer { list ->
-                if(observeLiveDataChange) populateFeaturedCategoryList(list)
+                try {
+                    if (observeLiveDataChange) populateFeaturedCategoryList(list)
+                } catch (e: IllegalStateException) {
+                    "crash".showLog("asyncInflation - $e")
+                }
             })
 
 
@@ -199,7 +201,9 @@ class HomeFragment : ToolbarLogoBaseFragment() {
         banner?.view_pager_slider1?.apply {
             removeAllSliders()
             setPresetIndicator(SliderLayout.PresetIndicators.Center_Bottom)
-            setCustomIndicator(view!!.findViewById<View>(R.id.circle_indicator) as PagerIndicator)
+            view?.findViewById<View>(R.id.circle_indicator)?.let {
+                setCustomIndicator(it as PagerIndicator)
+            }
         }
 
         var biggestImageAR = 100000F
@@ -220,7 +224,10 @@ class HomeFragment : ToolbarLogoBaseFragment() {
                 val url = URL(imageModel.imageUrl)
                 val bitmap = BitmapFactory.decodeStream(url.openConnection().getInputStream())
 
-                val thisImageAR = (bitmap?.width!!.toFloat() / bitmap.height.toFloat())
+                val bitmapWidth: Float = bitmap?.width?.toFloat() ?: 1f
+                val bitmapHeight: Float = bitmap?.height?.toFloat() ?: 1f
+
+                val thisImageAR = (bitmapWidth / bitmapHeight)
 
                 if (thisImageAR < biggestImageAR)
                     biggestImageAR = thisImageAR
@@ -275,15 +282,20 @@ class HomeFragment : ToolbarLogoBaseFragment() {
                 }
 
                 linearLayout.rvList.apply {
-                    setHasFixedSize(true)
-                    addItemDecoration(RecyclerViewMargin(15, 1, false))
-                    layoutManager = LinearLayoutManager(
-                        requireContext(), LinearLayoutManager.HORIZONTAL, false
-                    )
 
-                    adapter = FeaturedProductAdapter(
-                        featuredCategory.products, productClickListener
-                    )
+                    val ctx = requireContext()
+
+                    ctx?.let {
+                        setHasFixedSize(true)
+                        addItemDecoration(RecyclerViewMargin(15, 1, false))
+                        layoutManager = LinearLayoutManager(
+                            it, LinearLayoutManager.HORIZONTAL, false
+                        )
+
+                        adapter = FeaturedProductAdapter(
+                            featuredCategory.products, productClickListener
+                        )
+                    }
                 }
 
                 featuredCategoryContainerLayout?.addView(linearLayout)
@@ -313,9 +325,9 @@ class HomeFragment : ToolbarLogoBaseFragment() {
             return
         }
 
-        bestSellingLayout.visibility = View.VISIBLE
-        bestSellingLayout.tvTitle.text = DbHelper.getString("bestsellers")
-        bestSellingLayout.btnSeeAll.visibility = View.GONE
+        bestSellingLayout?.visibility = View.VISIBLE
+        bestSellingLayout?.tvTitle?.text = DbHelper.getString("bestsellers")
+        bestSellingLayout?.btnSeeAll?.visibility = View.GONE
         bestSellingLayout?.btnSeeAll?.text = DbHelper.getString(Const.COMMON_SEE_ALL)
 
         bestSellingLayout?.rvList?.adapter = FeaturedProductAdapter(list, productClickListener)
@@ -352,7 +364,7 @@ class HomeFragment : ToolbarLogoBaseFragment() {
     }
 
     private fun populateBottomSheet(subCategories: List<SubCategory>) {
-        bottomSheetLayout.subcategoryNameHolder.removeAllViews()
+        bottomSheetLayout?.subcategoryNameHolder?.removeAllViews()
 
         for (item in subCategories) {
             val v:View = layoutInflater.inflate(R.layout.item_home_bs_options, homePageRootView as RelativeLayout, false)
@@ -363,11 +375,11 @@ class HomeFragment : ToolbarLogoBaseFragment() {
                 bsBehavior.state = BottomSheetBehavior.STATE_COLLAPSED
 
                 replaceFragmentSafely(ProductListFragment.newInstance(
-                    item.name ?: "", item.id!!, ProductListFragment.GetBy.CATEGORY
+                    item.name ?: "", item.id ?: -1, ProductListFragment.GetBy.CATEGORY
                 ))
             }
 
-            bottomSheetLayout.subcategoryNameHolder.addView(v)
+            bottomSheetLayout?.subcategoryNameHolder?.addView(v)
         }
 
         bsBehavior.state = BottomSheetBehavior.STATE_EXPANDED
