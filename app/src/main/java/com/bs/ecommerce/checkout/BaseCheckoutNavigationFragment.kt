@@ -135,7 +135,11 @@ abstract class BaseCheckoutNavigationFragment : ToolbarLogoBaseFragment()
 
 
             CheckoutConstants.CartPage ->
-                (activity as BaseActivity).showOrderCompleteDialog(saveResponse!!.data.completedModel!!.orderId)
+                saveResponse?.data?.completedModel?.let {
+                    (activity as BaseActivity).showOrderCompleteDialog(it.orderId)
+                }
+
+
 
             /*startActivity(Intent(requireActivity(), ResultActivity::class.java)
                         .putExtra(CheckoutConstants.CHECKOUT_STEP, CheckoutConstants.Completed)
