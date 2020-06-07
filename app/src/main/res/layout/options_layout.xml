@@ -5,7 +5,7 @@
     android:layout_height="wrap_content"
     xmlns:tools="http://schemas.android.com/tools"
     android:padding="15dp"
-    android:background="@drawable/option_item_bg">
+    android:background="@drawable/customer_order_item_bg">
 
     <ImageView
         android:id="@+id/ivOptionIcon"

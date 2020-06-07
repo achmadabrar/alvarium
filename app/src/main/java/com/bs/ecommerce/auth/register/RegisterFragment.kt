@@ -257,7 +257,7 @@ open class RegisterFragment : ToolbarLogoBaseFragment(), View.OnClickListener
                 calender = myCalendar
 
 
-            val dialog = DatePickerDialog(activity!!, dateSetListener,
+            val dialog = DatePickerDialog(requireContext(), dateSetListener,
                 calender!!.get(Calendar.YEAR), calender.get(Calendar.MONTH),
                 calender.get(Calendar.DAY_OF_MONTH))
             dialog.datePicker.maxDate = System.currentTimeMillis()
@@ -381,7 +381,7 @@ open class RegisterFragment : ToolbarLogoBaseFragment(), View.OnClickListener
             }
 
             
-            newsletter = cbNewsletter?.isChecked!!
+            newsletter = cbNewsletter?.isChecked ?: false
 
         }
     }
