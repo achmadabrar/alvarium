@@ -10,7 +10,6 @@ import androidx.lifecycle.ViewModelProvider
 import com.bs.ecommerce.R
 import com.bs.ecommerce.base.BaseActivity
 import com.bs.ecommerce.db.DbHelper
-import com.bs.ecommerce.main.LanguageLoaderViewModel
 import com.bs.ecommerce.main.MainActivity
 import com.bs.ecommerce.main.MainViewModel
 import com.bs.ecommerce.main.model.MainModelImpl
@@ -25,7 +24,7 @@ import java.util.*
 class SettingsFragment: BaseUrlChangeFragment() {
 
 
-    lateinit var languageViewModel: LanguageLoaderViewModel
+    //lateinit var languageViewModel: LanguageLoaderViewModel
 
     private var currencyGetResponse: CurrencyNavSelector? = null
     private var languageGetResponse: LanguageNavSelector? = null
@@ -50,10 +49,10 @@ class SettingsFragment: BaseUrlChangeFragment() {
 
         mainModel = MainModelImpl(activity?.applicationContext!!)
 
-        mainViewModel = ViewModelProvider(this).get(MainViewModel::class.java)
-        languageViewModel = ViewModelProvider(this).get(LanguageLoaderViewModel::class.java)
+        mainViewModel = ViewModelProvider(requireActivity()).get(MainViewModel::class.java)
+        //languageViewModel = ViewModelProvider(this).get(LanguageLoaderViewModel::class.java)
 
-        mainViewModel.getAppSettings(mainModel)
+        //mainViewModel.getAppSettings(mainModel)
 
         setLiveDataListeners()
 
@@ -102,14 +101,14 @@ class SettingsFragment: BaseUrlChangeFragment() {
             }
         })
 
-        languageViewModel.isLanguageLoaded.observe(viewLifecycleOwner, Observer { loaded ->
+        /*languageViewModel.isLanguageLoaded.observe(viewLifecycleOwner, Observer { loaded ->
 
             if(languageId!=-1 && loaded.getContentIfNotHandled() == true) {
                 "lang_".showLog("Download success? ${loaded.peekContent()}")
 
                 mainViewModel.changeLanguage(languageId, model = mainModel)
             }
-        })
+        })*/
 
         mainViewModel.languageChangeSuccessLD.observe(viewLifecycleOwner, Observer { isChanged ->
 
@@ -121,12 +120,15 @@ class SettingsFragment: BaseUrlChangeFragment() {
 
         })
 
-        mainViewModel.isLoadingLD.observe(viewLifecycleOwner, Observer { isShowLoader -> showHideLoader(isShowLoader) })
-
-        languageViewModel.showLoader.observe(viewLifecycleOwner, Observer { show ->
-            if(show.getContentIfNotHandled() == true) blockingLoader.showDialog()
+        mainViewModel.isLoadingLD.observe(viewLifecycleOwner, Observer { isShowLoader ->
+            if(isShowLoader) blockingLoader.showDialog()
             else blockingLoader.hideDialog()
         })
+
+        /*languageViewModel.showLoader.observe(viewLifecycleOwner, Observer { show ->
+            if(show.getContentIfNotHandled() == true) blockingLoader.showDialog()
+            else blockingLoader.hideDialog()
+        })*/
     }
 
     private fun setLanguageDropdown(languageNavSelector: LanguageNavSelector)
@@ -224,7 +226,8 @@ class SettingsFragment: BaseUrlChangeFragment() {
                     languageId = languageIdList[position - 1]
 
                     // download language strings
-                    languageViewModel.downloadLanguage(languageId)
+                    //languageViewModel.downloadLanguage(languageId)
+                    mainViewModel.changeLanguage(languageId, model = mainModel)
                 }
             }
 
