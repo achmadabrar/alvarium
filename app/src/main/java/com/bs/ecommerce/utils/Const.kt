@@ -112,7 +112,6 @@ class Const {
         const val PRODUCT_BTN_ADDTO_WISHLIST = "shoppingcart.addtowishlist"
         const val PRODUCT_ADDED_TO_WISHLIST = "products.producthasbeenaddedtothewishlist"
 
-        const val ADDTO_WISHLIST_SUCCESS = "products.producthasbeenaddedtothewishlist"
 
 
         const val WISHLIST_NO_ITEM = "wishlist.cartisempty"
