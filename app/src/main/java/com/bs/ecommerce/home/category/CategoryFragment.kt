@@ -76,16 +76,7 @@ class CategoryFragment : BaseFragment()
 
             showList(categoryList)
         })
-
-
-        mainViewModel.isLoadingLD.observe(viewLifecycleOwner, Observer { isShowLoader ->
-
-            if (isShowLoader)
-                showLoading()
-            else
-                hideLoading()
-        })
-
+        mainViewModel.isLoadingLD.observe(viewLifecycleOwner, Observer { isShowLoader -> showHideLoader(isShowLoader) })
     }
 
     private fun showList(categoryList: List<Category>)

@@ -8,9 +8,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.bs.ecommerce.R
 import com.bs.ecommerce.base.BaseViewModel
 import com.bs.ecommerce.cart.CartAdapter
-import com.bs.ecommerce.cart.GiftCardAdapter
-import com.bs.ecommerce.cart.model.CartModel
-import com.bs.ecommerce.cart.model.CartModelImpl
 import com.bs.ecommerce.cart.model.data.*
 import com.bs.ecommerce.db.DbHelper
 import com.bs.ecommerce.main.MainViewModel
@@ -108,7 +105,8 @@ class ConfirmOrderFragment : BaseCheckoutNavigationFragment() {
     }
 
     private fun showProductList(cartData: CartInfoData?) {
-        val cartAdapter = CartAdapter(cartData?.items ?: mutableListOf(),clickListener,   viewModel, isCheckout = true)
+        val cartAdapter = CartAdapter(requireActivity(), cartData?.items ?: mutableListOf(),clickListener,   viewModel,
+            isCheckout = true)
 
         checkoutProductList?.apply {
             setHasFixedSize(true)

@@ -129,7 +129,7 @@ class CartFragment : BaseFragment() {
         cartproductRecyclerList?.setHasFixedSize(true)
         cartproductRecyclerList?.layoutManager = layoutManager
 
-        val cartAdapter = CartAdapter(items, clickListener, viewModel, model)
+        val cartAdapter = CartAdapter(requireActivity(), items, clickListener, viewModel, model)
 
         cartproductRecyclerList?.adapter = cartAdapter
     }

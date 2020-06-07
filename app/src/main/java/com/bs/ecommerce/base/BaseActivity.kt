@@ -41,6 +41,8 @@ abstract class BaseActivity : AppCompatActivity(), ConnectivityReceiver.Connecti
 
     private var counterText: TextView? = null
 
+    lateinit var connectivityReceiver :ConnectivityReceiver
+
     @LayoutRes
     abstract fun getLayoutId(): Int
 
@@ -50,7 +52,8 @@ abstract class BaseActivity : AppCompatActivity(), ConnectivityReceiver.Connecti
     {
         super.onCreate(savedInstanceState)
 
-        registerReceiver(ConnectivityReceiver(), IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION))
+        connectivityReceiver = ConnectivityReceiver()
+        registerReceiver(connectivityReceiver, IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION))
 
         setTheme(R.style.Nop_Theme_Dark)
 
@@ -79,6 +82,11 @@ abstract class BaseActivity : AppCompatActivity(), ConnectivityReceiver.Connecti
     override fun onResume() {
         super.onResume()
         ConnectivityReceiver.connectivityReceiverListener = this
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        unregisterReceiver(connectivityReceiver)
     }
 
     private fun showInternetDisconnectedDialog() {
@@ -129,7 +137,6 @@ abstract class BaseActivity : AppCompatActivity(), ConnectivityReceiver.Connecti
     override fun onCreateOptionsMenu(menu: Menu): Boolean
     {
         menuInflater.inflate(R.menu.menu_main, menu)
-        //changeMenuItemLoginAction(menu)
         setOrRefreshCurtMenuItem(menu)
         return true
     }
@@ -151,8 +158,6 @@ abstract class BaseActivity : AppCompatActivity(), ConnectivityReceiver.Connecti
         val cartCounterView = menu.findItem(R.id.menu_cart).actionView
         counterText = cartCounterView.findViewById<View>(R.id.counterText) as TextView
         cartCounterView.setOnClickListener {
-
-            //closeLeftDrawer()
 
             if (supportFragmentManager.findFragmentById(R.id.layoutFrame) !is CartFragment)
                 goMenuItemFragment(CartFragment())

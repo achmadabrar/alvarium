@@ -1,5 +1,6 @@
 package com.bs.ecommerce.cart
 
+import android.content.Context
 import android.graphics.Paint
 import android.view.*
 import android.webkit.WebView
@@ -7,6 +8,7 @@ import android.widget.Button
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.fragment.app.FragmentActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.bs.ecommerce.R
 import com.bs.ecommerce.auth.register.data.KeyValuePair
@@ -14,16 +16,14 @@ import com.bs.ecommerce.base.BaseViewModel
 import com.bs.ecommerce.cart.model.CartModel
 import com.bs.ecommerce.cart.model.data.CartProduct
 import com.bs.ecommerce.db.DbHelper
-import com.bs.ecommerce.utils.Const
-import com.bs.ecommerce.utils.ItemClickListener
-import com.bs.ecommerce.utils.loadImg
-import com.bs.ecommerce.utils.show
+import com.bs.ecommerce.utils.*
 import kotlinx.android.synthetic.main.cart_list_item.view.*
 import kotlinx.android.synthetic.main.product_price_layout_for_list.view.*
 import java.util.*
 
 
 open class CartAdapter(
+    val context: FragmentActivity,
     productsList: List<CartProduct>,
     private val clickListener: ItemClickListener<CartProduct>?,
     val viewModel: BaseViewModel,
@@ -132,6 +132,10 @@ open class CartAdapter(
                 else
                     holder?.tvAttribute1?.visibility =View.GONE
 
+                productModel.warnings?.let {
+                    if(it.isNotEmpty())
+                        context.toast(it[0])
+                }
 
 
                 OntrashClicked(holder!!.removeItem, position)
