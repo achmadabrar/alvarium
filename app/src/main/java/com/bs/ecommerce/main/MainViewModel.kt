@@ -42,6 +42,7 @@ class MainViewModel : CheckoutViewModel() {
     var testUrlSuccessLD = MutableLiveData<Boolean>()
 
     var languageChangeSuccessLD = MutableLiveData<Boolean>()
+    var currencyChangeSuccessLD = MutableLiveData<Boolean>()
 
     private val logTag: String = "nop_" + this::class.java.simpleName
 
@@ -267,6 +268,7 @@ class MainViewModel : CheckoutViewModel() {
             override fun onRequestSuccess(data: BaseResponse) {
                 isLoadingLD.value = false
 
+                currencyChangeSuccessLD.postValue(true)
                 toast(data.message)
             }
 

@@ -8,7 +8,6 @@ import android.widget.ArrayAdapter
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.bs.ecommerce.R
-import com.bs.ecommerce.base.BaseActivity
 import com.bs.ecommerce.db.DbHelper
 import com.bs.ecommerce.main.MainActivity
 import com.bs.ecommerce.main.MainViewModel
@@ -33,9 +32,12 @@ class SettingsFragment: BaseUrlChangeFragment() {
     private var rtl = false
 
     private var isLanguageChanged = false
+    private var isCurrencyChanged = false
 
 
-    private var languageId: Int = -1
+    private var languageId = -1
+    private var currencyId = -1
+
     private var currencyCode: String? = ""
 
     override fun getFragmentTitle() = DbHelper.getString(Const.MORE_SETTINGS)
@@ -80,55 +82,66 @@ class SettingsFragment: BaseUrlChangeFragment() {
 
     private fun setLiveDataListeners()
     {
-        mainViewModel.appSettingsLD.observe(viewLifecycleOwner, Observer { settings ->
 
-            settings.peekContent()?.let {
+        with(mainViewModel)
+        {
+            appSettingsLD.observe(viewLifecycleOwner, Observer { settings ->
 
-                languageCardView?.visibility = View.VISIBLE
-                currencyCardView?.visibility = View.VISIBLE
+                settings.peekContent()?.let {
 
-                if(isLanguageChanged)
-                {
-                    rtl = it.rtl
-                    changeLanguage(languageId, settings)
+                    languageCardView?.visibility = View.VISIBLE
+                    currencyCardView?.visibility = View.VISIBLE
+
+                    if(isLanguageChanged)
+                    {
+                        rtl = it.rtl
+                        changeLanguageInAppAndRestart(languageId, settings)
+                    }
+                    else if(isCurrencyChanged)
+                        changeCurrencyInAppAndRestart(currencyId, settings)
+                    else
+                    {
+                        setLanguageDropdown(it.languageNavSelector)
+                        setCurrencyDropdown(it.currencyNavSelector)
+                    }
+
                 }
-                else
-                {
-                    setLanguageDropdown(it.languageNavSelector)
-                    setCurrencyDropdown(it.currencyNavSelector)
+            })
+
+            /*languageViewModel.isLanguageLoaded.observe(viewLifecycleOwner, Observer { loaded ->
+
+                if(languageId!=-1 && loaded.getContentIfNotHandled() == true) {
+                    "lang_".showLog("Download success? ${loaded.peekContent()}")
+
+                    mainViewModel.changeLanguage(languageId, model = mainModel)
                 }
+            })*/
 
-            }
-        })
+            languageChangeSuccessLD.observe(viewLifecycleOwner, Observer { isChanged ->
+                if(isChanged) {
+                    isLanguageChanged = true
+                    mainViewModel.getAppSettings(mainModel)
+                }
+            })
+            currencyChangeSuccessLD.observe(viewLifecycleOwner, Observer { isChanged ->
+                if(isChanged) {
+                    isCurrencyChanged = true
+                    mainViewModel.getAppSettings(mainModel)
+                }
+            })
 
-        /*languageViewModel.isLanguageLoaded.observe(viewLifecycleOwner, Observer { loaded ->
+            isLoadingLD.observe(viewLifecycleOwner, Observer { isShowLoader ->
+                if(isShowLoader) blockingLoader.showDialog()
+                else blockingLoader.hideDialog()
+            })
 
-            if(languageId!=-1 && loaded.getContentIfNotHandled() == true) {
-                "lang_".showLog("Download success? ${loaded.peekContent()}")
+            /*languageViewModel.showLoader.observe(viewLifecycleOwner, Observer { show ->
+                if(show.getContentIfNotHandled() == true) blockingLoader.showDialog()
+                else blockingLoader.hideDialog()
+            })*/
+        }
 
-                mainViewModel.changeLanguage(languageId, model = mainModel)
-            }
-        })*/
 
-        mainViewModel.languageChangeSuccessLD.observe(viewLifecycleOwner, Observer { isChanged ->
-
-            if(isChanged)
-            {
-                isLanguageChanged = true
-                mainViewModel.getAppSettings(mainModel)
-            }
-
-        })
-
-        mainViewModel.isLoadingLD.observe(viewLifecycleOwner, Observer { isShowLoader ->
-            if(isShowLoader) blockingLoader.showDialog()
-            else blockingLoader.hideDialog()
-        })
-
-        /*languageViewModel.showLoader.observe(viewLifecycleOwner, Observer { show ->
-            if(show.getContentIfNotHandled() == true) blockingLoader.showDialog()
-            else blockingLoader.hideDialog()
-        })*/
     }
 
     private fun setLanguageDropdown(languageNavSelector: LanguageNavSelector)
@@ -140,19 +153,16 @@ class SettingsFragment: BaseUrlChangeFragment() {
             languageGetResponse = this
 
             val nameList = ArrayList<String>()
-
             val idList = ArrayList<Int>()
 
-            for(currency in availableLanguages)
+            for(language in availableLanguages)
             {
-                if(currency.id == currentLanguageId)
-                    prefObject.setPrefs(PrefSingleton.CURRENT_LANGUAGE, currency.name)
-
+                if(language.id == currentLanguageId)
+                    prefObject.setPrefs(PrefSingleton.CURRENT_LANGUAGE, language.name)
             }
 
             val currentLanguageName = prefObject.getPrefs(PrefSingleton.CURRENT_LANGUAGE)
-
-            nameList.add("Current Language : ${prefObject.getPrefs(PrefSingleton.CURRENT_LANGUAGE)}")
+            nameList.add("Current Language : $currentLanguageName")
 
             for (data in availableLanguages)
             {
@@ -176,7 +186,6 @@ class SettingsFragment: BaseUrlChangeFragment() {
             currencyGetResponse = this
 
             val nameList = ArrayList<String>()
-
             val idList = ArrayList<Int>()
 
             for(currency in availableCurrencies)
@@ -187,8 +196,7 @@ class SettingsFragment: BaseUrlChangeFragment() {
             }
 
             val currentCurrencyName = prefObject.getPrefs(PrefSingleton.CURRENT_CURRENCY)
-
-            nameList.add("Current Currency : ${prefObject.getPrefs(PrefSingleton.CURRENT_CURRENCY)}")
+            nameList.add("Current Currency : $currentCurrencyName")
 
             for (currency in availableCurrencies)
             {
@@ -197,7 +205,6 @@ class SettingsFragment: BaseUrlChangeFragment() {
                     nameList.add(currency.name)
                     idList.add(currency.id)
                 }
-
             }
             populateCurrencySpinner(nameList, idList)
         }
@@ -212,7 +219,6 @@ class SettingsFragment: BaseUrlChangeFragment() {
 
     private fun populateLanguageSpinner(languageNameList: List<String>, languageIdList: ArrayList<Int>)
     {
-
         changeLanguageSpinner?.adapter = createSpinnerAdapter(languageNameList)
 
         changeLanguageSpinner?.onItemSelectedListener = object : AdapterView.OnItemSelectedListener
@@ -249,9 +255,9 @@ class SettingsFragment: BaseUrlChangeFragment() {
                 {
                     currencyCode = currencyNameList[position - 1]
 
-                    val currencyId = currencyIdList[position - 1]
+                    currencyId = currencyIdList[position - 1]
 
-                    changeCurrency(currencyId)
+                    mainViewModel.changeCurrency(currencyId, model = mainModel)
                 }
             }
 
@@ -260,21 +266,8 @@ class SettingsFragment: BaseUrlChangeFragment() {
 
     }
 
-    private fun changeLanguage(languageId: Int, appSettings: OneTimeEvent<AppLandingData?>)
+    private fun restartApp(appSettings: OneTimeEvent<AppLandingData?>)
     {
-        var languageBehaviour = ""
-
-        if(rtl)
-            languageBehaviour = Language.ARABIC
-        else
-            languageBehaviour = Language.ENGLISH
-
-
-        prefObject.setPrefs(PrefSingleton.CURRENT_LANGUAGE, languageBehaviour)
-        prefObject.setPrefs(PrefSingleton.CURRENT_LANGUAGE_ID, languageId)
-
-        //(activity as BaseActivity).setLocale(true)
-
         appSettings.getContentIfNotHandled()?.let {
 
             it.stringResources = listOf()
@@ -283,12 +276,26 @@ class SettingsFragment: BaseUrlChangeFragment() {
             startActivity(
                 Intent(requireActivity().applicationContext, MainActivity::class.java)
                     .putExtra(MainActivity.KEY_APP_SETTINGS, it)
-
             )
         }
     }
 
-    private fun changeCurrency(currencyId : Int)
+    private fun changeLanguageInAppAndRestart(languageId: Int, appSettings: OneTimeEvent<AppLandingData?>)
+    {
+        var languageBehaviour = ""
+
+        if(rtl)
+            languageBehaviour = Language.ARABIC
+        else
+            languageBehaviour = Language.ENGLISH
+
+        prefObject.setPrefs(PrefSingleton.CURRENT_LANGUAGE, languageBehaviour)
+        prefObject.setPrefs(PrefSingleton.CURRENT_LANGUAGE_ID, languageId)
+
+        restartApp(appSettings)
+    }
+
+    private fun changeCurrencyInAppAndRestart(currencyId: Int, appSettings: OneTimeEvent<AppLandingData?>)
     {
         currencyGetResponse?.let {
 
@@ -297,12 +304,9 @@ class SettingsFragment: BaseUrlChangeFragment() {
                 if(currency.id == currencyId)
                     prefObject.setPrefs(PrefSingleton.CURRENT_CURRENCY, currency.name); break
             }
-
-            mainViewModel.changeCurrency(currencyId, model = mainModel)
-
-            (activity as BaseActivity).setLocale(true)
         }
 
+        restartApp(appSettings)
     }
 
     private fun enableThemeSwitchOption() {

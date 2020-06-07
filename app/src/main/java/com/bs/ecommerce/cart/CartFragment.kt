@@ -13,7 +13,6 @@ import com.bs.ecommerce.cart.model.CartModel
 import com.bs.ecommerce.cart.model.CartModelImpl
 import com.bs.ecommerce.cart.model.data.CartProduct
 import com.bs.ecommerce.cart.model.data.CartRootData
-import com.bs.ecommerce.cart.model.data.OrderTotal
 import com.bs.ecommerce.checkout.CheckoutStepFragment
 import com.bs.ecommerce.db.DbHelper
 import com.bs.ecommerce.networking.Api
@@ -130,7 +129,7 @@ class CartFragment : BaseFragment() {
         cartproductRecyclerList?.setHasFixedSize(true)
         cartproductRecyclerList?.layoutManager = layoutManager
 
-        val cartAdapter = CartAdapter(items, clickListener, viewModel, model)
+        val cartAdapter = CartAdapter(requireActivity(), items, clickListener, viewModel, model)
 
         cartproductRecyclerList?.adapter = cartAdapter
     }

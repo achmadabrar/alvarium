@@ -27,7 +27,7 @@ class CartProduct
 
     @SerializedName("IsAllowItemEditing") var isAllowItemEditing: Boolean? = null
 
-    @SerializedName("Warnings") var warnings: List<Any>? = null
+    @SerializedName("Warnings") var warnings: List<String>? = null
 
     @SerializedName("Id") var id: Int? = null
 
