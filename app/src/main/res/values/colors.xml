@@ -19,7 +19,7 @@
     <color name="etStyle1_background">#F2F2F2</color>
 
     <!-- Spinner -->
-    <color name="spinner_text">#A5A5A5</color>
+<!--    <color name="spinner_text">#A5A5A5</color>-->
 
     <!-- Button Style 1  (pink button) -->
     <color name="btnStyle1_text">#F2F2F2</color>

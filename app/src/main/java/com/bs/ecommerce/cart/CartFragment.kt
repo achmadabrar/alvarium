@@ -13,7 +13,6 @@ import com.bs.ecommerce.cart.model.CartModel
 import com.bs.ecommerce.cart.model.CartModelImpl
 import com.bs.ecommerce.cart.model.data.CartProduct
 import com.bs.ecommerce.cart.model.data.CartRootData
-import com.bs.ecommerce.cart.model.data.OrderTotal
 import com.bs.ecommerce.checkout.CheckoutStepFragment
 import com.bs.ecommerce.db.DbHelper
 import com.bs.ecommerce.networking.Api
@@ -150,7 +149,7 @@ class CartFragment : BaseFragment() {
 
                     val appliedCode = appliedDiscountsWithCodes[0].couponCode
 
-                    discountKey?.text = "${getString(R.string.discount)} ($appliedCode)"
+                    discountKey?.text = DbHelper.getString(Const.DISCOUNT).plus(" ").plus(appliedCode)
                     appliedDiscountText?.text = DbHelper.getStringWithNumber(Const.ENTERED_COUPON_CODE, appliedCode)
 
                     removeDiscountButton?.setOnClickListener {

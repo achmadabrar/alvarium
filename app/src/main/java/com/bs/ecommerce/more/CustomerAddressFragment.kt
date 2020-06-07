@@ -124,11 +124,11 @@ class CustomerAddressFragment : BaseFragment() {
 
             setMessage(DbHelper.getString(Const.CONFIRM_DELETE_ADDRESS)).setTitle(DbHelper.getString(Const.DELETE_ADDRESS))
 
-            setPositiveButton(R.string.yes) { _, _ ->
+            setPositiveButton(DbHelper.getString(Const.COMMON_YES)) { _, _ ->
                 (viewModel as AddressViewModel).deleteAddress(data, position, model)
             }
 
-            setNegativeButton(R.string.no) { dialog, _ ->
+            setNegativeButton(DbHelper.getString(Const.COMMON_NO)) { dialog, _ ->
                 dialog.dismiss()
             }
 

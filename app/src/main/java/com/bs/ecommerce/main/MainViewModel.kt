@@ -6,9 +6,7 @@ import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import com.bs.ecommerce.checkout.CheckoutViewModel
 import com.bs.ecommerce.common.RequestCompleteListener
-import com.bs.ecommerce.db.AppDatabase
 import com.bs.ecommerce.db.DbHelper
-import com.bs.ecommerce.db.StrResource
 import com.bs.ecommerce.home.homepage.model.HomePageModel
 import com.bs.ecommerce.home.homepage.model.data.HomePageProductResponse
 import com.bs.ecommerce.home.homepage.model.data.SliderData
@@ -213,17 +211,7 @@ class MainViewModel : CheckoutViewModel() {
                     //getLanguageResourceById(id)
 
                     if(saveLanguage) {
-                        val temp = mutableListOf<StrResource>()
-
-                        AppDatabase.getInstance().deleteAllStrings()
-
-                        for(i in data.data.stringResources) {
-                            temp.add(StrResource(i.key, i.value, id))
-                        }
-
-                        DbHelper.currentLanguageId = id
-
-                        AppDatabase.getInstance().insertAll(temp)
+                        DbHelper.addLanguage(data.data.stringResources, id)
                     }
 
                     appSettingsLD.value = OneTimeEvent(data.data)

@@ -4,7 +4,7 @@ import android.content.Context
 import android.os.Build
 import android.text.Html
 import android.text.Spanned
-import com.bs.ecommerce.R
+import com.bs.ecommerce.db.DbHelper
 import com.bs.ecommerce.networking.common.BaseResponse
 import com.bs.ecommerce.product.model.data.AddressModel
 import com.google.gson.Gson
@@ -84,18 +84,18 @@ class TextUtils {
         if (address == null) return ""
 
         return StringBuilder().apply {
-            append(context.get()?.getString(R.string.reg_hint_email)).append(": ").append(address.email)
+            append(DbHelper.getString(Const.ADDRESS_EMAIL)).append(": ").append(address.email)
                 .append("\n")
 
-            append(context.get()?.getString(R.string.reg_hint_phone)).append(": ").append(address.phoneNumber)
+            append(DbHelper.getString(Const.ADDRESS_PHONE)).append(": ").append(address.phoneNumber)
                 .append("\n")
 
             if (address.faxNumber?.isNotEmpty() == true)
-                append(context.get()?.getString(R.string.reg_hint_fax)).append(": ").append(address.faxNumber)
+                append(DbHelper.getString(Const.ADDRESS_FAX)).append(": ").append(address.faxNumber)
                     .append("\n")
 
             if (address.company?.isNotEmpty() == true)
-                append(context.get()?.getString(R.string.reg_hint_company_name)).append(": ")
+                append(DbHelper.getString(Const.ADDRESS_COMPANY_NAME)).append(": ")
                     .append(address.company).append("\n")
 
             append(address.address1).append("\n")

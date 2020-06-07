@@ -96,6 +96,11 @@ class Const {
         const val ACCOUNT_ORDERS = "account.customerorders"
         const val ACCOUNT_WISHLIST = "wishlist"
 
+        const val ADDRESS_COMPANY_NAME = "account.fields.company"
+        const val ADDRESS_FAX = "account.fields.fax"
+        const val ADDRESS_PHONE = "account.fields.phone"
+        const val ADDRESS_EMAIL = "account.fields.email"
+
         const val FILTER = "nopstation.webapi.filtering.filter"
 
         const val PRODUCT_GROUPED_PRODUCT = "enums.nop.core.domain.catalog.producttype.groupedproduct"
@@ -105,6 +110,7 @@ class Const {
         const val PRODUCT_BUY_DISABLED = "shoppingcart.buyingdisabled"
         const val PRODUCT_BTN_ADDTOCART = "shoppingcart.addtocart"
         const val PRODUCT_BTN_ADDTO_WISHLIST = "shoppingcart.addtowishlist"
+        const val PRODUCT_ADDED_TO_WISHLIST = "products.producthasbeenaddedtothewishlist"
 
 
         const val WISHLIST_NO_ITEM = "wishlist.cartisempty"

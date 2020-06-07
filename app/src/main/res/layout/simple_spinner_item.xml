@@ -9,4 +9,4 @@
     tools:text="@string/placeholder"
     android:textAlignment="inherit"
     android:textSize="@dimen/et_text_size"
-    android:textColor="@color/spinner_text" />
+    android:textColor="?attr/primaryTextColor" />
