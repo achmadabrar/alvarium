@@ -106,6 +106,8 @@ class Const {
         const val PRODUCT_BTN_ADDTOCART = "shoppingcart.addtocart"
         const val PRODUCT_BTN_ADDTO_WISHLIST = "shoppingcart.addtowishlist"
 
+        const val ADDTO_WISHLIST_SUCCESS = "products.producthasbeenaddedtothewishlist"
+
 
         const val WISHLIST_NO_ITEM = "wishlist.cartisempty"
         const val WISHLIST_ADD_ALL_TO_CART = "nopstation.webapi.wishlist.addall"
