@@ -20,6 +20,7 @@ import com.bs.ecommerce.checkout.BaseCheckoutNavigationFragment
 import com.bs.ecommerce.db.DbHelper
 import com.bs.ecommerce.fcm.MessagingService
 import com.bs.ecommerce.home.category.CategoryFragment
+import com.bs.ecommerce.home.category.NavDrawerFragment
 import com.bs.ecommerce.home.homepage.HomeFragment
 import com.bs.ecommerce.main.model.MainModelImpl
 import com.bs.ecommerce.main.model.data.AppLandingData
@@ -210,7 +211,7 @@ class MainActivity : PrivacyPolicyDialogActivity(), View.OnClickListener
         toggle.syncState()
         toolbarTop.setNavigationOnClickListener(this)
 
-        val navFragment = CategoryFragment.newInstance(isNavDrawer = true)
+        val navFragment = NavDrawerFragment()
         supportFragmentManager.beginTransaction()
             .add(R.id.layoutDrawer, navFragment)
             .commit()

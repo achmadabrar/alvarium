@@ -6,7 +6,7 @@ import android.widget.RelativeLayout
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.bs.ecommerce.R
-import com.bs.ecommerce.base.ToolbarLogoBaseFragment
+import com.bs.ecommerce.base.BaseFragment
 import com.bs.ecommerce.db.DbHelper
 import com.bs.ecommerce.main.MainViewModel
 import com.bs.ecommerce.main.model.MainModel
@@ -16,7 +16,7 @@ import com.bs.ecommerce.utils.Const
 import kotlinx.android.synthetic.main.category_left.*
 
 
-class CategoryFragment : ToolbarLogoBaseFragment()
+class NavDrawerFragment : BaseFragment()
 {
 
     private lateinit var mainModel: MainModel

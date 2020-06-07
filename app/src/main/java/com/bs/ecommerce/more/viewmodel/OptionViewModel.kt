@@ -16,7 +16,7 @@ class OptionViewModel : BaseViewModel() {
 
         val data = mutableListOf<AppOptions>()
 
-        data.add(AppOptions(R.string.title_scan_barcode, DbHelper.getString(Const.MORE_SCAN_BARCODE), R.drawable.ic_settings))
+        data.add(AppOptions(R.string.title_scan_barcode, DbHelper.getString(Const.MORE_SCAN_BARCODE), R.drawable.ic_scan_barcode))
 
         data.add(AppOptions(R.string.settings, DbHelper.getString(Const.MORE_SETTINGS), R.drawable.ic_settings))
 
@@ -24,7 +24,7 @@ class OptionViewModel : BaseViewModel() {
 
         data.add(AppOptions(R.string.title_about_us, DbHelper.getString(Const.MORE_ABOUT_US), R.drawable.ic_about_us))
 
-        data.add(AppOptions(R.string.title_contact_us, DbHelper.getString(Const.MORE_CONTACT_US), R.drawable.ic_settings))
+        data.add(AppOptions(R.string.title_contact_us, DbHelper.getString(Const.MORE_CONTACT_US), R.drawable.ic_contact_us))
 
         // data.add(AppOptions(R.string.title_checkout, DbHelper.getString("Test"), R.drawable.ic_my_order))
 

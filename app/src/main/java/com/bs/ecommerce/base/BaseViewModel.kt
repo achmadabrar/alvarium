@@ -3,7 +3,6 @@ package com.bs.ecommerce.base
 import android.widget.Toast
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.bs.ecommerce.R
 import com.bs.ecommerce.cart.model.CartModel
 import com.bs.ecommerce.cart.model.data.CartResponse
 import com.bs.ecommerce.cart.model.data.CartRootData
@@ -52,7 +51,7 @@ open class BaseViewModel : ViewModel() {
                     if (data.redirectionModel?.redirectToDetailsPage == true) {
                         addedToWishListLD.value = OneTimeEvent(product) // goto product details page
                     } else {
-                        toast(DbHelper.getString(Const.ADDTO_WISHLIST_SUCCESS))
+                        toast(DbHelper.getString(Const.PRODUCT_ADDED_TO_WISHLIST))
                         addedToWishListLD.value = null // success. do nothing
                     }
                 }

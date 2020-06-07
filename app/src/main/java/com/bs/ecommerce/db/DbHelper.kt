@@ -1,10 +1,14 @@
 package com.bs.ecommerce.db
 
+import com.bs.ecommerce.product.model.data.StringResource
+
 class DbHelper {
 
     companion object {
 
         var currentLanguageId: Int = 1
+
+        //var memCache: Map<String, StrResource> = mutableMapOf()
 
         fun isLanguageLoaded(languageId: Int): Boolean {
 
@@ -23,5 +27,19 @@ class DbHelper {
 
         fun getStringWithNumber(key: String, number: String): String = getString(key).replace("{0}", number)
 
+        fun addLanguage(stringResources: List<StringResource>, id: Int) {
+
+            val temp = mutableListOf<StrResource>()
+
+            AppDatabase.getInstance().deleteAllStrings()
+
+            for(i in stringResources) {
+                temp.add(StrResource(i.key, i.value, id))
+            }
+
+            currentLanguageId = id
+
+            AppDatabase.getInstance().insertAll(temp)
+        }
     }
 }

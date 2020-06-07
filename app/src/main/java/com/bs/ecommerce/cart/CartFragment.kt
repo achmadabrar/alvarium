@@ -149,7 +149,7 @@ class CartFragment : BaseFragment() {
 
                     val appliedCode = appliedDiscountsWithCodes[0].couponCode
 
-                    discountKey?.text = "${getString(R.string.discount)} ($appliedCode)"
+                    discountKey?.text = DbHelper.getString(Const.DISCOUNT).plus(" ").plus(appliedCode)
                     appliedDiscountText?.text = DbHelper.getStringWithNumber(Const.ENTERED_COUPON_CODE, appliedCode)
 
                     removeDiscountButton?.setOnClickListener {
