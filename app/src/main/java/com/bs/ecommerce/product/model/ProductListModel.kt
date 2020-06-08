@@ -3,6 +3,8 @@ package com.bs.ecommerce.product.model
 import com.bs.ecommerce.common.RequestCompleteListener
 import com.bs.ecommerce.product.model.data.CategoryModel
 import com.bs.ecommerce.product.model.data.Manufacturer
+import com.bs.ecommerce.product.model.data.ProductByTagData
+import com.bs.ecommerce.product.model.data.ProductByVendorData
 
 interface ProductListModel {
 
@@ -10,6 +12,18 @@ interface ProductListModel {
         catId: Long,
         queryMap: Map<String, String>,
         callback: RequestCompleteListener<CategoryModel>
+    )
+
+    fun fetchProductsByTag(
+        tagId: Long,
+        queryMap: Map<String, String>,
+        callback: RequestCompleteListener<ProductByTagData>
+    )
+
+    fun fetchProductsByVendor(
+        vendorId: Long,
+        queryMap: Map<String, String>,
+        callback: RequestCompleteListener<ProductByVendorData>
     )
 
     fun fetchProductsByManufacturer(

@@ -166,8 +166,23 @@ interface Api {
     @GET("catalog/category/{id}")
     fun getProductList(@Path("id") id: Long, @QueryMap options: Map<String, String>): Call<CategoryResponse>
 
+    @GET("catalog/vendor/{id}")
+    fun getProductByVendor(
+        @Path("id") id: Long,
+        @QueryMap options: Map<String, String>
+    ): Call<ProductByVendorResponse>
+
+    @GET("catalog/producttag/{id}")
+    fun getProductByTag(
+        @Path("id") id: Long,
+        @QueryMap options: Map<String, String>
+    ): Call<ProductByTagResponse>
+
     @GET("catalog/manufacturer/{manufacturerId}")
-    fun getProductListByManufacturer(@Path("manufacturerId") id: Long, @QueryMap options: Map<String, String>): Call<ProductByManufacturerResponse>
+    fun getProductListByManufacturer(
+        @Path("manufacturerId") id: Long,
+        @QueryMap options: Map<String, String>
+    ): Call<ProductByManufacturerResponse>
 
     @GET("catalog/manufacturer/all")
     fun getAllManufacturers(): Call<ManufacturerResponse>

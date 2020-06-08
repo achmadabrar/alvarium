@@ -14,6 +14,8 @@ import java.util.*
 
 class ProductListViewModel : BaseViewModel() {
     var productLiveData = MutableLiveData<CategoryModel>()
+    var tagLiveData = MutableLiveData<ProductByTagData>()
+    var vendorLiveData = MutableLiveData<ProductByVendorData>()
     var searchResultLD = MutableLiveData<SearchResult>()
     var manufacturerLD = MutableLiveData<Manufacturer>()
 
@@ -38,7 +40,7 @@ class ProductListViewModel : BaseViewModel() {
 
         isLoadingLD.value = true
 
-        model.fetchProducts(catId, getQueryMap(true, resetFilters), object : RequestCompleteListener<CategoryModel> {
+        model.fetchProducts(catId, getQueryMap(1, resetFilters), object : RequestCompleteListener<CategoryModel> {
             override fun onRequestSuccess(data: CategoryModel) {
                 isLoadingLD.value = false
 
@@ -57,6 +59,63 @@ class ProductListViewModel : BaseViewModel() {
         })
     }
 
+    fun getProductByTag(tagId: Long, resetFilters: Boolean, model: ProductListModel) {
+
+        // don't call if already loading
+        if (isLoadingLD.value == true || tagLiveData.value?.pagingFilteringContext?.hasNextPage == false) {
+            return
+        }
+
+        isLoadingLD.value = true
+
+        model.fetchProductsByTag(tagId, getQueryMap(3, resetFilters), object : RequestCompleteListener<ProductByTagData> {
+            override fun onRequestSuccess(data: ProductByTagData) {
+                isLoadingLD.value = false
+
+                tagLiveData.value = data
+
+                preparePriceFilter(data.pagingFilteringContext)
+                prepareFilterAttribute(data.pagingFilteringContext)
+                setFilterVisibility(data.pagingFilteringContext)
+            }
+
+            override fun onRequestFailed(errorMessage: String) {
+                isLoadingLD.value = false
+                toast(errorMessage)
+            }
+
+        })
+    }
+
+    fun getProductByVendor(vendorId: Long, resetFilters: Boolean, model: ProductListModel) {
+
+        // don't call if already loading
+        if (isLoadingLD.value == true || vendorLiveData.value?.pagingFilteringContext?.hasNextPage == false) {
+            return
+        }
+
+        isLoadingLD.value = true
+
+        model.fetchProductsByVendor(vendorId, getQueryMap(4, resetFilters), object : RequestCompleteListener<ProductByVendorData> {
+            override fun onRequestSuccess(data: ProductByVendorData) {
+                isLoadingLD.value = false
+
+                vendorLiveData.value = data
+
+                preparePriceFilter(data.pagingFilteringContext)
+                prepareFilterAttribute(data.pagingFilteringContext)
+                setFilterVisibility(data.pagingFilteringContext)
+            }
+
+            override fun onRequestFailed(errorMessage: String) {
+                isLoadingLD.value = false
+                toast(errorMessage)
+            }
+
+        })
+    }
+
+
     fun getProductByManufacturer(manufacturerId: Long, resetFilters: Boolean, model: ProductListModel) {
         // don't call if already loading
         if (isLoadingLD.value == true || manufacturerLD.value?.pagingFilteringContext?.hasNextPage == false) {
@@ -67,7 +126,7 @@ class ProductListViewModel : BaseViewModel() {
 
         model.fetchProductsByManufacturer(
             manufacturerId,
-            getQueryMap(false, resetFilters),
+            getQueryMap(2, resetFilters),
             object : RequestCompleteListener<Manufacturer> {
                 override fun onRequestSuccess(data: Manufacturer) {
                     isLoadingLD.value = false
@@ -153,7 +212,7 @@ class ProductListViewModel : BaseViewModel() {
         })
     }
 
-    fun applyFilter(catId: Long, filterUrl: String?, model: ProductListModel, manufacturer: Boolean) {
+    fun applyFilter(catId: Long, filterUrl: String?, model: ProductListModel, type: Int) {
 
         if (filterUrl.isNullOrEmpty()) return
         if (isLoadingLD.value == true) return
@@ -179,7 +238,7 @@ class ProductListViewModel : BaseViewModel() {
 
         shouldAppend = false
 
-        if (manufacturer) {
+        if (type == 2) {
             model.fetchProductsByManufacturer(
                 catId,
                 map,
@@ -198,7 +257,7 @@ class ProductListViewModel : BaseViewModel() {
                         toast(errorMessage)
                     }
                 })
-        } else {
+        } else if (type == 1) {
             model.fetchProducts(catId, map, object : RequestCompleteListener<CategoryModel> {
                 override fun onRequestSuccess(data: CategoryModel) {
                     isLoadingLD.value = false
@@ -216,13 +275,54 @@ class ProductListViewModel : BaseViewModel() {
                 }
 
             })
+        } else if (type == 3) {
+            model.fetchProductsByTag(catId, map, object : RequestCompleteListener<ProductByTagData> {
+                override fun onRequestSuccess(data: ProductByTagData) {
+                    isLoadingLD.value = false
+
+                    tagLiveData.value = data
+
+                    preparePriceFilter(data.pagingFilteringContext)
+                    prepareFilterAttribute(data.pagingFilteringContext)
+                    setFilterVisibility(data.pagingFilteringContext)
+                }
+
+                override fun onRequestFailed(errorMessage: String) {
+                    isLoadingLD.value = false
+                    toast(errorMessage)
+                }
+
+            })
+        } else if (type == 4) {
+            model.fetchProductsByVendor(catId, map, object : RequestCompleteListener<ProductByVendorData> {
+                override fun onRequestSuccess(data: ProductByVendorData) {
+                    isLoadingLD.value = false
+
+                    vendorLiveData.value = data
+
+                    preparePriceFilter(data.pagingFilteringContext)
+                    prepareFilterAttribute(data.pagingFilteringContext)
+                    setFilterVisibility(data.pagingFilteringContext)
+                }
+
+                override fun onRequestFailed(errorMessage: String) {
+                    isLoadingLD.value = false
+                    toast(errorMessage)
+                }
+
+            })
         }
     }
 
-    private fun getQueryMap(getProdByProdId: Boolean, resetFilters: Boolean): MutableMap<String, String> {
+    private fun getQueryMap(type: Int, resetFilters: Boolean): MutableMap<String, String> {
         // calculate next page to load
-        val currentPage = if(getProdByProdId) productLiveData.value?.pagingFilteringContext?.pageNumber ?: 0
-            else manufacturerLD.value?.pagingFilteringContext?.pageNumber ?: 0
+        val currentPage = when (type) {
+            1 -> productLiveData.value?.pagingFilteringContext?.pageNumber ?: 0
+            2 -> manufacturerLD.value?.pagingFilteringContext?.pageNumber ?: 0
+            3 -> tagLiveData.value?.pagingFilteringContext?.pageNumber ?: 0
+            4 -> vendorLiveData.value?.pagingFilteringContext?.pageNumber ?: 0
+            else -> 0
+        }
 
         pageNumber = currentPage + 1
 

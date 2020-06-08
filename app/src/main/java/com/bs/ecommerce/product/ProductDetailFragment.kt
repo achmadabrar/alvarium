@@ -248,7 +248,9 @@ class ProductDetailFragment : BaseFragment(), View.OnClickListener {
                                 val tv = TextView(requireContext(), null, 0, R.style.productPageDynamicText)
                                 tv.text = temp.name
                                 tv.setOnClickListener {
-                                    // TODO goto TAG page
+                                    replaceFragmentSafely(
+                                        ProductListFragment.newInstance(temp.name ?: "", temp.id ?: -1, ProductListFragment.GetBy.TAG)
+                                    )
                                 }
 
                                 productTag?.ll?.addView(tv)
@@ -268,7 +270,9 @@ class ProductDetailFragment : BaseFragment(), View.OnClickListener {
                         val tv = TextView(requireContext(), null, 0, R.style.productPageDynamicText)
                         tv.text = product.vendorModel.name
                         tv.setOnClickListener {
-                            // TODO goto Vendor page
+                            replaceFragmentSafely(
+                                ProductListFragment.newInstance(product.vendorModel.name ?: "", product.vendorModel.id ?: -1, ProductListFragment.GetBy.VENDOR)
+                            )
                         }
 
                         productVendor1?.vendorLl?.addView(tv)

@@ -29,6 +29,7 @@
             android:layout_height="wrap_content"
             android:gravity="start"
             android:maxLines="1"
+            android:visibility="gone"
             tools:text="@string/select_quantity"
             android:textColor="@color/gray"
             android:textSize="@dimen/tv_text_size_small" />

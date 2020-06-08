@@ -237,8 +237,11 @@ class HomeFragment : ToolbarLogoBaseFragment() {
                                 SliderType.MANUFACTURER ->
                                     replaceFragmentSafely(ProductListFragment.newInstance("", it, ProductListFragment.GetBy.MANUFACTURER))
 
-                                /*SliderType.TOPIC -> ;
-                                SliderType.VENDOR ->*/
+                                /*SliderType.TOPIC ->
+                                    */
+
+                                SliderType.VENDOR ->
+                                    replaceFragmentSafely(ProductListFragment.newInstance("", it, ProductListFragment.GetBy.VENDOR))
                             }
                         }
                     }

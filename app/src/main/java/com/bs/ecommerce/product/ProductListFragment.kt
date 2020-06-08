@@ -107,6 +107,14 @@ class ProductListFragment : BaseFragment() {
             (viewModel as ProductListViewModel).getProductByManufacturer(
                 categoryId.toLong(), resetFilters, model
             )
+        if (getBy == GetBy.TAG.name)
+            (viewModel as ProductListViewModel).getProductByTag(
+                categoryId.toLong(), resetFilters, model
+            )
+        if (getBy == GetBy.VENDOR.name)
+            (viewModel as ProductListViewModel).getProductByVendor(
+                categoryId.toLong(), resetFilters, model
+            )
     }
 
     private fun initView() {
@@ -262,6 +270,36 @@ class ProductListFragment : BaseFragment() {
             }
         })
 
+        viewModel.tagLiveData.observe(viewLifecycleOwner, Observer { data ->
+
+            productListAdapter.addData(data.products, viewModel.shouldAppend)
+
+            llButtonHolder.visibility =
+                if (data.products.isNullOrEmpty()) View.INVISIBLE else View.VISIBLE
+
+            populateSortOptions(data.pagingFilteringContext)
+
+            if(isAdded && lifecycle.currentState.isAtLeast(Lifecycle.State.RESUMED)) {
+                requireActivity().title = data?.name ?: ""
+                arguments?.putString(CATEGORY_NAME, data?.name ?: "")
+            }
+        })
+
+        viewModel.vendorLiveData.observe(viewLifecycleOwner, Observer { data ->
+
+            productListAdapter.addData(data.products, viewModel.shouldAppend)
+
+            llButtonHolder.visibility =
+                if (data.products.isNullOrEmpty()) View.INVISIBLE else View.VISIBLE
+
+            populateSortOptions(data.pagingFilteringContext)
+
+            if(isAdded && lifecycle.currentState.isAtLeast(Lifecycle.State.RESUMED)) {
+                requireActivity().title = data?.name ?: ""
+                arguments?.putString(CATEGORY_NAME, data?.name ?: "")
+            }
+        })
+
         viewModel.manufacturerLD.observe(viewLifecycleOwner, Observer { manufacturer ->
             productListAdapter.addData(manufacturer.products, viewModel.shouldAppend)
 
@@ -388,8 +426,16 @@ class ProductListFragment : BaseFragment() {
     }
 
     fun applyFilter(filterUrl: String?) {
+
+        val type = when (getBy) {
+            GetBy.CATEGORY.name -> 1
+            GetBy.MANUFACTURER.name -> 2
+            GetBy.TAG.name -> 3
+            else -> 4
+        }
+
         (viewModel as ProductListViewModel).applyFilter(categoryId.toLong(),
-            filterUrl, model, getBy == GetBy.MANUFACTURER.name)
+            filterUrl, model, type)
 
         sortOptionDialog.hide()
         drawerLayout?.closeDrawers()
@@ -404,7 +450,7 @@ class ProductListFragment : BaseFragment() {
 
 
     enum class GetBy {
-        CATEGORY, MANUFACTURER
+        CATEGORY, MANUFACTURER, TAG, VENDOR
     }
 
     companion object {

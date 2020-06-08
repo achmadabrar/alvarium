@@ -2,10 +2,7 @@ package com.bs.ecommerce.product.model
 
 import com.bs.ecommerce.common.RequestCompleteListener
 import com.bs.ecommerce.networking.RetroClient
-import com.bs.ecommerce.product.model.data.CategoryModel
-import com.bs.ecommerce.product.model.data.CategoryResponse
-import com.bs.ecommerce.product.model.data.Manufacturer
-import com.bs.ecommerce.product.model.data.ProductByManufacturerResponse
+import com.bs.ecommerce.product.model.data.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -28,6 +25,52 @@ class ProductListModelImpl : ProductListModel {
             ) {
                 if (response.body() != null)
                     callback.onRequestSuccess(response.body()?.data as CategoryModel)
+                else
+                    callback.onRequestFailed(response.message())
+            }
+
+        })
+    }
+
+    override fun fetchProductsByTag(
+        tagId: Long,
+        queryMap: Map<String, String>,
+        callback: RequestCompleteListener<ProductByTagData>) {
+
+        RetroClient.api.getProductByTag(tagId, queryMap).enqueue(object : Callback<ProductByTagResponse> {
+            override fun onFailure(call: Call<ProductByTagResponse>, t: Throwable) {
+                callback.onRequestFailed(t.localizedMessage ?: "Something went wrong")
+            }
+
+            override fun onResponse(
+                call: Call<ProductByTagResponse>,
+                response: Response<ProductByTagResponse>
+            ) {
+                if (response.body() != null)
+                    callback.onRequestSuccess(response.body()?.data as ProductByTagData)
+                else
+                    callback.onRequestFailed(response.message())
+            }
+
+        })
+    }
+
+    override fun fetchProductsByVendor(
+        vendorId: Long,
+        queryMap: Map<String, String>,
+        callback: RequestCompleteListener<ProductByVendorData>) {
+
+        RetroClient.api.getProductByVendor(vendorId, queryMap).enqueue(object : Callback<ProductByVendorResponse> {
+            override fun onFailure(call: Call<ProductByVendorResponse>, t: Throwable) {
+                callback.onRequestFailed(t.localizedMessage ?: "Something went wrong")
+            }
+
+            override fun onResponse(
+                call: Call<ProductByVendorResponse>,
+                response: Response<ProductByVendorResponse>
+            ) {
+                if (response.body() != null)
+                    callback.onRequestSuccess(response.body()?.data as ProductByVendorData)
                 else
                     callback.onRequestFailed(response.message())
             }
