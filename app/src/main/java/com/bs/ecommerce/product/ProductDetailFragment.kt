@@ -7,6 +7,7 @@ import android.graphics.Paint
 import android.os.Bundle
 import android.view.View
 import android.widget.RelativeLayout
+import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.Observer
@@ -38,11 +39,14 @@ import kotlinx.android.synthetic.main.fragment_product_detail.view.*
 import kotlinx.android.synthetic.main.product_availability_layout.view.*
 import kotlinx.android.synthetic.main.product_gift_card_layout.*
 import kotlinx.android.synthetic.main.product_gift_card_layout.view.*
+import kotlinx.android.synthetic.main.product_manufacturer_layout.view.*
+import kotlinx.android.synthetic.main.product_manufacturer_layout.view.tvSectionTitle
 import kotlinx.android.synthetic.main.product_name_layout.view.*
 import kotlinx.android.synthetic.main.product_name_layout.view.tvProductName
 import kotlinx.android.synthetic.main.product_price_layout.view.*
 import kotlinx.android.synthetic.main.product_quantity.view.*
 import kotlinx.android.synthetic.main.product_rating_layout.view.*
+import kotlinx.android.synthetic.main.product_vendor_layout.view.*
 import kotlinx.android.synthetic.main.rental_product_layout.view.*
 import kotlinx.android.synthetic.main.slider.view.*
 import java.util.*
@@ -161,10 +165,11 @@ class ProductDetailFragment : BaseFragment(), View.OnClickListener {
                     val productNameLayout = vsProductNameLayout?.inflate()
                     productNameLayout?.tvProductName?.text = product.name
                     product.shortDescription?.let {
-                        productNameLayout?.tvProductDescription?.show(
+                        /*productNameLayout?.tvProductDescription?.show(
                             it,
                             R.color.fragment_background
-                        )
+                        )*/
+                        productNameLayout?.tvProductDescription?.text = TextUtils().getHtmlFormattedText(it)
                     }
 
                     // product rating & review section
@@ -205,13 +210,77 @@ class ProductDetailFragment : BaseFragment(), View.OnClickListener {
 
                     //productPriceLayout.tvDiscountPercent.text = "40% Off"
 
-                    availabilityLayout.tvAvailabilityTitle.text = DbHelper.getString("products.availability")
+                    // PRODUCT MANUFACTURER LAYOUT
+                    product.productManufacturers?.let {
+                        if(it.isNotEmpty()) {
+                            hd16.visibility = View.VISIBLE
+                            productManufacturer?.visibility = View.VISIBLE
+
+                            productManufacturer?.ll?.removeAllViews()
+                            productManufacturer?.tvSectionTitle?.text =
+                                DbHelper.getString(Const.PRODUCT_MANUFACTURER)
+
+                            for(temp in it) {
+                                val tv = TextView(requireContext(), null, 0, R.style.productPageDynamicText)
+                                tv.text = temp.name
+                                tv.setOnClickListener {
+                                    replaceFragmentSafely(ProductListFragment.newInstance(
+                                        temp.name ?: "", temp.id ?: -1, ProductListFragment.GetBy.MANUFACTURER
+                                    ))
+                                }
+
+                                productManufacturer?.ll?.addView(tv)
+                            }
+                        }
+                    }
+
+                    // PRODUCT TAG LAYOUT
+                    product.productTags?.let {
+                        if(it.isNotEmpty()) {
+                            hd17.visibility = View.VISIBLE
+                            productTag?.visibility = View.VISIBLE
+
+                            productTag?.ll?.removeAllViews()
+                            productTag?.tvSectionTitle?.text =
+                                DbHelper.getString(Const.PRODUCT_TAG)
+
+                            for(temp in it) {
+                                val tv = TextView(requireContext(), null, 0, R.style.productPageDynamicText)
+                                tv.text = temp.name
+                                tv.setOnClickListener {
+                                    // TODO goto TAG page
+                                }
+
+                                productTag?.ll?.addView(tv)
+                            }
+                        }
+                    }
+
+                    // PRODUCT VENDOR LAYOUT
+                    if(product.vendorModel != null && product.showVendor == true) {
+                        hd18.visibility = View.VISIBLE
+                        productVendor1?.visibility = View.VISIBLE
+
+                        productVendor1?.vendorLl?.removeAllViews()
+                        productVendor1?.tvSectionTitle?.text =
+                            DbHelper.getString(Const.PRODUCT_VENDOR)
+
+                        val tv = TextView(requireContext(), null, 0, R.style.productPageDynamicText)
+                        tv.text = product.vendorModel.name
+                        tv.setOnClickListener {
+                            // TODO goto Vendor page
+                        }
+
+                        productVendor1?.vendorLl?.addView(tv)
+                    }
+
+                    availabilityLayout.tvAvailabilityTitle.text = DbHelper.getString(Const.PRODUCT_AVAILABILITY)
                     availabilityLayout.tvAvailability.text = product.stockAvailability
-                    availabilityLayout.deliveryMethod.text = DbHelper.getString("products.freeshipping")
+                    availabilityLayout.deliveryMethod.text = DbHelper.getString(Const.PRODUCT_FREE_SHIPPING)
                     availabilityLayout.deliveryMethod.visibility = if (product.isFreeShipping == true)
                         View.VISIBLE else View.GONE
 
-                    productQuantityLayout.tvQuantityTitle.text = DbHelper.getString("products.tierprices.quantity")
+                    productQuantityLayout.tvQuantityTitle.text = DbHelper.getString(Const.PRODUCT_QUANTITY)
                     productQuantityLayout.tvQuantity.text =
                         product.addToCart?.enteredQuantity?.toString() ?: "1"
 
@@ -220,10 +289,11 @@ class ProductDetailFragment : BaseFragment(), View.OnClickListener {
                         val productDescLayout = vsProductDescLayout?.inflate()
                         productDescLayout?.tvProductName?.text = DbHelper.getString("account.vendorinfo.description")
                         product.fullDescription.let {
-                            productDescLayout?.tvProductDescription?.show(
+                            /*productDescLayout?.tvProductDescription?.show(
                                 it,
                                 R.color.fragment_background
-                            )
+                            )*/
+                            productDescLayout?.tvProductDescription?.text = TextUtils().getHtmlFormattedText(it)
                         }
                         hd14.visibility = View.VISIBLE
                     }
@@ -291,7 +361,7 @@ class ProductDetailFragment : BaseFragment(), View.OnClickListener {
                 Observer { isInvalid ->
 
                     if (isInvalid) {
-                        toast(DbHelper.getString("nopstation.webapi.sliders.fields.entityid.invalidproduct"))
+                        toast(DbHelper.getString(Const.PRODUCT_INVALID_PRODUCT))
                     }
 
                 })

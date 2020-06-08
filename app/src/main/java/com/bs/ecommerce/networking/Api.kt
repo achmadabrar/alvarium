@@ -356,9 +356,6 @@ interface Api {
     @GET("order/reorder/{id}")
     fun getReOrder(@Path("id") id: Int): Call<ReOrderResponse>
 
-    @POST("facebookLogin")
-    fun loginUsingFaceBook(@Body facebookLogin: FacebookLogin): Call<LoginResponse>
-
     @POST("ShoppingCart/UpdateWishlist")
     fun updateWishList(@Body keyValuePairs: List<KeyValuePair>): Call<WishistUpdateResponse>
 

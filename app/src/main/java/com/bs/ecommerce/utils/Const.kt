@@ -108,6 +108,13 @@ class Const {
         const val FILTER = "nopstation.webapi.filtering.filter"
 
         const val PRODUCT_GROUPED_PRODUCT = "enums.nop.core.domain.catalog.producttype.groupedproduct"
+        const val PRODUCT_MANUFACTURER = "products.manufacturer"
+        const val PRODUCT_TAG = "products.tags"
+        const val PRODUCT_VENDOR = "products.vendor"
+        const val PRODUCT_AVAILABILITY = "products.availability"
+        const val PRODUCT_QUANTITY = "products.tierprices.quantity"
+        const val PRODUCT_FREE_SHIPPING = "products.freeshipping"
+        const val PRODUCT_INVALID_PRODUCT = "nopstation.webapi.sliders.fields.entityid.invalidproduct"
         const val PRODUCT_BTN_BUY_NOW = "nopstation.webapi.shoppingcart.buynow"
         const val PRODUCT_BTN_RENT_NOW = "nopstation.webapi.shoppingcart.rentnow"
         const val PRODUCT_WISHLIST_DISABLED = "shoppingcart.wishlistdisabled"

@@ -71,6 +71,32 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="5dp" />
 
+                <include
+                    android:id="@+id/hd16"
+                    layout="@layout/horizontal_divider"
+                    android:visibility="gone"/>
+
+                <include
+                    android:id="@+id/productManufacturer"
+                    layout="@layout/product_manufacturer_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:visibility="gone"
+                    android:layout_margin="5dp" />
+
+                <include
+                    android:id="@+id/hd18"
+                    layout="@layout/horizontal_divider"
+                    android:visibility="gone"/>
+
+                <include
+                    android:id="@+id/productVendor1"
+                    layout="@layout/product_vendor_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:visibility="gone"
+                    android:layout_margin="5dp" />
+
                 <include layout="@layout/horizontal_divider" />
 
                 <include
@@ -140,6 +166,19 @@
                     android:id="@+id/hd14"
                     layout="@layout/horizontal_divider"
                     android:visibility="invisible"/>
+
+                <include
+                    android:id="@+id/productTag"
+                    layout="@layout/product_manufacturer_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:visibility="gone"
+                    android:layout_margin="5dp" />
+
+                <include
+                    android:id="@+id/hd17"
+                    layout="@layout/horizontal_divider"
+                    android:visibility="gone"/>
 
                 <ViewStub
                     android:id="@+id/vsAssociatedProduct"

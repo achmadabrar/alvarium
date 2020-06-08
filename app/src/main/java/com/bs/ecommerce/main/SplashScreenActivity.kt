@@ -33,6 +33,7 @@ class SplashScreenActivity : BaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        NetworkUtil.token = prefObject.getPrefs(prefObject.TOKEN_KEY)
 
         viewModel = ViewModelProvider(this).get(MainViewModel::class.java)
 

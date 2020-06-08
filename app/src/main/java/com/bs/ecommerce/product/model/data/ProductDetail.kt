@@ -64,7 +64,7 @@ data class ProductDetail(
     @SerializedName("ProductAttributes")
     val productAttributes: List<ProductAttribute>,
     @SerializedName("ProductManufacturers")
-    val productManufacturers: List<Any>?,
+    val productManufacturers: List<ProductManufacturers>?,
     @SerializedName("ProductPrice")
     val productPrice: ProductPrice?,
     @SerializedName("ProductReviewOverview")
