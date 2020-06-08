@@ -8,6 +8,7 @@ class Const {
         const val TITLE_REGISTER = "pagetitle.register"
         const val TITLE_REVIEW = "reviews"
         const val TITLE_ORDER_DETAILS = "pagetitle.orderdetails"
+        const val TITLE_SEARCH = "pagetitle.search"
 
         const val HOME_NAV_HOME = "common.home"
         const val HOME_NAV_CATEGORY = "nopstation.webapi.common.category"
@@ -108,6 +109,13 @@ class Const {
         const val ADDRESS_EMAIL = "account.fields.email"
 
         const val FILTER = "nopstation.webapi.filtering.filter"
+        const val FILTER_REMOVE = "filtering.pricerangefilter.remove"
+        const val FILTER_PRICE_RANGE = "filtering.pricerangefilter"
+        const val FILTER_SPECIFICATION = "filtering.specificationfilter"
+        const val FILTER_FILTER_BY = "filtering.specificationfilter.currentlyfilteredby"
+
+        const val SEARCH_QUERY_LENGTH = "search.searchtermminimumlengthisncharacters"
+        const val SEARCH_NO_RESULT = "search.noresultstext"
 
         const val PRODUCT_GROUPED_PRODUCT = "enums.nop.core.domain.catalog.producttype.groupedproduct"
         const val PRODUCT_MANUFACTURER = "products.manufacturer"
@@ -124,6 +132,16 @@ class Const {
         const val PRODUCT_BTN_ADDTOCART = "shoppingcart.addtocart"
         const val PRODUCT_BTN_ADDTO_WISHLIST = "shoppingcart.addtowishlist"
         const val PRODUCT_ADDED_TO_WISHLIST = "products.producthasbeenaddedtothewishlist"
+        const val PRODUCT_ALSO_PURCHASED = "products.alsopurchased"
+        const val PRODUCT_DESCRIPTION = "account.vendorinfo.description"
+        const val PRODUCT_RELATED_PRODUCT = "products.relatedproducts"
+        const val PRODUCT_RENTAL_START = "shoppingcart.rental.enterstartdate"
+        const val PRODUCT_RENTAL_END = "shoppingcart.rental.enterenddate"
+        const val PRODUCT_RENT = "shoppingcart.rent"
+        const val PRODUCT_GIFT_CARD_SENDER = "products.giftcard.sendername"
+        const val PRODUCT_GIFT_CARD_RECIEPIENT = "products.giftcard.recipientname"
+        const val PRODUCT_GIFT_CARD_MESSAGE = "products.giftcard.message"
+        const val PRODUCT_QUANTITY_POSITIVE = "shoppingcart.quantityshouldpositive"
 
 
 
@@ -250,6 +268,7 @@ class Const {
 
         const val STREET_ADDRESS = "account.fields.streetaddress"
         const val STREET_ADDRESS_2 = "account.fields.streetaddress2"
+        const val COUNTRY = "account.fields.country"
 
 
         const val IS_REQUIRED = "nopstation.webapi.common.isrequired"

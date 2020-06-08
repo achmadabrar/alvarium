@@ -19,6 +19,7 @@ import com.bs.ecommerce.db.DbHelper
 import com.bs.ecommerce.product.model.data.FilterItems
 import com.bs.ecommerce.product.model.data.PriceRangeFilter
 import com.bs.ecommerce.product.viewModel.ProductListViewModel
+import com.bs.ecommerce.utils.Const
 import kotlinx.android.synthetic.main.fragment_product_filter.*
 import kotlinx.android.synthetic.main.price_filter_option.view.*
 import kotlinx.android.synthetic.main.product_applied_filter.view.*
@@ -78,7 +79,7 @@ class ProductFilterFragment : BaseFragment() {
         if (priceRange.isNotEmpty()) {
 
             val view = layoutInflater.inflate(R.layout.product_filter_option, viewGroup) as LinearLayout
-            view.tvTitle.text = DbHelper.getString("filtering.pricerangefilter")
+            view.tvTitle.text = DbHelper.getString(Const.FILTER_PRICE_RANGE)
 
             for (i in priceRange) {
                 val rl = layoutInflater.inflate(
@@ -90,7 +91,7 @@ class ProductFilterFragment : BaseFragment() {
                 rl.tvName.text = i.toString()
                 rl.btnRemoveFilter.visibility = if (i.selected) View.VISIBLE else View.GONE
 
-                rl.btnRemoveFilter.text = DbHelper.getString("filtering.pricerangefilter.remove")
+                rl.btnRemoveFilter.text = DbHelper.getString(Const.FILTER_REMOVE)
                 rl.btnRemoveFilter.setOnClickListener {
                     if (parentFragment is ProductListFragment && i.selected)
                         (parentFragment as ProductListFragment).applyFilter(priceRangeFilter?.removeFilterUrl)
@@ -129,7 +130,7 @@ class ProductFilterFragment : BaseFragment() {
         if(mMap.isNullOrEmpty()) return
 
         val view = layoutInflater.inflate(R.layout.product_applied_filter, viewGroup) as LinearLayout
-        view.tvCurrentlyShoppingBy.text = DbHelper.getString("filtering.specificationfilter.currentlyfilteredby")
+        view.tvCurrentlyShoppingBy.text = DbHelper.getString(Const.FILTER_FILTER_BY)
 
         val title = StringBuilder()
         var clearFilterUrl: String? = null
@@ -148,7 +149,7 @@ class ProductFilterFragment : BaseFragment() {
 
         view.tvAppliedAttributes.text = title.toString().trimEnd()
 
-        view.btnClearFilter.text = DbHelper.getString("filtering.pricerangefilter.remove")
+        view.btnClearFilter.text = DbHelper.getString(Const.FILTER_REMOVE)
         view.btnClearFilter.setOnClickListener {
             if (parentFragment is ProductListFragment)
                 (parentFragment as ProductListFragment).applyFilter(clearFilterUrl)
@@ -160,7 +161,7 @@ class ProductFilterFragment : BaseFragment() {
     private fun color(tmp: Map.Entry<String, MutableList<FilterItems>>): View {
         val view =
             layoutInflater.inflate(R.layout.product_filter_option_for_color, viewGroup) as LinearLayout
-        view.tvTitle.text = DbHelper.getString("filtering.specificationfilter").plus(": ${tmp.key}")
+        view.tvTitle.text = DbHelper.getString(Const.FILTER_SPECIFICATION).plus(": ${tmp.key}")
 
         for (i in tmp.value) {
             val rb = layoutInflater.inflate(
@@ -192,7 +193,7 @@ class ProductFilterFragment : BaseFragment() {
 
     private fun allExColor(tmp: Map.Entry<String, MutableList<FilterItems>>): View {
         val view = layoutInflater.inflate(R.layout.product_filter_option, viewGroup) as LinearLayout
-        view.tvTitle.text = DbHelper.getString("filtering.specificationfilter").plus(": ${tmp.key}")
+        view.tvTitle.text = DbHelper.getString(Const.FILTER_SPECIFICATION).plus(": ${tmp.key}")
 
         for (i in tmp.value) {
 

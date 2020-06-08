@@ -14,6 +14,7 @@ import com.bs.ecommerce.product.model.data.AddToCartResponse
 import com.bs.ecommerce.product.model.data.ProductDetail
 import com.bs.ecommerce.product.model.data.ProductDetailResponse
 import com.bs.ecommerce.product.model.data.ProductSummary
+import com.bs.ecommerce.utils.Const
 import com.bs.ecommerce.utils.OneTimeEvent
 import com.bs.ecommerce.utils.TextUtils
 import com.bs.ecommerce.utils.showLog
@@ -198,7 +199,7 @@ class ProductDetailViewModel : BaseViewModel() {
         if(quantityLiveData.value!! > 1) {
             quantityLiveData.setValue(quantityLiveData.value?.minus(1))
         } else {
-            toast(DbHelper.getString("shoppingcart.quantityshouldpositive"))
+            toast(DbHelper.getString(Const.PRODUCT_QUANTITY_POSITIVE))
         }
     }
 

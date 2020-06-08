@@ -79,7 +79,7 @@ class SearchFragment : BaseFragment() {
     private fun initView() {
         calculateAutomaticGridColumn()
 
-        tvNoProduct.text = DbHelper.getString("search.noresultstext")
+        tvNoProduct.text = DbHelper.getString(Const.SEARCH_NO_RESULT)
 
         btnFilter.findViewById<TextView>(R.id.tvFilter).text = DbHelper.getString(Const.FILTER)
         btnFilter.setOnClickListener {
@@ -94,7 +94,7 @@ class SearchFragment : BaseFragment() {
             }
         }
 
-        btnSortBy.findViewById<TextView>(R.id.tvSortBy).text = DbHelper.getString("catalog.orderby")
+        btnSortBy.findViewById<TextView>(R.id.tvSortBy).text = DbHelper.getString(Const.CATALOG_ORDER_BY)
         btnSortBy.setOnClickListener {
             drawerLayout?.closeDrawers()
             sortOptionDialog.show()
@@ -192,7 +192,7 @@ class SearchFragment : BaseFragment() {
                 MenuItemCompat.SHOW_AS_ACTION_COLLAPSE_ACTION_VIEW or MenuItemCompat.SHOW_AS_ACTION_ALWAYS)
             MenuItemCompat.setActionView(item, searchView)
 
-            searchView?.queryHint = DbHelper.getString("pagetitle.search")
+            searchView?.queryHint = DbHelper.getString(Const.TITLE_SEARCH)
 
             searchView?.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
                 override fun onQueryTextSubmit(query: String): Boolean {
@@ -241,7 +241,7 @@ class SearchFragment : BaseFragment() {
                 observeLiveDataChange = true
                 (viewModel as ProductListViewModel).searchProduct(query, true, model)
             } else
-                toast(DbHelper.getString("search.searchtermminimumlengthisncharacters"))
+                toast(DbHelper.getString(Const.SEARCH_QUERY_LENGTH))
 
         }
     }
@@ -249,7 +249,7 @@ class SearchFragment : BaseFragment() {
     private fun populateSortOptions(sortOption: PagingFilteringContext?) {
 
         val sortOptionHolder:LinearLayout = layoutInflater.inflate(R.layout.sort_option_bottom_sheet, null, false) as LinearLayout
-        sortOptionHolder.findViewById<TextView>(R.id.sortOptionBsTitle)?.text = DbHelper.getString("catalog.orderby")
+        sortOptionHolder.findViewById<TextView>(R.id.sortOptionBsTitle)?.text = DbHelper.getString(Const.CATALOG_ORDER_BY)
 
         if(sortOption?.allowProductSorting == true && !sortOption.availableSortOptions.isNullOrEmpty()) {
 

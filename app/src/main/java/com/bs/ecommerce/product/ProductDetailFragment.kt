@@ -178,7 +178,7 @@ class ProductDetailFragment : BaseFragment(), View.OnClickListener {
 
                     productRatingLayout.tvReviewCount.text = (product.productReviewOverview?.totalReviews ?: 0)
                         .toString().plus(" ")
-                        .plus(DbHelper.getString("reviews"))
+                        .plus(DbHelper.getString(Const.TITLE_REVIEW))
 
                     productRatingLayout.setOnClickListener {
 
@@ -291,7 +291,7 @@ class ProductDetailFragment : BaseFragment(), View.OnClickListener {
                     // long description
                     if(product?.fullDescription?.isEmpty() == false) {
                         val productDescLayout = vsProductDescLayout?.inflate()
-                        productDescLayout?.tvProductName?.text = DbHelper.getString("account.vendorinfo.description")
+                        productDescLayout?.tvProductName?.text = DbHelper.getString(Const.PRODUCT_DESCRIPTION)
                         product.fullDescription.let {
                             /*productDescLayout?.tvProductDescription?.show(
                                 it,
@@ -434,9 +434,9 @@ class ProductDetailFragment : BaseFragment(), View.OnClickListener {
 
         val view = vsGiftCardLayout.inflate()
 
-        view.etRecipientName.hint = DbHelper.getString("products.giftcard.recipientname")
-        view.etYourName.hint = DbHelper.getString("products.giftcard.sendername")
-        view.etMessage.hint = DbHelper.getString("products.giftcard.message")
+        view.etRecipientName.hint = DbHelper.getString(Const.PRODUCT_GIFT_CARD_RECIEPIENT)
+        view.etYourName.hint = DbHelper.getString(Const.PRODUCT_GIFT_CARD_SENDER)
+        view.etMessage.hint = DbHelper.getString(Const.PRODUCT_GIFT_CARD_MESSAGE)
 
         hd15.visibility = View.VISIBLE
     }
@@ -452,8 +452,8 @@ class ProductDetailFragment : BaseFragment(), View.OnClickListener {
 
         val calender: Calendar = Calendar.getInstance()
 
-        rentalProductLayout.tvLayoutTitle.text = DbHelper.getString("shoppingcart.rent")
-        rentalProductLayout.etRentFrom.hint = DbHelper.getString("shoppingcart.rental.enterstartdate")
+        rentalProductLayout.tvLayoutTitle.text = DbHelper.getString(Const.PRODUCT_RENT)
+        rentalProductLayout.etRentFrom.hint = DbHelper.getString(Const.PRODUCT_RENTAL_START)
         rentalProductLayout.etRentFrom.setOnClickListener{
 
             val dialog = DatePickerDialog(
@@ -471,11 +471,11 @@ class ProductDetailFragment : BaseFragment(), View.OnClickListener {
             dialog.show()
         }
 
-        rentalProductLayout.etRentTo.hint = DbHelper.getString("shoppingcart.rental.enterenddate")
+        rentalProductLayout.etRentTo.hint = DbHelper.getString(Const.PRODUCT_RENTAL_END)
         rentalProductLayout.etRentTo.setOnClickListener{
 
             if (rentalProductLayout.etRentFrom.text.isNullOrEmpty()) {
-                toast("Select start date")
+                //toast("Select start date")
                 return@setOnClickListener
             }
 
@@ -538,7 +538,7 @@ class ProductDetailFragment : BaseFragment(), View.OnClickListener {
 
         val featuredProductLayout = vsRelatedProduct.inflate()
 
-        featuredProductLayout.tvProductName.text = DbHelper.getString("products.relatedproducts")
+        featuredProductLayout.tvProductName.text = DbHelper.getString(Const.PRODUCT_RELATED_PRODUCT)
 
         featuredProductLayout.rvFeaturedProduct.apply {
             layoutManager =
@@ -558,7 +558,7 @@ class ProductDetailFragment : BaseFragment(), View.OnClickListener {
 
         val similarProductLayout = vsSimilarProduct.inflate()
 
-        similarProductLayout.tvProductName.text = DbHelper.getString("products.alsopurchased")
+        similarProductLayout.tvProductName.text = DbHelper.getString(Const.PRODUCT_ALSO_PURCHASED)
 
         similarProductLayout.rvFeaturedProduct.apply {
             layoutManager =
