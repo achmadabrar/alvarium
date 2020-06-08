@@ -46,6 +46,7 @@ class CategoryFragment : ToolbarLogoBaseFragment()
 
             categorySwipeRefresh.setOnRefreshListener {
                 categorySwipeRefresh.isRefreshing = false
+                showHideLoader(toShow = true)
                 mainViewModel.getNavDrawerCategoryList(mainModel)
             }
         }
@@ -60,7 +61,10 @@ class CategoryFragment : ToolbarLogoBaseFragment()
 
             showList(categoryList)
         })
-        mainViewModel.isLoadingLD.observe(viewLifecycleOwner, Observer { isShowLoader -> showHideLoader(isShowLoader) })
+
+        mainViewModel.isLoadingLD.observe(
+            viewLifecycleOwner,
+            Observer { isShowLoader -> if(!isShowLoader) showHideLoader(toShow = false) })
     }
 
     private fun showList(categoryList: List<Category>)
