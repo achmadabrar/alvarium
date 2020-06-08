@@ -122,6 +122,11 @@ class ProductDetailFragment : BaseFragment(), View.OnClickListener {
             productLiveData.observe(
                 viewLifecycleOwner,
                 Observer { product ->
+                    // Set Toolbar title
+                    if(isAdded && lifecycle.currentState.isAtLeast(Lifecycle.State.RESUMED)) {
+                        requireActivity().title = product?.name ?: ""
+                        arguments?.putString(PRODUCT_NAME, product?.name ?: "")
+                    }
 
                     // slider image
                     val imageSlider = vsImageSlider?.inflate()

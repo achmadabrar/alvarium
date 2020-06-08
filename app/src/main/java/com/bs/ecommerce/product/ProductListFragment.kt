@@ -12,6 +12,7 @@ import android.widget.RelativeLayout
 import android.widget.TextView
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.GridLayoutManager
@@ -248,12 +249,17 @@ class ProductListFragment : BaseFragment() {
 
             productListAdapter.addData(data.products, viewModel.shouldAppend)
 
-            initSubcategoryPopupWindow(data.subCategories)
+            initSubcategoryPopupWindow(data.name, data.subCategories)
 
             llButtonHolder.visibility =
                 if (data.subCategories.isNullOrEmpty()) View.VISIBLE else View.INVISIBLE
 
             populateSortOptions(data.pagingFilteringContext)
+
+            if(isAdded && lifecycle.currentState.isAtLeast(Lifecycle.State.RESUMED)) {
+                requireActivity().title = data?.name ?: ""
+                arguments?.putString(CATEGORY_NAME, data?.name ?: "")
+            }
         })
 
         viewModel.manufacturerLD.observe(viewLifecycleOwner, Observer { manufacturer ->
@@ -263,6 +269,11 @@ class ProductListFragment : BaseFragment() {
                 View.INVISIBLE else View.VISIBLE
 
             populateSortOptions(manufacturer.pagingFilteringContext)
+
+            if(isAdded && lifecycle.currentState.isAtLeast(Lifecycle.State.RESUMED)) {
+                requireActivity().title = manufacturer?.name ?: ""
+                arguments?.putString(CATEGORY_NAME, manufacturer?.name ?: "")
+            }
         })
 
         viewModel.isLoadingLD.observe(viewLifecycleOwner, Observer { isShowLoader ->
@@ -294,7 +305,7 @@ class ProductListFragment : BaseFragment() {
         })
     }
 
-    private fun initSubcategoryPopupWindow(subCatList: List<SubCategory>?) {
+    private fun initSubcategoryPopupWindow(catName: String?, subCatList: List<SubCategory>?) {
 
         if (subCatList.isNullOrEmpty()) {
             categoryNameTextView.visibility = View.GONE
@@ -302,7 +313,7 @@ class ProductListFragment : BaseFragment() {
         }
 
         categoryNameTextView.visibility = View.VISIBLE
-        categoryNameTextView.text = categoryName
+        categoryNameTextView.text = catName ?: ""
 
         subcategoryPopupWindow = ListPopupWindow(requireContext())
 

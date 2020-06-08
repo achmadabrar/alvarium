@@ -5,13 +5,14 @@ package com.bs.ecommerce.utils
 import android.app.Activity
 import android.content.Context
 import android.content.res.Configuration
-import android.net.ConnectivityManager
+import android.graphics.Rect
 import android.os.Build
 import android.util.Log
 import android.util.Patterns
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.ViewTreeObserver
 import android.view.inputmethod.InputMethodManager
 import android.webkit.WebView
 import android.widget.*
@@ -21,12 +22,15 @@ import androidx.asynclayoutinflater.view.AsyncLayoutInflater
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.bs.ecommerce.R
 import com.bs.ecommerce.base.BaseFragment
 import com.bs.ecommerce.db.DbHelper
 import com.bs.ecommerce.main.MainActivity
 import com.squareup.picasso.Picasso
 import java.util.*
+import kotlin.math.floor
 
 
 /**
@@ -296,4 +300,39 @@ fun TextView.setDrawableEnd(resId: Int) {
     } else {
         setCompoundDrawablesWithIntrinsicBounds(0, 0, resId, 0)
     }
+}
+
+fun RecyclerView.calculateColumnsForGridLayout() {
+
+    layoutManager = GridLayoutManager(context, 2)
+
+    viewTreeObserver.addOnGlobalLayoutListener(
+        object : ViewTreeObserver.OnGlobalLayoutListener {
+            override fun onGlobalLayout() {
+                viewTreeObserver?.removeOnGlobalLayoutListener(this)
+
+                val viewWidth = measuredWidth
+                val cardViewWidth =
+                    resources?.getDimension(R.dimen.product_item_size)
+
+                val newSpanCount = floor((viewWidth / cardViewWidth!!).toDouble()).toInt()
+
+                (layoutManager as GridLayoutManager).spanCount = newSpanCount
+                (layoutManager as GridLayoutManager).requestLayout()
+
+                val decoration = object : RecyclerView.ItemDecoration() {
+                    override fun getItemOffsets(
+                        outRect: Rect,
+                        view: View,
+                        parent: RecyclerView,
+                        state: RecyclerView.State
+                    ) {
+                        super.getItemOffsets(outRect, view, parent, state)
+                        outRect.set(15, 15, 15, 15)
+                    }
+                }
+
+                addItemDecoration(decoration)
+            }
+        })
 }

@@ -15,6 +15,10 @@ class Const {
         const val HOME_NAV_ACCOUNT = "pagetitle.account"
         const val HOME_NAV_MORE = "nopstation.webapi.common.more"
 
+        const val HOME_MANUFACTURER = "manufacturers"
+        const val HOME_FEATURED_PRODUCT = "homepage.products"
+        const val HOME_BESTSELLER = "bestsellers"
+
         const val CHANGE_PASS_BTN = "account.changepassword.button"
         const val CHANGE_PASS_OLD = "account.changepassword.fields.oldpassword"
         const val CHANGE_PASS_OLD_REQ = "account.changepassword.fields.oldpassword.required"

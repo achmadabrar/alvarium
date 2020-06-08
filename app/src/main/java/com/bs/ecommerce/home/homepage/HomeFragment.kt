@@ -14,6 +14,7 @@ import com.bs.ecommerce.base.ToolbarLogoBaseFragment
 import com.bs.ecommerce.db.DbHelper
 import com.bs.ecommerce.home.FeaturedProductAdapter
 import com.bs.ecommerce.home.ManufacturerListAdapter
+import com.bs.ecommerce.home.ManufacturerListFragment
 import com.bs.ecommerce.home.homepage.model.HomePageModel
 import com.bs.ecommerce.home.homepage.model.HomePageModelImpl
 import com.bs.ecommerce.home.homepage.model.data.SliderData
@@ -170,7 +171,11 @@ class HomeFragment : ToolbarLogoBaseFragment() {
 
 
             imageBannerLD.observe(viewLifecycleOwner, Observer { sliderData ->
-                if(observeLiveDataChange) populateBanner(sliderData)
+                try {
+                    if(observeLiveDataChange) populateBanner(sliderData)
+                } catch (e: IllegalStateException) {
+                    "crash".showLog("slider banner - $e")
+                }
             })
 
             homePageLoader.observe(viewLifecycleOwner, Observer { isShowLoader -> showHideLoader(isShowLoader) })
@@ -209,19 +214,40 @@ class HomeFragment : ToolbarLogoBaseFragment() {
         var biggestImageAR = 100000F
 
         thread {
-            for ((i, imageModel) in sliderData.sliders.withIndex()) {
+            for ((i, sliderModel) in sliderData.sliders.withIndex()) {
 
                 requireActivity().runOnUiThread {
                     val textSliderView = DefaultSliderView(requireContext())
 
-                    textSliderView.image(imageModel.imageUrl).scaleType =
+                    textSliderView.image(sliderModel.imageUrl).scaleType =
                         BaseSliderView.ScaleType.CenterInside
+
+                    textSliderView.setOnSliderClickListener {
+
+                        sliderModel.id?.let {
+
+                            when(sliderModel.sliderType) {
+
+                                SliderType.PRODUCT ->
+                                    replaceFragmentSafely(ProductDetailFragment.newInstance(it.toLong(), ""))
+
+                                SliderType.CATEGORY ->
+                                    replaceFragmentSafely(ProductListFragment.newInstance("", it, ProductListFragment.GetBy.CATEGORY))
+
+                                SliderType.MANUFACTURER ->
+                                    replaceFragmentSafely(ProductListFragment.newInstance("", it, ProductListFragment.GetBy.MANUFACTURER))
+
+                                /*SliderType.TOPIC -> ;
+                                SliderType.VENDOR ->*/
+                            }
+                        }
+                    }
 
                     banner?.view_pager_slider1?.addSlider(textSliderView)
                 }
 
                 //Execute all the long running tasks here
-                val url = URL(imageModel.imageUrl)
+                val url = URL(sliderModel.imageUrl)
                 val bitmap = BitmapFactory.decodeStream(url.openConnection().getInputStream())
 
                 val bitmapWidth: Float = bitmap?.width?.toFloat() ?: 1f
@@ -311,7 +337,7 @@ class HomeFragment : ToolbarLogoBaseFragment() {
         }
 
         featuredProductLayout?.visibility = View.VISIBLE
-        featuredProductLayout?.tvTitle?.text = DbHelper.getString("homepage.products")
+        featuredProductLayout?.tvTitle?.text = DbHelper.getString(Const.HOME_FEATURED_PRODUCT)
         featuredProductLayout?.btnSeeAll?.visibility = View.GONE
         featuredProductLayout?.btnSeeAll?.text = DbHelper.getString(Const.COMMON_SEE_ALL)
 
@@ -326,7 +352,7 @@ class HomeFragment : ToolbarLogoBaseFragment() {
         }
 
         bestSellingLayout?.visibility = View.VISIBLE
-        bestSellingLayout?.tvTitle?.text = DbHelper.getString("bestsellers")
+        bestSellingLayout?.tvTitle?.text = DbHelper.getString(Const.HOME_BESTSELLER)
         bestSellingLayout?.btnSeeAll?.visibility = View.GONE
         bestSellingLayout?.btnSeeAll?.text = DbHelper.getString(Const.COMMON_SEE_ALL)
 
@@ -341,9 +367,12 @@ class HomeFragment : ToolbarLogoBaseFragment() {
 
         featuredManufacturerLayout?.visibility = View.VISIBLE
         featuredManufacturerLayout?.divider?.visibility = View.INVISIBLE
-        featuredManufacturerLayout?.tvTitle?.text = DbHelper.getString("manufacturers")
-        featuredManufacturerLayout?.btnSeeAll?.visibility = View.GONE
+        featuredManufacturerLayout?.tvTitle?.text = DbHelper.getString(Const.HOME_MANUFACTURER)
         featuredManufacturerLayout?.btnSeeAll?.text = DbHelper.getString(Const.COMMON_SEE_ALL)
+
+        featuredManufacturerLayout?.btnSeeAll?.setOnClickListener {
+            replaceFragmentSafely(ManufacturerListFragment())
+        }
 
         val itemClickListener = object : ItemClickListener<Manufacturer> {
             override fun onClick(view: View, position: Int, data: Manufacturer) {
