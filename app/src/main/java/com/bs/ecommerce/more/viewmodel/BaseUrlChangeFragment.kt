@@ -14,6 +14,7 @@ import com.bs.ecommerce.main.MainViewModel
 import com.bs.ecommerce.main.model.MainModel
 import com.bs.ecommerce.networking.NetworkConstants
 import com.bs.ecommerce.networking.NetworkUtil
+import com.bs.ecommerce.utils.Const
 import com.bs.ecommerce.utils.PrefSingleton
 import com.bs.ecommerce.utils.hideKeyboard
 import com.bs.ecommerce.utils.toast
@@ -46,7 +47,7 @@ abstract class BaseUrlChangeFragment : BaseFragment()
         if(newBaseUrlEditTextFromSettings?.text?.length!! > 10)
             testApiCall()
         else
-            toast(DbHelper.getString("nopstation.webapi.settings.invalidurl"))
+            toast(DbHelper.getString(Const.SETTINGS_INVALID_URL))
             //newBaseUrlEditTextFromSettings?.error = getString(R.string.url_is_required)
 
     }

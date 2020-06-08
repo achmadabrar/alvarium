@@ -45,6 +45,7 @@ class Const {
         const val SETTINGS_LANGUAGE = "nopstation.webapi.settings.language"
         const val SETTINGS_CURRENCY = "nopstation.webapi.settings.currency"
         const val SETTINGS_THEME = "nopstation.webapi.settings.darktheme"
+        const val SETTINGS_INVALID_URL = "nopstation.webapi.settings.invalidurl"
         const val SETTINGS_BTN_TEST = "nopstation.webapi.settings.test"
         const val SETTINGS_BTN_SET_DEFAULT = "nopstation.webapi.settings.setdefault"
 
@@ -82,6 +83,7 @@ class Const {
         const val ORDER_TOTAL_ = "order.product(s).sku"
 
         const val CATALOG_ITEMS_PER_PAGE = "catalog.pagesize.label"
+        const val CATALOG_ORDER_BY = "catalog.orderby"
 
         const val MORE_SCAN_BARCODE = "nopstation.webapi.scanbarcode"
         const val MORE_SETTINGS = "nopstation.webapi.settings"

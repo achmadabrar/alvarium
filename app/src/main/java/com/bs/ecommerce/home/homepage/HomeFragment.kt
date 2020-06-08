@@ -19,6 +19,7 @@ import com.bs.ecommerce.home.homepage.model.HomePageModel
 import com.bs.ecommerce.home.homepage.model.HomePageModelImpl
 import com.bs.ecommerce.home.homepage.model.data.SliderData
 import com.bs.ecommerce.main.MainViewModel
+import com.bs.ecommerce.more.TopicFragment
 import com.bs.ecommerce.product.ProductDetailFragment
 import com.bs.ecommerce.product.ProductListFragment
 import com.bs.ecommerce.product.model.data.CategoryModel
@@ -237,8 +238,8 @@ class HomeFragment : ToolbarLogoBaseFragment() {
                                 SliderType.MANUFACTURER ->
                                     replaceFragmentSafely(ProductListFragment.newInstance("", it, ProductListFragment.GetBy.MANUFACTURER))
 
-                                /*SliderType.TOPIC ->
-                                    */
+                                SliderType.TOPIC ->
+                                    replaceFragmentSafely(TopicFragment.newInstance(it))
 
                                 SliderType.VENDOR ->
                                     replaceFragmentSafely(ProductListFragment.newInstance("", it, ProductListFragment.GetBy.VENDOR))

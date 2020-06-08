@@ -11,6 +11,7 @@ import com.bs.ecommerce.base.ToolbarLogoBaseFragment
 import com.bs.ecommerce.db.DbHelper
 import com.bs.ecommerce.more.settings.SettingsFragment
 import com.bs.ecommerce.more.viewmodel.OptionViewModel
+import com.bs.ecommerce.networking.Api
 import com.bs.ecommerce.utils.Const
 import com.bs.ecommerce.utils.replaceFragmentSafely
 import kotlinx.android.synthetic.main.fragment_options.*
@@ -61,10 +62,10 @@ class OptionsFragment : ToolbarLogoBaseFragment() {
                             replaceFragmentSafely(SettingsFragment())
 
                         R.string.privacy_policy ->
-                            replaceFragmentSafely(PrivacyPolicyFragment())
+                            replaceFragmentSafely(TopicFragment.newInstance(Api.topicPrivacyPolicy))
 
                         R.string.title_about_us ->
-                            replaceFragmentSafely(AboutUsFragment())
+                            replaceFragmentSafely(TopicFragment.newInstance(Api.topicAboutUs))
 
                         R.string.title_contact_us ->
                             replaceFragmentSafely(ContactUsFragment())

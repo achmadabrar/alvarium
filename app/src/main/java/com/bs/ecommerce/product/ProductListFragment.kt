@@ -133,7 +133,7 @@ class ProductListFragment : BaseFragment() {
             }
         }
 
-        btnSortBy.findViewById<TextView>(R.id.tvSortBy).text = DbHelper.getString("catalog.orderby")
+        btnSortBy.findViewById<TextView>(R.id.tvSortBy).text = DbHelper.getString(Const.CATALOG_ORDER_BY)
         btnSortBy.setOnClickListener {
             drawerLayout?.closeDrawers()
             sortOptionDialog.show()
@@ -222,7 +222,7 @@ class ProductListFragment : BaseFragment() {
         
         // sort option selection
         val sortOptionHolder:LinearLayout = layoutInflater.inflate(R.layout.sort_option_bottom_sheet, null, false) as LinearLayout
-        sortOptionHolder.findViewById<TextView>(R.id.sortOptionBsTitle)?.text = DbHelper.getString("catalog.orderby")
+        sortOptionHolder.findViewById<TextView>(R.id.sortOptionBsTitle)?.text = DbHelper.getString(Const.CATALOG_ORDER_BY)
 
         if(sortOption?.allowProductSorting == true && !sortOption.availableSortOptions.isNullOrEmpty()) {
 

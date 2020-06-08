@@ -12,18 +12,17 @@ import com.bs.ecommerce.db.DbHelper
 import com.bs.ecommerce.more.model.TopicModel
 import com.bs.ecommerce.more.model.TopicModelImpl
 import com.bs.ecommerce.more.viewmodel.TopicViewModel
-import com.bs.ecommerce.networking.Api
 import com.bs.ecommerce.utils.Const
 import com.bs.ecommerce.utils.show
-import kotlinx.android.synthetic.main.fragment_privacy_policy.*
+import kotlinx.android.synthetic.main.fragment_topic.*
 
-class PrivacyPolicyFragment : BaseFragment() {
+class TopicFragment : BaseFragment() {
 
     private lateinit var model: TopicModel
 
     override fun getFragmentTitle() = DbHelper.getString(Const.MORE_PRIVACY_POLICY)
 
-    override fun getLayoutId(): Int = R.layout.fragment_privacy_policy
+    override fun getLayoutId(): Int = R.layout.fragment_topic
 
     override fun getRootLayout(): RelativeLayout? = privacyPolicyLayout
 
@@ -37,7 +36,13 @@ class PrivacyPolicyFragment : BaseFragment() {
             model = TopicModelImpl()
             viewModel = ViewModelProvider(this).get(TopicViewModel::class.java)
 
-            (viewModel as TopicViewModel).fetchTopic(Api.topicPrivacyPolicy, model)
+            arguments?.getString(keyTopicName)?.let {
+                (viewModel as TopicViewModel).fetchTopic(it, model)
+            }
+
+            arguments?.getInt(keyTopicId)?.let {
+                (viewModel as TopicViewModel).fetchTopic(it, model)
+            }
         }
 
         setupLiveDataListener()
@@ -51,6 +56,13 @@ class PrivacyPolicyFragment : BaseFragment() {
 
                 topic?.body?.also {
                     wv_privacy_policy?.show( it, R.color.fragment_background)
+
+                    /*webViewClient = object : WebViewClient() {
+                        override fun onPageFinished(view: WebView, url: String) {
+                            "nop_".showLog("onPageFinished")
+                            hideLoading()
+                        }
+                    }*/
                 }
             })
 
@@ -64,12 +76,12 @@ class PrivacyPolicyFragment : BaseFragment() {
         }
     }
 
-    /*companion object {
-        @JvmStatic
-        private val keyTopicName: String = "key_topic_name"
+    companion object {
+        @JvmStatic private val keyTopicName: String = "key_topic_name"
+        @JvmStatic private val keyTopicId: String = "key_topic_id"
 
-        fun newInstance(topicName: String): PrivacyPolicyFragment {
-            val fragment = PrivacyPolicyFragment()
+        fun newInstance(topicName: String): TopicFragment {
+            val fragment = TopicFragment()
 
             fragment.arguments = Bundle().apply {
                 putString(keyTopicName, topicName)
@@ -77,5 +89,15 @@ class PrivacyPolicyFragment : BaseFragment() {
 
             return fragment
         }
-    }*/
+
+        fun newInstance(topicId: Int): TopicFragment {
+            val fragment = TopicFragment()
+
+            fragment.arguments = Bundle().apply {
+                putInt(keyTopicName, topicId)
+            }
+
+            return fragment
+        }
+    }
 }
