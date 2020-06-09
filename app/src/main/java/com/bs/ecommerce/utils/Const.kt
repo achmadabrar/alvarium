@@ -9,11 +9,12 @@ class Const {
         const val TITLE_REVIEW = "reviews"
         const val TITLE_ORDER_DETAILS = "pagetitle.orderdetails"
         const val TITLE_SEARCH = "pagetitle.search"
+        const val TITLE_ACCOUNT = "pagetitle.account"
 
         const val HOME_NAV_HOME = "common.home"
         const val HOME_NAV_CATEGORY = "nopstation.webapi.common.category"
         const val HOME_NAV_SEARCH = "common.search"
-        const val HOME_NAV_ACCOUNT = "pagetitle.account"
+        const val HOME_NAV_ACCOUNT = "nopstation.webapi.common.account"
         const val HOME_NAV_MORE = "nopstation.webapi.common.more"
 
         const val HOME_MANUFACTURER = "manufacturers"
@@ -50,7 +51,7 @@ class Const {
         const val SETTINGS_BTN_TEST = "nopstation.webapi.settings.test"
         const val SETTINGS_BTN_SET_DEFAULT = "nopstation.webapi.settings.setdefault"
 
-        const val ENTER_VALID_EMAIL = "nopstation.webapi.common.enterconst val idemail"
+        const val ENTER_VALID_EMAIL = "nopstation.webapi.common.entervalidemail"
         const val ENTER_PRICE = "nopstation.webapi.shoppingcart.donation.enterprice"
         const val ENTER_PRICE_REQ = "nopstation.webapi.shoppingcart.donation.enterprice.required"
 
@@ -312,7 +313,7 @@ class Const {
 
 
         // Barcode
-        const val INVALID_PRODUCT = "nopstation.webapi.sliders.fields.entityid.inconst val idproduct"
+        const val INVALID_PRODUCT = "nopstation.webapi.barcode.invalidproduct"
 
         //Order Complete Dialog
 
@@ -320,7 +321,7 @@ class Const {
         const val THANK_YOU = "checkout.thankyou"
 
         const val NO_INTERNET = "nopstation.webapi.nointernet"
-        const val SETTINGS = "plugin.nopstation.theme.crimson.settings"
+        const val SETTINGS = "nopstation.webapi.settings"
         const val TRY_AGAIN = "nopstation.webapi.tryagain"
 
         const val READ_BEFORE_CONTINUE = "nopstation.webapi.readbeforecontinue"

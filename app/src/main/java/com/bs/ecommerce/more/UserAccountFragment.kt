@@ -1,9 +1,12 @@
 package com.bs.ecommerce.more
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.Gravity
 import android.view.View
 import android.widget.RelativeLayout
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import com.bs.ecommerce.R
 import com.bs.ecommerce.auth.customerInfo.CustomerInfoFragment
 import com.bs.ecommerce.auth.login.LoginFragment
@@ -12,6 +15,9 @@ import com.bs.ecommerce.base.BaseViewModel
 import com.bs.ecommerce.base.ToolbarLogoBaseFragment
 import com.bs.ecommerce.cart.CartFragment
 import com.bs.ecommerce.db.DbHelper
+import com.bs.ecommerce.main.MainActivity
+import com.bs.ecommerce.main.MainViewModel
+import com.bs.ecommerce.main.model.MainModelImpl
 import com.bs.ecommerce.utils.Const
 import com.bs.ecommerce.utils.PrefSingleton
 import com.bs.ecommerce.utils.replaceFragmentSafely
@@ -25,15 +31,47 @@ class UserAccountFragment: ToolbarLogoBaseFragment() {
 
     override fun getRootLayout(): RelativeLayout? = userAccountRootLayout
 
-    override fun createViewModel(): BaseViewModel = BaseViewModel()
+    override fun createViewModel(): BaseViewModel = MainViewModel()
 
-    override fun getFragmentTitle() = DbHelper.getString(Const.HOME_NAV_ACCOUNT)
+    override fun getFragmentTitle() = DbHelper.getString(Const.TITLE_ACCOUNT)
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        viewModel = ViewModelProvider(requireActivity()).get(MainViewModel::class.java)
+
+        setLiveDataListeners()
         setupView()
     }
+
+    private fun setLiveDataListeners() {
+
+        (viewModel as MainViewModel).apply {
+
+            appSettingsLD.observe(viewLifecycleOwner, Observer { settings ->
+
+                settings.peekContent()?.let {
+
+                    if (updatingAppSettings) {
+                        updatingAppSettings = false
+
+                        it.stringResources = listOf()
+
+                        requireActivity().finish()
+                        startActivity(
+                            Intent(requireActivity().applicationContext, MainActivity::class.java)
+                                .putExtra(MainActivity.KEY_APP_SETTINGS, it)
+                        )
+                    }
+                }
+            })
+
+            isLoadingLD.observe(viewLifecycleOwner, Observer { isShowLoader ->
+                if (!isShowLoader) blockingLoader.hideDialog()
+            })
+        }
+    }
+
 
     private fun setupView() {
 
@@ -102,7 +140,13 @@ class UserAccountFragment: ToolbarLogoBaseFragment() {
                 if (prefObject.getPrefsBoolValue(PrefSingleton.IS_LOGGED_IN))
                     logoutConfirmationDialog(View.OnClickListener {
                         // updating UI
-                        setupView()
+                        // setupView()
+
+                        blockingLoader.showDialog()
+                        (viewModel as MainViewModel).apply {
+                            updatingAppSettings = true
+                            getAppSettings(MainModelImpl(requireContext()))
+                        }
                     })
                 else
                     replaceFragmentSafely(LoginFragment())

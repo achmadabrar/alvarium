@@ -49,6 +49,8 @@ class MainViewModel : CheckoutViewModel() {
 
     var topicLD = MutableLiveData<TopicData?>()
 
+    var updatingAppSettings = false
+
     fun getAllLandingPageProducts(model: HomePageModel) {
 
         Log.d("nop_", "called getAllLandingPageProducts ${count.get()}")

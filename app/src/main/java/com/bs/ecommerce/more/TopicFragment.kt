@@ -3,16 +3,15 @@ package com.bs.ecommerce.more
 import android.os.Bundle
 import android.view.View
 import android.widget.RelativeLayout
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.bs.ecommerce.R
 import com.bs.ecommerce.base.BaseFragment
 import com.bs.ecommerce.base.BaseViewModel
-import com.bs.ecommerce.db.DbHelper
 import com.bs.ecommerce.more.model.TopicModel
 import com.bs.ecommerce.more.model.TopicModelImpl
 import com.bs.ecommerce.more.viewmodel.TopicViewModel
-import com.bs.ecommerce.utils.Const
 import com.bs.ecommerce.utils.show
 import kotlinx.android.synthetic.main.fragment_topic.*
 
@@ -20,7 +19,7 @@ class TopicFragment : BaseFragment() {
 
     private lateinit var model: TopicModel
 
-    override fun getFragmentTitle() = DbHelper.getString(Const.MORE_PRIVACY_POLICY)
+    override fun getFragmentTitle() = ""
 
     override fun getLayoutId(): Int = R.layout.fragment_topic
 
@@ -53,6 +52,13 @@ class TopicFragment : BaseFragment() {
         (viewModel as TopicViewModel).apply {
 
             topicLD.observe(viewLifecycleOwner, Observer { topic ->
+
+                // Set Toolbar title
+                if(isAdded && lifecycle.currentState.isAtLeast(Lifecycle.State.RESUMED)) {
+                    requireActivity().title = topic?.title ?: ""
+                    arguments?.putString(keyTopicName, topic?.title ?: "")
+                }
+
 
                 topic?.body?.also {
                     wv_privacy_policy?.show( it, R.color.fragment_background)

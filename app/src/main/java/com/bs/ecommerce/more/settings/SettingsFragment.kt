@@ -162,7 +162,7 @@ class SettingsFragment: BaseUrlChangeFragment() {
             }
 
             val currentLanguageName = prefObject.getPrefs(PrefSingleton.CURRENT_LANGUAGE)
-            nameList.add("Current Language : $currentLanguageName")
+            nameList.add(currentLanguageName)
 
             for (data in availableLanguages)
             {
@@ -196,7 +196,7 @@ class SettingsFragment: BaseUrlChangeFragment() {
             }
 
             val currentCurrencyName = prefObject.getPrefs(PrefSingleton.CURRENT_CURRENCY)
-            nameList.add("Current Currency : $currentCurrencyName")
+            nameList.add(currentCurrencyName)
 
             for (currency in availableCurrencies)
             {

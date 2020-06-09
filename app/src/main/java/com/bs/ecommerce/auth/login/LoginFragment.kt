@@ -6,7 +6,6 @@ import android.util.Log
 import android.view.View
 import android.widget.RelativeLayout
 import android.widget.Toast
-import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.bs.ecommerce.R
@@ -20,6 +19,9 @@ import com.bs.ecommerce.auth.register.RegisterFragment
 import com.bs.ecommerce.base.BaseFragment
 import com.bs.ecommerce.base.BaseViewModel
 import com.bs.ecommerce.db.DbHelper
+import com.bs.ecommerce.main.MainActivity
+import com.bs.ecommerce.main.MainViewModel
+import com.bs.ecommerce.main.model.MainModelImpl
 import com.bs.ecommerce.networking.NetworkUtil
 import com.bs.ecommerce.utils.*
 import com.facebook.*
@@ -31,7 +33,7 @@ import org.json.JSONException
 
 class LoginFragment : BaseFragment()
 {
-
+    private lateinit var mainViewModel: MainViewModel
     private var callbackManager: CallbackManager? = null
 
     private lateinit var model: AuthModel
@@ -51,6 +53,7 @@ class LoginFragment : BaseFragment()
         model = AuthModelImpl()
 
         viewModel  = ViewModelProvider(this).get(LoginViewModel::class.java)
+        mainViewModel = ViewModelProvider(requireActivity()).get(MainViewModel::class.java)
 
         initView()
         initFacebookSdk()
@@ -128,12 +131,9 @@ class LoginFragment : BaseFragment()
 
                     toast(DbHelper.getString(Const.LOGIN_LOGIN_SUCCESS))
 
-                    // HomeFragment is never in backStack
-                    // Pop all items from backStack will make HomeFragment visible
-                    requireActivity().supportFragmentManager.popBackStack(
-                        null,
-                        FragmentManager.POP_BACK_STACK_INCLUSIVE
-                    )
+                    // get appLandingSettings
+                    mainViewModel.updatingAppSettings = true
+                    mainViewModel.getAppSettings(MainModelImpl(requireContext()))
                 }
                     ?:    toast(loginResponse?.errorsAsFormattedString.toString())
             })
@@ -149,7 +149,35 @@ class LoginFragment : BaseFragment()
         }
 
 
+        mainViewModel.appSettingsLD.observe(viewLifecycleOwner, Observer { settings ->
 
+            settings.peekContent()?.let {
+
+                if (mainViewModel.updatingAppSettings) {
+                    mainViewModel.updatingAppSettings = false
+
+                    // HomeFragment is never in backStack
+                    // Pop all items from backStack will make HomeFragment visible
+                    /*requireActivity().supportFragmentManager.popBackStack(
+                        null,
+                        FragmentManager.POP_BACK_STACK_INCLUSIVE
+                    )*/
+
+                    it.stringResources = listOf()
+
+                    requireActivity().finish()
+                    startActivity(
+                        Intent(requireActivity().applicationContext, MainActivity::class.java)
+                            .putExtra(MainActivity.KEY_APP_SETTINGS, it)
+                    )
+                }
+            }
+        })
+
+        mainViewModel.isLoadingLD.observe(viewLifecycleOwner, Observer { isShowLoader ->
+            if(isShowLoader) blockingLoader.showDialog()
+            else blockingLoader.hideDialog()
+        })
     }
 
     private fun initFacebookSdk()

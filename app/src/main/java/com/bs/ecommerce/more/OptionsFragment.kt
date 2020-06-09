@@ -37,7 +37,7 @@ class OptionsFragment : ToolbarLogoBaseFragment() {
             viewModel = ViewModelProvider(this).get(OptionViewModel::class.java)
             (viewModel as OptionViewModel).loadOptions()
 
-            mainViewModel = ViewModelProvider(this).get(MainViewModel::class.java)
+            mainViewModel = ViewModelProvider(requireActivity()).get(MainViewModel::class.java)
         }
 
         observeLiveData()
