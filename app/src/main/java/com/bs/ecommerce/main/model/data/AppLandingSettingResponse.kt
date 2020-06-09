@@ -49,8 +49,7 @@ data class AppLandingData  (
         parcel.readByte() != 0.toByte(),
         parcel.readValue(Boolean::class.java.classLoader) as? Boolean,
         parcel.createTypedArrayList(StringResource.CREATOR) ?: listOf()
-    ) {
-    }
+    )
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
         parcel.writeValue(andriodForceUpdate)
@@ -69,6 +68,7 @@ data class AppLandingData  (
         parcel.writeString(playStoreUrl)
         parcel.writeByte(if (rtl) 1 else 0)
         parcel.writeByte(if (showSubCategoryProducts) 1 else 0)
+        parcel.writeValue(showAllVendors)
         parcel.writeTypedList(stringResources)
     }
 
