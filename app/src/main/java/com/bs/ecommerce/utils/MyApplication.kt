@@ -45,10 +45,7 @@ class MyApplication : MultiDexApplication()
 
         var fcm_token : String? = null
 
-        var searchQuery = ""
-        var paypalKey = "payPalKey"
         var myCartCounter: Int = 0
-        val orderIdKey = "orderIdKey"
 
         var mAppContext: Context? = null
 
