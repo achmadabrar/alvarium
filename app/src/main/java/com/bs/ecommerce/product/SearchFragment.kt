@@ -2,6 +2,7 @@ package com.bs.ecommerce.product
 
 import android.graphics.Rect
 import android.os.Bundle
+import android.os.Handler
 import android.util.Log
 import android.view.*
 import android.widget.LinearLayout
@@ -32,6 +33,9 @@ import kotlinx.android.synthetic.main.fragment_product_list.*
 import kotlin.math.floor
 
 class SearchFragment : BaseFragment() {
+
+    private var searchProductItemClicked = false
+    private var previousSearchQuery = ""
 
     private lateinit var model: SearchModel
     private lateinit var layoutManager: GridLayoutManager
@@ -174,6 +178,10 @@ class SearchFragment : BaseFragment() {
         })
     }
 
+    override fun onDestroy() {
+        super.onDestroy()
+        searchProductItemClicked = false
+    }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater)
     {
@@ -192,14 +200,24 @@ class SearchFragment : BaseFragment() {
                 MenuItemCompat.SHOW_AS_ACTION_COLLAPSE_ACTION_VIEW or MenuItemCompat.SHOW_AS_ACTION_ALWAYS)
             MenuItemCompat.setActionView(item, searchView)
 
-            searchView?.queryHint = DbHelper.getString(Const.TITLE_SEARCH)
+            if (searchProductItemClicked)
+            {
+                searchView?.queryHint = previousSearchQuery
+                Handler().post {  requireActivity().hideKeyboard()  }
+            }
+            else
+            {
+                searchView?.queryHint = DbHelper.getString(Const.TITLE_SEARCH)
+                searchProductItemClicked = true
+            }
+
 
             searchView?.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
                 override fun onQueryTextSubmit(query: String): Boolean {
                     searchProduct()
 
                     requireActivity().title = query
-                    MyApplication.searchQuery = query
+                    previousSearchQuery = query
                     searchView?.clearFocus()
                     return false
                 }
