@@ -190,14 +190,12 @@ interface Api {
     @GET
     fun applyFilter(@Url endpoint: String): Call<CategoryResponse>
 
-    @GET("catalog/search/{pageNumber}/{pageSize}/{orderBy}/{viewMode}")
+    @GET("catalog/search")
     fun searchProduct(
-        @Path("pageNumber") pageNumber: Int,
-        @Path("pageSize") pageSize: Int,
-        @Path("orderBy") orderBy: String,
-        @Path("viewMode") viewMode: String,
+        @Query("pageNumber") pageNumber: Int,
+        @Query("pageSize") pageSize: Int,
         @QueryMap query: Map<String, String>
-        ): Call<SearchResponse>
+    ): Call<SearchResponse>
 
     // Order
 

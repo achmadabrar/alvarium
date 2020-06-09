@@ -19,8 +19,6 @@ class SearchModelImpl : SearchModel {
         RetroClient.api.searchProduct(
             searchParam.pageNumber,
             searchParam.pageSize,
-            searchParam.orderBy.toString(),
-            searchParam.viewMode.toString(),
             searchParam.queryMap
             ).enqueue(object : Callback<SearchResponse> {
 
