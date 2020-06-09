@@ -252,7 +252,7 @@ class Const {
         const val EMAIL = "address.fields.email"
 
 
-
+        const val REGISTRATION_PERSONAL_DETAILS = "nopstation.webapi.registration.personaldetails"
         const val GENDER = "account.fields.gender"
         const val GENDER_MALE = "account.fields.gender.male"
         const val GENDER_FEMALE = "account.fields.gender.female"
