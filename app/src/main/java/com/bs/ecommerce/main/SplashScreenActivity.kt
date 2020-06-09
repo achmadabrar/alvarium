@@ -16,6 +16,7 @@ import com.bs.ecommerce.utils.showLog
 import io.jsonwebtoken.Jwts
 import io.jsonwebtoken.SignatureAlgorithm
 import java.io.UnsupportedEncodingException
+import java.util.*
 
 
 class SplashScreenActivity : BaseActivity() {
@@ -33,12 +34,16 @@ class SplashScreenActivity : BaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        initializeJwt()
+
         NetworkUtil.token = prefObject.getPrefs(prefObject.TOKEN_KEY)
 
         viewModel = ViewModelProvider(this).get(MainViewModel::class.java)
 
         observeLiveData()
-        initializeData()
+
+        (viewModel as MainViewModel).getAppSettings(MainModelImpl(applicationContext), true)
     }
 
 
@@ -82,24 +87,29 @@ class SplashScreenActivity : BaseActivity() {
         }
     }
 
+    
+    private fun dateToUTC(date: Date): Date?
+        = Date(date.time - Calendar.getInstance().timeZone.getOffset(date.time))
+    
 
-    private fun initializeData() {
+    private fun initializeJwt()
+    {
         var compactJws: String? = null
+
+        val createdDate = Date()
+
         try {
             compactJws = Jwts.builder()
                 .claim("NST_KEY", NST_KEY)
+                .setIssuedAt(dateToUTC(createdDate))
                 .signWith(SignatureAlgorithm.HS512, NST_SECRET.toByteArray(charset("UTF-8")))
                 .compact()
         } catch (e: UnsupportedEncodingException) {
             e.printStackTrace()
         }
-
-
-
+        
         prefObject.setPrefs(PrefSingleton.NST, compactJws!!)
         NetworkUtil.nst = compactJws
-
-        (viewModel as MainViewModel).getAppSettings(MainModelImpl(applicationContext), true)
     }
 
 }
