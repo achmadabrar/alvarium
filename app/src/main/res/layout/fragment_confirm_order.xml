@@ -68,7 +68,8 @@
                         android:padding="10dp"
                         android:textStyle="bold"
                         android:text="@string/products"
-                        android:textColor="?attr/primaryTextColor" />
+                        android:textColor="?attr/primaryTextColor"
+                        style="@style/rtlSupportedTextView"/>
 
 
                     <androidx.recyclerview.widget.RecyclerView

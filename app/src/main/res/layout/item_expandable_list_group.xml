@@ -26,7 +26,8 @@
         android:layout_weight="1"
         tools:text="@string/placeholder"
         android:textColor="?attr/primaryTextColor"
-        android:textSize="@dimen/tv_text_size_regular" />
+        android:textSize="@dimen/tv_text_size_regular"
+        style="@style/rtlSupportedTextView"/>
 
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/expandableIcon"

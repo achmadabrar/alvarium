@@ -24,6 +24,7 @@
             android:textColor="?attr/primaryTextColor"
             android:textSize="@dimen/tv_text_size_large"
             android:textStyle="bold"
+            style="@style/rtlSupportedTextView"
             android:visibility="gone"
             tools:visibility="visible" />
 

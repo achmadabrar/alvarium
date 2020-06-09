@@ -23,6 +23,8 @@ abstract class PrivacyPolicyDialogActivity : BaseActivity()
 
     private lateinit var model: TopicModel
 
+    private var isDialogAlreadyShowed = false
+
     override fun onResume()
     {
         super.onResume()
@@ -31,7 +33,7 @@ abstract class PrivacyPolicyDialogActivity : BaseActivity()
 
         prefManager = AcceptPolicyPreference(this)
 
-        if (prefManager.isFirstTimeLaunch)
+        if (prefManager.isNotAccepted && !isDialogAlreadyShowed)
             (viewModel as MainViewModel).fetchTopic(Api.topicPrivacyPolicy, model)
 
 
@@ -41,8 +43,11 @@ abstract class PrivacyPolicyDialogActivity : BaseActivity()
 
                 topic?.body?.also {
 
-                    if(prefManager.isFirstTimeLaunch)
+                    if(prefManager.isNotAccepted && !isDialogAlreadyShowed)
+                    {
                         startPrivacyPolicyDialog(it)
+                        isDialogAlreadyShowed = true
+                    }
                 }
             })
         }
@@ -68,7 +73,7 @@ abstract class PrivacyPolicyDialogActivity : BaseActivity()
 
             positiveButton(null, DbHelper.getString(Const.I_READ_I_ACCEPT)) {
 
-                prefManager.isFirstTimeLaunch = false
+                prefManager.isNotAccepted = false
 
                 if(prefManager.isInstanceIdReceived)
                 {

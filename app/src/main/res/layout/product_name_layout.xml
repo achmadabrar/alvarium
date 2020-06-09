@@ -13,7 +13,8 @@
         tools:text="@string/placeholder"
         android:textColor="?attr/primaryTextColor"
         android:textSize="@dimen/tv_text_size_semi_large"
-        android:textStyle="bold" />
+        android:textStyle="bold"
+        style="@style/rtlSupportedTextView"/>
 
     <TextView
         android:id="@+id/tvProductDescription"

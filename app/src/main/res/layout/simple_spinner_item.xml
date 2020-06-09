@@ -7,6 +7,7 @@
     android:ellipsize="marquee"
     android:singleLine="true"
     tools:text="@string/placeholder"
-    android:textAlignment="inherit"
     android:textSize="@dimen/et_text_size"
-    android:textColor="?attr/primaryTextColor" />
+    android:textColor="?attr/primaryTextColor"
+    android:textDirection="locale"
+    android:textAlignment="gravity"/>

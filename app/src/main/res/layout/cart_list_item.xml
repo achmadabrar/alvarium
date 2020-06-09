@@ -55,6 +55,7 @@
             android:textColor="?attr/primaryTextColor"
             android:textSize="@dimen/tv_text_size_regular"
             android:textStyle="bold"
+            style="@style/rtlSupportedTextView"
             app:layout_constraintEnd_toStartOf="@id/icRemoveItem"
             app:layout_constraintStart_toEndOf="@id/referenceView"
             app:layout_constraintTop_toTopOf="parent"

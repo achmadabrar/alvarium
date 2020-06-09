@@ -59,7 +59,7 @@
         <item name="android:imeOptions">actionNext</item>
     </style>
 
-    <style name="OrderDetailsTitleTextViewStyle">
+    <style name="OrderDetailsTitleTextViewStyle" parent="rtlSupportedTextView">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:background">@color/confirm_order_card_title_bg</item>
@@ -161,6 +161,11 @@
         <item name="android:backgroundDimAmount">0.6</item>
         <item name="android:windowFrame">@null</item>
         <item name="android:windowIsFloating">true</item>
+    </style>
+
+    <style name="rtlSupportedTextView">
+        <item name="android:textDirection">locale</item>
+        <item name="android:textAlignment">gravity</item>
     </style>
 
 </resources>

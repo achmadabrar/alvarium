@@ -17,6 +17,7 @@
         android:textColor="?attr/primaryTextColor"
         android:textSize="@dimen/tv_text_size_large"
         android:textStyle="bold"
-        tools:text="@string/placeholder" />
+        tools:text="@string/placeholder"
+        style="@style/rtlSupportedTextView"/>
 
 </LinearLayout>

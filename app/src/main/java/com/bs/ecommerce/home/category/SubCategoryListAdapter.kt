@@ -9,18 +9,25 @@ import android.widget.BaseExpandableListAdapter
 import android.widget.TextView
 import androidx.appcompat.widget.AppCompatImageView
 import androidx.core.content.res.ResourcesCompat
+import androidx.fragment.app.Fragment
 import com.bs.ecommerce.R
 import com.bs.ecommerce.main.MainActivity
 import com.bs.ecommerce.main.model.data.SecondSubcategory
 import com.bs.ecommerce.main.model.data.Subcategory
 import com.bs.ecommerce.product.ProductListFragment
+import com.bs.ecommerce.utils.PrefSingleton
 import com.bs.ecommerce.utils.loadImg
 
 
 /**
  * Created by bs206 on 3/16/18.
  */
-class SubCategoryListAdapter(private val context: Context, private val categories: List<Subcategory>, private val fragment: androidx.fragment.app.Fragment) : BaseExpandableListAdapter()
+class SubCategoryListAdapter(
+    private val context: Context,
+    private val categories: List<Subcategory>,
+    private val fragment: Fragment
+)
+    : BaseExpandableListAdapter()
 {
 
     override fun getChild(groupPosition: Int, childPosition: Int): SecondSubcategory = categories[groupPosition].subcategories[childPosition]

@@ -19,7 +19,9 @@
         android:textColor="?attr/primaryTextColor"
         android:textSize="@dimen/tv_text_size_large"
         android:textStyle="bold"
+        android:gravity="start"
         tools:text="@string/placeholder"
+        style="@style/rtlSupportedTextView"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toStartOf="@id/btnSeeAll"/>

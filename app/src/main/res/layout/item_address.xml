@@ -25,6 +25,7 @@
         android:textSize="@dimen/tv_text_size_semi_large"
         android:textStyle="bold"
         tools:text="@string/placeholder"
+        style="@style/rtlSupportedTextView"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toStartOf="@id/icEdit"/>
@@ -37,6 +38,7 @@
         android:textColor="?attr/primaryTextColor"
         android:textSize="@dimen/tv_text_size_regular"
         tools:text="@string/placeholder"
+        style="@style/rtlSupportedTextView"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tv1"/>
 

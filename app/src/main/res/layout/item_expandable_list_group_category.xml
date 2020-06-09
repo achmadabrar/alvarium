@@ -33,7 +33,7 @@
             android:textColor="?attr/primaryTextColor"
             android:textSize="18sp"
             android:textStyle="bold"
-            tools:text="TextView" />
+            style="@style/rtlSupportedTextView"/>
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/topCategoryExpandableButton"

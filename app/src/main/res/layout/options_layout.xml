@@ -26,7 +26,8 @@
         android:layout_toStartOf="@id/imageView2"
         android:textColor="?attr/primaryTextColor"
         android:textSize="@dimen/tv_text_size_large"
-        tools:text="@string/placeholder" />
+        tools:text="@string/placeholder"
+        style="@style/rtlSupportedTextView"/>
 
     <ImageView
         android:id="@+id/imageView2"
