@@ -27,6 +27,7 @@ data class AppLandingData  (
     @SerializedName("PlayStoreUrl") val playStoreUrl: String? = null,
     @SerializedName("Rtl") val rtl: Boolean = false,
     @SerializedName("ShowSubCategoryProducts") val showSubCategoryProducts: Boolean = false,
+    @SerializedName("ShowAllVendors") val showAllVendors: Boolean? = null,
     @SerializedName("StringResources") var stringResources: List<StringResource> = listOf()
 ) : Parcelable {
     constructor(parcel: Parcel) : this(
@@ -46,6 +47,7 @@ data class AppLandingData  (
         parcel.readString(),
         parcel.readByte() != 0.toByte(),
         parcel.readByte() != 0.toByte(),
+        parcel.readValue(Boolean::class.java.classLoader) as? Boolean,
         parcel.createTypedArrayList(StringResource.CREATOR) ?: listOf()
     ) {
     }

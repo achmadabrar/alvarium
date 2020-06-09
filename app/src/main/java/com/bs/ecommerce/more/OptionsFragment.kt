@@ -9,6 +9,7 @@ import com.bs.ecommerce.R
 import com.bs.ecommerce.base.BaseViewModel
 import com.bs.ecommerce.base.ToolbarLogoBaseFragment
 import com.bs.ecommerce.db.DbHelper
+import com.bs.ecommerce.main.MainViewModel
 import com.bs.ecommerce.more.settings.SettingsFragment
 import com.bs.ecommerce.more.viewmodel.OptionViewModel
 import com.bs.ecommerce.networking.Api
@@ -18,6 +19,8 @@ import kotlinx.android.synthetic.main.fragment_options.*
 import kotlinx.android.synthetic.main.options_layout.view.*
 
 class OptionsFragment : ToolbarLogoBaseFragment() {
+
+    private lateinit var mainViewModel: MainViewModel
 
     override fun getFragmentTitle() = DbHelper.getString(Const.HOME_NAV_MORE)
 
@@ -32,7 +35,9 @@ class OptionsFragment : ToolbarLogoBaseFragment() {
 
         if(!viewCreated) {
             viewModel = ViewModelProvider(this).get(OptionViewModel::class.java)
-            (viewModel as OptionViewModel).loadOptions(prefObject)
+            (viewModel as OptionViewModel).loadOptions()
+
+            mainViewModel = ViewModelProvider(this).get(MainViewModel::class.java)
         }
 
         observeLiveData()
@@ -44,7 +49,15 @@ class OptionsFragment : ToolbarLogoBaseFragment() {
         (viewModel as OptionViewModel).optionsLD.observe(viewLifecycleOwner, Observer { options ->
             ll_option_holder.removeAllViews()
 
+            // TODO uncomment
+            val showAllVendors = true//mainViewModel.appSettingsLD.value?.peekContent()?.showAllVendors == true
+
             for (i in options) {
+
+                // show/hide based on flag on appLandingSettings
+                if(i.nameResId == R.string.placeholder && !showAllVendors)
+                    continue
+
                 val optionView = layoutInflater.inflate(R.layout.options_layout, null)
                 optionView.tag = i.nameResId
 
@@ -69,6 +82,9 @@ class OptionsFragment : ToolbarLogoBaseFragment() {
 
                         R.string.title_contact_us ->
                             replaceFragmentSafely(ContactUsFragment())
+
+                        R.string.placeholder ->
+                            replaceFragmentSafely(VendorListFragment())
 
                     }
                 }

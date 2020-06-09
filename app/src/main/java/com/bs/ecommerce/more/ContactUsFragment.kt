@@ -69,25 +69,30 @@ class ContactUsFragment: BaseFragment() {
 
     private fun setupView() {
 
-        etName.hint = DbHelper.getString("contactus.fullname.hint")
-        etEmail.hint = DbHelper.getString("contactus.email.hint")
-        etEnquiry.hint = DbHelper.getString("contactus.enquiry.hint")
+        etName.hint = DbHelper.getString(Const.CONTACT_US_FULLNAME)
+        etEmail.hint = DbHelper.getString(Const.CONTACT_US_EMAIL)
+        etEnquiry.hint = DbHelper.getString(Const.CONTACT_US_ENQUIRY)
 
-        btnSubmit.text = DbHelper.getString("contactus.button")
+        btnSubmit.text = DbHelper.getString(Const.CONTACT_US_BUTTON)
         btnSubmit.setOnClickListener { submitIfFormIsValid() }
+
+        etName.visibility = View.VISIBLE
+        etEmail.visibility = View.VISIBLE
+        etEnquiry.visibility = View.VISIBLE
+        btnSubmit.visibility = View.VISIBLE
     }
 
     private fun submitIfFormIsValid() {
         val etUtil = EditTextUtils()
 
         val name = etUtil.showToastIfEmpty(etName,
-            DbHelper.getString("contactus.fullname.required")) ?: return
+            DbHelper.getString(Const.CONTACT_US_REQUIRED_FULLNAME)) ?: return
 
         val email = etUtil.showToastIfEmpty(etEmail,
-            DbHelper.getString("contactvendor.email.required")) ?: return
+            DbHelper.getString(Const.CONTACT_US_REQUIRED_EMAIL)) ?: return
 
         val enquiry = etUtil.showToastIfEmpty(etEnquiry,
-            DbHelper.getString("contactus.enquiry.required")) ?: return
+            DbHelper.getString(Const.CONTACT_US_REQUIRED_ENQUIRY)) ?: return
 
         if(!email.isEmailValid()) {
             toast(DbHelper.getString(Const.ENTER_VALID_EMAIL))

@@ -128,7 +128,13 @@ class TextUtils {
                 null
             }
 
-            return baseResponse?.errorsAsFormattedString ?: errorMsg
+            val v = if (!baseResponse?.message.isNullOrEmpty())
+                baseResponse?.message
+            else if (!baseResponse?.errorsAsFormattedString.isNullOrEmpty())
+                baseResponse?.errorsAsFormattedString
+            else response.raw().message
+
+            return v ?: ""
         }
     }
 }

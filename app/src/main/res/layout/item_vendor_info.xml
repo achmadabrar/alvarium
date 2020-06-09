@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/rounded_background_slight"
+    android:backgroundTint="?attr/primaryListItemBg"
+    android:padding="10dp">
+
+    <TextView
+        android:id="@+id/tvVendorName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="10dp"
+        android:maxLines="1"
+        android:textColor="?attr/primaryTextColor"
+        android:textSize="@dimen/tv_text_size_large"
+        android:textStyle="bold"
+        tools:text="@string/placeholder" />
+
+    <TextView
+        android:id="@+id/tvVendorDetails"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tvVendorName"
+        android:layout_marginStart="10dp"
+        android:maxLines="1"
+        android:textColor="?attr/primaryTextColor"
+        android:textSize="@dimen/tv_text_size_regular"
+        tools:text="@string/placeholder" />
+
+    <Button
+        android:id="@+id/btnContactVendor"
+        style="@style/RoundedButtonRegular"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/slim_btn_height"
+        android:layout_marginTop="10dp"
+        android:layout_marginStart="10dp"
+        android:paddingStart="5dp"
+        android:paddingEnd="5dp"
+        android:layout_below="@id/tvVendorDetails"
+        tools:text="@string/placeholder"
+        android:textSize="14sp"
+        android:textAllCaps="false"
+        android:tint="@color/co_list_item_divider"
+        app:srcCompat="@drawable/ic_chevron_right" />
+
+</RelativeLayout>

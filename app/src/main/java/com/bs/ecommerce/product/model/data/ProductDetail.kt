@@ -98,7 +98,7 @@ data class ProductDetail(
     @SerializedName("TierPrices")
     val tierPrices: List<Any>?,
     @SerializedName("VendorModel")
-    val vendorModel: VendorModel?,
+    val vendorModel: VendorDataModel?,
     @SerializedName("ReviewOverviewModel")
     val reviewOverviewModel: ReviewModel? = null
 )

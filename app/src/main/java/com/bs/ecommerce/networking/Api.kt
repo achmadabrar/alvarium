@@ -289,6 +289,15 @@ interface Api {
     @GET("common/getstringresources/{languageId}")
     fun getStringResource(@Path("languageId") language: Int) : Call<StringResourceResponse>
 
+    @GET("catalog/vendor/all")
+    fun getAllVendors(): Call<GetAllVendorsResponse>
+
+    @GET("common/contactvendor/{vendorId}")
+    fun getContactVendorModel(@Path("vendorId") vendorId: Int) : Call<GetContactVendorResponse>
+
+    @POST("api/??")
+    fun postContactVendorModel(@Path("vendorId") vendorId: Int) : Call<GetContactVendorResponse>
+
 /*  @get:GET("ShoppingCart")
     val shoppingCart: Call<CartProductListResponse>
 

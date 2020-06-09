@@ -26,6 +26,8 @@
                 android:background="@drawable/rounded_background_slight"
                 android:drawableEnd="@drawable/ic_star_formular"
                 tools:hint="@string/hint_name"
+                android:visibility="gone"
+                tools:visibility="visible"
                 android:imeOptions="actionNext"
                 android:inputType="textPersonName|textCapWords|textNoSuggestions" />
 
@@ -41,6 +43,25 @@
                 android:background="@drawable/rounded_background_slight"
                 android:drawableEnd="@drawable/ic_star_formular"
                 tools:hint="@string/hint_email"
+                android:visibility="gone"
+                tools:visibility="visible"
+                android:imeOptions="actionNext"
+                android:inputType="textEmailAddress" />
+
+            <EditText
+                android:id="@+id/etSubject"
+                style="@style/RoundedEditText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/etEmail"
+                android:layout_marginStart="@dimen/fragment_margin"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="@dimen/fragment_margin"
+                android:background="@drawable/rounded_background_slight"
+                android:drawableEnd="@drawable/ic_star_formular"
+                tools:hint="Subject"
+                android:visibility="gone"
+                tools:visibility="visible"
                 android:imeOptions="actionNext"
                 android:inputType="textEmailAddress" />
 
@@ -49,10 +70,12 @@
                 style="@style/RoundedEditText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/etEmail"
+                android:layout_below="@id/etSubject"
                 android:layout_marginStart="@dimen/fragment_margin"
                 android:layout_marginTop="10dp"
                 android:layout_marginEnd="@dimen/fragment_margin"
+                android:visibility="gone"
+                tools:visibility="visible"
                 android:background="@drawable/rounded_background_slight"
                 android:drawableEnd="@drawable/ic_star_formular"
                 android:gravity="top"
@@ -72,7 +95,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         tools:text="@string/submit"
-        android:visibility="visible"
+        android:visibility="gone"
         tools:visibility="visible" />
 
 </RelativeLayout>
