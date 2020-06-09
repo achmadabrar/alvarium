@@ -11,7 +11,7 @@ class AcceptPolicyPreference(context: Context)
 
     var PRIVATE_MODE = 0
 
-    var isFirstTimeLaunch: Boolean
+    var isNotAccepted: Boolean
         get() = pref.getBoolean(IS_FIRST_TIME_LAUNCH, true)
 
         set(isFirstTime)

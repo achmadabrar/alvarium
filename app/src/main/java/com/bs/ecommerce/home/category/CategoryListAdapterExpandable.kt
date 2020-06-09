@@ -1,6 +1,7 @@
 package com.bs.ecommerce.home.category
 
 import android.content.Context
+import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -8,6 +9,7 @@ import android.widget.BaseExpandableListAdapter
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.widget.AppCompatImageView
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import com.bs.ecommerce.R
 import com.bs.ecommerce.customViews.CustomExpandableListView
@@ -20,9 +22,12 @@ import com.squareup.picasso.Picasso
 /**
  * Created by bs206 on 3/16/18.
  */
-class CategoryListAdapterExpandable(private val context: Context,
-                                    private val categories: List<Category>,
-                                    private val fragment: androidx.fragment.app.Fragment) : BaseExpandableListAdapter() {
+class CategoryListAdapterExpandable(
+    private val context: Context,
+    private val categories: List<Category>,
+    private val fragment: Fragment
+)
+    : BaseExpandableListAdapter() {
 
     override fun getChild(groupPosition: Int, childPosition: Int): List<Subcategory> = categories[groupPosition].subcategories
 

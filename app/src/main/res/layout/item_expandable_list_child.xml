@@ -17,6 +17,7 @@
         android:layout_weight="1"
         tools:text="@string/placeholder"
         android:textColor="?attr/primaryTextColor"
-        android:textSize="@dimen/tv_text_size_small" />
+        android:textSize="@dimen/tv_text_size_small"
+        style="@style/rtlSupportedTextView"/>
 
 </LinearLayout>

@@ -47,6 +47,7 @@
         android:textColor="?attr/primaryTextColor"
         android:textSize="@dimen/tv_text_size_regular"
         android:textStyle="bold"
+        style="@style/rtlSupportedTextView"
         app:layout_constraintStart_toEndOf="@id/ivCardThumb"
         app:layout_constraintTop_toBottomOf="@id/tvCardTitle" />
 
@@ -60,6 +61,7 @@
         tools:text="@string/placeholder"
         android:textColor="?attr/primaryTextColor"
         android:textSize="@dimen/tv_text_size_small"
+        style="@style/rtlSupportedTextView"
         app:layout_constraintStart_toEndOf="@id/ivCardThumb"
         app:layout_constraintTop_toBottomOf="@id/tvCardDetails" />
 

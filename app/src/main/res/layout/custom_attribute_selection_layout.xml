@@ -33,7 +33,8 @@
         app:layout_constraintEnd_toStartOf="@id/guideline_v_half"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:text="@string/placeholder" />
+        tools:text="@string/placeholder"
+        style="@style/rtlSupportedTextView"/>
 
     <TextView
         android:id="@id/tvLayoutSubTitle"
@@ -47,7 +48,8 @@
         app:layout_constraintEnd_toStartOf="@id/guideline_v_half"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tvLayoutTitle"
-        tools:text="@string/placeholder" />
+        tools:text="@string/placeholder"
+        style="@style/rtlSupportedTextView"/>
 
     <TextView
         android:id="@+id/tvSelectedAttr"
