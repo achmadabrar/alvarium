@@ -293,8 +293,10 @@ interface Api {
     @GET("common/contactvendor/{vendorId}")
     fun getContactVendorModel(@Path("vendorId") vendorId: Int) : Call<GetContactVendorResponse>
 
-    @POST("api/??")
-    fun postContactVendorModel(@Path("vendorId") vendorId: Int) : Call<GetContactVendorResponse>
+    @POST("common/contactvendor")
+    fun postContactVendorModel(
+        @Body body: GetContactVendorResponse
+    ) : Call<GetContactVendorResponse>
 
 /*  @get:GET("ShoppingCart")
     val shoppingCart: Call<CartProductListResponse>

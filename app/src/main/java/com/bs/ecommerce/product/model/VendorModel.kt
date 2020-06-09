@@ -10,8 +10,13 @@ interface VendorModel {
         callback: RequestCompleteListener<GetAllVendorsResponse>
     )
 
-    fun getContactVendorBody(
+    fun getContactVendorModel(
         vendorId: Int,
+        callback: RequestCompleteListener<GetContactVendorResponse>
+    )
+
+    fun postContactVendorModel(
+        reqBody: GetContactVendorResponse,
         callback: RequestCompleteListener<GetContactVendorResponse>
     )
 }

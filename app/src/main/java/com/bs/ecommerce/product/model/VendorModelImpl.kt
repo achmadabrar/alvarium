@@ -33,7 +33,7 @@ class VendorModelImpl: VendorModel {
         })
     }
 
-    override fun getContactVendorBody(
+    override fun getContactVendorModel(
         vendorId: Int,
         callback: RequestCompleteListener<GetContactVendorResponse>
     ) {
@@ -50,6 +50,30 @@ class VendorModelImpl: VendorModel {
                 response: Response<GetContactVendorResponse>
             ) {
                 if (response.body() != null)
+                    callback.onRequestSuccess(response.body() as GetContactVendorResponse)
+                else
+                    callback.onRequestFailed(TextUtils.getErrorMessage(response))
+            }
+
+        })
+    }
+
+    override fun postContactVendorModel(
+        reqBody: GetContactVendorResponse,
+        callback: RequestCompleteListener<GetContactVendorResponse>
+    ) {
+        RetroClient.api.postContactVendorModel(reqBody).enqueue(object :
+            Callback<GetContactVendorResponse> {
+
+            override fun onFailure(call: Call<GetContactVendorResponse>, t: Throwable) {
+                callback.onRequestFailed(t.localizedMessage ?: "Something went wrong")
+            }
+
+            override fun onResponse(
+                call: Call<GetContactVendorResponse>,
+                response: Response<GetContactVendorResponse>
+            ) {
+                if (response.body() != null && response.code() == 200)
                     callback.onRequestSuccess(response.body() as GetContactVendorResponse)
                 else
                     callback.onRequestFailed(TextUtils.getErrorMessage(response))

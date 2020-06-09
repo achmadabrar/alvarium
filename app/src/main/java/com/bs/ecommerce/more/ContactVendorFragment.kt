@@ -64,11 +64,15 @@ class ContactVendorFragment: BaseFragment() {
                     hideLoading()
             })
 
-            /*if(data.successfullySent == true) {
-                etName?.text?.clear()
-                etEmail?.text?.clear()
-                etEnquiry?.text?.clear()
-            }*/
+            enquirySendSuccessLD.observe(viewLifecycleOwner, Observer { success ->
+
+                if (success.getContentIfNotHandled() == true) {
+                    etName?.text?.clear()
+                    etEmail?.text?.clear()
+                    etEnquiry?.text?.clear()
+                    etSubject?.text?.clear()
+                }
+            })
         }
     }
 

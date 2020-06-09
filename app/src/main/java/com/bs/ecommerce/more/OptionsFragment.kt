@@ -49,8 +49,7 @@ class OptionsFragment : ToolbarLogoBaseFragment() {
         (viewModel as OptionViewModel).optionsLD.observe(viewLifecycleOwner, Observer { options ->
             ll_option_holder.removeAllViews()
 
-            // TODO uncomment
-            val showAllVendors = true//mainViewModel.appSettingsLD.value?.peekContent()?.showAllVendors == true
+            val showAllVendors = mainViewModel.appSettingsLD.value?.peekContent()?.showAllVendors == true
 
             for (i in options) {
 

@@ -8,11 +8,13 @@ import com.bs.ecommerce.product.model.data.ContactVendorModel
 import com.bs.ecommerce.product.model.data.GetAllVendorsResponse
 import com.bs.ecommerce.product.model.data.GetContactVendorResponse
 import com.bs.ecommerce.product.model.data.ProductByVendorData
+import com.bs.ecommerce.utils.OneTimeEvent
 
 class VendorViewModel : BaseViewModel() {
 
     var vendorLD = MutableLiveData<List<ProductByVendorData>>()
     var contactVendorModelLD = MutableLiveData<ContactVendorModel?>()
+    var enquirySendSuccessLD = MutableLiveData<OneTimeEvent<Boolean>>()
 
     fun getAllVendors(model: VendorModel) {
         isLoadingLD.value = true
@@ -34,7 +36,7 @@ class VendorViewModel : BaseViewModel() {
     fun getContactVendorModel(vendorId: Int, model: VendorModel) {
         isLoadingLD.value = true
 
-        model.getContactVendorBody(vendorId, object : RequestCompleteListener<GetContactVendorResponse> {
+        model.getContactVendorModel(vendorId, object : RequestCompleteListener<GetContactVendorResponse> {
 
             override fun onRequestSuccess(data: GetContactVendorResponse) {
                 isLoadingLD.value = false
@@ -50,6 +52,23 @@ class VendorViewModel : BaseViewModel() {
     }
 
     fun postVendorEnquiry(data: ContactVendorModel, model: VendorModel) {
-        TODO("Not yet implemented")
+        isLoadingLD.value = true
+
+        model.postContactVendorModel(
+            GetContactVendorResponse(data),
+            object : RequestCompleteListener<GetContactVendorResponse> {
+
+                override fun onRequestSuccess(data: GetContactVendorResponse) {
+                    isLoadingLD.value = false
+                    toast(data.message)
+
+                    enquirySendSuccessLD.value = OneTimeEvent(true)
+                }
+
+                override fun onRequestFailed(errorMessage: String) {
+                    isLoadingLD.value = false
+                    toast(errorMessage)
+                }
+            })
     }
 }
