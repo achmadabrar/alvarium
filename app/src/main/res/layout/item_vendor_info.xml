@@ -1,50 +1,58 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@drawable/rounded_background_slight"
-    android:backgroundTint="?attr/primaryListItemBg"
-    android:padding="10dp">
+    android:backgroundTint="?attr/primaryListItemBg">
+
+    <ImageView
+        android:id="@+id/ivVendorThumb"
+        android:layout_width="@dimen/product_thumbnail_cart"
+        android:layout_height="@dimen/product_thumbnail_cart"
+        android:contentDescription="@string/placeholder"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:src="@tools:sample/avatars" />
 
     <TextView
         android:id="@+id/tvVendorName"
+        style="@style/titleTextViewStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_marginStart="10dp"
         android:maxLines="1"
-        android:textColor="?attr/primaryTextColor"
-        android:textSize="@dimen/tv_text_size_large"
-        android:textStyle="bold"
-        tools:text="@string/placeholder" />
+        app:layout_constraintStart_toEndOf="@id/ivVendorThumb"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/tvVendorDetails"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/tvVendorName"
+        style="@style/titleTextViewStyle"
         android:layout_marginStart="10dp"
-        android:maxLines="1"
-        android:textColor="?attr/primaryTextColor"
+        android:layout_toEndOf="@id/ivVendorThumb"
         android:textSize="@dimen/tv_text_size_regular"
-        tools:text="@string/placeholder" />
+        android:textStyle="normal"
+        app:layout_constraintStart_toEndOf="@id/ivVendorThumb"
+        app:layout_constraintTop_toBottomOf="@id/tvVendorName" />
 
     <Button
         android:id="@+id/btnContactVendor"
         style="@style/RoundedButtonRegular"
         android:layout_width="wrap_content"
         android:layout_height="@dimen/slim_btn_height"
-        android:layout_marginTop="10dp"
         android:layout_marginStart="10dp"
-        android:paddingStart="5dp"
-        android:paddingEnd="5dp"
-        android:layout_below="@id/tvVendorDetails"
-        tools:text="@string/placeholder"
-        android:textSize="14sp"
+        android:layout_marginTop="10dp"
+        android:layout_toEndOf="@id/ivVendorThumb"
+        android:paddingStart="10dp"
+        android:paddingEnd="10dp"
         android:textAllCaps="false"
+        android:textSize="14sp"
         android:tint="@color/co_list_item_divider"
-        app:srcCompat="@drawable/ic_chevron_right" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@id/ivVendorThumb"
+        app:srcCompat="@drawable/ic_chevron_right"
+        tools:text="@string/placeholder" />
 
-</RelativeLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

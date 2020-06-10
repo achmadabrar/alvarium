@@ -9,6 +9,7 @@ import com.bs.ecommerce.db.DbHelper
 import com.bs.ecommerce.product.model.data.ProductByVendorData
 import com.bs.ecommerce.utils.Const
 import com.bs.ecommerce.utils.ItemClickListener
+import com.bs.ecommerce.utils.loadImg
 import kotlinx.android.synthetic.main.item_vendor_info.view.*
 
 class VendorAdapter(
@@ -32,18 +33,20 @@ class VendorAdapter(
         holder.itemView.apply {
             id = R.id.itemView
 
-            tvVendorName.text = vendor.name
-            tvVendorDetails.text = vendor.description
+            ivVendorThumb?.loadImg(vendor.pictureModel?.imageUrl)
+
+            tvVendorName?.text = vendor.name
+            tvVendorDetails?.text = vendor.description
 
             if(vendor.allowCustomersToContactVendors == true) {
-                btnContactVendor.text = DbHelper.getString(Const.VENDOR_CONTACT_VENDOR)
-                btnContactVendor.visibility = View.VISIBLE
+                btnContactVendor?.text = DbHelper.getString(Const.VENDOR_CONTACT_VENDOR)
+                btnContactVendor?.visibility = View.VISIBLE
 
-                btnContactVendor.setOnClickListener {
+                btnContactVendor?.setOnClickListener {
                     listener.onClick(btnContactVendor, position, vendor)
                 }
             } else {
-                btnContactVendor.visibility = View.GONE
+                btnContactVendor?.visibility = View.GONE
             }
 
             setOnClickListener { listener.onClick(holder.itemView, position, vendor) }
