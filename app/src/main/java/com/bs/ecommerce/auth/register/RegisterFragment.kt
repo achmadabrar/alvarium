@@ -156,6 +156,7 @@ open class RegisterFragment : ToolbarLogoBaseFragment(), View.OnClickListener
         cbNewsletter?.text = DbHelper.getString(Const.NEWSLETTER)
         tvChangePassword?.text = DbHelper.getString(Const.CHANGE_PASSWORD)
         tvOptions?.text = DbHelper.getString(Const.OPTIONS)
+        tvPassword?.text = DbHelper.getString(Const.REGISTRATION_PASSWORD)
         tvGender?.text = DbHelper.getString(Const.GENDER)
         tvPersonalDetails?.text = DbHelper.getString(Const.REGISTRATION_PERSONAL_DETAILS)
         genderMaleRadioButton?.text = DbHelper.getString(Const.GENDER_MALE)

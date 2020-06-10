@@ -115,7 +115,7 @@
         <item name="android:fontFamily">@font/montserrat_regular</item>
     </style>
 
-    <style name="productPageDynamicText">
+    <style name="productPageDynamicText" parent="rtlSupportedTextView">
         <item name="android:layout_width">0dp</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:paddingEnd">10dp</item>
@@ -123,7 +123,7 @@
         <item name="android:textSize">@dimen/tv_text_size_regular</item>
     </style>
 
-    <style name="orderTotalKeyTextViewStyle">
+    <style name="orderTotalKeyTextViewStyle" parent="rtlSupportedTextView">
         <item name="android:layout_width">0dp</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_weight">.5</item>
@@ -133,7 +133,7 @@
         <item name="android:textStyle">bold</item>
     </style>
 
-    <style name="orderTotalValueTextViewStyle">
+    <style name="orderTotalValueTextViewStyle" parent="rtlSupportedTextView">
         <item name="android:layout_width">0dp</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_weight">.5</item>
@@ -166,6 +166,16 @@
     <style name="rtlSupportedTextView">
         <item name="android:textDirection">locale</item>
         <item name="android:textAlignment">gravity</item>
+    </style>
+
+    <style name="titleTextViewStyle" parent="rtlSupportedTextView">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:maxLines">1</item>
+        <item name="android:textColor">?attr/primaryTextColor</item>
+        <item name="android:textSize">@dimen/tv_text_size_semi_large</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:text">@string/placeholder</item>
     </style>
 
 </resources>

@@ -47,13 +47,9 @@
 
                     <TextView
                         android:id="@+id/tvPersonalDetails"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="@string/reg_title_your_personal_details"
+                        style="@style/titleTextViewStyle"
                         android:textColor="?attr/primaryTextColor"
-                        android:layout_marginBottom="5dp"
-                        android:textSize="@dimen/registration_title_text_size"
-                        android:textStyle="bold" />
+                        android:layout_marginBottom="5dp" />
 
                     <include layout="@layout/horizontal_divider" />
 
@@ -200,13 +196,9 @@
 
                         <TextView
                             android:id="@+id/tvGender"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
+                            style="@style/titleTextViewStyle"
                             android:layout_marginEnd="15dp"
-                            android:text="@string/reg_gender"
-                            android:textColor="?attr/primaryTextColor"
-                            android:textSize="18sp"
-                            android:textStyle="bold" />
+                            android:text="@string/reg_gender" />
 
                         <RadioButton
                             android:id="@+id/genderMaleRadioButton"
@@ -257,14 +249,10 @@
 
                         <TextView
                             android:id="@+id/tvOptions"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
+                            style="@style/titleTextViewStyle"
                             android:layout_marginTop="20dp"
                             android:text="@string/reg_title_options"
-                            android:layout_marginBottom="5dp"
-                            android:textColor="?attr/primaryTextColor"
-                            android:textSize="@dimen/registration_title_text_size"
-                            android:textStyle="bold" />
+                            android:layout_marginBottom="5dp" />
 
                         <include layout="@layout/horizontal_divider" />
 
@@ -311,14 +299,11 @@
                         android:orientation="vertical">
 
                         <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
+                            android:id="@+id/tvPassword"
+                            style="@style/titleTextViewStyle"
                             android:layout_marginTop="20dp"
                             android:text="@string/reg_title_your_password"
-                            android:textColor="?attr/primaryTextColor"
-                            android:layout_marginBottom="5dp"
-                            android:textSize="@dimen/registration_title_text_size"
-                            android:textStyle="bold" />
+                            android:layout_marginBottom="5dp" />
 
                         <include layout="@layout/horizontal_divider" />
 
@@ -372,6 +357,7 @@
 
                     <TextView
                         android:id="@+id/tvChangePassword"
+                        style="@style/rtlSupportedTextView"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="end"

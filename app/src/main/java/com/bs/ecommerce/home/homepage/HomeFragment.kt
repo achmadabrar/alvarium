@@ -196,6 +196,7 @@ class HomeFragment : ToolbarLogoBaseFragment() {
     }
 
     private fun populateBanner(sliderData: SliderData) {
+        "banner_".showLog("Populating banner")
 
         if (sliderData.isEnabled == false || sliderData.sliders.isNullOrEmpty()) {
             banner?.visibility = View.GONE

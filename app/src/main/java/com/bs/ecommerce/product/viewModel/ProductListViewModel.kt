@@ -346,6 +346,9 @@ class ProductListViewModel : BaseViewModel() {
     }
 
     private fun prepareFilterAttribute(filterInfo: PagingFilteringContext?) {
+
+        if(filterInfo?.pageNumber ?: 1 > 1) return
+
         // Applicable Filter
         val notFilteredItems = filterInfo?.specificationFilter?.notFilteredItems
 
@@ -365,7 +368,7 @@ class ProductListViewModel : BaseViewModel() {
             }
         }
 
-        applicableFilterLD.value = mMap
+        applicableFilterLD.value = mMap.toMutableMap()
 
         // Already applied filter
         val appliedFilteredItems = filterInfo?.specificationFilter?.alreadyFilteredItems
@@ -389,10 +392,13 @@ class ProductListViewModel : BaseViewModel() {
             }
         }
 
-        appliedFilterLD.value = mMap
+        appliedFilterLD.value = mMap.toMutableMap()
     }
 
     private fun preparePriceFilter(filterInfo: PagingFilteringContext?) {
+
+        if(filterInfo?.pageNumber ?: 1 > 1) return
+
         if (filterInfo?.priceRangeFilter?.enabled == true && filterInfo.priceRangeFilter.items != null) {
             priceRangeLD.value = filterInfo.priceRangeFilter
         } else {
