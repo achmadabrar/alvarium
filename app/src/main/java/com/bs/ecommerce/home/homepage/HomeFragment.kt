@@ -52,6 +52,8 @@ class HomeFragment : ToolbarLogoBaseFragment() {
         BottomSheetBehavior.from(bottomSheetLayout)
     }
 
+    private var bannerThread: Thread? = null
+
 
     override fun getFragmentTitle() =  DbHelper.getString(Const.HOME_NAV_HOME)
 
@@ -203,6 +205,8 @@ class HomeFragment : ToolbarLogoBaseFragment() {
             return
         }
 
+        if(bannerThread?.isAlive == true) return
+
         banner?.visibility = View.VISIBLE
 
         banner?.view_pager_slider1?.apply {
@@ -215,7 +219,7 @@ class HomeFragment : ToolbarLogoBaseFragment() {
 
         var biggestImageAR = 100000F
 
-        thread {
+        bannerThread = thread {
             for ((i, sliderModel) in sliderData.sliders.withIndex()) {
 
                 requireActivity().runOnUiThread {
@@ -266,7 +270,7 @@ class HomeFragment : ToolbarLogoBaseFragment() {
                 "banner_ar".showLog("ar of image $i: $thisImageAR, largest ar: $biggestImageAR")
             }
 
-            banner?.slider?.setmAspectRatio(biggestImageAR)
+            banner?.slider?.aspectRatioView?.setmAspectRatio(biggestImageAR)
         }
 
     }

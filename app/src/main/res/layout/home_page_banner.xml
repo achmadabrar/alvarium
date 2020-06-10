@@ -1,40 +1,45 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.bs.ecommerce.customViews.AspectRatioView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:custom="http://schemas.android.com/apk/res-auto"
     android:id="@+id/slider"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    custom:aspectRatio="2">
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
 
-    <RelativeLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
+    <com.bs.ecommerce.customViews.AspectRatioView
+        android:id="@+id/aspectRatioView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        custom:aspectRatio="2"
+        custom:layout_constraintTop_toTopOf="parent"
+        custom:layout_constraintStart_toStartOf="parent"
+        custom:layout_constraintEnd_toEndOf="parent">
 
         <com.daimajia.slider.library.SliderLayout
             android:id="@+id/view_pager_slider1"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
+            android:adjustViewBounds="true"
             custom:auto_cycle="true"
             custom:indicator_visibility="visible"
-            android:adjustViewBounds="true"
-            android:layout_alignParentTop="true"
-            custom:pager_animation_span="1100"/>
+            custom:pager_animation_span="1100" />
 
-        <com.daimajia.slider.library.Indicators.PagerIndicator
-            android:id="@+id/circle_indicator"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_centerHorizontal="true"
-            android:gravity="center"
-            android:paddingBottom="5dp"
-            custom:selected_drawable="@drawable/home_slider_indicator_selected"
-            custom:selected_padding_left="3dp"
-            custom:selected_padding_right="3dp"
-            custom:unselected_drawable="@drawable/home_slider_indicator_unselected"
-            custom:unselected_padding_left="3dp"
-            custom:unselected_padding_right="3dp" />
-    </RelativeLayout>
+    </com.bs.ecommerce.customViews.AspectRatioView>
+
+    <com.daimajia.slider.library.Indicators.PagerIndicator
+        android:id="@+id/circle_indicator"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:paddingBottom="5dp"
+        custom:selected_drawable="@drawable/home_slider_indicator_selected"
+        custom:selected_padding_left="3dp"
+        custom:selected_padding_right="3dp"
+        custom:unselected_drawable="@drawable/home_slider_indicator_unselected"
+        custom:unselected_padding_left="3dp"
+        custom:unselected_padding_right="3dp"
+        custom:layout_constraintBottom_toBottomOf="@id/aspectRatioView"
+        custom:layout_constraintStart_toStartOf="parent"
+        custom:layout_constraintEnd_toEndOf="parent"/>
 
 
-</com.bs.ecommerce.customViews.AspectRatioView>
+</androidx.constraintlayout.widget.ConstraintLayout>
