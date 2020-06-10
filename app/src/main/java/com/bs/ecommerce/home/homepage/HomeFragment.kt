@@ -271,7 +271,7 @@ class HomeFragment : ToolbarLogoBaseFragment() {
                 "banner_ar".showLog("ar of image $i: $thisImageAR, largest ar: $biggestImageAR")
             }
 
-            banner?.slider?.aspectRatioView?.setmAspectRatio(biggestImageAR)
+            banner?.aspectRatioView?.setmAspectRatio(biggestImageAR)
         }
 
     }
