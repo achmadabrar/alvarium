@@ -67,8 +67,6 @@ class HomeFragment : ToolbarLogoBaseFragment() {
 
         viewModel = ViewModelProvider(requireActivity()).get(MainViewModel::class.java)
 
-        setCurrentCartItemCounterOnTopView()
-
         if (!viewCreated) {
             model = HomePageModelImpl(requireContext())
 
@@ -76,9 +74,9 @@ class HomeFragment : ToolbarLogoBaseFragment() {
 
             initComponents()
             observeLiveDataChange = true
-        } else {
-            observeLiveDataChange = false
         }
+        else
+            observeLiveDataChange = false
 
         setLiveDataListeners()
     }
@@ -146,7 +144,10 @@ class HomeFragment : ToolbarLogoBaseFragment() {
 
         with(viewModel as MainViewModel)
         {
-            cartLD.observe(viewLifecycleOwner, Observer { cartRootData -> updateCartItemCounter(cartRootData.cart.items) })
+
+            appSettingsLD.observe(viewLifecycleOwner, Observer { appLanding ->
+                if(observeLiveDataChange) appLanding.peekContent()?.totalShoppingCartProducts?.let { updateTopCart(it) }
+            })
 
             featuredProductListLD.observe(viewLifecycleOwner,
                 Observer { list ->

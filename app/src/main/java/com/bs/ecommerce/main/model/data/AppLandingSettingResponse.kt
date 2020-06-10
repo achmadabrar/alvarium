@@ -10,7 +10,7 @@ data class AppLandingSettingResponse(
     @SerializedName("Data") var data: AppLandingData = AppLandingData()
 ) : BaseResponse()
 
-data class AppLandingData  (
+data class AppLandingData(
     @SerializedName("AndriodForceUpdate") val andriodForceUpdate: Boolean? = null,
     @SerializedName("AndroidVersion") val androidVersion: String? = null,
     @SerializedName("AppStoreUrl") val appStoreUrl: String? = null,
@@ -28,6 +28,7 @@ data class AppLandingData  (
     @SerializedName("Rtl") val rtl: Boolean = false,
     @SerializedName("ShowSubCategoryProducts") val showSubCategoryProducts: Boolean = false,
     @SerializedName("ShowAllVendors") val showAllVendors: Boolean? = null,
+    @SerializedName("TotalShoppingCartProducts") val totalShoppingCartProducts: Int = 0,
     @SerializedName("StringResources") var stringResources: List<StringResource> = listOf()
 ) : Parcelable {
     constructor(parcel: Parcel) : this(
@@ -48,6 +49,7 @@ data class AppLandingData  (
         parcel.readByte() != 0.toByte(),
         parcel.readByte() != 0.toByte(),
         parcel.readValue(Boolean::class.java.classLoader) as? Boolean,
+        parcel.readInt(),
         parcel.createTypedArrayList(StringResource.CREATOR) ?: listOf()
     )
 
@@ -69,6 +71,7 @@ data class AppLandingData  (
         parcel.writeByte(if (rtl) 1 else 0)
         parcel.writeByte(if (showSubCategoryProducts) 1 else 0)
         parcel.writeValue(showAllVendors)
+        parcel.writeInt(totalShoppingCartProducts)
         parcel.writeTypedList(stringResources)
     }
 
