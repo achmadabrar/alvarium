@@ -51,7 +51,7 @@ android {
     flavorDimensions "app"
     productFlavors {
         flavorNopStation {
-            applicationId "com.bs.ecommerce.nopstationv2"
+            applicationId "com.nopstation.nopcommerce.nopstationcart"
             versionCode 1000000
             versionName "1.0.0"
             dimension "app"
@@ -151,9 +151,9 @@ dependencies {
     implementation 'com.afollestad.material-dialogs:core:3.3.0'
 
     //firebase
-    implementation 'com.google.firebase:firebase-core:17.4.2'
+    implementation 'com.google.firebase:firebase-core:17.4.3'
     implementation 'com.google.firebase:firebase-messaging:20.2.0'
-    implementation 'com.google.firebase:firebase-crashlytics:17.0.0'
+    implementation 'com.google.firebase:firebase-crashlytics:17.0.1'
 
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'

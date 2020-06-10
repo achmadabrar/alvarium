@@ -1,35 +1,42 @@
 {
   "project_info": {
-    "project_number": "570678951937",
-    "firebase_url": "https://testing-nopstation.firebaseio.com",
-    "project_id": "testing-nopstation",
-    "storage_bucket": "testing-nopstation.appspot.com"
+    "project_number": "334372623564",
+    "firebase_url": "https://nopstation-2899f.firebaseio.com",
+    "project_id": "nopstation-2899f",
+    "storage_bucket": "nopstation-2899f.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:570678951937:android:b2a2f7e5f04d6940634000",
+        "mobilesdk_app_id": "1:334372623564:android:0f73d560d5d18819",
         "android_client_info": {
-          "package_name": "com.bs.ecommerce.nopstation"
+          "package_name": "com.bs.ecommerce"
         }
       },
       "oauth_client": [
         {
-          "client_id": "570678951937-59fiama41mk4u7p38aadscpavadbhrnt.apps.googleusercontent.com",
+          "client_id": "334372623564-hrm349n935r5nm83j7l8ls9n19fvej82.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyBLQhfDj1meS7hxva5HAyF-FoJm3fC6TpA"
+          "current_key": "AIzaSyA0VoK5xsol9zvphHK31EiHXYGS4eRbew4"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "570678951937-59fiama41mk4u7p38aadscpavadbhrnt.apps.googleusercontent.com",
+              "client_id": "334372623564-hrm349n935r5nm83j7l8ls9n19fvej82.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "334372623564-193k36bu9s891mpm2aplqe8gijhk94ev.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.bs23.nopStation"
+              }
             }
           ]
         }
@@ -37,28 +44,107 @@
     },
     {
       "client_info": {
-        "mobilesdk_app_id": "1:570678951937:android:0f66c8388e309000634000",
+        "mobilesdk_app_id": "1:334372623564:android:8ea91a209dc81f83",
         "android_client_info": {
-          "package_name": "com.bs.ecommerce.nopstationv2"
+          "package_name": "com.bs.ecommerce.nopstation"
         }
       },
       "oauth_client": [
         {
-          "client_id": "570678951937-59fiama41mk4u7p38aadscpavadbhrnt.apps.googleusercontent.com",
+          "client_id": "334372623564-hrm349n935r5nm83j7l8ls9n19fvej82.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyBLQhfDj1meS7hxva5HAyF-FoJm3fC6TpA"
+          "current_key": "AIzaSyA0VoK5xsol9zvphHK31EiHXYGS4eRbew4"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "570678951937-59fiama41mk4u7p38aadscpavadbhrnt.apps.googleusercontent.com",
+              "client_id": "334372623564-hrm349n935r5nm83j7l8ls9n19fvej82.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "334372623564-193k36bu9s891mpm2aplqe8gijhk94ev.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.bs23.nopStation"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:334372623564:android:f5aa5a1461765e4f",
+        "android_client_info": {
+          "package_name": "com.bs23.shipping"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "334372623564-hrm349n935r5nm83j7l8ls9n19fvej82.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA0VoK5xsol9zvphHK31EiHXYGS4eRbew4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "334372623564-hrm349n935r5nm83j7l8ls9n19fvej82.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "334372623564-193k36bu9s891mpm2aplqe8gijhk94ev.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.bs23.nopStation"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:334372623564:android:e6ba4cc217313d5ba05e69",
+        "android_client_info": {
+          "package_name": "com.nopstation.nopcommerce.nopstationcart"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "334372623564-hrm349n935r5nm83j7l8ls9n19fvej82.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA0VoK5xsol9zvphHK31EiHXYGS4eRbew4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "334372623564-hrm349n935r5nm83j7l8ls9n19fvej82.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "334372623564-193k36bu9s891mpm2aplqe8gijhk94ev.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.bs23.nopStation"
+              }
             }
           ]
         }
