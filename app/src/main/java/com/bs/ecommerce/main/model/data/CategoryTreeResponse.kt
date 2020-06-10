@@ -13,7 +13,7 @@ data class Category(
     @SerializedName("IconUrl") var iconUrl: String = "",
     @SerializedName("Name") var name: String = "",
     var childVisible: Boolean = false,
-    @SerializedName("Subcategories") var subcategories: List<Subcategory> = listOf()
+    @SerializedName("SubCategories") var subcategories: List<Subcategory> = listOf()
 )
 
 data class Subcategory(
@@ -21,12 +21,12 @@ data class Subcategory(
     @SerializedName("IconUrl") var iconUrl: String = "",
     @SerializedName("Name") var name: String = "",
     var childVisible: Boolean = false,
-    @SerializedName("Subcategories") var subcategories: List<SecondSubcategory> = listOf()
+    @SerializedName("SubCategories") var subcategories: List<SecondSubcategory> = listOf()
 )
 
 data class SecondSubcategory(
     @SerializedName("CategoryId") var categoryId: Int = 0,
     @SerializedName("IconUrl") var iconUrl: String = "",
     @SerializedName("Name") var name: String = "",
-    @SerializedName("Subcategories") var subcategories: List<Any> = listOf()
+    @SerializedName("SubCategories") var subcategories: List<Any> = listOf()
 )

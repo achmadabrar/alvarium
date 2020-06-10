@@ -17,6 +17,7 @@ import com.bs.ecommerce.db.DbHelper
 import com.bs.ecommerce.utils.Const
 import com.bs.ecommerce.utils.MyApplication
 import com.bs.ecommerce.utils.loadImg
+import com.bs.ecommerce.utils.showLog
 import kotlinx.android.synthetic.main.fragment_shipping_method.*
 
 class PaymentMethodFragment : BaseCheckoutNavigationFragment() {
@@ -49,14 +50,12 @@ class PaymentMethodFragment : BaseCheckoutNavigationFragment() {
                         .replace("{0}", it.rewardPointsBalance.toString())
                         .replace("{1}", it.rewardPointsAmount.toString())
 
-                    useRewardPoints = rewardPointCheckBox.isChecked
-
                 }
 
                 addMethodRadioGroup(paymentMethods)
 
                 btnContinue?.setOnClickListener {
-                    (viewModel as CheckoutViewModel).savePaymentMethodVM(paymentMethodValue, model)
+                    (viewModel as CheckoutViewModel).savePaymentMethodVM(paymentMethodValue, rewardPointCheckBox.isChecked, model)
 
                     for(i in paymentMethods.indices)
                     {

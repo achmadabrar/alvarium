@@ -6,7 +6,6 @@ import com.bs.ecommerce.base.BaseViewModel
 import com.bs.ecommerce.checkout.model.CheckoutModel
 import com.bs.ecommerce.checkout.model.data.*
 import com.bs.ecommerce.common.RequestCompleteListener
-import com.bs.ecommerce.networking.NetworkConstants
 import com.bs.ecommerce.networking.common.Data
 import com.bs.ecommerce.networking.common.ExistingAddress
 import com.bs.ecommerce.networking.common.KeyValueFormData
@@ -19,10 +18,6 @@ open class CheckoutViewModel : BaseViewModel()
     var stateListLD = MutableLiveData<List<AvailableState>>()
 
     var saveResponseLD = MutableLiveData<CheckoutSaveResponse>()
-
-    var shippingMethodModelLD = MutableLiveData<ShippingMethodModel>()
-
-    var paymentMethodModelLD = MutableLiveData<PaymentMethodModel>()
 
     var getConfirmOrderLD = MutableLiveData<ConfirmOrderResponse>()
 
@@ -192,19 +187,18 @@ open class CheckoutViewModel : BaseViewModel()
         })
     }
 
-    fun savePaymentMethodVM(value: String, model: CheckoutModel)
+    fun savePaymentMethodVM(value: String, useRewardPoints: Boolean, model: CheckoutModel)
     {
-        val formValues = listOf(KeyValuePair(key = "paymentmethod", value = value))
+        val formValues = mutableListOf(KeyValuePair(key = "paymentmethod", value = value))
+
+        if(useRewardPoints)
+            formValues.add(KeyValuePair(key = "UseRewardPoints", value = useRewardPoints.toString()))
 
         isLoadingLD.postValue(true)
 
         model.savePaymentMethod(KeyValueFormData(formValues), object : RequestCompleteListener<CheckoutSaveResponse>
         {
-            override fun onRequestSuccess(data: CheckoutSaveResponse){
-
-                saveCheckoutData(data)
-                paymentMethodModelLD.postValue(data.data.paymentMethodModel)
-            }
+            override fun onRequestSuccess(data: CheckoutSaveResponse) = saveCheckoutData(data)
 
             override fun onRequestFailed(errorMessage: String)
             {

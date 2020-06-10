@@ -17,6 +17,7 @@ import com.bs.ecommerce.main.MainActivity
 import com.bs.ecommerce.main.model.data.Category
 import com.bs.ecommerce.main.model.data.Subcategory
 import com.bs.ecommerce.product.ProductListFragment
+import com.bs.ecommerce.utils.showLog
 import com.squareup.picasso.Picasso
 
 /**
@@ -87,7 +88,7 @@ class CategoryListAdapterExpandable(
         if (getChildrenCountForHidingGroupIndicator(groupPosition) < 1)
         {
             expandableIcon.visibility = View.INVISIBLE
-            convertView.setOnClickListener(subCategory.name?.let { CategoryOnClickListener(subCategory) })
+            convertView.setOnClickListener(subCategory.name?.let { categoryClickListener(subCategory) })
         }
         else
         {
@@ -98,7 +99,7 @@ class CategoryListAdapterExpandable(
                 expandableIcon.setImageResource(R.drawable.ic_plus_left_category)
         }
 
-        text.setOnClickListener(subCategory.name?.let { CategoryOnClickListener(subCategory) })
+        text.setOnClickListener(subCategory.name?.let { categoryClickListener(subCategory) })
 
         Picasso.with(context).load(subCategory.iconUrl).fit().centerInside().into(logo)
 
@@ -114,7 +115,7 @@ class CategoryListAdapterExpandable(
     private fun getChildrenCountForHidingGroupIndicator(groupPosition: Int): Int = categories[groupPosition].subcategories.size
 
 
-    private inner class CategoryOnClickListener(internal var category: Category) : View.OnClickListener {
+    private inner class categoryClickListener(internal var category: Category) : View.OnClickListener {
         override fun onClick(v: View) {
             goToCategoryListPage(category)
         }

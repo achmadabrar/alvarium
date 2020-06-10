@@ -72,12 +72,11 @@ class CartFragment : BaseFragment() {
         {
             cartLD.observe(viewLifecycleOwner, Observer { cartRootData ->
 
+                tvTotalItem?.text = DbHelper.getStringWithNumber(Const.ITEMS, updateCartItemCounter(cartRootData.cart.items))
+
                 if(cartRootData.cart.items.isNotEmpty())
                 {
                     cartRootLayout?.visibility = View.VISIBLE
-
-                    tvTotalItem?.text = DbHelper.getStringWithNumber(Const.ITEMS, updateCartItemCounter(cartRootData.cart.items))
-
                     setData(cartRootData)
                 }
                 else
