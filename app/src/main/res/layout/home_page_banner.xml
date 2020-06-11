@@ -15,14 +15,14 @@
         custom:layout_constraintStart_toStartOf="parent"
         custom:layout_constraintEnd_toEndOf="parent">
 
-        <!--<com.daimajia.slider.library.SliderLayout
+        <com.daimajia.slider.library.SliderLayout
             android:id="@+id/view_pager_slider1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:adjustViewBounds="true"
             custom:auto_cycle="true"
             custom:indicator_visibility="visible"
-            custom:pager_animation_span="1100" />-->
+            custom:pager_animation_span="1100" />
 
     </com.bs.ecommerce.customViews.AspectRatioView>
 
