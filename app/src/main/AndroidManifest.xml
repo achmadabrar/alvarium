@@ -44,7 +44,10 @@
             android:parentActivityName=".main.MainActivity"/>
         <activity android:name=".checkout.ResultActivity" />
 
-        <service android:name=".fcm.MessagingService">
+        <service
+            android:name=".fcm.MessagingService"
+            android:enabled="true"
+            android:exported="true">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT"/>
             </intent-filter>
