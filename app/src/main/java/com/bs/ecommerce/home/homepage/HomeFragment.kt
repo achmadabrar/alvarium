@@ -13,11 +13,11 @@ import com.bs.ecommerce.base.BaseViewModel
 import com.bs.ecommerce.base.ToolbarLogoBaseFragment
 import com.bs.ecommerce.db.DbHelper
 import com.bs.ecommerce.home.FeaturedProductAdapter
-import com.bs.ecommerce.home.ManufacturerListAdapter
-import com.bs.ecommerce.home.ManufacturerListFragment
 import com.bs.ecommerce.home.homepage.model.HomePageModel
 import com.bs.ecommerce.home.homepage.model.HomePageModelImpl
 import com.bs.ecommerce.home.homepage.model.data.SliderData
+import com.bs.ecommerce.home.manufaturer.ManufacturerListAdapter
+import com.bs.ecommerce.home.manufaturer.ManufacturerListFragment
 import com.bs.ecommerce.main.MainViewModel
 import com.bs.ecommerce.more.TopicFragment
 import com.bs.ecommerce.product.ProductDetailFragment
@@ -399,7 +399,10 @@ class HomeFragment : ToolbarLogoBaseFragment() {
         }
 
         featuredManufacturerLayout?.rvList?.adapter =
-            ManufacturerListAdapter(list, itemClickListener)
+            ManufacturerListAdapter(
+                list,
+                itemClickListener
+            )
     }
 
     private fun populateBottomSheet(subCategories: List<SubCategory>) {

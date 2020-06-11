@@ -15,4 +15,15 @@
         tools:itemCount="4"
         tools:listitem="@layout/item_manufacturer" />
 
+    <TextView
+        android:id="@+id/tvNoData"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:textColor="?attr/primaryTextColor"
+        android:textSize="@dimen/tv_text_size_regular"
+        tools:visibility="visible"
+        android:visibility="gone"
+        tools:text="@string/placeholder"/>
+
 </RelativeLayout>
