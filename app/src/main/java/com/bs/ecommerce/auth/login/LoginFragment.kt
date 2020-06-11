@@ -78,20 +78,9 @@ class LoginFragment : BaseFragment()
     {
         loginButton?.setOnClickListener {  sendLogInData();   requireActivity().hideKeyboard()   }
 
-        tvNewCustomer.setOnClickListener {
+        tvNewCustomer.setOnClickListener { replaceFragmentSafely(RegisterFragment()) }
 
-            requireActivity().supportFragmentManager
-                .beginTransaction()
-                .replace(R.id.layoutFrame,
-                    RegisterFragment()
-                )
-                .addToBackStack(RegisterFragment::class.java.simpleName)
-                .commit()
-        }
-
-        tvForgotPassword?.setOnClickListener {
-            replaceFragmentSafely(ForgotPasswordFragment())
-        }
+        tvForgotPassword?.setOnClickListener { replaceFragmentSafely(ForgotPasswordFragment()) }
     }
 
     private fun sendLogInData()

@@ -31,15 +31,7 @@ import com.bs.ecommerce.main.MainActivity
 import com.squareup.picasso.Picasso
 import kotlin.math.floor
 
-
-/**
- * Created by bs206 on 4/10/18.
- */
-fun <T1, T2> ifNotNull(value1: T1?, value2: T2?, bothNotNull: (T1, T2) -> (Unit)) {
-    if (value1 != null && value2 != null)
-        bothNotNull(value1, value2)
-
-}
+const val MAX_ALLOWED_FRAGMENT = 4
 
 fun Fragment.inflateAsync(resId: Int, parent: ViewGroup?, f: (v: View) -> Unit) {
 
@@ -60,14 +52,23 @@ fun Fragment.replaceFragmentSafely(
     @AnimRes popEnterAnimation: Int = 0,
     @AnimRes popExitAnimation: Int = 0
 ) {
-    val ft = requireActivity().supportFragmentManager
+    val fragManager = requireActivity().supportFragmentManager
+
+    if(fragManager.backStackEntryCount > MAX_ALLOWED_FRAGMENT) {
+        "test_".showLog("Pop BS")
+        fragManager.popBackStack()
+    } else {
+        "test_".showLog("No need to pop BS. ${fragManager.backStackEntryCount}")
+    }
+
+    val ft = fragManager
         .beginTransaction()
         .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
         .setCustomAnimations(enterAnimation, exitAnimation, popEnterAnimation, popExitAnimation)
         .replace(containerViewId, fragment, fragment::class.java.simpleName)
         .addToBackStack(fragment::class.java.simpleName)
 
-    if (!requireActivity().supportFragmentManager.isStateSaved) {
+    if (!fragManager.isStateSaved) {
         ft.commit()
     }
 /*    else if (allowStateLoss)
@@ -127,6 +128,7 @@ fun ImageView.loadImg(imageUrl: String?, placeHolder: Int? = R.drawable.ic_place
         if(placeHolder!=null) {
             Picasso.with(context)
                 .load(imageUrl)
+                //.transform(RoundedCornersTransform())
                 .placeholder(R.drawable.ic_placeholder)
                 .fit()
                 .centerInside()
@@ -250,7 +252,7 @@ fun WebView.show(text: String, backgroundColorRes: Int, textColorRes: Int = R.co
 
     val htmlRtlHeader = "dir=\"rtl\" lang=\"\""
 
-    var htmlColorHeader =
+    val htmlColorHeader =
             "<style type=\"text/css\">body{color: $textColor; background-color: $webViewBg;}</style>"
 
 

@@ -25,7 +25,7 @@ class OptionViewModel : BaseViewModel() {
 
         data.add(AppOptions(R.string.title_contact_us, DbHelper.getString(Const.MORE_CONTACT_US), R.drawable.ic_contact_us))
 
-        data.add(AppOptions(R.string.placeholder, DbHelper.getString(Const.PRODUCT_VENDOR), R.drawable.ic_my_order))
+        data.add(AppOptions(R.string.placeholder, DbHelper.getString(Const.PRODUCT_VENDOR), R.drawable.ic_vendor))
 
         optionsLD.postValue(data)
     }

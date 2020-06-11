@@ -73,7 +73,7 @@ class ProductDetailFragment : BaseFragment(), View.OnClickListener {
 
         if(arguments?.getLong(PRODUCT_ID) == null) {
             toast(DbHelper.getString(Const.INVALID_PRODUCT))
-            requireActivity().supportFragmentManager.popBackStack()
+            //requireActivity().supportFragmentManager.popBackStack()
             return
         }
 
