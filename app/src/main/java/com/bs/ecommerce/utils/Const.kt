@@ -253,7 +253,7 @@ class Const {
 
 
         const val REGISTRATION_PERSONAL_DETAILS = "nopstation.webapi.registration.personaldetails"
-        const val REGISTRATION_PASSWORD = "account.fields.password"
+        const val REGISTRATION_PASSWORD = "nopstation.webapi.registration.password"
         const val GENDER = "account.fields.gender"
         const val GENDER_MALE = "account.fields.gender.male"
         const val GENDER_FEMALE = "account.fields.gender.female"

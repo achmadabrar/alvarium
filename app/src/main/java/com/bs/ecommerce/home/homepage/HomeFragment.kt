@@ -195,7 +195,7 @@ class HomeFragment : ToolbarLogoBaseFragment() {
                 try {
                     if(observeLiveDataChange) populateBanner(sliderData)
                 } catch (e: IllegalStateException) {
-                    "crash".showLog("slider banner - $e")
+                    "banner_crash".showLog("$e")
                 }
             })
 
@@ -226,9 +226,10 @@ class HomeFragment : ToolbarLogoBaseFragment() {
         if(bannerThread?.isAlive == true) return
 
         banner?.visibility = View.VISIBLE
+        banner?.aspectRatioView?.removeAllViews()
 
-        banner?.view_pager_slider1?.apply {
-            removeAllSliders()
+        val slider = SliderLayout(requireContext()).apply {
+            //removeAllSliders()
             setPresetIndicator(SliderLayout.PresetIndicators.Center_Bottom)
             view?.findViewById<View>(R.id.circle_indicator)?.let {
                 setCustomIndicator(it as PagerIndicator)
@@ -270,7 +271,7 @@ class HomeFragment : ToolbarLogoBaseFragment() {
                         }
                     }
 
-                    banner?.view_pager_slider1?.addSlider(textSliderView)
+                    slider.addSlider(textSliderView)
                 }
 
                 //Execute all the long running tasks here
@@ -288,7 +289,10 @@ class HomeFragment : ToolbarLogoBaseFragment() {
                 "banner_ar".showLog("ar of image $i: $thisImageAR, largest ar: $biggestImageAR")
             }
 
-            banner?.aspectRatioView?.setmAspectRatio(biggestImageAR)
+            requireActivity().runOnUiThread {
+                banner?.aspectRatioView?.setmAspectRatio(biggestImageAR)
+                banner?.aspectRatioView?.addView(slider)
+            }
         }
 
     }
