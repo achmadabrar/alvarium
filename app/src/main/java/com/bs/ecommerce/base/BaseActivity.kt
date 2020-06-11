@@ -41,7 +41,7 @@ abstract class BaseActivity : AppCompatActivity(), ConnectivityReceiver.Connecti
 
     private var counterText: TextView? = null
 
-    lateinit var connectivityReceiver: ConnectivityReceiver
+    private lateinit var connectivityReceiver: ConnectivityReceiver
 
     @LayoutRes
     abstract fun getLayoutId(): Int
