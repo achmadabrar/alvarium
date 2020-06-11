@@ -22,7 +22,8 @@
         android:layout_height="wrap_content"
         tools:text="@string/placeholder_long"
         android:textColor="?attr/primaryTextColor"
-        android:textSize="@dimen/tv_text_size_regular" />
+        android:textSize="@dimen/tv_text_size_regular"
+        style="@style/rtlSupportedTextView"/>
 
     <!--<WebView
         android:id="@+id/tvProductDescription"

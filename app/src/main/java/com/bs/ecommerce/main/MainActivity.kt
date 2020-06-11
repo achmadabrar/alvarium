@@ -23,7 +23,6 @@ import com.bs.ecommerce.home.category.CategoryFragment
 import com.bs.ecommerce.home.category.NavDrawerFragment
 import com.bs.ecommerce.home.homepage.HomeFragment
 import com.bs.ecommerce.main.model.MainModelImpl
-import com.bs.ecommerce.main.model.data.AppLandingData
 import com.bs.ecommerce.more.OptionsFragment
 import com.bs.ecommerce.more.UserAccountFragment
 import com.bs.ecommerce.networking.NetworkUtil
@@ -75,10 +74,10 @@ class MainActivity : PrivacyPolicyDialogActivity(), View.OnClickListener
 
         if (savedInstanceState == null) {
 
-            intent?.getParcelableExtra<AppLandingData>(KEY_APP_SETTINGS)?.let {
+            DbHelper.memCache?.let {
                 mainViewModel.setAppSettings(it)
                 setAppSettings(it)
-                intent = null
+                DbHelper.memCache = null
             }
 
             //mainViewModel.getAppSettings(mainModel)

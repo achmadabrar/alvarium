@@ -270,12 +270,13 @@ class SettingsFragment: BaseUrlChangeFragment() {
     {
         appSettings.getContentIfNotHandled()?.let {
 
-            it.stringResources = listOf()
+            //it.stringResources = listOf()
+            DbHelper.memCache = it
 
             requireActivity().finish()
             startActivity(
                 Intent(requireActivity().applicationContext, MainActivity::class.java)
-                    .putExtra(MainActivity.KEY_APP_SETTINGS, it)
+                    //.putExtra(MainActivity.KEY_APP_SETTINGS, it)
             )
         }
     }

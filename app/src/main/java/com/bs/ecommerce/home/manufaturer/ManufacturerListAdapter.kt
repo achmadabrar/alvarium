@@ -1,4 +1,4 @@
-package com.bs.ecommerce.home
+package com.bs.ecommerce.home.manufaturer
 
 import android.view.LayoutInflater
 import android.view.ViewGroup

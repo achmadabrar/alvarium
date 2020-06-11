@@ -104,6 +104,8 @@ abstract class BaseUrlChangeFragment : BaseFragment()
         NetworkUtil.token = ""
         prefObject.setPrefs(PrefSingleton.IS_LOGGED_IN, false)
 
+        DbHelper.memCache = mainViewModel.appSettingsLD.value?.peekContent()
+
         val intent = Intent(activity, MainActivity::class.java)
         intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
         intent.putExtra("EXIT", true)

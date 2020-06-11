@@ -1,6 +1,7 @@
 package com.bs.ecommerce.product.adapter
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bs.ecommerce.R
@@ -25,23 +26,30 @@ class ProductListAdapter(
     override fun getItemCount(): Int = productsList.size
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        holder.itemView.tvProductName.text = productsList[position].name
-        holder.itemView.tvProductPrice.text = productsList[position].productPrice?.price
 
-        holder.itemView.ratingBar.rating =
-            (productsList[position].reviewOverviewModel?.ratingSum ?: 0).toFloat()
+        val product = productsList[position]
 
-        holder.itemView.ivProductThumb.loadImg(
-            productsList[position].defaultPictureModel?.imageUrl
-        )
+        holder.itemView.apply {
+            tvProductName?.text = product.name
+            tvProductPrice?.text = product.productPrice?.price
 
-        holder.itemView.id = R.id.itemView
-        holder.itemView.setOnClickListener { v ->
-            listener.onClick(v, position, productsList[position])
-        }
+            ratingBar?.rating = (product.reviewOverviewModel?.ratingSum ?: 0).toFloat()
 
-        holder.itemView.ivAddToFav.setOnClickListener { v ->
-            listener.onClick(v, position, productsList[position])
+            ivProductThumb?.loadImg(
+                product.defaultPictureModel?.imageUrl
+            )
+
+            id = R.id.itemView
+            setOnClickListener { v ->
+                listener.onClick(v, position, product)
+            }
+
+            ivAddToFav?.setOnClickListener { v ->
+                listener.onClick(v, position, product)
+            }
+
+            ivAddToFav?.visibility = if(product.productPrice?.disableWishlistButton == true)
+                View.INVISIBLE else View.VISIBLE
         }
     }
 
