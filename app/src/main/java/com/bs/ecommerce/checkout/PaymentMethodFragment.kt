@@ -8,16 +8,17 @@ import android.widget.ImageView
 import android.widget.RelativeLayout
 import android.widget.TextView
 import androidx.appcompat.widget.AppCompatRadioButton
+import androidx.lifecycle.ViewModelProvider
 import com.bs.ecommerce.R
 import com.bs.ecommerce.base.BaseViewModel
 import com.bs.ecommerce.checkout.model.data.PaymentMethod
 import com.bs.ecommerce.customViews.CheckableLinearLayout
 import com.bs.ecommerce.customViews.MethodSelectionProcess
 import com.bs.ecommerce.db.DbHelper
+import com.bs.ecommerce.main.MainViewModel
 import com.bs.ecommerce.utils.Const
 import com.bs.ecommerce.utils.MyApplication
 import com.bs.ecommerce.utils.loadImg
-import com.bs.ecommerce.utils.showLog
 import kotlinx.android.synthetic.main.fragment_shipping_method.*
 
 class PaymentMethodFragment : BaseCheckoutNavigationFragment() {
@@ -39,6 +40,10 @@ class PaymentMethodFragment : BaseCheckoutNavigationFragment() {
         super.onViewCreated(view, savedInstanceState)
 
         MyApplication.checkoutSaveResponse?.data?.paymentMethodModel?.let {
+
+            // saving appLandingData to memory to reload after order is placed
+            val mainViewModel = ViewModelProvider(requireActivity()).get(MainViewModel::class.java)
+            DbHelper.memCache = mainViewModel.appSettingsLD.value?.peekContent()
 
             with(it)
             {
