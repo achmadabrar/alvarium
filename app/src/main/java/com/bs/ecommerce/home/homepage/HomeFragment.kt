@@ -18,6 +18,7 @@ import com.bs.ecommerce.home.homepage.model.HomePageModelImpl
 import com.bs.ecommerce.home.homepage.model.data.SliderData
 import com.bs.ecommerce.home.manufaturer.ManufacturerListAdapter
 import com.bs.ecommerce.home.manufaturer.ManufacturerListFragment
+import com.bs.ecommerce.main.MainActivity
 import com.bs.ecommerce.main.MainViewModel
 import com.bs.ecommerce.more.TopicFragment
 import com.bs.ecommerce.product.ProductDetailFragment
@@ -83,6 +84,26 @@ class HomeFragment : ToolbarLogoBaseFragment() {
         setLiveDataListeners()
     }
 
+    private fun callHomePageProducts()
+    {
+        (viewModel as MainViewModel).apply {
+            observeLiveDataChange = true
+
+            getAllLandingPageProducts(model)
+        }
+    }
+
+    override fun onResume() {
+        super.onResume()
+
+        if((activity as MainActivity).notificationClicked)
+        {
+            callHomePageProducts()
+            (activity as MainActivity).notificationClicked = false
+        }
+
+    }
+
     private fun initComponents() {
 
         productClickListener = object : ItemClickListener<ProductSummary> {
@@ -105,11 +126,7 @@ class HomeFragment : ToolbarLogoBaseFragment() {
 
             swipeRefreshLayout.isRefreshing = false
 
-            (viewModel as MainViewModel).apply {
-                observeLiveDataChange = true
-
-                getAllLandingPageProducts(model)
-            }
+            callHomePageProducts()
         }
 
         featuredProductLayout?.rvList?.apply {

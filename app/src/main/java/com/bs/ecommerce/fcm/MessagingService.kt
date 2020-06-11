@@ -10,10 +10,13 @@ import android.graphics.Color
 import android.media.RingtoneManager
 import android.os.Bundle
 import android.util.Log
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.NotificationCompat
 import androidx.core.app.TaskStackBuilder
 import com.bs.ecommerce.R
+import com.bs.ecommerce.base.BaseActivity
 import com.bs.ecommerce.main.MainActivity
+import com.bs.ecommerce.main.SplashScreenActivity
 import com.bs.ecommerce.utils.AcceptPolicyPreference
 import com.bs.ecommerce.utils.MyApplication
 import com.bs.ecommerce.utils.showLog
@@ -61,8 +64,14 @@ class MessagingService : FirebaseMessagingService() {
         val bigPicture = data[BANNER]
 
 
+        val targetActivityClass : Class<*>
 
-        val intent = Intent(this, MainActivity::class.java)
+        if(MyApplication.isJwtActive)
+            targetActivityClass = MainActivity::class.java
+        else
+            targetActivityClass = SplashScreenActivity::class.java
+
+        val intent = Intent(this, targetActivityClass)
         val bundle = Bundle()
         for (key in data.keys) {
             bundle.putString(key, data[key])
@@ -71,7 +80,7 @@ class MessagingService : FirebaseMessagingService() {
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
 
         val stackBuilder = TaskStackBuilder.create(this)
-        stackBuilder.addParentStack(MainActivity::class.java)
+        stackBuilder.addParentStack(targetActivityClass)
         stackBuilder.addNextIntent(intent)
 
         val pendingIntent = PendingIntent.getActivity(this, REQUEST_CODE, intent, PendingIntent.FLAG_ONE_SHOT)

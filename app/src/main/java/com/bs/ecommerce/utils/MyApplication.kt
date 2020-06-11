@@ -59,6 +59,8 @@ class MyApplication : MultiDexApplication()
 
         var previouslySelectedTab = 0
         var logoUrl = ""
+
+        var isJwtActive = false
     }
 
 }

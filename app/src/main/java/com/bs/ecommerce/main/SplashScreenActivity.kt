@@ -12,6 +12,7 @@ import com.bs.ecommerce.db.DbHelper
 import com.bs.ecommerce.main.model.MainModelImpl
 import com.bs.ecommerce.more.UpdateAppFragment
 import com.bs.ecommerce.networking.NetworkUtil
+import com.bs.ecommerce.utils.MyApplication
 import com.bs.ecommerce.utils.PrefSingleton
 import com.bs.ecommerce.utils.showLog
 import io.jsonwebtoken.Jwts
@@ -54,7 +55,7 @@ class SplashScreenActivity : BaseActivity() {
 
             appSettingsLD.observe(this@SplashScreenActivity, Observer { appSettings ->
 
-                appSettings.getContentIfNotHandled()?.let {
+                appSettings.getContentIfNotHandled()?.let { it ->
 
                     if (it.stringResources.isNullOrEmpty()) {
                         "lang_".showLog("Download success: false")
@@ -80,6 +81,10 @@ class SplashScreenActivity : BaseActivity() {
                             val mainActivityIntent =
                                 Intent(this@SplashScreenActivity, MainActivity::class.java)
                             //mainActivityIntent.putExtra(MainActivity.KEY_APP_SETTINGS, it)
+
+                            intent.extras?.let {
+                                mainActivityIntent.putExtras(it)
+                            }
 
                             startActivity(mainActivityIntent)
                             finish()
@@ -113,6 +118,8 @@ class SplashScreenActivity : BaseActivity() {
         
         prefObject.setPrefs(PrefSingleton.NST, compactJws!!)
         NetworkUtil.nst = compactJws
+
+        MyApplication.isJwtActive = true
     }
 
 }

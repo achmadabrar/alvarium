@@ -48,6 +48,8 @@ class MainActivity : PrivacyPolicyDialogActivity(), View.OnClickListener
     private val TIME_INTERVAL: Long = 2000
     private var doubleBackToExitPressedOnce = false
 
+    var notificationClicked = false
+
     override fun getLayoutId(): Int = R.layout.activity_main
 
     override fun createViewModel(): MainViewModel = ViewModelProvider(this).get(MainViewModel::class.java)
@@ -64,8 +66,6 @@ class MainActivity : PrivacyPolicyDialogActivity(), View.OnClickListener
         mainViewModel = ViewModelProvider(this).get(MainViewModel::class.java)
 
         setFirebaseTopic()
-
-        setNotificationBundleToDynamicLink()
 
         //setLiveDataListeners()
 
@@ -85,6 +85,8 @@ class MainActivity : PrivacyPolicyDialogActivity(), View.OnClickListener
         }
 
         setBackStackChangeListener()
+
+        setNotificationBundleToDynamicLink()
     }
 
     private fun setFirebaseTopic()
@@ -116,8 +118,10 @@ class MainActivity : PrivacyPolicyDialogActivity(), View.OnClickListener
     }
 
     private fun gotoFragment(fragment: androidx.fragment.app.Fragment)
-
-            = supportFragmentManager.beginTransaction().replace(R.id.layoutFrame, fragment).addToBackStack(null).commit()
+    {
+        supportFragmentManager.beginTransaction().replace(R.id.layoutFrame, fragment).addToBackStack(null).commit()
+        notificationClicked = true
+    }
 
     /*private fun setLiveDataListeners()
     {
