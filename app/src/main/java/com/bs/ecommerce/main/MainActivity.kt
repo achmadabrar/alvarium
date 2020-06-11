@@ -99,20 +99,19 @@ class MainActivity : PrivacyPolicyDialogActivity(), View.OnClickListener
     }
     private fun setNotificationBundleToDynamicLink()
     {
-        val bundle = intent.extras
+        intent.extras?.let {
 
-        if (bundle != null)
-        {
-            val itemType = Integer.valueOf(bundle.getString(MessagingService.ITEM_TYPE, "0"))
-            val itemId = Integer.valueOf(bundle.getString(MessagingService.ITEM_ID, "0"))
+            val itemType = Integer.valueOf(it.getString(MessagingService.ITEM_TYPE, "0"))
+            val itemId = Integer.valueOf(it.getString(MessagingService.ITEM_ID, "0"))
 
-            if (itemType == MessagingService.ITEM_PRODUCT)
+            when(itemType)
             {
-                gotoFragment(ProductDetailFragment.newInstance(itemId.toLong(), ""))
-            }
-            else if (itemType == MessagingService.ITEM_CATEGORY)
-            {
-                gotoFragment(ProductListFragment.newInstance("", itemId, ProductListFragment.GetBy.CATEGORY))
+                MessagingService.ITEM_PRODUCT -> gotoFragment(ProductDetailFragment.newInstance(itemId.toLong(), ""))
+
+                MessagingService.ITEM_CATEGORY -> gotoFragment(ProductListFragment.newInstance(
+                    "", itemId, ProductListFragment.GetBy.CATEGORY))
+
+                else -> {}
             }
         }
     }

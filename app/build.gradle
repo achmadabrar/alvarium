@@ -9,7 +9,7 @@ android {
         nopstation {
             keyAlias 'nopStation'
             keyPassword '159753246'
-            storeFile file('/Users/rarahat/Desktop/NopStation Projects/NopStation_MVVM/app/playstore_info/v2_keystore.jks')
+            storeFile file('/Users/rarahat/Desktop/NopStation Projects/NopStation_MVVM/app/playstore_info/nopstation_cart_keystore.jks')
             storePassword '159753246'
         }
     }
@@ -52,8 +52,8 @@ android {
     productFlavors {
         flavorNopStation {
             applicationId "com.nopstation.nopcommerce.nopstationcart"
-            versionCode 1000000
-            versionName "1.0.0"
+            versionCode 1000001
+            versionName "1.0.1"
             dimension "app"
             signingConfig signingConfigs.nopstation
         }
