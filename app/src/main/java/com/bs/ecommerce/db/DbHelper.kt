@@ -1,5 +1,6 @@
 package com.bs.ecommerce.db
 
+import com.bs.ecommerce.main.model.data.AppLandingData
 import com.bs.ecommerce.product.model.data.StringResource
 
 class DbHelper {
@@ -9,6 +10,7 @@ class DbHelper {
         var currentLanguageId: Int = 1
 
         //var memCache: Map<String, StrResource> = mutableMapOf()
+        var memCache: AppLandingData? = null
 
         fun isLanguageLoaded(languageId: Int): Boolean {
 

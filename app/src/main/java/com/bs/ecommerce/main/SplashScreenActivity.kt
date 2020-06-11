@@ -8,6 +8,7 @@ import com.bs.ecommerce.BuildConfig
 import com.bs.ecommerce.R
 import com.bs.ecommerce.base.BaseActivity
 import com.bs.ecommerce.base.BaseViewModel
+import com.bs.ecommerce.db.DbHelper
 import com.bs.ecommerce.main.model.MainModelImpl
 import com.bs.ecommerce.more.UpdateAppFragment
 import com.bs.ecommerce.networking.NetworkUtil
@@ -72,11 +73,13 @@ class SplashScreenActivity : BaseActivity() {
                         } else {
                             // removing language resources before adding to intent
                             // we don't need this huge data on MainActivity
-                            it.stringResources = listOf()
+                            //it.stringResources = listOf()
+
+                            DbHelper.memCache = it
 
                             val mainActivityIntent =
                                 Intent(this@SplashScreenActivity, MainActivity::class.java)
-                            mainActivityIntent.putExtra(MainActivity.KEY_APP_SETTINGS, it)
+                            //mainActivityIntent.putExtra(MainActivity.KEY_APP_SETTINGS, it)
 
                             startActivity(mainActivityIntent)
                             finish()
