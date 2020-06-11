@@ -17,7 +17,7 @@ data class ProductSummary(
     @SerializedName("Name")
     val name: String? = null,
     @SerializedName("ProductPrice")
-    val productPrice: ProductPrice? = null,
+    val productPrice: ProductSummaryPrice? = null,
     @SerializedName("ProductType")
     val productType: Int? = null,
     @SerializedName("ReviewOverviewModel")

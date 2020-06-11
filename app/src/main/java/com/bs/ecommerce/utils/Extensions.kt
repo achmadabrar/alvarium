@@ -29,7 +29,6 @@ import com.bs.ecommerce.base.BaseFragment
 import com.bs.ecommerce.db.DbHelper
 import com.bs.ecommerce.main.MainActivity
 import com.squareup.picasso.Picasso
-import java.util.*
 import kotlin.math.floor
 
 
@@ -226,9 +225,9 @@ fun WebView.show(text : String, nightMode: Boolean = true)
 
     val htmlFullHeader = ("<head>$htmlColorHeader$htmlFontHeader</head>")
 
-    if (Locale.getDefault().language == Language.ARABIC)
+    if (resources.configuration.layoutDirection == View.LAYOUT_DIRECTION_RTL)
         this.loadDataWithBaseURL("file:///android_asset/",
-            "<html$htmlRtlHeader>$htmlFullHeader<body>$text</body></html>", "text/html", "UTF-8", "")
+            "<html $htmlRtlHeader>$htmlFullHeader<body>$text</body></html>", "text/html", "UTF-8", "")
     else
         this.loadDataWithBaseURL("file:///android_asset/",
             "<html>$htmlFullHeader<body>$text</body></html>", "text/html", "UTF-8", "")
@@ -261,10 +260,10 @@ fun WebView.show(text: String, backgroundColorRes: Int, textColorRes: Int = R.co
 
     val htmlFullHeader = ("<head>$htmlColorHeader$htmlFontHeader</head>")
 
-    if (Locale.getDefault().language == Language.ARABIC)
+    if (resources.configuration.layoutDirection == View.LAYOUT_DIRECTION_RTL)
         this.loadDataWithBaseURL(
             "file:///android_asset/",
-            "<html$htmlRtlHeader>$htmlFullHeader<body>$text</body></html>", "text/html", "UTF-8", ""
+            "<html $htmlRtlHeader>$htmlFullHeader<body>$text</body></html>", "text/html", "UTF-8", ""
         )
     else
         this.loadDataWithBaseURL(
