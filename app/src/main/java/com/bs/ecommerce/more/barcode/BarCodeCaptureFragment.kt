@@ -71,7 +71,7 @@ class BarCodeCaptureFragment : BaseFragment()
     {
         val formats: Collection<BarcodeFormat> = listOf(BarcodeFormat.QR_CODE, BarcodeFormat.EAN_13, BarcodeFormat.EAN_8, BarcodeFormat.CODE_128)
         barcodeView.barcodeView.decoderFactory = DefaultDecoderFactory(formats)
-        barcodeView.initializeFromIntent(activity?.intent)
+        requireActivity().intent?.let { barcodeView.initializeFromIntent(it) }
         barcodeView.decodeContinuous(callback)
 
         //barcodeView.setStatusText(getString(R.string.place_barcode_in_camera))
