@@ -316,6 +316,7 @@ class Const {
 
 
         // Barcode
+        const val PUT_BARCODE_HERE = "nopstation.webapi.barcode.putbarcodehere"
         const val INVALID_PRODUCT = "nopstation.webapi.barcode.invalidproduct"
 
         //Order Complete Dialog

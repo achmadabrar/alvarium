@@ -74,7 +74,7 @@ class BarCodeCaptureFragment : BaseFragment()
         requireActivity().intent?.let { barcodeView.initializeFromIntent(it) }
         barcodeView.decodeContinuous(callback)
 
-        //barcodeView.setStatusText(getString(R.string.place_barcode_in_camera))
+        barcodeView.setStatusText(DbHelper.getString(Const.PUT_BARCODE_HERE))
 
         beepManager = BeepManager(activity)
         beepManager?.isVibrateEnabled = true
