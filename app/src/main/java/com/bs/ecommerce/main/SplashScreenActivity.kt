@@ -55,9 +55,9 @@ class SplashScreenActivity : BaseActivity() {
 
             appSettingsLD.observe(this@SplashScreenActivity, Observer { appSettings ->
 
-                appSettings.getContentIfNotHandled()?.let { it ->
+                appSettings.getContentIfNotHandled().let { it ->
 
-                    if (it.stringResources.isNullOrEmpty()) {
+                    if (it == null || it.stringResources.isNullOrEmpty()) {
                         "lang_".showLog("Download success: false")
                         finish()
                     } else {
@@ -95,10 +95,10 @@ class SplashScreenActivity : BaseActivity() {
         }
     }
 
-    
+
     private fun dateToUTC(date: Date): Date?
-        = Date(date.time - Calendar.getInstance().timeZone.getOffset(date.time))
-    
+            = Date(date.time - Calendar.getInstance().timeZone.getOffset(date.time))
+
 
     private fun initializeJwt()
     {
@@ -115,7 +115,7 @@ class SplashScreenActivity : BaseActivity() {
         } catch (e: UnsupportedEncodingException) {
             e.printStackTrace()
         }
-        
+
         prefObject.setPrefs(PrefSingleton.NST, compactJws!!)
         NetworkUtil.nst = compactJws
 

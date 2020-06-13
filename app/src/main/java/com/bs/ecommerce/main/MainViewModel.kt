@@ -225,6 +225,8 @@ class MainViewModel : CheckoutViewModel() {
                     appSettingsLD.value = OneTimeEvent(null)
                     showLoader.value = OneTimeEvent(false)
                     isLoadingLD.value = false
+
+                    toast(errorMessage)
                 }
             })
     }
