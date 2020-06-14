@@ -311,7 +311,7 @@ class SearchFragment : BaseFragment() {
                 search.priceFrom = priceFromEditText!!.text.toString().trim { it <= ' ' }
                 search.priceTo = priceToEditText!!.text.toString().trim { it <= ' ' }
 
-                search.isSearchInDescription = searchDescription!!.isChecked
+                search.isSearchInDescription = searchInDescription?.isChecked!!
             }
             return search
         }
@@ -418,8 +418,29 @@ class SearchFragment : BaseFragment() {
         layoutManager.requestLayout()
     }
 
+    private fun setDynamicStrings()
+    {
+        advanceSearchCheckBox?.text = DbHelper.getString(Const.ADVANCED_SEARCH)
+
+        label_category?.text = DbHelper.getString(Const.HOME_NAV_CATEGORY)
+        searchInSubCategory?.text = DbHelper.getString(Const.AUTOMATICALLY_SEARCH_SUBCATEGORIES)
+
+        label_manufacturer?.text = DbHelper.getString(Const.PRODUCT_MANUFACTURER)
+        label_vendor?.text = DbHelper.getString(Const.PRODUCT_VENDOR)
+
+        label_price_range_from?.text = DbHelper.getString(Const.PRICE_RANGE)
+        label_price_range_to?.text = DbHelper.getString(Const.TO)
+
+        searchInDescription?.text = DbHelper.getString(Const.SEARCH_IN_PRODUCT_DISCRIPTIONS)
+
+        searchButton?.text = DbHelper.getString(Const.HOME_NAV_SEARCH)
+    }
+
     private fun initAdvancedSearch()
     {
+
+        setDynamicStrings()
+
         advanceSearchFullView?.visibility = View.VISIBLE
 
         initSearchCategorySpinner()

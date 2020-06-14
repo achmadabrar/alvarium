@@ -331,6 +331,14 @@ class Const {
 
         const val READ_BEFORE_CONTINUE = "nopstation.webapi.readbeforecontinue"
         const val I_READ_I_ACCEPT = "nopstation.webapi.accept"
+
+        //search
+        const val ADVANCED_SEARCH = "nopstation.webapi.search.advancedsearch"
+        const val AUTOMATICALLY_SEARCH_SUBCATEGORIES = "nopstation.webapi.search.subcategorysearchautomatically"
+        const val PRICE_RANGE = "nopstation.webapi.search.pricerange"
+        const val TO = "nopstation.webapi.search.to"
+        const val SEARCH_IN_PRODUCT_DISCRIPTIONS = "nopstation.webapi.search.searchindiscriptions"
+
     }
 
 }
