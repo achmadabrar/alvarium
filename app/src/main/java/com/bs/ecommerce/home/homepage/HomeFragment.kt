@@ -3,6 +3,8 @@ package com.bs.ecommerce.home.homepage
 import android.graphics.BitmapFactory
 import android.os.Bundle
 import android.view.View
+import android.view.ViewGroup
+import android.widget.LinearLayout
 import android.widget.RelativeLayout
 import android.widget.TextView
 import androidx.lifecycle.Observer
@@ -32,10 +34,9 @@ import com.daimajia.slider.library.Indicators.PagerIndicator
 import com.daimajia.slider.library.SliderLayout
 import com.daimajia.slider.library.SliderTypes.BaseSliderView
 import com.daimajia.slider.library.SliderTypes.DefaultSliderView
-import com.google.android.material.bottomsheet.BottomSheetBehavior
+import com.google.android.material.bottomsheet.BottomSheetDialog
 import kotlinx.android.synthetic.main.featured_list_layout.view.*
 import kotlinx.android.synthetic.main.fragment_home.*
-import kotlinx.android.synthetic.main.home_fragment_bottomsheet.*
 import kotlinx.android.synthetic.main.home_fragment_bottomsheet.view.*
 import kotlinx.android.synthetic.main.home_page_banner.view.*
 import java.net.URL
@@ -48,10 +49,6 @@ class HomeFragment : ToolbarLogoBaseFragment() {
     private var observeLiveDataChange = true
 
     private lateinit var productClickListener: ItemClickListener<ProductSummary>
-
-    private val bsBehavior: BottomSheetBehavior<*> by lazy {
-        BottomSheetBehavior.from(bottomSheetLayout)
-    }
 
     private var bannerThread: Thread? = null
 
@@ -152,11 +149,6 @@ class HomeFragment : ToolbarLogoBaseFragment() {
             setHasFixedSize(true)
 
             addItemDecoration(RecyclerViewMargin(15, 1, false))
-        }
-
-        tvCloseBs.text = DbHelper.getString(Const.COMMON_DONE)
-        tvCloseBs.setOnClickListener {
-            bsBehavior.state = BottomSheetBehavior.STATE_COLLAPSED
         }
     }
 
@@ -426,7 +418,16 @@ class HomeFragment : ToolbarLogoBaseFragment() {
     }
 
     private fun populateBottomSheet(subCategories: List<SubCategory>) {
-        bottomSheetLayout?.subcategoryNameHolder?.removeAllViews()
+        val bsDialog = BottomSheetDialog(requireContext(), R.style.BsDialog)
+
+        val dialogView: LinearLayout = layoutInflater.inflate(
+            R.layout.home_fragment_bottomsheet, getRootView() as ViewGroup, false
+        ) as LinearLayout
+
+        dialogView.tvCloseBs.text = DbHelper.getString(Const.COMMON_DONE)
+        dialogView.tvCloseBs.setOnClickListener {
+            bsDialog.hide()
+        }
 
         for (item in subCategories) {
             val v:View = layoutInflater.inflate(R.layout.item_home_bs_options, homePageRootView as RelativeLayout, false)
@@ -434,16 +435,17 @@ class HomeFragment : ToolbarLogoBaseFragment() {
             v.findViewById<TextView>(R.id.tvName).text = item.name
 
             v.setOnClickListener {
-                bsBehavior.state = BottomSheetBehavior.STATE_COLLAPSED
+                bsDialog.hide()
 
                 replaceFragmentSafely(ProductListFragment.newInstance(
                     item.name ?: "", item.id ?: -1, ProductListFragment.GetBy.CATEGORY
                 ))
             }
 
-            bottomSheetLayout?.subcategoryNameHolder?.addView(v)
+            dialogView.subcategoryNameHolder.addView(v)
         }
 
-        bsBehavior.state = BottomSheetBehavior.STATE_EXPANDED
+        bsDialog.setContentView(dialogView)
+        bsDialog.show()
     }
 }

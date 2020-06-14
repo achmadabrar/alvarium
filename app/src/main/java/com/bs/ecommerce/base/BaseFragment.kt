@@ -2,20 +2,12 @@ package com.bs.ecommerce.base
 
 import android.Manifest
 import android.app.AlertDialog
-import android.app.Dialog
-import android.content.Context
-import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Bundle
-import android.os.Handler
-import android.provider.Settings
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.WindowManager
-import android.widget.LinearLayout
 import android.widget.RelativeLayout
-import android.widget.TextView
 import androidx.annotation.LayoutRes
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
@@ -24,13 +16,11 @@ import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bs.ecommerce.R
 import com.bs.ecommerce.cart.GiftCardAdapter
-import com.bs.ecommerce.cart.model.CartModel
 import com.bs.ecommerce.cart.model.CartModelImpl
 import com.bs.ecommerce.cart.model.data.CartProduct
 import com.bs.ecommerce.cart.model.data.OrderTotal
 import com.bs.ecommerce.customViews.ContentLoadingDialog
 import com.bs.ecommerce.db.DbHelper
-import com.bs.ecommerce.main.MainActivity
 import com.bs.ecommerce.more.barcode.BarCodeCaptureFragment
 import com.bs.ecommerce.networking.NetworkUtil
 import com.bs.ecommerce.product.model.data.ProductSummary
@@ -80,6 +70,8 @@ abstract class BaseFragment : Fragment()
 
         return rootView
     }
+
+    protected fun getRootView(): View? = rootView
 
     fun setCustomToolbarTitle(title: String) {
         activity?.title = title
