@@ -99,7 +99,7 @@ class SplashScreenActivity : BaseActivity() {
     private fun dateToUTC(date: Date): Date?
             = Date(date.time - Calendar.getInstance().timeZone.getOffset(date.time))
 
-
+    // unused from Retrofit
     private fun initializeJwt()
     {
         var compactJws: String? = null

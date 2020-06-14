@@ -47,7 +47,7 @@ object NetworkUtil
     private fun dateToUTC(date: Date): Date?
             = Date(date.time - Calendar.getInstance().timeZone.getOffset(date.time))
 
-    fun getJwt() : String?
+    fun getSecurityToken() : String?
     {
 
         val NST_KEY = BuildConfig.NST_KEY
