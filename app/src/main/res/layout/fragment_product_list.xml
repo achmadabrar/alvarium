@@ -37,10 +37,17 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+        <include layout="@layout/advanced_search_layout"
+            android:id="@+id/advanceSearchFullView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:visibility="gone"/>
+
         <View
             android:id="@+id/subcategoryPlaceholder"
             android:layout_width="match_parent"
-            android:layout_alignParentTop="true"
+            android:layout_below="@id/advanceSearchFullView"
             android:layout_height="@dimen/btn_height"
             android:visibility="gone"
             tools:visibility="visible"/>

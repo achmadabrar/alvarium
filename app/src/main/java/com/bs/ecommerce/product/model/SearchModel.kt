@@ -10,4 +10,5 @@ interface SearchModel {
         searchParam: SearchParam,
         callback: RequestCompleteListener<SearchResult>
     )
+    fun getModelsForAdvancedSearch(callback: RequestCompleteListener<SearchResult>)
 }

@@ -201,6 +201,8 @@ interface Api {
         @QueryMap query: Map<String, String>
     ): Call<SearchResponse>
 
+    @GET("catalog/search")
+    fun getModelsForAdvancedSearch(): Call<SearchResponse>
     // Order
 
     @GET("order/orderdetails/{id}")
