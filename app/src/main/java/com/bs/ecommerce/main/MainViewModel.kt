@@ -333,16 +333,14 @@ class MainViewModel : CheckoutViewModel() {
         }
     }
 
-    fun submitAppStart(appStartRequest: AppStartRequest, model: MainModel) {
+    fun submitAppStart(appStartData: AppStartData, model: MainModel) {
 
         isLoadingLD.value = true
 
-        model.submitAppStart(appStartRequest, object : RequestCompleteListener<BaseResponse> {
-            override fun onRequestSuccess(data: BaseResponse) {
+        model.submitAppStart(AppStartRequest(appStartData), object : RequestCompleteListener<Any?> {
+            override fun onRequestSuccess(data: Any?) {
                 isLoadingLD.value = false
-
                 appStartResponseLD.postValue(true)
-                toast(data.message)
             }
 
             override fun onRequestFailed(errorMessage: String) {

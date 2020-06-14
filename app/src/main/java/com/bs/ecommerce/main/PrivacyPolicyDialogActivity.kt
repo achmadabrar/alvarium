@@ -7,7 +7,7 @@ import com.afollestad.materialdialogs.customview.customView
 import com.bs.ecommerce.base.BaseActivity
 import com.bs.ecommerce.db.DbHelper
 import com.bs.ecommerce.main.model.MainModelImpl
-import com.bs.ecommerce.main.model.data.AppStartRequest
+import com.bs.ecommerce.main.model.data.AppStartData
 import com.bs.ecommerce.more.model.TopicModel
 import com.bs.ecommerce.more.model.TopicModelImpl
 import com.bs.ecommerce.networking.Api
@@ -95,25 +95,17 @@ abstract class PrivacyPolicyDialogActivity : BaseActivity()
 
     private fun sendRegistrationToServer(token: String?)
     {
-        val appStartRequest = AppStartRequest(deviceTypeId = 10, subscriptionId = token)
+        val appStartData = AppStartData(deviceTypeId = 10, subscriptionId = token)
 
-        (viewModel as MainViewModel).submitAppStart(appStartRequest, mainModel)
+        (viewModel as MainViewModel).submitAppStart(appStartData, mainModel)
 
 
         mainViewModel.appStartResponseLD.observe(this, Observer { appStartResponse ->
 
+            PrefSingleton.setPrefs(PrefSingleton.SENT_TOKEN_TO_SERVER, appStartResponse)
             TAG.showLog("Registered")
         })
-
-
-        //RetroClient.api.initApp(appStartRequest).enqueue(CustomCB<AppThemeResponse>())
     }
-
-    /*@Subscribe
-    fun onEvent(appInitRequestResponse: AppInitRequestResponse) {
-        PrefSingleton.setPrefs(PrefSingleton.SENT_TOKEN_TO_SERVER, true)
-        Log.i(TAG, "Registered")
-    }*/
 
     companion object
     {

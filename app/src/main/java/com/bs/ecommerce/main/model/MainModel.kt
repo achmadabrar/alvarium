@@ -16,5 +16,5 @@ interface MainModel
 
     fun changeCurrency(currencyId : Long, callback: RequestCompleteListener<BaseResponse>)
 
-    fun submitAppStart(appStartRequest: AppStartRequest, callback: RequestCompleteListener<BaseResponse>)
+    fun submitAppStart(appStartRequest: AppStartRequest, callback: RequestCompleteListener<Any?>)
 }
