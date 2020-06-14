@@ -109,15 +109,15 @@ class SplashScreenActivity : BaseActivity() {
         try {
             compactJws = Jwts.builder()
                 .claim("NST_KEY", NST_KEY)
-                .setIssuedAt(dateToUTC(createdDate))
+                .setIssuedAt(createdDate)
                 .signWith(SignatureAlgorithm.HS512, NST_SECRET.toByteArray(charset("UTF-8")))
                 .compact()
         } catch (e: UnsupportedEncodingException) {
             e.printStackTrace()
         }
 
-        prefObject.setPrefs(PrefSingleton.NST, compactJws!!)
-        NetworkUtil.nst = compactJws
+        prefObject.setPrefs(PrefSingleton.NST, compactJws ?: "")
+        NetworkUtil.nst = compactJws ?: ""
 
         MyApplication.isJwtActive = true
     }
