@@ -18,10 +18,6 @@ interface ReviewModel {
         callback: RequestCompleteListener<ProductReviewResponse>
     )
 
-    fun getProductReviewPostModel(
-
-    )
-
     fun postProductReview(
         productId: Long,
         userData: ProductReviewResponse,

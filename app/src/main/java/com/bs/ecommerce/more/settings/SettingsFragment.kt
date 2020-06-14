@@ -266,18 +266,21 @@ class SettingsFragment: BaseUrlChangeFragment() {
 
     }
 
-    private fun restartApp(appSettings: OneTimeEvent<AppLandingData?>)
-    {
+    private fun restartApp(appSettings: OneTimeEvent<AppLandingData?>) {
         appSettings.getContentIfNotHandled()?.let {
 
-            //it.stringResources = listOf()
-            DbHelper.memCache = it
+            activity?.let { mainActivity ->
 
-            requireActivity().finish()
-            startActivity(
-                Intent(requireActivity().applicationContext, MainActivity::class.java)
-                    //.putExtra(MainActivity.KEY_APP_SETTINGS, it)
-            )
+                DbHelper.memCache = it
+
+                if (isAdded) {
+                    mainActivity.finish()
+
+                    startActivity(
+                        Intent(requireActivity().applicationContext, MainActivity::class.java)
+                    )
+                }
+            }
         }
     }
 

@@ -11,6 +11,7 @@ import com.bs.ecommerce.checkout.model.data.*
 import com.bs.ecommerce.home.homepage.model.data.HomePageProductResponse
 import com.bs.ecommerce.home.homepage.model.data.SliderResponse
 import com.bs.ecommerce.main.model.data.AppLandingSettingResponse
+import com.bs.ecommerce.main.model.data.AppStartRequest
 import com.bs.ecommerce.main.model.data.CategoryTreeResponse
 import com.bs.ecommerce.networking.common.BaseResponse
 import com.bs.ecommerce.networking.common.ExistingAddress
@@ -26,6 +27,9 @@ import retrofit2.http.*
  */
 
 interface Api {
+
+    @POST("appstart")
+    fun appStartApi(@Body appStartRequest: AppStartRequest): Call<ResponseBody>
 
     @GET("common/setCurrency/{id}")
     fun setCurrency(@Path("id") id: Long): Call<BaseResponse>
@@ -335,9 +339,6 @@ interface Api {
 
     @get:GET("categoriesNmanufactures/search")
     val advanceSearchOptions: Call<AdvanceSearchSpinnerOptionResponse>
-
-    @POST("AppStart")
-    fun initApp(@Body appStartRequest: AppStartRequest): Call<AppThemeResponse>
 
 
     @GET("categoryfeaturedproductandsubcategory/{id}")

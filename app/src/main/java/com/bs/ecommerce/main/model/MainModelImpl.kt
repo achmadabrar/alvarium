@@ -8,6 +8,7 @@ import com.bs.ecommerce.main.model.data.CategoryTreeResponse
 import com.bs.ecommerce.networking.RetroClient
 import com.bs.ecommerce.networking.common.BaseResponse
 import com.bs.ecommerce.utils.TextUtils
+import okhttp3.ResponseBody
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -23,7 +24,7 @@ class MainModelImpl(private val context: Context): MainModel
             override fun onResponse(call: Call<CategoryTreeResponse>, response: Response<CategoryTreeResponse>)
             {
                 if (response.body() != null)
-                    callback.onRequestSuccess(response.body()!!)
+                    callback.onRequestSuccess(response.body() as CategoryTreeResponse)
                 else
                     callback.onRequestFailed(TextUtils.getErrorMessage(response))
             }
@@ -63,7 +64,7 @@ class MainModelImpl(private val context: Context): MainModel
             override fun onResponse(call: Call<BaseResponse>, response: Response<BaseResponse>)
             {
                 if (response.body() != null)
-                    callback.onRequestSuccess(response.body()!!)
+                    callback.onRequestSuccess(response.body() as BaseResponse)
                 else
                     callback.onRequestFailed(TextUtils.getErrorMessage(response))
             }
@@ -83,7 +84,7 @@ class MainModelImpl(private val context: Context): MainModel
             override fun onResponse(call: Call<BaseResponse>, response: Response<BaseResponse>)
             {
                 if (response.body() != null)
-                    callback.onRequestSuccess(response.body()!!)
+                    callback.onRequestSuccess(response.body() as BaseResponse)
                 else
                     callback.onRequestFailed(TextUtils.getErrorMessage(response))
             }
@@ -95,24 +96,24 @@ class MainModelImpl(private val context: Context): MainModel
         })
     }
 
-    override fun submitAppStart(appStartRequest: AppStartRequest, callback: RequestCompleteListener<BaseResponse>)
+    override fun submitAppStart(appStartRequest: AppStartRequest, callback: RequestCompleteListener<Any?>)
     {
 
-        /*RetroClient.api.setCurrency(appStartRequest).enqueue(object : Callback<BaseResponse>
+        RetroClient.api.appStartApi(appStartRequest).enqueue(object : Callback<ResponseBody>
         {
-            override fun onResponse(call: Call<BaseResponse>, response: Response<BaseResponse>)
+            override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>)
             {
-                if (response.body() != null)
-                    callback.onRequestSuccess(response.body()!!)
+                if (response.code() == 200)
+                    callback.onRequestSuccess(null)
                 else
-                    callback.onRequestFailed(response.message())
+                    callback.onRequestFailed(TextUtils.getErrorMessage(response))
             }
 
 
-            override fun onFailure(call: Call<BaseResponse>, t: Throwable) {
-                callback.onRequestFailed(t.localizedMessage!!)
+            override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
+                callback.onRequestFailed(t.localizedMessage ?: "Unknown")
             }
-        })*/
+        })
     }
 
 }
