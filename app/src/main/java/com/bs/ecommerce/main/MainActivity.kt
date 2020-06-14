@@ -1,6 +1,7 @@
 package com.bs.ecommerce.main
 
 import android.animation.ValueAnimator
+import android.content.Intent
 import android.content.res.Configuration
 import android.os.Bundle
 import android.os.Handler
@@ -83,7 +84,15 @@ class MainActivity : PrivacyPolicyDialogActivity(), View.OnClickListener
 
         setBackStackChangeListener()
 
-        setNotificationBundleToDynamicLink()
+        setNotificationBundleToDynamicLink(intent)
+    }
+
+    /**
+     * Called when user clicks a notification while the app is in foreground
+     */
+    override fun onNewIntent(intent: Intent?) {
+        super.onNewIntent(intent)
+        setNotificationBundleToDynamicLink(intent)
     }
 
     private fun setFirebaseTopic()
@@ -95,9 +104,11 @@ class MainActivity : PrivacyPolicyDialogActivity(), View.OnClickListener
             prefObject.setPrefs(PrefSingleton.FIRST_RUN, true)
         }
     }
-    private fun setNotificationBundleToDynamicLink()
+
+
+    private fun setNotificationBundleToDynamicLink(intent: Intent?)
     {
-        intent.extras?.let {
+        intent?.extras?.let {
 
             val itemType = Integer.valueOf(it.getString(MessagingService.ITEM_TYPE, "0"))
             val itemId = Integer.valueOf(it.getString(MessagingService.ITEM_ID, "0"))
