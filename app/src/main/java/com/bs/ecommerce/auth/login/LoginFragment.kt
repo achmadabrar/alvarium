@@ -85,7 +85,7 @@ class LoginFragment : BaseFragment()
 
     private fun sendLogInData()
     {
-        if (loginUsernameEditText?.text?.isNotEmpty()!! && loginPasswordEditText?.text?.isNotEmpty()!!)
+        if (loginUsernameEditText?.text?.isNotEmpty() == true && loginPasswordEditText?.text?.isNotEmpty() == true)
         {
             if(loginUsernameEditText?.text.isEmailValid())
                 (viewModel as LoginViewModel).postLoginVM(LoginPostData(LoginData(email = loginUsernameEditText?.text.toString(), password = loginPasswordEditText?.text?.toString().toString())), model)

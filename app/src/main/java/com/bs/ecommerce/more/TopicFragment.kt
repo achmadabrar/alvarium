@@ -2,6 +2,8 @@ package com.bs.ecommerce.more
 
 import android.os.Bundle
 import android.view.View
+import android.webkit.WebView
+import android.webkit.WebViewClient
 import android.widget.RelativeLayout
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.Observer
@@ -40,7 +42,7 @@ class TopicFragment : BaseFragment() {
             }
 
             arguments?.getInt(keyTopicId)?.let {
-                (viewModel as TopicViewModel).fetchTopic(it, model)
+                if(it>0) (viewModel as TopicViewModel).fetchTopic(it, model)
             }
         }
 
@@ -63,12 +65,11 @@ class TopicFragment : BaseFragment() {
                 topic?.body?.also {
                     wv_privacy_policy?.show( it, R.color.fragment_background)
 
-                    /*webViewClient = object : WebViewClient() {
+                    wv_privacy_policy?.webViewClient = object : WebViewClient() {
                         override fun onPageFinished(view: WebView, url: String) {
-                            "nop_".showLog("onPageFinished")
-                            hideLoading()
+                            wv_privacy_policy?.visibility = View.VISIBLE
                         }
-                    }*/
+                    }
                 }
             })
 
@@ -100,7 +101,7 @@ class TopicFragment : BaseFragment() {
             val fragment = TopicFragment()
 
             fragment.arguments = Bundle().apply {
-                putInt(keyTopicName, topicId)
+                putInt(keyTopicId, topicId)
             }
 
             return fragment

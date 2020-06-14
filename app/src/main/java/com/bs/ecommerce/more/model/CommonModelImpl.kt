@@ -36,6 +36,28 @@ class CommonModelImpl: CommonModel {
         })
     }
 
+    override fun getContactUsModel(
+        callback: RequestCompleteListener<ContactUsResponse>
+    ) {
+
+        RetroClient.api.getContactUsModel().enqueue(object : Callback<ContactUsResponse> {
+
+            override fun onFailure(call: Call<ContactUsResponse>, t: Throwable) {
+                callback.onRequestFailed(t.localizedMessage ?: "Unknown")
+            }
+
+            override fun onResponse(call: Call<ContactUsResponse>, response: Response<ContactUsResponse>) {
+
+                if(response.body()!=null && response.code() == 200) {
+                    callback.onRequestSuccess(response.body() as ContactUsResponse)
+                } else {
+                    callback.onRequestFailed(TextUtils.getErrorMessage(response))
+                }
+            }
+
+        })
+    }
+
     override fun getAllManufacturers(callback: RequestCompleteListener<ManufacturerResponse>) {
 
         RetroClient.api.getAllManufacturers().enqueue(object : Callback<ManufacturerResponse> {

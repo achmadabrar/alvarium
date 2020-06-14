@@ -9,7 +9,7 @@ import com.bs.ecommerce.product.model.data.ContactUsResponse
 
 class ContactUsViewModel: BaseViewModel() {
 
-    val contactUsLD = MutableLiveData<ContactUsData>()
+    val contactUsLD = MutableLiveData<ContactUsData?>()
 
     fun postCustomersEnquiry(userData: ContactUsData, model: CommonModel) {
 
@@ -26,6 +26,29 @@ class ContactUsViewModel: BaseViewModel() {
                     contactUsLD.value = data.contactUsData
 
                 toast(data.message)
+            }
+
+            override fun onRequestFailed(errorMessage: String) {
+                isLoadingLD.value = false
+                toast(errorMessage)
+            }
+
+        })
+    }
+
+
+    fun getContactUsModel(model: CommonModel) {
+
+        if(isLoadingLD.value == true) return
+
+        isLoadingLD.value = true
+
+        model.getContactUsModel(object: RequestCompleteListener<ContactUsResponse> {
+
+            override fun onRequestSuccess(data: ContactUsResponse) {
+                isLoadingLD.value = false
+
+                contactUsLD.value = data.contactUsData
             }
 
             override fun onRequestFailed(errorMessage: String) {

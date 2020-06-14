@@ -79,21 +79,21 @@ class ContactVendorFragment: BaseFragment() {
     private fun setupView(data: ContactVendorModel) {
 
         if(data.subjectEnabled == true) {
-            etSubject.visibility = View.VISIBLE
-            etSubject.hint = DbHelper.getString(Const.VENDOR_SUBJECT)
+            etSubject?.visibility = View.VISIBLE
+            etSubject?.hint = DbHelper.getString(Const.VENDOR_SUBJECT)
         }
 
-        etName.hint = DbHelper.getString(Const.VENDOR_FULLNAME)
-        etEmail.hint = DbHelper.getString(Const.VENDOR_EMAIL)
-        etEnquiry.hint = DbHelper.getString(Const.VENDOR_ENQUIRY)
-        btnSubmit.text = DbHelper.getString(Const.VENDOR_BUTTON)
+        etName?.hint = DbHelper.getString(Const.VENDOR_FULLNAME)
+        etEmail?.hint = DbHelper.getString(Const.VENDOR_EMAIL)
+        etEnquiry?.hint = DbHelper.getString(Const.VENDOR_ENQUIRY)
+        btnSubmit?.text = DbHelper.getString(Const.VENDOR_BUTTON)
 
-        btnSubmit.setOnClickListener { submitIfFormIsValid(data) }
+        btnSubmit?.setOnClickListener { submitIfFormIsValid(data) }
 
-        etName.visibility = View.VISIBLE
-        etEmail.visibility = View.VISIBLE
-        etEnquiry.visibility = View.VISIBLE
-        btnSubmit.visibility = View.VISIBLE
+        etName?.visibility = View.VISIBLE
+        etEmail?.visibility = View.VISIBLE
+        etEnquiry?.visibility = View.VISIBLE
+        btnSubmit?.visibility = View.VISIBLE
     }
 
     private fun submitIfFormIsValid(data: ContactVendorModel) {
