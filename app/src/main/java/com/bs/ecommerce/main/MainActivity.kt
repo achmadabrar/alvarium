@@ -41,9 +41,6 @@ class MainActivity : PrivacyPolicyDialogActivity(), View.OnClickListener
     lateinit var toolbarTop : androidx.appcompat.widget.Toolbar
     lateinit var toggle: ActionBarDrawerToggle
 
-    private lateinit var mainModel: MainModelImpl
-    private lateinit var mainViewModel: MainViewModel
-
     private var mBackPressed: Long = 0
     private val TIME_INTERVAL: Long = 2000
     private var doubleBackToExitPressedOnce = false

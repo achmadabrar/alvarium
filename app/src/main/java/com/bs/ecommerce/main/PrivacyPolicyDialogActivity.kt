@@ -1,24 +1,24 @@
 package com.bs.ecommerce.main
 
-import android.content.Intent
-import android.util.Log
 import android.webkit.WebView
 import androidx.lifecycle.Observer
 import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.customview.customView
-import com.bs.ecommerce.R
 import com.bs.ecommerce.base.BaseActivity
 import com.bs.ecommerce.db.DbHelper
+import com.bs.ecommerce.main.model.MainModelImpl
+import com.bs.ecommerce.main.model.data.AppStartRequest
 import com.bs.ecommerce.more.model.TopicModel
 import com.bs.ecommerce.more.model.TopicModelImpl
 import com.bs.ecommerce.networking.Api
-import com.bs.ecommerce.utils.AcceptPolicyPreference
-import com.bs.ecommerce.utils.Const
-import com.bs.ecommerce.utils.MyApplication
-import com.bs.ecommerce.utils.showLog
+import com.bs.ecommerce.utils.*
 
 abstract class PrivacyPolicyDialogActivity : BaseActivity()
 {
+
+    protected lateinit var mainModel: MainModelImpl
+    protected lateinit var mainViewModel: MainViewModel
+
     private lateinit var prefManager: AcceptPolicyPreference
 
     private lateinit var model: TopicModel
@@ -78,10 +78,11 @@ abstract class PrivacyPolicyDialogActivity : BaseActivity()
                 if(prefManager.isInstanceIdReceived)
                 {
                     MyApplication.fcm_token?.let {
-                        //sendRegistrationToServer(MyApplication.fcm_token)
-                        "rahat_fcm".showLog("Registered\t" + MyApplication.fcm_token)
-                    }
 
+                        sendRegistrationToServer(it)
+
+                        "fcm".showLog("Registered\t" + MyApplication.fcm_token)
+                    }
                 }
             }
             cancelable(false)
@@ -92,16 +93,23 @@ abstract class PrivacyPolicyDialogActivity : BaseActivity()
     }
 
 
-    /*private fun sendRegistrationToServer(token: String?)
+    private fun sendRegistrationToServer(token: String?)
     {
-        val appStartRequest = AppStartRequest()
-        appStartRequest.deviceTypeId = 10
-        appStartRequest.subscriptionId = token
+        val appStartRequest = AppStartRequest(deviceTypeId = 10, subscriptionId = token)
 
-        RetroClient.api.initApp(appStartRequest).enqueue(CustomCB<AppThemeResponse>())
+        (viewModel as MainViewModel).submitAppStart(appStartRequest, mainModel)
+
+
+        mainViewModel.appStartResponseLD.observe(this, Observer { appStartResponse ->
+
+            TAG.showLog("Registered")
+        })
+
+
+        //RetroClient.api.initApp(appStartRequest).enqueue(CustomCB<AppThemeResponse>())
     }
 
-    @Subscribe
+    /*@Subscribe
     fun onEvent(appInitRequestResponse: AppInitRequestResponse) {
         PrefSingleton.setPrefs(PrefSingleton.SENT_TOKEN_TO_SERVER, true)
         Log.i(TAG, "Registered")

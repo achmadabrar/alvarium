@@ -52,8 +52,8 @@ android {
     productFlavors {
         flavorNopStation {
             applicationId "com.nopstation.nopcommerce.nopstationcart"
-            versionCode 1000001
-            versionName "1.0.1"
+            versionCode 1000002
+            versionName "1.0.2"
             dimension "app"
             signingConfig signingConfigs.nopstation
         }

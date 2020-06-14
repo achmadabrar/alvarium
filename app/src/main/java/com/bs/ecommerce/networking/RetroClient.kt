@@ -84,6 +84,7 @@ object RetroClient
             val request = builder
                     .addHeader("Content-Type", "application/json")
                     .addHeader("DeviceId", NetworkUtil.getDeviceId())
+                    //.addHeader("NST", NetworkUtil.getJwt()?: "")
                     .addHeader("NST", NetworkUtil.nst)
                     .addHeader("User-Agent", BuildConfig.APPLICATION_ID + "/" + BuildConfig.VERSION_NAME)
                     .method(original.method, original.body)

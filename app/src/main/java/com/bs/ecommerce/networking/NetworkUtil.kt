@@ -1,5 +1,11 @@
 package com.bs.ecommerce.networking
 
+import com.bs.ecommerce.BuildConfig
+import com.bs.ecommerce.utils.MyApplication
+import com.bs.ecommerce.utils.PrefSingleton
+import io.jsonwebtoken.Jwts
+import io.jsonwebtoken.SignatureAlgorithm
+import java.io.UnsupportedEncodingException
 import java.util.*
 
 /**
@@ -10,8 +16,8 @@ object NetworkUtil
 {
     private var deviceId = ""
     var token: String = ""
-    internal var nst = ""
-        set
+    var nst = ""
+
 
     val headers: Map<String, String>
         get()
@@ -36,5 +42,33 @@ object NetworkUtil
             deviceId = DeviceId.get()
 
         return deviceId
+    }
+
+    private fun dateToUTC(date: Date): Date?
+            = Date(date.time - Calendar.getInstance().timeZone.getOffset(date.time))
+
+    fun getJwt() : String?
+    {
+
+        val NST_KEY = BuildConfig.NST_KEY
+        val NST_SECRET = BuildConfig.NST_SECRET
+
+        var compactJws: String? = null
+
+        val createdDate = Date()
+
+        try {
+            compactJws = Jwts.builder()
+                .claim("NST_KEY", NST_KEY)
+                .setIssuedAt(dateToUTC(createdDate))
+                .signWith(SignatureAlgorithm.HS512, NST_SECRET.toByteArray(charset("UTF-8")))
+                .compact()
+        } catch (e: UnsupportedEncodingException) {
+            e.printStackTrace()
+        }
+
+        MyApplication.isJwtActive = true
+
+        return compactJws
     }
 }

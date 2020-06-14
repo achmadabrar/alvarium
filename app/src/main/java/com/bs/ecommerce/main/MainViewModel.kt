@@ -11,10 +11,7 @@ import com.bs.ecommerce.home.homepage.model.HomePageModel
 import com.bs.ecommerce.home.homepage.model.data.HomePageProductResponse
 import com.bs.ecommerce.home.homepage.model.data.SliderData
 import com.bs.ecommerce.main.model.MainModel
-import com.bs.ecommerce.main.model.data.AppLandingData
-import com.bs.ecommerce.main.model.data.AppLandingSettingResponse
-import com.bs.ecommerce.main.model.data.Category
-import com.bs.ecommerce.main.model.data.CategoryTreeResponse
+import com.bs.ecommerce.main.model.data.*
 import com.bs.ecommerce.more.model.TopicModel
 import com.bs.ecommerce.networking.common.BaseResponse
 import com.bs.ecommerce.product.model.data.*
@@ -35,6 +32,7 @@ class MainViewModel : CheckoutViewModel() {
     var imageBannerLD = MutableLiveData<SliderData>()
 
     var appSettingsLD = MutableLiveData<OneTimeEvent<AppLandingData?>>()
+    var appStartResponseLD = MutableLiveData<Boolean>()
     var showLoader = MutableLiveData<OneTimeEvent<Boolean>>()
 
     var testUrlSuccessLD = MutableLiveData<Boolean>()
@@ -299,6 +297,25 @@ class MainViewModel : CheckoutViewModel() {
         } else {
             return false
         }
+    }
+
+    fun submitAppStart(appStartRequest: AppStartRequest, model: MainModel) {
+
+        isLoadingLD.value = true
+
+        model.submitAppStart(appStartRequest, object : RequestCompleteListener<BaseResponse> {
+            override fun onRequestSuccess(data: BaseResponse) {
+                isLoadingLD.value = false
+
+                appStartResponseLD.postValue(true)
+                toast(data.message)
+            }
+
+            override fun onRequestFailed(errorMessage: String) {
+                isLoadingLD.value = false
+                toast(errorMessage)
+            }
+        })
     }
 
 }
