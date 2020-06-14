@@ -37,4 +37,23 @@ class SearchModelImpl : SearchModel {
             }
         })
     }
+    override fun getModelsForAdvancedSearch(callback: RequestCompleteListener<SearchResult>)
+    {
+        RetroClient.api.getModelsForAdvancedSearch().enqueue(object : Callback<SearchResponse> {
+
+            override fun onFailure(call: Call<SearchResponse>, t: Throwable) {
+                callback.onRequestFailed(t.localizedMessage ?: "Something went wrong")
+            }
+
+            override fun onResponse(
+                call: Call<SearchResponse>,
+                response: Response<SearchResponse>
+            ) {
+                if (response.body() != null)
+                    callback.onRequestSuccess(response.body()?.data as SearchResult)
+                else
+                    callback.onRequestFailed(TextUtils.getErrorMessage(response))
+            }
+        })
+    }
 }

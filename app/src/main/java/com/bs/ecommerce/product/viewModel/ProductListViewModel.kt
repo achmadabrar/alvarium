@@ -31,6 +31,11 @@ class ProductListViewModel : BaseViewModel() {
     private var queryMapLD = MutableLiveData<MutableMap<String, String>>()
     private var searchParam = SearchParam()
 
+    var availableCategoriesLD = MutableLiveData<List<AvailableCategory>>()
+    var availableManufacturersLD =  MutableLiveData<List<AvailableCategory>>()
+    var availableVendorsLD = MutableLiveData<List<AvailableCategory>>()
+
+
     fun getProductByCategory(catId: Long, resetFilters: Boolean, model: ProductListModel) {
 
         // don't call if already loading
@@ -144,7 +149,7 @@ class ProductListViewModel : BaseViewModel() {
             })
     }
 
-    fun searchProduct(query: String, resetFilters: Boolean, model: SearchModel) {
+    fun searchProduct(advancedSearch: AdvancedSearch, resetFilters: Boolean, model: SearchModel) {
 
         if (isLoadingLD.value == true) {
             return
@@ -159,11 +164,44 @@ class ProductListViewModel : BaseViewModel() {
         searchParam.apply {
             if(resetFilters) clear()
             incrementPageNumber()
-            queryMap["q"] = query
+
+            with(advancedSearch)
+            {
+                queryMap["q"] = query.toString()
+
+                if(isAdvanceSearchSelected)
+                {
+                    queryMap["adv"] = isAdvanceSearchSelected.toString()
+                    queryMap["cid"] = categoryId.toString()
+                    queryMap["isc"] = isSearchInSubcategory.toString()
+                    queryMap["mid"] = manufacturerId.toString()
+                    queryMap["pf"] = priceFrom.toString()
+                    queryMap["pt"] = priceTo.toString()
+                    queryMap["sid"] = isSearchInDescription.toString()
+                    queryMap["asv"] = isSearchVendor.toString()
+                    queryMap["vid"] = vendorId.toString()
+                }
+
+            }
+
         }
 
         search(model)
     }
+    fun getModelsForAdvancedSearch(model: SearchModel) {
+
+        model.getModelsForAdvancedSearch(object : RequestCompleteListener<SearchResult> {
+            override fun onRequestSuccess(data: SearchResult)
+            {
+                availableCategoriesLD.postValue(data.availableCategories)
+                availableManufacturersLD.postValue(data.availableManufacturers)
+                availableVendorsLD.postValue(data.availableVendors)
+            }
+
+            override fun onRequestFailed(errorMessage: String) {}
+        })
+    }
+
 
     fun applySearchFilter(filterUrl: String?, model: SearchModel) {
         if (filterUrl.isNullOrEmpty()) return

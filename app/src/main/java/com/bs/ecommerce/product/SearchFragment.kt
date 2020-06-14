@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.os.Handler
 import android.util.Log
 import android.view.*
+import android.widget.ArrayAdapter
 import android.widget.LinearLayout
 import android.widget.RelativeLayout
 import android.widget.TextView
@@ -24,12 +25,13 @@ import com.bs.ecommerce.main.MainActivity
 import com.bs.ecommerce.product.adapter.ProductListAdapter
 import com.bs.ecommerce.product.model.SearchModel
 import com.bs.ecommerce.product.model.SearchModelImpl
-import com.bs.ecommerce.product.model.data.PagingFilteringContext
-import com.bs.ecommerce.product.model.data.ProductSummary
+import com.bs.ecommerce.product.model.data.*
 import com.bs.ecommerce.product.viewModel.ProductListViewModel
 import com.bs.ecommerce.utils.*
 import com.google.android.material.bottomsheet.BottomSheetDialog
+import kotlinx.android.synthetic.main.advanced_search_layout.*
 import kotlinx.android.synthetic.main.fragment_product_list.*
+import java.util.ArrayList
 import kotlin.math.floor
 
 class SearchFragment : BaseFragment() {
@@ -65,11 +67,11 @@ class SearchFragment : BaseFragment() {
 
         if(!viewCreated) {
 
-            initView()
-
             model = SearchModelImpl()
             viewModel = ViewModelProviders.of(this).get(ProductListViewModel::class.java)
             observeLiveDataChange = true
+
+            initView()
 
         } else {
             observeLiveDataChange = false
@@ -80,7 +82,10 @@ class SearchFragment : BaseFragment() {
 
     }
 
-    private fun initView() {
+    private fun initView()
+    {
+        initAdvancedSearch()
+
         calculateAutomaticGridColumn()
 
         tvNoProduct.text = DbHelper.getString(Const.SEARCH_NO_RESULT)
@@ -130,7 +135,7 @@ class SearchFragment : BaseFragment() {
                     Log.d("nop_", "last item of Product list is visible")
 
                     observeLiveDataChange = true
-                    (viewModel as ProductListViewModel).searchProduct(query, false, model)
+                    (viewModel as ProductListViewModel).searchProduct(advancedSearchData, false, model)
                 }
             }
         })
@@ -142,40 +147,71 @@ class SearchFragment : BaseFragment() {
             .commit()
     }
 
-    private fun setLiveDataListeners() {
-        val viewModel = viewModel as ProductListViewModel
+    private fun setLiveDataListeners()
+    {
+        with(viewModel as ProductListViewModel)
+        {
+            searchResultLD.observe(viewLifecycleOwner, Observer { searchResult ->
 
-        viewModel.searchResultLD.observe(viewLifecycleOwner, Observer { searchResult ->
+                if(observeLiveDataChange) productListAdapter.addData(searchResult.products, shouldAppend)
 
-            if(observeLiveDataChange) productListAdapter.addData(searchResult.products, viewModel.shouldAppend)
+                llButtonHolder.visibility =
+                    if (searchResult.noResults == false) View.VISIBLE else View.GONE
+                tvNoProduct.visibility =
+                    if (searchResult.noResults == true && !shouldAppend) View.VISIBLE else View.GONE
 
-            llButtonHolder.visibility =
-                if (searchResult.noResults == false) View.VISIBLE else View.GONE
-            tvNoProduct.visibility =
-                if (searchResult.noResults == true && !viewModel.shouldAppend) View.VISIBLE else View.GONE
+                populateSortOptions(searchResult.pagingFilteringContext)
+            })
 
-            populateSortOptions(searchResult.pagingFilteringContext)
-        })
+            isLoadingLD.observe(viewLifecycleOwner, Observer { isShowLoader -> showHideLoader(isShowLoader) })
 
-        viewModel.isLoadingLD.observe(viewLifecycleOwner, Observer { isShowLoader ->
-            if (isShowLoader)
-                showLoading()
-            else
-                hideLoading()
-        })
+            filterVisibilityLD.observe(viewLifecycleOwner, Observer { show ->
 
+                if(show) {
+                    drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED)
+                    btnFilter.visibility = View.VISIBLE
+                } else {
+                    // to turn off slide open drawer
+                    btnFilter.visibility = View.GONE
+                    drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED)
+                }
+            })
 
-        viewModel.filterVisibilityLD.observe(viewLifecycleOwner, Observer { show ->
+            availableCategoriesLD.observe(viewLifecycleOwner, Observer { availableCategoryList ->
 
-            if(show) {
-                drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED)
-                btnFilter.visibility = View.VISIBLE
-            } else {
-                // to turn off slide open drawer
-                btnFilter.visibility = View.GONE
-                drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED)
-            }
-        })
+                if (availableCategoryList.isNotEmpty())
+                {
+                    categoryList.clear()
+                    categoryList.addAll(availableCategoryList)
+
+                    categorySpinner?.adapter = createSpinnerAdapter(categoryList.map { it.text } as List<String>)
+                }
+            })
+            availableManufacturersLD.observe(viewLifecycleOwner, Observer { availableManufacturerList ->
+
+                if (availableManufacturerList.isNotEmpty())
+                {
+                    manufacturerList.clear()
+                    manufacturerList.addAll(availableManufacturerList)
+
+                    manufacturerSpinner?.adapter =
+                        createSpinnerAdapter(manufacturerList.map { it.text } as List<String>)
+                }
+
+            })
+            availableVendorsLD.observe(viewLifecycleOwner, Observer { availableVendorList ->
+
+                if (availableVendorList.isNotEmpty())
+                {
+                    vendorList.clear()
+                    vendorList.addAll(availableVendorList)
+
+                    vendorSpinner?.adapter =
+                        createSpinnerAdapter(vendorList.map { it.text } as List<String>)
+                }
+
+            })
+        }
     }
 
     override fun onDestroy() {
@@ -249,6 +285,38 @@ class SearchFragment : BaseFragment() {
 
     private lateinit var query:String
 
+    private var categoryList: MutableList<AvailableCategory> = ArrayList()
+    private var manufacturerList: MutableList<AvailableCategory> = ArrayList()
+    private var vendorList: MutableList<AvailableCategory> = ArrayList()
+
+    private val advancedSearchData: AdvancedSearch
+        get()
+        {
+            val search = AdvancedSearch()
+
+            searchView?.let {   search.query = it.query.toString()  }
+
+            if (advanceSearchCheckBox?.isChecked!!)
+            {
+                search.isAdvanceSearchSelected = true
+
+                search.isSearchInSubcategory = searchInSubCategory?.isChecked!!
+
+                search.categoryId = categorySpinner?.selectedItemId?.toInt() ?: 0
+                search.manufacturerId = manufacturerSpinner?.selectedItemId?.toInt() ?: 0
+                search.vendorId = vendorSpinner?.selectedItemId?.toInt() ?: 0
+
+                search.isSearchVendor = true
+
+                search.priceFrom = priceFromEditText!!.text.toString().trim { it <= ' ' }
+                search.priceTo = priceToEditText!!.text.toString().trim { it <= ' ' }
+
+                search.isSearchInDescription = searchDescription!!.isChecked
+            }
+            return search
+        }
+
+
     fun searchProduct() {
 
         searchView?.let {
@@ -257,7 +325,7 @@ class SearchFragment : BaseFragment() {
 
             if (query.length > 2) {
                 observeLiveDataChange = true
-                (viewModel as ProductListViewModel).searchProduct(query, true, model)
+                (viewModel as ProductListViewModel).searchProduct(advancedSearchData, true, model)
             } else
                 toast(DbHelper.getString(Const.SEARCH_QUERY_LENGTH))
 
@@ -349,4 +417,48 @@ class SearchFragment : BaseFragment() {
         layoutManager.spanCount = spanCount
         layoutManager.requestLayout()
     }
+
+    private fun initAdvancedSearch()
+    {
+        advanceSearchFullView?.visibility = View.VISIBLE
+
+        initSearchCategorySpinner()
+        initSearchManufacturerSpinner()
+        initSearchVendorSpinner()
+
+        advanceSearchCheckBox?.setOnCheckedChangeListener { _, isChecked ->
+            if (isChecked)
+                advanceSearchLayout?.visibility = View.VISIBLE
+            else
+                advanceSearchLayout?.visibility = View.GONE
+        }
+        searchButton?.setOnClickListener { searchProduct() }
+
+        (viewModel as ProductListViewModel).getModelsForAdvancedSearch(model)
+    }
+
+    private fun createSpinnerAdapter(nameList: List<String>): ArrayAdapter<String>
+    {
+        val dataAdapter: ArrayAdapter<String> = ArrayAdapter<String>(requireContext(), R.layout.simple_spinner_item, nameList)
+        dataAdapter.setDropDownViewResource(R.layout.simple_spinner_dropdown_item)
+        return dataAdapter
+    }
+
+    private fun initSearchCategorySpinner()
+    {
+        categoryList.add(AvailableCategory(false,null,false,"All","0"))
+        categorySpinner?.adapter = createSpinnerAdapter(categoryList.map { it.text } as List<String>)
+    }
+
+    private fun initSearchManufacturerSpinner()
+    {
+        manufacturerList.add(AvailableCategory(false,null,false,"All","0"))
+        manufacturerSpinner?.adapter = createSpinnerAdapter(manufacturerList.map { it.text } as List<String>)
+    }
+    private fun initSearchVendorSpinner()
+    {
+        vendorList.add(AvailableCategory(false,null,false,"All","0"))
+        vendorSpinner?.adapter = createSpinnerAdapter(vendorList.map { it.text } as List<String>)
+    }
+
 }
