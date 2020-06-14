@@ -12,6 +12,10 @@ interface CommonModel {
         callback: RequestCompleteListener<ContactUsResponse>
     )
 
+    fun getContactUsModel(
+        callback: RequestCompleteListener<ContactUsResponse>
+    )
+
     fun getAllManufacturers(
         callback: RequestCompleteListener<ManufacturerResponse>
     )

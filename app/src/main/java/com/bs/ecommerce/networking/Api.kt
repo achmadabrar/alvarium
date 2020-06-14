@@ -257,6 +257,9 @@ interface Api {
     @POST("common/contactus")
     fun contactUs(@Body userData: ContactUsResponse) : Call<ContactUsResponse>
 
+    @GET("common/contactus")
+    fun getContactUsModel() : Call<ContactUsResponse>
+
     // Review
 
     @GET("product/productreviews")

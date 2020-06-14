@@ -39,7 +39,7 @@ class ContactUsFragment: BaseFragment() {
             model = CommonModelImpl()
             viewModel = ViewModelProvider(this).get(ContactUsViewModel::class.java)
 
-            setupView()
+            (viewModel as ContactUsViewModel).getContactUsModel(model)
         }
 
         setLiveDataObserver()
@@ -51,10 +51,13 @@ class ContactUsFragment: BaseFragment() {
 
             contactUsLD.observe(viewLifecycleOwner, Observer { data ->
 
-                if(data.successfullySent == true) {
+                if(data?.successfullySent == true) {
                     etName?.text?.clear()
                     etEmail?.text?.clear()
                     etEnquiry?.text?.clear()
+                } else {
+                    // got model
+                    if (data != null) setupView(data)
                 }
             })
 
@@ -67,19 +70,24 @@ class ContactUsFragment: BaseFragment() {
         }
     }
 
-    private fun setupView() {
+    private fun setupView(data: ContactUsData) {
 
-        etName.hint = DbHelper.getString(Const.CONTACT_US_FULLNAME)
-        etEmail.hint = DbHelper.getString(Const.CONTACT_US_EMAIL)
-        etEnquiry.hint = DbHelper.getString(Const.CONTACT_US_ENQUIRY)
+        etName?.hint = DbHelper.getString(Const.CONTACT_US_FULLNAME)
+        etEmail?.hint = DbHelper.getString(Const.CONTACT_US_EMAIL)
+        etEnquiry?.hint = DbHelper.getString(Const.CONTACT_US_ENQUIRY)
 
-        btnSubmit.text = DbHelper.getString(Const.CONTACT_US_BUTTON)
-        btnSubmit.setOnClickListener { submitIfFormIsValid() }
+        btnSubmit?.text = DbHelper.getString(Const.CONTACT_US_BUTTON)
+        btnSubmit?.setOnClickListener { submitIfFormIsValid() }
 
-        etName.visibility = View.VISIBLE
-        etEmail.visibility = View.VISIBLE
-        etEnquiry.visibility = View.VISIBLE
-        btnSubmit.visibility = View.VISIBLE
+        etName?.visibility = View.VISIBLE
+        etEmail?.visibility = View.VISIBLE
+        etEnquiry?.visibility = View.VISIBLE
+        btnSubmit?.visibility = View.VISIBLE
+
+        if(data.subjectEnabled == true) {
+            etSubject?.visibility = View.VISIBLE
+            etSubject?.hint = DbHelper.getString(Const.CONTACT_US_SUBJECT)
+        }
     }
 
     private fun submitIfFormIsValid() {

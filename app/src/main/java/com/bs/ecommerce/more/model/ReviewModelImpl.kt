@@ -60,6 +60,10 @@ class ReviewModelImpl: ReviewModel {
         })
     }
 
+    override fun getProductReviewPostModel() {
+        // TODO
+    }
+
     override fun postProductReview(
         productId: Long,
         userData: ProductReviewResponse,
