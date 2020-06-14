@@ -41,7 +41,7 @@ class MainViewModel : CheckoutViewModel() {
     var currencyChangeSuccessLD = MutableLiveData<Boolean>()
 
     private val logTag: String = "nop_" + this::class.java.simpleName
-
+    private var numberOfApis  = 0
     private var count: AtomicInteger = AtomicInteger(0)
     var homePageLoader = MutableLiveData<Boolean>()
 
@@ -53,19 +53,51 @@ class MainViewModel : CheckoutViewModel() {
 
         Log.d("nop_", "called getAllLandingPageProducts ${count.get()}")
 
+        numberOfApis = 0
         homePageLoader.value = true
 
-        getFeaturedProducts(model)
-        getCategoryListWithProducts(model)
-        getManufactures(model)
-        getBannerImages(model)
-        getBestSellingProducts(model)
+        val appLandingData = appSettingsLD.value?.peekContent()
+
+        if(appLandingData == null) {
+            numberOfApis = 5
+
+            getFeaturedProducts(model)
+            getCategoryListWithProducts(model)
+            getManufactures(model)
+            getBannerImages(model)
+            getBestSellingProducts(model)
+        } else {
+            appLandingData.apply {
+                if(enableFeatureProducts) {
+                    getFeaturedProducts(model)
+                    numberOfApis++
+                }
+
+                if(enableHomeCategoriesProducts) {
+                    getCategoryListWithProducts(model)
+                    numberOfApis++
+                }
+
+                if(enableHomePageSlider) {
+                    getBannerImages(model)
+                    numberOfApis++
+                }
+
+                if(enableBestSellingProducts) {
+                    getBestSellingProducts(model)
+                    numberOfApis++
+                }
+
+                getManufactures(model)
+                numberOfApis++
+            }
+        }
     }
 
     private fun hideLoader() {
         val serviceCalled = count.incrementAndGet()
 
-        if(serviceCalled == 5) {
+        if(serviceCalled == numberOfApis) {
             homePageLoader.value = false
             count = AtomicInteger(0)
         }

@@ -27,9 +27,9 @@ class HomePageModelImpl(private val context: Context) : HomePageModel {
                     response: Response<HomePageProductResponse>
                 ) {
                     if (response.body() != null)
-                        callback.onRequestSuccess(response.body()!!)
+                        callback.onRequestSuccess(response.body() as HomePageProductResponse)
                     else
-                        callback.onRequestFailed(response.message())
+                        callback.onRequestFailed(TextUtils.getErrorMessage(response))
                 }
 
 

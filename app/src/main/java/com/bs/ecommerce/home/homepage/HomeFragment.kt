@@ -241,6 +241,8 @@ class HomeFragment : ToolbarLogoBaseFragment() {
         bannerThread = thread {
             for ((i, sliderModel) in sliderData.sliders.withIndex()) {
 
+                if(!isAdded) return@thread
+
                 requireActivity().runOnUiThread {
                     val textSliderView = DefaultSliderView(requireContext())
 
@@ -311,6 +313,8 @@ class HomeFragment : ToolbarLogoBaseFragment() {
 
                     linearLayout ->
 
+                if(!isAdded) return@inflateAsync
+
                 linearLayout.visibility = View.VISIBLE
                 linearLayout.tvTitle.text = featuredCategory.name
                 linearLayout.ivMore.visibility = if(featuredCategory.subCategories?.isNullOrEmpty() == true)
@@ -337,9 +341,7 @@ class HomeFragment : ToolbarLogoBaseFragment() {
 
                 linearLayout.rvList.apply {
 
-                    val ctx = requireContext()
-
-                    ctx?.let {
+                    context?.let {
                         setHasFixedSize(true)
                         addItemDecoration(RecyclerViewMargin(15, 1, false))
                         layoutManager = LinearLayoutManager(
