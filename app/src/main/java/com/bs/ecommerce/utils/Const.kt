@@ -334,6 +334,7 @@ class Const {
 
         //search
         const val ADVANCED_SEARCH = "nopstation.webapi.search.advancedsearch"
+        const val SEARCH_ALL = "nopstation.webapi.search.all"
         const val AUTOMATICALLY_SEARCH_SUBCATEGORIES = "nopstation.webapi.search.subcategorysearchautomatically"
         const val PRICE_RANGE = "nopstation.webapi.search.pricerange"
         const val TO = "nopstation.webapi.search.to"

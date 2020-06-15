@@ -467,18 +467,18 @@ class SearchFragment : BaseFragment() {
 
     private fun initSearchCategorySpinner()
     {
-        categoryList.add(AvailableCategory(false,null,false,"All","0"))
+        categoryList.add(AvailableCategory(false,null,false, DbHelper.getString(Const.SEARCH_ALL),"0"))
         categorySpinner?.adapter = createSpinnerAdapter(categoryList.map { it.text } as List<String>)
     }
 
     private fun initSearchManufacturerSpinner()
     {
-        manufacturerList.add(AvailableCategory(false,null,false,"All","0"))
+        manufacturerList.add(AvailableCategory(false,null,false, DbHelper.getString(Const.SEARCH_ALL),"0"))
         manufacturerSpinner?.adapter = createSpinnerAdapter(manufacturerList.map { it.text } as List<String>)
     }
     private fun initSearchVendorSpinner()
     {
-        vendorList.add(AvailableCategory(false,null,false,"All","0"))
+        vendorList.add(AvailableCategory(false,null,false, DbHelper.getString(Const.SEARCH_ALL),"0"))
         vendorSpinner?.adapter = createSpinnerAdapter(vendorList.map { it.text } as List<String>)
     }
 

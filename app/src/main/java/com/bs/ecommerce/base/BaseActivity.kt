@@ -42,6 +42,7 @@ abstract class BaseActivity : AppCompatActivity(), ConnectivityReceiver.Connecti
     private var counterText: TextView? = null
 
     private lateinit var connectivityReceiver: ConnectivityReceiver
+    private var connectivityErrorDialog : Dialog? = null
 
     @LayoutRes
     abstract fun getLayoutId(): Int
@@ -90,36 +91,36 @@ abstract class BaseActivity : AppCompatActivity(), ConnectivityReceiver.Connecti
     }
 
     private fun showInternetDisconnectedDialog() {
-        val dialog = Dialog(this, android.R.style.Theme_Black_NoTitleBar_Fullscreen)
-        dialog.setContentView(R.layout.custom_dialog_internet_disconnect)
+        connectivityErrorDialog = Dialog(this, android.R.style.Theme_Black_NoTitleBar_Fullscreen)
+        connectivityErrorDialog?.setContentView(R.layout.custom_dialog_internet_disconnect)
 
-        dialog.window?.setLayout(
+        connectivityErrorDialog?.window?.setLayout(
             WindowManager.LayoutParams.MATCH_PARENT,
             WindowManager.LayoutParams.MATCH_PARENT)
 
 
-        val tvNoInternet = dialog.findViewById<View>(R.id.tvNoInternet) as TextView
+        val tvNoInternet = connectivityErrorDialog?.findViewById<View>(R.id.tvNoInternet) as TextView
 
         if(Const.NO_INTERNET != DbHelper.getString(Const.NO_INTERNET))
             tvNoInternet.text = DbHelper.getString(Const.NO_INTERNET)
 
-        val buttonSetting = dialog.findViewById<View>(R.id.button_setting) as TextView
+        val buttonSetting = connectivityErrorDialog?.findViewById<View>(R.id.button_setting) as TextView
 
         if(Const.SETTINGS != DbHelper.getString(Const.SETTINGS))
             buttonSetting.text = DbHelper.getString(Const.SETTINGS)
 
-        val buttonTryAgain = dialog.findViewById<View>(R.id.btnTryAgain) as TextView
+        val buttonTryAgain = connectivityErrorDialog?.findViewById<View>(R.id.btnTryAgain) as TextView
 
         if(Const.TRY_AGAIN != DbHelper.getString(Const.TRY_AGAIN))
             buttonTryAgain.text = DbHelper.getString(Const.TRY_AGAIN)
 
-        val tryAgainLayout = dialog.findViewById<View>(R.id.linearTryAgain) as LinearLayout
+        val tryAgainLayout = connectivityErrorDialog?.findViewById<View>(R.id.linearTryAgain) as LinearLayout
 
         buttonSetting.setOnClickListener { sentWifiSettings(this) }
 
         tryAgainLayout.setOnClickListener {
 
-            dialog.dismiss()
+            connectivityErrorDialog?.dismiss()
             // set delay for smooth animation
             val handler = Handler()
             handler.postDelayed({
@@ -128,7 +129,7 @@ abstract class BaseActivity : AppCompatActivity(), ConnectivityReceiver.Connecti
             }, 500)
         }
 
-        dialog.show()
+        connectivityErrorDialog?.show()
     }
     private fun sentWifiSettings(context: Context?) {
         context?.startActivity(Intent(Settings.ACTION_WIFI_SETTINGS))
