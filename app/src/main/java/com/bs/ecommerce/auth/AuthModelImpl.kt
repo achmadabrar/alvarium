@@ -3,9 +3,10 @@ package com.bs.ecommerce.auth
 import com.bs.ecommerce.auth.login.data.*
 import com.bs.ecommerce.auth.register.data.GetRegistrationResponse
 import com.bs.ecommerce.common.RequestCompleteListener
+import com.bs.ecommerce.db.DbHelper
 import com.bs.ecommerce.networking.RetroClient
+import com.bs.ecommerce.utils.Const
 import com.bs.ecommerce.utils.TextUtils
-import com.google.gson.GsonBuilder
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -14,8 +15,7 @@ import retrofit2.Response
 class AuthModelImpl: AuthModel
 {
 
-    override fun getRegisterModel(callback: RequestCompleteListener<GetRegistrationResponse>)
-    {
+    override fun getRegisterModel(callback: RequestCompleteListener<GetRegistrationResponse>) {
 
         RetroClient.api.getRegisterAPI().enqueue(object : Callback<GetRegistrationResponse>
         {
@@ -24,77 +24,64 @@ class AuthModelImpl: AuthModel
                 if (response.body() != null)
                     callback.onRequestSuccess(response.body() as GetRegistrationResponse)
                 else
-                    callback.onRequestFailed(response.message())
+                    callback.onRequestFailed(TextUtils.getErrorMessage(response))
             }
 
 
             override fun onFailure(call: Call<GetRegistrationResponse>, t: Throwable) {
-                callback.onRequestFailed(t.localizedMessage ?: "Unknown")
+                callback.onRequestFailed(t.localizedMessage ?: DbHelper.getString(Const.COMMON_SOMETHING_WENT_WRONG))
             }
         })
     }
 
-    override fun postRegisterModel(registerPostData: GetRegistrationResponse, callback: RequestCompleteListener<GetRegistrationResponse>)
-    {
+    override fun postRegisterModel(
+        registerPostData: GetRegistrationResponse,
+        callback: RequestCompleteListener<GetRegistrationResponse>
+    ) {
 
         RetroClient.api.postRegisterAPI(registerPostData).enqueue(object : Callback<GetRegistrationResponse>
         {
             override fun onResponse(call: Call<GetRegistrationResponse>, response: Response<GetRegistrationResponse>)
             {
-                if (response.body() != null)
+                if (response.body() != null && response.code() == 200)
                     callback.onRequestSuccess(response.body() as GetRegistrationResponse)
-
-                else if (response.code() == 300 || response.code() == 400)
-                {
-                    val gson = GsonBuilder().create()
-                    val errorBody = gson.fromJson(response.errorBody()!!.string(), GetRegistrationResponse::class.java)
-
-                    callback.onRequestSuccess(errorBody as GetRegistrationResponse)
-                }
                 else
-                    callback.onRequestFailed(response.message())
+                    callback.onRequestFailed(TextUtils.getErrorMessage(response))
             }
 
 
             override fun onFailure(call: Call<GetRegistrationResponse>, t: Throwable) {
-                callback.onRequestFailed(t.localizedMessage ?: "Unknown")
+                callback.onRequestFailed(t.localizedMessage ?: DbHelper.getString(Const.COMMON_SOMETHING_WENT_WRONG))
             }
         })
     }
 
 
-    override fun postLoginModel(loginPostData : LoginPostData, callback: RequestCompleteListener<LoginResponse>)
-    {
+    override fun postLoginModel(
+        loginPostData: LoginPostData,
+        callback: RequestCompleteListener<LoginResponse>
+    ) {
 
         RetroClient.api.postLoginAPI(loginPostData).enqueue(object : Callback<LoginResponse>
         {
             override fun onResponse(call: Call<LoginResponse>, response: Response<LoginResponse>)
             {
 
-                if (response.body() != null)
+                if (response.body() != null && response.code() == 200)
                     callback.onRequestSuccess(response.body() as LoginResponse)
-
-                else if (response.code() == 300 || response.code() == 400)
-                {
-                    val gson = GsonBuilder().create()
-                    val errorBody = gson.fromJson(response.errorBody()!!.string(), LoginResponse::class.java)
-
-                    callback.onRequestSuccess(errorBody as LoginResponse)
-                }
                 else
-                    callback.onRequestFailed(response.message())
+                    callback.onRequestFailed(TextUtils.getErrorMessage(response))
             }
 
 
             override fun onFailure(call: Call<LoginResponse>, t: Throwable) {
-                callback.onRequestFailed(t.localizedMessage ?: "Unknown")
+                callback.onRequestFailed(t.localizedMessage ?: DbHelper.getString(Const.COMMON_SOMETHING_WENT_WRONG))
             }
         })
     }
 
 
-    override fun getCustomerInfoModel(callback: RequestCompleteListener<GetRegistrationResponse>)
-    {
+    override fun getCustomerInfoModel(callback: RequestCompleteListener<GetRegistrationResponse>) {
 
         RetroClient.api.getCustomerInfoAPI().enqueue(object : Callback<GetRegistrationResponse>
         {
@@ -103,12 +90,12 @@ class AuthModelImpl: AuthModel
                 if (response.body() != null)
                     callback.onRequestSuccess(response.body() as GetRegistrationResponse)
                 else
-                    callback.onRequestFailed(response.message())
+                    callback.onRequestFailed(TextUtils.getErrorMessage(response))
             }
 
 
             override fun onFailure(call: Call<GetRegistrationResponse>, t: Throwable) {
-                callback.onRequestFailed(t.localizedMessage ?: "Unknown")
+                callback.onRequestFailed(t.localizedMessage ?: DbHelper.getString(Const.COMMON_SOMETHING_WENT_WRONG))
             }
         })
     }
@@ -120,7 +107,7 @@ class AuthModelImpl: AuthModel
         RetroClient.api.saveCustomerInfo(postData).enqueue(object : Callback<GetRegistrationResponse> {
 
             override fun onFailure(call: Call<GetRegistrationResponse>, t: Throwable) {
-                callback.onRequestFailed(t.localizedMessage ?: "Unknown")
+                callback.onRequestFailed(t.localizedMessage ?: DbHelper.getString(Const.COMMON_SOMETHING_WENT_WRONG))
             }
 
             override fun onResponse(call: Call<GetRegistrationResponse>, response: Response<GetRegistrationResponse>) {
@@ -144,7 +131,7 @@ class AuthModelImpl: AuthModel
         RetroClient.api.forgetPassword(reqBody).enqueue(object : Callback<ForgotPasswordResponse> {
 
             override fun onFailure(call: Call<ForgotPasswordResponse>, t: Throwable) {
-                callback.onRequestFailed(t.localizedMessage ?: "Unknown")
+                callback.onRequestFailed(t.localizedMessage ?: DbHelper.getString(Const.COMMON_SOMETHING_WENT_WRONG))
             }
 
             override fun onResponse(call: Call<ForgotPasswordResponse>, response: Response<ForgotPasswordResponse>) {
@@ -164,7 +151,7 @@ class AuthModelImpl: AuthModel
         RetroClient.api.getChangePasswordModel().enqueue(object : Callback<ChangePasswordModel> {
 
             override fun onFailure(call: Call<ChangePasswordModel>, t: Throwable) {
-                callback.onRequestFailed(t.localizedMessage ?: "Unknown")
+                callback.onRequestFailed(t.localizedMessage ?: DbHelper.getString(Const.COMMON_SOMETHING_WENT_WRONG))
             }
 
             override fun onResponse(call: Call<ChangePasswordModel>, response: Response<ChangePasswordModel>) {
@@ -187,7 +174,7 @@ class AuthModelImpl: AuthModel
         RetroClient.api.changePassword(userData).enqueue(object : Callback<ChangePasswordModel> {
 
             override fun onFailure(call: Call<ChangePasswordModel>, t: Throwable) {
-                callback.onRequestFailed(t.localizedMessage ?: "Unknown")
+                callback.onRequestFailed(t.localizedMessage ?: DbHelper.getString(Const.COMMON_SOMETHING_WENT_WRONG))
             }
 
             override fun onResponse(call: Call<ChangePasswordModel>, response: Response<ChangePasswordModel>) {

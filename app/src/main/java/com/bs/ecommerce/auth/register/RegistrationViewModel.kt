@@ -32,6 +32,7 @@ class RegistrationViewModel  : BaseViewModel()
             override fun onRequestFailed(errorMessage: String)
             {
                 isLoadingLD.postValue(false)
+                toast(errorMessage)
             }
         })
     }
@@ -56,6 +57,7 @@ class RegistrationViewModel  : BaseViewModel()
             override fun onRequestFailed(errorMessage: String)
             {
                 isLoadingLD.postValue(false)
+                toast(errorMessage)
             }
         })
     }
@@ -80,6 +82,8 @@ class RegistrationViewModel  : BaseViewModel()
             {
                 isLoadingLD.postValue(false)
                 registrationSuccessLD.value = false
+
+                toast(errorMessage)
             }
         })
     }
