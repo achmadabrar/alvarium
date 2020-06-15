@@ -75,10 +75,7 @@ abstract class BaseUrlChangeFragment : BaseFragment()
 
         mainViewModel.isLoadingLD.observe(viewLifecycleOwner, Observer { isShowLoader ->
 
-            if (isShowLoader)
-                showLoading()
-            else
-                hideLoading()
+            showHideLoader(isShowLoader)
         })
 
     }
@@ -101,12 +98,13 @@ abstract class BaseUrlChangeFragment : BaseFragment()
 
     private fun forceRunApp()
     {
-        NetworkUtil.token = ""
-        prefObject.setPrefs(PrefSingleton.IS_LOGGED_IN, false)
+        performLogout()
 
         DbHelper.memCache = mainViewModel.appSettingsLD.value?.peekContent()
 
-        val intent = Intent(activity, MainActivity::class.java)
+        requireActivity().finish()
+
+        val intent = Intent(requireActivity(), MainActivity::class.java)
         intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
         intent.putExtra("EXIT", true)
         startActivity(intent)
