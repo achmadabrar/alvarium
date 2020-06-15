@@ -444,12 +444,12 @@ class CustomAttributeManager(
 
         tvProductPrice?.apply {
 
-            if(priceModel!!.isRental == true) {
-                text = priceModel!!.rentalPrice
+            if(priceModel?.isRental == true) {
+                text = priceModel?.rentalPrice
                 return@apply
             }
 
-            var price = priceModel!!.priceValue!!
+            var price: Double = priceModel?.priceValue ?: 0.0
 
             for (valueList in selectedAttributes.values) {
                 for (i in valueList) {

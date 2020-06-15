@@ -34,6 +34,7 @@ import com.bs.ecommerce.utils.*
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.messaging.FirebaseMessaging
 import kotlinx.android.synthetic.main.activity_main.*
+import org.jetbrains.anko.toast
 
 
 class MainActivity : PrivacyPolicyDialogActivity(), View.OnClickListener
@@ -76,10 +77,14 @@ class MainActivity : PrivacyPolicyDialogActivity(), View.OnClickListener
                 mainViewModel.setAppSettings(it)
                 setAppSettings(it)
                 DbHelper.memCache = null
+
+                initHomeFragment()
+            } ?: run {
+                finish()
+                startActivity(Intent(this@MainActivity, SplashScreenActivity::class.java))
             }
 
             //mainViewModel.getAppSettings(mainModel)
-            initHomeFragment()
         }
 
         setBackStackChangeListener()
