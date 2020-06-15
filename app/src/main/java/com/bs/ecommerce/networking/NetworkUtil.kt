@@ -44,7 +44,7 @@ object NetworkUtil
         return deviceId
     }
 
-    private fun dateToUTC(date: Date): Date?
+    private fun dateToUTC(date: Date): Date
             = Date(date.time - Calendar.getInstance().timeZone.getOffset(date.time))
 
     fun getSecurityToken() : String?
@@ -60,7 +60,7 @@ object NetworkUtil
         try {
             compactJws = Jwts.builder()
                 .claim("NST_KEY", NST_KEY)
-                .setIssuedAt(dateToUTC(createdDate))
+                .setIssuedAt(createdDate)
                 .signWith(SignatureAlgorithm.HS512, NST_SECRET.toByteArray(charset("UTF-8")))
                 .compact()
         } catch (e: UnsupportedEncodingException) {
