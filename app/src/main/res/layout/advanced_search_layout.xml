@@ -13,22 +13,18 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:layout_marginLeft="16dp"
-        android:layout_marginRight="16dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
         android:paddingBottom="5dp"
         android:paddingTop="5dp"
         android:text="Advanced Search"
-        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-        android:textColor="#000000"/>
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
 
     <LinearLayout
         android:id="@+id/advanceSearchLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="10dp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginRight="16dp"
-        android:layout_marginTop="10dp"
+        android:layout_margin="10dp"
         android:orientation="vertical"
         android:visibility="gone"
         tools:visibility="visible">
@@ -43,7 +39,7 @@
                 android:id="@+id/label_category"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginRight="5dp"
+                android:layout_marginEnd="5dp"
                 android:text="Category"/>
 
             <androidx.appcompat.widget.AppCompatSpinner
@@ -70,7 +66,7 @@
                 android:id="@+id/label_manufacturer"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginRight="5dp"
+                android:layout_marginEnd="5dp"
                 android:text="Manufacturer" />
 
             <androidx.appcompat.widget.AppCompatSpinner
@@ -90,7 +86,7 @@
                 android:id="@+id/label_vendor"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginRight="5dp"
+                android:layout_marginEnd="5dp"
                 android:text="Vendor" />
 
             <androidx.appcompat.widget.AppCompatSpinner
@@ -109,7 +105,7 @@
                 android:id="@+id/label_price_range_from"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginRight="5dp"
+                android:layout_marginEnd="5dp"
                 android:text="price_range"/>
 
             <EditText
@@ -123,8 +119,8 @@
                 android:id="@+id/label_price_range_to"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="5dp"
-                android:layout_marginRight="5dp"
+                android:layout_marginStart="5dp"
+                android:layout_marginEnd="5dp"
                 android:text="to"/>
 
             <EditText
@@ -145,7 +141,7 @@
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/searchButton"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="36dp"
             android:layout_gravity="center_horizontal"
             android:text="search"
             style="@style/RectangularButtonRegular"/>
