@@ -203,6 +203,7 @@ class MainViewModel : CheckoutViewModel() {
 
     fun getNavDrawerCategoryList(model: MainModel) {
         isLoadingLD.value = true
+        testUrlSuccessLD.value = false
 
         model.getLeftCategories(object : RequestCompleteListener<CategoryTreeResponse> {
             override fun onRequestSuccess(data: CategoryTreeResponse) {

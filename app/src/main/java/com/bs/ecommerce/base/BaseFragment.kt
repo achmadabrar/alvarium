@@ -207,7 +207,7 @@ abstract class BaseFragment : Fragment()
         dialog.show()
     }
 
-    private fun performLogout()
+    protected fun performLogout()
     {
         NetworkUtil.token = ""
         MyApplication.myCartCounter = 0
