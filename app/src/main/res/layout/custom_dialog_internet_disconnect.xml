@@ -2,7 +2,8 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="?attr/fragmentBackGroundColor"
     android:orientation="vertical">
 
     <LinearLayout
@@ -18,9 +19,9 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:padding="16dp"
-            android:text="No Internet Connection"
+            tools:text="No Internet Connection"
             android:layout_gravity="center_horizontal"
-            android:textColor="@color/black"
+            android:textColor="?attr/primaryTextColor"
             android:textSize="18sp" />
 
 <!--        <ImageView
@@ -53,7 +54,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="5dp"
                     android:maxLines="3"
-                    android:text="Try Again"
+                    tools:text="Try Again"
                     android:textColor="@color/white" />
 
             </LinearLayout>
@@ -66,7 +67,7 @@
                 android:background="@drawable/rounded_button_red_background"
                 android:gravity="center"
                 android:padding="8dp"
-                android:text="Settings"
+                tools:text="Settings"
                 android:textColor="@color/white"
                 android:layout_weight="0.20" />
         </LinearLayout>

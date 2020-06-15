@@ -10,10 +10,12 @@ import com.bs.ecommerce.base.BaseActivity
 import com.bs.ecommerce.base.BaseViewModel
 import com.bs.ecommerce.db.DbHelper
 import com.bs.ecommerce.main.model.MainModelImpl
+import com.bs.ecommerce.more.GenericErrorFragment
 import com.bs.ecommerce.more.UpdateAppFragment
 import com.bs.ecommerce.networking.NetworkUtil
 import com.bs.ecommerce.utils.MyApplication
 import com.bs.ecommerce.utils.PrefSingleton
+import com.bs.ecommerce.utils.Utils
 import com.bs.ecommerce.utils.showLog
 import io.jsonwebtoken.Jwts
 import io.jsonwebtoken.SignatureAlgorithm
@@ -45,9 +47,12 @@ class SplashScreenActivity : BaseActivity() {
 
         observeLiveData()
 
-        (viewModel as MainViewModel).getAppSettings(MainModelImpl(applicationContext), true)
+        loadAppLandingData()
     }
 
+    fun loadAppLandingData() {
+        (viewModel as MainViewModel).getAppSettings(MainModelImpl(applicationContext), true)
+    }
 
     private fun observeLiveData() {
 
@@ -59,7 +64,14 @@ class SplashScreenActivity : BaseActivity() {
 
                     if (it == null || it.stringResources.isNullOrEmpty()) {
                         "lang_".showLog("Download success: false")
-                        finish()
+
+                        if(Utils().isWifiOrMobileNetworkAvailable(applicationContext)) {
+                            supportFragmentManager.beginTransaction()
+                                .add(R.id.fragmentHolder, GenericErrorFragment())
+                                .commit()
+                        } else {
+                            "lang_".showLog("No internet connection")
+                        }
                     } else {
                         "lang_".showLog("Download success: true")
 
@@ -72,15 +84,10 @@ class SplashScreenActivity : BaseActivity() {
                                 .commit()
 
                         } else {
-                            // removing language resources before adding to intent
-                            // we don't need this huge data on MainActivity
-                            //it.stringResources = listOf()
-
                             DbHelper.memCache = it
 
                             val mainActivityIntent =
                                 Intent(this@SplashScreenActivity, MainActivity::class.java)
-                            //mainActivityIntent.putExtra(MainActivity.KEY_APP_SETTINGS, it)
 
                             intent.extras?.let {
                                 mainActivityIntent.putExtras(it)
@@ -96,8 +103,6 @@ class SplashScreenActivity : BaseActivity() {
     }
 
 
-    private fun dateToUTC(date: Date): Date?
-            = Date(date.time - Calendar.getInstance().timeZone.getOffset(date.time))
 
     // unused from Retrofit
     private fun initializeJwt()

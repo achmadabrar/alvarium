@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/rootLayout"
+    android:background="?attr/fragmentBackGroundColor">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true">
+
+        <TextView
+            android:id="@+id/tvErrorMessage"
+            style="@style/titleTextViewStyle"
+            android:layout_centerHorizontal="true"
+            android:padding="16dp"
+            android:text="Something Went Wrong"
+            android:textStyle="normal"
+            android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/btnTryAgain"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:paddingTop="3dp"
+            android:paddingBottom="3dp"
+            android:paddingStart="8dp"
+            android:paddingEnd="8dp"
+            android:layout_marginTop="10dp"
+            android:layout_below="@id/tvErrorMessage"
+            android:background="@drawable/rounded_button_red_background"
+            android:layout_marginEnd="5dp"
+            android:textColor="@color/white"
+            android:text="Try Again" />
+
+    </RelativeLayout>
+</RelativeLayout>

@@ -7,6 +7,7 @@
     android:layout_width="match_parent"
     android:layout_height="?attr/actionBarSize"
     android:background="?attr/toolbarColor"
+    android:paddingEnd="3dp"
     android:minHeight="?attr/actionBarSize"
     android:fitsSystemWindows="true"
     app:theme="@style/Toolbar_Popup"

@@ -366,7 +366,6 @@ class ProductDetailFragment : BaseFragment(), View.OnClickListener {
 
                     if (isInvalid) {
                         toast(DbHelper.getString(Const.PRODUCT_INVALID_PRODUCT))
-                        requireActivity().supportFragmentManager.popBackStackImmediate()
                     }
 
                 })
