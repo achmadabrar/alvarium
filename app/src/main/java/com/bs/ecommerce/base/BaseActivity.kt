@@ -163,7 +163,7 @@ abstract class BaseActivity : AppCompatActivity(), ConnectivityReceiver.Connecti
             if (supportFragmentManager.findFragmentById(R.id.layoutFrame) !is CartFragment)
                 goMenuItemFragment(CartFragment())
         }
-        updateHotCount(MyApplication.myCartCounter)
+        updateBadgeCount(MyApplication.myCartCounter)
     }
 
     fun resetAppTheme() {
@@ -173,7 +173,7 @@ abstract class BaseActivity : AppCompatActivity(), ConnectivityReceiver.Connecti
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
     }
 
-    fun updateHotCount(badgeCount: Int)
+    fun updateBadgeCount(badgeCount: Int)
     {
         if (counterText == null) return
         runOnUiThread {
@@ -327,6 +327,9 @@ abstract class BaseActivity : AppCompatActivity(), ConnectivityReceiver.Connecti
         else
             msg = DbHelper.getString(Const.ORDER_PROCESSED)
 
+        MyApplication.setCartCounter(0)
+        updateBadgeCount(0)
+
         MaterialDialog(this).show {
 
             title(null, DbHelper.getString(Const.THANK_YOU))
@@ -336,7 +339,7 @@ abstract class BaseActivity : AppCompatActivity(), ConnectivityReceiver.Connecti
             positiveButton(null, DbHelper.getString(Const.CONTINUE)) {
                 finish()
                 startActivity(Intent(applicationContext, MainActivity::class.java))
-                    //.putExtra(MainActivity.KEY_APP_SETTINGS, it))
+                MyApplication.navigateFromCheckoutCompleteToHomePage = true
             }
 
             cancelable(false)

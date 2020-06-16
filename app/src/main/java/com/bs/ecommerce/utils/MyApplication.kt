@@ -43,7 +43,7 @@ class MyApplication : MultiDexApplication()
 
     companion object {
 
-        var fcm_token : String? = null
+        var navigateFromCheckoutCompleteToHomePage = false
 
         var myCartCounter: Int = 0
 

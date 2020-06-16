@@ -123,7 +123,7 @@ abstract class BaseFragment : Fragment()
     protected fun updateTopCart(totalItems: Int)
     {
         MyApplication.setCartCounter(totalItems)
-        activity?.let {  (it as BaseActivity).updateHotCount(totalItems)    }
+        activity?.let {  (it as BaseActivity).updateBadgeCount(totalItems)    }
     }
 
 

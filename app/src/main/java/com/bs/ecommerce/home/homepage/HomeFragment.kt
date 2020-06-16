@@ -156,9 +156,12 @@ class HomeFragment : ToolbarLogoBaseFragment() {
 
         with(viewModel as MainViewModel)
         {
-
             appSettingsLD.observe(viewLifecycleOwner, Observer { appLanding ->
-                if(observeLiveDataChange) appLanding.peekContent()?.totalShoppingCartProducts?.let { updateTopCart(it) }
+
+                if(observeLiveDataChange && !MyApplication.navigateFromCheckoutCompleteToHomePage)
+                    appLanding.peekContent()?.totalShoppingCartProducts?.let { updateTopCart(it) }
+
+                MyApplication.navigateFromCheckoutCompleteToHomePage = false
             })
 
             featuredProductListLD.observe(viewLifecycleOwner,
