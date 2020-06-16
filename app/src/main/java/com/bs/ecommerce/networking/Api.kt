@@ -74,8 +74,11 @@ interface Api {
     fun removeGiftCardCoupon(@Body request: KeyValueFormData): Call<CartResponse>
 
 
-    @POST("customer/login") fun postLoginAPI(@Body loginPostData: LoginPostData): Call<LoginResponse>
+    @POST("customer/login")
+    fun postLoginAPI(@Body loginPostData: LoginPostData): Call<LoginResponse>
 
+    @GET("customer/logout")
+    fun logout(): Call<ResponseBody>
 
     @POST("customer/passwordrecovery")
     fun forgetPassword(@Body forgetData: ForgotPasswordResponse): Call<ForgotPasswordResponse>

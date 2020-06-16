@@ -130,6 +130,7 @@ fun ImageView.loadImg(imageUrl: String?, placeHolder: Int? = R.drawable.ic_place
                 .load(imageUrl)
                 //.transform(RoundedCornersTransform())
                 .placeholder(R.drawable.ic_placeholder)
+                .error(R.drawable.ic_placeholder)
                 .fit()
                 .centerInside()
                 .into(this)
