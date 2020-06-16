@@ -19,6 +19,7 @@ import com.bs.ecommerce.main.MainActivity
 import com.bs.ecommerce.main.SplashScreenActivity
 import com.bs.ecommerce.utils.AcceptPolicyPreference
 import com.bs.ecommerce.utils.MyApplication
+import com.bs.ecommerce.utils.PrefSingleton
 import com.bs.ecommerce.utils.showLog
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
@@ -31,25 +32,24 @@ class MessagingService : FirebaseMessagingService() {
     private var mNotificationManager: NotificationManager? = null
     private lateinit var prefManager: AcceptPolicyPreference
 
-    override fun onNewToken(s: String)
+    override fun onNewToken(refreshedToken: String)
     {
-        super.onNewToken(s)
+        super.onNewToken(refreshedToken)
 
         prefManager = AcceptPolicyPreference(this)
 
-        val refreshedToken = s
-        Log.d(TAG, "Refreshed Fcm token: " + refreshedToken)
+        TAG.showLog("New Fcm token: $refreshedToken")
 
-        MyApplication.fcm_token = refreshedToken
+        PrefSingleton.setPrefs(PrefSingleton.FCM_TOKEN, refreshedToken)
 
-        prefManager.isInstanceIdReceived = true
+        prefManager.fcmTokenChanged = true
     }
 
     override fun onMessageReceived(remoteMessage: RemoteMessage)
     {
         super.onMessageReceived(remoteMessage)
 
-        "fcm".showLog(remoteMessage.data.toString())
+        TAG.showLog(remoteMessage.data.toString())
 
         if (remoteMessage.data.isNotEmpty())
             sendNotification(remoteMessage.data)
@@ -141,7 +141,7 @@ class MessagingService : FirebaseMessagingService() {
 
     companion object
     {
-        private val TAG = MessagingService::class.java.simpleName
+        val TAG = "fcm"
         val REQUEST_CODE = 0
         val NOTIFICATION_ID = 1
 
