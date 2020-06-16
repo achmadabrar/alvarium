@@ -74,7 +74,10 @@ object PrefSingleton
     var NEW_URL = "URL_CHANGE_KEY"
     var SHOULD_USE_NEW_URL = "URL_CHANGE_KEY_BOOLEAN"
     var APP_VERSION_CODE_KEY = "VERSION_CODE"
+
     var SENT_TOKEN_TO_SERVER = "SENT_TOKEN_TO_SERVER_KEY"
+    var FCM_TOKEN = "FCM_TOKEN"
+
     var REGISTRATION_COMPLETE = "REGISTRATION_COMPLETE_KEY"
     var taxShow = "taxShow"
     var discuntShow = "discuntShow"

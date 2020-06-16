@@ -20,7 +20,7 @@ class AcceptPolicyPreference(context: Context)
             editor.commit()
         }
 
-    var isInstanceIdReceived: Boolean
+    var fcmTokenChanged: Boolean
         get() = pref.getBoolean(IS_INSTANCE_ID_RECEIVED, false)
 
         set(idReceived)

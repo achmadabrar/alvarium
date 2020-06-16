@@ -25,13 +25,10 @@ abstract class PrivacyPolicyDialogActivity : BaseActivity()
 
     private var isDialogAlreadyShowed = false
 
-    override fun onResume()
+
+    private fun checkPrivacyPolicyAndSendAppStartToken()
     {
-        super.onResume()
-
         model = TopicModelImpl()
-
-        prefManager = AcceptPolicyPreference(this)
 
         if (prefManager.isNotAccepted && !isDialogAlreadyShowed)
             (viewModel as MainViewModel).fetchTopic(Api.topicPrivacyPolicy, model)
@@ -43,7 +40,7 @@ abstract class PrivacyPolicyDialogActivity : BaseActivity()
 
                 topic?.body?.also {
 
-                    if(prefManager.isNotAccepted && !isDialogAlreadyShowed)
+                    if(!isDialogAlreadyShowed)
                     {
                         startPrivacyPolicyDialog(it)
                         isDialogAlreadyShowed = true
@@ -53,10 +50,22 @@ abstract class PrivacyPolicyDialogActivity : BaseActivity()
         }
     }
 
+    override fun onResume()
+    {
+        super.onResume()
+
+        prefManager = AcceptPolicyPreference(this)
+
+        if (prefManager.isNotAccepted && !isDialogAlreadyShowed)
+            checkPrivacyPolicyAndSendAppStartToken()
+        
+        else if(prefManager.fcmTokenChanged)
+            sendAppStartDataToServer()
+    }
+
 
     private fun startPrivacyPolicyDialog(mHtmlString : String?)
     {
-
         val webViewDialog = WebView(this)
         webViewDialog.settings.defaultFontSize = 10
 
@@ -75,40 +84,33 @@ abstract class PrivacyPolicyDialogActivity : BaseActivity()
 
                 prefManager.isNotAccepted = false
 
-                if(prefManager.isInstanceIdReceived)
-                {
-                    MyApplication.fcm_token?.let {
-
-                        sendRegistrationToServer(it)
-
-                        "fcm".showLog("Registered\t" + MyApplication.fcm_token)
-                    }
-                }
+                sendAppStartDataToServer()
             }
             cancelable(false)
             cancelOnTouchOutside(false)
-
         }
-
     }
 
 
-    private fun sendRegistrationToServer(token: String?)
+    private fun sendAppStartDataToServer()
     {
-        val appStartData = AppStartData(deviceTypeId = 10, subscriptionId = token)
+        val fcmToken = PrefSingleton.getPrefs(PrefSingleton.FCM_TOKEN)
+        TAG.showLog("Sending Token\t$fcmToken")
+
+        val appStartData = AppStartData(deviceTypeId = 10, subscriptionId = fcmToken)
 
         (viewModel as MainViewModel).submitAppStart(appStartData, mainModel)
-
 
         mainViewModel.appStartResponseLD.observe(this, Observer { appStartResponse ->
 
             PrefSingleton.setPrefs(PrefSingleton.SENT_TOKEN_TO_SERVER, appStartResponse)
-            TAG.showLog("Registered")
+            TAG.showLog("Token Sent Successful")
+            prefManager.fcmTokenChanged = false
         })
     }
 
     companion object
     {
-        private val TAG = "PrivacyPolicyActivity"
+        private val TAG = "fcm"
     }
 }
