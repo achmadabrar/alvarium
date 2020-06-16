@@ -9,12 +9,9 @@ import android.graphics.Bitmap
 import android.graphics.Color
 import android.media.RingtoneManager
 import android.os.Bundle
-import android.util.Log
-import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.NotificationCompat
 import androidx.core.app.TaskStackBuilder
 import com.bs.ecommerce.R
-import com.bs.ecommerce.base.BaseActivity
 import com.bs.ecommerce.main.MainActivity
 import com.bs.ecommerce.main.SplashScreenActivity
 import com.bs.ecommerce.utils.AcceptPolicyPreference
@@ -60,7 +57,7 @@ class MessagingService : FirebaseMessagingService() {
     private fun sendNotification(data: Map<String, String>)
     {
         val title = data[TITLE]
-        val summery = data[BODY]
+        val textContent = data[BODY]
         val bigPicture = data[BANNER]
 
 
@@ -88,10 +85,8 @@ class MessagingService : FirebaseMessagingService() {
 
         val notificationBuilder = NotificationCompat.Builder(this, NOTIFICATION_CHANNEL_ID)
         notificationBuilder.setSmallIcon(R.mipmap.ic_launcher_nopstation)
-                //.setBackgroundColor(Color.parseColor("#ffffff"))
-                .setContentTitle(title)
-                .setContentText(summery)
-                .setAutoCancel(true)
+                .setStyle(NotificationCompat.BigTextStyle().setBigContentTitle(title).bigText(textContent))
+                .setAutoCancel(false)
                 .setSound(defaultSoundUri)
                 .setContentIntent(pendingIntent)
 
@@ -131,7 +126,7 @@ class MessagingService : FirebaseMessagingService() {
         {
             val style = NotificationCompat.BigPictureStyle()
             style.setBigContentTitle(title)
-            style.setSummaryText(summery)
+            style.setSummaryText(textContent)
             style.bigPicture(bitmap)
             notificationBuilder.setStyle(style)
         }
@@ -150,9 +145,6 @@ class MessagingService : FirebaseMessagingService() {
         val BANNER = "bigPicture"
         val ITEM_TYPE = "itemType"
         val ITEM_ID = "itemId"
-
-        val ITEM_PRODUCT = 1
-        val ITEM_CATEGORY = 2
 
         val NOTIFICATION_CHANNEL_ID = "10002"
         val NOTIFICATION_CHANNEL_NAME = "NOTIFICATION_CHANNEL_NAME"

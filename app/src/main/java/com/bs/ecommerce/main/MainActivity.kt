@@ -25,6 +25,8 @@ import com.bs.ecommerce.home.category.NavDrawerFragment
 import com.bs.ecommerce.home.homepage.HomeFragment
 import com.bs.ecommerce.main.model.MainModelImpl
 import com.bs.ecommerce.more.OptionsFragment
+import com.bs.ecommerce.more.OrderDetailsFragment
+import com.bs.ecommerce.more.TopicFragment
 import com.bs.ecommerce.more.UserAccountFragment
 import com.bs.ecommerce.networking.NetworkUtil
 import com.bs.ecommerce.product.ProductDetailFragment
@@ -120,12 +122,27 @@ class MainActivity : PrivacyPolicyDialogActivity(), View.OnClickListener
 
             when(itemType)
             {
-                MessagingService.ITEM_PRODUCT -> gotoFragment(ProductDetailFragment.newInstance(itemId.toLong(), ""))
+                NotificationType.PRODUCT ->
+                    gotoFragment(ProductDetailFragment.newInstance(productId = itemId.toLong(), productName = ""))
 
-                MessagingService.ITEM_CATEGORY -> gotoFragment(ProductListFragment.newInstance(
-                    "", itemId, ProductListFragment.GetBy.CATEGORY))
+                NotificationType.CATEGORY ->
+                    gotoFragment(ProductListFragment.newInstance("", categoryId = itemId, getBy = ProductListFragment.GetBy.CATEGORY))
 
-                else -> {}
+                NotificationType.MANUFACTURER ->
+                    gotoFragment(ProductListFragment.newInstance("", categoryId = itemId, getBy = ProductListFragment.GetBy.MANUFACTURER))
+
+                NotificationType.VENDOR ->
+                    gotoFragment(ProductListFragment.newInstance("", categoryId = itemId, getBy = ProductListFragment.GetBy.VENDOR))
+
+                NotificationType.ORDER ->
+                    gotoFragment(OrderDetailsFragment.newInstance(orderId = itemId))
+
+                NotificationType.ACCOUNT ->
+                    gotoFragment(CustomerInfoFragment())
+
+                NotificationType.TOPIC ->
+                    gotoFragment(TopicFragment.newInstance(topicId = itemId))
+
             }
         }
     }
@@ -135,17 +152,6 @@ class MainActivity : PrivacyPolicyDialogActivity(), View.OnClickListener
         supportFragmentManager.beginTransaction().replace(R.id.layoutFrame, fragment).addToBackStack(null).commit()
         notificationClicked = true
     }
-
-    /*private fun setLiveDataListeners()
-    {
-        mainViewModel.appSettingsLD.observe(this, Observer { settings ->
-
-            settings.getContentIfNotHandled()?.let {
-                setAppSettings(it)
-            }
-        })
-
-    }*/
 
     /**
      * Changes bottomNavigationView selected item, based on the name of top fragment in backStack
@@ -410,10 +416,5 @@ class MainActivity : PrivacyPolicyDialogActivity(), View.OnClickListener
         }
         
         dialog.dismiss()
-    }
-
-    companion object {
-        @JvmStatic
-        val KEY_APP_SETTINGS = "KEY_APP_SETTINGS"
     }
 }
