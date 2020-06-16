@@ -6,13 +6,27 @@ import com.bs.ecommerce.common.RequestCompleteListener
 
 interface AuthModel
 {
-    fun getRegisterModel(callback: RequestCompleteListener<GetRegistrationResponse>)
+    fun getRegisterModel(
+        callback: RequestCompleteListener<GetRegistrationResponse>
+    )
 
-    fun postRegisterModel(registerPostData: GetRegistrationResponse, callback: RequestCompleteListener<GetRegistrationResponse>)
+    fun postRegisterModel(
+        registerPostData: GetRegistrationResponse,
+        callback: RequestCompleteListener<GetRegistrationResponse>
+    )
 
-    fun postLoginModel(loginPostData : LoginPostData, callback: RequestCompleteListener<LoginResponse>)
+    fun postLoginModel(
+        loginPostData: LoginPostData,
+        callback: RequestCompleteListener<LoginResponse>
+    )
 
-    fun getCustomerInfoModel(callback: RequestCompleteListener<GetRegistrationResponse>)
+    fun logout(
+        callback: RequestCompleteListener<Boolean>
+    )
+
+    fun getCustomerInfoModel(
+        callback: RequestCompleteListener<GetRegistrationResponse>
+    )
 
     fun postCustomerInfoModel(
         postData: GetRegistrationResponse,

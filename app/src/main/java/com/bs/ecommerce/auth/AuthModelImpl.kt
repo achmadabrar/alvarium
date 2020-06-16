@@ -7,6 +7,7 @@ import com.bs.ecommerce.db.DbHelper
 import com.bs.ecommerce.networking.RetroClient
 import com.bs.ecommerce.utils.Const
 import com.bs.ecommerce.utils.TextUtils
+import okhttp3.ResponseBody
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -76,6 +77,26 @@ class AuthModelImpl: AuthModel
 
             override fun onFailure(call: Call<LoginResponse>, t: Throwable) {
                 callback.onRequestFailed(t.localizedMessage ?: DbHelper.getString(Const.COMMON_SOMETHING_WENT_WRONG))
+            }
+        })
+    }
+
+    override fun logout(callback: RequestCompleteListener<Boolean>) {
+
+        RetroClient.api.logout().enqueue(object : Callback<ResponseBody> {
+
+            override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
+
+                if (response.code() == 200)
+                    callback.onRequestSuccess(data = true)
+                else
+                    callback.onRequestFailed(TextUtils.getErrorMessage(response))
+            }
+
+            override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
+                callback.onRequestFailed(
+                    t.localizedMessage ?: DbHelper.getString(Const.COMMON_SOMETHING_WENT_WRONG)
+                )
             }
         })
     }

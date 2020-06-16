@@ -124,55 +124,34 @@
             android:visibility="visible"
             android:layout_height="match_parent">
 
-            <androidx.core.widget.NestedScrollView
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rvProductList"
+                android:layout_below="@id/llButtonHolder"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="match_parent"
+                app:spanCount="2"
+                tools:itemCount="5"
+                android:paddingBottom="60dp"
+                android:clipToPadding="false"
+                tools:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+                tools:listitem="@layout/item_product_for_gridlayout" />
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical">
-
-                    <include layout="@layout/advanced_search_layout"
-                        android:id="@+id/advanceSearchFullView"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentTop="true"
-                        android:visibility="gone"/>
-
-                    <androidx.recyclerview.widget.RecyclerView
-                        android:id="@+id/rvProductList"
-                        android:layout_below="@id/llButtonHolder"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        app:spanCount="2"
-                        tools:itemCount="5"
-                        android:paddingBottom="60dp"
-                        android:clipToPadding="false"
-                        tools:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
-                        tools:listitem="@layout/item_product_for_gridlayout" />
-
-                    <TextView
-                        android:id="@+id/tvNoProduct"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:gravity="center"
-                        android:textColor="?attr/primaryTextColor"
-                        android:textSize="@dimen/tv_text_size_regular"
-                        tools:visibility="visible"
-                        android:visibility="gone"
-                        android:text="@string/no_product_found"/>
-
-                </LinearLayout>
-
-            </androidx.core.widget.NestedScrollView>
+            <TextView
+                android:id="@+id/tvNoProduct"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:textColor="?attr/primaryTextColor"
+                android:textSize="@dimen/tv_text_size_regular"
+                tools:visibility="visible"
+                android:visibility="gone"
+                android:text="@string/no_product_found"/>
 
             <FrameLayout
                 android:id="@+id/filterFragmentHolder"
                 android:layout_width="300dp"
                 android:layout_height="match_parent"
                 android:layout_gravity="end" />
-
 
         </androidx.drawerlayout.widget.DrawerLayout>
     </RelativeLayout>
@@ -188,5 +167,16 @@
         app:backgroundTint="@color/gray"
         app:fabCustomSize="50dp"
         tools:visibility="visible" />
+
+    <include
+        android:id="@+id/advanceSearchFullView"
+        layout="@layout/advanced_search_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:behavior_hideable="true"
+        app:behavior_peekHeight="40dp"
+        android:visibility="gone"
+        tools:visibility="visible"
+        app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

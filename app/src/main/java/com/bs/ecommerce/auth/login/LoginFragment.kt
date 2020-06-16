@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.RelativeLayout
-import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.bs.ecommerce.R
@@ -124,7 +123,6 @@ class LoginFragment : BaseFragment()
                     mainViewModel.updatingAppSettings = true
                     mainViewModel.getAppSettings(MainModelImpl(requireContext()))
                 }
-                    ?:    toast(loginResponse?.errorsAsFormattedString.toString())
             })
 
             isLoadingLD.observe(viewLifecycleOwner, Observer { isShowLoader ->
@@ -152,13 +150,11 @@ class LoginFragment : BaseFragment()
                         FragmentManager.POP_BACK_STACK_INCLUSIVE
                     )*/
 
-                    //it.stringResources = listOf()
                     DbHelper.memCache = it
 
                     requireActivity().finish()
                     startActivity(
                         Intent(requireActivity().applicationContext, MainActivity::class.java)
-                            //.putExtra(MainActivity.KEY_APP_SETTINGS, it)
                     )
                 }
             }
@@ -223,7 +219,7 @@ class LoginFragment : BaseFragment()
             {
                 e.printStackTrace()
                 LoginManager.getInstance().logOut()
-                Toast.makeText(FacebookSdk.getApplicationContext(), getString(R.string.email_permission_require), Toast.LENGTH_LONG).show()
+                toast(getString(R.string.email_permission_require))
             }
         }
         val parameters = Bundle()
@@ -232,15 +228,5 @@ class LoginFragment : BaseFragment()
         graphRequest.executeAsync()
 
     }
-
-    /*private fun initView() {
-
-        Picasso.with(activity)
-            .load(R.drawable.app_splash_background)
-            .fit()
-            .into(backgroundImageView)
-
-
-    }*/
 
 }

@@ -8,8 +8,10 @@ import android.widget.RelativeLayout
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.bs.ecommerce.R
+import com.bs.ecommerce.auth.AuthModelImpl
 import com.bs.ecommerce.auth.customerInfo.CustomerInfoFragment
 import com.bs.ecommerce.auth.login.LoginFragment
+import com.bs.ecommerce.auth.login.LoginViewModel
 import com.bs.ecommerce.base.BaseFragment
 import com.bs.ecommerce.base.BaseViewModel
 import com.bs.ecommerce.base.ToolbarLogoBaseFragment
@@ -27,6 +29,8 @@ import kotlinx.android.synthetic.main.item_user_account.view.*
 
 class UserAccountFragment: ToolbarLogoBaseFragment() {
 
+    private lateinit var logoutViewModel: LoginViewModel
+
     override fun getLayoutId(): Int = R.layout.fragment_user_account
 
     override fun getRootLayout(): RelativeLayout? = userAccountRootLayout
@@ -39,6 +43,7 @@ class UserAccountFragment: ToolbarLogoBaseFragment() {
         super.onViewCreated(view, savedInstanceState)
 
         viewModel = ViewModelProvider(requireActivity()).get(MainViewModel::class.java)
+        logoutViewModel = ViewModelProvider(this).get(LoginViewModel::class.java)
 
         setLiveDataListeners()
         setupView()
@@ -55,13 +60,11 @@ class UserAccountFragment: ToolbarLogoBaseFragment() {
                     if (updatingAppSettings) {
                         updatingAppSettings = false
 
-                        //it.stringResources = listOf()
                         DbHelper.memCache = it
 
                         requireActivity().finish()
                         startActivity(
                             Intent(requireActivity().applicationContext, MainActivity::class.java)
-                                //.putExtra(MainActivity.KEY_APP_SETTINGS, it)
                         )
                     }
                 }
@@ -144,6 +147,9 @@ class UserAccountFragment: ToolbarLogoBaseFragment() {
                         // setupView()
 
                         blockingLoader.showDialog()
+
+                        logoutViewModel.logout(AuthModelImpl())
+
                         (viewModel as MainViewModel).apply {
                             updatingAppSettings = true
                             getAppSettings(MainModelImpl(requireContext()))

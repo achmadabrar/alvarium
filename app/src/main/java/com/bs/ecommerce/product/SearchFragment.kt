@@ -25,13 +25,17 @@ import com.bs.ecommerce.main.MainActivity
 import com.bs.ecommerce.product.adapter.ProductListAdapter
 import com.bs.ecommerce.product.model.SearchModel
 import com.bs.ecommerce.product.model.SearchModelImpl
-import com.bs.ecommerce.product.model.data.*
+import com.bs.ecommerce.product.model.data.AdvancedSearch
+import com.bs.ecommerce.product.model.data.AvailableCategory
+import com.bs.ecommerce.product.model.data.PagingFilteringContext
+import com.bs.ecommerce.product.model.data.ProductSummary
 import com.bs.ecommerce.product.viewModel.ProductListViewModel
 import com.bs.ecommerce.utils.*
+import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import kotlinx.android.synthetic.main.advanced_search_layout.*
 import kotlinx.android.synthetic.main.fragment_product_list.*
-import java.util.ArrayList
+import java.util.*
 import kotlin.math.floor
 
 class SearchFragment : BaseFragment() {
@@ -42,6 +46,7 @@ class SearchFragment : BaseFragment() {
     private lateinit var model: SearchModel
     private lateinit var layoutManager: GridLayoutManager
     private lateinit var productClickListener: ItemClickListener<ProductSummary>
+    private lateinit var bsBehavior: BottomSheetBehavior<*>
 
     private lateinit var productListAdapter: ProductListAdapter
     private var searchView: SearchView? = null
@@ -438,6 +443,7 @@ class SearchFragment : BaseFragment() {
 
     private fun initAdvancedSearch()
     {
+        bsBehavior = BottomSheetBehavior.from(advanceSearchFullView)
 
         setDynamicStrings()
 
@@ -449,11 +455,16 @@ class SearchFragment : BaseFragment() {
 
         advanceSearchCheckBox?.setOnCheckedChangeListener { _, isChecked ->
             if (isChecked)
-                advanceSearchLayout?.visibility = View.VISIBLE
+                bsBehavior.state = BottomSheetBehavior.STATE_EXPANDED
+                //advanceSearchLayout?.visibility = View.VISIBLE
             else
-                advanceSearchLayout?.visibility = View.GONE
+                bsBehavior.state = BottomSheetBehavior.STATE_COLLAPSED
+                //advanceSearchLayout?.visibility = View.GONE
         }
-        searchButton?.setOnClickListener { searchProduct() }
+        searchButton?.setOnClickListener {
+            bsBehavior.state = BottomSheetBehavior.STATE_COLLAPSED
+            searchProduct()
+        }
 
         (viewModel as ProductListViewModel).getModelsForAdvancedSearch(model)
     }
