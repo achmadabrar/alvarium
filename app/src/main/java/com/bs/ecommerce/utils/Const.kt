@@ -305,6 +305,7 @@ class Const {
         const val WILL_EARN = "shoppingcart.totals.rewardpoints.willearn"
         const val POINTS = "shoppingcart.totals.rewardpoints.willearn.point"
         const val QUANTITY = "order.product(s).quantity"
+        const val PRICE = "order.product(s).price"
         const val CHECKOUT_ORDER_NUMBER = "checkout.ordernumber"
         const val CHECKOUT_ORDER_PLACED = "nopstation.webapi.order.confirmed" // Your Order is Confirmed
 

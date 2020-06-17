@@ -6,6 +6,20 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="horizontal">
 
+
+    <TextView
+        android:id="@+id/tvTotalPrice"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/pink"
+        android:textSize="@dimen/tv_text_size_regular"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:textStyle="bold"
+        tools:text="@string/placeholder_price"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"/>
+
     <TextView
         android:id="@+id/tvDiscountPrice"
         android:layout_width="wrap_content"
@@ -16,7 +30,7 @@
         android:maxLines="1"
         android:textStyle="bold"
         tools:text="@string/placeholder_price"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvTotalPrice"
         app:layout_constraintStart_toStartOf="parent"/>
 
     <TextView
@@ -30,7 +44,7 @@
         android:maxLines="1"
         android:textStyle="bold"
         tools:text="@string/placeholder_price"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvTotalPrice"
         app:layout_constraintStart_toEndOf="@id/tvDiscountPrice" />
 
     <TextView
@@ -44,7 +58,7 @@
         android:maxLines="1"
         android:textStyle="bold"
         tools:text="50% off"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvTotalPrice"
         app:layout_constraintStart_toEndOf="@id/tvOriginalPrice" />
 
 

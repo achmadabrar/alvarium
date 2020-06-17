@@ -105,7 +105,8 @@
                         android:padding="10dp"
                         android:textStyle="bold"
                         android:text="@string/invoice"
-                        android:textColor="?attr/primaryTextColor" />
+                        android:textColor="?attr/primaryTextColor"
+                        style="@style/rtlSupportedTextView"/>
 
                     <include
                         layout="@layout/table_order_total"

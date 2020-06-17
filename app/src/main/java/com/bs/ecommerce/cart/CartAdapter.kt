@@ -105,9 +105,10 @@ open class CartAdapter(
                 holder?.itemView?.id = R.id.itemView
                 holder?.itemView?.setOnClickListener { clickListener?.onClick(it, position, products[position]) }
 
-                holder?.productName!!.text = productModel.productName
-                holder?.productPrice!!.text = productModel.unitPrice
-                //holder?.productShortdescription!!.visibility = View.GONE
+                holder?.productName?.text = productModel.productName
+
+                holder?.productTotalPrice?.text = "${DbHelper.getString(Const.TOTAL)}:  ${productModel.subTotal}"
+                holder?.productPrice?.text = "${DbHelper.getString(Const.PRICE)}:  ${productModel.unitPrice}"
 
 
                 holder?.productImage?.loadImg(productModel.picture?.imageUrl)
@@ -119,7 +120,7 @@ open class CartAdapter(
                     holder?.quantityLayout?.visibility = View.GONE
 
                     holder?.quantityForCheckout?.visibility = View.VISIBLE
-                    holder?.quantityForCheckout?.text = "${DbHelper.getString(Const.QUANTITY)}  ${productModel.quantity}"
+                    holder?.quantityForCheckout?.text = "${DbHelper.getString(Const.QUANTITY)}:  ${productModel.quantity}"
                 }
                 else
                     holder?.productQuantity!!.text = productModel.quantity.toString()
@@ -183,6 +184,7 @@ open class CartAdapter(
     inner class ProductSummaryHolder(itemView: View) :
         RecyclerView.ViewHolder(itemView), View.OnClickListener {
         var productImage: ImageView
+        var productTotalPrice: TextView
         var productPrice: TextView
         var productName: TextView
 
@@ -205,6 +207,7 @@ open class CartAdapter(
 
             quantityLayout = itemView.findViewById<View>(R.id.ll_quantity) as LinearLayout
             productImage = itemView.findViewById<View>(R.id.ivProductThumb) as ImageView
+            productTotalPrice = itemView.findViewById<View>(R.id.tvTotalPrice) as TextView
             productPrice = itemView.findViewById<View>(R.id.tvDiscountPrice) as TextView
             productName = itemView.findViewById<View>(R.id.tvProductName) as TextView
             // productShortdescription = itemView.findViewById<View>(R.id.tv_product_short_descrption) as TextView
@@ -220,8 +223,9 @@ open class CartAdapter(
             tvAttribute1 = itemView.findViewById<View>(R.id.tvAttribute1) as WebView
             //itemView.tvAttribute1.text = "Color: Black"
             itemView.tvAttribute2.text = "Size: XL"
+/*
             itemView.tvOriginalPrice.text = "$100"
-            itemView.tvOriginalPrice.paintFlags = Paint.STRIKE_THRU_TEXT_FLAG
+            itemView.tvOriginalPrice.paintFlags = Paint.STRIKE_THRU_TEXT_FLAG*/
 
             removeItem.setOnClickListener(this)
             //swipeLayout.getSurfaceView().setOnClickListener(this);

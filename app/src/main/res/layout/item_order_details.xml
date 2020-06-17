@@ -14,7 +14,8 @@
         android:maxLines="2"
         android:textColor="?attr/primaryTextColor"
         android:textSize="@dimen/tv_text_size_semi_large"
-        tools:text="@string/placeholder" />
+        tools:text="@string/placeholder"
+        style="@style/rtlSupportedTextView"/>
 
     <TextView
         android:id="@+id/tv1"
@@ -24,7 +25,8 @@
         android:layout_marginTop="5dp"
         android:textColor="?attr/primaryTextColor"
         android:textSize="@dimen/tv_text_size_regular"
-        tools:text="@string/placeholder" />
+        tools:text="@string/placeholder"
+        style="@style/rtlSupportedTextView"/>
 
     <!--<TextView
         android:id="@+id/tv2"

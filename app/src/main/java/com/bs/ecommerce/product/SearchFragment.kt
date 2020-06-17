@@ -255,11 +255,14 @@ class SearchFragment : BaseFragment() {
 
             searchView?.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
                 override fun onQueryTextSubmit(query: String): Boolean {
-                    searchProduct()
 
+                    bsBehavior.state = BottomSheetBehavior.STATE_COLLAPSED
+
+                    searchProduct()
                     requireActivity().title = query
                     previousSearchQuery = query
                     searchView?.clearFocus()
+
                     return false
                 }
 
@@ -448,6 +451,7 @@ class SearchFragment : BaseFragment() {
         setDynamicStrings()
 
         advanceSearchFullView?.visibility = View.VISIBLE
+        advanceSearchCheckBox?.visibility = View.VISIBLE
 
         initSearchCategorySpinner()
         initSearchManufacturerSpinner()
@@ -464,6 +468,7 @@ class SearchFragment : BaseFragment() {
         searchButton?.setOnClickListener {
             bsBehavior.state = BottomSheetBehavior.STATE_COLLAPSED
             searchProduct()
+            requireActivity().hideKeyboard()
         }
 
         (viewModel as ProductListViewModel).getModelsForAdvancedSearch(model)

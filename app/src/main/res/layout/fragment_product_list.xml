@@ -38,10 +38,25 @@
         android:layout_height="match_parent">
 
 
+        <androidx.appcompat.widget.AppCompatCheckBox
+            android:id="@+id/advanceSearchCheckBox"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:paddingBottom="5dp"
+            android:paddingTop="5dp"
+            android:text="Advanced Search"
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+            android:gravity="center"
+            android:visibility="gone"
+            tools:visibility="visible"
+            android:layout_centerHorizontal="true"/>
+
+
         <View
             android:id="@+id/subcategoryPlaceholder"
             android:layout_width="match_parent"
-            android:layout_alignParentTop="true"
+            android:layout_below="@id/advanceSearchCheckBox"
             android:layout_height="@dimen/btn_height"
             android:visibility="gone"
             tools:visibility="visible"/>
@@ -174,7 +189,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:behavior_hideable="true"
-        app:behavior_peekHeight="40dp"
+        app:behavior_peekHeight="0dp"
         android:visibility="gone"
         tools:visibility="visible"
         app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior" />
