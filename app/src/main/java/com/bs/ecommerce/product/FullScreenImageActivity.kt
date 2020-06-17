@@ -7,9 +7,8 @@ import android.widget.RelativeLayout
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import com.bs.ecommerce.R
-import com.bs.ecommerce.customViews.TouchImageView
 import com.bs.ecommerce.customViews.TouchImageViewJava
-import com.bs.ecommerce.product.model.data.PictureModel
+import com.bs.ecommerce.product.model.data.ImageModel
 import com.bs.ecommerce.utils.loadImg
 import kotlinx.android.synthetic.main.activity_full_screen_image.*
 
@@ -40,14 +39,14 @@ class FullScreenImageActivity : AppCompatActivity() {
 
         // private static int[] images = { R.drawable.nature_1, R.drawable.nature_2, R.drawable.nature_3, R.drawable.nature_4, R.drawable.nature_5 };
 
-        override fun getCount(): Int = pictureModels?.size!!
+        override fun getCount(): Int = pictureModels?.size ?: 0
 
         override fun instantiateItem(container: ViewGroup, position: Int): View {
             val img = TouchImageViewJava(container.context)
 
             img.maxZoom = 4F
 
-            img.loadImg(pictureModels!![position].fullSizeImageUrl)
+            img.loadImg(pictureModels?.get(position)?.fullSizeImageUrl)
 
             container.addView(
                 img
@@ -73,6 +72,6 @@ class FullScreenImageActivity : AppCompatActivity() {
 
         var sliderPosition = 0
 
-        var pictureModels: List<PictureModel>? = null
+        var pictureModels: List<ImageModel?>? = null
     }
 }

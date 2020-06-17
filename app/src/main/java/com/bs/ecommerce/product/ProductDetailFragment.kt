@@ -135,11 +135,12 @@ class ProductDetailFragment : BaseFragment(), View.OnClickListener {
                     // slider image
                     val imageSlider = vsImageSlider?.inflate()
 
-                    val detailsSliderAdapter =
-                        DetailsSliderAdapter(
-                            requireContext(),
-                            product.pictureModels
-                        )
+                    val sliderData = if (product.pictureModels.isNullOrEmpty())
+                        listOf(product.defaultPictureModel)
+                    else
+                        product.pictureModels
+
+                    val detailsSliderAdapter = DetailsSliderAdapter(requireContext(), sliderData)
                     imageSlider?.view_pager_slider?.adapter = detailsSliderAdapter
                     imageSlider?.view_pager_slider?.currentItem = 0
                     imageSlider?.circle_indicator?.setViewPager(imageSlider.view_pager_slider)
@@ -155,7 +156,7 @@ class ProductDetailFragment : BaseFragment(), View.OnClickListener {
 
                             // Open fullscreen image activity
                             FullScreenImageActivity.sliderPosition = position
-                            FullScreenImageActivity.pictureModels = product.pictureModels
+                            FullScreenImageActivity.pictureModels = sliderData
                             val intent = Intent(activity, FullScreenImageActivity::class.java)
                             startActivity(intent)
                         }
