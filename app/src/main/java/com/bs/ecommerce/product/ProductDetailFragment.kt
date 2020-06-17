@@ -73,7 +73,6 @@ class ProductDetailFragment : BaseFragment(), View.OnClickListener {
 
         if(arguments?.getLong(PRODUCT_ID) == null) {
             toast(DbHelper.getString(Const.INVALID_PRODUCT))
-            //requireActivity().supportFragmentManager.popBackStack()
             return
         }
 
@@ -132,232 +131,233 @@ class ProductDetailFragment : BaseFragment(), View.OnClickListener {
                         arguments?.putString(PRODUCT_NAME, product?.name ?: "")
                     }
 
-                    // slider image
-                    val imageSlider = vsImageSlider?.inflate()
+                    product?.let {
 
-                    val detailsSliderAdapter =
-                        DetailsSliderAdapter(
-                            requireContext(),
-                            product.pictureModels
-                        )
-                    imageSlider?.view_pager_slider?.adapter = detailsSliderAdapter
-                    imageSlider?.view_pager_slider?.currentItem = 0
-                    imageSlider?.circle_indicator?.setViewPager(imageSlider.view_pager_slider)
+                        // slider image
+                        val imageSlider = vsImageSlider?.inflate()
 
-                    imageSlider?.circle_indicator?.pageColor =
-                        ContextCompat.getColor(requireContext(), R.color.white)
-                    imageSlider?.circle_indicator?.fillColor =
-                        ContextCompat.getColor(requireContext(), R.color.darkOrGray)
-
-                    detailsSliderAdapter.setOnSliderClickListener(object :
-                        DetailsSliderAdapter.OnSliderClickListener {
-                        override fun onSliderClick(view: View, position: Int) {
-
-                            // Open fullscreen image activity
-                            FullScreenImageActivity.sliderPosition = position
-                            FullScreenImageActivity.pictureModels = product.pictureModels
-                            val intent = Intent(activity, FullScreenImageActivity::class.java)
-                            startActivity(intent)
-                        }
-                    })
-
-                    // short description
-                    val productNameLayout = vsProductNameLayout?.inflate()
-                    productNameLayout?.tvProductName?.text = product.name
-                    product.shortDescription?.let {
-                        /*productNameLayout?.tvProductDescription?.show(
-                            it,
-                            R.color.fragment_background
-                        )*/
-                        productNameLayout?.tvProductDescription?.text = TextUtils().getHtmlFormattedText(it)
-                    }
-
-                    // product rating & review section
-                    productRatingLayout.ratingBar.rating =
-                        (product.productReviewOverview?.ratingSum ?: 0).toFloat()
-
-                    productRatingLayout.tvReviewCount.text = (product.productReviewOverview?.totalReviews ?: 0)
-                        .toString().plus(" ")
-                        .plus(DbHelper.getString(Const.TITLE_REVIEW))
-
-                    productRatingLayout.setOnClickListener {
-
-                        if(product.productReviewOverview?.allowCustomerReviews == true) {
-                            product.id?.let {
-                                replaceFragmentSafely(ProductReviewFragment.newInstance(it))
-                            }
-                        }
-                    }
-
-
-                    // product price
-                    productPriceLayout.tvOriginalPrice.apply {
-                        if (product.productPrice?.oldPrice == null) {
-                            visibility = View.GONE
-                        } else {
-                            text = product.productPrice.oldPrice
-                            paintFlags = Paint.STRIKE_THRU_TEXT_FLAG
-                        }
-                    }
-
-                    if (product.addToCart?.customerEntersPrice == true) {
-
-                        productPriceLayout?.tvDiscountPrice?.visibility = View.GONE
-                        productPriceLayout?.priceInputLl?.visibility = View.VISIBLE
-
-                        productPriceLayout?.etPrice?.hint = product.addToCart.customerEnteredPriceRange
-                    }
-
-                    //productPriceLayout.tvDiscountPercent.text = "40% Off"
-
-                    // PRODUCT MANUFACTURER LAYOUT
-                    product.productManufacturers?.let {
-                        if(it.isNotEmpty()) {
-                            hd16.visibility = View.VISIBLE
-                            productManufacturer?.visibility = View.VISIBLE
-
-                            productManufacturer?.ll?.removeAllViews()
-                            productManufacturer?.tvSectionTitle?.text =
-                                DbHelper.getString(Const.PRODUCT_MANUFACTURER)
-
-                            for(temp in it) {
-                                val tv = TextView(requireContext(), null, 0, R.style.productPageDynamicText)
-                                tv.text = temp.name
-                                tv.setOnClickListener {
-                                    replaceFragmentSafely(ProductListFragment.newInstance(
-                                        temp.name ?: "", temp.id ?: -1, ProductListFragment.GetBy.MANUFACTURER
-                                    ))
-                                }
-
-                                productManufacturer?.ll?.addView(tv)
-                            }
-                        }
-                    }
-
-                    // PRODUCT TAG LAYOUT
-                    product.productTags?.let {
-                        if(it.isNotEmpty()) {
-                            hd17.visibility = View.VISIBLE
-                            productTag?.visibility = View.VISIBLE
-
-                            productTag?.ll?.removeAllViews()
-                            productTag?.tvSectionTitle?.text =
-                                DbHelper.getString(Const.PRODUCT_TAG)
-
-                            for(temp in it) {
-                                val tv = TextView(requireContext(), null, 0, R.style.productPageDynamicText)
-                                tv.text = temp.name
-                                tv.setOnClickListener {
-                                    replaceFragmentSafely(
-                                        ProductListFragment.newInstance(temp.name ?: "", temp.id ?: -1, ProductListFragment.GetBy.TAG)
-                                    )
-                                }
-
-                                productTag?.ll?.addView(tv)
-                            }
-                        }
-                    }
-
-                    // PRODUCT VENDOR LAYOUT
-                    if(product.vendorModel != null && product.showVendor == true) {
-                        hd18.visibility = View.VISIBLE
-                        productVendor1?.visibility = View.VISIBLE
-
-                        productVendor1?.vendorLl?.removeAllViews()
-                        productVendor1?.tvSectionTitle?.text =
-                            DbHelper.getString(Const.PRODUCT_VENDOR)
-
-                        val tv = TextView(requireContext(), null, 0, R.style.productPageDynamicText)
-                        tv.text = product.vendorModel.name
-                        tv.setOnClickListener {
-                            replaceFragmentSafely(
-                                ProductListFragment.newInstance(product.vendorModel.name ?: "", product.vendorModel.id ?: -1, ProductListFragment.GetBy.VENDOR)
+                        val detailsSliderAdapter =
+                            DetailsSliderAdapter(
+                                requireContext(),
+                                product.pictureModels
                             )
-                        }
+                        imageSlider?.view_pager_slider?.adapter = detailsSliderAdapter
+                        imageSlider?.view_pager_slider?.currentItem = 0
+                        imageSlider?.circle_indicator?.setViewPager(imageSlider.view_pager_slider)
 
-                        productVendor1?.vendorLl?.addView(tv)
-                    }
+                        imageSlider?.circle_indicator?.pageColor =
+                            ContextCompat.getColor(requireContext(), R.color.white)
+                        imageSlider?.circle_indicator?.fillColor =
+                            ContextCompat.getColor(requireContext(), R.color.darkOrGray)
 
-                    availabilityLayout.tvAvailabilityTitle.text = DbHelper.getString(Const.PRODUCT_AVAILABILITY)
-                    availabilityLayout.tvAvailability.text = product.stockAvailability
-                    availabilityLayout.deliveryMethod.text = DbHelper.getString(Const.PRODUCT_FREE_SHIPPING)
-                    availabilityLayout.deliveryMethod.visibility = if (product.isFreeShipping == true)
-                        View.VISIBLE else View.GONE
+                        detailsSliderAdapter.setOnSliderClickListener(object :
+                            DetailsSliderAdapter.OnSliderClickListener {
+                            override fun onSliderClick(view: View, position: Int) {
 
-                    productQuantityLayout.tvQuantityTitle.text = DbHelper.getString(Const.PRODUCT_QUANTITY)
-                    productQuantityLayout.tvQuantity.text =
-                        product.addToCart?.enteredQuantity?.toString() ?: "1"
+                                // Open fullscreen image activity
+                                FullScreenImageActivity.sliderPosition = position
+                                FullScreenImageActivity.pictureModels = product.pictureModels
+                                val intent = Intent(activity, FullScreenImageActivity::class.java)
+                                startActivity(intent)
+                            }
+                        })
 
-                    // long description
-                    if(product?.fullDescription?.isEmpty() == false) {
-                        val productDescLayout = vsProductDescLayout?.inflate()
-                        productDescLayout?.tvProductName?.text = DbHelper.getString(Const.PRODUCT_DESCRIPTION)
-                        product.fullDescription.let {
-                            /*productDescLayout?.tvProductDescription?.show(
+                        // short description
+                        val productNameLayout = vsProductNameLayout?.inflate()
+                        productNameLayout?.tvProductName?.text = product.name
+                        product.shortDescription?.let {
+                            /*productNameLayout?.tvProductDescription?.show(
                                 it,
                                 R.color.fragment_background
                             )*/
-                            productDescLayout?.tvProductDescription?.text = TextUtils().getHtmlFormattedText(it)
+                            productNameLayout?.tvProductDescription?.text = TextUtils().getHtmlFormattedText(it)
                         }
-                        hd14.visibility = View.VISIBLE
-                    }
 
-                    // setup product attributes
-                    customAttributeManager =
-                        CustomAttributeManager(
-                            attributes = product.productAttributes,
-                            attributeViewHolder = attrViewHolder,
-                            attributeValueHolder = bottomSheetLayout.attributeValueHolder,
-                            bsBehavior = bsBehavior
-                        )
+                        // product rating & review section
+                        productRatingLayout.ratingBar.rating =
+                            (product.productReviewOverview?.ratingSum ?: 0).toFloat()
 
-                    customAttributeManager?.attachAttributesToFragment()
+                        productRatingLayout.tvReviewCount.text = (product.productReviewOverview?.totalReviews ?: 0)
+                            .toString().plus(" ")
+                            .plus(DbHelper.getString(Const.TITLE_REVIEW))
 
-                    // Price calculation not needed for Products with manual price input i.e (Donation)
-                    if (product.addToCart?.customerEntersPrice == false) {
-                        customAttributeManager?.setupProductPriceCalculation(
-                            product?.productPrice,
-                            productPriceLayout.tvDiscountPrice
-                        )
-                    }
+                        productRatingLayout.setOnClickListener {
+
+                            if(product.productReviewOverview?.allowCustomerReviews == true) {
+                                product.id?.let {
+                                    replaceFragmentSafely(ProductReviewFragment.newInstance(it))
+                                }
+                            }
+                        }
 
 
-                    // Gift Card
-                    if(product.giftCard?.isGiftCard == true) {
-                        populateGiftCardSection()
-                    }
+                        // product price
+                        productPriceLayout.tvOriginalPrice.apply {
+                            if (product.productPrice?.oldPrice == null) {
+                                visibility = View.GONE
+                            } else {
+                                text = product.productPrice.oldPrice
+                                paintFlags = Paint.STRIKE_THRU_TEXT_FLAG
+                            }
+                        }
+
+                        if (product.addToCart?.customerEntersPrice == true) {
+
+                            productPriceLayout?.tvDiscountPrice?.visibility = View.GONE
+                            productPriceLayout?.priceInputLl?.visibility = View.VISIBLE
+
+                            productPriceLayout?.etPrice?.hint = product.addToCart.customerEnteredPriceRange
+                        }
+
+                        //productPriceLayout.tvDiscountPercent.text = "40% Off"
+
+                        // PRODUCT MANUFACTURER LAYOUT
+                        product.productManufacturers?.let {
+                            if(it.isNotEmpty()) {
+                                hd16.visibility = View.VISIBLE
+                                productManufacturer?.visibility = View.VISIBLE
+
+                                productManufacturer?.ll?.removeAllViews()
+                                productManufacturer?.tvSectionTitle?.text =
+                                    DbHelper.getString(Const.PRODUCT_MANUFACTURER)
+
+                                for(temp in it) {
+                                    val tv = TextView(requireContext(), null, 0, R.style.productPageDynamicText)
+                                    tv.text = temp.name
+                                    tv.setOnClickListener {
+                                        replaceFragmentSafely(ProductListFragment.newInstance(
+                                            temp.name ?: "", temp.id ?: -1, ProductListFragment.GetBy.MANUFACTURER
+                                        ))
+                                    }
+
+                                    productManufacturer?.ll?.addView(tv)
+                                }
+                            }
+                        }
+
+                        // PRODUCT TAG LAYOUT
+                        product.productTags?.let {
+                            if(it.isNotEmpty()) {
+                                hd17.visibility = View.VISIBLE
+                                productTag?.visibility = View.VISIBLE
+
+                                productTag?.ll?.removeAllViews()
+                                productTag?.tvSectionTitle?.text =
+                                    DbHelper.getString(Const.PRODUCT_TAG)
+
+                                for(temp in it) {
+                                    val tv = TextView(requireContext(), null, 0, R.style.productPageDynamicText)
+                                    tv.text = temp.name
+                                    tv.setOnClickListener {
+                                        replaceFragmentSafely(
+                                            ProductListFragment.newInstance(temp.name ?: "", temp.id ?: -1, ProductListFragment.GetBy.TAG)
+                                        )
+                                    }
+
+                                    productTag?.ll?.addView(tv)
+                                }
+                            }
+                        }
+
+                        // PRODUCT VENDOR LAYOUT
+                        if(product.vendorModel != null && product.showVendor == true) {
+                            hd18.visibility = View.VISIBLE
+                            productVendor1?.visibility = View.VISIBLE
+
+                            productVendor1?.vendorLl?.removeAllViews()
+                            productVendor1?.tvSectionTitle?.text =
+                                DbHelper.getString(Const.PRODUCT_VENDOR)
+
+                            val tv = TextView(requireContext(), null, 0, R.style.productPageDynamicText)
+                            tv.text = product.vendorModel.name
+                            tv.setOnClickListener {
+                                replaceFragmentSafely(
+                                    ProductListFragment.newInstance(product.vendorModel.name ?: "", product.vendorModel.id ?: -1, ProductListFragment.GetBy.VENDOR)
+                                )
+                            }
+
+                            productVendor1?.vendorLl?.addView(tv)
+                        }
+
+                        availabilityLayout.tvAvailabilityTitle.text = DbHelper.getString(Const.PRODUCT_AVAILABILITY)
+                        availabilityLayout.tvAvailability.text = product.stockAvailability
+                        availabilityLayout.deliveryMethod.text = DbHelper.getString(Const.PRODUCT_FREE_SHIPPING)
+                        availabilityLayout.deliveryMethod.visibility = if (product.isFreeShipping == true)
+                            View.VISIBLE else View.GONE
+
+                        productQuantityLayout.tvQuantityTitle.text = DbHelper.getString(Const.PRODUCT_QUANTITY)
+                        productQuantityLayout.tvQuantity.text =
+                            product.addToCart?.enteredQuantity?.toString() ?: "1"
+
+                        // long description
+                        if(product?.fullDescription?.isEmpty() == false) {
+                            val productDescLayout = vsProductDescLayout?.inflate()
+                            productDescLayout?.tvProductName?.text = DbHelper.getString(Const.PRODUCT_DESCRIPTION)
+                            product.fullDescription.let {
+                                /*productDescLayout?.tvProductDescription?.show(
+                                    it,
+                                    R.color.fragment_background
+                                )*/
+                                productDescLayout?.tvProductDescription?.text = TextUtils().getHtmlFormattedText(it)
+                            }
+                            hd14.visibility = View.VISIBLE
+                        }
+
+                        // setup product attributes
+                        customAttributeManager =
+                            CustomAttributeManager(
+                                attributes = product.productAttributes,
+                                attributeViewHolder = attrViewHolder,
+                                attributeValueHolder = bottomSheetLayout.attributeValueHolder,
+                                bsBehavior = bsBehavior
+                            )
+
+                        customAttributeManager?.attachAttributesToFragment()
+
+                        // Price calculation not needed for Products with manual price input i.e (Donation)
+                        if (product.addToCart?.customerEntersPrice == false) {
+                            customAttributeManager?.setupProductPriceCalculation(
+                                product?.productPrice,
+                                productPriceLayout.tvDiscountPrice
+                            )
+                        }
 
 
-                    // Rental Product
-                    if(product.isRental == true) {
-                        populateRentalProductSection(product)
-                    }
+                        // Gift Card
+                        if(product.giftCard?.isGiftCard == true) {
+                            populateGiftCardSection()
+                        }
 
-                    // Associated Product
 
-                    if(product.associatedProducts?.isNotEmpty() == true) {
-                        populateAssociatedProductList(product.associatedProducts)
+                        // Rental Product
+                        if(product.isRental == true) {
+                            populateRentalProductSection(product)
+                        }
 
-                        // Hide unrelated layouts
-                        productPriceLayout.visibility = View.GONE
-                        productQuantityLayout.visibility = View.GONE
-                        addtoCartLayout.visibility = View.GONE
-                        btnAddToWishList.visibility = View.GONE
+                        // Associated Product
 
-                        // Hide horizontal dividers
-                        hd11.visibility = View.GONE
-                        hd12.visibility = View.GONE
+                        if(product.associatedProducts?.isNotEmpty() == true) {
+                            populateAssociatedProductList(product.associatedProducts)
 
+                            // Hide unrelated layouts
+                            productPriceLayout.visibility = View.GONE
+                            productQuantityLayout.visibility = View.GONE
+                            addtoCartLayout.visibility = View.GONE
+                            btnAddToWishList.visibility = View.GONE
+
+                            // Hide horizontal dividers
+                            hd11.visibility = View.GONE
+                            hd12.visibility = View.GONE
+
+                            productDetailsScrollView.visibility = View.VISIBLE
+
+                            return@Observer
+                        } else {
+                            addtoCartLayout.visibility = View.VISIBLE
+                            btnAddToWishList.visibility = View.VISIBLE
+                        }
                         productDetailsScrollView.visibility = View.VISIBLE
-
-                        return@Observer
-                    } else {
-                        addtoCartLayout.visibility = View.VISIBLE
-                        btnAddToWishList.visibility = View.VISIBLE
                     }
-
-                    productDetailsScrollView.visibility = View.VISIBLE
-
                 })
 
             isInvalidProductLD.observe(
@@ -372,13 +372,7 @@ class ProductDetailFragment : BaseFragment(), View.OnClickListener {
 
             isLoadingLD.observe(
                 viewLifecycleOwner,
-                Observer { isShowLoader ->
-
-                    if (isShowLoader)
-                        showLoading()
-                    else
-                        hideLoading()
-                })
+                Observer { isShowLoader ->  showHideLoader(isShowLoader) })
 
             addToCartResponseLD.observe(
                 viewLifecycleOwner,
