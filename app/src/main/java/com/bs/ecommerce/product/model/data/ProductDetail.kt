@@ -60,7 +60,7 @@ data class ProductDetail(
     @SerializedName("PageShareCode")
     val pageShareCode: String?,
     @SerializedName("PictureModels")
-    val pictureModels: List<PictureModel>,
+    val pictureModels: List<ImageModel>,
     @SerializedName("ProductAttributes")
     val productAttributes: List<ProductAttribute>,
     @SerializedName("ProductManufacturers")

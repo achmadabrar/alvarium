@@ -117,7 +117,7 @@ class ReviewViewModel: BaseViewModel() {
         isLoadingLD.value = true
 
         model.postProductReview(
-            userData.productId!!, ProductReviewResponse(userData),
+            userData.productId ?: -1, ProductReviewResponse(userData),
             object: RequestCompleteListener<ProductReviewResponse> {
 
             override fun onRequestSuccess(data: ProductReviewResponse) {

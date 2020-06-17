@@ -29,8 +29,6 @@ class ProductDetailViewModel : BaseViewModel() {
 
     var quantityLiveData = MutableLiveData<Int>()
 
-    var isInvalidProductLD = MutableLiveData<Boolean>()
-
     var addToCartResponseLD = MutableLiveData<OneTimeEvent<AddToCartResponse>>()
 
     var gotoCartPage = false
@@ -52,7 +50,7 @@ class ProductDetailViewModel : BaseViewModel() {
 
             override fun onRequestFailed(errorMessage: String) {
                 isLoadingLD.value = false
-                isInvalidProductLD.value = true
+                toast(errorMessage)
             }
 
         })
@@ -187,6 +185,7 @@ class ProductDetailViewModel : BaseViewModel() {
             override fun onRequestFailed(errorMessage: String)
             {
                 isLoadingLD.value = false
+                toast(errorMessage)
             }
         })
     }
@@ -196,7 +195,7 @@ class ProductDetailViewModel : BaseViewModel() {
     }
 
     fun decrementQuantity() {
-        if(quantityLiveData.value!! > 1) {
+        if(quantityLiveData.value ?: 0 > 1) {
             quantityLiveData.setValue(quantityLiveData.value?.minus(1))
         } else {
             toast(DbHelper.getString(Const.PRODUCT_QUANTITY_POSITIVE))

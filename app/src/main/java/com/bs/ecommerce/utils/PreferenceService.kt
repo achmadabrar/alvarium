@@ -25,7 +25,7 @@ object PrefSingleton
 
     fun setPrefs(key: String, value: Boolean?)
     {
-        Prefs.putBoolean(key, value!!)
+        Prefs.putBoolean(key, value ?: false)
     }
 
     fun setPrefs(key: String, value: Int)

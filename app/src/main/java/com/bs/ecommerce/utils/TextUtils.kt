@@ -116,7 +116,9 @@ class TextUtils {
         /**
          * Extracts error message from retrofit error body
          */
-        fun getErrorMessage(response: Response<*>): String {
+        fun getErrorMessage(response: Response<*>?): String {
+
+            if(response == null) return ""
 
             val errorMsg = response.errorBody()?.string()
 

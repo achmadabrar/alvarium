@@ -6,22 +6,19 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.LinearLayout
+import androidx.viewpager.widget.PagerAdapter
 import com.bs.ecommerce.R
-import com.bs.ecommerce.product.model.data.PictureModel
+import com.bs.ecommerce.product.model.data.ImageModel
 import com.bs.ecommerce.utils.loadImg
 
-/**
- * Created by BS148 on 11/8/2016.
- */
 
-class DetailsSliderAdapter(private val context: Context, private var imageUrl: List<PictureModel>) :
-    androidx.viewpager.widget.PagerAdapter() {
-    private var layoutInflater: LayoutInflater? = null
+class DetailsSliderAdapter(private val context: Context, private var imageUrl: List<ImageModel?>?) :
+    PagerAdapter() {
 
-    internal var sliderClickListener: OnSliderClickListener? = null
+    private var sliderClickListener: OnSliderClickListener? = null
 
     override fun getCount(): Int {
-        return imageUrl.size
+        return imageUrl?.size ?: 0
     }
 
     override fun isViewFromObject(view: View, `object`: Any): Boolean {
@@ -29,18 +26,21 @@ class DetailsSliderAdapter(private val context: Context, private var imageUrl: L
     }
 
     override fun instantiateItem(container: ViewGroup, pos: Int): Any {
-        layoutInflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
-        val view = layoutInflater!!.inflate(R.layout.layout_viewpager_slider, container, false)
+        val layoutInflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
+        val view = layoutInflater.inflate(R.layout.layout_viewpager_slider, container, false)
+
         val imageView = view.findViewById<View>(R.id.image_view) as ImageView
         val linearLayout = view.findViewById<View>(R.id.layout) as LinearLayout
 
-        imageView.loadImg(imageUrl[pos].imageUrl)
+        imageView.loadImg(imageUrl?.get(pos)?.imageUrl)
         container.addView(view)
+
         linearLayout.setOnClickListener { v ->
-            if (sliderClickListener != null) {
-                sliderClickListener!!.onSliderClick(v, pos)
+            sliderClickListener?.apply {
+                onSliderClick(v, pos)
             }
         }
+
         return view
     }
 
