@@ -26,6 +26,12 @@ class ProductDetailModelImpl :
             override fun onResponse(call: Call<ProductDetailResponse>, response: Response<ProductDetailResponse>) {
                 if (response.body() != null)
                     callback.onRequestSuccess(response.body() as ProductDetailResponse)
+
+                else if (response.code() == 300 || response.code() == 400 || response.code() == 404 || response.code() == 500)
+                {
+                    val errorBody = GsonBuilder().create().fromJson(response.errorBody()!!.string(), ProductDetailResponse::class.java)
+                    callback.onRequestSuccess(errorBody as ProductDetailResponse)
+                }
                 else
                     callback.onRequestFailed(response.message())
             }
