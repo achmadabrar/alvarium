@@ -8,6 +8,7 @@ import com.bs.ecommerce.networking.common.KeyValueFormData
 import com.bs.ecommerce.product.model.data.AddToCartResponse
 import com.bs.ecommerce.product.model.data.AddToWishListResponse
 import com.bs.ecommerce.product.model.data.ProductDetailResponse
+import com.bs.ecommerce.utils.TextUtils
 import com.google.gson.GsonBuilder
 import retrofit2.Call
 import retrofit2.Callback
@@ -24,16 +25,11 @@ class ProductDetailModelImpl :
             }
 
             override fun onResponse(call: Call<ProductDetailResponse>, response: Response<ProductDetailResponse>) {
-                if (response.body() != null)
-                    callback.onRequestSuccess(response.body() as ProductDetailResponse)
 
-                else if (response.code() == 300 || response.code() == 400 || response.code() == 404 || response.code() == 500)
-                {
-                    val errorBody = GsonBuilder().create().fromJson(response.errorBody()!!.string(), ProductDetailResponse::class.java)
-                    callback.onRequestSuccess(errorBody as ProductDetailResponse)
-                }
+                if (response.body() != null && response.code()==200)
+                    callback.onRequestSuccess(response.body() as ProductDetailResponse)
                 else
-                    callback.onRequestFailed(response.message())
+                    callback.onRequestFailed(TextUtils.getErrorMessage(response))
             }
 
         })
@@ -52,16 +48,11 @@ class ProductDetailModelImpl :
             }
 
             override fun onResponse(call: Call<AddToCartResponse>, response: Response<AddToCartResponse>) {
-                if (response.body() != null)
-                    callback.onRequestSuccess(response.body() as AddToCartResponse)
 
-                else if (response.code() == 300 || response.code() == 400)
-                {
-                    val errorBody = GsonBuilder().create().fromJson(response.errorBody()!!.string(), AddToCartResponse::class.java)
-                    callback.onRequestSuccess(errorBody as AddToCartResponse)
-                }
+                if (response.body() != null && response.code()==200)
+                    callback.onRequestSuccess(response.body() as AddToCartResponse)
                 else
-                    callback.onRequestFailed(response.message())
+                    callback.onRequestFailed(TextUtils.getErrorMessage(response))
             }
 
         })
@@ -100,7 +91,7 @@ class ProductDetailModelImpl :
                         callback.onRequestSuccess(errorBody as AddToWishListResponse)
                     }
                     else
-                        callback.onRequestFailed(response.message())
+                        callback.onRequestFailed(TextUtils.getErrorMessage(response))
                 }
 
             })
@@ -120,12 +111,12 @@ class ProductDetailModelImpl :
                     if (response.body() != null)
                         callback.onRequestSuccess(response.body() as HomePageProductResponse)
                     else
-                        callback.onRequestFailed(response.message())
+                        callback.onRequestFailed(TextUtils.getErrorMessage(response))
                 }
 
 
                 override fun onFailure(call: Call<HomePageProductResponse>, t: Throwable) {
-                    callback.onRequestFailed(t.localizedMessage ?: "")
+                    callback.onRequestFailed(t.localizedMessage ?: "Unknown")
                 }
             })
     }
@@ -149,7 +140,7 @@ class ProductDetailModelImpl :
 
 
                 override fun onFailure(call: Call<HomePageProductResponse>, t: Throwable) {
-                    callback.onRequestFailed(t.localizedMessage ?: "")
+                    callback.onRequestFailed(t.localizedMessage ?: "Unknown")
                 }
             })
     }

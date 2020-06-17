@@ -13,7 +13,6 @@ import com.bs.ecommerce.main.MainActivity
 import com.bs.ecommerce.main.MainViewModel
 import com.bs.ecommerce.main.model.MainModel
 import com.bs.ecommerce.networking.NetworkConstants
-import com.bs.ecommerce.networking.NetworkUtil
 import com.bs.ecommerce.utils.Const
 import com.bs.ecommerce.utils.PrefSingleton
 import com.bs.ecommerce.utils.hideKeyboard
@@ -44,7 +43,7 @@ abstract class BaseUrlChangeFragment : BaseFragment()
 
     protected fun validateForm()
     {
-        if(newBaseUrlEditTextFromSettings?.text?.length!! > 10)
+        if(newBaseUrlEditTextFromSettings?.text?.length ?: 0 > 10)
             testApiCall()
         else
             toast(DbHelper.getString(Const.SETTINGS_INVALID_URL))

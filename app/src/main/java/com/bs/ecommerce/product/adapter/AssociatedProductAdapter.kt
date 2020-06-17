@@ -77,11 +77,11 @@ class AssociatedProductAdapter(
             }
 
             btnPlus.setOnClickListener {
-                updateQuantity(productModel.id!!, true, tvItemQuantity)
+                updateQuantity(productModel.id ?: -1, true, tvItemQuantity)
             }
 
             btnMinus.setOnClickListener {
-                updateQuantity(productModel.id!!, false, tvItemQuantity)
+                updateQuantity(productModel.id ?: -1, false, tvItemQuantity)
             }
         }
 

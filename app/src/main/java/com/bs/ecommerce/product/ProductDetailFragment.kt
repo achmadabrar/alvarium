@@ -78,7 +78,7 @@ class ProductDetailFragment : BaseFragment(), View.OnClickListener {
 
         if(!viewCreated) {
 
-            val productId: Long = arguments?.getLong(PRODUCT_ID)!!
+            val productId: Long = arguments?.getLong(PRODUCT_ID) ?: -1
 
             initView(productId)
 
@@ -136,11 +136,12 @@ class ProductDetailFragment : BaseFragment(), View.OnClickListener {
                         // slider image
                         val imageSlider = vsImageSlider?.inflate()
 
-                        val detailsSliderAdapter =
-                            DetailsSliderAdapter(
-                                requireContext(),
-                                product.pictureModels
-                            )
+                        val sliderData = if (product.pictureModels.isNullOrEmpty())
+                            listOf(product.defaultPictureModel)
+                        else
+                            product.pictureModels
+
+                        val detailsSliderAdapter = DetailsSliderAdapter(requireContext(), sliderData)
                         imageSlider?.view_pager_slider?.adapter = detailsSliderAdapter
                         imageSlider?.view_pager_slider?.currentItem = 0
                         imageSlider?.circle_indicator?.setViewPager(imageSlider.view_pager_slider)
@@ -156,7 +157,7 @@ class ProductDetailFragment : BaseFragment(), View.OnClickListener {
 
                                 // Open fullscreen image activity
                                 FullScreenImageActivity.sliderPosition = position
-                                FullScreenImageActivity.pictureModels = product.pictureModels
+                                FullScreenImageActivity.pictureModels = sliderData
                                 val intent = Intent(activity, FullScreenImageActivity::class.java)
                                 startActivity(intent)
                             }
@@ -360,16 +361,6 @@ class ProductDetailFragment : BaseFragment(), View.OnClickListener {
                     }
                 })
 
-            isInvalidProductLD.observe(
-                viewLifecycleOwner,
-                Observer { isInvalid ->
-
-                    if (isInvalid) {
-                        toast(DbHelper.getString(Const.PRODUCT_INVALID_PRODUCT))
-                    }
-
-                })
-
             isLoadingLD.observe(
                 viewLifecycleOwner,
                 Observer { isShowLoader ->  showHideLoader(isShowLoader) })
@@ -379,20 +370,15 @@ class ProductDetailFragment : BaseFragment(), View.OnClickListener {
                 Observer { data ->
                     val response = data.getContentIfNotHandled() ?: return@Observer
 
-                    if(response.errorList.isNotEmpty())
-                        toast(response.errorsAsFormattedString)
-                    else
-                    {
-                        val totalCartItems = response.data.totalShoppingCartProducts
-                        updateTopCart(totalCartItems)
-                        toast(response.message)
+                    val totalCartItems = response.data.totalShoppingCartProducts
+                    updateTopCart(totalCartItems)
+                    toast(response.message)
 
-                        if (gotoCartPage) {
-                            gotoCartPage = false
+                    if (gotoCartPage) {
+                        gotoCartPage = false
 
-                            if (lifecycle.currentState.isAtLeast(Lifecycle.State.RESUMED))
-                                (requireActivity() as BaseActivity).goMenuItemFragment(CartFragment())
-                        }
+                        if (lifecycle.currentState.isAtLeast(Lifecycle.State.RESUMED))
+                            (requireActivity() as BaseActivity).goMenuItemFragment(CartFragment())
                     }
 
                 })
