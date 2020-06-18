@@ -304,11 +304,11 @@ class SearchFragment : BaseFragment() {
 
             searchView?.let {   search.query = it.query.toString()  }
 
-            if (advanceSearchCheckBox?.isChecked!!)
+            if (advanceSearchCheckBox?.isChecked == true)
             {
                 search.isAdvanceSearchSelected = true
 
-                search.isSearchInSubcategory = searchInSubCategory?.isChecked!!
+                search.isSearchInSubcategory = searchInSubCategory?.isChecked == true
 
                 search.categoryId = categorySpinner?.selectedItemId?.toInt() ?: 0
                 search.manufacturerId = manufacturerSpinner?.selectedItemId?.toInt() ?: 0
@@ -316,10 +316,10 @@ class SearchFragment : BaseFragment() {
 
                 search.isSearchVendor = true
 
-                search.priceFrom = priceFromEditText!!.text.toString().trim { it <= ' ' }
-                search.priceTo = priceToEditText!!.text.toString().trim { it <= ' ' }
+                search.priceFrom = priceFromEditText?.text?.toString()?.trim { it <= ' ' } ?: ""
+                search.priceTo = priceToEditText?.text?.toString()?.trim { it <= ' ' } ?: ""
 
-                search.isSearchInDescription = searchInDescription?.isChecked!!
+                search.isSearchInDescription = searchInDescription?.isChecked == true
             }
             return search
         }
@@ -398,9 +398,9 @@ class SearchFragment : BaseFragment() {
 
                     val viewWidth = rvProductList.measuredWidth
                     val cardViewWidth =
-                        requireContext().resources?.getDimension(R.dimen.product_item_size)
+                        requireContext().resources?.getDimension(R.dimen.product_item_size) ?: 165f
 
-                    val newSpanCount = floor((viewWidth / cardViewWidth!!).toDouble()).toInt()
+                    val newSpanCount = floor((viewWidth / cardViewWidth).toDouble()).toInt()
 
                     updateColumnPerRow(newSpanCount)
 

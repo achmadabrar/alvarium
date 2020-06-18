@@ -120,6 +120,8 @@ class ProductListFragment : BaseFragment() {
     private fun initView() {
         calculateAutomaticGridColumn()
 
+        tvNoProduct.text = DbHelper.getString(Const.COMMON_NO_DATA)
+
         btnFilter.findViewById<TextView>(R.id.tvFilter).text = DbHelper.getString(Const.FILTER)
         btnFilter.setOnClickListener {
             when (drawerLayout.isDrawerOpen(GravityCompat.END)) {
@@ -380,8 +382,8 @@ class ProductListFragment : BaseFragment() {
             subcategoryPopupWindow.dismiss()
 
             replaceFragmentSafely(newInstance(
-                subCatList[position].name!!,
-                subCatList[position].id!!,
+                subCatList[position].name ?: "",
+                subCatList[position].id ?: -1,
                 GetBy.CATEGORY
             ))
         }
@@ -400,9 +402,9 @@ class ProductListFragment : BaseFragment() {
 
                     val viewWidth = rvProductList.measuredWidth
                     val cardViewWidth =
-                        requireContext().resources?.getDimension(R.dimen.product_item_size)
+                        requireContext().resources?.getDimension(R.dimen.product_item_size) ?: 165f
 
-                    val newSpanCount = floor((viewWidth / cardViewWidth!!).toDouble()).toInt()
+                    val newSpanCount = floor((viewWidth / cardViewWidth).toDouble()).toInt()
 
                     updateColumnPerRow(newSpanCount)
 

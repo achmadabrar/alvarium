@@ -457,7 +457,9 @@ class CustomAttributeManager(
                 }
             }
 
-            text = "$%.2f".format(price)
+            val currencySymbol = priceModel?.price?.get(0) ?: "$"
+
+            text = "$currencySymbol%.2f".format(price)
         }
     }
 
