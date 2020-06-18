@@ -19,7 +19,7 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:padding="16dp"
-            tools:text="No Internet Connection"
+            android:text="No Internet Connection"
             android:layout_gravity="center_horizontal"
             android:textColor="?attr/primaryTextColor"
             android:textSize="18sp" />
@@ -54,7 +54,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="5dp"
                     android:maxLines="3"
-                    tools:text="Try Again"
+                    android:text="Try Again"
                     android:textColor="@color/white" />
 
             </LinearLayout>
@@ -67,7 +67,7 @@
                 android:background="@drawable/rounded_button_red_background"
                 android:gravity="center"
                 android:padding="8dp"
-                tools:text="Settings"
+                android:text="Settings"
                 android:textColor="@color/white"
                 android:layout_weight="0.20" />
         </LinearLayout>
