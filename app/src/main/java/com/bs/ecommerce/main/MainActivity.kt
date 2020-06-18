@@ -189,6 +189,11 @@ class MainActivity : PrivacyPolicyDialogActivity(), View.OnClickListener
 
             hideKeyboard()
         }
+
+        // set back button after theme/configuration change
+        if (supportFragmentManager.backStackEntryCount > 0) {
+            setArrowIconInDrawer()
+        }
     }
 
 
