@@ -52,29 +52,29 @@ fun Fragment.replaceFragmentSafely(
     @AnimRes popEnterAnimation: Int = 0,
     @AnimRes popExitAnimation: Int = 0
 ) {
-    val fragManager = requireActivity().supportFragmentManager
+    try {
+        val fragManager = requireActivity().supportFragmentManager
 
-    if(fragManager.backStackEntryCount > MAX_ALLOWED_FRAGMENT) {
-        "test_".showLog("Pop BS")
-        fragManager.popBackStack()
-    } else {
-        "test_".showLog("No need to pop BS. ${fragManager.backStackEntryCount}")
+        if(fragManager.backStackEntryCount > MAX_ALLOWED_FRAGMENT) {
+            "test_".showLog("Pop BS")
+            fragManager.popBackStack()
+        } else {
+            "test_".showLog("No need to pop BS. ${fragManager.backStackEntryCount}")
+        }
+
+        val ft = fragManager
+            .beginTransaction()
+            .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
+            .setCustomAnimations(enterAnimation, exitAnimation, popEnterAnimation, popExitAnimation)
+            .replace(containerViewId, fragment, fragment::class.java.simpleName)
+            .addToBackStack(fragment::class.java.simpleName)
+
+        if (!fragManager.isStateSaved) {
+            ft.commit()
+        }
+    } catch(e: Exception) {
+        e.printStackTrace()
     }
-
-    val ft = fragManager
-        .beginTransaction()
-        .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
-        .setCustomAnimations(enterAnimation, exitAnimation, popEnterAnimation, popExitAnimation)
-        .replace(containerViewId, fragment, fragment::class.java.simpleName)
-        .addToBackStack(fragment::class.java.simpleName)
-
-    if (!fragManager.isStateSaved) {
-        ft.commit()
-    }
-/*    else if (allowStateLoss)
-    {
-        ft?.commitAllowingStateLoss()
-    }*/
 }
 
 inline fun <reified T> MainActivity.createIfNotInBackStack(fragment: BaseFragment) {
