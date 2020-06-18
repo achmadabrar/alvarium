@@ -6,7 +6,8 @@ package com.bs.ecommerce.networking
 object NetworkConstants
 {
     //@JvmStatic val SITE_URL = "http://13.72.65.213:8092"
-    @JvmStatic val SITE_URL = "https://plugin.nop-station.com"
+    //@JvmStatic val SITE_URL = "https://plugin.nop-station.com"
+    @JvmStatic val SITE_URL = "https://cart.nop-station.com"
 
     @JvmStatic val DEFAULT_URL = "${SITE_URL}/api/"
     @JvmStatic var BASE_URL = "${SITE_URL}/api/"
