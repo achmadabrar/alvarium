@@ -213,7 +213,7 @@ fun LinearLayout?.showOrHide(isEnabledParam: Boolean = false)
 
 fun CharSequence?.isEmailValid() = !isNullOrEmpty() && Patterns.EMAIL_ADDRESS.matcher(this!!).matches()
 
-fun WebView.show(text : String, nightMode: Boolean = true)
+fun WebView.show(text : String, nightMode: Boolean = false)
 {
     val htmlRtlHeader = "dir=\"rtl\" lang=\"\""
 

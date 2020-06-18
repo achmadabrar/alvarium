@@ -68,6 +68,7 @@ class HomeFragment : ToolbarLogoBaseFragment() {
         viewModel = ViewModelProvider(requireActivity()).get(MainViewModel::class.java)
 
         if (!viewCreated) {
+            "freeze_".showLog("view created")
             model = HomePageModelImpl(requireContext())
 
             (viewModel as MainViewModel).getAllLandingPageProducts(model)
@@ -75,8 +76,10 @@ class HomeFragment : ToolbarLogoBaseFragment() {
             initComponents()
             observeLiveDataChange = true
         }
-        else
+        else {
+            "freeze_".showLog("view restored")
             observeLiveDataChange = false
+        }
 
         setLiveDataListeners()
     }
@@ -98,10 +101,11 @@ class HomeFragment : ToolbarLogoBaseFragment() {
             callHomePageProducts()
             (activity as MainActivity).notificationClicked = false
         }
-
+        "freeze_".showLog("onResume")
     }
 
     private fun initComponents() {
+        "freeze_".showLog("initComponent - start")
 
         productClickListener = object : ItemClickListener<ProductSummary> {
             override fun onClick(view: View, position: Int, data: ProductSummary) {
@@ -150,9 +154,11 @@ class HomeFragment : ToolbarLogoBaseFragment() {
 
             addItemDecoration(RecyclerViewMargin(15, 1, false))
         }
+        "freeze_".showLog("initComponent - end")
     }
 
     private fun setLiveDataListeners() {
+        "freeze_".showLog("setLiveData - start")
 
         with(viewModel as MainViewModel)
         {
@@ -208,11 +214,11 @@ class HomeFragment : ToolbarLogoBaseFragment() {
             })
         }
 
-
+        "freeze_".showLog("setLiveData - end")
     }
 
     private fun populateBanner(sliderData: SliderData) {
-        "banner_".showLog("Populating banner")
+        "freeze_".showLog("Populating banner")
 
         if (sliderData.isEnabled == false || sliderData.sliders.isNullOrEmpty()) {
             banner?.visibility = View.GONE
@@ -237,6 +243,7 @@ class HomeFragment : ToolbarLogoBaseFragment() {
             for ((i, sliderModel) in sliderData.sliders.withIndex()) {
 
                 if(!isAdded) return@thread
+                "freeze_".showLog("Populating banner $i")
 
                 requireActivity().runOnUiThread {
                     val textSliderView = DefaultSliderView(requireContext())
@@ -292,6 +299,8 @@ class HomeFragment : ToolbarLogoBaseFragment() {
     }
 
     private fun populateFeaturedCategoryList(list: List<CategoryModel>) {
+        "freeze_".showLog("Populating featuredCat")
+
         if (list.isNullOrEmpty()) {
             featuredCategoryContainerLayout?.visibility = View.GONE
             return
@@ -301,7 +310,7 @@ class HomeFragment : ToolbarLogoBaseFragment() {
         featuredCategoryContainerLayout?.removeAllViews()
 
 
-        for (featuredCategory in list) {
+        for ((j, featuredCategory) in list.withIndex()) {
             if (featuredCategory.products.isNullOrEmpty()) continue
 
             inflateAsync(R.layout.featured_list_layout, homePageRootView as RelativeLayout) {
@@ -309,6 +318,7 @@ class HomeFragment : ToolbarLogoBaseFragment() {
                     linearLayout ->
 
                 if(!isAdded) return@inflateAsync
+                "freeze_".showLog("Populating featuredCat $j")
 
                 linearLayout.visibility = View.VISIBLE
                 linearLayout.tvTitle.text = featuredCategory.name
@@ -360,6 +370,7 @@ class HomeFragment : ToolbarLogoBaseFragment() {
             featuredProductLayout?.visibility = View.GONE
             return
         }
+        "freeze_".showLog("Populating featured products")
 
         featuredProductLayout?.visibility = View.VISIBLE
         featuredProductLayout?.tvTitle?.text = DbHelper.getString(Const.HOME_FEATURED_PRODUCT)
@@ -389,6 +400,7 @@ class HomeFragment : ToolbarLogoBaseFragment() {
             featuredManufacturerLayout?.visibility = View.GONE
             return
         }
+        "freeze_".showLog("Populating manufacturer list")
 
         featuredManufacturerLayout?.visibility = View.VISIBLE
         featuredManufacturerLayout?.divider?.visibility = View.INVISIBLE
@@ -421,6 +433,8 @@ class HomeFragment : ToolbarLogoBaseFragment() {
     }
 
     private fun populateBottomSheet(subCategories: List<SubCategory>) {
+        "freeze_".showLog("Populating bottomSheet")
+
         val bsDialog = BottomSheetDialog(requireContext(), R.style.BsDialog)
 
         val dialogView: LinearLayout = layoutInflater.inflate(
