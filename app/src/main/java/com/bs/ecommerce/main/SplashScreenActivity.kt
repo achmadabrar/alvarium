@@ -72,13 +72,18 @@ class SplashScreenActivity : BaseActivity() {
                         } else {
                             "lang_".showLog("No internet connection")
                         }
-                    } else {
+                    }
+                    else
+                    {
                         "lang_".showLog("Download success: true")
+
+                        MyApplication.isAnonymousCheckoutAllowed = it.anonymousCheckoutAllowed
 
                         val updateNeeded =
                             (viewModel as MainViewModel).isUpdateNeeded(applicationContext, it)
 
-                        if (updateNeeded) {
+                        if (updateNeeded)
+                        {
                             supportFragmentManager.beginTransaction()
                                 .add(R.id.fragmentHolder, UpdateAppFragment.newInstance(it.playStoreUrl ?: ""))
                                 .commit()

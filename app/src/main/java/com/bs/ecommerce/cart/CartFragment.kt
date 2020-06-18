@@ -7,6 +7,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bs.ecommerce.R
+import com.bs.ecommerce.auth.login.LoginFragment
 import com.bs.ecommerce.base.BaseFragment
 import com.bs.ecommerce.base.BaseViewModel
 import com.bs.ecommerce.cart.model.CartModel
@@ -237,11 +238,14 @@ class CartFragment : BaseFragment() {
 
             submitCheckoutAttributes()
 
-            if (prefObject.getPrefsBoolValue(PrefSingleton.IS_LOGGED_IN)) {
+            if (prefObject.getPrefsBoolValue(PrefSingleton.IS_LOGGED_IN))
                 replaceFragmentSafely(CheckoutStepFragment())
-            } else {
+
+            else if(!MyApplication.isAnonymousCheckoutAllowed)
+                replaceFragmentSafely(LoginFragment())
+            else
                 showCheckOutOptionsDialogFragment()
-            }
+
         }
 
         tvDone.setOnClickListener{

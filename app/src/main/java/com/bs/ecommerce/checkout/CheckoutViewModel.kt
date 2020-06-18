@@ -28,6 +28,12 @@ open class CheckoutViewModel : BaseViewModel()
         saveResponseLD.postValue(data)
     }
 
+    private fun hideLoader_ShowErrorMsg(errorMessage : String)
+    {
+        isLoadingLD.postValue(false)
+        toast(errorMessage)
+    }
+
     fun getBillingFormVM(model: CheckoutModel)
     {
         isLoadingLD.postValue(true)
@@ -41,10 +47,7 @@ open class CheckoutViewModel : BaseViewModel()
                 getBillingAddressLD.postValue(data)
             }
 
-            override fun onRequestFailed(errorMessage: String)
-            {
-                isLoadingLD.postValue(false)
-            }
+            override fun onRequestFailed(errorMessage: String) = hideLoader_ShowErrorMsg(errorMessage)
         })
     }
 
@@ -60,10 +63,7 @@ open class CheckoutViewModel : BaseViewModel()
                 stateListLD.postValue(data.stateList)
             }
 
-            override fun onRequestFailed(errorMessage: String)
-            {
-                isLoadingLD.postValue(false)
-            }
+            override fun onRequestFailed(errorMessage: String) = hideLoader_ShowErrorMsg(errorMessage)
         })
     }
 
@@ -80,10 +80,7 @@ open class CheckoutViewModel : BaseViewModel()
         {
             override fun onRequestSuccess(data: CheckoutSaveResponse) = saveCheckoutData(data)
 
-            override fun onRequestFailed(errorMessage: String)
-            {
-                isLoadingLD.postValue(false)
-            }
+            override fun onRequestFailed(errorMessage: String) = hideLoader_ShowErrorMsg(errorMessage)
         })
     }
 
@@ -100,10 +97,7 @@ open class CheckoutViewModel : BaseViewModel()
         {
             override fun onRequestSuccess(data: CheckoutSaveResponse) = saveCheckoutData(data)
 
-            override fun onRequestFailed(errorMessage: String)
-            {
-                isLoadingLD.postValue(false)
-            }
+            override fun onRequestFailed(errorMessage: String) = hideLoader_ShowErrorMsg(errorMessage)
         })
     }
 
@@ -119,10 +113,7 @@ open class CheckoutViewModel : BaseViewModel()
         {
             override fun onRequestSuccess(data: CheckoutSaveResponse) = saveCheckoutData(data)
 
-            override fun onRequestFailed(errorMessage: String)
-            {
-                isLoadingLD.postValue(false)
-            }
+            override fun onRequestFailed(errorMessage: String) = hideLoader_ShowErrorMsg(errorMessage)
         })
     }
 
@@ -162,9 +153,7 @@ open class CheckoutViewModel : BaseViewModel()
         {
             override fun onRequestSuccess(data: CheckoutSaveResponse) = saveCheckoutData(data)
 
-            override fun onRequestFailed(errorMessage: String) {
-                isLoadingLD.postValue(false)
-            }
+            override fun onRequestFailed(errorMessage: String)  = hideLoader_ShowErrorMsg(errorMessage)
         })
     }
 
@@ -180,10 +169,7 @@ open class CheckoutViewModel : BaseViewModel()
         {
             override fun onRequestSuccess(data: CheckoutSaveResponse) = saveCheckoutData(data)
 
-            override fun onRequestFailed(errorMessage: String)
-            {
-                isLoadingLD.postValue(false)
-            }
+            override fun onRequestFailed(errorMessage: String) = hideLoader_ShowErrorMsg(errorMessage)
         })
     }
 
@@ -200,10 +186,7 @@ open class CheckoutViewModel : BaseViewModel()
         {
             override fun onRequestSuccess(data: CheckoutSaveResponse) = saveCheckoutData(data)
 
-            override fun onRequestFailed(errorMessage: String)
-            {
-                isLoadingLD.postValue(false)
-            }
+            override fun onRequestFailed(errorMessage: String) = hideLoader_ShowErrorMsg(errorMessage)
         })
     }
 
@@ -221,10 +204,7 @@ open class CheckoutViewModel : BaseViewModel()
 
             }
 
-            override fun onRequestFailed(errorMessage: String)
-            {
-                isLoadingLD.postValue(false)
-            }
+            override fun onRequestFailed(errorMessage: String) = hideLoader_ShowErrorMsg(errorMessage)
         })
     }
 
@@ -236,10 +216,7 @@ open class CheckoutViewModel : BaseViewModel()
         {
             override fun onRequestSuccess(data: CheckoutSaveResponse) = saveCheckoutData(data)
 
-            override fun onRequestFailed(errorMessage: String)
-            {
-                isLoadingLD.postValue(false)
-            }
+            override fun onRequestFailed(errorMessage: String) = hideLoader_ShowErrorMsg(errorMessage)
         })
     }
     fun submitCompleteOrderVM(model: CheckoutModel)
@@ -250,10 +227,7 @@ open class CheckoutViewModel : BaseViewModel()
         {
             override fun onRequestSuccess(data: CheckoutSaveResponse) = saveCheckoutData(data)
 
-            override fun onRequestFailed(errorMessage: String)
-            {
-                isLoadingLD.postValue(false)
-            }
+            override fun onRequestFailed(errorMessage: String) = hideLoader_ShowErrorMsg(errorMessage)
         })
     }
 

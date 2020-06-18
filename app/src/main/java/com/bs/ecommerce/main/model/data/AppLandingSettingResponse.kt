@@ -29,6 +29,7 @@ data class AppLandingData(
     @SerializedName("ShowSubCategoryProducts") val showSubCategoryProducts: Boolean = false,
     @SerializedName("ShowAllVendors") val showAllVendors: Boolean? = null,
     @SerializedName("TotalShoppingCartProducts") val totalShoppingCartProducts: Int = 0,
+    @SerializedName("AnonymousCheckoutAllowed") val anonymousCheckoutAllowed: Boolean = false,
     @SerializedName("StringResources") var stringResources: List<StringResource> = listOf()
 ) : Parcelable {
     constructor(parcel: Parcel) : this(
@@ -50,6 +51,7 @@ data class AppLandingData(
         parcel.readByte() != 0.toByte(),
         parcel.readValue(Boolean::class.java.classLoader) as? Boolean,
         parcel.readInt(),
+        parcel.readValue(Boolean::class.java.classLoader) as Boolean,
         parcel.createTypedArrayList(StringResource.CREATOR) ?: listOf()
     )
 
@@ -72,6 +74,7 @@ data class AppLandingData(
         parcel.writeByte(if (showSubCategoryProducts) 1 else 0)
         parcel.writeValue(showAllVendors)
         parcel.writeInt(totalShoppingCartProducts)
+        parcel.writeValue(anonymousCheckoutAllowed)
         parcel.writeTypedList(stringResources)
     }
 

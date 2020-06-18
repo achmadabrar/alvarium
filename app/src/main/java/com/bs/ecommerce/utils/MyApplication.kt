@@ -61,6 +61,7 @@ class MyApplication : MultiDexApplication()
         var logoUrl = ""
 
         var isJwtActive = false
+        var isAnonymousCheckoutAllowed = false
     }
 
 }
