@@ -160,8 +160,6 @@ class SearchFragment : BaseFragment() {
 
                 if(observeLiveDataChange) productListAdapter.addData(searchResult.products, shouldAppend)
 
-                llButtonHolder.visibility =
-                    if (searchResult.noResults == false) View.VISIBLE else View.GONE
                 tvNoProduct.visibility =
                     if (searchResult.noResults == true && !shouldAppend) View.VISIBLE else View.GONE
 
@@ -175,9 +173,11 @@ class SearchFragment : BaseFragment() {
                 if(show) {
                     drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED)
                     btnFilter.visibility = View.VISIBLE
+                    llButtonHolder.visibility = View.VISIBLE
                 } else {
                     // to turn off slide open drawer
                     btnFilter.visibility = View.GONE
+                    llButtonHolder.visibility = View.GONE
                     drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED)
                 }
             })

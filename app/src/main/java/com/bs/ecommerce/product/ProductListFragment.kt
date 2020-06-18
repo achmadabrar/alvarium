@@ -259,16 +259,14 @@ class ProductListFragment : BaseFragment() {
 
             productListAdapter.addData(data.products, viewModel.shouldAppend)
 
-            initSubcategoryPopupWindow(data.name, data.subCategories)
+            if(data.pagingFilteringContext?.pageNumber ?: 1 == 1) {
+                initSubcategoryPopupWindow(data.name, data.subCategories)
 
-            llButtonHolder.visibility =
-                if (data.products.isNullOrEmpty()) View.INVISIBLE else View.VISIBLE
+                tvNoProduct.visibility =
+                    if (data.products.isNullOrEmpty()) View.VISIBLE else View.GONE
 
-            populateSortOptions(data.pagingFilteringContext)
-
-            if(isAdded && lifecycle.currentState.isAtLeast(Lifecycle.State.RESUMED)) {
-                requireActivity().title = data?.name ?: ""
-                arguments?.putString(CATEGORY_NAME, data?.name ?: "")
+                populateSortOptions(data.pagingFilteringContext)
+                setToolbarTitle(data.name)
             }
         })
 
@@ -276,14 +274,12 @@ class ProductListFragment : BaseFragment() {
 
             productListAdapter.addData(data.products, viewModel.shouldAppend)
 
-            llButtonHolder.visibility =
-                if (data.products.isNullOrEmpty()) View.INVISIBLE else View.VISIBLE
+            if(data.pagingFilteringContext?.pageNumber ?: 1 == 1) {
+                tvNoProduct.visibility =
+                    if (data.products.isNullOrEmpty()) View.VISIBLE else View.GONE
 
-            populateSortOptions(data.pagingFilteringContext)
-
-            if(isAdded && lifecycle.currentState.isAtLeast(Lifecycle.State.RESUMED)) {
-                requireActivity().title = data?.name ?: ""
-                arguments?.putString(CATEGORY_NAME, data?.name ?: "")
+                populateSortOptions(data.pagingFilteringContext)
+                setToolbarTitle(data.name)
             }
         })
 
@@ -291,28 +287,24 @@ class ProductListFragment : BaseFragment() {
 
             productListAdapter.addData(data.products, viewModel.shouldAppend)
 
-            llButtonHolder.visibility =
-                if (data.products.isNullOrEmpty()) View.INVISIBLE else View.VISIBLE
+            if(data.pagingFilteringContext?.pageNumber ?: 1 == 1) {
+                tvNoProduct.visibility =
+                    if (data.products.isNullOrEmpty()) View.VISIBLE else View.GONE
 
-            populateSortOptions(data.pagingFilteringContext)
-
-            if(isAdded && lifecycle.currentState.isAtLeast(Lifecycle.State.RESUMED)) {
-                requireActivity().title = data?.name ?: ""
-                arguments?.putString(CATEGORY_NAME, data?.name ?: "")
+                populateSortOptions(data.pagingFilteringContext)
+                setToolbarTitle(data.name)
             }
         })
 
         viewModel.manufacturerLD.observe(viewLifecycleOwner, Observer { manufacturer ->
             productListAdapter.addData(manufacturer.products, viewModel.shouldAppend)
 
-            llButtonHolder.visibility = if (manufacturer.products.isNullOrEmpty())
-                View.INVISIBLE else View.VISIBLE
+            if(manufacturer.pagingFilteringContext?.pageNumber ?: 1 == 1) {
+                tvNoProduct.visibility =
+                    if (manufacturer.products.isNullOrEmpty()) View.VISIBLE else View.GONE
 
-            populateSortOptions(manufacturer.pagingFilteringContext)
-
-            if(isAdded && lifecycle.currentState.isAtLeast(Lifecycle.State.RESUMED)) {
-                requireActivity().title = manufacturer?.name ?: ""
-                arguments?.putString(CATEGORY_NAME, manufacturer?.name ?: "")
+                populateSortOptions(manufacturer.pagingFilteringContext)
+                setToolbarTitle(manufacturer.name)
             }
         })
 
@@ -329,9 +321,11 @@ class ProductListFragment : BaseFragment() {
             if(show) {
                 drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED)
                 btnFilter.visibility = View.VISIBLE
+                llButtonHolder.visibility = View.VISIBLE
             } else {
                 // to turn off slide open drawer
                 btnFilter.visibility = View.GONE
+                llButtonHolder.visibility = View.INVISIBLE
                 drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED)
             }
         })
@@ -343,6 +337,13 @@ class ProductListFragment : BaseFragment() {
             }
             blockingLoader.hideDialog()
         })
+    }
+
+    private fun setToolbarTitle(title: String?) {
+        if(isAdded && lifecycle.currentState.isAtLeast(Lifecycle.State.RESUMED)) {
+            requireActivity().title = title ?: ""
+            arguments?.putString(CATEGORY_NAME, title ?: "")
+        }
     }
 
     private fun initSubcategoryPopupWindow(catName: String?, subCatList: List<SubCategory>?) {
