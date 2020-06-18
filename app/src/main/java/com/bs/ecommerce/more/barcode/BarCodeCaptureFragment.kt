@@ -7,12 +7,18 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.RelativeLayout
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import com.bs.ecommerce.R
 import com.bs.ecommerce.auth.register.RegistrationViewModel
 import com.bs.ecommerce.base.BaseFragment
 import com.bs.ecommerce.base.BaseViewModel
 import com.bs.ecommerce.db.DbHelper
 import com.bs.ecommerce.product.ProductDetailFragment
+import com.bs.ecommerce.product.model.ProductDetailModel
+import com.bs.ecommerce.product.model.ProductDetailModelImpl
+import com.bs.ecommerce.product.viewModel.ProductDetailViewModel
 import com.bs.ecommerce.utils.Const
 import com.bs.ecommerce.utils.isNumeric
 import com.bs.ecommerce.utils.replaceFragmentSafely
@@ -34,13 +40,13 @@ class BarCodeCaptureFragment : BaseFragment()
 
     override fun getRootLayout(): RelativeLayout? = barcode_root_layout
 
-    override fun createViewModel(): BaseViewModel = RegistrationViewModel()
+    override fun createViewModel(): BaseViewModel = ProductDetailViewModel()
 
     private var beepManager: BeepManager? = null
 
     private var lastText: String = ""
 
-
+    private lateinit var model: ProductDetailModel
 
     private val callback: BarcodeCallback = object : BarcodeCallback {
 
@@ -58,7 +64,8 @@ class BarCodeCaptureFragment : BaseFragment()
 
 
             if(result.text.toString().isNumeric())
-                replaceFragmentSafely(ProductDetailFragment.newInstance(result.text.toLong(), null))
+                (viewModel as ProductDetailViewModel).getProductDetail(result.text.toLong(), model)
+
             else
                 toast(DbHelper.getString(Const.INVALID_PRODUCT))
         }
@@ -90,14 +97,31 @@ class BarCodeCaptureFragment : BaseFragment()
     {
         super.onViewCreated(view, savedInstanceState)
 
+        model = ProductDetailModelImpl()
+        viewModel = ViewModelProvider(this).get(ProductDetailViewModel::class.java)
+
         initializeBarcodeView()
 
         surfaceView.setZOrderOnTop(true)
         val sfhTrackHolder = surfaceView.holder
         sfhTrackHolder.setFormat(PixelFormat.TRANSPARENT)
 
+        setLiveDataListeners()
 
+    }
 
+    private fun setLiveDataListeners()
+    {
+        with(viewModel as ProductDetailViewModel)
+        {
+            productLiveData.observe(viewLifecycleOwner, Observer { product ->
+                requireActivity().supportFragmentManager.beginTransaction()
+                    .add(R.id.layoutFrame, ProductDetailFragment.newInstance(product.id!!.toLong(), ""))
+                    .addToBackStack(BarCodeCaptureFragment::class.java.simpleName)
+                    .commit()
+            })
+            isLoadingLD.observe(viewLifecycleOwner, Observer { isShowLoader ->  showHideLoader(isShowLoader) })
+        }
     }
 
 
