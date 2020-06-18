@@ -3,8 +3,11 @@ package com.bs.ecommerce.checkout.model
 import com.bs.ecommerce.checkout.model.data.*
 import com.bs.ecommerce.networking.RetroClient
 import com.bs.ecommerce.common.RequestCompleteListener
+import com.bs.ecommerce.networking.common.BaseResponse
 import com.bs.ecommerce.networking.common.ExistingAddress
 import com.bs.ecommerce.networking.common.KeyValueFormData
+import com.bs.ecommerce.product.model.data.TopicResponse
+import com.bs.ecommerce.utils.TextUtils
 import com.google.gson.GsonBuilder
 import retrofit2.Call
 import retrofit2.Callback
@@ -21,10 +24,10 @@ class CheckoutModelImpl : CheckoutModel
         {
             override fun onResponse(call: Call<BillingAddressResponse>, response: Response<BillingAddressResponse>)
             {
-                if (response.body() != null)
-                    callback.onRequestSuccess(response.body()!!)
+                if(response.body() != null && response.code() == 200)
+                    callback.onRequestSuccess(response.body() as BillingAddressResponse)
                 else
-                    callback.onRequestFailed(response.message())
+                    callback.onRequestFailed(TextUtils.getErrorMessage(response))
             }
 
 
@@ -41,12 +44,11 @@ class CheckoutModelImpl : CheckoutModel
         {
             override fun onResponse(call: Call<StateListResponse>, response: Response<StateListResponse>)
             {
-                if (response.body() != null)
-                    callback.onRequestSuccess(response.body()!!)
+                if(response.body() != null && response.code() == 200)
+                    callback.onRequestSuccess(response.body() as StateListResponse)
                 else
-                    callback.onRequestFailed(response.message())
+                    callback.onRequestFailed(TextUtils.getErrorMessage(response))
             }
-
 
             override fun onFailure(call: Call<StateListResponse>, t: Throwable) {
                 callback.onRequestFailed(t.localizedMessage!!)
@@ -60,9 +62,12 @@ class CheckoutModelImpl : CheckoutModel
         RetroClient.api.saveNewBillingAPI(billingAddress).enqueue(object : Callback<CheckoutSaveResponse>
         {
             override fun onResponse(call: Call<CheckoutSaveResponse>, response: Response<CheckoutSaveResponse>)
-
-                    = checkoutCommonCallback(callback, response)
-
+            {
+                if(response.body() != null && response.code() == 200)
+                    callback.onRequestSuccess(response.body() as CheckoutSaveResponse)
+                else
+                    callback.onRequestFailed(TextUtils.getErrorMessage(response))
+            }
 
             override fun onFailure(call: Call<CheckoutSaveResponse>, t: Throwable) {
                 callback.onRequestFailed(t.localizedMessage!!)
@@ -75,8 +80,12 @@ class CheckoutModelImpl : CheckoutModel
         RetroClient.api.saveExistingBillingAPI(postModel).enqueue(object : Callback<CheckoutSaveResponse>
         {
             override fun onResponse(call: Call<CheckoutSaveResponse>, response: Response<CheckoutSaveResponse>)
-
-                    = checkoutCommonCallback(callback, response)
+            {
+                if(response.body() != null && response.code() == 200)
+                    callback.onRequestSuccess(response.body() as CheckoutSaveResponse)
+                else
+                    callback.onRequestFailed(TextUtils.getErrorMessage(response))
+            }
 
 
             override fun onFailure(call: Call<CheckoutSaveResponse>, t: Throwable) {
@@ -90,8 +99,12 @@ class CheckoutModelImpl : CheckoutModel
         RetroClient.api.saveNewShippingAPI(shippingAddress).enqueue(object : Callback<CheckoutSaveResponse>
         {
             override fun onResponse(call: Call<CheckoutSaveResponse>, response: Response<CheckoutSaveResponse>)
-
-                    = checkoutCommonCallback(callback, response)
+            {
+                if(response.body() != null && response.code() == 200)
+                    callback.onRequestSuccess(response.body() as CheckoutSaveResponse)
+                else
+                    callback.onRequestFailed(TextUtils.getErrorMessage(response))
+            }
 
 
             override fun onFailure(call: Call<CheckoutSaveResponse>, t: Throwable) {
@@ -105,8 +118,12 @@ class CheckoutModelImpl : CheckoutModel
         RetroClient.api.saveExistingShippingAPI(postModel).enqueue(object : Callback<CheckoutSaveResponse>
         {
             override fun onResponse(call: Call<CheckoutSaveResponse>, response: Response<CheckoutSaveResponse>)
-
-                    = checkoutCommonCallback(callback, response)
+            {
+                if(response.body() != null && response.code() == 200)
+                    callback.onRequestSuccess(response.body() as CheckoutSaveResponse)
+                else
+                    callback.onRequestFailed(TextUtils.getErrorMessage(response))
+            }
 
             override fun onFailure(call: Call<CheckoutSaveResponse>, t: Throwable) {
                 callback.onRequestFailed(t.localizedMessage!!)
@@ -120,8 +137,12 @@ class CheckoutModelImpl : CheckoutModel
         RetroClient.api.saveShippingMethodAPI(KeyValueFormData).enqueue(object : Callback<CheckoutSaveResponse>
         {
             override fun onResponse(call: Call<CheckoutSaveResponse>, response: Response<CheckoutSaveResponse>)
-
-                    = checkoutCommonCallback(callback, response)
+            {
+                if(response.body() != null && response.code() == 200)
+                    callback.onRequestSuccess(response.body() as CheckoutSaveResponse)
+                else
+                    callback.onRequestFailed(TextUtils.getErrorMessage(response))
+            }
 
             override fun onFailure(call: Call<CheckoutSaveResponse>, t: Throwable) {
                 callback.onRequestFailed(t.localizedMessage!!)
@@ -135,8 +156,12 @@ class CheckoutModelImpl : CheckoutModel
         RetroClient.api.savePaymentMethodAPI(KeyValueFormData).enqueue(object : Callback<CheckoutSaveResponse>
         {
             override fun onResponse(call: Call<CheckoutSaveResponse>, response: Response<CheckoutSaveResponse>)
-
-                    = checkoutCommonCallback(callback, response)
+            {
+                if(response.body() != null && response.code() == 200)
+                    callback.onRequestSuccess(response.body() as CheckoutSaveResponse)
+                else
+                    callback.onRequestFailed(TextUtils.getErrorMessage(response))
+            }
 
 
             override fun onFailure(call: Call<CheckoutSaveResponse>, t: Throwable) {
@@ -153,10 +178,10 @@ class CheckoutModelImpl : CheckoutModel
         {
             override fun onResponse(call: Call<ConfirmOrderResponse>, response: Response<ConfirmOrderResponse>)
             {
-                if (response.body() != null)
-                    callback.onRequestSuccess(response.body()!!)
+                if(response.body() != null && response.code() == 200)
+                    callback.onRequestSuccess(response.body() as ConfirmOrderResponse)
                 else
-                    callback.onRequestFailed(response.message())
+                    callback.onRequestFailed(TextUtils.getErrorMessage(response))
             }
 
 
@@ -171,8 +196,12 @@ class CheckoutModelImpl : CheckoutModel
         RetroClient.api.submitConfirmOrderAPI().enqueue(object : Callback<CheckoutSaveResponse>
         {
             override fun onResponse(call: Call<CheckoutSaveResponse>, response: Response<CheckoutSaveResponse>)
-
-                    = checkoutCommonCallback(callback, response)
+            {
+                if(response.body() != null && response.code() == 200)
+                    callback.onRequestSuccess(response.body() as CheckoutSaveResponse)
+                else
+                    callback.onRequestFailed(TextUtils.getErrorMessage(response))
+            }
 
 
             override fun onFailure(call: Call<CheckoutSaveResponse>, t: Throwable) {
@@ -186,8 +215,12 @@ class CheckoutModelImpl : CheckoutModel
         RetroClient.api.completeOrderAPI().enqueue(object : Callback<CheckoutSaveResponse>
         {
             override fun onResponse(call: Call<CheckoutSaveResponse>, response: Response<CheckoutSaveResponse>)
-
-                = checkoutCommonCallback(callback, response)
+            {
+                if(response.body() != null && response.code() == 200)
+                    callback.onRequestSuccess(response.body() as CheckoutSaveResponse)
+                else
+                    callback.onRequestFailed(TextUtils.getErrorMessage(response))
+            }
 
             override fun onFailure(call: Call<CheckoutSaveResponse>, t: Throwable) {
                 callback.onRequestFailed(t.localizedMessage!!)
@@ -195,7 +228,7 @@ class CheckoutModelImpl : CheckoutModel
         })
     }
 
-    private fun checkoutCommonCallback(callback: RequestCompleteListener<CheckoutSaveResponse>, response: Response<CheckoutSaveResponse>)
+    private fun genericCallback(callback: RequestCompleteListener<BaseResponse>, response: Response<BaseResponse>)
     {
         if (response.body() != null)
             callback.onRequestSuccess(response.body()!!)
@@ -203,9 +236,9 @@ class CheckoutModelImpl : CheckoutModel
         else if (response.code() == 300 || response.code() == 400 || response.code() == 500)
         {
             val gson = GsonBuilder().create()
-            val errorBody = gson.fromJson(response.errorBody()!!.string(), CheckoutSaveResponse::class.java)
+            val errorBody = gson.fromJson(response.errorBody()!!.string(), BaseResponse::class.java)
 
-            callback.onRequestSuccess(errorBody as CheckoutSaveResponse)
+            callback.onRequestSuccess(errorBody as BaseResponse)
         }
         else
             callback.onRequestFailed(response.message())
