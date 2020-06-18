@@ -396,13 +396,16 @@ class SearchFragment : BaseFragment() {
                 override fun onGlobalLayout() {
                     rvProductList?.viewTreeObserver?.removeOnGlobalLayoutListener(this)
 
-                    val viewWidth = rvProductList.measuredWidth
+                    val viewWidth = rvProductList?.measuredWidth ?: 720
                     val cardViewWidth =
-                        requireContext().resources?.getDimension(R.dimen.product_item_size) ?: 165f
+                        requireContext().resources?.getDimension(R.dimen.product_item_size) ?: 330f
 
                     val newSpanCount = floor((viewWidth / cardViewWidth).toDouble()).toInt()
 
-                    updateColumnPerRow(newSpanCount)
+                    layoutManager.apply {
+                        spanCount = newSpanCount
+                        requestLayout()
+                    }
 
                     val decoration = object : RecyclerView.ItemDecoration() {
                         override fun getItemOffsets(
@@ -416,14 +419,9 @@ class SearchFragment : BaseFragment() {
                         }
                     }
 
-                    rvProductList.addItemDecoration(decoration)
+                    rvProductList?.addItemDecoration(decoration)
                 }
             })
-    }
-
-    private fun updateColumnPerRow(spanCount: Int) {
-        layoutManager.spanCount = spanCount
-        layoutManager.requestLayout()
     }
 
     private fun setDynamicStrings()

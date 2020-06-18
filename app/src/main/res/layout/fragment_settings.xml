@@ -57,6 +57,8 @@
                         android:layout_marginTop="10dp"
                         android:backgroundTint="@color/gray"
                         android:gravity="start"
+                        android:singleLine="true"
+                        android:imeOptions="actionDone"
                         android:textDirection="ltr"
                         android:hint="@string/sample_base_url"
                         android:textColor="?attr/primaryTextColor"

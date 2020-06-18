@@ -35,7 +35,7 @@ class MainViewModel : CheckoutViewModel() {
     var appStartResponseLD = MutableLiveData<Boolean>()
     var showLoader = MutableLiveData<OneTimeEvent<Boolean>>()
 
-    var testUrlSuccessLD = MutableLiveData<Boolean>()
+    var testUrlSuccessLD = MutableLiveData<Boolean?>()
 
     var languageChangeSuccessLD = MutableLiveData<Boolean>()
     var currencyChangeSuccessLD = MutableLiveData<Boolean>()
@@ -203,7 +203,7 @@ class MainViewModel : CheckoutViewModel() {
 
     fun getNavDrawerCategoryList(model: MainModel) {
         isLoadingLD.value = true
-        testUrlSuccessLD.value = false
+        testUrlSuccessLD.value = null
 
         model.getLeftCategories(object : RequestCompleteListener<CategoryTreeResponse> {
             override fun onRequestSuccess(data: CategoryTreeResponse) {

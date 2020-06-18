@@ -50,6 +50,7 @@ class Const {
         const val SETTINGS_INVALID_URL = "nopstation.webapi.settings.invalidurl"
         const val SETTINGS_BTN_TEST = "nopstation.webapi.settings.test"
         const val SETTINGS_BTN_SET_DEFAULT = "nopstation.webapi.settings.setdefault"
+        const val SETTINGS_BASE_URL_CHANGE_FAIL = "nopstation.webapi.settings.baseUrl_fail"
 
         const val ENTER_VALID_EMAIL = "nopstation.webapi.common.entervalidemail"
         const val ENTER_PRICE = "nopstation.webapi.shoppingcart.donation.enterprice"
@@ -334,7 +335,7 @@ class Const {
         const val I_READ_I_ACCEPT = "nopstation.webapi.accept"
 
         //search
-        const val ADVANCED_SEARCH = "nopstation.webapi.search.advancedsearch"
+        const val ADVANCED_SEARCH = "search.advancedsearch"
         const val SEARCH_ALL = "nopstation.webapi.search.all"
         const val AUTOMATICALLY_SEARCH_SUBCATEGORIES = "nopstation.webapi.search.subcategorysearchautomatically"
         const val PRICE_RANGE = "nopstation.webapi.search.pricerange"

@@ -60,15 +60,15 @@ abstract class BaseUrlChangeFragment : BaseFragment()
 
         mainViewModel.testUrlSuccessLD.observe(viewLifecycleOwner, Observer { success ->
 
-            if(success)
-            {
-                changeBaseUrl()
-                toast("Base URL changed successfully")
-                forceRunApp()
+            success?.let {
+                if (it) {
+                    changeBaseUrl()
+                    //toast(DbHelper.getString(Const.SETTINGS_BASE_URL_CHANGE_SUCCESS))
+                    forceRunApp()
+                } else {
+                    toast(DbHelper.getString(Const.SETTINGS_BASE_URL_CHANGE_FAIL))
+                }
             }
-            else
-                toast("Your API is not compatible with us yet")
-
         })
 
 

@@ -162,9 +162,9 @@ class ProductListFragment : BaseFragment() {
             productClickListener
         )
 
-        rvProductList.adapter = productListAdapter
+        rvProductList?.adapter = productListAdapter
 
-        rvProductList.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+        rvProductList?.addOnScrollListener(object : RecyclerView.OnScrollListener() {
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
 
                 val totalItemCount = layoutManager.itemCount
@@ -394,20 +394,23 @@ class ProductListFragment : BaseFragment() {
     private fun calculateAutomaticGridColumn() {
         layoutManager = GridLayoutManager(requireContext(), 2)
 
-        rvProductList.layoutManager = layoutManager
+        rvProductList?.layoutManager = layoutManager
 
-        rvProductList.viewTreeObserver.addOnGlobalLayoutListener(
+        rvProductList?.viewTreeObserver?.addOnGlobalLayoutListener(
             object : ViewTreeObserver.OnGlobalLayoutListener {
                 override fun onGlobalLayout() {
-                    rvProductList.viewTreeObserver?.removeOnGlobalLayoutListener(this)
+                    rvProductList?.viewTreeObserver?.removeOnGlobalLayoutListener(this)
 
-                    val viewWidth = rvProductList.measuredWidth
+                    val viewWidth = rvProductList?.measuredWidth ?: 720
                     val cardViewWidth =
-                        requireContext().resources?.getDimension(R.dimen.product_item_size) ?: 165f
+                        requireContext().resources?.getDimension(R.dimen.product_item_size) ?: 330f
 
                     val newSpanCount = floor((viewWidth / cardViewWidth).toDouble()).toInt()
 
-                    updateColumnPerRow(newSpanCount)
+                    layoutManager.apply {
+                        spanCount = newSpanCount
+                        requestLayout()
+                    }
 
                     val decoration = object : RecyclerView.ItemDecoration() {
                         override fun getItemOffsets(
@@ -421,14 +424,9 @@ class ProductListFragment : BaseFragment() {
                         }
                     }
 
-                    rvProductList.addItemDecoration(decoration)
+                    rvProductList?.addItemDecoration(decoration)
                 }
             })
-    }
-
-    private fun updateColumnPerRow(spanCount: Int) {
-        layoutManager.spanCount = spanCount
-        layoutManager.requestLayout()
     }
 
     fun applyFilter(filterUrl: String?) {
