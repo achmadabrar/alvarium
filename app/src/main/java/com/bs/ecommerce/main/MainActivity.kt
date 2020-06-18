@@ -117,8 +117,16 @@ class MainActivity : PrivacyPolicyDialogActivity(), View.OnClickListener
     {
         intent?.extras?.let {
 
-            val itemType = Integer.valueOf(it.getString(MessagingService.ITEM_TYPE, "0"))
-            val itemId = Integer.valueOf(it.getString(MessagingService.ITEM_ID, "0"))
+            var itemType: Int
+            var itemId: Int
+
+            try {
+                itemType = Integer.valueOf(it.getString(MessagingService.ITEM_TYPE, "0"))
+                itemId = Integer.valueOf(it.getString(MessagingService.ITEM_ID, "0"))
+            } catch (e: NumberFormatException) {
+                itemType = 0
+                itemId = 0
+            }
 
             when(itemType)
             {
