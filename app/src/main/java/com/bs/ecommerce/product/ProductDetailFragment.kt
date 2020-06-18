@@ -167,11 +167,11 @@ class ProductDetailFragment : BaseFragment(), View.OnClickListener {
                         val productNameLayout = vsProductNameLayout?.inflate()
                         productNameLayout?.tvProductName?.text = product.name
                         product.shortDescription?.let {
-                            /*productNameLayout?.tvProductDescription?.show(
+                            productNameLayout?.tvProductDescription?.show(
                                 it,
                                 R.color.fragment_background
-                            )*/
-                            productNameLayout?.tvProductDescription?.text = TextUtils().getHtmlFormattedText(it)
+                            )
+                            //productNameLayout?.tvProductDescription?.text = TextUtils().getHtmlFormattedText(it)
                         }
 
                         // product rating & review section
@@ -295,11 +295,11 @@ class ProductDetailFragment : BaseFragment(), View.OnClickListener {
                             val productDescLayout = vsProductDescLayout?.inflate()
                             productDescLayout?.tvProductName?.text = DbHelper.getString(Const.PRODUCT_DESCRIPTION)
                             product.fullDescription.let {
-                                /*productDescLayout?.tvProductDescription?.show(
+                                productDescLayout?.tvProductDescription?.show(
                                     it,
                                     R.color.fragment_background
-                                )*/
-                                productDescLayout?.tvProductDescription?.text = TextUtils().getHtmlFormattedText(it)
+                                )
+                                //productDescLayout?.tvProductDescription?.text = TextUtils().getHtmlFormattedText(it)
                             }
                             hd14.visibility = View.VISIBLE
                         }

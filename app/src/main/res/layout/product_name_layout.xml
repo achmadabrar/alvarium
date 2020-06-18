@@ -16,22 +16,22 @@
         android:textStyle="bold"
         style="@style/rtlSupportedTextView"/>
 
-    <TextView
+    <!--<TextView
         android:id="@+id/tvProductDescription"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         tools:text="@string/placeholder_long"
         android:textColor="?attr/primaryTextColor"
         android:textSize="@dimen/tv_text_size_regular"
-        style="@style/rtlSupportedTextView"/>
+        style="@style/rtlSupportedTextView"/>-->
 
-    <!--<WebView
+    <WebView
         android:id="@+id/tvProductDescription"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         tools:text="@string/placeholder_long"
         android:textColor="?attr/primaryTextColor"
-        android:textSize="@dimen/tv_text_size_small" />-->
+        android:textSize="@dimen/tv_text_size_small" />
 
 
 </LinearLayout>
