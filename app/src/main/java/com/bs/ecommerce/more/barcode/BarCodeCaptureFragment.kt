@@ -42,6 +42,12 @@ class BarCodeCaptureFragment : BaseFragment()
 
     override fun createViewModel(): BaseViewModel = ProductDetailViewModel()
 
+    private fun initViewModel()
+    {
+        model = ProductDetailModelImpl()
+        viewModel = ViewModelProvider(this).get(ProductDetailViewModel::class.java)
+    }
+
     private var beepManager: BeepManager? = null
 
     private var lastText: String = ""
@@ -97,8 +103,7 @@ class BarCodeCaptureFragment : BaseFragment()
     {
         super.onViewCreated(view, savedInstanceState)
 
-        model = ProductDetailModelImpl()
-        viewModel = ViewModelProvider(this).get(ProductDetailViewModel::class.java)
+        initViewModel()
 
         initializeBarcodeView()
 
