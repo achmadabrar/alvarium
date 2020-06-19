@@ -1,6 +1,5 @@
 package com.bs.ecommerce.home.homepage
 
-import android.graphics.BitmapFactory
 import android.os.Bundle
 import android.view.View
 import android.view.ViewGroup
@@ -39,8 +38,6 @@ import kotlinx.android.synthetic.main.featured_list_layout.view.*
 import kotlinx.android.synthetic.main.fragment_home.*
 import kotlinx.android.synthetic.main.home_fragment_bottomsheet.view.*
 import kotlinx.android.synthetic.main.home_page_banner.view.*
-import java.net.URL
-import kotlin.concurrent.thread
 
 
 class HomeFragment : ToolbarLogoBaseFragment() {
@@ -49,8 +46,6 @@ class HomeFragment : ToolbarLogoBaseFragment() {
     private var observeLiveDataChange = true
 
     private lateinit var productClickListener: ItemClickListener<ProductSummary>
-
-    private var bannerThread: Thread? = null
 
 
     override fun getFragmentTitle() =  DbHelper.getString(Const.HOME_NAV_HOME)
@@ -81,7 +76,12 @@ class HomeFragment : ToolbarLogoBaseFragment() {
             observeLiveDataChange = false
         }
 
-        setLiveDataListeners()
+
+        try {
+            setLiveDataListeners()
+        } catch (e: Exception) {
+            "crash".showLog("$e")
+        }
     }
 
     private fun callHomePageProducts()
@@ -126,7 +126,6 @@ class HomeFragment : ToolbarLogoBaseFragment() {
         swipeRefreshLayout.setOnRefreshListener {
 
             swipeRefreshLayout.isRefreshing = false
-            bannerThread = null
 
             callHomePageProducts()
         }
@@ -180,11 +179,7 @@ class HomeFragment : ToolbarLogoBaseFragment() {
             })
 
             featuredCategoryLD.observe(viewLifecycleOwner, Observer { list ->
-                try {
-                    if (observeLiveDataChange) populateFeaturedCategoryList(list)
-                } catch (e: IllegalStateException) {
-                    "crash".showLog("asyncInflation - $e")
-                }
+                if (observeLiveDataChange) populateFeaturedCategoryList(list)
             })
 
 
@@ -194,11 +189,7 @@ class HomeFragment : ToolbarLogoBaseFragment() {
 
 
             imageBannerLD.observe(viewLifecycleOwner, Observer { sliderData ->
-                try {
-                    if(observeLiveDataChange) populateBanner(sliderData)
-                } catch (e: IllegalStateException) {
-                    "banner_crash".showLog("$e")
-                }
+                if(observeLiveDataChange) populateBanner(sliderData)
             })
 
             homePageLoader.observe(viewLifecycleOwner, Observer { isShowLoader -> showHideLoader(isShowLoader) })
@@ -218,14 +209,10 @@ class HomeFragment : ToolbarLogoBaseFragment() {
     }
 
     private fun populateBanner(sliderData: SliderData) {
-        "freeze_".showLog("Populating banner")
-
         if (sliderData.isEnabled == false || sliderData.sliders.isNullOrEmpty()) {
             banner?.visibility = View.GONE
             return
         }
-
-        if(bannerThread!=null || bannerThread?.isAlive == true) return
 
         banner?.visibility = View.VISIBLE
 
@@ -237,65 +224,66 @@ class HomeFragment : ToolbarLogoBaseFragment() {
             }
         }
 
-        var biggestImageAR = 100000F
+        for ((i, sliderModel) in sliderData.sliders.withIndex()) {
 
-        bannerThread = thread {
-            for ((i, sliderModel) in sliderData.sliders.withIndex()) {
+            "freeze_".showLog("Populating banner $i")
 
-                if(!isAdded) return@thread
-                "freeze_".showLog("Populating banner $i")
+            val textSliderView = DefaultSliderView(requireContext())
 
-                requireActivity().runOnUiThread {
-                    val textSliderView = DefaultSliderView(requireContext())
+            textSliderView.image(sliderModel.imageUrl).scaleType =
+                BaseSliderView.ScaleType.CenterInside
 
-                    textSliderView.image(sliderModel.imageUrl).scaleType =
-                        BaseSliderView.ScaleType.CenterInside
+            textSliderView.setOnSliderClickListener {
 
-                    textSliderView.setOnSliderClickListener {
+                sliderModel.id?.let {
 
-                        sliderModel.id?.let {
+                    when (sliderModel.sliderType) {
 
-                            when(sliderModel.sliderType) {
+                        SliderType.PRODUCT ->
+                            replaceFragmentSafely(
+                                ProductDetailFragment.newInstance(
+                                    it.toLong(),
+                                    ""
+                                )
+                            )
 
-                                SliderType.PRODUCT ->
-                                    replaceFragmentSafely(ProductDetailFragment.newInstance(it.toLong(), ""))
+                        SliderType.CATEGORY ->
+                            replaceFragmentSafely(
+                                ProductListFragment.newInstance(
+                                    "",
+                                    it,
+                                    ProductListFragment.GetBy.CATEGORY
+                                )
+                            )
 
-                                SliderType.CATEGORY ->
-                                    replaceFragmentSafely(ProductListFragment.newInstance("", it, ProductListFragment.GetBy.CATEGORY))
+                        SliderType.MANUFACTURER ->
+                            replaceFragmentSafely(
+                                ProductListFragment.newInstance(
+                                    "",
+                                    it,
+                                    ProductListFragment.GetBy.MANUFACTURER
+                                )
+                            )
 
-                                SliderType.MANUFACTURER ->
-                                    replaceFragmentSafely(ProductListFragment.newInstance("", it, ProductListFragment.GetBy.MANUFACTURER))
+                        SliderType.TOPIC ->
+                            replaceFragmentSafely(TopicFragment.newInstance(it))
 
-                                SliderType.TOPIC ->
-                                    replaceFragmentSafely(TopicFragment.newInstance(it))
-
-                                SliderType.VENDOR ->
-                                    replaceFragmentSafely(ProductListFragment.newInstance("", it, ProductListFragment.GetBy.VENDOR))
-                            }
-                        }
+                        SliderType.VENDOR ->
+                            replaceFragmentSafely(
+                                ProductListFragment.newInstance(
+                                    "",
+                                    it,
+                                    ProductListFragment.GetBy.VENDOR
+                                )
+                            )
                     }
-
-                    banner?.view_pager_slider1?.addSlider(textSliderView)
                 }
-
-                //Execute all the long running tasks here
-                val url = URL(sliderModel.imageUrl)
-                val bitmap = BitmapFactory.decodeStream(url.openConnection().getInputStream())
-
-                val bitmapWidth: Float = bitmap?.width?.toFloat() ?: 1f
-                val bitmapHeight: Float = bitmap?.height?.toFloat() ?: 1f
-
-                val thisImageAR = (bitmapWidth / bitmapHeight)
-
-                if (thisImageAR < biggestImageAR)
-                    biggestImageAR = thisImageAR
-
-                "banner_ar".showLog("ar of image $i: $thisImageAR, largest ar: $biggestImageAR")
             }
 
-            banner?.aspectRatioView?.setmAspectRatio(biggestImageAR)
+            banner?.view_pager_slider1?.addSlider(textSliderView)
         }
 
+        banner?.aspectRatioView?.setmAspectRatio(2.3f)
     }
 
     private fun populateFeaturedCategoryList(list: List<CategoryModel>) {
