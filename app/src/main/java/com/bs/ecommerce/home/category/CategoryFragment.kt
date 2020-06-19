@@ -3,16 +3,22 @@ package com.bs.ecommerce.home.category
 import android.os.Bundle
 import android.view.View
 import android.widget.RelativeLayout
+import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.bs.ecommerce.R
 import com.bs.ecommerce.base.ToolbarLogoBaseFragment
 import com.bs.ecommerce.db.DbHelper
+import com.bs.ecommerce.main.MainActivity
 import com.bs.ecommerce.main.MainViewModel
 import com.bs.ecommerce.main.model.MainModel
 import com.bs.ecommerce.main.model.MainModelImpl
 import com.bs.ecommerce.main.model.data.Category
+import com.bs.ecommerce.product.ProductListFragment
 import com.bs.ecommerce.utils.Const
+import com.bs.ecommerce.utils.ItemClickListener
+import com.bs.ecommerce.utils.LeftDrawerItem
+import com.bs.ecommerce.utils.replaceFragmentSafely
 import kotlinx.android.synthetic.main.category_left.*
 
 
@@ -21,6 +27,22 @@ class CategoryFragment : ToolbarLogoBaseFragment()
 
     private lateinit var mainModel: MainModel
     private lateinit var mainViewModel: MainViewModel
+
+    private val itemClickListener: ItemClickListener<LeftDrawerItem> = object : ItemClickListener<LeftDrawerItem> {
+        override fun onClick(view: View, position: Int, data: LeftDrawerItem) {
+
+            val activity = requireActivity()
+
+            if(activity is MainActivity) {
+                activity.closeDrawer()
+
+                activity.supportFragmentManager.popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE)
+
+                replaceFragmentSafely(ProductListFragment.newInstance(data.name, data.id,
+                    ProductListFragment.GetBy.CATEGORY))
+            }
+        }
+    }
 
     override fun getFragmentTitle() = DbHelper.getString(Const.HOME_NAV_CATEGORY)
 
@@ -72,7 +94,7 @@ class CategoryFragment : ToolbarLogoBaseFragment()
         /*expandList?.layoutManager = LinearLayoutManager(activity)
         expandList?.adapter = CategoryListAdapter(activity!!, categoryList, this)*/
 
-        expandList?.setAdapter(CategoryListAdapterExpandable(requireActivity(), categoryList, this))
+        expandList?.setAdapter(CategoryListAdapterExpandable(categoryList, itemClickListener))
         expandList?.setGroupIndicator(null)
 
         // code for collapse all group except selected one

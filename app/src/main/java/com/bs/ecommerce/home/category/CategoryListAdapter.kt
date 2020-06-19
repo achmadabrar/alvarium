@@ -1,21 +1,7 @@
 package com.bs.ecommerce.home.category
 
-import android.content.Context
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import android.widget.ExpandableListView
-import android.widget.ImageView
-import android.widget.TextView
-import androidx.core.content.ContextCompat
-import androidx.fragment.app.FragmentManager
 
-import com.bs.ecommerce.R
-import com.bs.ecommerce.main.MainActivity
-import com.bs.ecommerce.main.model.data.Category
-import com.bs.ecommerce.product.ProductListFragment
-
-
+/*
 class CategoryListAdapter(private val context: Context, private val categoryList: List<Category>, private val fragment: androidx.fragment.app.Fragment) : androidx.recyclerview.widget.RecyclerView.Adapter<androidx.recyclerview.widget.RecyclerView.ViewHolder>()
 {
     private val productClickListener: OnItemClickListener? = null
@@ -124,3 +110,4 @@ class CategoryListAdapter(private val context: Context, private val categoryList
 
 
 }
+*/

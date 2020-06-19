@@ -7,11 +7,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.RelativeLayout
-import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.bs.ecommerce.R
-import com.bs.ecommerce.auth.register.RegistrationViewModel
 import com.bs.ecommerce.base.BaseFragment
 import com.bs.ecommerce.base.BaseViewModel
 import com.bs.ecommerce.db.DbHelper
@@ -120,10 +118,9 @@ class BarCodeCaptureFragment : BaseFragment()
         with(viewModel as ProductDetailViewModel)
         {
             productLiveData.observe(viewLifecycleOwner, Observer { product ->
-                requireActivity().supportFragmentManager.beginTransaction()
-                    .add(R.id.layoutFrame, ProductDetailFragment.newInstance(product.id!!.toLong(), ""))
-                    .addToBackStack(BarCodeCaptureFragment::class.java.simpleName)
-                    .commit()
+                replaceFragmentSafely(
+                    ProductDetailFragment.newInstance(product.id?.toLong() ?: -1, "")
+                )
             })
             isLoadingLD.observe(viewLifecycleOwner, Observer { isShowLoader ->  showHideLoader(isShowLoader) })
         }

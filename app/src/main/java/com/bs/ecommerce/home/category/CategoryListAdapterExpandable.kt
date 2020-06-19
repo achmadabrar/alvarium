@@ -1,7 +1,6 @@
 package com.bs.ecommerce.home.category
 
 import android.content.Context
-import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,24 +8,20 @@ import android.widget.BaseExpandableListAdapter
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.widget.AppCompatImageView
-import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentManager
 import com.bs.ecommerce.R
 import com.bs.ecommerce.customViews.CustomExpandableListView
-import com.bs.ecommerce.main.MainActivity
 import com.bs.ecommerce.main.model.data.Category
 import com.bs.ecommerce.main.model.data.Subcategory
-import com.bs.ecommerce.product.ProductListFragment
-import com.bs.ecommerce.utils.showLog
+import com.bs.ecommerce.utils.ItemClickListener
+import com.bs.ecommerce.utils.LeftDrawerItem
 import com.squareup.picasso.Picasso
 
 /**
  * Created by bs206 on 3/16/18.
  */
 class CategoryListAdapterExpandable(
-    private val context: Context,
     private val categories: List<Category>,
-    private val fragment: Fragment
+    private val itemClickListener: ItemClickListener<LeftDrawerItem>
 )
     : BaseExpandableListAdapter() {
 
@@ -41,10 +36,10 @@ class CategoryListAdapterExpandable(
                               parent: ViewGroup): View {
 
         val subCategory = getChild(groupPosition, childPosition)
-        var convertView = LayoutInflater.from(context).inflate(R.layout.item_expandable_list_child_subcategory, parent, false)
+        var convertView = LayoutInflater.from(parent.context).inflate(R.layout.item_expandable_list_child_subcategory, parent, false)
 
         var customList = convertView.findViewById<View>(R.id.expandList) as CustomExpandableListView
-        customList.setAdapter(SubCategoryListAdapter(context, subCategory, fragment))
+        customList.setAdapter(SubCategoryListAdapter(subCategory, itemClickListener))
         customList.setGroupIndicator(null)
 
         // code for collapse all group except selected one
@@ -76,7 +71,7 @@ class CategoryListAdapterExpandable(
     {
         var convertView = convertView
 
-        val inflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
+        val inflater = parent.context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
         convertView = inflater.inflate(R.layout.item_expandable_list_group_category, null)
         val logo = convertView.findViewById<View>(R.id.logo) as AppCompatImageView
         val expandableIcon = convertView.findViewById<View>(R.id.topCategoryExpandableButton) as ImageView
@@ -88,8 +83,15 @@ class CategoryListAdapterExpandable(
         if (getChildrenCountForHidingGroupIndicator(groupPosition) < 1)
         {
             expandableIcon.visibility = View.INVISIBLE
-            convertView.setOnClickListener(subCategory.name?.let { categoryClickListener(subCategory) })
+            convertView.setOnClickListener{
+                itemClickListener.onClick(
+                    convertView, groupPosition, LeftDrawerItem(
+                        subCategory.categoryId, subCategory.name, isCategory = true
+                    )
+                )
+            }
         }
+
         else
         {
             expandableIcon.visibility = View.VISIBLE
@@ -99,9 +101,15 @@ class CategoryListAdapterExpandable(
                 expandableIcon.setImageResource(R.drawable.ic_plus_left_category)
         }
 
-        text.setOnClickListener(subCategory.name?.let { categoryClickListener(subCategory) })
+        text.setOnClickListener{
+            itemClickListener.onClick(
+                text, groupPosition, LeftDrawerItem(
+                    subCategory.categoryId, subCategory.name, isCategory = true
+                )
+            )
+        }
 
-        Picasso.with(context).load(subCategory.iconUrl).fit().centerInside().into(logo)
+        Picasso.with(parent.context).load(subCategory.iconUrl).fit().centerInside().into(logo)
 
         logo.visibility = View.GONE
 
@@ -113,31 +121,4 @@ class CategoryListAdapterExpandable(
     override fun isChildSelectable(groupPosition: Int, childPosition: Int): Boolean = true
 
     private fun getChildrenCountForHidingGroupIndicator(groupPosition: Int): Int = categories[groupPosition].subcategories.size
-
-
-    private inner class categoryClickListener(internal var category: Category) : View.OnClickListener {
-        override fun onClick(v: View) {
-            goToCategoryListPage(category)
-        }
-    }
-
-    private fun goToCategoryListPage(category: Category)
-    {
-        val activity = fragment.requireActivity()
-
-        if(activity is MainActivity) {
-            activity.closeDrawer()
-
-            activity.supportFragmentManager.popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE)
-
-            activity.supportFragmentManager.beginTransaction()
-                .replace(
-                    R.id.layoutFrame,
-                    ProductListFragment.newInstance(category.name, category.categoryId,
-                        ProductListFragment.GetBy.CATEGORY)
-                )
-                .addToBackStack(null)
-                .commit()
-        }
-    }
 }

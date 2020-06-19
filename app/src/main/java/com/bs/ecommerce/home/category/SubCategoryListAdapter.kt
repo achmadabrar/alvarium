@@ -9,13 +9,11 @@ import android.widget.BaseExpandableListAdapter
 import android.widget.TextView
 import androidx.appcompat.widget.AppCompatImageView
 import androidx.core.content.res.ResourcesCompat
-import androidx.fragment.app.Fragment
 import com.bs.ecommerce.R
-import com.bs.ecommerce.main.MainActivity
 import com.bs.ecommerce.main.model.data.SecondSubcategory
 import com.bs.ecommerce.main.model.data.Subcategory
-import com.bs.ecommerce.product.ProductListFragment
-import com.bs.ecommerce.utils.PrefSingleton
+import com.bs.ecommerce.utils.ItemClickListener
+import com.bs.ecommerce.utils.LeftDrawerItem
 import com.bs.ecommerce.utils.loadImg
 
 
@@ -23,9 +21,8 @@ import com.bs.ecommerce.utils.loadImg
  * Created by bs206 on 3/16/18.
  */
 class SubCategoryListAdapter(
-    private val context: Context,
     private val categories: List<Subcategory>,
-    private val fragment: Fragment
+    private val itemClickListener: ItemClickListener<LeftDrawerItem>
 )
     : BaseExpandableListAdapter()
 {
@@ -42,14 +39,20 @@ class SubCategoryListAdapter(
     {
         var convertView = convertView
         val subCategory = getChild(groupPosition, childPosition)
-        convertView = LayoutInflater.from(context).
+        convertView = LayoutInflater.from(parent.context).
                 inflate(R.layout.item_expandable_list_child, parent, false)
 
         val textView_name = convertView.findViewById<View>(R.id.textView_name) as TextView
         textView_name.text = subCategory.name
 
 
-        convertView.setOnClickListener(CategoryonClicklistener(subCategory.categoryId, subCategory.name))
+        convertView.setOnClickListener{
+            itemClickListener.onClick(
+                convertView, groupPosition, LeftDrawerItem(
+                    subCategory.categoryId, subCategory.name, isCategory = false
+                )
+            )
+        }
         return convertView
     }
 
@@ -69,7 +72,7 @@ class SubCategoryListAdapter(
     {
         var convertView = convertView
 
-        val inflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
+        val inflater = parent.context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
         convertView = inflater.inflate(R.layout.item_expandable_list_group, null)
         val logo = convertView.findViewById<View>(R.id.logo) as AppCompatImageView
         val expandableIcon = convertView.findViewById<View>(R.id.expandableIcon) as AppCompatImageView
@@ -78,12 +81,18 @@ class SubCategoryListAdapter(
         text.text = subCategory.name
         if (getChildrenCount(groupPosition) < 1) {
             expandableIcon.visibility = View.INVISIBLE
-            convertView?.setOnClickListener(CategoryonClicklistener(subCategory.categoryId, subCategory.name))
+            convertView?.setOnClickListener{
+                itemClickListener.onClick(
+                    text, groupPosition, LeftDrawerItem(
+                        subCategory.categoryId, subCategory.name, isCategory = false
+                    )
+                )
+            }
         }
         else
         {
 
-            val typeface = ResourcesCompat.getFont(context, R.font.montserrat_regular)
+            val typeface = ResourcesCompat.getFont(text.context, R.font.montserrat_regular)
             text.setTypeface(typeface, Typeface.BOLD)
 
             logo.visibility = View.GONE
@@ -95,7 +104,13 @@ class SubCategoryListAdapter(
                 expandableIcon.setImageResource(R.drawable.ic_list_expand)
         }
 
-        text.setOnClickListener( CategoryonClicklistener(subCategory.categoryId, subCategory.name))
+        text.setOnClickListener{
+            itemClickListener.onClick(
+                text, groupPosition, LeftDrawerItem(
+                    subCategory.categoryId, subCategory.name, isCategory = false
+                )
+            )
+        }
 
         logo.loadImg(subCategory.iconUrl)
 
@@ -105,29 +120,4 @@ class SubCategoryListAdapter(
     override fun hasStableIds(): Boolean = true
 
     override fun isChildSelectable(groupPosition: Int, childPosition: Int): Boolean = true
-
-
-    private inner class CategoryonClicklistener(private val id: Int, private val name: String) : View.OnClickListener
-    {
-
-        override fun onClick(v: View)
-        {
-            val activity = fragment.requireActivity()
-
-            if(activity is MainActivity) {
-                activity.closeDrawer()
-
-                activity.supportFragmentManager.popBackStack(null, androidx.fragment.app.FragmentManager.POP_BACK_STACK_INCLUSIVE)
-
-                activity.supportFragmentManager.beginTransaction()
-                    .replace(
-                        R.id.layoutFrame,
-                        ProductListFragment.newInstance(name, id,
-                            ProductListFragment.GetBy.CATEGORY)
-                    )
-                    .addToBackStack(null)
-                    .commit()
-            }
-        }
-    }
 }
