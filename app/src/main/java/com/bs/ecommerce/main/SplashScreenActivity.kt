@@ -78,6 +78,7 @@ class SplashScreenActivity : BaseActivity() {
                         "lang_".showLog("Download success: true")
 
                         MyApplication.isAnonymousCheckoutAllowed = it.anonymousCheckoutAllowed
+                        PrefSingleton.setPrefs(PrefSingleton.APP_LOGO, it.logoUrl ?: "")
 
                         val updateNeeded =
                             (viewModel as MainViewModel).isUpdateNeeded(applicationContext, it)
