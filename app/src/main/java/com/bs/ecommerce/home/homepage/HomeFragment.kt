@@ -298,57 +298,51 @@ class HomeFragment : ToolbarLogoBaseFragment() {
         featuredCategoryContainerLayout?.removeAllViews()
 
 
-        for ((j, featuredCategory) in list.withIndex()) {
+        for (featuredCategory in list) {
             if (featuredCategory.products.isNullOrEmpty()) continue
 
-            inflateAsync(R.layout.featured_list_layout, homePageRootView as RelativeLayout) {
+            val linearLayout = layoutInflater.inflate(R.layout.featured_list_layout, homePageRootView as RelativeLayout, false)
 
-                    linearLayout ->
-
-                if(!isAdded) return@inflateAsync
-                "freeze_".showLog("Populating featuredCat $j")
-
-                linearLayout.visibility = View.VISIBLE
-                linearLayout.tvTitle.text = featuredCategory.name
-                linearLayout.ivMore.visibility = if(featuredCategory.subCategories?.isNullOrEmpty() == true)
-                    View.GONE else View.VISIBLE
-                linearLayout.btnSeeAll?.text = DbHelper.getString(Const.COMMON_SEE_ALL)
+            linearLayout.visibility = View.VISIBLE
+            linearLayout.tvTitle.text = featuredCategory.name
+            linearLayout.ivMore.visibility = if(featuredCategory.subCategories?.isNullOrEmpty() == true)
+                View.GONE else View.VISIBLE
+            linearLayout.btnSeeAll?.text = DbHelper.getString(Const.COMMON_SEE_ALL)
 
 
-                linearLayout.btnSeeAll.setOnClickListener {
+            linearLayout.btnSeeAll.setOnClickListener {
 
-                    if (featuredCategory.id == null) return@setOnClickListener
+                if (featuredCategory.id == null) return@setOnClickListener
 
-                    replaceFragmentSafely(
-                        ProductListFragment.newInstance(
-                            featuredCategory.name ?: "",
-                            featuredCategory.id,
-                            ProductListFragment.GetBy.CATEGORY
-                        )
+                replaceFragmentSafely(
+                    ProductListFragment.newInstance(
+                        featuredCategory.name ?: "",
+                        featuredCategory.id,
+                        ProductListFragment.GetBy.CATEGORY
+                    )
+                )
+            }
+
+            linearLayout.ivMore.setOnClickListener {
+                populateBottomSheet(featuredCategory.subCategories)
+            }
+
+            linearLayout.rvList.apply {
+
+                context?.let {
+                    setHasFixedSize(true)
+                    addItemDecoration(RecyclerViewMargin(15, 1, false))
+                    layoutManager = LinearLayoutManager(
+                        it, LinearLayoutManager.HORIZONTAL, false
+                    )
+
+                    adapter = FeaturedProductAdapter(
+                        featuredCategory.products, productClickListener
                     )
                 }
-
-                linearLayout.ivMore.setOnClickListener {
-                    populateBottomSheet(featuredCategory.subCategories)
-                }
-
-                linearLayout.rvList.apply {
-
-                    context?.let {
-                        setHasFixedSize(true)
-                        addItemDecoration(RecyclerViewMargin(15, 1, false))
-                        layoutManager = LinearLayoutManager(
-                            it, LinearLayoutManager.HORIZONTAL, false
-                        )
-
-                        adapter = FeaturedProductAdapter(
-                            featuredCategory.products, productClickListener
-                        )
-                    }
-                }
-
-                featuredCategoryContainerLayout?.addView(linearLayout)
             }
+
+            featuredCategoryContainerLayout?.addView(linearLayout)
 
         }
     }
