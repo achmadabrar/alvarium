@@ -184,7 +184,7 @@
                         android:layout_marginTop="15dp"
                         android:hint="@string/reg_hint_state"
                         android:imeOptions="actionNext"
-                        android:inputType="textPersonName"/>
+                        android:inputType="numberDecimal"/>
 
 
                     <RadioGroup

@@ -350,7 +350,8 @@ open class RegisterFragment : ToolbarLogoBaseFragment(), View.OnClickListener
             }
 
             stateProvinceEditText?.let {
-                val input = it.text?.trim().toString(); if(input.isNotEmpty()) stateProvinceId = input.toInt() else { showValidation(it, stateProvinceRequired)}
+                val input = it.text?.trim().toString()
+                if(input.isNotEmpty() && input.isNumeric()) stateProvinceId = input.toInt() else { showValidation(it, stateProvinceRequired)}
             }
 
 
