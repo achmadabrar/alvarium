@@ -78,6 +78,8 @@ class SearchFragment : BaseFragment() {
 
             initView()
 
+            (viewModel as ProductListViewModel).getModelsForAdvancedSearch(model)
+
         } else {
             observeLiveDataChange = false
             (viewModel as ProductListViewModel).shouldAppend = false
@@ -182,39 +184,42 @@ class SearchFragment : BaseFragment() {
                 }
             })
 
-            availableCategoriesLD.observe(viewLifecycleOwner, Observer { availableCategoryList ->
+            advSearchModelLD.observe(viewLifecycleOwner, Observer { data->
 
-                if (availableCategoryList.isNotEmpty())
-                {
-                    categoryList.clear()
-                    categoryList.addAll(availableCategoryList)
+                data?.availableCategories?.let { availableCategoryList->
 
-                    categorySpinner?.adapter = createSpinnerAdapter(categoryList.map { it.text } as List<String>)
-                }
-            })
-            availableManufacturersLD.observe(viewLifecycleOwner, Observer { availableManufacturerList ->
+                    if (availableCategoryList.isNotEmpty()) {
+                        categoryList.clear()
+                        categoryList.addAll(availableCategoryList)
 
-                if (availableManufacturerList.isNotEmpty())
-                {
-                    manufacturerList.clear()
-                    manufacturerList.addAll(availableManufacturerList)
-
-                    manufacturerSpinner?.adapter =
-                        createSpinnerAdapter(manufacturerList.map { it.text } as List<String>)
+                        categorySpinner?.adapter =
+                            createSpinnerAdapter(categoryList.map { it.text ?: "" })
+                    }
                 }
 
-            })
-            availableVendorsLD.observe(viewLifecycleOwner, Observer { availableVendorList ->
+                data?.availableManufacturers?.let { availableManufacturerList ->
 
-                if (availableVendorList.isNotEmpty())
-                {
-                    vendorList.clear()
-                    vendorList.addAll(availableVendorList)
+                    if (availableManufacturerList.isNotEmpty()) {
+                        manufacturerList.clear()
+                        manufacturerList.addAll(availableManufacturerList)
 
-                    vendorSpinner?.adapter =
-                        createSpinnerAdapter(vendorList.map { it.text } as List<String>)
+                        manufacturerSpinner?.adapter =
+                            createSpinnerAdapter(manufacturerList.map { it.text ?: "" })
+                    }
+
                 }
 
+                data?.availableVendors?.let { availableVendorList ->
+
+                    if (availableVendorList.isNotEmpty()) {
+                        vendorList.clear()
+                        vendorList.addAll(availableVendorList)
+
+                        vendorSpinner?.adapter =
+                            createSpinnerAdapter(vendorList.map { it.text ?: "" })
+                    }
+
+                }
             })
         }
     }
@@ -431,15 +436,15 @@ class SearchFragment : BaseFragment() {
         label_category?.text = DbHelper.getString(Const.HOME_NAV_CATEGORY)
         searchInSubCategory?.text = DbHelper.getString(Const.AUTOMATICALLY_SEARCH_SUBCATEGORIES)
 
-        label_manufacturer?.text = DbHelper.getString(Const.PRODUCT_MANUFACTURER)
-        label_vendor?.text = DbHelper.getString(Const.PRODUCT_VENDOR)
+        label_manufacturer?.text = DbHelper.getString(Const.SEARCH_MANUFACTURER)
+        label_vendor?.text = DbHelper.getString(Const.SEARCH_VENDOR)
 
-        label_price_range_from?.text = DbHelper.getString(Const.PRICE_RANGE)
-        label_price_range_to?.text = DbHelper.getString(Const.TO)
+        label_price_range_from?.text = DbHelper.getString(Const.SEARCH_PRICE_RANGE)
+        label_price_range_to?.text = DbHelper.getString(Const.SEARCH_TO)
 
         searchInDescription?.text = DbHelper.getString(Const.SEARCH_IN_PRODUCT_DISCRIPTIONS)
 
-        searchButton?.text = DbHelper.getString(Const.HOME_NAV_SEARCH)
+        searchButton?.text = DbHelper.getString(Const.SEARCH_BUTTON)
     }
 
     private fun initAdvancedSearch()
@@ -458,18 +463,15 @@ class SearchFragment : BaseFragment() {
         advanceSearchCheckBox?.setOnCheckedChangeListener { _, isChecked ->
             if (isChecked)
                 bsBehavior.state = BottomSheetBehavior.STATE_EXPANDED
-                //advanceSearchLayout?.visibility = View.VISIBLE
             else
                 bsBehavior.state = BottomSheetBehavior.STATE_COLLAPSED
-                //advanceSearchLayout?.visibility = View.GONE
         }
+
         searchButton?.setOnClickListener {
             bsBehavior.state = BottomSheetBehavior.STATE_COLLAPSED
             searchProduct()
             requireActivity().hideKeyboard()
         }
-
-        (viewModel as ProductListViewModel).getModelsForAdvancedSearch(model)
     }
 
     private fun createSpinnerAdapter(nameList: List<String>): ArrayAdapter<String>
@@ -481,19 +483,19 @@ class SearchFragment : BaseFragment() {
 
     private fun initSearchCategorySpinner()
     {
-        categoryList.add(AvailableCategory(false,null,false, DbHelper.getString(Const.SEARCH_ALL),"0"))
-        categorySpinner?.adapter = createSpinnerAdapter(categoryList.map { it.text } as List<String>)
+        categoryList.add(AvailableCategory(false,null,false, DbHelper.getString(Const.COMMON_ALL),"0"))
+        categorySpinner?.adapter = createSpinnerAdapter(categoryList.map { it.text ?: "" })
     }
 
     private fun initSearchManufacturerSpinner()
     {
-        manufacturerList.add(AvailableCategory(false,null,false, DbHelper.getString(Const.SEARCH_ALL),"0"))
-        manufacturerSpinner?.adapter = createSpinnerAdapter(manufacturerList.map { it.text } as List<String>)
+        manufacturerList.add(AvailableCategory(false,null,false, DbHelper.getString(Const.COMMON_ALL),"0"))
+        manufacturerSpinner?.adapter = createSpinnerAdapter(manufacturerList.map { it.text ?: "" })
     }
     private fun initSearchVendorSpinner()
     {
-        vendorList.add(AvailableCategory(false,null,false, DbHelper.getString(Const.SEARCH_ALL),"0"))
-        vendorSpinner?.adapter = createSpinnerAdapter(vendorList.map { it.text } as List<String>)
+        vendorList.add(AvailableCategory(false,null,false, DbHelper.getString(Const.COMMON_ALL),"0"))
+        vendorSpinner?.adapter = createSpinnerAdapter(vendorList.map { it.text ?: "" })
     }
 
 }

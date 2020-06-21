@@ -31,9 +31,7 @@ class ProductListViewModel : BaseViewModel() {
     private var queryMapLD = MutableLiveData<MutableMap<String, String>>()
     private var searchParam = SearchParam()
 
-    var availableCategoriesLD = MutableLiveData<List<AvailableCategory>>()
-    var availableManufacturersLD =  MutableLiveData<List<AvailableCategory>>()
-    var availableVendorsLD = MutableLiveData<List<AvailableCategory>>()
+    var advSearchModelLD = MutableLiveData<SearchResult>()
 
 
     fun getProductByCategory(catId: Long, resetFilters: Boolean, model: ProductListModel) {
@@ -188,14 +186,14 @@ class ProductListViewModel : BaseViewModel() {
 
         search(model)
     }
+
+
     fun getModelsForAdvancedSearch(model: SearchModel) {
 
         model.getModelsForAdvancedSearch(object : RequestCompleteListener<SearchResult> {
             override fun onRequestSuccess(data: SearchResult)
             {
-                availableCategoriesLD.postValue(data.availableCategories)
-                availableManufacturersLD.postValue(data.availableManufacturers)
-                availableVendorsLD.postValue(data.availableVendors)
+                advSearchModelLD.value = data
             }
 
             override fun onRequestFailed(errorMessage: String) {}

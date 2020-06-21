@@ -336,11 +336,15 @@ class Const {
 
         //search
         const val ADVANCED_SEARCH = "search.advancedsearch"
-        const val SEARCH_ALL = "nopstation.webapi.search.all"
-        const val AUTOMATICALLY_SEARCH_SUBCATEGORIES = "nopstation.webapi.search.subcategorysearchautomatically"
-        const val PRICE_RANGE = "nopstation.webapi.search.pricerange"
-        const val TO = "nopstation.webapi.search.to"
-        const val SEARCH_IN_PRODUCT_DISCRIPTIONS = "nopstation.webapi.search.searchindiscriptions"
+        const val COMMON_ALL = "common.all"
+        const val SEARCH_MANUFACTURER = "search.manufacturer"
+        const val SEARCH_VENDOR = "search.vendor"
+        const val SEARCH_CATEGORY = "search.category"
+        const val SEARCH_BUTTON = "search.button"
+        const val AUTOMATICALLY_SEARCH_SUBCATEGORIES = "search.includesubcategories"
+        const val SEARCH_PRICE_RANGE = "search.pricerange"
+        const val SEARCH_TO = "search.pricerange.to"
+        const val SEARCH_IN_PRODUCT_DISCRIPTIONS = "search.searchindescriptions"
 
     }
 
