@@ -68,28 +68,30 @@ class MainViewModel : CheckoutViewModel() {
             getBestSellingProducts(model)
         } else {
             appLandingData.apply {
-                if(enableFeatureProducts) {
+                if(showFeaturedProducts == true) {
                     getFeaturedProducts(model)
                     numberOfApis++
                 }
 
-                if(enableHomeCategoriesProducts) {
+                if(showHomepageCategoryProducts == true) {
                     getCategoryListWithProducts(model)
                     numberOfApis++
                 }
 
-                if(enableHomePageSlider) {
+                if(showHomepageSlider == true) {
                     getBannerImages(model)
                     numberOfApis++
                 }
 
-                if(enableBestSellingProducts) {
+                if(showBestsellersOnHomepage == true) {
                     getBestSellingProducts(model)
                     numberOfApis++
                 }
 
-                getManufactures(model)
-                numberOfApis++
+                if(showManufacturers == true) {
+                    getManufactures(model)
+                    numberOfApis++
+                }
             }
         }
     }

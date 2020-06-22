@@ -15,11 +15,6 @@ data class AppLandingData(
     @SerializedName("AndroidVersion") val androidVersion: String? = null,
     @SerializedName("AppStoreUrl") val appStoreUrl: String? = null,
     @SerializedName("CurrencyNavSelector") var currencyNavSelector: CurrencyNavSelector = CurrencyNavSelector(),
-    @SerializedName("EnableBestSellingProducts") var enableBestSellingProducts: Boolean = false,
-    @SerializedName("EnableFeatureProducts") var enableFeatureProducts: Boolean = false,
-    @SerializedName("EnableHomeCategoriesProducts") var enableHomeCategoriesProducts: Boolean = false,
-    @SerializedName("EnableHomePageSlider") var enableHomePageSlider: Boolean = false,
-    @SerializedName("EnableSubCategoriesProducts") var enableSubCategoriesProducts: Boolean = false,
     @SerializedName("IOSForceUpdate") val iOSForceUpdate: Boolean? = null,
     @SerializedName("IOSVersion") val iOSVersion: String? = null,
     @SerializedName("LanguageNavSelector") var languageNavSelector: LanguageNavSelector = LanguageNavSelector(),
@@ -28,70 +23,16 @@ data class AppLandingData(
     @SerializedName("Rtl") val rtl: Boolean = false,
     @SerializedName("ShowSubCategoryProducts") val showSubCategoryProducts: Boolean = false,
     @SerializedName("ShowAllVendors") val showAllVendors: Boolean? = null,
+    @SerializedName("ShowBestsellersOnHomepage") var showBestsellersOnHomepage: Boolean? = null,
+    @SerializedName("ShowFeaturedProducts") var showFeaturedProducts: Boolean? = null,
+    @SerializedName("ShowHomepageCategoryProducts") var showHomepageCategoryProducts: Boolean? = null,
+    @SerializedName("ShowHomepageSlider") var showHomepageSlider: Boolean? = null,
+    @SerializedName("ShowManufacturers") var showManufacturers: Boolean? = null,
     @SerializedName("TotalShoppingCartProducts") val totalShoppingCartProducts: Int = 0,
+    @SerializedName("TotalWishListProducts") val totalWishListProducts: Int = 0,
     @SerializedName("AnonymousCheckoutAllowed") val anonymousCheckoutAllowed: Boolean = false,
     @SerializedName("StringResources") var stringResources: List<StringResource> = listOf()
-) : Parcelable {
-    constructor(parcel: Parcel) : this(
-        parcel.readValue(Boolean::class.java.classLoader) as? Boolean,
-        parcel.readString(),
-        parcel.readString(),
-        parcel.readParcelable(CurrencyNavSelector::class.java.classLoader) ?: CurrencyNavSelector(),
-        parcel.readByte() != 0.toByte(),
-        parcel.readByte() != 0.toByte(),
-        parcel.readByte() != 0.toByte(),
-        parcel.readByte() != 0.toByte(),
-        parcel.readByte() != 0.toByte(),
-        parcel.readValue(Boolean::class.java.classLoader) as? Boolean,
-        parcel.readString(),
-        parcel.readParcelable(LanguageNavSelector::class.java.classLoader) ?: LanguageNavSelector(),
-        parcel.readString() ?: "",
-        parcel.readString(),
-        parcel.readByte() != 0.toByte(),
-        parcel.readByte() != 0.toByte(),
-        parcel.readValue(Boolean::class.java.classLoader) as? Boolean,
-        parcel.readInt(),
-        parcel.readValue(Boolean::class.java.classLoader) as Boolean,
-        parcel.createTypedArrayList(StringResource.CREATOR) ?: listOf()
-    )
-
-    override fun writeToParcel(parcel: Parcel, flags: Int) {
-        parcel.writeValue(andriodForceUpdate)
-        parcel.writeString(androidVersion)
-        parcel.writeString(appStoreUrl)
-        parcel.writeParcelable(currencyNavSelector, flags)
-        parcel.writeByte(if (enableBestSellingProducts) 1 else 0)
-        parcel.writeByte(if (enableFeatureProducts) 1 else 0)
-        parcel.writeByte(if (enableHomeCategoriesProducts) 1 else 0)
-        parcel.writeByte(if (enableHomePageSlider) 1 else 0)
-        parcel.writeByte(if (enableSubCategoriesProducts) 1 else 0)
-        parcel.writeValue(iOSForceUpdate)
-        parcel.writeString(iOSVersion)
-        parcel.writeParcelable(languageNavSelector, flags)
-        parcel.writeString(logoUrl)
-        parcel.writeString(playStoreUrl)
-        parcel.writeByte(if (rtl) 1 else 0)
-        parcel.writeByte(if (showSubCategoryProducts) 1 else 0)
-        parcel.writeValue(showAllVendors)
-        parcel.writeInt(totalShoppingCartProducts)
-        parcel.writeValue(anonymousCheckoutAllowed)
-        parcel.writeTypedList(stringResources)
-    }
-
-    override fun describeContents(): Int {
-        return 0
-    }
-
-    companion object CREATOR : Parcelable.Creator<AppLandingData> {
-        override fun createFromParcel(parcel: Parcel): AppLandingData {
-            return AppLandingData(parcel)
-        }
-
-        override fun newArray(size: Int): Array<AppLandingData?> {
-            return arrayOfNulls(size)
-        }
-    }
-}
+)
 
 data class CurrencyNavSelector(
     @SerializedName("AvailableCurrencies") var availableCurrencies: List<AvailableCurrency> = listOf(),
