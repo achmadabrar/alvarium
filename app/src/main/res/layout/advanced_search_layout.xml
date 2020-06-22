@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:background="@drawable/rounded_background_top"
-    android:backgroundTint="?attr/primaryListItemBg"
     android:elevation="16dp"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -17,6 +16,17 @@
         android:orientation="vertical"
         android:visibility="visible"
         tools:visibility="visible">
+
+        <androidx.appcompat.widget.AppCompatCheckBox
+            android:id="@+id/advanceSearchCheckBox"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingBottom="5dp"
+            android:paddingTop="5dp"
+            tools:text="Advanced Search"
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+            android:layout_gravity="center"
+            android:visibility="visible"/>
 
         <LinearLayout
             android:layout_width="match_parent"

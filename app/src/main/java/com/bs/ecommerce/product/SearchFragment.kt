@@ -31,9 +31,8 @@ import com.bs.ecommerce.product.model.data.PagingFilteringContext
 import com.bs.ecommerce.product.model.data.ProductSummary
 import com.bs.ecommerce.product.viewModel.ProductListViewModel
 import com.bs.ecommerce.utils.*
-import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
-import kotlinx.android.synthetic.main.advanced_search_layout.*
+import kotlinx.android.synthetic.main.advanced_search_layout.view.*
 import kotlinx.android.synthetic.main.fragment_product_list.*
 import java.util.*
 import kotlin.math.floor
@@ -46,11 +45,14 @@ class SearchFragment : BaseFragment() {
     private lateinit var model: SearchModel
     private lateinit var layoutManager: GridLayoutManager
     private lateinit var productClickListener: ItemClickListener<ProductSummary>
-    private lateinit var bsBehavior: BottomSheetBehavior<*>
+    private lateinit var advanceSearchView: View
 
     private lateinit var productListAdapter: ProductListAdapter
     private var searchView: SearchView? = null
     private val sortOptionDialog: BottomSheetDialog by lazy {
+        BottomSheetDialog(requireContext(), R.style.BsDialog)
+    }
+    private val advSearchDialog: BottomSheetDialog by lazy {
         BottomSheetDialog(requireContext(), R.style.BsDialog)
     }
 
@@ -192,7 +194,7 @@ class SearchFragment : BaseFragment() {
                         categoryList.clear()
                         categoryList.addAll(availableCategoryList)
 
-                        categorySpinner?.adapter =
+                        advanceSearchView.categorySpinner?.adapter =
                             createSpinnerAdapter(categoryList.map { it.text ?: "" })
                     }
                 }
@@ -203,7 +205,7 @@ class SearchFragment : BaseFragment() {
                         manufacturerList.clear()
                         manufacturerList.addAll(availableManufacturerList)
 
-                        manufacturerSpinner?.adapter =
+                        advanceSearchView.manufacturerSpinner?.adapter =
                             createSpinnerAdapter(manufacturerList.map { it.text ?: "" })
                     }
 
@@ -215,7 +217,7 @@ class SearchFragment : BaseFragment() {
                         vendorList.clear()
                         vendorList.addAll(availableVendorList)
 
-                        vendorSpinner?.adapter =
+                        advanceSearchView.vendorSpinner?.adapter =
                             createSpinnerAdapter(vendorList.map { it.text ?: "" })
                     }
 
@@ -260,8 +262,6 @@ class SearchFragment : BaseFragment() {
 
             searchView?.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
                 override fun onQueryTextSubmit(query: String): Boolean {
-
-                    bsBehavior.state = BottomSheetBehavior.STATE_COLLAPSED
 
                     searchProduct()
                     requireActivity().title = query
@@ -309,22 +309,24 @@ class SearchFragment : BaseFragment() {
 
             searchView?.let {   search.query = it.query.toString()  }
 
-            if (advanceSearchCheckBox?.isChecked == true)
-            {
-                search.isAdvanceSearchSelected = true
+            advanceSearchView.apply {
 
-                search.isSearchInSubcategory = searchInSubCategory?.isChecked == true
+                if (advanceSearchCheckBox?.isChecked == true){
+                    search.isAdvanceSearchSelected = true
 
-                search.categoryId = categorySpinner?.selectedItemId?.toInt() ?: 0
-                search.manufacturerId = manufacturerSpinner?.selectedItemId?.toInt() ?: 0
-                search.vendorId = vendorSpinner?.selectedItemId?.toInt() ?: 0
+                    search.isSearchInSubcategory = searchInSubCategory?.isChecked == true
 
-                search.isSearchVendor = true
+                    search.categoryId = categorySpinner?.selectedItemId?.toInt() ?: 0
+                    search.manufacturerId = manufacturerSpinner?.selectedItemId?.toInt() ?: 0
+                    search.vendorId = vendorSpinner?.selectedItemId?.toInt() ?: 0
 
-                search.priceFrom = priceFromEditText?.text?.toString()?.trim { it <= ' ' } ?: ""
-                search.priceTo = priceToEditText?.text?.toString()?.trim { it <= ' ' } ?: ""
+                    search.isSearchVendor = true
 
-                search.isSearchInDescription = searchInDescription?.isChecked == true
+                    search.priceFrom = priceFromEditText?.text?.toString()?.trim { it <= ' ' } ?: ""
+                    search.priceTo = priceToEditText?.text?.toString()?.trim { it <= ' ' } ?: ""
+
+                    search.isSearchInDescription = searchInDescription?.isChecked == true
+                }
             }
             return search
         }
@@ -431,44 +433,49 @@ class SearchFragment : BaseFragment() {
 
     private fun setDynamicStrings()
     {
-        advanceSearchCheckBox?.text = DbHelper.getString(Const.ADVANCED_SEARCH)
+        advanceSearchButton?.text = DbHelper.getString(Const.ADVANCED_SEARCH)
 
-        label_category?.text = DbHelper.getString(Const.HOME_NAV_CATEGORY)
-        searchInSubCategory?.text = DbHelper.getString(Const.AUTOMATICALLY_SEARCH_SUBCATEGORIES)
+        advanceSearchView.apply {
+            advanceSearchCheckBox?.text = DbHelper.getString(Const.ADVANCED_SEARCH)
 
-        label_manufacturer?.text = DbHelper.getString(Const.SEARCH_MANUFACTURER)
-        label_vendor?.text = DbHelper.getString(Const.SEARCH_VENDOR)
+            label_category?.text = DbHelper.getString(Const.HOME_NAV_CATEGORY)
+            searchInSubCategory?.text = DbHelper.getString(Const.AUTOMATICALLY_SEARCH_SUBCATEGORIES)
 
-        label_price_range_from?.text = DbHelper.getString(Const.SEARCH_PRICE_RANGE)
-        label_price_range_to?.text = DbHelper.getString(Const.SEARCH_TO)
+            label_manufacturer?.text = DbHelper.getString(Const.SEARCH_MANUFACTURER)
+            label_vendor?.text = DbHelper.getString(Const.SEARCH_VENDOR)
 
-        searchInDescription?.text = DbHelper.getString(Const.SEARCH_IN_PRODUCT_DISCRIPTIONS)
+            label_price_range_from?.text = DbHelper.getString(Const.SEARCH_PRICE_RANGE)
+            label_price_range_to?.text = DbHelper.getString(Const.SEARCH_TO)
 
-        searchButton?.text = DbHelper.getString(Const.SEARCH_BUTTON)
+            searchInDescription?.text = DbHelper.getString(Const.SEARCH_IN_PRODUCT_DISCRIPTIONS)
+
+            searchButton?.text = DbHelper.getString(Const.SEARCH_BUTTON)
+        }
     }
 
     private fun initAdvancedSearch()
     {
-        bsBehavior = BottomSheetBehavior.from(advanceSearchFullView)
+        advanceSearchView = layoutInflater.inflate(R.layout.advanced_search_layout, view as ViewGroup, false)
 
         setDynamicStrings()
 
-        advanceSearchFullView?.visibility = View.VISIBLE
-        advanceSearchCheckBox?.visibility = View.VISIBLE
+        advanceSearchButton?.visibility = View.VISIBLE
 
         initSearchCategorySpinner()
         initSearchManufacturerSpinner()
         initSearchVendorSpinner()
 
-        advanceSearchCheckBox?.setOnCheckedChangeListener { _, isChecked ->
-            if (isChecked)
-                bsBehavior.state = BottomSheetBehavior.STATE_EXPANDED
-            else
-                bsBehavior.state = BottomSheetBehavior.STATE_COLLAPSED
+        advanceSearchButton?.setOnClickListener {
+            requireActivity().hideKeyboard()
+
+            (advanceSearchView.parent as ViewGroup?)?.removeView(advanceSearchView)
+
+            advSearchDialog.setContentView(advanceSearchView)
+            advSearchDialog.show()
         }
 
-        searchButton?.setOnClickListener {
-            bsBehavior.state = BottomSheetBehavior.STATE_COLLAPSED
+        advanceSearchView.searchButton?.setOnClickListener {
+            advSearchDialog.hide()
             searchProduct()
             requireActivity().hideKeyboard()
         }
@@ -484,18 +491,18 @@ class SearchFragment : BaseFragment() {
     private fun initSearchCategorySpinner()
     {
         categoryList.add(AvailableCategory(false,null,false, DbHelper.getString(Const.COMMON_ALL),"0"))
-        categorySpinner?.adapter = createSpinnerAdapter(categoryList.map { it.text ?: "" })
+        advanceSearchView.categorySpinner?.adapter = createSpinnerAdapter(categoryList.map { it.text ?: "" })
     }
 
     private fun initSearchManufacturerSpinner()
     {
         manufacturerList.add(AvailableCategory(false,null,false, DbHelper.getString(Const.COMMON_ALL),"0"))
-        manufacturerSpinner?.adapter = createSpinnerAdapter(manufacturerList.map { it.text ?: "" })
+        advanceSearchView.manufacturerSpinner?.adapter = createSpinnerAdapter(manufacturerList.map { it.text ?: "" })
     }
     private fun initSearchVendorSpinner()
     {
         vendorList.add(AvailableCategory(false,null,false, DbHelper.getString(Const.COMMON_ALL),"0"))
-        vendorSpinner?.adapter = createSpinnerAdapter(vendorList.map { it.text ?: "" })
+        advanceSearchView.vendorSpinner?.adapter = createSpinnerAdapter(vendorList.map { it.text ?: "" })
     }
 
 }
