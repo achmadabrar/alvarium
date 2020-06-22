@@ -154,15 +154,33 @@
                         android:imeOptions="actionNext"
                         android:inputType="textPersonName"/>
 
-                    <EditText
-                        android:id="@+id/countryEditText"
-                        style="@style/RoundedEditText"
+                    <LinearLayout
+                        style="@style/RoundedSpinner"
+                        android:layout_marginTop="15dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <androidx.appcompat.widget.AppCompatSpinner
+                            android:id="@+id/countrySpinner"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/checkout_spinner_bg"/>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/stateSpinnerLayout"
+                        style="@style/RoundedSpinner"
+                        android:layout_marginTop="15dp"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="15dp"
-                        android:hint="@string/reg_hint_country"
-                        android:imeOptions="actionNext"
-                        android:inputType="textPersonName"/>
+                        android:visibility="gone">
+
+                        <androidx.appcompat.widget.AppCompatSpinner
+                            android:id="@+id/stateSpinner"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/checkout_spinner_bg"/>
+                    </LinearLayout>
 
                     <EditText
                         android:id="@+id/cityEditText"
@@ -173,18 +191,6 @@
                         android:hint="@string/reg_hint_city"
                         android:imeOptions="actionNext"
                         android:inputType="textPersonName"/>
-
-
-
-                    <EditText
-                        android:id="@+id/stateProvinceEditText"
-                        style="@style/RoundedEditText"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="15dp"
-                        android:hint="@string/reg_hint_state"
-                        android:imeOptions="actionNext"
-                        android:inputType="numberDecimal"/>
 
 
                     <RadioGroup

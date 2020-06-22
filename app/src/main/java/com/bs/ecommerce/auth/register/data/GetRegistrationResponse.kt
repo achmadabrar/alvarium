@@ -1,4 +1,6 @@
 package com.bs.ecommerce.auth.register.data
+import com.bs.ecommerce.checkout.model.data.AvailableCountry
+import com.bs.ecommerce.checkout.model.data.AvailableState
 import com.bs.ecommerce.networking.common.BaseResponse
 import com.bs.ecommerce.product.model.data.CustomerAttribute
 import com.google.gson.annotations.SerializedName
@@ -10,8 +12,8 @@ data class GetRegisterData(
     @SerializedName("AcceptPrivacyPolicyEnabled") var acceptPrivacyPolicyEnabled: Boolean = false,
     @SerializedName("AcceptPrivacyPolicyPopup") var acceptPrivacyPolicyPopup: Boolean = false,
     @SerializedName("AllowCustomersToSetTimeZone") var allowCustomersToSetTimeZone: Boolean = false,
-    @SerializedName("AvailableCountries") var availableCountries: List<Any> = listOf(),
-    @SerializedName("AvailableStates") var availableStates: List<Any> = listOf(),
+    @SerializedName("AvailableCountries") var availableCountries: List<AvailableCountry> = listOf(),
+    @SerializedName("AvailableStates") var availableStates: List<AvailableState> = listOf(),
     @SerializedName("AvailableTimeZones") var availableTimeZones: List<AvailableTimeZone> = listOf(),
     @SerializedName("CheckUsernameAvailabilityEnabled") var checkUsernameAvailabilityEnabled: Boolean = false,
     @SerializedName("City") var city: String = "",

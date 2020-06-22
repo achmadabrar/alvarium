@@ -182,9 +182,7 @@ class AddressFormUtil(private val form: View, private val context: Context) {
 
             if (countryEnabled==true && countryId == 0) {
                 isValidForm = false
-                val toastMsg = "${DbHelper.getString(Const.COUNTRY)} ${DbHelper.getString(Const.IS_REQUIRED)}"
-
-                Toast.makeText(context, toastMsg, Toast.LENGTH_SHORT).show()
+                Toast.makeText(context, DbHelper.getString(Const.COUNTRY_REQUIRED), Toast.LENGTH_SHORT).show()
             }
 
             stateProvinceId = null

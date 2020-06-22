@@ -3,6 +3,8 @@ package com.bs.ecommerce.auth.register
 import android.app.DatePickerDialog
 import android.os.Bundle
 import android.view.View
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
 import android.widget.EditText
 import android.widget.RelativeLayout
 import androidx.lifecycle.Observer
@@ -16,6 +18,10 @@ import com.bs.ecommerce.auth.register.data.GetRegisterData
 import com.bs.ecommerce.auth.register.data.GetRegistrationResponse
 import com.bs.ecommerce.base.BaseViewModel
 import com.bs.ecommerce.base.ToolbarLogoBaseFragment
+import com.bs.ecommerce.checkout.CheckoutViewModel
+import com.bs.ecommerce.checkout.model.CheckoutModelImpl
+import com.bs.ecommerce.checkout.model.data.AvailableCountry
+import com.bs.ecommerce.checkout.model.data.AvailableState
 import com.bs.ecommerce.db.DbHelper
 import com.bs.ecommerce.networking.Api
 import com.bs.ecommerce.networking.common.KeyValueFormData
@@ -146,6 +152,10 @@ open class RegisterFragment : ToolbarLogoBaseFragment(), View.OnClickListener
                     }
                 }
             })
+
+            stateListLD.observe(viewLifecycleOwner, Observer { statesList ->
+                populateStateSpinner(getRegistrationResponseLD.value?.data?.stateProvinceId ?: 0, statesList)
+            })
         }
 
 
@@ -201,19 +211,15 @@ open class RegisterFragment : ToolbarLogoBaseFragment(), View.OnClickListener
             cityEditText?.showOrHideOrRequired(isEnabledParam = cityEnabled, isRequired =   cityRequired, value = city,
                 hintText = DbHelper.getString(Const.CITY))
 
-            countryEditText?.showOrHideOrRequired(isEnabledParam = countryEnabled, isRequired =   countryRequired, value = county,
-                hintText = DbHelper.getString(Const.SELECT_COUNTRY))
-
-            stateProvinceEditText?.showOrHideOrRequired(isEnabledParam = stateProvinceEnabled, isRequired =   stateProvinceRequired,
-                hintText = DbHelper.getString(Const.STATE_PROVINCE))
-
             phoneEditText?.showOrHideOrRequired(isEnabledParam = phoneEnabled, isRequired =   phoneRequired, value = phone,
                 hintText = DbHelper.getString(Const.PHONE))
 
             faxEditText?.showOrHideOrRequired(isEnabledParam = faxEnabled, isRequired =   faxRequired, value = fax,
                 hintText = DbHelper.getString(Const.FAX))
 
-
+            if(countryEnabled) {
+                populateCountrySpinner(availableCountries)
+            }
 
             genderLayout?.showOrHide(genderEnabled)
 
@@ -270,11 +276,13 @@ open class RegisterFragment : ToolbarLogoBaseFragment(), View.OnClickListener
 
             requireActivity().hideKeyboard()
 
-            getCustomerInfoWithValidation()
-
-            performSubmit()
+            try {
+                getCustomerInfoWithValidation()
+                performSubmit()
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
         }
-
 
     }
 
@@ -345,13 +353,16 @@ open class RegisterFragment : ToolbarLogoBaseFragment(), View.OnClickListener
                 val input = it.text?.trim().toString(); if(input.isNotEmpty()) city = input else { showValidation(it, cityRequired) }
             }
 
-            countryEditText?.let {
-                val input = it.text?.trim().toString(); if(input.isNotEmpty()) county = input else { showValidation(it, countryRequired)}
+            val selectedCountryId = (countrySpinner.selectedItem as AvailableCountry).value.toInt()
+            if (countryEnabled && selectedCountryId == 0) {
+                isValidInfo = false
+                toast(DbHelper.getString(Const.COUNTRY_REQUIRED))
+            } else {
+                countryId = selectedCountryId
             }
 
-            stateProvinceEditText?.let {
-                val input = it.text?.trim().toString()
-                if(input.isNotEmpty() && input.isNumeric()) stateProvinceId = input.toInt() else { showValidation(it, stateProvinceRequired)}
+            if(stateSpinner.selectedItem is AvailableState) {
+                stateProvinceId = (stateSpinner.selectedItem as AvailableState).id
             }
 
 
@@ -404,6 +415,57 @@ open class RegisterFragment : ToolbarLogoBaseFragment(), View.OnClickListener
                 bsBehavior.state = BottomSheetBehavior.STATE_COLLAPSED
                 //customerAttributeView?.onBottomSheetClose()
             }
+        }
+    }
+
+    private fun populateCountrySpinner(availableCountries: List<AvailableCountry>) {
+
+        val countryAdapter: ArrayAdapter<AvailableCountry> =
+            ArrayAdapter<AvailableCountry>(requireContext(), R.layout.simple_spinner_item, availableCountries)
+
+        countryAdapter.setDropDownViewResource(R.layout.simple_spinner_dropdown_item)
+
+        countrySpinner?.adapter = countryAdapter
+
+        countrySpinner?.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(
+                parent: AdapterView<*>,
+                view: View,
+                position: Int,
+                id: Long
+            ) {
+                // load states for selected country
+                if (availableCountries[position].value != "0") {
+                    (viewModel as CheckoutViewModel).getStatesByCountryVM(
+                        availableCountries[position].value, CheckoutModelImpl()
+                    )
+                }
+            }
+
+
+            override fun onNothingSelected(parent: AdapterView<*>) {}
+        }
+
+        // set selected country
+        availableCountries.indexOfFirst { it.selected }.also {
+            if (it >= 0) countrySpinner.setSelection(it)
+        }
+    }
+
+    private fun populateStateSpinner(selectedStateId: Int?, states: List<AvailableState>) {
+
+        val spinnerAdapter: ArrayAdapter<AvailableState> =
+            ArrayAdapter<AvailableState>(requireContext(), R.layout.simple_spinner_item, states)
+
+        spinnerAdapter.setDropDownViewResource(R.layout.simple_spinner_dropdown_item)
+
+        stateSpinner?.adapter = spinnerAdapter
+
+        stateSpinnerLayout?.visibility = View.VISIBLE
+
+        // set selected state
+        states.indexOfFirst { it.id == selectedStateId }.also {
+            if (it >= 0) stateSpinner.setSelection(it)
         }
     }
 

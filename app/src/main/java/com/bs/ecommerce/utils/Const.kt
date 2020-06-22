@@ -292,6 +292,7 @@ class Const {
         const val STREET_ADDRESS = "account.fields.streetaddress"
         const val STREET_ADDRESS_2 = "account.fields.streetaddress2"
         const val COUNTRY = "account.fields.country"
+        const val COUNTRY_REQUIRED = "account.fields.country.required"
 
 
         const val IS_REQUIRED = "nopstation.webapi.common.isrequired"

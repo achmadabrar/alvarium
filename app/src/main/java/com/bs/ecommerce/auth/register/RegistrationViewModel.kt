@@ -3,11 +3,11 @@ package com.bs.ecommerce.auth.register
 import androidx.lifecycle.MutableLiveData
 import com.bs.ecommerce.auth.AuthModel
 import com.bs.ecommerce.auth.register.data.GetRegistrationResponse
-import com.bs.ecommerce.base.BaseViewModel
+import com.bs.ecommerce.checkout.CheckoutViewModel
 import com.bs.ecommerce.common.RequestCompleteListener
 
 
-class RegistrationViewModel  : BaseViewModel()
+class RegistrationViewModel  : CheckoutViewModel()
 {
 
     var getRegistrationResponseLD = MutableLiveData<GetRegistrationResponse>()
