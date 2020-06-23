@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:ellipsize="marquee"
-    android:background="@color/gray"
+    android:background="@color/tab_background_selected"
     android:padding="6dp"
     android:singleLine="true"
     android:textSize="@dimen/et_text_size"

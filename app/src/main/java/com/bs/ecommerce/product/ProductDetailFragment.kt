@@ -108,7 +108,7 @@ class ProductDetailFragment : BaseFragment(), View.OnClickListener {
             }
         }
 
-        setLiveDataListeners()
+        try { setLiveDataListeners() } catch (e: Exception) {e.printStackTrace() }
     }
 
     override fun onResume() {
@@ -295,9 +295,8 @@ class ProductDetailFragment : BaseFragment(), View.OnClickListener {
                             product.fullDescription.let { text ->
                                 productDescLayout?.tvProductDescription?.apply {
                                     settings?.javaScriptEnabled = true
-                                    settings?.loadWithOverviewMode = true
-                                    settings?.useWideViewPort = true
-
+                                    //settings?.loadWithOverviewMode = true
+                                    //settings?.useWideViewPort = true
                                     webViewClient = WebViewClient()
 
                                     show(text)
