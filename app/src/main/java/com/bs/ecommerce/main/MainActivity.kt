@@ -15,9 +15,11 @@ import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.ViewModelProvider
 import com.bs.ecommerce.R
 import com.bs.ecommerce.auth.customerInfo.CustomerInfoFragment
+import com.bs.ecommerce.auth.register.RegisterFragment
 import com.bs.ecommerce.base.BaseFragment
 import com.bs.ecommerce.cart.CartFragment
 import com.bs.ecommerce.checkout.BaseCheckoutNavigationFragment
+import com.bs.ecommerce.checkout.CheckoutStepFragment
 import com.bs.ecommerce.db.DbHelper
 import com.bs.ecommerce.fcm.MessagingService
 import com.bs.ecommerce.home.category.CategoryFragment
@@ -36,6 +38,8 @@ import com.bs.ecommerce.utils.*
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.messaging.FirebaseMessaging
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.toolbar.*
+import kotlinx.android.synthetic.main.toolbar.view.*
 import org.jetbrains.anko.toast
 
 
@@ -157,7 +161,7 @@ class MainActivity : PrivacyPolicyDialogActivity(), View.OnClickListener
 
     private fun gotoFragment(fragment: androidx.fragment.app.Fragment)
     {
-        supportFragmentManager.beginTransaction().replace(R.id.layoutFrame, fragment).addToBackStack(null).commit()
+        replaceFragment(fragment)
         notificationClicked = true
     }
 
@@ -178,7 +182,7 @@ class MainActivity : PrivacyPolicyDialogActivity(), View.OnClickListener
 
             when(topFragmentName) {
                 OptionsFragment::class.java.simpleName -> bottomNavPosition = 4
-                CustomerInfoFragment::class.java.simpleName -> bottomNavPosition = 3
+                UserAccountFragment::class.java.simpleName -> bottomNavPosition = 3
                 SearchFragment::class.java.simpleName -> bottomNavPosition = 2
                 CategoryFragment::class.java.simpleName -> bottomNavPosition = 1
                 HomeFragment::class.java.simpleName -> bottomNavPosition = 0
@@ -196,6 +200,26 @@ class MainActivity : PrivacyPolicyDialogActivity(), View.OnClickListener
             }
 
             hideKeyboard()
+
+            // show/hide toolbar logo & title
+            val show = when(topFragmentName) {
+                HomeFragment::class.java.simpleName -> true
+                CategoryFragment::class.java.simpleName -> true
+                UserAccountFragment::class.java.simpleName -> true
+                OptionsFragment::class.java.simpleName -> true
+                CheckoutStepFragment::class.java.simpleName -> true
+                BaseCheckoutNavigationFragment::class.java.simpleName -> true
+                RegisterFragment::class.java.simpleName -> true
+                else -> false
+            }
+
+            val toolbarTitle = if(topFragment is BaseFragment) topFragment.getFragmentTitle() else ""
+
+            topLogoLayout?.visibility = if(show) View.VISIBLE else View.GONE
+            title = toolbarTitle
+
+            "toolbar_".showLog("logo visible - $show <> title - $toolbarTitle")
+
         }
 
         // set back button after theme/configuration change
@@ -217,6 +241,7 @@ class MainActivity : PrivacyPolicyDialogActivity(), View.OnClickListener
     {
         toolbarTop = findViewById(R.id.appToolbar)
         setSupportActionBar(toolbarTop)
+        topLogoLayout?.topLogo?.loadImg(PrefSingleton.getPrefs(PrefSingleton.APP_LOGO), null)
 
 
         toggle = object : ActionBarDrawerToggle(this, drawerLayout, toolbarTop, R.string.app_name, R.string.app_name)
@@ -319,10 +344,7 @@ class MainActivity : PrivacyPolicyDialogActivity(), View.OnClickListener
         when {
             supportFragmentManager.findFragmentById(R.id.checkoutFragmentHolder) is BaseCheckoutNavigationFragment ->
             {
-                supportFragmentManager.beginTransaction()
-                    .replace(R.id.layoutFrame, CartFragment())
-                    .addToBackStack(CartFragment::class.java.simpleName)
-                    .commit()
+                supportFragmentManager.popBackStack(CartFragment::class.java.simpleName, 0)
 
                 //MyApplication.getBillingResponse = null
                 //MyApplication.checkoutSaveResponse = null
@@ -421,11 +443,7 @@ class MainActivity : PrivacyPolicyDialogActivity(), View.OnClickListener
     fun switchFragmentFromDialog(dialog: DialogFragment, fragment: BaseFragment?) {
 
         fragment?.let {
-            supportFragmentManager
-                .beginTransaction()
-                .replace(R.id.layoutFrame, it, it::class.java.simpleName)
-                .addToBackStack(it::class.java.simpleName)
-                .commit()
+            replaceFragment(fragment)
         }
         
         dialog.dismiss()

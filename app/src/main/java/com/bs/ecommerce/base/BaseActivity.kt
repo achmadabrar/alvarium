@@ -9,7 +9,6 @@ import android.os.Build
 import android.os.Bundle
 import android.os.Handler
 import android.provider.Settings
-import android.text.TextUtils
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
@@ -190,7 +189,7 @@ abstract class BaseActivity : AppCompatActivity(), ConnectivityReceiver.Connecti
     fun goMenuItemFragment(fragment: androidx.fragment.app.Fragment)
     {
         supportFragmentManager.popBackStack(null, androidx.fragment.app.FragmentManager.POP_BACK_STACK_INCLUSIVE)
-        supportFragmentManager.beginTransaction().replace(R.id.layoutFrame, fragment).addToBackStack(null).commit()
+        replaceFragment(fragment)
 
     }
 

@@ -21,10 +21,10 @@ import androidx.annotation.IdRes
 import androidx.asynclayoutinflater.view.AsyncLayoutInflater
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentTransaction
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bs.ecommerce.R
+import com.bs.ecommerce.base.BaseActivity
 import com.bs.ecommerce.base.BaseFragment
 import com.bs.ecommerce.db.DbHelper
 import com.bs.ecommerce.main.MainActivity
@@ -64,9 +64,10 @@ fun Fragment.replaceFragmentSafely(
 
         val ft = fragManager
             .beginTransaction()
-            .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
-            .setCustomAnimations(enterAnimation, exitAnimation, popEnterAnimation, popExitAnimation)
-            .replace(containerViewId, fragment, fragment::class.java.simpleName)
+            //.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
+            //.setCustomAnimations(enterAnimation, exitAnimation, popEnterAnimation, popExitAnimation)
+            .hide(this)
+            .add(containerViewId, fragment, fragment::class.java.simpleName)
             .addToBackStack(fragment::class.java.simpleName)
 
         if (!fragManager.isStateSaved) {
@@ -80,21 +81,57 @@ fun Fragment.replaceFragmentSafely(
 inline fun <reified T> MainActivity.createIfNotInBackStack(fragment: BaseFragment) {
     //val fragment = Class.forName(fragmentName).newInstance() as BaseFragment
 
-    if(supportFragmentManager.findFragmentById(R.id.layoutFrame) !is T) {
+    try {
+        if(supportFragmentManager.findFragmentById(R.id.layoutFrame) !is T) {
 
-        val backStateName: String = fragment::class.java.simpleName
+            val backStateName: String = fragment::class.java.simpleName
 
-        val fragmentPopped = supportFragmentManager.popBackStackImmediate(backStateName, 0)
+            val topFragment = supportFragmentManager.findFragmentById(R.id.layoutFrame)
 
-        if (!fragmentPopped) {
-            supportFragmentManager.beginTransaction().replace(
-                R.id.layoutFrame,
-                fragment
-            ).addToBackStack(backStateName).commit()
+            val fragmentPopped = supportFragmentManager.popBackStackImmediate(backStateName, 0)
+
+            if (!fragmentPopped) {
+                supportFragmentManager.beginTransaction()
+                    .hide(topFragment!!).add(
+                        R.id.layoutFrame,
+                        fragment
+                    ).addToBackStack(backStateName).commit()
+            }
         }
+    } catch (e: Exception) {
+        e.printStackTrace()
     }
 }
 
+fun BaseActivity.replaceFragment(
+    fragment: Fragment,
+    @IdRes containerViewId: Int = R.id.layoutFrame
+) {
+    try {
+        val fragManager = supportFragmentManager
+
+        if(fragManager.backStackEntryCount > MAX_ALLOWED_FRAGMENT) {
+            "test_".showLog("Pop BS")
+            fragManager.popBackStack()
+        } else {
+            "test_".showLog("No need to pop BS. ${fragManager.backStackEntryCount}")
+        }
+
+        val topFragment = fragManager.findFragmentById(containerViewId)
+
+        val ft = fragManager
+            .beginTransaction()
+            .hide(topFragment!!)
+            .add(containerViewId, fragment, fragment::class.java.simpleName)
+            .addToBackStack(fragment::class.java.simpleName)
+
+        if (!fragManager.isStateSaved) {
+            ft.commit()
+        }
+    } catch(e: Exception) {
+        e.printStackTrace()
+    }
+}
 
 private var toast: Toast? = null
 
