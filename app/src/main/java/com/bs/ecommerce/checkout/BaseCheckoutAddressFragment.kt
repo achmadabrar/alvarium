@@ -246,10 +246,9 @@ open class BaseCheckoutAddressFragment : BaseCheckoutNavigationFragment()
     }
 
 
-    protected fun getAddressWithValidation(address: AddressModel) : AddressModel
+    protected fun getAddressWithValidation(address: AddressModel?) : AddressModel?
     {
-        with(address)
-        {
+        address?.apply {
 
             etCompanyName?.let {
                 val input = it.text?.trim().toString(); if(input.isNotEmpty()) company = input else { showValidation(it, companyRequired)}

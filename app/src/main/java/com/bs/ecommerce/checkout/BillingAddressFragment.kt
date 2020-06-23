@@ -17,22 +17,22 @@ class BillingAddressFragment : BaseCheckoutAddressFragment()
 
         addressTabLayout?.getTabAt(CheckoutConstants.BILLING_ADDRESS_TAB)?.select()
 
-        newAddress = MyApplication.getBillingResponse?.data?.billingAddress?.billingNewAddress!!
+        MyApplication.getBillingResponse?.data?.billingAddress?.billingNewAddress?.let { newAddress = it }
 
         btnContinue?.setOnClickListener {
 
             if(addressID == 0L)
             {
-                val newAddress = getAddressWithValidation(newAddress!!)
+                val newAddress = getAddressWithValidation(newAddress)
 
-                if(isValidInfo)
+                if(isValidInfo && newAddress!=null)
                     (viewModel as CheckoutViewModel).saveNewBillingVM(newAddress, getCustomAttributeValues(), model)
             }
             else
                 (viewModel as CheckoutViewModel).saveExistingBillingVM(addressID, model, shipToSameAddressCheckBox.isChecked)
         }
 
-        showBillingAddressUI(MyApplication.getBillingResponse!!)
+        MyApplication.getBillingResponse?.let { showBillingAddressUI(it) }
     }
 
     private fun showBillingAddressUI(billingAddressResponse: BillingAddressResponse)

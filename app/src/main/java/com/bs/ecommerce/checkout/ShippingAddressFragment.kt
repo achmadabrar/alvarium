@@ -3,6 +3,7 @@ package com.bs.ecommerce.checkout
 import android.os.Bundle
 import android.view.View
 import android.widget.AdapterView
+import com.bs.ecommerce.checkout.model.data.AddressModel
 import com.bs.ecommerce.checkout.model.data.CheckoutSaveResponse
 import com.bs.ecommerce.checkout.model.data.ShippingAddressModel
 import com.bs.ecommerce.checkout.model.data.Store
@@ -22,18 +23,18 @@ class ShippingAddressFragment : BaseCheckoutAddressFragment()
 
         addressTabLayout?.getTabAt(CheckoutConstants.SHIPPING_ADDRESS_TAB)?.select()
 
-        initShippingLayout(MyApplication.checkoutSaveResponse!!)
+        MyApplication.checkoutSaveResponse?.let { initShippingLayout(it) }
 
         btnContinue?.setOnClickListener {
 
-            if(storeCheckBox?.isChecked!!)
+            if(storeCheckBox?.isChecked == true)
                 saveStoreData()
 
             else if(addressID == 0L)
             {
-                val newAddress = getAddressWithValidation(newAddress!!)
+                val newAddress: AddressModel? = getAddressWithValidation(newAddress)
 
-                if(isValidInfo)
+                if(isValidInfo && newAddress!=null)
                     (viewModel as CheckoutViewModel).saveNewShippingVM(newAddress, getCustomAttributeValues(), model)
             }
             else
@@ -51,8 +52,7 @@ class ShippingAddressFragment : BaseCheckoutAddressFragment()
     private fun initShippingLayout(saveResponse: CheckoutSaveResponse)
     {
 
-        with(saveResponse.data.shippingAddressModel!!)
-        {
+        saveResponse.data.shippingAddressModel?.apply {
 
             newAddress = shippingNewAddress
 
@@ -80,7 +80,7 @@ class ShippingAddressFragment : BaseCheckoutAddressFragment()
                     existingAddressLayout?.visibility = View.VISIBLE
                 }
             }
-            showShippingAddressUI(saveResponse.data.shippingAddressModel!!)
+            showShippingAddressUI(this)
         }
 
     }
@@ -109,7 +109,8 @@ class ShippingAddressFragment : BaseCheckoutAddressFragment()
         {
             override fun onItemSelected(parent: AdapterView<*>, view: View?, position: Int, id: Long)
             {
-                storeId = MyApplication.checkoutSaveResponse!!.data.shippingAddressModel!!.pickupPoints[position].id
+                storeId = MyApplication.checkoutSaveResponse?.data
+                    ?.shippingAddressModel?.pickupPoints?.get(position)?.id ?: 0
             }
 
             override fun onNothingSelected(parent: AdapterView<*>)
