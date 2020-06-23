@@ -1,14 +1,11 @@
 package com.bs.ecommerce.checkout.model
 
 import com.bs.ecommerce.checkout.model.data.*
-import com.bs.ecommerce.networking.RetroClient
 import com.bs.ecommerce.common.RequestCompleteListener
-import com.bs.ecommerce.networking.common.BaseResponse
+import com.bs.ecommerce.networking.RetroClient
 import com.bs.ecommerce.networking.common.ExistingAddress
 import com.bs.ecommerce.networking.common.KeyValueFormData
-import com.bs.ecommerce.product.model.data.TopicResponse
 import com.bs.ecommerce.utils.TextUtils
-import com.google.gson.GsonBuilder
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -32,7 +29,7 @@ class CheckoutModelImpl : CheckoutModel
 
 
             override fun onFailure(call: Call<BillingAddressResponse>, t: Throwable) {
-                callback.onRequestFailed(t.localizedMessage!!)
+                callback.onRequestFailed(t.localizedMessage ?: "")
             }
         })
     }
@@ -51,7 +48,7 @@ class CheckoutModelImpl : CheckoutModel
             }
 
             override fun onFailure(call: Call<StateListResponse>, t: Throwable) {
-                callback.onRequestFailed(t.localizedMessage!!)
+                callback.onRequestFailed(t.localizedMessage ?: "")
             }
         })
     }
@@ -70,7 +67,7 @@ class CheckoutModelImpl : CheckoutModel
             }
 
             override fun onFailure(call: Call<CheckoutSaveResponse>, t: Throwable) {
-                callback.onRequestFailed(t.localizedMessage!!)
+                callback.onRequestFailed(t.localizedMessage ?: "")
             }
         })
     }
@@ -89,7 +86,7 @@ class CheckoutModelImpl : CheckoutModel
 
 
             override fun onFailure(call: Call<CheckoutSaveResponse>, t: Throwable) {
-                callback.onRequestFailed(t.localizedMessage!!)
+                callback.onRequestFailed(t.localizedMessage ?: "")
             }
         })
     }
@@ -108,7 +105,7 @@ class CheckoutModelImpl : CheckoutModel
 
 
             override fun onFailure(call: Call<CheckoutSaveResponse>, t: Throwable) {
-                callback.onRequestFailed(t.localizedMessage!!)
+                callback.onRequestFailed(t.localizedMessage ?: "")
             }
         })
     }
@@ -126,7 +123,7 @@ class CheckoutModelImpl : CheckoutModel
             }
 
             override fun onFailure(call: Call<CheckoutSaveResponse>, t: Throwable) {
-                callback.onRequestFailed(t.localizedMessage!!)
+                callback.onRequestFailed(t.localizedMessage ?: "")
             }
         })
     }
@@ -145,7 +142,7 @@ class CheckoutModelImpl : CheckoutModel
             }
 
             override fun onFailure(call: Call<CheckoutSaveResponse>, t: Throwable) {
-                callback.onRequestFailed(t.localizedMessage!!)
+                callback.onRequestFailed(t.localizedMessage ?: "")
             }
         })
     }
@@ -165,7 +162,7 @@ class CheckoutModelImpl : CheckoutModel
 
 
             override fun onFailure(call: Call<CheckoutSaveResponse>, t: Throwable) {
-                callback.onRequestFailed(t.localizedMessage!!)
+                callback.onRequestFailed(t.localizedMessage ?: "")
             }
         })
     }
@@ -186,7 +183,7 @@ class CheckoutModelImpl : CheckoutModel
 
 
             override fun onFailure(call: Call<ConfirmOrderResponse>, t: Throwable) {
-                callback.onRequestFailed(t.localizedMessage!!)
+                callback.onRequestFailed(t.localizedMessage ?: "")
             }
         })
     }
@@ -205,7 +202,7 @@ class CheckoutModelImpl : CheckoutModel
 
 
             override fun onFailure(call: Call<CheckoutSaveResponse>, t: Throwable) {
-                callback.onRequestFailed(t.localizedMessage!!)
+                callback.onRequestFailed(t.localizedMessage ?: "")
             }
         })
     }
@@ -223,24 +220,24 @@ class CheckoutModelImpl : CheckoutModel
             }
 
             override fun onFailure(call: Call<CheckoutSaveResponse>, t: Throwable) {
-                callback.onRequestFailed(t.localizedMessage!!)
+                callback.onRequestFailed(t.localizedMessage ?: "")
             }
         })
     }
 
-    private fun genericCallback(callback: RequestCompleteListener<BaseResponse>, response: Response<BaseResponse>)
+    /*private fun genericCallback(callback: RequestCompleteListener<BaseResponse>, response: Response<BaseResponse>)
     {
         if (response.body() != null)
-            callback.onRequestSuccess(response.body()!!)
+            callback.onRequestSuccess(response.body() as BaseResponse)
 
         else if (response.code() == 300 || response.code() == 400 || response.code() == 500)
         {
             val gson = GsonBuilder().create()
-            val errorBody = gson.fromJson(response.errorBody()!!.string(), BaseResponse::class.java)
+            val errorBody = gson.fromJson(response.errorBody()?.string() ?: "", BaseResponse::class.java)
 
             callback.onRequestSuccess(errorBody as BaseResponse)
         }
         else
             callback.onRequestFailed(response.message())
-    }
+    }*/
 }

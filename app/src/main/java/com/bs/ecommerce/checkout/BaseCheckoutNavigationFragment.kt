@@ -1,15 +1,12 @@
 package com.bs.ecommerce.checkout
 
 import android.app.Activity
-import android.app.AlertDialog
 import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
-import android.util.Log
 import android.view.View
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import com.afollestad.materialdialogs.MaterialDialog
 import com.bs.ecommerce.R
 import com.bs.ecommerce.base.BaseActivity
 import com.bs.ecommerce.base.BaseFragment
@@ -18,14 +15,12 @@ import com.bs.ecommerce.checkout.model.CheckoutModel
 import com.bs.ecommerce.checkout.model.CheckoutModelImpl
 import com.bs.ecommerce.checkout.model.data.CheckoutSaveResponse
 import com.bs.ecommerce.db.DbHelper
-import com.bs.ecommerce.main.MainActivity
 import com.bs.ecommerce.utils.Const
 import com.bs.ecommerce.utils.MyApplication
 import com.bs.ecommerce.utils.toast
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayout.OnTabSelectedListener
 import kotlinx.android.synthetic.main.fragment_base_billing_adddress.*
-import kotlinx.android.synthetic.main.fragment_confirm_order.*
 import kotlinx.android.synthetic.main.fragment_shipping_method.*
 
 
@@ -73,13 +68,13 @@ abstract class BaseCheckoutNavigationFragment : ToolbarLogoBaseFragment()
         if(stepIdFromPaymentInfoPage != null)
             nextStepId = stepIdFromPaymentInfoPage
         else
-            nextStepId = saveResponse?.data?.nextStep!!
+            saveResponse?.data?.nextStep?.let { nextStepId = it }
 
         when(nextStepId)
         {
             CheckoutConstants.ShippingAddress ->
             {
-                saveResponse!!.data.shippingAddressModel?.let {
+                saveResponse?.data?.shippingAddressModel?.let {
 
                     MyApplication.checkoutSaveResponse?.data?.shippingAddressModel = it
 
@@ -90,7 +85,7 @@ abstract class BaseCheckoutNavigationFragment : ToolbarLogoBaseFragment()
             }
             CheckoutConstants.ShippingMethod ->
             {
-                saveResponse!!.data.shippingMethodModel?.let {
+                saveResponse?.data?.shippingMethodModel?.let {
 
                     MyApplication.checkoutSaveResponse?.data?.shippingMethodModel = it
 
@@ -101,7 +96,7 @@ abstract class BaseCheckoutNavigationFragment : ToolbarLogoBaseFragment()
             }
             CheckoutConstants.PaymentMethod ->
             {
-                saveResponse!!.data.paymentMethodModel?.let {
+                saveResponse?.data?.paymentMethodModel?.let {
 
                     MyApplication.checkoutSaveResponse?.data?.paymentMethodModel = it
 
@@ -112,7 +107,7 @@ abstract class BaseCheckoutNavigationFragment : ToolbarLogoBaseFragment()
             }
             CheckoutConstants.PaymentInfo -> {
 
-                saveResponse!!.data.paymentInfoModel?.let {
+                saveResponse?.data?.paymentInfoModel?.let {
 
                     startActivityForResult(
                         Intent(requireActivity(), WebViewPaymentActivity::class.java)
@@ -143,7 +138,7 @@ abstract class BaseCheckoutNavigationFragment : ToolbarLogoBaseFragment()
 
             /*startActivity(Intent(requireActivity(), ResultActivity::class.java)
                         .putExtra(CheckoutConstants.CHECKOUT_STEP, CheckoutConstants.Completed)
-                        .putExtra(CheckoutConstants.ORDER_ID, saveResponse!!.data.completedModel!!.orderId)
+                        .putExtra(CheckoutConstants.ORDER_ID, saveResponse.data.completedModel.orderId)
                 )*/
 
 
@@ -185,7 +180,7 @@ abstract class BaseCheckoutNavigationFragment : ToolbarLogoBaseFragment()
             CheckoutConstants.SHIPPING_ADDRESS_TAB ->
             {
                 if (CheckoutStepFragment.isBillingAddressSubmitted &&
-                    MyApplication.getBillingResponse?.data?.shippingRequired!! &&
+                    MyApplication.getBillingResponse?.data?.shippingRequired == true &&
                     MyApplication.checkoutSaveResponse?.data?.shippingAddressModel != null
                 )
                 {

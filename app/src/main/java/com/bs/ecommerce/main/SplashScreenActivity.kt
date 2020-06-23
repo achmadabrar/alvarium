@@ -47,7 +47,8 @@ class SplashScreenActivity : BaseActivity() {
 
         observeLiveData()
 
-        loadAppLandingData()
+        if(Utils().isWifiOrMobileNetworkAvailable(applicationContext))
+            loadAppLandingData()
     }
 
     fun loadAppLandingData() {
