@@ -6,6 +6,7 @@ import android.content.Intent
 import android.graphics.Paint
 import android.os.Bundle
 import android.view.View
+import android.webkit.WebViewClient
 import android.widget.RelativeLayout
 import android.widget.TextView
 import androidx.core.content.ContextCompat
@@ -118,6 +119,7 @@ class ProductDetailFragment : BaseFragment(), View.OnClickListener {
         }
     }
 
+    @SuppressLint("SetJavaScriptEnabled")
     private fun setLiveDataListeners() {
 
         (viewModel as ProductDetailViewModel).apply {
@@ -287,11 +289,19 @@ class ProductDetailFragment : BaseFragment(), View.OnClickListener {
                             product.addToCart?.enteredQuantity?.toString() ?: "1"
 
                         // long description
-                        if(product?.fullDescription?.isEmpty() == false) {
+                        if(product.fullDescription?.isEmpty() == false) {
                             val productDescLayout = vsProductDescLayout?.inflate()
                             productDescLayout?.tvProductName?.text = DbHelper.getString(Const.PRODUCT_DESCRIPTION)
-                            product.fullDescription.let {
-                                productDescLayout?.tvProductDescription?.show(it)
+                            product.fullDescription.let { text ->
+                                productDescLayout?.tvProductDescription?.apply {
+                                    settings?.javaScriptEnabled = true
+                                    settings?.loadWithOverviewMode = true
+                                    settings?.useWideViewPort = true
+
+                                    webViewClient = WebViewClient()
+
+                                    show(text)
+                                }
                             }
                             hd14.visibility = View.VISIBLE
                         }
@@ -310,7 +320,7 @@ class ProductDetailFragment : BaseFragment(), View.OnClickListener {
                         // Price calculation not needed for Products with manual price input i.e (Donation)
                         if (product.addToCart?.customerEntersPrice == false) {
                             customAttributeManager?.setupProductPriceCalculation(
-                                product?.productPrice,
+                                product.productPrice,
                                 productPriceLayout.tvDiscountPrice
                             )
                         }
@@ -324,7 +334,7 @@ class ProductDetailFragment : BaseFragment(), View.OnClickListener {
 
                         // Rental Product
                         if(product.isRental == true) {
-                            populateRentalProductSection(product)
+                            populateRentalProductSection()
                         }
 
                         // Associated Product
@@ -414,7 +424,7 @@ class ProductDetailFragment : BaseFragment(), View.OnClickListener {
     }
 
     @SuppressLint("SetTextI18n")
-    private fun populateRentalProductSection(product: ProductDetail) {
+    private fun populateRentalProductSection() {
         if (vsRentalProduct == null) return
 
         val rentalProductLayout = vsRentalProduct.inflate()

@@ -117,7 +117,7 @@ class LoginFragment : BaseFragment()
 
                     "token".showLog("token: " + NetworkUtil.token)
 
-                    toast(DbHelper.getString(Const.LOGIN_LOGIN_SUCCESS))
+                    //toast(DbHelper.getString(Const.LOGIN_LOGIN_SUCCESS))
 
                     // get appLandingSettings
                     mainViewModel.updatingAppSettings = true

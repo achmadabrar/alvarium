@@ -66,7 +66,6 @@ class Const {
         const val LOGIN_LOGIN_BTN = "account.login.loginbutton"
         const val LOGIN_OR = "nopstation.webapi.login.or"
         const val LOGIN_LOGIN_WITH_FB = "nopstation.webapi.loginwithfb"
-        const val LOGIN_LOGIN_SUCCESS = "nopstation.webapi.loginsuccess"
 
         const val REWARD_NO_HISTORY = "rewardpoints.nohistory"
         const val REWARD_POINT_DATE = "rewardpoints.fields.createddate"
@@ -254,8 +253,8 @@ class Const {
         const val EMAIL = "address.fields.email"
 
 
-        const val REGISTRATION_PERSONAL_DETAILS = "nopstation.webapi.registration.personaldetails"
-        const val REGISTRATION_PASSWORD = "nopstation.webapi.registration.password"
+        const val REGISTRATION_PERSONAL_DETAILS = "account.yourpersonaldetails"
+        const val REGISTRATION_PASSWORD = "account.yourpassword"
         const val GENDER = "account.fields.gender"
         const val GENDER_MALE = "account.fields.gender.male"
         const val GENDER_FEMALE = "account.fields.gender.female"
