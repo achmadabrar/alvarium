@@ -20,6 +20,7 @@ import com.bs.ecommerce.networking.common.KeyValueFormData
 import com.bs.ecommerce.product.model.data.AddressModel
 import com.bs.ecommerce.utils.*
 import com.google.android.material.bottomsheet.BottomSheetBehavior
+import kotlinx.android.synthetic.main.address_form.view.*
 import kotlinx.android.synthetic.main.custom_attribute_bottom_sheet.*
 import kotlinx.android.synthetic.main.custom_attribute_bottom_sheet.view.*
 import kotlinx.android.synthetic.main.fragment_address_edit.*
@@ -91,10 +92,12 @@ class AddOrEditAddressFragment : BaseFragment() {
                     val formValue = customAttributeManager
                         ?.getFormData(Api.addressAttributePrefix) ?: KeyValueFormData()
 
-                    if (isEditMode) {
-                        updateAddress(formUtil.validAddress!!, formValue.formValues, model)
-                    } else {
-                        saveCustomerAddress(formUtil.validAddress!!, formValue.formValues, model)
+                    formUtil.validAddress?.let {
+                        if (isEditMode) {
+                            updateAddress(it, formValue.formValues, model)
+                        } else {
+                            saveCustomerAddress(it, formValue.formValues, model)
+                        }
                     }
                 }
             }
@@ -174,7 +177,7 @@ class AddOrEditAddressFragment : BaseFragment() {
         customAttributeManager =
             CustomAttributeManager(
                 attributes = address.customAddressAttributes ?: listOf(),
-                attributeViewHolder = customAttributeViewHolder,
+                attributeViewHolder = addressForm.customAttributeViewHolder,
                 attributeValueHolder = bottomSheetLayoutCart.attributeValueHolder,
                 bsBehavior = bsBehavior
             )

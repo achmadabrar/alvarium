@@ -1,6 +1,7 @@
 package com.bs.ecommerce.checkout.model.data
 
 import com.bs.ecommerce.networking.common.BaseResponse
+import com.bs.ecommerce.product.model.data.AddressAttribute
 import com.google.gson.annotations.SerializedName
 
 
@@ -43,7 +44,7 @@ data class AddressModel(
     @SerializedName("County") var county: Any = Any(),
     @SerializedName("CountyEnabled") var countyEnabled: Boolean = false,
     @SerializedName("CountyRequired") var countyRequired: Boolean = false,
-    @SerializedName("CustomAddressAttributes") var customAddressAttributes: List<Any> = listOf(),
+    @SerializedName("CustomAddressAttributes") var customAddressAttributes: List<AddressAttribute> = listOf(),
     @SerializedName("Email") var email: String = "",
     @SerializedName("FaxEnabled") var faxEnabled: Boolean = false,
     @SerializedName("FaxNumber") var faxNumber: Any = Any(),

@@ -39,15 +39,6 @@
                     android:layout_marginEnd="@dimen/form_margin"
                     android:visibility="visible" />
 
-                <LinearLayout
-                    android:id="@+id/customAttributeViewHolder"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:layout_marginStart="@dimen/form_margin"
-                    android:layout_marginEnd="@dimen/form_margin"
-                    android:layout_marginTop="10dp"/>
-
                 <Button
                     android:id="@+id/btnSave"
                     style="@style/RectangularButtonRegular"

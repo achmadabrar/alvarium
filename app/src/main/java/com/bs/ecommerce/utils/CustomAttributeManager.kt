@@ -250,6 +250,7 @@ class CustomAttributeManager(
 
         val etUserInput = layout.findViewById<EditText>(R.id.etUserInput)
         etUserInput.hint = attr.textPrompt ?: attr.name
+        etUserInput.setText(attr.defaultValue ?: "")
         etUserInput.setCompoundDrawablesWithIntrinsicBounds(
             0, 0, if (attr.isRequired) R.drawable.ic_star_formular else 0, 0
         )

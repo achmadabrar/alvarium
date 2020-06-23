@@ -2,7 +2,6 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    xmlns:tools="http://schemas.android.com/tools"
     android:background="?attr/fragmentBackGroundColor"
     android:animateLayoutChanges="true"
     android:orientation="vertical">
@@ -103,5 +102,12 @@
         android:hint="@string/fax"
         android:imeOptions="actionDone"
         android:inputType="phone" />
+
+    <LinearLayout
+        android:id="@+id/customAttributeViewHolder"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginTop="5dp"/>
 
 </LinearLayout>

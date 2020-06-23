@@ -11,11 +11,13 @@ import com.bs.ecommerce.base.BaseViewModel
 import com.bs.ecommerce.checkout.model.data.AddressModel
 import com.bs.ecommerce.checkout.model.data.AvailableCountry
 import com.bs.ecommerce.db.DbHelper
-import com.bs.ecommerce.utils.Const
-import com.bs.ecommerce.utils.isEmailValid
-import com.bs.ecommerce.utils.showOrHideOrRequired
-import com.bs.ecommerce.utils.toast
+import com.bs.ecommerce.networking.Api
+import com.bs.ecommerce.networking.common.KeyValueFormData
+import com.bs.ecommerce.utils.*
+import com.google.android.material.bottomsheet.BottomSheetBehavior
 import kotlinx.android.synthetic.main.address_form.*
+import kotlinx.android.synthetic.main.address_form.view.*
+import kotlinx.android.synthetic.main.custom_attribute_bottom_sheet.view.*
 import kotlinx.android.synthetic.main.fragment_base_billing_adddress.*
 import kotlinx.android.synthetic.main.fragment_billing_address.*
 
@@ -31,6 +33,9 @@ open class BaseCheckoutAddressFragment : BaseCheckoutNavigationFragment()
     protected var newAddress : AddressModel? = null
 
     protected var addressID: Long = 0
+
+    private var customAttributeManager: CustomAttributeManager? = null
+    private lateinit var bsBehavior: BottomSheetBehavior<*>
 
     override fun getFragmentTitle() = DbHelper.getString(Const.SHOPPING_CART_TITLE)
 
@@ -88,6 +93,19 @@ open class BaseCheckoutAddressFragment : BaseCheckoutNavigationFragment()
 
     protected fun createNewAddressLayout(address: AddressModel)
     {
+        bsBehavior = BottomSheetBehavior.from(bottomSheetLayoutCheckout)
+
+        // setup product attributes
+        customAttributeManager =
+            CustomAttributeManager(
+                attributes = address.customAddressAttributes,
+                attributeViewHolder = layoutCheckoutAddress.customAttributeViewHolder,
+                attributeValueHolder = bottomSheetLayoutCheckout.attributeValueHolder,
+                bsBehavior = bsBehavior
+            )
+
+        customAttributeManager?.attachAttributesToFragment()
+
         createForms(address)
 
         val countryNameList = address.availableCountries?.map { it.text }
@@ -96,6 +114,12 @@ open class BaseCheckoutAddressFragment : BaseCheckoutNavigationFragment()
 
         android.os.Handler().post {  newAddressLayout?.visibility = View.VISIBLE    }
 
+    }
+
+    protected fun getCustomAttributeValues(): KeyValueFormData {
+
+        return customAttributeManager
+            ?.getFormData(Api.addressAttributePrefix) ?: KeyValueFormData()
     }
 
 
@@ -122,7 +146,7 @@ open class BaseCheckoutAddressFragment : BaseCheckoutNavigationFragment()
         if (isNewAddressSelected(existingAddress, position))
         {
             addressID = 0
-            createNewAddressLayout(newAddress!!)
+            newAddress?.let { createNewAddressLayout(it) }
         }
         else
             onSelectExistingAddress(existingAddress, position)
@@ -135,7 +159,8 @@ open class BaseCheckoutAddressFragment : BaseCheckoutNavigationFragment()
     }
     
 
-    private fun isNewAddressSelected(existingAddress: List<AddressModel>?, position: Int): Boolean = (position == existingAddress!!.size)
+    private fun isNewAddressSelected(existingAddress: List<AddressModel>?, position: Int): Boolean
+            = (position == existingAddress?.size ?: 0)
     
 
     protected fun createSpinnerAdapter(nameList: List<String>): ArrayAdapter<String>
@@ -153,9 +178,9 @@ open class BaseCheckoutAddressFragment : BaseCheckoutNavigationFragment()
             override fun onItemSelected(parent: AdapterView<*>, view: View, position: Int, id: Long) {
                 if (position != 0) {
                     stateProvinceIdByForm = ""
-                    countryIdByForm = availableCountries!![position].value
+                    countryIdByForm = availableCountries?.get(position)?.value ?: ""
 
-                    (viewModel as CheckoutViewModel).getStatesByCountryVM(countryIdByForm!!, model)
+                    (viewModel as CheckoutViewModel).getStatesByCountryVM(countryIdByForm, model)
                 }
             }
 

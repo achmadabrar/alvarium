@@ -3,11 +3,9 @@ package com.bs.ecommerce.checkout
 import android.os.Bundle
 import android.view.View
 import android.widget.AdapterView
-import androidx.lifecycle.Observer
 import com.bs.ecommerce.checkout.model.data.CheckoutSaveResponse
 import com.bs.ecommerce.checkout.model.data.ShippingAddressModel
 import com.bs.ecommerce.checkout.model.data.Store
-import com.bs.ecommerce.networking.NetworkConstants
 import com.bs.ecommerce.utils.MyApplication
 import kotlinx.android.synthetic.main.fragment_base_billing_adddress.*
 import kotlinx.android.synthetic.main.fragment_billing_address.*
@@ -36,7 +34,7 @@ class ShippingAddressFragment : BaseCheckoutAddressFragment()
                 val newAddress = getAddressWithValidation(newAddress!!)
 
                 if(isValidInfo)
-                    (viewModel as CheckoutViewModel).saveNewShippingVM(newAddress, model)
+                    (viewModel as CheckoutViewModel).saveNewShippingVM(newAddress, getCustomAttributeValues(), model)
             }
             else
                 (viewModel as CheckoutViewModel)

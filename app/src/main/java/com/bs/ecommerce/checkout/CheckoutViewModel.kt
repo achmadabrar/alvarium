@@ -68,11 +68,19 @@ open class CheckoutViewModel : BaseViewModel()
     }
 
 
-    fun saveNewBillingVM(newAddress: AddressModel, model: CheckoutModel)
+    fun saveNewBillingVM(
+        newAddress: AddressModel,
+        formValues: KeyValueFormData,
+        model: CheckoutModel
+    )
     {
+        // remove custom attribute values from requestBody to avoid 500
+        newAddress.customAddressAttributes = listOf()
+
         val saveBillingPostData = SaveBillingPostData()
         saveBillingPostData.data = BillingAddress()
         saveBillingPostData.data.billingNewAddress = newAddress
+        saveBillingPostData.formValues = formValues.formValues
 
         isLoadingLD.postValue(true)
 
@@ -101,11 +109,19 @@ open class CheckoutViewModel : BaseViewModel()
         })
     }
 
-    fun saveNewShippingVM(newAddress: AddressModel, model: CheckoutModel)
+    fun saveNewShippingVM(
+        newAddress: AddressModel,
+        formValues: KeyValueFormData,
+        model: CheckoutModel
+    )
     {
+        // remove custom attribute values from requestBody to avoid 500
+        newAddress.customAddressAttributes = listOf()
+
         val saveShippingPostData = SaveShippingPostData()
         saveShippingPostData.data = ShippingAddress()
         saveShippingPostData.data.shippingNewAddress = newAddress
+        saveShippingPostData.formValues = formValues.formValues
 
         isLoadingLD.postValue(true)
 

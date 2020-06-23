@@ -1,42 +1,56 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/baseBillingRootLayout"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    xmlns:tools="http://schemas.android.com/tools">
+    android:layout_height="match_parent">
 
-    <com.google.android.material.tabs.TabLayout
-        android:id="@+id/addressTabLayout"
+    <RelativeLayout android:id="@+id/baseBillingRootLayout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:tabBackground="@drawable/tab_color_selector"
-        app:tabTextAppearance="@style/CustomTextAppearanceTab"
-        app:tabIndicatorColor="@color/tab_indicator_color"
-        app:tabIndicatorHeight="2dp"
-        app:tabSelectedTextColor="@color/tab_text_selected"
-        app:tabTextColor="@color/tab_text_unselected">
+        android:layout_height="match_parent">
 
-        <com.google.android.material.tabs.TabItem
-            android:id="@+id/tabBillingAdrs"
+        <com.google.android.material.tabs.TabLayout
+            android:id="@+id/addressTabLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/billing_address" />
+            app:tabBackground="@drawable/tab_color_selector"
+            app:tabTextAppearance="@style/CustomTextAppearanceTab"
+            app:tabIndicatorColor="@color/tab_indicator_color"
+            app:tabIndicatorHeight="2dp"
+            app:tabSelectedTextColor="@color/tab_text_selected"
+            app:tabTextColor="@color/tab_text_unselected">
 
-        <com.google.android.material.tabs.TabItem
-            android:id="@+id/tabShippingAdrs"
+            <com.google.android.material.tabs.TabItem
+                android:id="@+id/tabBillingAdrs"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/billing_address" />
+
+            <com.google.android.material.tabs.TabItem
+                android:id="@+id/tabShippingAdrs"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/shipping_address" />
+
+        </com.google.android.material.tabs.TabLayout>
+
+
+        <include
+            android:id="@+id/layoutCheckoutAddress"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/shipping_address" />
+            android:layout_height="match_parent"
+            android:layout_below="@id/addressTabLayout"
+            layout="@layout/fragment_billing_address" />
 
-    </com.google.android.material.tabs.TabLayout>
-
+    </RelativeLayout>
 
     <include
-        android:id="@+id/layoutCheckoutAddress"
+        android:id="@+id/bottomSheetLayoutCheckout"
+        layout="@layout/custom_attribute_bottom_sheet"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@id/addressTabLayout"
-        layout="@layout/fragment_billing_address" />
+        android:layout_height="wrap_content"
+        app:behavior_hideable="true"
+        app:behavior_peekHeight="0dp"
+        app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior" />
 
-</RelativeLayout>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>
