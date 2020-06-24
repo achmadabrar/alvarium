@@ -80,15 +80,15 @@ class OrderDetailsFragment : BaseFragment() {
 
     private fun initView(data: OrderDetailsData) {
         val orderDetails = DbHelper.getString(Const.ORDER_DATE)
-            .plus(" ")
+            .plus(": ")
             .plus(
                 TextUtils().tzTimeConverter(
                     data.createdOn,
                     WeakReference(requireContext())
                 )
-            ).plus("\n").plus(DbHelper.getString(Const.ORDER_STATUS)).plus(" ")
+            ).plus("\n").plus(DbHelper.getString(Const.ORDER_STATUS)).plus(": ")
             .plus(data.orderStatus).plus("\n")
-            .plus(DbHelper.getString(Const.ORDER_TOTAL)).plus(" ").plus(data.orderTotal)
+            .plus(DbHelper.getString(Const.ORDER_TOTAL)).plus(": ").plus(data.orderTotal)
 
         orderDetailsCard.tvCardTitle.text = DbHelper.getString(Const.TITLE_ORDER_DETAILS)
         orderDetailsCard.tvCardDetails.text = DbHelper.getString(Const.ORDER_NUMBER).plus(" ").plus(data.customOrderNumber)
