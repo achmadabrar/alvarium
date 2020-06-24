@@ -3,10 +3,12 @@ package com.bs.ecommerce.cart
 import com.bs.ecommerce.auth.register.data.KeyValuePair
 import com.bs.ecommerce.base.BaseViewModel
 import com.bs.ecommerce.cart.model.CartModel
+import com.bs.ecommerce.cart.model.data.CartProduct
 import com.bs.ecommerce.cart.model.data.CartResponse
 import com.bs.ecommerce.cart.model.data.CartRootData
 import com.bs.ecommerce.common.RequestCompleteListener
 import com.bs.ecommerce.networking.common.KeyValueFormData
+import java.util.*
 
 class CartViewModel : BaseViewModel()
 {
@@ -18,6 +20,28 @@ class CartViewModel : BaseViewModel()
 
     private var REMOVE_DISCOUNT_KEY = "removediscount-"
     private var REMOVE_GIFT_CARD_KEY = "removegiftcard-"
+
+    fun removeItemFromCart(productId: Int?, model: CartModel) {
+
+        productId?.let {
+            val keyValuePairList = ArrayList<KeyValuePair>()
+            keyValuePairList.add(KeyValuePair(key = "removefromcart", value = it.toString()))
+
+            updateCartData(keyValuePairList, model)
+        }
+    }
+
+    fun updateQuantity(product: CartProduct, isIncrement: Boolean, model: CartModel) {
+
+        val totalQuantity = product.quantity + if(isIncrement) 1 else -1
+
+        product.id?.let {
+            val keyValuePairList = ArrayList<KeyValuePair>()
+            keyValuePairList.add(KeyValuePair(key = "itemquantity".plus(it), value = totalQuantity.toString()))
+
+            updateCartData(keyValuePairList, model)
+        }
+    }
 
     fun updateCartData(allKeyValueList: List<KeyValuePair>, model: CartModel)
     {

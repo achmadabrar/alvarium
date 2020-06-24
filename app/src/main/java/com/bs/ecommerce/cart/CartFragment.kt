@@ -286,6 +286,15 @@ class CartFragment : BaseFragment() {
                         data.productId?.let {
                             replaceFragmentSafely(ProductDetailFragment.newInstance(it, data.productName))
                         }
+
+                    R.id.icRemoveItem ->
+                        (viewModel as CartViewModel).removeItemFromCart(data.id, model)
+
+                    R.id.btnPlus ->
+                        (viewModel as CartViewModel).updateQuantity(data, true, model)
+
+                    R.id.btnMinus ->
+                        (viewModel as CartViewModel).updateQuantity(data, false, model)
                 }
             }
         }
