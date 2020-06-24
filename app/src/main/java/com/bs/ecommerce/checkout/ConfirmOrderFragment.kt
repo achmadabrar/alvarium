@@ -7,22 +7,17 @@ import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bs.ecommerce.R
 import com.bs.ecommerce.base.BaseViewModel
-import com.bs.ecommerce.cart.CartAdapter
-import com.bs.ecommerce.cart.model.data.*
+import com.bs.ecommerce.cart.CartAdapter2
+import com.bs.ecommerce.cart.model.data.CartInfoData
+import com.bs.ecommerce.cart.model.data.CartProduct
+import com.bs.ecommerce.cart.model.data.OrderReviewAddressModel
+import com.bs.ecommerce.cart.model.data.OrderReviewData
 import com.bs.ecommerce.db.DbHelper
-import com.bs.ecommerce.main.MainViewModel
-import com.bs.ecommerce.product.ProductDetailFragment
 import com.bs.ecommerce.utils.Const
-import com.bs.ecommerce.utils.ItemClickListener
-import com.bs.ecommerce.utils.replaceFragmentSafely
-import com.bs.ecommerce.utils.showTextPendingCalculationOnCheckout
 import kotlinx.android.synthetic.main.confirm_order_card.view.*
 import kotlinx.android.synthetic.main.fragment_confirm_order.*
-import kotlinx.android.synthetic.main.table_order_total.*
 
 class ConfirmOrderFragment : BaseCheckoutNavigationFragment() {
-
-    private lateinit var clickListener : ItemClickListener<CartProduct>
 
     override fun getFragmentTitle() = DbHelper.getString(Const.SHOPPING_CART_TITLE)
 
@@ -36,20 +31,6 @@ class ConfirmOrderFragment : BaseCheckoutNavigationFragment() {
         super.onViewCreated(view, savedInstanceState)
 
         (viewModel as CheckoutViewModel).getCheckoutConfirmInformationVM(model)
-
-        clickListener = object : ItemClickListener<CartProduct> {
-
-            override fun onClick(view: View, position: Int, data: CartProduct) {
-
-                when (view.id) {
-
-                    R.id.itemView ->
-                        data.productId?.let {
-                            replaceFragmentSafely(ProductDetailFragment.newInstance(it, data.productName))
-                        }
-                }
-            }
-        }
 
         setStrings()
 
@@ -105,14 +86,12 @@ class ConfirmOrderFragment : BaseCheckoutNavigationFragment() {
     }
 
     private fun showProductList(cartData: CartInfoData?) {
-        val cartAdapter = CartAdapter(requireActivity(), cartData?.items ?: mutableListOf(),clickListener,   viewModel,
-            isCheckout = true)
 
         checkoutProductList?.apply {
             setHasFixedSize(true)
             layoutManager =
                 LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
-            adapter = cartAdapter
+            adapter = CartAdapter2(cartData?.items as MutableList<CartProduct>, null, isCheckout = true)
         }
     }
 
@@ -142,7 +121,7 @@ class ConfirmOrderFragment : BaseCheckoutNavigationFragment() {
             with(orderReviewData.billingAddress)
             {
                 billingAddressCard.tvCardTitle.text = DbHelper.getString(Const.BILLING_ADDRESS_TAB)
-                billingAddressCard.tvCardDetails.text = "$firstName $lastName"
+                billingAddressCard.tvCardDetails.text = firstName?.plus(" ")?.plus(lastName)
                 billingAddressCard.tvCardDetails2.text = getDetailAddress(this)
                 billingAddressCard.ivCardThumb.visibility = View.GONE
             }
@@ -152,7 +131,7 @@ class ConfirmOrderFragment : BaseCheckoutNavigationFragment() {
                 with(orderReviewData.shippingAddress)
                 {
                     shippingAddressCard.tvCardTitle.text = DbHelper.getString(Const.SHIPPING_ADDRESS_TAB)
-                    shippingAddressCard.tvCardDetails.text = "$firstName $lastName"
+                    shippingAddressCard.tvCardDetails.text = firstName?.plus(" ")?.plus(lastName)
                     shippingAddressCard.tvCardDetails2.text = getDetailAddress(this)
                     shippingAddressCard.ivCardThumb.visibility = View.GONE
                 }
@@ -166,7 +145,7 @@ class ConfirmOrderFragment : BaseCheckoutNavigationFragment() {
                 with(orderReviewData.shippingAddress)
                 {
                     pickupStoreCard.tvCardTitle.text = DbHelper.getString(Const.PICK_UP_POINT_ADDRESS)
-                    pickupStoreCard.tvCardDetails.text = "$firstName $lastName"
+                    pickupStoreCard.tvCardDetails.text = firstName?.plus(" ")?.plus(lastName)
 
                     pickupStoreCard.tvCardDetails2.text = getDetailAddress(this)
                     pickupStoreCard.ivCardThumb.visibility = View.GONE

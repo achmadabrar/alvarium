@@ -78,7 +78,12 @@ class CartFragment : BaseFragment() {
                 if(cartRootData.cart.items.isNotEmpty())
                 {
                     cartRootLayout?.visibility = View.VISIBLE
-                    setData(cartRootData)
+
+                    try {
+                        setData(cartRootData)
+                    } catch (e: Exception) {
+                        e.printStackTrace()
+                    }
                 }
                 else
                 {
@@ -129,7 +134,8 @@ class CartFragment : BaseFragment() {
         cartproductRecyclerList?.setHasFixedSize(true)
         cartproductRecyclerList?.layoutManager = layoutManager
 
-        val cartAdapter = CartAdapter(requireActivity(), items, clickListener, viewModel, model)
+//        val cartAdapter = CartAdapter(requireActivity(), items, clickListener, viewModel, model)
+        val cartAdapter = CartAdapter2(items as MutableList<CartProduct>, clickListener, isCheckout = false)
 
         cartproductRecyclerList?.adapter = cartAdapter
     }

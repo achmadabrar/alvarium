@@ -7,6 +7,7 @@ import com.bs.ecommerce.cart.model.data.CartProduct
 import com.bs.ecommerce.cart.model.data.CartResponse
 import com.bs.ecommerce.cart.model.data.CartRootData
 import com.bs.ecommerce.common.RequestCompleteListener
+import com.bs.ecommerce.networking.Api
 import com.bs.ecommerce.networking.common.KeyValueFormData
 import java.util.*
 
@@ -25,7 +26,7 @@ class CartViewModel : BaseViewModel()
 
         productId?.let {
             val keyValuePairList = ArrayList<KeyValuePair>()
-            keyValuePairList.add(KeyValuePair(key = "removefromcart", value = it.toString()))
+            keyValuePairList.add(KeyValuePair(key = Api.removeFromCartOrWishList, value = it.toString()))
 
             updateCartData(keyValuePairList, model)
         }
@@ -37,7 +38,7 @@ class CartViewModel : BaseViewModel()
 
         product.id?.let {
             val keyValuePairList = ArrayList<KeyValuePair>()
-            keyValuePairList.add(KeyValuePair(key = "itemquantity".plus(it), value = totalQuantity.toString()))
+            keyValuePairList.add(KeyValuePair(key = Api.cartItemQuantity.plus(it), value = totalQuantity.toString()))
 
             updateCartData(keyValuePairList, model)
         }

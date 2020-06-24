@@ -45,11 +45,11 @@ data class OrderReviewData(
     @SerializedName("BillingAddress") var billingAddress: OrderReviewAddressModel = OrderReviewAddressModel(),
     @SerializedName("Display") var display: Boolean = false,
     @SerializedName("IsShippable") var isShippable: Boolean = false,
-    @SerializedName("PaymentMethod") var paymentMethod: String = String(),
+    @SerializedName("PaymentMethod") var paymentMethod: String? = "",
     @SerializedName("PickupAddress") var pickupAddress: OrderReviewAddressModel = OrderReviewAddressModel(),
     @SerializedName("SelectedPickupInStore") var selectedPickupInStore: Boolean = false,
     @SerializedName("ShippingAddress") var shippingAddress: OrderReviewAddressModel = OrderReviewAddressModel(),
-    @SerializedName("ShippingMethod") var shippingMethod: String = String()
+    @SerializedName("ShippingMethod") var shippingMethod: String? = ""
 )
 
 data class OrderReviewAddressModel(
@@ -74,10 +74,10 @@ data class OrderReviewAddressModel(
     @SerializedName("FaxEnabled") var faxEnabled: Boolean = false,
     @SerializedName("FaxNumber") var faxNumber: Any = Any(),
     @SerializedName("FaxRequired") var faxRequired: Boolean = false,
-    @SerializedName("FirstName") var firstName: Any = Any(),
+    @SerializedName("FirstName") var firstName: String? = "",
     @SerializedName("FormattedCustomAddressAttributes") var formattedCustomAddressAttributes: Any = Any(),
     @SerializedName("Id") var id: Int = 0,
-    @SerializedName("LastName") var lastName: Any = Any(),
+    @SerializedName("LastName") var lastName: String? = "",
     @SerializedName("PhoneEnabled") var phoneEnabled: Boolean = false,
     @SerializedName("PhoneNumber") var phoneNumber: Any = Any(),
     @SerializedName("PhoneRequired") var phoneRequired: Boolean = false,

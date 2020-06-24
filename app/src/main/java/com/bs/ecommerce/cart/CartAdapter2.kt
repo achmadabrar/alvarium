@@ -18,11 +18,10 @@ import kotlinx.android.synthetic.main.qunatity_button.view.*
 
 
 class CartAdapter2 (
-    private val clickListener: ItemClickListener<CartProduct>,
+    private val list: MutableList<CartProduct> = mutableListOf(),
+    private val clickListener: ItemClickListener<CartProduct>?,
     private val isCheckout: Boolean
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
-
-    private val list: MutableList<CartProduct> = mutableListOf()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val itemView =
@@ -40,13 +39,13 @@ class CartAdapter2 (
         with(holder.itemView) {
 
             id = R.id.itemView
-            setOnClickListener { clickListener.onClick(it, position, item) }
+            setOnClickListener { clickListener?.onClick(it, position, item) }
 
-            tvProductName.text = item.productName
-            productPriceLayout.tvTotalPrice.text = DbHelper.getString(Const.TOTAL).plus(": ").plus(item.subTotal)
-            productPriceLayout.tvDiscountPrice?.text = DbHelper.getString(Const.PRICE).plus(": ").plus(item.unitPrice)
+            tvProductName?.text = item.productName
+            productPriceLayout?.tvTotalPrice?.text = DbHelper.getString(Const.TOTAL).plus(": ").plus(item.subTotal)
+            productPriceLayout?.tvDiscountPrice?.text = DbHelper.getString(Const.PRICE).plus(": ").plus(item.unitPrice)
 
-            ivProductThumb.loadImg(item.picture?.imageUrl)
+            ivProductThumb?.loadImg(item.picture?.imageUrl)
 
 
             icRemoveItem?.visibility = if (isCheckout) View.GONE else View.VISIBLE
@@ -70,16 +69,16 @@ class CartAdapter2 (
                     Toast.makeText(holder.itemView.context, it[0], Toast.LENGTH_SHORT).show()
             }
 
-            icRemoveItem.setOnClickListener { v ->
-                clickListener.onClick(v, position, item)
+            icRemoveItem?.setOnClickListener { v ->
+                clickListener?.onClick(v, position, item)
             }
 
-            btn_holder.btnPlus.setOnClickListener { v ->
-                clickListener.onClick(v, position, item)
+            btn_holder?.btnPlus?.setOnClickListener { v ->
+                clickListener?.onClick(v, position, item)
             }
 
-            btn_holder.btnMinus.setOnClickListener { v ->
-                clickListener.onClick(v, position, item)
+            btn_holder?.btnMinus?.setOnClickListener { v ->
+                clickListener?.onClick(v, position, item)
             }
         }
     }

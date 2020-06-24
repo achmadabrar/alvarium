@@ -324,6 +324,7 @@ interface Api {
 
         const val removeFromCartOrWishList: String = "removefromcart"
         const val addToCart: String = "addtocart"
+        const val cartItemQuantity: String = "itemquantity"
         const val typeShoppingCart: Long = 1
         const val typeWishList: Long = 2
 
