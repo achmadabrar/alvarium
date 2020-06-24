@@ -353,7 +353,11 @@ open class RegisterFragment : ToolbarLogoBaseFragment(), View.OnClickListener
                 val input = it.text?.trim().toString(); if(input.isNotEmpty()) city = input else { showValidation(it, cityRequired) }
             }
 
-            val selectedCountryId = (countrySpinner.selectedItem as AvailableCountry).value.toInt()
+            var selectedCountryId = 0
+
+            if(countrySpinner.selectedItem is AvailableCountry)
+                selectedCountryId = (countrySpinner.selectedItem as AvailableCountry).value.toInt()
+
             if (countryEnabled && selectedCountryId == 0) {
                 isValidInfo = false
                 toast(DbHelper.getString(Const.COUNTRY_REQUIRED))
@@ -426,6 +430,8 @@ open class RegisterFragment : ToolbarLogoBaseFragment(), View.OnClickListener
         countryAdapter.setDropDownViewResource(R.layout.simple_spinner_dropdown_item)
 
         countrySpinner?.adapter = countryAdapter
+
+        countrySpinnerLayout?.visibility = View.VISIBLE
 
         countrySpinner?.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(
