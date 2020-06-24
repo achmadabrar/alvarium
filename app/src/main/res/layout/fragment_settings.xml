@@ -27,7 +27,7 @@
             android:layout_height="match_parent">
 
             <androidx.cardview.widget.CardView
-                android:id="@+id/use_your_api"
+                android:id="@+id/cardBaseUrlChange"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="15dp"
@@ -91,7 +91,7 @@
                 android:id="@+id/languageCardView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/use_your_api"
+                android:layout_below="@+id/cardBaseUrlChange"
                 android:layout_marginTop="15dp"
                 app:cardBackgroundColor="@color/settings_card_bg"
                 app:cardCornerRadius="5dp"

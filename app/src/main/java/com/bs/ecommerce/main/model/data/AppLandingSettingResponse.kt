@@ -31,6 +31,7 @@ data class AppLandingData(
     @SerializedName("TotalShoppingCartProducts") val totalShoppingCartProducts: Int = 0,
     @SerializedName("TotalWishListProducts") val totalWishListProducts: Int = 0,
     @SerializedName("AnonymousCheckoutAllowed") val anonymousCheckoutAllowed: Boolean = false,
+    @SerializedName("ShowChangeBaseUrlPanel") val showChangeBaseUrlPanel: Boolean = false,
     @SerializedName("StringResources") var stringResources: List<StringResource> = listOf()
 )
 

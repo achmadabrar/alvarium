@@ -91,6 +91,8 @@ class SettingsFragment: BaseUrlChangeFragment() {
 
                     languageCardView?.visibility = View.VISIBLE
                     currencyCardView?.visibility = View.VISIBLE
+                    cardBaseUrlChange?.visibility = if(it.showChangeBaseUrlPanel) View.VISIBLE
+                        else View.GONE
 
                     if(isLanguageChanged)
                     {
