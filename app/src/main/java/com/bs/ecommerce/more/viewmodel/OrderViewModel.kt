@@ -6,11 +6,13 @@ import com.bs.ecommerce.common.RequestCompleteListener
 import com.bs.ecommerce.more.model.OrderModel
 import com.bs.ecommerce.product.model.data.OrderDetailsData
 import com.bs.ecommerce.product.model.data.OrderHistoryData
+import com.bs.ecommerce.utils.OneTimeEvent
 
 class OrderViewModel : BaseViewModel() {
 
     var orderHistoryLD = MutableLiveData<OrderHistoryData>()
     var orderDetailsLD = MutableLiveData<OrderDetailsData>()
+    var reorderLD = MutableLiveData<OneTimeEvent<Boolean>>()
 
     fun getOrderHistory(model: OrderModel) {
         isLoadingLD.value = true
@@ -36,6 +38,23 @@ class OrderViewModel : BaseViewModel() {
             override fun onRequestSuccess(data: OrderDetailsData) {
                 isLoadingLD.value = false
                 orderDetailsLD.value = data
+            }
+
+            override fun onRequestFailed(errorMessage: String) {
+                isLoadingLD.value = false
+
+            }
+
+        })
+    }
+
+    fun reorder(orderId: Int, model: OrderModel) {
+        isLoadingLD.value = true
+
+        model.reorder(orderId, object : RequestCompleteListener<Boolean> {
+            override fun onRequestSuccess(data: Boolean) {
+                isLoadingLD.value = false
+                reorderLD.value = OneTimeEvent(true)
             }
 
             override fun onRequestFailed(errorMessage: String) {

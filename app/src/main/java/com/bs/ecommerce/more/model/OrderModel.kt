@@ -13,4 +13,9 @@ interface OrderModel {
         orderId: Int,
         callback: RequestCompleteListener<OrderDetailsData>
     )
+
+    fun reorder(
+        orderId: Int,
+        callback: RequestCompleteListener<Boolean>
+    )
 }
