@@ -14,6 +14,8 @@ data class ProductReviewItem(
     val customerId: Long?,
     @SerializedName("CustomerName")
     val customerName: String?,
+    @SerializedName("CustomerAvatarUrl")
+    val customerAvatarUrl: String?,
     @SerializedName("Helpfulness")
     var helpfulness: Helpfulness?,
     @SerializedName("Id")

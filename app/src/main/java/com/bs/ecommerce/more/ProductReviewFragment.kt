@@ -21,6 +21,7 @@ import com.bs.ecommerce.product.model.data.Helpfulness
 import com.bs.ecommerce.product.model.data.ProductReviewItem
 import com.bs.ecommerce.utils.Const
 import com.bs.ecommerce.utils.RecyclerViewMargin
+import com.bs.ecommerce.utils.loadImg
 import kotlinx.android.synthetic.main.fragment_product_review.*
 import kotlinx.android.synthetic.main.item_product_review.view.*
 
@@ -151,6 +152,7 @@ class ProductReviewFragment : BaseFragment() {
 
             holder.itemView.apply {
 
+                ivReviewAvatar?.loadImg(item.customerAvatarUrl, R.drawable.ic_vendor)
                 tvReviewTitle.text = item.title
                 tvReviewText.text = item.reviewText
                 tvDate.text = item.writtenOnStr

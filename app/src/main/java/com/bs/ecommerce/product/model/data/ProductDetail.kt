@@ -20,7 +20,7 @@ data class ProductDetail(
     @SerializedName("DefaultPictureZoomEnabled")
     val defaultPictureZoomEnabled: Boolean?,
     @SerializedName("DeliveryDate")
-    val deliveryDate: Any?,
+    val deliveryDate: String?,
     @SerializedName("DisplayBackInStockSubscription")
     val displayBackInStockSubscription: Boolean?,
     @SerializedName("DisplayDiscontinuedMessage")
@@ -63,6 +63,8 @@ data class ProductDetail(
     val pictureModels: List<ImageModel>,
     @SerializedName("ProductAttributes")
     val productAttributes: List<ProductAttribute>,
+    @SerializedName("ProductEstimateShipping")
+    val productEstimateShipping: ProductEstimateShipping,
     @SerializedName("ProductManufacturers")
     val productManufacturers: List<ProductManufacturers>?,
     @SerializedName("ProductPrice")
