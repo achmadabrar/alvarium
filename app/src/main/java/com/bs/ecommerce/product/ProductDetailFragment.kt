@@ -305,6 +305,16 @@ class ProductDetailFragment : BaseFragment(), View.OnClickListener {
                             hd14.visibility = View.VISIBLE
                         }
 
+                        // download sample
+                        if(product.hasSampleDownload == true) {
+                            productRatingLayout?.ivSampleDownload?.let {
+                                it.visibility = View.VISIBLE
+                                it.setOnClickListener {
+                                    // TODO handle sample download
+                                }
+                            }
+                        }
+
                         // setup product attributes
                         customAttributeManager =
                             CustomAttributeManager(

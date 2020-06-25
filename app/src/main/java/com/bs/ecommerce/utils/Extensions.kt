@@ -265,13 +265,16 @@ fun WebView.show(text : String, nightMode: Boolean = false)
 
     val htmlFullHeader = ("<head>$htmlColorHeader$htmlFontHeader</head>")
 
-    if (resources.configuration.layoutDirection == View.LAYOUT_DIRECTION_RTL)
-        this.loadDataWithBaseURL("file:///android_asset/",
-            "<html $htmlRtlHeader>$htmlFullHeader<body>$text</body></html>", "text/html", "UTF-8", "")
-    else
-        this.loadDataWithBaseURL("file:///android_asset/",
-            "<html>$htmlFullHeader<body>$text</body></html>", "text/html", "UTF-8", "")
-
+    try {
+        if (resources.configuration.layoutDirection == View.LAYOUT_DIRECTION_RTL)
+            this.loadDataWithBaseURL("file:///android_asset/",
+                "<html $htmlRtlHeader>$htmlFullHeader<body>$text</body></html>", "text/html", "UTF-8", "")
+        else
+            this.loadDataWithBaseURL("file:///android_asset/",
+                "<html>$htmlFullHeader<body>$text</body></html>", "text/html", "UTF-8", "")
+    } catch (e: Exception) {
+        e.printStackTrace()
+    }
 }
 
 fun WebView.show(text: String, backgroundColorRes: Int, textColorRes: Int = R.color.whiteOrBlack) {
@@ -300,16 +303,20 @@ fun WebView.show(text: String, backgroundColorRes: Int, textColorRes: Int = R.co
 
     val htmlFullHeader = ("<head>$htmlColorHeader$htmlFontHeader</head>")
 
-    if (resources.configuration.layoutDirection == View.LAYOUT_DIRECTION_RTL)
-        this.loadDataWithBaseURL(
-            "file:///android_asset/",
-            "<html $htmlRtlHeader>$htmlFullHeader<body>$text</body></html>", "text/html", "UTF-8", ""
-        )
-    else
-        this.loadDataWithBaseURL(
-            "file:///android_asset/",
-            "<html>$htmlFullHeader<body>$text</body></html>", "text/html", "UTF-8", ""
-        )
+    try {
+        if (resources.configuration.layoutDirection == View.LAYOUT_DIRECTION_RTL)
+            this.loadDataWithBaseURL(
+                "file:///android_asset/",
+                "<html $htmlRtlHeader>$htmlFullHeader<body>$text</body></html>", "text/html", "UTF-8", ""
+            )
+        else
+            this.loadDataWithBaseURL(
+                "file:///android_asset/",
+                "<html>$htmlFullHeader<body>$text</body></html>", "text/html", "UTF-8", ""
+            )
+    } catch (e: Exception) {
+        e.printStackTrace()
+    }
 
 }
 

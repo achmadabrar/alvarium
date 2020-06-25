@@ -63,8 +63,13 @@ class CustomerAddressFragment : BaseFragment() {
 
 
             addressDeleteLD.observe(viewLifecycleOwner, Observer { position ->
-                if (position >= 0 && rvAddress?.adapter != null) {
-                    (rvAddress?.adapter!! as AddressListAdapter).removeData(position)
+                rvAddress?.adapter?.let {
+                    if (position >= 0) {
+                        (it as AddressListAdapter).removeData(position)
+
+                        tvNoData.visibility = if (it?.itemCount == 0)
+                            View.VISIBLE else View.GONE
+                    }
                 }
             })
 

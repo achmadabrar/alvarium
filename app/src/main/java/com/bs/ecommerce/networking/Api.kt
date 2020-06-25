@@ -214,6 +214,12 @@ interface Api {
     @GET("order/history")
     fun getOrderHistory(): Call<OrderHistoryResponse>
 
+    @GET("order/orderdetails/pdf/{orderId}")
+    fun downloadPdfInvoice(@Path("orderId") id: Int): Call<OrderDetailsResponse>
+
+    @GET("order/reorder/{orderId}")
+    fun reorder(@Path("orderId") id: Int): Call<ResponseBody>
+
     // WishList
 
     @GET("shoppingcart/wishlist")

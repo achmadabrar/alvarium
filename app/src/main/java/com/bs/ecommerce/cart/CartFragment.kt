@@ -180,18 +180,18 @@ class CartFragment : BaseFragment() {
             {
                 ll_cart_gift_card?.visibility = View.VISIBLE
 
-                if(cartRootData.orderTotals.giftCards?.isNotEmpty()!!)
+                if(cartRootData.orderTotals.giftCards?.isNotEmpty() == true)
                 {
                     appliedGiftCardLayout?.visibility = View.VISIBLE
 
-                    val appliedCode = cartRootData.orderTotals.giftCards!![0].couponCode
+                    val appliedCode = cartRootData.orderTotals.giftCards?.get(0)?.couponCode ?: ""
 
-                    appliedGiftCardCodeText?.text = DbHelper.getStringWithNumber(Const.ENTERED_COUPON_CODE, appliedCode!!)
-
-
+                    appliedGiftCardCodeText?.text = DbHelper.getStringWithNumber(Const.ENTERED_COUPON_CODE, appliedCode)
 
                     removeGiftCardButton?.setOnClickListener {
-                        (viewModel as CartViewModel).removeGiftCardVM(cartRootData.orderTotals.giftCards!![0].id!!.toInt(), appliedCode, model)
+                        cartRootData.orderTotals.giftCards?.get(0)?.id?.toInt()?.let {
+                            (viewModel as CartViewModel).removeGiftCardVM(it, appliedCode, model)
+                        }
                     }
                 }
                 else
@@ -201,8 +201,7 @@ class CartFragment : BaseFragment() {
             else
                 ll_cart_gift_card?.visibility = View.GONE
 
-            if(message != null && message?.isNotEmpty()!!)
-                toast(message.toString())
+            message?.let { if(it.isNotEmpty()) toast(it) }
         }
 
     }

@@ -5,13 +5,16 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.RelativeLayout
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bs.ecommerce.R
+import com.bs.ecommerce.base.BaseActivity
 import com.bs.ecommerce.base.BaseFragment
 import com.bs.ecommerce.base.BaseViewModel
+import com.bs.ecommerce.cart.CartFragment
 import com.bs.ecommerce.cart.GiftCardAdapter
 import com.bs.ecommerce.db.DbHelper
 import com.bs.ecommerce.more.model.OrderModel
@@ -76,19 +79,29 @@ class OrderDetailsFragment : BaseFragment() {
                 else
                     hideLoading()
             })
+
+        (viewModel as OrderViewModel).reorderLD.observe(
+            viewLifecycleOwner,
+            Observer { reorder ->
+
+                if (reorder?.getContentIfNotHandled() == true
+                    && lifecycle.currentState.isAtLeast(Lifecycle.State.RESUMED)) {
+                    (requireActivity() as BaseActivity).goMenuItemFragment(CartFragment())
+                }
+            })
     }
 
     private fun initView(data: OrderDetailsData) {
         val orderDetails = DbHelper.getString(Const.ORDER_DATE)
-            .plus(" ")
+            .plus(": ")
             .plus(
                 TextUtils().tzTimeConverter(
                     data.createdOn,
                     WeakReference(requireContext())
                 )
-            ).plus("\n").plus(DbHelper.getString(Const.ORDER_STATUS)).plus(" ")
+            ).plus("\n").plus(DbHelper.getString(Const.ORDER_STATUS)).plus(": ")
             .plus(data.orderStatus).plus("\n")
-            .plus(DbHelper.getString(Const.ORDER_TOTAL)).plus(" ").plus(data.orderTotal)
+            .plus(DbHelper.getString(Const.ORDER_TOTAL)).plus(": ").plus(data.orderTotal)
 
         orderDetailsCard.tvCardTitle.text = DbHelper.getString(Const.TITLE_ORDER_DETAILS)
         orderDetailsCard.tvCardDetails.text = DbHelper.getString(Const.ORDER_NUMBER).plus(" ").plus(data.customOrderNumber)
@@ -128,9 +141,11 @@ class OrderDetailsFragment : BaseFragment() {
         populateOrderTotal(data)
 
         orderDetailsScrollView.visibility = View.VISIBLE
+        fabPdfInvoice?.visibility = View.VISIBLE
     }
 
     private fun populateOrderTotal(data: OrderDetailsData) {
+        btnReorder?.text = DbHelper.getString(Const.ORDER_REORDER)
 
         subTotalKey?.text = DbHelper.getString(Const.SUB_TOTAL)
         shippingKey?.text = DbHelper.getString(Const.SHIPPING)
@@ -186,6 +201,14 @@ class OrderDetailsFragment : BaseFragment() {
             if (orderShipping.isNullOrEmpty()) {
                 tvTotal?.text = DbHelper.getString(Const.CALCULATED_DURING_CHECKOUT)
                 tvTotal?.setTextColor(android.graphics.Color.RED)
+            }
+
+            fabPdfInvoice?.setOnClickListener {
+
+            }
+
+            btnReorder?.setOnClickListener {
+                (viewModel as OrderViewModel).reorder(id ?: -1, model)
             }
         }
     }
