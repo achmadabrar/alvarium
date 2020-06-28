@@ -8,6 +8,7 @@ import com.bs.ecommerce.networking.common.KeyValueFormData
 import com.bs.ecommerce.product.model.data.AddToCartResponse
 import com.bs.ecommerce.product.model.data.AddToWishListResponse
 import com.bs.ecommerce.product.model.data.ProductDetailResponse
+import com.bs.ecommerce.product.model.data.SampleDownloadResponse
 import com.bs.ecommerce.utils.TextUtils
 import com.google.gson.GsonBuilder
 import retrofit2.Call
@@ -94,6 +95,29 @@ class ProductDetailModelImpl :
                         callback.onRequestFailed(TextUtils.getErrorMessage(response))
                 }
 
+            })
+    }
+
+    override fun downloadSample(
+        productId: Long,
+        callback: RequestCompleteListener<SampleDownloadResponse>
+    ) {
+        RetroClient.api.sampleDownload(productId)
+            .enqueue(object : Callback<SampleDownloadResponse> {
+                override fun onResponse(
+                    call: Call<SampleDownloadResponse>,
+                    response: Response<SampleDownloadResponse>
+                ) {
+                    if (response.body() != null && response.code() == 200)
+                        callback.onRequestSuccess(response.body() as SampleDownloadResponse)
+                    else
+                        callback.onRequestFailed(TextUtils.getErrorMessage(response))
+                }
+
+
+                override fun onFailure(call: Call<SampleDownloadResponse>, t: Throwable) {
+                    callback.onRequestFailed(t.localizedMessage ?: "Unknown")
+                }
             })
     }
 

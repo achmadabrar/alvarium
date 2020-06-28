@@ -6,6 +6,7 @@ import com.bs.ecommerce.networking.common.KeyValueFormData
 import com.bs.ecommerce.product.model.data.AddToCartResponse
 import com.bs.ecommerce.product.model.data.AddToWishListResponse
 import com.bs.ecommerce.product.model.data.ProductDetailResponse
+import com.bs.ecommerce.product.model.data.SampleDownloadResponse
 
 interface ProductDetailModel {
 
@@ -25,6 +26,11 @@ interface ProductDetailModel {
         productId: Long,
         cartType: Long,
         callback: RequestCompleteListener<AddToWishListResponse>
+    )
+
+    fun downloadSample(
+        productId: Long,
+        callback: RequestCompleteListener<SampleDownloadResponse>
     )
 
 }

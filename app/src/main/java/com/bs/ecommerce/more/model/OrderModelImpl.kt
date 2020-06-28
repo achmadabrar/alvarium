@@ -1,12 +1,18 @@
 package com.bs.ecommerce.more.model
 
 import com.bs.ecommerce.common.RequestCompleteListener
+import com.bs.ecommerce.db.DbHelper
 import com.bs.ecommerce.networking.RetroClient
 import com.bs.ecommerce.product.model.data.OrderDetailsData
 import com.bs.ecommerce.product.model.data.OrderDetailsResponse
 import com.bs.ecommerce.product.model.data.OrderHistoryData
 import com.bs.ecommerce.product.model.data.OrderHistoryResponse
+import com.bs.ecommerce.utils.Const
 import com.bs.ecommerce.utils.TextUtils
+import com.bs.ecommerce.utils.showLog
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.observers.DisposableObserver
+import io.reactivex.schedulers.Schedulers
 import okhttp3.ResponseBody
 import retrofit2.Call
 import retrofit2.Callback
@@ -76,5 +82,34 @@ class OrderModelImpl : OrderModel {
             }
 
         })
+    }
+
+    override fun downloadPdfInvoice(orderId: Int, callback: RequestCompleteListener<ResponseBody>) {
+
+        val observabled = RetroClient.api.downloadPdfInvoice(orderId)
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribeWith(object : DisposableObserver<Response<ResponseBody>>() {
+
+                override fun onComplete() {
+                    "invoice_".showLog("onComplete")
+                }
+
+                override fun onNext(t: Response<ResponseBody>) {
+                    "invoice_".showLog("onNext")
+
+                    t.body()?.let {
+                        callback.onRequestSuccess(it)
+                    } ?: run {
+                        callback.onRequestFailed(DbHelper.getString(Const.COMMON_SOMETHING_WENT_WRONG))
+                    }
+                }
+
+                override fun onError(e: Throwable) {
+                    "invoice_".showLog("onError")
+                    callback.onRequestFailed(e.message ?: DbHelper.getString(Const.COMMON_SOMETHING_WENT_WRONG))
+                }
+
+            })
     }
 }

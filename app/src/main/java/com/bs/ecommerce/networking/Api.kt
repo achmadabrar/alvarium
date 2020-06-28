@@ -17,8 +17,10 @@ import com.bs.ecommerce.networking.common.BaseResponse
 import com.bs.ecommerce.networking.common.ExistingAddress
 import com.bs.ecommerce.networking.common.KeyValueFormData
 import com.bs.ecommerce.product.model.data.*
+import io.reactivex.Observable
 import okhttp3.ResponseBody
 import retrofit2.Call
+import retrofit2.Response
 import retrofit2.http.*
 
 
@@ -204,8 +206,14 @@ interface Api {
         @QueryMap query: Map<String, String>
     ): Call<SearchResponse>
 
+    @GET("download/sample/{productId}")
+    fun sampleDownload(
+        @Path("productId") id: Long
+    ): Call<SampleDownloadResponse>
+
     @GET("catalog/search")
     fun getModelsForAdvancedSearch(): Call<SearchResponse>
+
     // Order
 
     @GET("order/orderdetails/{id}")
@@ -214,8 +222,9 @@ interface Api {
     @GET("order/history")
     fun getOrderHistory(): Call<OrderHistoryResponse>
 
+    @Streaming
     @GET("order/orderdetails/pdf/{orderId}")
-    fun downloadPdfInvoice(@Path("orderId") id: Int): Call<OrderDetailsResponse>
+    fun downloadPdfInvoice(@Path("orderId") id: Int): Observable<Response<ResponseBody>>
 
     @GET("order/reorder/{orderId}")
     fun reorder(@Path("orderId") id: Int): Call<ResponseBody>

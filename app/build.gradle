@@ -125,6 +125,10 @@ dependencies {
     // Picasso
     implementation 'com.squareup.picasso:picasso:2.5.0'
 
+    // rx
+    implementation "io.reactivex.rxjava2:rxjava:$rx_java"
+    implementation "io.reactivex.rxjava2:rxandroid:$rx_android_version"
+
     // Jjwt
     implementation 'io.jsonwebtoken:jjwt:0.9.1'
 
