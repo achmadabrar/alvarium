@@ -38,7 +38,7 @@ data class OrderDetailsData(
     @SerializedName("Items")
     val items: List<Item>?,
     @SerializedName("OrderNotes")
-    val orderNotes: List<String>?,
+    val orderNotes: List<OrderNotes>?,
     @SerializedName("OrderShipping")
     val orderShipping: String?,
     @SerializedName("OrderStatus")

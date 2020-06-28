@@ -18,7 +18,7 @@ class OrderViewModel : BaseViewModel() {
     var orderHistoryLD = MutableLiveData<OrderHistoryData>()
     var orderDetailsLD = MutableLiveData<OrderDetailsData>()
     var reorderLD = MutableLiveData<OneTimeEvent<Boolean>>()
-    var invoiceDownloadLD = MutableLiveData<OneTimeEvent<ResponseBody>>()
+    //var invoiceDownloadLD = MutableLiveData<OneTimeEvent<ResponseBody>>()
 
     fun getOrderHistory(model: OrderModel) {
         isLoadingLD.value = true

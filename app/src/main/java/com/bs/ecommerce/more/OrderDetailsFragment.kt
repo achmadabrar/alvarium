@@ -17,15 +17,14 @@ import com.bs.ecommerce.base.BaseViewModel
 import com.bs.ecommerce.cart.CartFragment
 import com.bs.ecommerce.cart.GiftCardAdapter
 import com.bs.ecommerce.db.DbHelper
+import com.bs.ecommerce.more.adapter.OrderNotesAdapter
 import com.bs.ecommerce.more.model.OrderModel
 import com.bs.ecommerce.more.model.OrderModelImpl
 import com.bs.ecommerce.more.viewmodel.OrderViewModel
 import com.bs.ecommerce.product.model.data.Item
 import com.bs.ecommerce.product.model.data.OrderDetailsData
-import com.bs.ecommerce.utils.Const
-import com.bs.ecommerce.utils.RecyclerViewMargin
-import com.bs.ecommerce.utils.TextUtils
-import com.bs.ecommerce.utils.toast
+import com.bs.ecommerce.product.model.data.OrderNotes
+import com.bs.ecommerce.utils.*
 import kotlinx.android.synthetic.main.confirm_order_card.view.*
 import kotlinx.android.synthetic.main.fragment_customer_order_detail.*
 import kotlinx.android.synthetic.main.item_order_details.view.*
@@ -140,8 +139,42 @@ class OrderDetailsFragment : BaseFragment() {
 
         populateOrderTotal(data)
 
+        // populate order notes
+        if(!data.orderNotes.isNullOrEmpty()) {
+            orderNotesLayout?.visibility = View.VISIBLE
+            tvOrderNotes.text = DbHelper.getString(DbHelper.getString(Const.ORDER_NOTES))
+
+            rvOrderNotes?.apply {
+                setHasFixedSize(true)
+                layoutManager =
+                    LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
+                addItemDecoration(RecyclerViewMargin(15, 1, true))
+
+                adapter = OrderNotesAdapter(data.orderNotes, object : ItemClickListener<OrderNotes> {
+                    override fun onClick(view: View, position: Int, data: OrderNotes) {
+                        toast("Notes")
+                    }
+                })
+            }
+        }
+
+        fabPdfInvoice?.setOnClickListener {
+            if(hasDiskWritePermission()) {
+                data.id?.let { (viewModel as OrderViewModel).downloadPdfInvoice(it, model) }
+            }
+        }
+
+        btnReorder?.setOnClickListener {
+            (viewModel as OrderViewModel).reorder(data.id ?: -1, model)
+        }
+
         orderDetailsScrollView.visibility = View.VISIBLE
-        fabPdfInvoice?.visibility = View.VISIBLE
+
+        fabPdfInvoice?.visibility = if (data.pdfInvoiceDisabled == true) View.GONE
+        else View.VISIBLE
+
+        btnReorder?.visibility = if (data.isReOrderAllowed == true) View.VISIBLE
+        else View.GONE
     }
 
     private fun populateOrderTotal(data: OrderDetailsData) {
@@ -201,16 +234,6 @@ class OrderDetailsFragment : BaseFragment() {
             if (orderShipping.isNullOrEmpty()) {
                 tvTotal?.text = DbHelper.getString(Const.CALCULATED_DURING_CHECKOUT)
                 tvTotal?.setTextColor(android.graphics.Color.RED)
-            }
-
-            fabPdfInvoice?.setOnClickListener {
-                if(hasDiskWritePermission()) {
-                    id?.let { (viewModel as OrderViewModel).downloadPdfInvoice(it, model) }
-                }
-            }
-
-            btnReorder?.setOnClickListener {
-                (viewModel as OrderViewModel).reorder(id ?: -1, model)
             }
         }
     }

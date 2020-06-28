@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="?attr/primaryListItemBg"
+    android:padding="5dp">
+
+    <TextView
+        android:id="@+id/tvNoteText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ellipsize="end"
+        android:maxLines="3"
+        android:textColor="?attr/primaryTextColor"
+        android:textSize="@dimen/tv_text_size_regular"
+        tools:text="@string/placeholder"
+        style="@style/rtlSupportedTextView"/>
+
+    <TextView
+        android:id="@+id/tvNoteDate"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tvNoteText"
+        android:layout_toStartOf="@id/ivDownload"
+        android:layout_marginTop="5dp"
+        android:maxLines="1"
+        android:textColor="?attr/primaryTextColor"
+        android:textSize="@dimen/tv_text_size_regular"
+        tools:text="@string/placeholder"
+        style="@style/rtlSupportedTextView"/>
+
+    <ImageView
+        android:id="@+id/ivDownload"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:contentDescription="@string/placeholder"
+        android:layout_below="@id/tvNoteText"
+        android:paddingStart="5dp"
+        android:paddingEnd="5dp"
+        android:src="@drawable/ic_file_download"
+        android:layout_alignParentEnd="true"
+        android:tint="?attr/primaryIconTint"
+        android:visibility="gone"
+        tools:visibility="visible" />
+
+</RelativeLayout>

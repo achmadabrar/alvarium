@@ -68,6 +68,29 @@
 
 
                 <LinearLayout
+                    android:id="@+id/orderNotesLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:visibility="gone">
+
+                    <TextView
+                        style="@style/OrderDetailsTitleTextViewStyle"
+                        android:id="@+id/tvOrderNotes"
+                        android:text="@string/products" />
+
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/rvOrderNotes"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:nestedScrollingEnabled="false"
+                        tools:itemCount="2"
+                        tools:listitem="@layout/item_order_details" />
+                </LinearLayout>
+
+
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical">

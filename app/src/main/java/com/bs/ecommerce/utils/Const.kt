@@ -85,6 +85,7 @@ class Const {
         const val ORDER_TOTAL_ = "order.product(s).sku"
         const val ORDER_REORDER = "order.reorder"
         const val ORDER_PDF_INVOICE = "order.getpdfinvoice"
+        const val ORDER_NOTES = "order.notes"
 
         const val CATALOG_ITEMS_PER_PAGE = "catalog.pagesize.label"
         const val CATALOG_ORDER_BY = "catalog.orderby"
@@ -104,7 +105,7 @@ class Const {
         const val ACCOUNT_LOGOUT = "account.logout"
         const val ACCOUNT_LOGOUT_CONFIRM = "nopstation.webapi.account.logoutconfirmation"
         const val ACCOUNT_ORDERS = "account.customerorders"
-        const val ACCOUNT_DOWNLOADABLE_PRODUCTS = "nopstation.webapi.account.downloadableproducts"
+        const val ACCOUNT_DOWNLOADABLE_PRODUCTS = "account.downloadableproducts"
         const val ACCOUNT_WISHLIST = "wishlist"
 
         const val CONTACT_US_FULLNAME = "contactus.fullname.hint"
