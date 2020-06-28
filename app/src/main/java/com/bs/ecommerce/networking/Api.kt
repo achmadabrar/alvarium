@@ -13,6 +13,7 @@ import com.bs.ecommerce.home.homepage.model.data.SliderResponse
 import com.bs.ecommerce.main.model.data.AppLandingSettingResponse
 import com.bs.ecommerce.main.model.data.AppStartRequest
 import com.bs.ecommerce.main.model.data.CategoryTreeResponse
+import com.bs.ecommerce.more.downloadableProducts.model.data.DownloadableProductListResponse
 import com.bs.ecommerce.networking.common.BaseResponse
 import com.bs.ecommerce.networking.common.ExistingAddress
 import com.bs.ecommerce.networking.common.KeyValueFormData
@@ -210,6 +211,9 @@ interface Api {
     fun sampleDownload(
         @Path("productId") id: Long
     ): Observable<Response<ResponseBody>>
+
+    @GET("customer/downloadableproducts")
+    fun getDownloadableProducts(): Call<DownloadableProductListResponse>
 
     @GET("catalog/search")
     fun getModelsForAdvancedSearch(): Call<SearchResponse>
