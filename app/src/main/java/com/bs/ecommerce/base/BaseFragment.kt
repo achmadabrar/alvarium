@@ -170,6 +170,17 @@ abstract class BaseFragment : Fragment()
         }
     }
 
+    fun hasDiskWritePermission(): Boolean {
+        return if (ContextCompat.checkSelfPermission(requireActivity(), Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(requireActivity(),
+                arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE), 222)
+
+            false
+        } else {
+            true
+        }
+    }
+
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>, grantResults: IntArray)
     {
         when (requestCode)

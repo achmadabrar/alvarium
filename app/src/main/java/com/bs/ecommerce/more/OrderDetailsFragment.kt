@@ -204,7 +204,9 @@ class OrderDetailsFragment : BaseFragment() {
             }
 
             fabPdfInvoice?.setOnClickListener {
-
+                if(hasDiskWritePermission()) {
+                    id?.let { (viewModel as OrderViewModel).downloadPdfInvoice(it, model) }
+                }
             }
 
             btnReorder?.setOnClickListener {
