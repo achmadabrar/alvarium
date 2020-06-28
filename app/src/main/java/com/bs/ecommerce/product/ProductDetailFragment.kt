@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.app.DatePickerDialog
 import android.content.Intent
 import android.graphics.Paint
+import android.net.Uri
 import android.os.Bundle
 import android.view.View
 import android.webkit.WebViewClient
@@ -310,9 +311,13 @@ class ProductDetailFragment : BaseFragment(), View.OnClickListener {
                             productRatingLayout?.ivSampleDownload?.let {
                                 it.visibility = View.VISIBLE
                                 it.setOnClickListener {
-                                    // TODO handle sample download
+
                                     if(hasDiskWritePermission()) {
-                                        //
+                                        blockingLoader.showDialog()
+
+                                        (viewModel as ProductDetailViewModel).downloadSample(
+                                            product.id ?: -1, model
+                                        )
                                     }
                                 }
                             }
@@ -411,6 +416,25 @@ class ProductDetailFragment : BaseFragment(), View.OnClickListener {
             similarProductsLD.observe(viewLifecycleOwner,
                 Observer { list ->
                     populateSimilarProductList(list)
+                })
+
+            sampleDownloadLD.observe(viewLifecycleOwner,
+                Observer { sampleDownloadResp ->
+                    blockingLoader.hideDialog()
+
+                    sampleDownloadResp?.let {
+                        it.getContentIfNotHandled()?.let { data ->
+                            data.data?.apply {
+                                // open browser
+                                try {
+                                    val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse(this.downloadUrl))
+                                    startActivity(browserIntent)
+                                } catch (e: Exception) {
+                                    e.localizedMessage?.let { msg-> toast(msg) }
+                                }
+                            }
+                        }
+                    }
                 })
 
             viewModel.addedToWishListLD.observe(viewLifecycleOwner, Observer { action ->

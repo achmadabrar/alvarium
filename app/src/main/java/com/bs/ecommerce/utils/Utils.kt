@@ -26,7 +26,7 @@ class Utils {
     }
 
     fun writeResponseBodyToDisk(
-        ctx: Context,
+        ctx: Context?,
         fileName: String,
         body: ResponseBody
     ): Boolean {

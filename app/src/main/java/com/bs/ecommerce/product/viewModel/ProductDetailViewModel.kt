@@ -10,14 +10,10 @@ import com.bs.ecommerce.home.homepage.model.data.HomePageProductResponse
 import com.bs.ecommerce.networking.Api
 import com.bs.ecommerce.networking.common.KeyValueFormData
 import com.bs.ecommerce.product.model.ProductDetailModel
-import com.bs.ecommerce.product.model.data.AddToCartResponse
-import com.bs.ecommerce.product.model.data.ProductDetail
-import com.bs.ecommerce.product.model.data.ProductDetailResponse
-import com.bs.ecommerce.product.model.data.ProductSummary
-import com.bs.ecommerce.utils.Const
-import com.bs.ecommerce.utils.OneTimeEvent
-import com.bs.ecommerce.utils.TextUtils
-import com.bs.ecommerce.utils.showLog
+import com.bs.ecommerce.product.model.data.*
+import com.bs.ecommerce.utils.*
+import com.google.gson.Gson
+import okhttp3.ResponseBody
 import java.util.*
 
 
@@ -30,6 +26,7 @@ class ProductDetailViewModel : BaseViewModel() {
     var quantityLiveData = MutableLiveData<Int>()
 
     var addToCartResponseLD = MutableLiveData<OneTimeEvent<AddToCartResponse>>()
+    var sampleDownloadLD = MutableLiveData<OneTimeEvent<SampleDownloadResponse?>>()
 
     var gotoCartPage = false
     var rentDateFrom: Long? = null
@@ -86,6 +83,43 @@ class ProductDetailViewModel : BaseViewModel() {
             }
 
             override fun onRequestFailed(errorMessage: String) {
+                Log.e("", errorMessage)
+            }
+
+        })
+    }
+
+    fun downloadSample(prodId: Long, model: ProductDetailModel) {
+
+        model.downloadSample(prodId, object: RequestCompleteListener<ResponseBody> {
+
+            override fun onRequestSuccess(data: ResponseBody) {
+                val contentType = data.contentType()
+
+                try {
+                    if(contentType?.subtype?.equals("json") == true) {
+                        val response = Gson().fromJson(data.string(), SampleDownloadResponse::class.java)
+
+                        sampleDownloadLD.value = OneTimeEvent(response)
+                    } else {
+                        val done = Utils().writeResponseBodyToDisk(null, "sample_$prodId", data)
+
+                        if(done)
+                            toast("File sample_$prodId downloaded to Download directory")
+                        else
+                            toast(DbHelper.getString(Const.COMMON_SOMETHING_WENT_WRONG))
+
+                        sampleDownloadLD.value = OneTimeEvent(null)
+                    }
+                } catch (e: Exception) {
+                    e.printStackTrace()
+                }
+
+                sampleDownloadLD.value = OneTimeEvent(null)
+            }
+
+            override fun onRequestFailed(errorMessage: String) {
+                sampleDownloadLD.value = OneTimeEvent(null)
                 Log.e("", errorMessage)
             }
 

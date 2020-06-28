@@ -6,7 +6,7 @@ import com.bs.ecommerce.networking.common.KeyValueFormData
 import com.bs.ecommerce.product.model.data.AddToCartResponse
 import com.bs.ecommerce.product.model.data.AddToWishListResponse
 import com.bs.ecommerce.product.model.data.ProductDetailResponse
-import com.bs.ecommerce.product.model.data.SampleDownloadResponse
+import okhttp3.ResponseBody
 
 interface ProductDetailModel {
 
@@ -30,7 +30,7 @@ interface ProductDetailModel {
 
     fun downloadSample(
         productId: Long,
-        callback: RequestCompleteListener<SampleDownloadResponse>
+        callback: RequestCompleteListener<ResponseBody>
     )
 
 }

@@ -209,7 +209,7 @@ interface Api {
     @GET("download/sample/{productId}")
     fun sampleDownload(
         @Path("productId") id: Long
-    ): Call<SampleDownloadResponse>
+    ): Observable<Response<ResponseBody>>
 
     @GET("catalog/search")
     fun getModelsForAdvancedSearch(): Call<SearchResponse>

@@ -2,15 +2,21 @@ package com.bs.ecommerce.product.model
 
 import com.bs.ecommerce.auth.register.data.KeyValuePair
 import com.bs.ecommerce.common.RequestCompleteListener
+import com.bs.ecommerce.db.DbHelper
 import com.bs.ecommerce.home.homepage.model.data.HomePageProductResponse
 import com.bs.ecommerce.networking.RetroClient
 import com.bs.ecommerce.networking.common.KeyValueFormData
 import com.bs.ecommerce.product.model.data.AddToCartResponse
 import com.bs.ecommerce.product.model.data.AddToWishListResponse
 import com.bs.ecommerce.product.model.data.ProductDetailResponse
-import com.bs.ecommerce.product.model.data.SampleDownloadResponse
+import com.bs.ecommerce.utils.Const
 import com.bs.ecommerce.utils.TextUtils
+import com.bs.ecommerce.utils.showLog
 import com.google.gson.GsonBuilder
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.observers.DisposableObserver
+import io.reactivex.schedulers.Schedulers
+import okhttp3.ResponseBody
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -100,24 +106,32 @@ class ProductDetailModelImpl :
 
     override fun downloadSample(
         productId: Long,
-        callback: RequestCompleteListener<SampleDownloadResponse>
+        callback: RequestCompleteListener<ResponseBody>
     ) {
-        RetroClient.api.sampleDownload(productId)
-            .enqueue(object : Callback<SampleDownloadResponse> {
-                override fun onResponse(
-                    call: Call<SampleDownloadResponse>,
-                    response: Response<SampleDownloadResponse>
-                ) {
-                    if (response.body() != null && response.code() == 200)
-                        callback.onRequestSuccess(response.body() as SampleDownloadResponse)
-                    else
-                        callback.onRequestFailed(TextUtils.getErrorMessage(response))
+        val x = RetroClient.api.sampleDownload(productId)
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribeWith(object : DisposableObserver<Response<ResponseBody>>() {
+
+                override fun onComplete() {
+                    "downloadSample_".showLog("onComplete")
                 }
 
+                override fun onNext(t: Response<ResponseBody>) {
+                    "downloadSample_".showLog("onNext")
 
-                override fun onFailure(call: Call<SampleDownloadResponse>, t: Throwable) {
-                    callback.onRequestFailed(t.localizedMessage ?: "Unknown")
+                    t.body()?.let {
+                        callback.onRequestSuccess(it)
+                    } ?: run {
+                        callback.onRequestFailed(DbHelper.getString(Const.COMMON_SOMETHING_WENT_WRONG))
+                    }
                 }
+
+                override fun onError(e: Throwable) {
+                    "downloadSample_".showLog("onError")
+                    callback.onRequestFailed(e.message ?: DbHelper.getString(Const.COMMON_SOMETHING_WENT_WRONG))
+                }
+
             })
     }
 
