@@ -161,7 +161,7 @@ class MainActivity : PrivacyPolicyDialogActivity(), View.OnClickListener
 
     private fun gotoFragment(fragment: androidx.fragment.app.Fragment)
     {
-        replaceFragment(fragment)
+        supportFragmentManager.beginTransaction().add(R.id.layoutFrame, fragment).addToBackStack(null).commit()
         notificationClicked = true
     }
 
