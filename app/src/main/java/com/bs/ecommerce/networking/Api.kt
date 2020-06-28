@@ -206,6 +206,11 @@ interface Api {
         @QueryMap query: Map<String, String>
     ): Call<SearchResponse>
 
+    @GET("download/sample/{productId}")
+    fun sampleDownload(
+        @Path("productId") id: Long
+    ): Call<SampleDownloadResponse>
+
     @GET("catalog/search")
     fun getModelsForAdvancedSearch(): Call<SearchResponse>
 

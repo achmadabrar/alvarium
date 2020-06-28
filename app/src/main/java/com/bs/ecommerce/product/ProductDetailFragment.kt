@@ -311,6 +311,9 @@ class ProductDetailFragment : BaseFragment(), View.OnClickListener {
                                 it.visibility = View.VISIBLE
                                 it.setOnClickListener {
                                     // TODO handle sample download
+                                    if(hasDiskWritePermission()) {
+                                        //
+                                    }
                                 }
                             }
                         }
