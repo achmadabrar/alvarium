@@ -20,6 +20,7 @@ import com.bs.ecommerce.db.DbHelper
 import com.bs.ecommerce.main.MainActivity
 import com.bs.ecommerce.main.MainViewModel
 import com.bs.ecommerce.main.model.MainModelImpl
+import com.bs.ecommerce.more.downloadableProducts.DownloadableProductListFragment
 import com.bs.ecommerce.utils.Const
 import com.bs.ecommerce.utils.PrefSingleton
 import com.bs.ecommerce.utils.replaceFragmentSafely
@@ -109,6 +110,12 @@ class UserAccountFragment: ToolbarLogoBaseFragment() {
             ivOptionIcon.setImageResource(R.drawable.ic_my_order)
             tvOptionName.text = DbHelper.getString(Const.ACCOUNT_ORDERS)
             setOnClickListener { clickAction(OrderHistoryFragment()) }
+        }
+
+        downloadableProductsLayout.apply {
+            ivOptionIcon.setImageResource(R.drawable.ic_my_order)
+            tvOptionName.text = DbHelper.getString(Const.ACCOUNT_DOWNLOADABLE_PRODUCTS)
+            setOnClickListener { clickAction(DownloadableProductListFragment()) }
         }
 
         cartLayout.apply {

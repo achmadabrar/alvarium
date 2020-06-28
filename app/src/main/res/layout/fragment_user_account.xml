@@ -68,6 +68,10 @@
                 layout="@layout/item_user_account" />
 
             <include
+                android:id="@+id/downloadableProductsLayout"
+                layout="@layout/item_user_account" />
+
+            <include
                 android:id="@+id/cartLayout"
                 layout="@layout/item_user_account" />
 

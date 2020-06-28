@@ -104,6 +104,7 @@ class Const {
         const val ACCOUNT_LOGOUT = "account.logout"
         const val ACCOUNT_LOGOUT_CONFIRM = "nopstation.webapi.account.logoutconfirmation"
         const val ACCOUNT_ORDERS = "account.customerorders"
+        const val ACCOUNT_DOWNLOADABLE_PRODUCTS = "nopstation.webapi.account.downloadableproducts"
         const val ACCOUNT_WISHLIST = "wishlist"
 
         const val CONTACT_US_FULLNAME = "contactus.fullname.hint"
