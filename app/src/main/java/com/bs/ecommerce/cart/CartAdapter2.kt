@@ -20,7 +20,9 @@ import kotlinx.android.synthetic.main.qunatity_button.view.*
 class CartAdapter2 (
     private val list: MutableList<CartProduct> = mutableListOf(),
     private val clickListener: ItemClickListener<CartProduct>?,
-    private val isCheckout: Boolean
+    private val isCheckout: Boolean,
+    private val showSku: Boolean,
+    private val isEditable: Boolean
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
@@ -56,6 +58,11 @@ class CartAdapter2 (
                 DbHelper.getString(Const.QUANTITY).plus(": ").plus(item.quantity)
 
             tvItemQuantity?.text = if (isCheckout) "" else item.quantity.toString()
+
+            sku?.text = "SKU".plus(": ").plus(item.sku)
+            sku?.visibility = if (showSku) View.VISIBLE else View.GONE
+
+
 
 
             if (item.attributeInfo.isNotEmpty()) {

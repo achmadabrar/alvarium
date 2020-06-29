@@ -93,6 +93,19 @@
             app:layout_constraintTop_toBottomOf="@id/tvAttribute1"
             tools:text="@string/placeholder" />
 
+
+        <TextView
+            android:id="@+id/sku"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:textColor="?attr/primaryTextColor"
+            android:textSize="@dimen/tv_text_size_regular"
+            android:visibility="gone"
+            app:layout_constraintStart_toEndOf="@id/referenceView"
+            app:layout_constraintTop_toBottomOf="@id/quantityForCheckout"
+            tools:text="@string/placeholder" />
+
         <LinearLayout
             android:id="@+id/btn_holder"
             android:layout_width="0dp"
@@ -100,7 +113,7 @@
             android:layout_marginTop="5dp"
             android:orientation="horizontal"
             app:layout_constraintStart_toEndOf="@id/referenceView"
-            app:layout_constraintTop_toBottomOf="@id/quantityForCheckout">
+            app:layout_constraintTop_toBottomOf="@id/sku">
 
             <include layout="@layout/qunatity_button" />
 
@@ -116,18 +129,6 @@
                 android:visibility="visible"
                 tools:text="1" />
         </LinearLayout>
-
-        <TextView
-            android:id="@+id/tvAttribute2"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
-            android:textColor="?attr/primaryTextColor"
-            android:textSize="@dimen/tv_text_size_regular"
-            android:visibility="gone"
-            app:layout_constraintStart_toEndOf="@id/referenceView"
-            app:layout_constraintTop_toBottomOf="@id/quantityForCheckout"
-            tools:text="@string/placeholder" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

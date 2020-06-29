@@ -96,9 +96,15 @@ data class ProductDetail(
     @SerializedName("StockAvailability")
     val stockAvailability: String?,
     @SerializedName("TierPrices")
-    val tierPrices: List<Any>?,
+    val tierPrices: List<TierPriceItem>?,
     @SerializedName("VendorModel")
     val vendorModel: VendorDataModel?,
     @SerializedName("ReviewOverviewModel")
     val reviewOverviewModel: ReviewModel? = null
+)
+
+
+data class TierPriceItem(
+    @SerializedName("Price") var price: String = "",
+    @SerializedName("Quantity") var quantity: Int = 0
 )
