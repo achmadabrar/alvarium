@@ -222,7 +222,7 @@ open class CartAdapter(
 
             tvAttribute1 = itemView.findViewById<View>(R.id.tvAttribute1) as WebView
             //itemView.tvAttribute1.text = "Color: Black"
-            itemView.tvAttribute2.text = "Size: XL"
+            itemView.sku.text = "Size: XL"
 /*
             itemView.tvOriginalPrice.text = "$100"
             itemView.tvOriginalPrice.paintFlags = Paint.STRIKE_THRU_TEXT_FLAG*/

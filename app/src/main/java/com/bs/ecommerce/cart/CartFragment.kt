@@ -101,7 +101,7 @@ class CartFragment : BaseFragment() {
     {
         cartInfoLinearLayout?.visibility = View.VISIBLE
 
-        populateProductList(cartRootData.cart.items)
+        populateProductList(cartRootData.cart.items, cartRootData.cart.showSku, cartRootData.cart.isEditable)
 
         populateDiscountAndGiftCard(cartRootData)
 
@@ -127,7 +127,7 @@ class CartFragment : BaseFragment() {
         customAttributeManager?.attachAttributesToFragment()
     }
 
-    private fun populateProductList(items: List<CartProduct>)
+    private fun populateProductList(items: List<CartProduct>, showSku: Boolean = false, editable: Boolean = false)
     {
 
         val layoutManager = LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false)
@@ -135,7 +135,8 @@ class CartFragment : BaseFragment() {
         cartproductRecyclerList?.layoutManager = layoutManager
 
 //        val cartAdapter = CartAdapter(requireActivity(), items, clickListener, viewModel, model)
-        val cartAdapter = CartAdapter2(items as MutableList<CartProduct>, clickListener, isCheckout = false)
+        val cartAdapter = CartAdapter2(items as MutableList<CartProduct>, clickListener, isCheckout = false,
+            showSku = showSku, isEditable = editable)
 
         cartproductRecyclerList?.adapter = cartAdapter
     }
