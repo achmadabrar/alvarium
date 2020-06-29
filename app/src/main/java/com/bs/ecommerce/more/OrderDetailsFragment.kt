@@ -1,5 +1,7 @@
 package com.bs.ecommerce.more
 
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -88,6 +90,28 @@ class OrderDetailsFragment : BaseFragment() {
                     (requireActivity() as BaseActivity).goMenuItemFragment(CartFragment())
                 }
             })
+
+        (viewModel as OrderViewModel).apply {
+
+            notesDownloadLD.observe(viewLifecycleOwner,
+                Observer { sampleDownloadResp ->
+                    blockingLoader.hideDialog()
+
+                    sampleDownloadResp?.let {
+                        it.getContentIfNotHandled()?.let { data ->
+                            data.data?.apply {
+                                // open browser
+                                try {
+                                    val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse(this.downloadUrl))
+                                    startActivity(browserIntent)
+                                } catch (e: Exception) {
+                                    e.localizedMessage?.let { msg-> toast(msg) }
+                                }
+                            }
+                        }
+                    }
+                })
+        }
     }
 
     private fun initView(data: OrderDetailsData) {
@@ -152,7 +176,9 @@ class OrderDetailsFragment : BaseFragment() {
 
                 adapter = OrderNotesAdapter(data.orderNotes, object : ItemClickListener<OrderNotes> {
                     override fun onClick(view: View, position: Int, data: OrderNotes) {
-                        toast("Notes")
+                        blockingLoader.showDialog()
+
+                        (viewModel as OrderViewModel).downloadOrderNote(data.id ?: -1, model)
                     }
                 })
             }

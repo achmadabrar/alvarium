@@ -14,6 +14,7 @@ import com.bs.ecommerce.product.model.data.*
 import com.bs.ecommerce.utils.*
 import com.google.gson.Gson
 import okhttp3.ResponseBody
+import retrofit2.Response
 import java.util.*
 
 
@@ -91,21 +92,22 @@ class ProductDetailViewModel : BaseViewModel() {
 
     fun downloadSample(prodId: Long, model: ProductDetailModel) {
 
-        model.downloadSample(prodId, object: RequestCompleteListener<ResponseBody> {
+        model.downloadSample(prodId, object: RequestCompleteListener<Response<ResponseBody>> {
 
-            override fun onRequestSuccess(data: ResponseBody) {
-                val contentType = data.contentType()
+            override fun onRequestSuccess(data: Response<ResponseBody>) {
 
                 try {
+                    val contentType = data.body()?.contentType()
+
                     if(contentType?.subtype?.equals("json") == true) {
-                        val response = Gson().fromJson(data.string(), SampleDownloadResponse::class.java)
+                        val response = Gson().fromJson(data.body()?.string(), SampleDownloadResponse::class.java)
 
                         sampleDownloadLD.value = OneTimeEvent(response)
                     } else {
-                        val done = Utils().writeResponseBodyToDisk(null, "sample_$prodId", data)
+                        val done = Utils().writeResponseBodyToDisk("sample_$prodId", data)
 
                         if(done)
-                            toast("File sample_$prodId downloaded to Download directory")
+                            toast(DbHelper.getString(Const.FILE_DOWNLOADED))
                         else
                             toast(DbHelper.getString(Const.COMMON_SOMETHING_WENT_WRONG))
 

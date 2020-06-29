@@ -7,6 +7,7 @@ import com.bs.ecommerce.product.model.data.AddToCartResponse
 import com.bs.ecommerce.product.model.data.AddToWishListResponse
 import com.bs.ecommerce.product.model.data.ProductDetailResponse
 import okhttp3.ResponseBody
+import retrofit2.Response
 
 interface ProductDetailModel {
 
@@ -30,7 +31,7 @@ interface ProductDetailModel {
 
     fun downloadSample(
         productId: Long,
-        callback: RequestCompleteListener<ResponseBody>
+        callback: RequestCompleteListener<Response<ResponseBody>>
     )
 
 }

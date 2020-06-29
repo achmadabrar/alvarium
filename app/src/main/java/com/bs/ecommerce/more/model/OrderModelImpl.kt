@@ -84,7 +84,7 @@ class OrderModelImpl : OrderModel {
         })
     }
 
-    override fun downloadPdfInvoice(orderId: Int, callback: RequestCompleteListener<ResponseBody>) {
+    override fun downloadPdfInvoice(orderId: Int, callback: RequestCompleteListener<Response<ResponseBody>>) {
 
         val observabled = RetroClient.api.downloadPdfInvoice(orderId)
             .subscribeOn(Schedulers.io())
@@ -99,7 +99,7 @@ class OrderModelImpl : OrderModel {
                     "invoice_".showLog("onNext")
 
                     t.body()?.let {
-                        callback.onRequestSuccess(it)
+                        callback.onRequestSuccess(t)
                     } ?: run {
                         callback.onRequestFailed(DbHelper.getString(Const.COMMON_SOMETHING_WENT_WRONG))
                     }
@@ -107,6 +107,35 @@ class OrderModelImpl : OrderModel {
 
                 override fun onError(e: Throwable) {
                     "invoice_".showLog("onError")
+                    callback.onRequestFailed(e.message ?: DbHelper.getString(Const.COMMON_SOMETHING_WENT_WRONG))
+                }
+
+            })
+    }
+
+    override fun downloadOrderNotes(notesId: Int, callback: RequestCompleteListener<Response<ResponseBody>>) {
+
+        val observabled = RetroClient.api.orderNoteDownload(notesId)
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribeWith(object : DisposableObserver<Response<ResponseBody>>() {
+
+                override fun onComplete() {
+                    "noteDownload_".showLog("onComplete")
+                }
+
+                override fun onNext(t: Response<ResponseBody>) {
+                    "noteDownload_".showLog("onNext")
+
+                    t.body()?.let {
+                        callback.onRequestSuccess(t)
+                    } ?: run {
+                        callback.onRequestFailed(DbHelper.getString(Const.COMMON_SOMETHING_WENT_WRONG))
+                    }
+                }
+
+                override fun onError(e: Throwable) {
+                    "noteDownload_".showLog("onError")
                     callback.onRequestFailed(e.message ?: DbHelper.getString(Const.COMMON_SOMETHING_WENT_WRONG))
                 }
 
