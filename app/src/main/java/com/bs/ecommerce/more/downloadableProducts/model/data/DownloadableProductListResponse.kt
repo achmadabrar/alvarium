@@ -5,9 +5,9 @@ import com.google.gson.annotations.SerializedName
 
 data class DownloadableProductListResponse(@SerializedName("Data") var downloadableProductList: DownloadableProductList? = DownloadableProductList()) : BaseResponse()
 
-data class DownloadableProductList(@SerializedName("Items") var items: List<Item>? = listOf())
+data class DownloadableProductList(@SerializedName("Items") var items: List<DownloadableProductItem>? = listOf())
 
-data class Item(
+data class DownloadableProductItem(
     @SerializedName("CreatedOn") var createdOn: String? = "",
     @SerializedName("CustomOrderNumber") var customOrderNumber: String? = "",
     @SerializedName("DownloadId") var downloadId: Int? = 0,

@@ -187,6 +187,10 @@ class Const {
         const val COMMON_NO = "common.no"
         const val FILE_DOWNLOADED = "File downloaded to Download directory"
 
+        const val DOWNLOADABLE_I_AGREE = "downloadableproducts.iagree"
+        const val DOWNLOADABLE_USER_AGREEMENT = "downloadableproducts.useragreement"
+        const val DOWNLOADABLE_USER_DOWNLOAD = "downloadableproducts.fields.download"
+
 
         //SHOPPING CART
         const val SHOPPING_CART_TITLE = "pagetitle.shoppingcart"

@@ -212,11 +212,22 @@ interface Api {
         @Path("productId") id: Long
     ): Observable<Response<ResponseBody>>
 
+    @GET("catalog/search")
+    fun getModelsForAdvancedSearch(): Call<SearchResponse>
+
     @GET("customer/downloadableproducts")
     fun getDownloadableProducts(): Call<DownloadableProductListResponse>
 
-    @GET("catalog/search")
-    fun getModelsForAdvancedSearch(): Call<SearchResponse>
+    @GET("download/getdownload/{guid}/{consent}")
+    fun downloadProduct(
+        @Path("guid") guid: String,
+        @Path("consent") consent: String?
+    ): Observable<Response<ResponseBody>>
+
+    @GET("customer/useragreement/{guid}")
+    fun userAgreement(
+        @Path("guid") guid: String
+    ): Call<UserAgreementResponse>
 
     // Order
 

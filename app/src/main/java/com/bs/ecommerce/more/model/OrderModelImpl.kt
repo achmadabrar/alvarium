@@ -101,7 +101,7 @@ class OrderModelImpl : OrderModel {
                     t.body()?.let {
                         callback.onRequestSuccess(t)
                     } ?: run {
-                        callback.onRequestFailed(DbHelper.getString(Const.COMMON_SOMETHING_WENT_WRONG))
+                        callback.onRequestFailed(TextUtils.getErrorMessage(t))
                     }
                 }
 
@@ -130,7 +130,7 @@ class OrderModelImpl : OrderModel {
                     t.body()?.let {
                         callback.onRequestSuccess(t)
                     } ?: run {
-                        callback.onRequestFailed(DbHelper.getString(Const.COMMON_SOMETHING_WENT_WRONG))
+                        callback.onRequestFailed(TextUtils.getErrorMessage(t))
                     }
                 }
 

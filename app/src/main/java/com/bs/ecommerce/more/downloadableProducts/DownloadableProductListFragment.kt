@@ -1,5 +1,7 @@
 package com.bs.ecommerce.more.downloadableProducts
 
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.view.View
 import android.widget.RelativeLayout
@@ -11,11 +13,16 @@ import com.bs.ecommerce.base.BaseFragment
 import com.bs.ecommerce.base.BaseViewModel
 import com.bs.ecommerce.db.DbHelper
 import com.bs.ecommerce.more.OrderDetailsFragment
+import com.bs.ecommerce.more.UserAgreementDialogFragment
 import com.bs.ecommerce.more.downloadableProducts.model.DownloadableProductListModel
 import com.bs.ecommerce.more.downloadableProducts.model.DownloadableProductListModelImpl
-import com.bs.ecommerce.more.downloadableProducts.model.data.Item
+import com.bs.ecommerce.more.downloadableProducts.model.data.DownloadableProductItem
 import com.bs.ecommerce.product.ProductDetailFragment
-import com.bs.ecommerce.utils.*
+import com.bs.ecommerce.product.model.data.UserAgreementData
+import com.bs.ecommerce.utils.Const
+import com.bs.ecommerce.utils.ItemClickListener
+import com.bs.ecommerce.utils.RecyclerViewMargin
+import com.bs.ecommerce.utils.toast
 import kotlinx.android.synthetic.main.fragment_customer_address.tvNoData
 import kotlinx.android.synthetic.main.fragment_customer_downloadable_product_list.*
 
@@ -23,6 +30,8 @@ class DownloadableProductListFragment : BaseFragment() {
 
     private lateinit var model: DownloadableProductListModel
     private lateinit var listAdapter: DownloadableProductListAdapter
+
+    private var currentGuid: String = ""
 
     override fun getLayoutId(): Int = R.layout.fragment_customer_downloadable_product_list
 
@@ -57,7 +66,47 @@ class DownloadableProductListFragment : BaseFragment() {
 
                 listAdapter.addData(data?.items)
             })
-            isLoadingLD.observe(viewLifecycleOwner, Observer { isShowLoader -> showHideLoader(isShowLoader) })
+
+            isLoadingLD.observe(viewLifecycleOwner, Observer {
+                    isShowLoader -> showHideLoader(isShowLoader)
+            })
+
+            productDownloadLD.observe(viewLifecycleOwner,
+                Observer { sampleDownloadResp ->
+                    blockingLoader.hideDialog()
+
+                    sampleDownloadResp?.let {
+                        it.getContentIfNotHandled()?.let { data ->
+                            data.data?.apply {
+                                // open browser
+                                try {
+                                    if(this.hasUserAgreement == true) {
+
+                                        // Call user agreement api
+                                        getUserAgreementData(currentGuid, model)
+
+                                    } else if (this.downloadUrl != null ){
+                                        val browserIntent =
+                                            Intent(Intent.ACTION_VIEW, Uri.parse(this.downloadUrl))
+                                        startActivity(browserIntent)
+                                    }
+                                } catch (e: Exception) {
+                                    e.localizedMessage?.let { msg -> toast(msg) }
+                                }
+                            }
+                        }
+                    }
+                })
+
+            userAgreementLD.observe(viewLifecycleOwner, Observer {
+
+                it.getContentIfNotHandled()?.let { agreementData ->
+                    UserAgreementDialogFragment.newInstance(agreementData).show(
+                        requireActivity().supportFragmentManager, "Dialog"
+                    )
+                }
+            })
+
         }
     }
 
@@ -66,17 +115,32 @@ class DownloadableProductListFragment : BaseFragment() {
         requireActivity().supportFragmentManager
             .beginTransaction().add(R.id.layoutFrame, fragment).addToBackStack(null).commit()
     }
+    
+    fun onUserAgreeClicked(data: UserAgreementData) {
+        blockingLoader.showDialog()
+
+        (viewModel as DownloadableProductListViewModel).downloadProduct(
+            data.orderItemGuid ?: "", "true", model
+        )
+    }
 
 
     private fun setupView() {
 
 
-        val clickListener = object : ItemClickListener<Item> {
-            override fun onClick(view: View, position: Int, data: Item) {
+        val clickListener = object : ItemClickListener<DownloadableProductItem> {
+            override fun onClick(view: View, position: Int, data: DownloadableProductItem) {
 
                 when (view.id) {
 
-                    R.id.icDownload -> {    }
+                    R.id.icDownload -> {
+                        currentGuid = data.orderItemGuid ?: ""
+                        blockingLoader.showDialog()
+
+                        (viewModel as DownloadableProductListViewModel).downloadProduct(
+                           currentGuid, "null", model
+                        )
+                    }
 
                     R.id.tv1 -> {
                         addFragment(ProductDetailFragment.newInstance(productId = data.productId.toLong(), productName = data.productName))
