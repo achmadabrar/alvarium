@@ -87,6 +87,14 @@ class Const {
         const val ORDER_PDF_INVOICE = "order.getpdfinvoice"
         const val ORDER_NOTES = "order.notes"
 
+
+
+        const val ORDER_SHIPMENT = "nopstation.webapi.order.shipment"
+        const val ORDER_SHIPMENT_ID = "nopstation.webapi.order.shipmentid"
+        const val ORDER_TRACKING_NUMBER = "nopstation.webapi.order.trackingnumber"
+        const val ORDER_DATE_SHIPPED = "nopstation.webapi.order.dateshipped"
+        const val ORDER_DATE_DELIVERED = "nopstation.webapi.order.datedelivered"
+
         const val CATALOG_ITEMS_PER_PAGE = "catalog.pagesize.label"
         const val CATALOG_ORDER_BY = "catalog.orderby"
 

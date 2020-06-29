@@ -72,7 +72,7 @@ data class OrderDetailsData(
     @SerializedName("RedeemedRewardPointsAmount")
     val redeemedRewardPointsAmount: Any?,
     @SerializedName("Shipments")
-    val shipments: List<Any>?,
+    val shipments: List<ShipmentItem>,
     @SerializedName("ShippingAddress")
     val shippingAddress: AddressModel?,
     @SerializedName("ShippingMethod")
@@ -89,4 +89,13 @@ data class OrderDetailsData(
     val taxRates: List<TaxRate>?,
     @SerializedName("VatNumber")
     val vatNumber: Any?
+)
+
+
+
+data class ShipmentItem(
+    @SerializedName("DeliveryDate") var deliveryDate: String? = "",
+    @SerializedName("Id") var id: Int? = 0,
+    @SerializedName("ShippedDate") var shippedDate: String? = "",
+    @SerializedName("TrackingNumber") var trackingNumber: String? = ""
 )

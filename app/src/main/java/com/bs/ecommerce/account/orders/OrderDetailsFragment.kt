@@ -21,9 +21,11 @@ import com.bs.ecommerce.cart.GiftCardAdapter
 import com.bs.ecommerce.db.DbHelper
 import com.bs.ecommerce.account.orders.model.OrderModel
 import com.bs.ecommerce.account.orders.model.OrderModelImpl
+import com.bs.ecommerce.account.orders.shipments.ShipmentListAdapter
 import com.bs.ecommerce.product.model.data.Item
 import com.bs.ecommerce.product.model.data.OrderDetailsData
 import com.bs.ecommerce.product.model.data.OrderNotes
+import com.bs.ecommerce.product.model.data.ShipmentItem
 import com.bs.ecommerce.utils.*
 import kotlinx.android.synthetic.main.confirm_order_card.view.*
 import kotlinx.android.synthetic.main.fragment_customer_order_detail.*
@@ -66,31 +68,24 @@ class OrderDetailsFragment : BaseFragment() {
     }
 
     private fun setLiveDataObserver() {
-        (viewModel as OrderViewModel).orderDetailsLD.observe(viewLifecycleOwner, Observer { data->
-            initView(data)
-        })
 
-        (viewModel as OrderViewModel).isLoadingLD.observe(
-            viewLifecycleOwner,
-            Observer { isShowLoader ->
-
-                if (isShowLoader)
-                    showLoading()
-                else
-                    hideLoading()
-            })
-
-        (viewModel as OrderViewModel).reorderLD.observe(
-            viewLifecycleOwner,
-            Observer { reorder ->
-
-                if (reorder?.getContentIfNotHandled() == true
-                    && lifecycle.currentState.isAtLeast(Lifecycle.State.RESUMED)) {
-                    (requireActivity() as BaseActivity).goMenuItemFragment(CartFragment())
-                }
-            })
 
         (viewModel as OrderViewModel).apply {
+
+            orderDetailsLD.observe(viewLifecycleOwner, Observer { data->
+                initView(data)
+            })
+
+            reorderLD.observe(
+                viewLifecycleOwner,
+                Observer { reorder ->
+
+                    if (reorder?.getContentIfNotHandled() == true
+                        && lifecycle.currentState.isAtLeast(Lifecycle.State.RESUMED)) {
+                        (requireActivity() as BaseActivity).goMenuItemFragment(CartFragment())
+                    }
+                })
+
 
             notesDownloadLD.observe(viewLifecycleOwner,
                 Observer { sampleDownloadResp ->
@@ -110,7 +105,31 @@ class OrderDetailsFragment : BaseFragment() {
                         }
                     }
                 })
+
+            isLoadingLD.observe(viewLifecycleOwner, Observer { isShowLoader ->
+                showHideLoader(isShowLoader) })
         }
+    }
+
+    private fun populateShipments(shipments: List<ShipmentItem>)
+    {
+        if(shipments.isNotEmpty())
+        {
+            shipmentsTitle?.visibility = View.VISIBLE
+            shipmentsList?.visibility = View.VISIBLE
+
+            shipmentsTitle?.text = DbHelper.getString(Const.ORDER_SHIPMENT)
+
+            shipmentsList?.apply {
+                setHasFixedSize(true)
+                layoutManager =
+                    LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
+                addItemDecoration(RecyclerViewMargin(15, 1, true))
+                adapter = ShipmentListAdapter(shipments, requireActivity())
+            }
+        }
+
+
     }
 
     private fun initView(data: OrderDetailsData) {
@@ -150,6 +169,8 @@ class OrderDetailsFragment : BaseFragment() {
         paymentMethodCard.tvCardDetails.text = data.paymentMethod
         paymentMethodCard.tvCardDetails2.text = data.paymentMethodStatus
         paymentMethodCard.ivCardThumb.visibility = View.VISIBLE
+
+        populateShipments(data.shipments)
 
 
         checkoutProductList?.apply {
