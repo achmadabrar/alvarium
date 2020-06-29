@@ -5,8 +5,10 @@ import android.view.*
 import android.widget.LinearLayout
 import androidx.fragment.app.DialogFragment
 import com.bs.ecommerce.R
+import com.bs.ecommerce.db.DbHelper
 import com.bs.ecommerce.more.downloadableProducts.DownloadableProductListFragment
 import com.bs.ecommerce.product.model.data.UserAgreementData
+import com.bs.ecommerce.utils.Const
 import kotlinx.android.synthetic.main.user_agreement_dialog.*
 
 class UserAgreementDialogFragment: DialogFragment() {
@@ -34,6 +36,10 @@ class UserAgreementDialogFragment: DialogFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         dialog?.requestWindowFeature(Window.FEATURE_NO_TITLE)
+
+        tvTitle?.text = DbHelper.getString(Const.DOWNLOADABLE_USER_AGREEMENT)
+        cbAgree?.text = DbHelper.getString(Const.DOWNLOADABLE_I_AGREE)
+        btnProceed?.text = DbHelper.getString(Const.DOWNLOADABLE_USER_DOWNLOAD)
 
         val data = arguments?.getParcelable<UserAgreementData>(KEY_)
 

@@ -12,11 +12,11 @@
 
 
         <TextView
-            android:id="@+id/checkoutAsGuestOrRegisterTitle"
+            android:id="@+id/tvTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/pink"
-            android:gravity="start"
+            android:gravity="center"
             android:maxLines="1"
             android:orientation="horizontal"
             android:paddingStart="5dp"
@@ -24,7 +24,7 @@
             android:paddingEnd="5dp"
             android:paddingBottom="8dp"
             android:textColor="@color/white"
-            android:textSize="15sp"
+            android:textSize="@dimen/tv_text_size_semi_large"
             android:textStyle="bold"
             tools:text="@string/placeholder" />
 
@@ -37,6 +37,7 @@
             android:layout_marginTop="12dp"
             android:layout_marginEnd="15dp"
             android:gravity="center"
+            android:textSize="@dimen/tv_text_size_semi_large"
             android:textColor="?attr/primaryTextColor"
             tools:text="@string/placeholder_long" />
 
@@ -55,6 +56,7 @@
                 android:layout_marginTop="12dp"
                 android:button="@drawable/custom_radio_button"
                 android:padding="5dp"
+                android:maxLines="1"
                 android:textColor="?attr/primaryTextColor"
                 android:textSize="@dimen/tv_text_size_regular"
                 tools:text="@string/placeholder" />
@@ -69,8 +71,8 @@
                 android:layout_marginBottom="10dp"
                 android:paddingStart="25dp"
                 android:paddingEnd="25dp"
+                android:maxLines="1"
                 android:textAllCaps="false"
-                android:textSize="12sp"
                 tools:text="@string/placeholder" />
         </LinearLayout>
 
