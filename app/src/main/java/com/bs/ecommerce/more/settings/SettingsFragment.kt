@@ -15,7 +15,6 @@ import com.bs.ecommerce.main.model.MainModelImpl
 import com.bs.ecommerce.main.model.data.AppLandingData
 import com.bs.ecommerce.main.model.data.CurrencyNavSelector
 import com.bs.ecommerce.main.model.data.LanguageNavSelector
-import com.bs.ecommerce.more.viewmodel.BaseUrlChangeFragment
 import com.bs.ecommerce.utils.*
 import kotlinx.android.synthetic.main.fragment_settings.*
 import java.util.*

@@ -15,7 +15,7 @@ import androidx.appcompat.widget.AppCompatRadioButton
 import androidx.core.view.ViewCompat
 import androidx.core.view.children
 import com.bs.ecommerce.R
-import com.bs.ecommerce.auth.register.data.KeyValuePair
+import com.bs.ecommerce.account.auth.register.data.KeyValuePair
 import com.bs.ecommerce.db.DbHelper
 import com.bs.ecommerce.networking.common.KeyValueFormData
 import com.bs.ecommerce.product.model.data.AttributeControlValue
@@ -483,15 +483,36 @@ class CustomAttributeManager(
                         val month = times?.get(1) ?: "1"
                         val year = times?.get(2) ?: "1970"
 
-                        allKeyValueList.add(KeyValuePair("${productAttributePrefix}_${key}_day", day))
-                        allKeyValueList.add(KeyValuePair("${productAttributePrefix}_${key}_month", month))
-                        allKeyValueList.add(KeyValuePair("${productAttributePrefix}_${key}_year", year))
+                        allKeyValueList.add(
+                            KeyValuePair(
+                                "${productAttributePrefix}_${key}_day",
+                                day
+                            )
+                        )
+                        allKeyValueList.add(
+                            KeyValuePair(
+                                "${productAttributePrefix}_${key}_month",
+                                month
+                            )
+                        )
+                        allKeyValueList.add(
+                            KeyValuePair(
+                                "${productAttributePrefix}_${key}_year",
+                                year
+                            )
+                        )
 
                     } else if (attribute.id == -1) { // -1 for textAttr & -2 for datePickerAttr
-                        allKeyValueList.add(KeyValuePair("${productAttributePrefix}_${key}", attribute.name ?: ""))
+                        allKeyValueList.add(
+                            KeyValuePair(
+                                "${productAttributePrefix}_${key}",
+                                attribute.name ?: ""
+                            )
+                        )
 
                     } else {
-                        val keyValuePair = KeyValuePair()
+                        val keyValuePair =
+                            KeyValuePair()
 
                         keyValuePair.key = "${productAttributePrefix}_${key}"
                         keyValuePair.value = attribute.id.toString()

@@ -20,7 +20,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import com.afollestad.materialdialogs.MaterialDialog
 import com.bs.ecommerce.R
-import com.bs.ecommerce.auth.login.LoginFragment
+import com.bs.ecommerce.account.auth.login.LoginFragment
 import com.bs.ecommerce.cart.CartFragment
 import com.bs.ecommerce.db.DbHelper
 import com.bs.ecommerce.main.MainActivity

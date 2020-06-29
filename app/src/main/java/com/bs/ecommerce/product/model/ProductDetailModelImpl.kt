@@ -1,6 +1,6 @@
 package com.bs.ecommerce.product.model
 
-import com.bs.ecommerce.auth.register.data.KeyValuePair
+import com.bs.ecommerce.account.auth.register.data.KeyValuePair
 import com.bs.ecommerce.common.RequestCompleteListener
 import com.bs.ecommerce.db.DbHelper
 import com.bs.ecommerce.home.homepage.model.data.HomePageProductResponse
@@ -73,7 +73,8 @@ class ProductDetailModelImpl :
         // create request body
         val formValues: MutableList<KeyValuePair> = mutableListOf()
 
-        formValues.add(KeyValuePair().apply {
+        formValues.add(
+            KeyValuePair().apply {
             key = "addtocart_$productId.EnteredQuantity"
             value = "1"
         })

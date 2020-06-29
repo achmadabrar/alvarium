@@ -1,10 +1,10 @@
 package com.bs.ecommerce.networking
 
-import com.bs.ecommerce.auth.login.data.ChangePasswordModel
-import com.bs.ecommerce.auth.login.data.ForgotPasswordResponse
-import com.bs.ecommerce.auth.login.data.LoginPostData
-import com.bs.ecommerce.auth.login.data.LoginResponse
-import com.bs.ecommerce.auth.register.data.GetRegistrationResponse
+import com.bs.ecommerce.account.auth.login.data.ChangePasswordModel
+import com.bs.ecommerce.account.auth.login.data.ForgotPasswordResponse
+import com.bs.ecommerce.account.auth.login.data.LoginPostData
+import com.bs.ecommerce.account.auth.login.data.LoginResponse
+import com.bs.ecommerce.account.auth.register.data.GetRegistrationResponse
 import com.bs.ecommerce.cart.model.data.CartResponse
 import com.bs.ecommerce.cart.model.data.CartRootData
 import com.bs.ecommerce.checkout.model.data.*
@@ -13,7 +13,7 @@ import com.bs.ecommerce.home.homepage.model.data.SliderResponse
 import com.bs.ecommerce.main.model.data.AppLandingSettingResponse
 import com.bs.ecommerce.main.model.data.AppStartRequest
 import com.bs.ecommerce.main.model.data.CategoryTreeResponse
-import com.bs.ecommerce.more.downloadableProducts.model.data.DownloadableProductListResponse
+import com.bs.ecommerce.account.downloadableProducts.model.data.DownloadableProductListResponse
 import com.bs.ecommerce.networking.common.BaseResponse
 import com.bs.ecommerce.networking.common.ExistingAddress
 import com.bs.ecommerce.networking.common.KeyValueFormData

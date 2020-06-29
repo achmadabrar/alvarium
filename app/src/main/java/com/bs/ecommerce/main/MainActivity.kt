@@ -14,8 +14,8 @@ import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.ViewModelProvider
 import com.bs.ecommerce.R
-import com.bs.ecommerce.auth.customerInfo.CustomerInfoFragment
-import com.bs.ecommerce.auth.register.RegisterFragment
+import com.bs.ecommerce.account.auth.customerInfo.CustomerInfoFragment
+import com.bs.ecommerce.account.auth.register.RegisterFragment
 import com.bs.ecommerce.base.BaseFragment
 import com.bs.ecommerce.cart.CartFragment
 import com.bs.ecommerce.checkout.BaseCheckoutNavigationFragment
@@ -26,10 +26,10 @@ import com.bs.ecommerce.home.category.CategoryFragment
 import com.bs.ecommerce.home.category.NavDrawerFragment
 import com.bs.ecommerce.home.homepage.HomeFragment
 import com.bs.ecommerce.main.model.MainModelImpl
-import com.bs.ecommerce.more.OptionsFragment
-import com.bs.ecommerce.more.OrderDetailsFragment
-import com.bs.ecommerce.more.TopicFragment
-import com.bs.ecommerce.more.UserAccountFragment
+import com.bs.ecommerce.more.options.OptionsFragment
+import com.bs.ecommerce.account.orders.OrderDetailsFragment
+import com.bs.ecommerce.more.topic.TopicFragment
+import com.bs.ecommerce.account.UserAccountFragment
 import com.bs.ecommerce.networking.NetworkUtil
 import com.bs.ecommerce.product.ProductDetailFragment
 import com.bs.ecommerce.product.ProductListFragment
@@ -415,13 +415,17 @@ class MainActivity : PrivacyPolicyDialogActivity(), View.OnClickListener
             }
             R.id.bottom_nav_account -> {
 
-                createIfNotInBackStack<UserAccountFragment>(UserAccountFragment())
+                createIfNotInBackStack<UserAccountFragment>(
+                    UserAccountFragment()
+                )
                 return@OnNavigationItemSelectedListener true
 
             }
             R.id.bottom_nav_more -> {
 
-                createIfNotInBackStack<OptionsFragment>(OptionsFragment())
+                createIfNotInBackStack<OptionsFragment>(
+                    OptionsFragment()
+                )
                 return@OnNavigationItemSelectedListener true
 
 

@@ -21,7 +21,7 @@ import com.bs.ecommerce.home.manufaturer.ManufacturerListAdapter
 import com.bs.ecommerce.home.manufaturer.ManufacturerListFragment
 import com.bs.ecommerce.main.MainActivity
 import com.bs.ecommerce.main.MainViewModel
-import com.bs.ecommerce.more.TopicFragment
+import com.bs.ecommerce.more.topic.TopicFragment
 import com.bs.ecommerce.product.ProductDetailFragment
 import com.bs.ecommerce.product.ProductListFragment
 import com.bs.ecommerce.product.model.data.CategoryModel

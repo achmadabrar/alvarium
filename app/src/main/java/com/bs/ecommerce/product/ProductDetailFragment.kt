@@ -22,7 +22,7 @@ import com.bs.ecommerce.base.BaseViewModel
 import com.bs.ecommerce.cart.CartFragment
 import com.bs.ecommerce.db.DbHelper
 import com.bs.ecommerce.home.FeaturedProductAdapter
-import com.bs.ecommerce.more.ProductReviewFragment
+import com.bs.ecommerce.account.review.ProductReviewFragment
 import com.bs.ecommerce.networking.Api
 import com.bs.ecommerce.networking.common.KeyValueFormData
 import com.bs.ecommerce.product.adapter.AssociatedProductAdapter

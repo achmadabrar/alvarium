@@ -7,7 +7,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bs.ecommerce.R
-import com.bs.ecommerce.auth.login.LoginFragment
+import com.bs.ecommerce.account.auth.login.LoginFragment
 import com.bs.ecommerce.base.BaseFragment
 import com.bs.ecommerce.base.BaseViewModel
 import com.bs.ecommerce.cart.model.CartModel

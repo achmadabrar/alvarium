@@ -3,7 +3,7 @@ package com.bs.ecommerce.home.manufaturer
 import androidx.lifecycle.MutableLiveData
 import com.bs.ecommerce.base.BaseViewModel
 import com.bs.ecommerce.common.RequestCompleteListener
-import com.bs.ecommerce.more.model.CommonModel
+import com.bs.ecommerce.more.options.model.CommonModel
 import com.bs.ecommerce.product.model.data.Manufacturer
 import com.bs.ecommerce.product.model.data.ManufacturerResponse
 

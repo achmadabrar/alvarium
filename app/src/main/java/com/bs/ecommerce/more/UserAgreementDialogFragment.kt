@@ -6,7 +6,7 @@ import android.widget.LinearLayout
 import androidx.fragment.app.DialogFragment
 import com.bs.ecommerce.R
 import com.bs.ecommerce.db.DbHelper
-import com.bs.ecommerce.more.downloadableProducts.DownloadableProductListFragment
+import com.bs.ecommerce.account.downloadableProducts.DownloadableProductListFragment
 import com.bs.ecommerce.product.model.data.UserAgreementData
 import com.bs.ecommerce.utils.Const
 import kotlinx.android.synthetic.main.user_agreement_dialog.*

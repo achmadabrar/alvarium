@@ -2,7 +2,7 @@ package com.bs.ecommerce.product.viewModel
 
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
-import com.bs.ecommerce.auth.register.data.KeyValuePair
+import com.bs.ecommerce.account.auth.register.data.KeyValuePair
 import com.bs.ecommerce.base.BaseViewModel
 import com.bs.ecommerce.common.RequestCompleteListener
 import com.bs.ecommerce.db.DbHelper
@@ -142,14 +142,16 @@ class ProductDetailViewModel : BaseViewModel() {
 
         val keyPrefix = "addtocart_$productId."
 
-        formValues.add(KeyValuePair().apply {
+        formValues.add(
+            KeyValuePair().apply {
             key = keyPrefix.plus("EnteredQuantity")
             value = quantity
         })
 
         if(productLiveData.value?.addToCart?.customerEntersPrice == true) {
 
-            formValues.add(KeyValuePair().apply {
+            formValues.add(
+                KeyValuePair().apply {
                 key = keyPrefix.plus("CustomerEnteredPrice")
                 value = productLiveData.value?.addToCart?.customerEnteredPrice?.toString() ?: ""
             })
@@ -158,12 +160,14 @@ class ProductDetailViewModel : BaseViewModel() {
         // Add rental start & end date for Rental Product
         if (productLiveData.value?.isRental == true) {
 
-            formValues.add(KeyValuePair().apply {
+            formValues.add(
+                KeyValuePair().apply {
                 key = Api.rentalStart.plus(productId)
                 value = TextUtils().epoch2DateString(rentDateFrom ?: 0L, "MM/dd/yyyy")
             })
 
-            formValues.add(KeyValuePair().apply {
+            formValues.add(
+                KeyValuePair().apply {
                 key = Api.rentalEnd.plus(productId)
                 value = TextUtils().epoch2DateString(rentDateTo ?: 0L, "MM/dd/yyyy")
             })
@@ -173,17 +177,20 @@ class ProductDetailViewModel : BaseViewModel() {
         productLiveData.value?.giftCard?.let {
 
             if (it.isGiftCard == true) {
-                formValues.add(KeyValuePair().apply {
+                formValues.add(
+                    KeyValuePair().apply {
                     key = Api.getKeyForGiftCardMessage(productId)
                     value = it.message ?: ""
                 })
 
-                formValues.add(KeyValuePair().apply {
+                formValues.add(
+                    KeyValuePair().apply {
                     key = Api.getKeyForGiftCardSender(productId)
                     value = it.senderName ?: ""
                 })
 
-                formValues.add(KeyValuePair().apply {
+                formValues.add(
+                    KeyValuePair().apply {
                     key = Api.getKeyForGiftCardRecipient(productId)
                     value = it.recipientName ?: ""
                 })

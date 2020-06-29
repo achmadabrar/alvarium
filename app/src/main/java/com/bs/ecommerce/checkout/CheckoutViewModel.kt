@@ -1,7 +1,7 @@
 package com.bs.ecommerce.checkout
 
 import androidx.lifecycle.MutableLiveData
-import com.bs.ecommerce.auth.register.data.KeyValuePair
+import com.bs.ecommerce.account.auth.register.data.KeyValuePair
 import com.bs.ecommerce.base.BaseViewModel
 import com.bs.ecommerce.checkout.model.CheckoutModel
 import com.bs.ecommerce.checkout.model.data.*
@@ -133,7 +133,11 @@ open class CheckoutViewModel : BaseViewModel()
         })
     }
 
-    private fun getKeyValue(key: String, value: Long) = KeyValuePair(key = key, value = value.toString())
+    private fun getKeyValue(key: String, value: Long) =
+        KeyValuePair(
+            key = key,
+            value = value.toString()
+        )
 
     fun saveShippingFromExistingAddressVM(type: Int, addressId: Long, model: CheckoutModel)
     {
@@ -177,7 +181,12 @@ open class CheckoutViewModel : BaseViewModel()
 
     fun saveShippingMethodVM(value: String, model: CheckoutModel)
     {
-        val formValues = listOf(KeyValuePair(key = "shippingoption", value = value))
+        val formValues = listOf(
+            KeyValuePair(
+                key = "shippingoption",
+                value = value
+            )
+        )
 
         isLoadingLD.postValue(true)
 
@@ -191,10 +200,20 @@ open class CheckoutViewModel : BaseViewModel()
 
     fun savePaymentMethodVM(value: String, useRewardPoints: Boolean, model: CheckoutModel)
     {
-        val formValues = mutableListOf(KeyValuePair(key = "paymentmethod", value = value))
+        val formValues = mutableListOf(
+            KeyValuePair(
+                key = "paymentmethod",
+                value = value
+            )
+        )
 
         if(useRewardPoints)
-            formValues.add(KeyValuePair(key = "UseRewardPoints", value = useRewardPoints.toString()))
+            formValues.add(
+                KeyValuePair(
+                    key = "UseRewardPoints",
+                    value = useRewardPoints.toString()
+                )
+            )
 
         isLoadingLD.postValue(true)
 

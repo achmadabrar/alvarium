@@ -9,8 +9,7 @@ import android.widget.LinearLayout
 import androidx.fragment.app.DialogFragment
 import com.bs.ecommerce.R
 import com.bs.ecommerce.db.DbHelper
-import com.bs.ecommerce.more.ProductReviewFragment
-import com.bs.ecommerce.product.model.data.AddProductReview
+import com.bs.ecommerce.account.review.ProductReviewFragment
 import com.bs.ecommerce.utils.Const
 import com.bs.ecommerce.utils.EditTextUtils
 import kotlinx.android.synthetic.main.fragment_add_review.*

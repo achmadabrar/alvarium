@@ -12,7 +12,7 @@ import com.bs.ecommerce.home.homepage.model.data.HomePageProductResponse
 import com.bs.ecommerce.home.homepage.model.data.SliderData
 import com.bs.ecommerce.main.model.MainModel
 import com.bs.ecommerce.main.model.data.*
-import com.bs.ecommerce.more.model.TopicModel
+import com.bs.ecommerce.more.topic.model.TopicModel
 import com.bs.ecommerce.networking.common.BaseResponse
 import com.bs.ecommerce.product.model.data.*
 import com.bs.ecommerce.utils.OneTimeEvent

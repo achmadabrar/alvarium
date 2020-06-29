@@ -8,8 +8,8 @@ import com.bs.ecommerce.base.BaseActivity
 import com.bs.ecommerce.db.DbHelper
 import com.bs.ecommerce.main.model.MainModelImpl
 import com.bs.ecommerce.main.model.data.AppStartData
-import com.bs.ecommerce.more.model.TopicModel
-import com.bs.ecommerce.more.model.TopicModelImpl
+import com.bs.ecommerce.more.topic.model.TopicModel
+import com.bs.ecommerce.more.topic.model.TopicModelImpl
 import com.bs.ecommerce.networking.Api
 import com.bs.ecommerce.utils.*
 
