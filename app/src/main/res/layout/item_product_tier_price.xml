@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="?attr/fragmentBackGroundColor"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="horizontal">
+
+    <include layout="@layout/vertical_divider"
+        android:id="@+id/startDivider"
+        android:visibility="gone"/>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <include layout="@layout/horizontal_divider" />
+
+        <TextView
+            android:id="@+id/quantityItem"
+            android:layout_marginStart="4dp"
+            android:layout_marginEnd="8dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:text="@string/placeholder"
+            android:textColor="?attr/primaryTextColor"
+            android:textSize="14sp"
+            style="@style/rtlSupportedTextView"/>
+
+        <include layout="@layout/horizontal_divider" />
+
+        <TextView
+            android:id="@+id/priceItem"
+            android:layout_marginStart="4dp"
+            android:layout_marginEnd="8dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:text="@string/placeholder"
+            android:textColor="@color/pink"
+            android:textStyle="bold"
+            android:textSize="14sp"
+            style="@style/rtlSupportedTextView"/>
+
+        <include layout="@layout/horizontal_divider" />
+
+    </LinearLayout>
+
+    <include layout="@layout/vertical_divider"
+        android:id="@+id/endDivider"/>
+
+</LinearLayout>

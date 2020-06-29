@@ -27,6 +27,7 @@ import com.bs.ecommerce.networking.Api
 import com.bs.ecommerce.networking.common.KeyValueFormData
 import com.bs.ecommerce.product.adapter.AssociatedProductAdapter
 import com.bs.ecommerce.product.adapter.DetailsSliderAdapter
+import com.bs.ecommerce.product.adapter.TierPriceListAdapter
 import com.bs.ecommerce.product.model.ProductDetailModel
 import com.bs.ecommerce.product.model.ProductDetailModelImpl
 import com.bs.ecommerce.product.model.data.ProductDetail
@@ -198,6 +199,17 @@ class ProductDetailFragment : BaseFragment(), View.OnClickListener {
                             } else {
                                 text = product.productPrice.oldPrice
                                 paintFlags = Paint.STRIKE_THRU_TEXT_FLAG
+                            }
+                        }
+
+                        if(product.tierPrices?.isNotEmpty()!!)
+                        {
+                            tierPriceList?.apply {
+
+                                tierPriceList?.visibility = View.VISIBLE
+                                layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+
+                                adapter = TierPriceListAdapter(requireActivity(), product.tierPrices)
                             }
                         }
 
