@@ -106,7 +106,7 @@ class ProductDetailModelImpl :
 
     override fun downloadSample(
         productId: Long,
-        callback: RequestCompleteListener<ResponseBody>
+        callback: RequestCompleteListener<Response<ResponseBody>>
     ) {
         val x = RetroClient.api.sampleDownload(productId)
             .subscribeOn(Schedulers.io())
@@ -121,7 +121,7 @@ class ProductDetailModelImpl :
                     "downloadSample_".showLog("onNext")
 
                     t.body()?.let {
-                        callback.onRequestSuccess(it)
+                        callback.onRequestSuccess(t)
                     } ?: run {
                         callback.onRequestFailed(DbHelper.getString(Const.COMMON_SOMETHING_WENT_WRONG))
                     }

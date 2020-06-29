@@ -230,6 +230,11 @@ interface Api {
     @GET("order/orderdetails/pdf/{orderId}")
     fun downloadPdfInvoice(@Path("orderId") id: Int): Observable<Response<ResponseBody>>
 
+    @GET("download/ordernotefile/{noteId}")
+    fun orderNoteDownload(
+        @Path("noteId") id: Int
+    ): Observable<Response<ResponseBody>>
+
     @GET("order/reorder/{orderId}")
     fun reorder(@Path("orderId") id: Int): Call<ResponseBody>
 

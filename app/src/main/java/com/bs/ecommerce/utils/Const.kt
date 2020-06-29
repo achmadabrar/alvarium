@@ -185,6 +185,7 @@ class Const {
         const val COMMON_AGAIN_PRESS_TO_EXIT = "nopstation.webapi.home.pressagaintoexit"
         const val COMMON_YES = "common.yes"
         const val COMMON_NO = "common.no"
+        const val FILE_DOWNLOADED = "File downloaded to Download directory"
 
 
         //SHOPPING CART

@@ -4,7 +4,10 @@ import android.content.Context
 import android.net.ConnectivityManager
 import android.os.Environment
 import okhttp3.ResponseBody
+import retrofit2.Response
 import java.io.*
+import java.util.regex.Matcher
+import java.util.regex.Pattern
 
 
 class Utils {
@@ -26,16 +29,23 @@ class Utils {
     }
 
     fun writeResponseBodyToDisk(
-        ctx: Context?,
-        fileName: String,
-        body: ResponseBody
+        filenameHint: String,
+        response: Response<ResponseBody>
     ): Boolean {
         return try {
 
-            val fullFileName = fileName.plus(".").plus(body.contentType()?.subtype ?: "txt")
+            var fileName: String? = null
+            val regex: Pattern = Pattern.compile("filename[^;=\\n]*=((['\"]).*?\\2|[^;\\n]*)")
+            val regexMatcher: Matcher = regex.matcher(response.headers()?.get("content-disposition") ?: "")
+            if (regexMatcher.find()) {
+                fileName = regexMatcher.group()
+                fileName = fileName.replace("filename=", "")
+            }
+
+            if(fileName == null) fileName = filenameHint
             var myFile: File? = File(
                 Environment.getExternalStorageDirectory(),
-                Environment.DIRECTORY_DOWNLOADS + File.separator + fullFileName
+                Environment.DIRECTORY_DOWNLOADS + File.separator + fileName
             )
 
             /*val downLoadDir = ContextCompat.getExternalFilesDirs(ctx, null)
@@ -47,14 +57,14 @@ class Utils {
             var outputStream: OutputStream? = null
             try {
                 val fileReader = ByteArray(4096)
-                val fileSize = body.contentLength()
+                // val fileSize = response.body()?.contentLength()
                 var fileSizeDownloaded: Long = 0
 
-                inputStream = body.byteStream()
+                inputStream = response.body()?.byteStream()
                 outputStream = FileOutputStream(myFile)
 
                 while (true) {
-                    val read = inputStream.read(fileReader)
+                    val read = inputStream?.read(fileReader) ?: -1
                     if (read == -1) {
                         break
                     }

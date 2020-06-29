@@ -30,15 +30,16 @@ class OrderNotesAdapter(
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         val item = list[position]
 
-        holder.itemView.setOnClickListener { listener.onClick(holder.itemView, position, item) }
-
         holder.itemView.tvNoteText?.text = item.note
         holder.itemView.tvNoteDate?.text = textUtils.tzTimeConverter(
             item.createdOn, WeakReference(holder.itemView.context)
         )
 
-        holder.itemView.ivDownload?.visibility = if(item.hasDownload == true)
-            View.VISIBLE else View.GONE
+        holder.itemView.ivDownload?.apply {
+            visibility = if(item.hasDownload == true) View.VISIBLE else View.GONE
+
+            setOnClickListener { listener.onClick(this, position, item) }
+        }
     }
 
 }
