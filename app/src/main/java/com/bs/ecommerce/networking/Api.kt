@@ -14,6 +14,9 @@ import com.bs.ecommerce.main.model.data.AppLandingSettingResponse
 import com.bs.ecommerce.main.model.data.AppStartRequest
 import com.bs.ecommerce.main.model.data.CategoryTreeResponse
 import com.bs.ecommerce.account.downloadableProducts.model.data.DownloadableProductListResponse
+import com.bs.ecommerce.account.orders.model.data.OrderDetailsResponse
+import com.bs.ecommerce.account.orders.model.data.OrderHistoryResponse
+import com.bs.ecommerce.account.orders.model.data.ShipmentDetailsResponse
 import com.bs.ecommerce.networking.common.BaseResponse
 import com.bs.ecommerce.networking.common.ExistingAddress
 import com.bs.ecommerce.networking.common.KeyValueFormData
@@ -245,6 +248,9 @@ interface Api {
     fun orderNoteDownload(
         @Path("noteId") id: Int
     ): Observable<Response<ResponseBody>>
+
+    @GET("order/orderdetails/shipment/{id}")
+    fun getShipmentDetails(@Path("id") id: Int): Call<ShipmentDetailsResponse>
 
     @GET("order/reorder/{orderId}")
     fun reorder(@Path("orderId") id: Int): Call<ResponseBody>

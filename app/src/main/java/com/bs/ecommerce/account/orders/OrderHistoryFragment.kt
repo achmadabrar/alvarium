@@ -15,7 +15,7 @@ import com.bs.ecommerce.base.BaseViewModel
 import com.bs.ecommerce.db.DbHelper
 import com.bs.ecommerce.account.orders.model.OrderModel
 import com.bs.ecommerce.account.orders.model.OrderModelImpl
-import com.bs.ecommerce.product.model.data.Order
+import com.bs.ecommerce.account.orders.model.data.Order
 import com.bs.ecommerce.utils.Const
 import com.bs.ecommerce.utils.TextUtils
 import com.bs.ecommerce.utils.replaceFragmentSafely

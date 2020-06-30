@@ -1,6 +1,7 @@
-package com.bs.ecommerce.product.model.data
+package com.bs.ecommerce.account.orders.model.data
 
 
+import com.bs.ecommerce.product.model.data.CustomProperties
 import com.google.gson.annotations.SerializedName
 
 data class OrderHistoryData(

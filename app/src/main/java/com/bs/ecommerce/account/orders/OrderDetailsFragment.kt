@@ -22,10 +22,10 @@ import com.bs.ecommerce.db.DbHelper
 import com.bs.ecommerce.account.orders.model.OrderModel
 import com.bs.ecommerce.account.orders.model.OrderModelImpl
 import com.bs.ecommerce.account.orders.shipments.ShipmentListAdapter
-import com.bs.ecommerce.product.model.data.Item
-import com.bs.ecommerce.product.model.data.OrderDetailsData
-import com.bs.ecommerce.product.model.data.OrderNotes
-import com.bs.ecommerce.product.model.data.ShipmentItem
+import com.bs.ecommerce.account.orders.model.data.OrderDetailsData
+import com.bs.ecommerce.account.orders.model.data.OrderItem
+import com.bs.ecommerce.account.orders.model.data.OrderNotes
+import com.bs.ecommerce.account.orders.model.data.ShipmentItem
 import com.bs.ecommerce.utils.*
 import kotlinx.android.synthetic.main.confirm_order_card.view.*
 import kotlinx.android.synthetic.main.fragment_customer_order_detail.*
@@ -289,7 +289,7 @@ class OrderDetailsFragment : BaseFragment() {
     //--------------------
 
     inner class OrderItemsAdapter(
-        private val list: List<Item>
+        private val list: List<OrderItem>
     ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {

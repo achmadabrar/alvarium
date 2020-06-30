@@ -1,12 +1,9 @@
 package com.bs.ecommerce.account.orders.model
 
+import com.bs.ecommerce.account.orders.model.data.*
 import com.bs.ecommerce.common.RequestCompleteListener
 import com.bs.ecommerce.db.DbHelper
 import com.bs.ecommerce.networking.RetroClient
-import com.bs.ecommerce.product.model.data.OrderDetailsData
-import com.bs.ecommerce.product.model.data.OrderDetailsResponse
-import com.bs.ecommerce.product.model.data.OrderHistoryData
-import com.bs.ecommerce.product.model.data.OrderHistoryResponse
 import com.bs.ecommerce.utils.Const
 import com.bs.ecommerce.utils.TextUtils
 import com.bs.ecommerce.utils.showLog
@@ -55,6 +52,31 @@ class OrderModelImpl : OrderModel {
             ) {
                 if (response.body() != null)
                     callback.onRequestSuccess(response.body()?.data as OrderDetailsData)
+                else
+                    callback.onRequestFailed(TextUtils.getErrorMessage(response))
+            }
+
+        })
+    }
+
+    override fun getShipmentDetails(
+        shipmentId: Int,
+        callback: RequestCompleteListener<ShipmentDetailsData>
+    ) {
+
+        RetroClient.api.getShipmentDetails(shipmentId).enqueue(object :
+            Callback<ShipmentDetailsResponse> {
+
+            override fun onFailure(call: Call<ShipmentDetailsResponse>, t: Throwable) {
+                callback.onRequestFailed(t.localizedMessage ?: "Unknown")
+            }
+
+            override fun onResponse(
+                call: Call<ShipmentDetailsResponse>,
+                response: Response<ShipmentDetailsResponse>
+            ) {
+                if (response.body() != null)
+                    callback.onRequestSuccess(response.body()?.data as ShipmentDetailsData)
                 else
                     callback.onRequestFailed(TextUtils.getErrorMessage(response))
             }

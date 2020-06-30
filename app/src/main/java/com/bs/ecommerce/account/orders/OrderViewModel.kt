@@ -6,8 +6,9 @@ import com.bs.ecommerce.base.BaseViewModel
 import com.bs.ecommerce.common.RequestCompleteListener
 import com.bs.ecommerce.db.DbHelper
 import com.bs.ecommerce.account.orders.model.OrderModel
-import com.bs.ecommerce.product.model.data.OrderDetailsData
-import com.bs.ecommerce.product.model.data.OrderHistoryData
+import com.bs.ecommerce.account.orders.model.data.OrderDetailsData
+import com.bs.ecommerce.account.orders.model.data.OrderHistoryData
+import com.bs.ecommerce.account.orders.model.data.ShipmentDetailsData
 import com.bs.ecommerce.product.model.data.SampleDownloadResponse
 import com.bs.ecommerce.utils.Const
 import com.bs.ecommerce.utils.MyApplication
@@ -21,6 +22,7 @@ class OrderViewModel : BaseViewModel() {
 
     var orderHistoryLD = MutableLiveData<OrderHistoryData>()
     var orderDetailsLD = MutableLiveData<OrderDetailsData>()
+    var shipmentDetailsLD = MutableLiveData<ShipmentDetailsData>()
     var reorderLD = MutableLiveData<OneTimeEvent<Boolean>>()
     //var invoiceDownloadLD = MutableLiveData<OneTimeEvent<ResponseBody>>()
     var notesDownloadLD = MutableLiveData<OneTimeEvent<SampleDownloadResponse?>>()
@@ -54,6 +56,22 @@ class OrderViewModel : BaseViewModel() {
             override fun onRequestFailed(errorMessage: String) {
                 isLoadingLD.value = false
 
+            }
+
+        })
+    }
+
+    fun getShipmentDetails(orderId: Int, model: OrderModel) {
+        isLoadingLD.value = true
+
+        model.getShipmentDetails(orderId, object : RequestCompleteListener<ShipmentDetailsData> {
+            override fun onRequestSuccess(data: ShipmentDetailsData) {
+                isLoadingLD.value = false
+                shipmentDetailsLD.value = data
+            }
+
+            override fun onRequestFailed(errorMessage: String) {
+                isLoadingLD.value = false
             }
 
         })

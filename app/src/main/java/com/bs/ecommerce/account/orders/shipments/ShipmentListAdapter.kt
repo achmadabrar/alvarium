@@ -7,7 +7,7 @@ import androidx.fragment.app.FragmentActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.bs.ecommerce.R
 import com.bs.ecommerce.db.DbHelper
-import com.bs.ecommerce.product.model.data.ShipmentItem
+import com.bs.ecommerce.account.orders.model.data.ShipmentItem
 import com.bs.ecommerce.utils.Const
 import com.bs.ecommerce.utils.TextUtils
 import kotlinx.android.synthetic.main.confirm_order_card.view.*
@@ -15,7 +15,7 @@ import java.lang.ref.WeakReference
 
 class ShipmentListAdapter(
     private val list: List<ShipmentItem>,
-    private val context: FragmentActivity
+    private val activity: FragmentActivity
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
@@ -36,7 +36,7 @@ class ShipmentListAdapter(
         {
             tvCardTitle.visibility = View.GONE
 
-            tvCardDetails.text = DbHelper.getString(Const.ORDER_SHIPMENT_ID).plus(" ") + item.trackingNumber
+            tvCardDetails.text = DbHelper.getString(Const.ORDER_SHIPMENT_ID).plus(" ") + item.id
 
             tvCardDetails2.visibility = View.VISIBLE
 
@@ -48,6 +48,13 @@ class ShipmentListAdapter(
 
                     DbHelper.getString(Const.ORDER_DATE_DELIVERED).plus(" : ").plus( TextUtils().tzTimeConverter(item.deliveryDate, WeakReference(context)))
                 ))
+
+
+            this.setOnClickListener { v ->
+
+                activity.supportFragmentManager
+                    .beginTransaction().add(R.id.layoutFrame, ShipmentDetailsFragment.newInstance(shipmentId = item.id!!)).addToBackStack(null).commit()
+            }
         }
     }
 }

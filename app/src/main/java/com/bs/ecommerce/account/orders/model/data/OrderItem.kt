@@ -1,13 +1,11 @@
-package com.bs.ecommerce.product.model.data
+package com.bs.ecommerce.account.orders.model.data
 
 
 import com.google.gson.annotations.SerializedName
 
-data class Item(
+data class OrderItem(
     @SerializedName("AttributeInfo")
     val attributeInfo: String?,
-    @SerializedName("CustomProperties")
-    val customProperties: CustomProperties?,
     @SerializedName("DownloadId")
     val downloadId: Int?,
     @SerializedName("Id")

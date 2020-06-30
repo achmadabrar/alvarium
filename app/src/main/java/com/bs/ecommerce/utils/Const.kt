@@ -8,6 +8,7 @@ class Const {
         const val TITLE_REGISTER = "pagetitle.register"
         const val TITLE_REVIEW = "reviews"
         const val TITLE_ORDER_DETAILS = "pagetitle.orderdetails"
+        const val TITLE_ORDER_SHIPMENT_DETAILS = "nopstation.webapi.pagetitle.shipmentdetails"
         const val TITLE_SEARCH = "pagetitle.search"
         const val TITLE_ACCOUNT = "pagetitle.account"
 
@@ -94,6 +95,9 @@ class Const {
         const val ORDER_TRACKING_NUMBER = "nopstation.webapi.order.trackingnumber"
         const val ORDER_DATE_SHIPPED = "nopstation.webapi.order.dateshipped"
         const val ORDER_DATE_DELIVERED = "nopstation.webapi.order.datedelivered"
+
+        const val SKU = "nopstation.webapi.sku"
+        const val ORDER_QUANTITY_SHIPPED = "nopstation.webapi.order.quantityshipped"
 
         const val CATALOG_ITEMS_PER_PAGE = "catalog.pagesize.label"
         const val CATALOG_ORDER_BY = "catalog.orderby"

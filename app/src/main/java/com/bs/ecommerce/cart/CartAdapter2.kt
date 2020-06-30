@@ -59,7 +59,7 @@ class CartAdapter2 (
 
             tvItemQuantity?.text = if (isCheckout) "" else item.quantity.toString()
 
-            sku?.text = "SKU".plus(": ").plus(item.sku)
+            sku?.text = DbHelper.getString(Const.SKU).plus(": ").plus(item.sku)
             sku?.visibility = if (showSku) View.VISIBLE else View.GONE
 
 

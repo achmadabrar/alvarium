@@ -5,7 +5,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bs.ecommerce.R
-import com.bs.ecommerce.product.model.data.OrderNotes
+import com.bs.ecommerce.account.orders.model.data.OrderNotes
 import com.bs.ecommerce.utils.ItemClickListener
 import com.bs.ecommerce.utils.TextUtils
 import kotlinx.android.synthetic.main.item_order_notes.view.*

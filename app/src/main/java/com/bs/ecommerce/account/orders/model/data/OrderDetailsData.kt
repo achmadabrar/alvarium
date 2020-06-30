@@ -1,7 +1,8 @@
-package com.bs.ecommerce.product.model.data
+package com.bs.ecommerce.account.orders.model.data
 
 
 import com.bs.ecommerce.cart.model.data.GiftCard
+import com.bs.ecommerce.product.model.data.*
 import com.google.gson.annotations.SerializedName
 
 data class OrderDetailsData(
@@ -36,7 +37,7 @@ data class OrderDetailsData(
     @SerializedName("IsShippable")
     val isShippable: Boolean?,
     @SerializedName("Items")
-    val items: List<Item>?,
+    val items: List<OrderItem>?,
     @SerializedName("OrderNotes")
     val orderNotes: List<OrderNotes>?,
     @SerializedName("OrderShipping")
