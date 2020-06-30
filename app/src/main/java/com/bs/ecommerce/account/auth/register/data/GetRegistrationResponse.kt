@@ -2,7 +2,7 @@ package com.bs.ecommerce.account.auth.register.data
 import com.bs.ecommerce.checkout.model.data.AvailableCountry
 import com.bs.ecommerce.checkout.model.data.AvailableState
 import com.bs.ecommerce.networking.common.BaseResponse
-import com.bs.ecommerce.product.model.data.CustomerAttribute
+import com.bs.ecommerce.catalog.common.CustomerAttribute
 import com.google.gson.annotations.SerializedName
 
 

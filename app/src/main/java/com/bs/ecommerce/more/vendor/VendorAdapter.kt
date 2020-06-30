@@ -6,7 +6,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bs.ecommerce.R
 import com.bs.ecommerce.db.DbHelper
-import com.bs.ecommerce.product.model.data.ProductByVendorData
+import com.bs.ecommerce.catalog.common.ProductByVendorData
 import com.bs.ecommerce.utils.Const
 import com.bs.ecommerce.utils.ItemClickListener
 import com.bs.ecommerce.utils.loadImg

@@ -1,12 +1,11 @@
 package com.bs.ecommerce.account.review.model
 
-import com.bs.ecommerce.account.review.model.ReviewModel
-import com.bs.ecommerce.common.RequestCompleteListener
+import com.bs.ecommerce.networking.common.RequestCompleteListener
 import com.bs.ecommerce.networking.RetroClient
 import com.bs.ecommerce.networking.common.KeyValueFormData
-import com.bs.ecommerce.product.model.data.HelpfulnessResponse
-import com.bs.ecommerce.product.model.data.MyReviewsResponse
-import com.bs.ecommerce.product.model.data.ProductReviewResponse
+import com.bs.ecommerce.catalog.common.HelpfulnessResponse
+import com.bs.ecommerce.account.review.model.data.MyReviewsResponse
+import com.bs.ecommerce.account.review.model.data.ProductReviewResponse
 import com.bs.ecommerce.utils.TextUtils
 import retrofit2.Call
 import retrofit2.Callback

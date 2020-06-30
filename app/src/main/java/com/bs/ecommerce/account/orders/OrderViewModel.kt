@@ -3,13 +3,13 @@ package com.bs.ecommerce.account.orders
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import com.bs.ecommerce.base.BaseViewModel
-import com.bs.ecommerce.common.RequestCompleteListener
+import com.bs.ecommerce.networking.common.RequestCompleteListener
 import com.bs.ecommerce.db.DbHelper
 import com.bs.ecommerce.account.orders.model.OrderModel
 import com.bs.ecommerce.account.orders.model.data.OrderDetailsData
 import com.bs.ecommerce.account.orders.model.data.OrderHistoryData
 import com.bs.ecommerce.account.orders.model.data.ShipmentDetailsData
-import com.bs.ecommerce.product.model.data.SampleDownloadResponse
+import com.bs.ecommerce.catalog.common.SampleDownloadResponse
 import com.bs.ecommerce.utils.Const
 import com.bs.ecommerce.utils.MyApplication
 import com.bs.ecommerce.utils.OneTimeEvent
@@ -30,7 +30,8 @@ class OrderViewModel : BaseViewModel() {
     fun getOrderHistory(model: OrderModel) {
         isLoadingLD.value = true
 
-        model.getOrderHistory(object : RequestCompleteListener<OrderHistoryData> {
+        model.getOrderHistory(object :
+            RequestCompleteListener<OrderHistoryData> {
             override fun onRequestSuccess(data: OrderHistoryData) {
                 isLoadingLD.value = false
 
@@ -47,7 +48,8 @@ class OrderViewModel : BaseViewModel() {
     fun getOrderDetails(orderId: Int, model: OrderModel) {
         isLoadingLD.value = true
 
-        model.getOrderDetails(orderId, object : RequestCompleteListener<OrderDetailsData> {
+        model.getOrderDetails(orderId, object :
+            RequestCompleteListener<OrderDetailsData> {
             override fun onRequestSuccess(data: OrderDetailsData) {
                 isLoadingLD.value = false
                 orderDetailsLD.value = data
@@ -64,7 +66,8 @@ class OrderViewModel : BaseViewModel() {
     fun getShipmentDetails(orderId: Int, model: OrderModel) {
         isLoadingLD.value = true
 
-        model.getShipmentDetails(orderId, object : RequestCompleteListener<ShipmentDetailsData> {
+        model.getShipmentDetails(orderId, object :
+            RequestCompleteListener<ShipmentDetailsData> {
             override fun onRequestSuccess(data: ShipmentDetailsData) {
                 isLoadingLD.value = false
                 shipmentDetailsLD.value = data
@@ -80,7 +83,8 @@ class OrderViewModel : BaseViewModel() {
     fun reorder(orderId: Int, model: OrderModel) {
         isLoadingLD.value = true
 
-        model.reorder(orderId, object : RequestCompleteListener<Boolean> {
+        model.reorder(orderId, object :
+            RequestCompleteListener<Boolean> {
             override fun onRequestSuccess(data: Boolean) {
                 isLoadingLD.value = false
                 reorderLD.value = OneTimeEvent(true)
@@ -97,7 +101,8 @@ class OrderViewModel : BaseViewModel() {
     fun downloadPdfInvoice(orderId: Int, model: OrderModel) {
         isLoadingLD.value = true
 
-        model.downloadPdfInvoice(orderId, object : RequestCompleteListener<Response<ResponseBody>> {
+        model.downloadPdfInvoice(orderId, object :
+            RequestCompleteListener<Response<ResponseBody>> {
 
             override fun onRequestSuccess(data: Response<ResponseBody>) {
 
@@ -123,7 +128,8 @@ class OrderViewModel : BaseViewModel() {
 
     fun downloadOrderNote(noteId: Int, model: OrderModel) {
 
-        model.downloadOrderNotes(noteId, object: RequestCompleteListener<Response<ResponseBody>> {
+        model.downloadOrderNotes(noteId, object:
+            RequestCompleteListener<Response<ResponseBody>> {
 
             override fun onRequestSuccess(data: Response<ResponseBody>) {
 

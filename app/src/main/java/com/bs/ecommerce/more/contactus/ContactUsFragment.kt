@@ -11,7 +11,7 @@ import com.bs.ecommerce.base.BaseViewModel
 import com.bs.ecommerce.db.DbHelper
 import com.bs.ecommerce.more.options.model.CommonModel
 import com.bs.ecommerce.more.options.model.CommonModelImpl
-import com.bs.ecommerce.product.model.data.ContactUsData
+import com.bs.ecommerce.more.contactus.data.ContactUsData
 import com.bs.ecommerce.utils.Const
 import com.bs.ecommerce.utils.EditTextUtils
 import com.bs.ecommerce.utils.isEmailValid

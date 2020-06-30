@@ -16,7 +16,7 @@ import com.bs.ecommerce.account.addresses.model.CustomerAddressModel
 import com.bs.ecommerce.account.addresses.model.CustomerAddressModelImpl
 import com.bs.ecommerce.networking.Api
 import com.bs.ecommerce.networking.common.KeyValueFormData
-import com.bs.ecommerce.product.model.data.AddressModel
+import com.bs.ecommerce.catalog.common.AddressModel
 import com.bs.ecommerce.utils.*
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import kotlinx.android.synthetic.main.address_form.view.*

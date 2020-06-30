@@ -5,7 +5,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bs.ecommerce.R
 import com.bs.ecommerce.db.DbHelper
-import com.bs.ecommerce.product.model.data.WishListItem
+import com.bs.ecommerce.account.wishlist.model.data.WishListItem
 import com.bs.ecommerce.utils.Const
 import com.bs.ecommerce.utils.ItemClickListener
 import com.bs.ecommerce.utils.TextUtils

@@ -1,10 +1,10 @@
 package com.bs.ecommerce.account.addresses.model
 
 import com.bs.ecommerce.account.auth.register.data.KeyValuePair
-import com.bs.ecommerce.common.RequestCompleteListener
-import com.bs.ecommerce.product.model.data.AddressModel
-import com.bs.ecommerce.product.model.data.CustomerAddressData
-import com.bs.ecommerce.product.model.data.EditCustomerAddressData
+import com.bs.ecommerce.networking.common.RequestCompleteListener
+import com.bs.ecommerce.catalog.common.AddressModel
+import com.bs.ecommerce.account.addresses.model.data.CustomerAddressData
+import com.bs.ecommerce.account.addresses.model.data.EditCustomerAddressData
 
 interface CustomerAddressModel {
 

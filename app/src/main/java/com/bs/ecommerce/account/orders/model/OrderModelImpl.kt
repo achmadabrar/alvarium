@@ -1,7 +1,7 @@
 package com.bs.ecommerce.account.orders.model
 
 import com.bs.ecommerce.account.orders.model.data.*
-import com.bs.ecommerce.common.RequestCompleteListener
+import com.bs.ecommerce.networking.common.RequestCompleteListener
 import com.bs.ecommerce.db.DbHelper
 import com.bs.ecommerce.networking.RetroClient
 import com.bs.ecommerce.utils.Const

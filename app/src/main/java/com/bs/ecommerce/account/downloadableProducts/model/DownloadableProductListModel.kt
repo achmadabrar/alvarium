@@ -1,8 +1,8 @@
 package com.bs.ecommerce.account.downloadableProducts.model
 
-import com.bs.ecommerce.common.RequestCompleteListener
+import com.bs.ecommerce.networking.common.RequestCompleteListener
 import com.bs.ecommerce.account.downloadableProducts.model.data.DownloadableProductListResponse
-import com.bs.ecommerce.product.model.data.UserAgreementResponse
+import com.bs.ecommerce.account.downloadableProducts.model.data.UserAgreementResponse
 import okhttp3.ResponseBody
 import retrofit2.Response
 

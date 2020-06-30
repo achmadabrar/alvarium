@@ -6,7 +6,7 @@ import android.text.Html
 import android.text.Spanned
 import com.bs.ecommerce.db.DbHelper
 import com.bs.ecommerce.networking.common.BaseResponse
-import com.bs.ecommerce.product.model.data.AddressModel
+import com.bs.ecommerce.catalog.common.AddressModel
 import com.google.gson.Gson
 import com.google.gson.JsonSyntaxException
 import retrofit2.Response

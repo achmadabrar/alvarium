@@ -1,9 +1,9 @@
 package com.bs.ecommerce.home.homepage.model
 
 import android.util.Log
-import com.bs.ecommerce.common.RequestCompleteListener
+import com.bs.ecommerce.networking.common.RequestCompleteListener
 import com.bs.ecommerce.networking.RetroClient
-import com.bs.ecommerce.product.model.data.StringResourceResponse
+import com.bs.ecommerce.main.model.data.StringResourceResponse
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response

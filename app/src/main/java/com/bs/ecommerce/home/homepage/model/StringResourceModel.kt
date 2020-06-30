@@ -1,7 +1,7 @@
 package com.bs.ecommerce.home.homepage.model
 
-import com.bs.ecommerce.common.RequestCompleteListener
-import com.bs.ecommerce.product.model.data.StringResourceResponse
+import com.bs.ecommerce.networking.common.RequestCompleteListener
+import com.bs.ecommerce.main.model.data.StringResourceResponse
 
 interface StringResourceModel {
 

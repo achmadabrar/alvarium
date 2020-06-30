@@ -1,5 +1,7 @@
 package com.bs.ecommerce.networking
 
+import com.bs.ecommerce.account.addresses.model.data.CustomerAddressResponse
+import com.bs.ecommerce.account.addresses.model.data.EditCustomerAddressResponse
 import com.bs.ecommerce.account.auth.login.data.ChangePasswordModel
 import com.bs.ecommerce.account.auth.login.data.ForgotPasswordResponse
 import com.bs.ecommerce.account.auth.login.data.LoginPostData
@@ -14,13 +16,25 @@ import com.bs.ecommerce.main.model.data.AppLandingSettingResponse
 import com.bs.ecommerce.main.model.data.AppStartRequest
 import com.bs.ecommerce.main.model.data.CategoryTreeResponse
 import com.bs.ecommerce.account.downloadableProducts.model.data.DownloadableProductListResponse
+import com.bs.ecommerce.account.downloadableProducts.model.data.UserAgreementResponse
 import com.bs.ecommerce.account.orders.model.data.OrderDetailsResponse
 import com.bs.ecommerce.account.orders.model.data.OrderHistoryResponse
 import com.bs.ecommerce.account.orders.model.data.ShipmentDetailsResponse
+import com.bs.ecommerce.account.review.model.data.MyReviewsResponse
+import com.bs.ecommerce.account.review.model.data.ProductReviewResponse
+import com.bs.ecommerce.account.rewardpoint.model.data.RewardPointResponse
+import com.bs.ecommerce.account.wishlist.model.data.WishListResponse
+import com.bs.ecommerce.catalog.common.*
 import com.bs.ecommerce.networking.common.BaseResponse
 import com.bs.ecommerce.networking.common.ExistingAddress
 import com.bs.ecommerce.networking.common.KeyValueFormData
-import com.bs.ecommerce.product.model.data.*
+import com.bs.ecommerce.home.homepage.model.data.HomePageCategoryResponse
+import com.bs.ecommerce.home.homepage.model.data.ManufacturerResponse
+import com.bs.ecommerce.main.model.data.StringResourceResponse
+import com.bs.ecommerce.more.contactus.data.ContactUsResponse
+import com.bs.ecommerce.more.topic.model.data.TopicResponse
+import com.bs.ecommerce.more.vendor.model.data.GetAllVendorsResponse
+import com.bs.ecommerce.more.vendor.model.data.GetContactVendorResponse
 import io.reactivex.Observable
 import okhttp3.ResponseBody
 import retrofit2.Call

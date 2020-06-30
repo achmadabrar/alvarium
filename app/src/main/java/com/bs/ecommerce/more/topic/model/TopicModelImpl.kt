@@ -1,9 +1,8 @@
 package com.bs.ecommerce.more.topic.model
 
-import com.bs.ecommerce.common.RequestCompleteListener
-import com.bs.ecommerce.more.topic.model.TopicModel
+import com.bs.ecommerce.networking.common.RequestCompleteListener
 import com.bs.ecommerce.networking.RetroClient
-import com.bs.ecommerce.product.model.data.TopicResponse
+import com.bs.ecommerce.more.topic.model.data.TopicResponse
 import com.bs.ecommerce.utils.TextUtils
 import retrofit2.Call
 import retrofit2.Callback

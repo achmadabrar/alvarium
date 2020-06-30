@@ -4,7 +4,7 @@ import androidx.lifecycle.MutableLiveData
 import com.bs.ecommerce.account.auth.AuthModel
 import com.bs.ecommerce.account.auth.register.data.GetRegistrationResponse
 import com.bs.ecommerce.checkout.CheckoutViewModel
-import com.bs.ecommerce.common.RequestCompleteListener
+import com.bs.ecommerce.networking.common.RequestCompleteListener
 
 
 class RegistrationViewModel  : CheckoutViewModel()
@@ -20,7 +20,8 @@ class RegistrationViewModel  : CheckoutViewModel()
 
         isLoadingLD.postValue(true)
 
-        model.getRegisterModel(object : RequestCompleteListener<GetRegistrationResponse>
+        model.getRegisterModel(object :
+            RequestCompleteListener<GetRegistrationResponse>
         {
             override fun onRequestSuccess(data: GetRegistrationResponse)
             {
@@ -44,7 +45,8 @@ class RegistrationViewModel  : CheckoutViewModel()
 
         isLoadingLD.postValue(true)
 
-        model.getCustomerInfoModel(object : RequestCompleteListener<GetRegistrationResponse>
+        model.getCustomerInfoModel(object :
+            RequestCompleteListener<GetRegistrationResponse>
         {
             override fun onRequestSuccess(data: GetRegistrationResponse)
             {
@@ -67,7 +69,8 @@ class RegistrationViewModel  : CheckoutViewModel()
 
         isLoadingLD.postValue(true)
 
-        model.postRegisterModel(registerPostData, object : RequestCompleteListener<GetRegistrationResponse>
+        model.postRegisterModel(registerPostData, object :
+            RequestCompleteListener<GetRegistrationResponse>
         {
             override fun onRequestSuccess(data: GetRegistrationResponse)
             {
@@ -95,7 +98,8 @@ class RegistrationViewModel  : CheckoutViewModel()
         model.postCustomerInfoModel(
             registerPostData,
 
-            object : RequestCompleteListener<GetRegistrationResponse> {
+            object :
+                RequestCompleteListener<GetRegistrationResponse> {
                 override fun onRequestSuccess(data: GetRegistrationResponse) {
                     isLoadingLD.postValue(false)
 

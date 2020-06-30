@@ -3,11 +3,16 @@ package com.bs.ecommerce.account.review
 import androidx.lifecycle.MutableLiveData
 import com.bs.ecommerce.account.auth.register.data.KeyValuePair
 import com.bs.ecommerce.base.BaseViewModel
-import com.bs.ecommerce.common.RequestCompleteListener
+import com.bs.ecommerce.networking.common.RequestCompleteListener
 import com.bs.ecommerce.account.review.model.ReviewModel
+import com.bs.ecommerce.account.review.model.data.MyReviewsResponse
+import com.bs.ecommerce.account.review.model.data.ProductReview
+import com.bs.ecommerce.account.review.model.data.ProductReviewData
+import com.bs.ecommerce.account.review.model.data.ProductReviewResponse
+import com.bs.ecommerce.catalog.common.Helpfulness
+import com.bs.ecommerce.catalog.common.HelpfulnessResponse
 import com.bs.ecommerce.networking.Api
 import com.bs.ecommerce.networking.common.KeyValueFormData
-import com.bs.ecommerce.product.model.data.*
 
 class ReviewViewModel: BaseViewModel() {
 
@@ -27,7 +32,8 @@ class ReviewViewModel: BaseViewModel() {
 
         isLoadingLD.value = true
 
-        model.getMyReviews(++pageNumber, object: RequestCompleteListener<MyReviewsResponse> {
+        model.getMyReviews(++pageNumber, object:
+            RequestCompleteListener<MyReviewsResponse> {
 
             override fun onRequestSuccess(data: MyReviewsResponse) {
                 isLoadingLD.value = false
@@ -51,7 +57,8 @@ class ReviewViewModel: BaseViewModel() {
 
         isLoadingLD.value = true
 
-        model.getProductReview(productId, object: RequestCompleteListener<ProductReviewResponse> {
+        model.getProductReview(productId, object:
+            RequestCompleteListener<ProductReviewResponse> {
 
             override fun onRequestSuccess(data: ProductReviewResponse) {
                 isLoadingLD.value = false
@@ -91,7 +98,8 @@ class ReviewViewModel: BaseViewModel() {
         model.postReviewHelpfulness(
             reviewId,
             KeyValueFormData(formValues),
-            object: RequestCompleteListener<HelpfulnessResponse> {
+            object:
+                RequestCompleteListener<HelpfulnessResponse> {
 
             override fun onRequestSuccess(data: HelpfulnessResponse) {
                 isLoadingLD.value = false
@@ -119,8 +127,12 @@ class ReviewViewModel: BaseViewModel() {
         isLoadingLD.value = true
 
         model.postProductReview(
-            userData.productId ?: -1, ProductReviewResponse(userData),
-            object: RequestCompleteListener<ProductReviewResponse> {
+            userData.productId ?: -1,
+            ProductReviewResponse(
+                userData
+            ),
+            object:
+                RequestCompleteListener<ProductReviewResponse> {
 
             override fun onRequestSuccess(data: ProductReviewResponse) {
                 isLoadingLD.value = false

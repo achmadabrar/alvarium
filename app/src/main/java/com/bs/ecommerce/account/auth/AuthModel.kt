@@ -2,7 +2,7 @@ package com.bs.ecommerce.account.auth
 
 import com.bs.ecommerce.account.auth.login.data.*
 import com.bs.ecommerce.account.auth.register.data.GetRegistrationResponse
-import com.bs.ecommerce.common.RequestCompleteListener
+import com.bs.ecommerce.networking.common.RequestCompleteListener
 
 interface AuthModel
 {

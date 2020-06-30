@@ -11,10 +11,10 @@ import com.bs.ecommerce.base.BaseFragment
 import com.bs.ecommerce.base.BaseViewModel
 import com.bs.ecommerce.db.DbHelper
 import com.bs.ecommerce.account.wishlist.WishListViewModel
-import com.bs.ecommerce.product.ProductListFragment
-import com.bs.ecommerce.product.model.VendorModel
-import com.bs.ecommerce.product.model.VendorModelImpl
-import com.bs.ecommerce.product.model.data.ProductByVendorData
+import com.bs.ecommerce.catalog.productList.ProductListFragment
+import com.bs.ecommerce.more.vendor.model.VendorModel
+import com.bs.ecommerce.more.vendor.model.VendorModelImpl
+import com.bs.ecommerce.catalog.common.ProductByVendorData
 import com.bs.ecommerce.utils.Const
 import com.bs.ecommerce.utils.ItemClickListener
 import com.bs.ecommerce.utils.RecyclerViewMargin

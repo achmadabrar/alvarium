@@ -1,10 +1,14 @@
 package com.bs.ecommerce.account.addresses.model
 
-import com.bs.ecommerce.account.addresses.model.CustomerAddressModel
+import com.bs.ecommerce.account.addresses.model.data.CustomerAddressData
+import com.bs.ecommerce.account.addresses.model.data.CustomerAddressResponse
+import com.bs.ecommerce.account.addresses.model.data.EditCustomerAddressData
+import com.bs.ecommerce.account.addresses.model.data.EditCustomerAddressResponse
 import com.bs.ecommerce.account.auth.register.data.KeyValuePair
-import com.bs.ecommerce.common.RequestCompleteListener
+import com.bs.ecommerce.catalog.common.AddressModel
+import com.bs.ecommerce.catalog.common.CustomProperties
+import com.bs.ecommerce.networking.common.RequestCompleteListener
 import com.bs.ecommerce.networking.RetroClient
-import com.bs.ecommerce.product.model.data.*
 import com.bs.ecommerce.utils.TextUtils
 import okhttp3.ResponseBody
 import retrofit2.Call
@@ -89,7 +93,12 @@ class CustomerAddressModelImpl :
         callback: RequestCompleteListener<Any?>
     ) {
         val reqBody =
-            EditCustomerAddressResponse(EditCustomerAddressData(address, CustomProperties()))
+            EditCustomerAddressResponse(
+                EditCustomerAddressData(
+                    address,
+                    CustomProperties()
+                )
+            )
         reqBody.formValues = customAttributes
 
         RetroClient.api.editAddress(address.id!!, reqBody).enqueue(object :
@@ -119,7 +128,13 @@ class CustomerAddressModelImpl :
         customAttributes: List<KeyValuePair>,
         callback: RequestCompleteListener<Any?>
     ) {
-        val reqBody = EditCustomerAddressResponse(EditCustomerAddressData(address, CustomProperties()))
+        val reqBody =
+            EditCustomerAddressResponse(
+                EditCustomerAddressData(
+                    address,
+                    CustomProperties()
+                )
+            )
         reqBody.formValues = customAttributes
 
         RetroClient.api.saveCustomerAddress(reqBody).enqueue(object :

@@ -13,12 +13,11 @@ import com.bs.ecommerce.base.BaseFragment
 import com.bs.ecommerce.base.BaseViewModel
 import com.bs.ecommerce.db.DbHelper
 import com.bs.ecommerce.account.orders.OrderDetailsFragment
-import com.bs.ecommerce.more.UserAgreementDialogFragment
 import com.bs.ecommerce.account.downloadableProducts.model.DownloadableProductListModel
 import com.bs.ecommerce.account.downloadableProducts.model.DownloadableProductListModelImpl
 import com.bs.ecommerce.account.downloadableProducts.model.data.DownloadableProductItem
-import com.bs.ecommerce.product.ProductDetailFragment
-import com.bs.ecommerce.product.model.data.UserAgreementData
+import com.bs.ecommerce.catalog.product.ProductDetailFragment
+import com.bs.ecommerce.account.downloadableProducts.model.data.UserAgreementData
 import com.bs.ecommerce.utils.Const
 import com.bs.ecommerce.utils.ItemClickListener
 import com.bs.ecommerce.utils.RecyclerViewMargin

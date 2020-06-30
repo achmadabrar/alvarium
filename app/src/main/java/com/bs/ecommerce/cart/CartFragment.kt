@@ -18,8 +18,8 @@ import com.bs.ecommerce.checkout.CheckoutStepFragment
 import com.bs.ecommerce.db.DbHelper
 import com.bs.ecommerce.networking.Api
 import com.bs.ecommerce.networking.common.KeyValueFormData
-import com.bs.ecommerce.product.ProductDetailFragment
-import com.bs.ecommerce.product.model.data.CheckoutAttribute
+import com.bs.ecommerce.catalog.product.ProductDetailFragment
+import com.bs.ecommerce.catalog.common.CheckoutAttribute
 import com.bs.ecommerce.utils.*
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import kotlinx.android.synthetic.main.custom_attribute_bottom_sheet.*

@@ -1,9 +1,8 @@
 package com.bs.ecommerce.account.rewardpoint.model
 
-import com.bs.ecommerce.account.rewardpoint.model.RewardPointModel
-import com.bs.ecommerce.common.RequestCompleteListener
+import com.bs.ecommerce.networking.common.RequestCompleteListener
 import com.bs.ecommerce.networking.RetroClient
-import com.bs.ecommerce.product.model.data.RewardPointResponse
+import com.bs.ecommerce.account.rewardpoint.model.data.RewardPointResponse
 import com.bs.ecommerce.utils.TextUtils
 import retrofit2.Call
 import retrofit2.Callback

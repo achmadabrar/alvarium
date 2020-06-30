@@ -2,12 +2,12 @@ package com.bs.ecommerce.more.vendor
 
 import androidx.lifecycle.MutableLiveData
 import com.bs.ecommerce.base.BaseViewModel
-import com.bs.ecommerce.common.RequestCompleteListener
-import com.bs.ecommerce.product.model.VendorModel
-import com.bs.ecommerce.product.model.data.ContactVendorModel
-import com.bs.ecommerce.product.model.data.GetAllVendorsResponse
-import com.bs.ecommerce.product.model.data.GetContactVendorResponse
-import com.bs.ecommerce.product.model.data.ProductByVendorData
+import com.bs.ecommerce.networking.common.RequestCompleteListener
+import com.bs.ecommerce.more.vendor.model.VendorModel
+import com.bs.ecommerce.more.vendor.model.data.ContactVendorModel
+import com.bs.ecommerce.more.vendor.model.data.GetAllVendorsResponse
+import com.bs.ecommerce.more.vendor.model.data.GetContactVendorResponse
+import com.bs.ecommerce.catalog.common.ProductByVendorData
 import com.bs.ecommerce.utils.OneTimeEvent
 
 class VendorViewModel : BaseViewModel() {
@@ -19,7 +19,8 @@ class VendorViewModel : BaseViewModel() {
     fun getAllVendors(model: VendorModel) {
         isLoadingLD.value = true
 
-        model.getAllVendors(object : RequestCompleteListener<GetAllVendorsResponse> {
+        model.getAllVendors(object :
+            RequestCompleteListener<GetAllVendorsResponse> {
             override fun onRequestSuccess(data: GetAllVendorsResponse) {
                 isLoadingLD.value = false
 
@@ -36,7 +37,8 @@ class VendorViewModel : BaseViewModel() {
     fun getContactVendorModel(vendorId: Int, model: VendorModel) {
         isLoadingLD.value = true
 
-        model.getContactVendorModel(vendorId, object : RequestCompleteListener<GetContactVendorResponse> {
+        model.getContactVendorModel(vendorId, object :
+            RequestCompleteListener<GetContactVendorResponse> {
 
             override fun onRequestSuccess(data: GetContactVendorResponse) {
                 isLoadingLD.value = false
@@ -56,7 +58,8 @@ class VendorViewModel : BaseViewModel() {
 
         model.postContactVendorModel(
             GetContactVendorResponse(data),
-            object : RequestCompleteListener<GetContactVendorResponse> {
+            object :
+                RequestCompleteListener<GetContactVendorResponse> {
 
                 override fun onRequestSuccess(data: GetContactVendorResponse) {
                     isLoadingLD.value = false

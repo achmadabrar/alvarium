@@ -6,7 +6,7 @@ import com.bs.ecommerce.account.auth.login.data.ChangePasswordModel
 import com.bs.ecommerce.account.auth.login.data.ForgotPasswordData
 import com.bs.ecommerce.account.auth.login.data.ForgotPasswordResponse
 import com.bs.ecommerce.base.BaseViewModel
-import com.bs.ecommerce.common.RequestCompleteListener
+import com.bs.ecommerce.networking.common.RequestCompleteListener
 
 class PasswordViewModel: BaseViewModel() {
 
@@ -25,7 +25,8 @@ class PasswordViewModel: BaseViewModel() {
             null
         )
 
-        model.forgotPassword(data, object : RequestCompleteListener<ForgotPasswordResponse> {
+        model.forgotPassword(data, object :
+            RequestCompleteListener<ForgotPasswordResponse> {
 
             override fun onRequestSuccess(data: ForgotPasswordResponse) {
                 isLoadingLD.value = false
@@ -45,7 +46,8 @@ class PasswordViewModel: BaseViewModel() {
     fun getChangePasswordModel(model: AuthModel) {
         isLoadingLD.value = true
 
-        model.getChangePassword(object : RequestCompleteListener<ChangePasswordModel> {
+        model.getChangePassword(object :
+            RequestCompleteListener<ChangePasswordModel> {
 
             override fun onRequestSuccess(data: ChangePasswordModel) {
 
@@ -66,7 +68,8 @@ class PasswordViewModel: BaseViewModel() {
     fun postChangePasswordModel(userData: ChangePasswordModel, model: AuthModel) {
         isLoadingLD.value = true
 
-        model.postChangePassword(userData, object : RequestCompleteListener<ChangePasswordModel> {
+        model.postChangePassword(userData, object :
+            RequestCompleteListener<ChangePasswordModel> {
 
             override fun onRequestSuccess(data: ChangePasswordModel) {
 

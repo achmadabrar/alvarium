@@ -18,9 +18,9 @@ import com.bs.ecommerce.R
 import com.bs.ecommerce.account.auth.register.data.KeyValuePair
 import com.bs.ecommerce.db.DbHelper
 import com.bs.ecommerce.networking.common.KeyValueFormData
-import com.bs.ecommerce.product.model.data.AttributeControlValue
-import com.bs.ecommerce.product.model.data.CustomAttribute
-import com.bs.ecommerce.product.model.data.ProductPrice
+import com.bs.ecommerce.catalog.common.AttributeControlValue
+import com.bs.ecommerce.catalog.common.CustomAttribute
+import com.bs.ecommerce.catalog.common.ProductPrice
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import kotlinx.android.synthetic.main.color_selection_layout.view.*
 import org.jetbrains.anko.layoutInflater
@@ -223,7 +223,8 @@ class CustomAttributeManager(
             context, DatePickerDialog.OnDateSetListener { _, y, m, d ->
                 tvDatePicker.text = TextUtils().getFormattedDate(d,m,y)
 
-                val value = AttributeControlValue()
+                val value =
+                    AttributeControlValue()
                 value.id = -1 * attr.attributeControlType!!
 
                 value.name = "$d-$m-$y"

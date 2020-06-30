@@ -3,11 +3,11 @@ package com.bs.ecommerce.account.wishlist
 import androidx.lifecycle.MutableLiveData
 import com.bs.ecommerce.account.auth.register.data.KeyValuePair
 import com.bs.ecommerce.base.BaseViewModel
-import com.bs.ecommerce.common.RequestCompleteListener
+import com.bs.ecommerce.networking.common.RequestCompleteListener
 import com.bs.ecommerce.account.wishlist.model.WishListModel
 import com.bs.ecommerce.networking.Api
-import com.bs.ecommerce.product.model.data.WishListData
-import com.bs.ecommerce.product.model.data.WishListResponse
+import com.bs.ecommerce.account.wishlist.model.data.WishListData
+import com.bs.ecommerce.account.wishlist.model.data.WishListResponse
 import java.util.*
 
 class WishListViewModel : BaseViewModel() {
@@ -18,7 +18,8 @@ class WishListViewModel : BaseViewModel() {
     fun getWishList(model: WishListModel) {
         isLoadingLD.value = true
 
-        model.getWishList(object : RequestCompleteListener<WishListResponse> {
+        model.getWishList(object :
+            RequestCompleteListener<WishListResponse> {
             override fun onRequestSuccess(data: WishListResponse) {
                 isLoadingLD.value = false
 
@@ -35,7 +36,8 @@ class WishListViewModel : BaseViewModel() {
 
         isLoadingLD.value = true
 
-        model.updateWishListData(keyValuePairs, object : RequestCompleteListener<WishListResponse> {
+        model.updateWishListData(keyValuePairs, object :
+            RequestCompleteListener<WishListResponse> {
             override fun onRequestSuccess(data: WishListResponse) {
                 isLoadingLD.value = false
 
@@ -106,7 +108,8 @@ class WishListViewModel : BaseViewModel() {
 
         isLoadingLD.value = true
 
-        model.moveItemsToCart(keyValuePairs, object : RequestCompleteListener<WishListResponse> {
+        model.moveItemsToCart(keyValuePairs, object :
+            RequestCompleteListener<WishListResponse> {
             override fun onRequestSuccess(data: WishListResponse) {
                 isLoadingLD.value = false
 

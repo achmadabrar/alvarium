@@ -5,7 +5,7 @@ import com.bs.ecommerce.account.auth.AuthModel
 import com.bs.ecommerce.account.auth.login.data.LoginPostData
 import com.bs.ecommerce.account.auth.login.data.LoginResponse
 import com.bs.ecommerce.base.BaseViewModel
-import com.bs.ecommerce.common.RequestCompleteListener
+import com.bs.ecommerce.networking.common.RequestCompleteListener
 
 
 class LoginViewModel  : BaseViewModel()
@@ -19,7 +19,8 @@ class LoginViewModel  : BaseViewModel()
 
         isLoadingLD.value = true
 
-        model.postLoginModel(loginPostData, object : RequestCompleteListener<LoginResponse>
+        model.postLoginModel(loginPostData, object :
+            RequestCompleteListener<LoginResponse>
         {
             override fun onRequestSuccess(data: LoginResponse)
             {
@@ -40,7 +41,8 @@ class LoginViewModel  : BaseViewModel()
 
         isLoadingLD.value = true
 
-        model.logout(object : RequestCompleteListener<Boolean> {
+        model.logout(object :
+            RequestCompleteListener<Boolean> {
             override fun onRequestSuccess(data: Boolean) {
                 isLoadingLD.value = false
                 logoutResponseLD.value = data

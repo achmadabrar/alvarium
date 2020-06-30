@@ -2,10 +2,10 @@ package com.bs.ecommerce.account.rewardpoint
 
 import androidx.lifecycle.MutableLiveData
 import com.bs.ecommerce.base.BaseViewModel
-import com.bs.ecommerce.common.RequestCompleteListener
+import com.bs.ecommerce.networking.common.RequestCompleteListener
 import com.bs.ecommerce.account.rewardpoint.model.RewardPointModel
-import com.bs.ecommerce.product.model.data.RewardPointData
-import com.bs.ecommerce.product.model.data.RewardPointResponse
+import com.bs.ecommerce.account.rewardpoint.model.data.RewardPointData
+import com.bs.ecommerce.account.rewardpoint.model.data.RewardPointResponse
 
 class RewardPointViewModel: BaseViewModel() {
 
@@ -22,7 +22,8 @@ class RewardPointViewModel: BaseViewModel() {
 
         isLoadingLD.value = true
 
-        model.fetchRewardPoints(++pageNumber, object: RequestCompleteListener<RewardPointResponse> {
+        model.fetchRewardPoints(++pageNumber, object:
+            RequestCompleteListener<RewardPointResponse> {
 
             override fun onRequestSuccess(data: RewardPointResponse) {
                 isLoadingLD.value = false

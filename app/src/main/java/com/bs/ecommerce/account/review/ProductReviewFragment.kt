@@ -15,9 +15,9 @@ import com.bs.ecommerce.account.review.model.ReviewModelImpl
 import com.bs.ecommerce.base.BaseFragment
 import com.bs.ecommerce.base.BaseViewModel
 import com.bs.ecommerce.db.DbHelper
-import com.bs.ecommerce.product.AddReviewFragment
-import com.bs.ecommerce.product.model.data.Helpfulness
-import com.bs.ecommerce.product.model.data.ProductReviewItem
+import com.bs.ecommerce.catalog.AddReviewFragment
+import com.bs.ecommerce.catalog.common.Helpfulness
+import com.bs.ecommerce.catalog.common.ProductReviewItem
 import com.bs.ecommerce.utils.Const
 import com.bs.ecommerce.utils.RecyclerViewMargin
 import kotlinx.android.synthetic.main.fragment_product_review.*

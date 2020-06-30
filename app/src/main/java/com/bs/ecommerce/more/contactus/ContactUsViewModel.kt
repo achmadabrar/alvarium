@@ -2,10 +2,10 @@ package com.bs.ecommerce.more.contactus
 
 import androidx.lifecycle.MutableLiveData
 import com.bs.ecommerce.base.BaseViewModel
-import com.bs.ecommerce.common.RequestCompleteListener
+import com.bs.ecommerce.networking.common.RequestCompleteListener
 import com.bs.ecommerce.more.options.model.CommonModel
-import com.bs.ecommerce.product.model.data.ContactUsData
-import com.bs.ecommerce.product.model.data.ContactUsResponse
+import com.bs.ecommerce.more.contactus.data.ContactUsData
+import com.bs.ecommerce.more.contactus.data.ContactUsResponse
 
 class ContactUsViewModel: BaseViewModel() {
 
@@ -17,7 +17,8 @@ class ContactUsViewModel: BaseViewModel() {
 
         isLoadingLD.value = true
 
-        model.postCustomerEnquiry(userData, object: RequestCompleteListener<ContactUsResponse> {
+        model.postCustomerEnquiry(userData, object:
+            RequestCompleteListener<ContactUsResponse> {
 
             override fun onRequestSuccess(data: ContactUsResponse) {
                 isLoadingLD.value = false
@@ -43,7 +44,8 @@ class ContactUsViewModel: BaseViewModel() {
 
         isLoadingLD.value = true
 
-        model.getContactUsModel(object: RequestCompleteListener<ContactUsResponse> {
+        model.getContactUsModel(object:
+            RequestCompleteListener<ContactUsResponse> {
 
             override fun onRequestSuccess(data: ContactUsResponse) {
                 isLoadingLD.value = false

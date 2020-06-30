@@ -2,7 +2,10 @@ package com.bs.ecommerce.account.orders.model.data
 
 
 import com.bs.ecommerce.cart.model.data.GiftCard
-import com.bs.ecommerce.product.model.data.*
+import com.bs.ecommerce.catalog.common.AddressModel
+import com.bs.ecommerce.catalog.common.CustomProperties
+import com.bs.ecommerce.catalog.common.CustomValues
+import com.bs.ecommerce.catalog.common.TaxRate
 import com.google.gson.annotations.SerializedName
 
 data class OrderDetailsData(

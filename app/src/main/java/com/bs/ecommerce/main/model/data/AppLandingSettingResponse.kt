@@ -2,7 +2,6 @@ package com.bs.ecommerce.main.model.data
 import android.os.Parcel
 import android.os.Parcelable
 import com.bs.ecommerce.networking.common.BaseResponse
-import com.bs.ecommerce.product.model.data.StringResource
 import com.google.gson.annotations.SerializedName
 
 

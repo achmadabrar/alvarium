@@ -1,7 +1,7 @@
 package com.bs.ecommerce.db
 
 import com.bs.ecommerce.main.model.data.AppLandingData
-import com.bs.ecommerce.product.model.data.StringResource
+import com.bs.ecommerce.main.model.data.StringResource
 
 class DbHelper {
 

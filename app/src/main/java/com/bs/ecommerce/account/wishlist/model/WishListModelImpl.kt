@@ -2,12 +2,12 @@ package com.bs.ecommerce.account.wishlist.model
 
 
 import com.bs.ecommerce.account.auth.register.data.KeyValuePair
-import com.bs.ecommerce.common.RequestCompleteListener
+import com.bs.ecommerce.networking.common.RequestCompleteListener
 
 import com.bs.ecommerce.networking.RetroClient
 import com.bs.ecommerce.networking.common.BaseResponse
 import com.bs.ecommerce.networking.common.KeyValueFormData
-import com.bs.ecommerce.product.model.data.WishListResponse
+import com.bs.ecommerce.account.wishlist.model.data.WishListResponse
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response

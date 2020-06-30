@@ -6,7 +6,7 @@ import com.bs.ecommerce.cart.model.CartModel
 import com.bs.ecommerce.cart.model.data.CartProduct
 import com.bs.ecommerce.cart.model.data.CartResponse
 import com.bs.ecommerce.cart.model.data.CartRootData
-import com.bs.ecommerce.common.RequestCompleteListener
+import com.bs.ecommerce.networking.common.RequestCompleteListener
 import com.bs.ecommerce.networking.Api
 import com.bs.ecommerce.networking.common.KeyValueFormData
 import java.util.*
@@ -64,7 +64,8 @@ class CartViewModel : BaseViewModel()
 
         isLoadingLD.value = true
 
-        model.updateCartData(body, object : RequestCompleteListener<CartResponse>
+        model.updateCartData(body, object :
+            RequestCompleteListener<CartResponse>
         {
             override fun onRequestSuccess(data: CartResponse)
             {
@@ -85,7 +86,8 @@ class CartViewModel : BaseViewModel()
 
         isLoadingLD.value = true
 
-        model.applyCheckoutAttributes(keyValueFormData.formValues, object : RequestCompleteListener<CartRootData>
+        model.applyCheckoutAttributes(keyValueFormData.formValues, object :
+            RequestCompleteListener<CartRootData>
         {
             override fun onRequestSuccess(data: CartRootData)
             {
@@ -112,7 +114,8 @@ class CartViewModel : BaseViewModel()
                 DISCOUNT_KEY,
                 code
             )
-        )), object : RequestCompleteListener<CartResponse>
+        )), object :
+            RequestCompleteListener<CartResponse>
         {
             override fun onRequestSuccess(data: CartResponse)
             {
@@ -137,7 +140,8 @@ class CartViewModel : BaseViewModel()
                 "${REMOVE_DISCOUNT_KEY}$discountId",
                 code
             )
-        )), object : RequestCompleteListener<CartResponse>
+        )), object :
+            RequestCompleteListener<CartResponse>
         {
             override fun onRequestSuccess(data: CartResponse)
             {
@@ -163,7 +167,8 @@ class CartViewModel : BaseViewModel()
                 GIFT_CARD_KEY,
                 code
             )
-        )), object : RequestCompleteListener<CartResponse>
+        )), object :
+            RequestCompleteListener<CartResponse>
         {
             override fun onRequestSuccess(data: CartResponse)
             {
@@ -187,7 +192,8 @@ class CartViewModel : BaseViewModel()
                 "${REMOVE_GIFT_CARD_KEY}$discountId",
                 code
             )
-        )), object : RequestCompleteListener<CartResponse>
+        )), object :
+            RequestCompleteListener<CartResponse>
         {
             override fun onRequestSuccess(data: CartResponse)
             {

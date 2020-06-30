@@ -3,11 +3,11 @@ package com.bs.ecommerce.account.addresses
 import androidx.lifecycle.MutableLiveData
 import com.bs.ecommerce.account.auth.register.data.KeyValuePair
 import com.bs.ecommerce.checkout.CheckoutViewModel
-import com.bs.ecommerce.common.RequestCompleteListener
+import com.bs.ecommerce.networking.common.RequestCompleteListener
 import com.bs.ecommerce.account.addresses.model.CustomerAddressModel
-import com.bs.ecommerce.product.model.data.AddressModel
-import com.bs.ecommerce.product.model.data.CustomerAddressData
-import com.bs.ecommerce.product.model.data.EditCustomerAddressData
+import com.bs.ecommerce.catalog.common.AddressModel
+import com.bs.ecommerce.account.addresses.model.data.CustomerAddressData
+import com.bs.ecommerce.account.addresses.model.data.EditCustomerAddressData
 
 class AddressViewModel: CheckoutViewModel() {
 
@@ -24,7 +24,8 @@ class AddressViewModel: CheckoutViewModel() {
 
         isLoadingLD.value = true
 
-        model.getCustomerAddresses(object : RequestCompleteListener<CustomerAddressData> {
+        model.getCustomerAddresses(object :
+            RequestCompleteListener<CustomerAddressData> {
             override fun onRequestSuccess(data: CustomerAddressData) {
                 isLoadingLD.value = false
 
@@ -43,7 +44,8 @@ class AddressViewModel: CheckoutViewModel() {
 
         isLoadingLD.value = true
 
-        model.getFormDataForNewAddress(object : RequestCompleteListener<EditCustomerAddressData> {
+        model.getFormDataForNewAddress(object :
+            RequestCompleteListener<EditCustomerAddressData> {
             override fun onRequestSuccess(data: EditCustomerAddressData) {
                 isLoadingLD.value = false
 
@@ -62,7 +64,8 @@ class AddressViewModel: CheckoutViewModel() {
 
         isLoadingLD.value = true
 
-        model.getFormDataForEditAddress(addressId, object : RequestCompleteListener<EditCustomerAddressData> {
+        model.getFormDataForEditAddress(addressId, object :
+            RequestCompleteListener<EditCustomerAddressData> {
             override fun onRequestSuccess(data: EditCustomerAddressData) {
                 isLoadingLD.value = false
 
@@ -84,7 +87,8 @@ class AddressViewModel: CheckoutViewModel() {
 
         isLoadingLD.value = true
 
-        model.saveAddress(address, customAttributes, object : RequestCompleteListener<Any?> {
+        model.saveAddress(address, customAttributes, object :
+            RequestCompleteListener<Any?> {
             override fun onRequestSuccess(data: Any?) {
                 isLoadingLD.value = false
 
@@ -106,7 +110,8 @@ class AddressViewModel: CheckoutViewModel() {
 
         isLoadingLD.value = true
 
-        model.updateAddress(address, customAttributes, object : RequestCompleteListener<Any?> {
+        model.updateAddress(address, customAttributes, object :
+            RequestCompleteListener<Any?> {
             override fun onRequestSuccess(data: Any?) {
                 isLoadingLD.value = false
                 resetFormLD.value = true
@@ -126,7 +131,8 @@ class AddressViewModel: CheckoutViewModel() {
 
          isLoadingLD.value = true
 
-        model.deleteAddress(address.id!!, object : RequestCompleteListener<Any?> {
+        model.deleteAddress(address.id!!, object :
+            RequestCompleteListener<Any?> {
             override fun onRequestSuccess(data: Any?) {
                 isLoadingLD.value = false
                 addressDeleteLD.value = positionInList

@@ -31,9 +31,9 @@ import com.bs.ecommerce.account.orders.OrderDetailsFragment
 import com.bs.ecommerce.more.topic.TopicFragment
 import com.bs.ecommerce.account.UserAccountFragment
 import com.bs.ecommerce.networking.NetworkUtil
-import com.bs.ecommerce.product.ProductDetailFragment
-import com.bs.ecommerce.product.ProductListFragment
-import com.bs.ecommerce.product.SearchFragment
+import com.bs.ecommerce.catalog.product.ProductDetailFragment
+import com.bs.ecommerce.catalog.productList.ProductListFragment
+import com.bs.ecommerce.catalog.search.SearchFragment
 import com.bs.ecommerce.utils.*
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.messaging.FirebaseMessaging
@@ -410,7 +410,9 @@ class MainActivity : PrivacyPolicyDialogActivity(), View.OnClickListener
             }
             R.id.bottom_nav_search -> {
 
-                createIfNotInBackStack<SearchFragment>(SearchFragment())
+                createIfNotInBackStack<SearchFragment>(
+                    SearchFragment()
+                )
                 return@OnNavigationItemSelectedListener true
             }
             R.id.bottom_nav_account -> {

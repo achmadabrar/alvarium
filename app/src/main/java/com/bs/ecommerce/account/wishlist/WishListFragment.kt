@@ -14,8 +14,8 @@ import com.bs.ecommerce.cart.CartFragment
 import com.bs.ecommerce.db.DbHelper
 import com.bs.ecommerce.account.wishlist.model.WishListModel
 import com.bs.ecommerce.account.wishlist.model.WishListModelImpl
-import com.bs.ecommerce.product.ProductDetailFragment
-import com.bs.ecommerce.product.model.data.WishListItem
+import com.bs.ecommerce.catalog.product.ProductDetailFragment
+import com.bs.ecommerce.account.wishlist.model.data.WishListItem
 import com.bs.ecommerce.utils.*
 import kotlinx.android.synthetic.main.fragment_wishlist.*
 

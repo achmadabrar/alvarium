@@ -15,7 +15,7 @@ import com.bs.ecommerce.account.rewardpoint.model.RewardPointModelImpl
 import com.bs.ecommerce.base.BaseFragment
 import com.bs.ecommerce.base.BaseViewModel
 import com.bs.ecommerce.db.DbHelper
-import com.bs.ecommerce.product.model.data.RewardPoint
+import com.bs.ecommerce.account.rewardpoint.model.data.RewardPoint
 import com.bs.ecommerce.utils.Const
 import com.bs.ecommerce.utils.RecyclerViewMargin
 import com.bs.ecommerce.utils.TextUtils

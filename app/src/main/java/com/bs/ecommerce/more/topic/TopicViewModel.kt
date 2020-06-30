@@ -2,10 +2,10 @@ package com.bs.ecommerce.more.topic
 
 import androidx.lifecycle.MutableLiveData
 import com.bs.ecommerce.base.BaseViewModel
-import com.bs.ecommerce.common.RequestCompleteListener
+import com.bs.ecommerce.networking.common.RequestCompleteListener
 import com.bs.ecommerce.more.topic.model.TopicModel
-import com.bs.ecommerce.product.model.data.TopicData
-import com.bs.ecommerce.product.model.data.TopicResponse
+import com.bs.ecommerce.more.topic.model.data.TopicData
+import com.bs.ecommerce.more.topic.model.data.TopicResponse
 
 class TopicViewModel: BaseViewModel() {
 
@@ -15,7 +15,8 @@ class TopicViewModel: BaseViewModel() {
 
         isLoadingLD.value = true
 
-        model.getTopicBySystemName(sysName, object: RequestCompleteListener<TopicResponse> {
+        model.getTopicBySystemName(sysName, object:
+            RequestCompleteListener<TopicResponse> {
 
             override fun onRequestSuccess(data: TopicResponse) {
                 isLoadingLD.value = false
@@ -36,7 +37,8 @@ class TopicViewModel: BaseViewModel() {
 
         isLoadingLD.value = true
 
-        model.getTopicById(topicId, object: RequestCompleteListener<TopicResponse> {
+        model.getTopicById(topicId, object:
+            RequestCompleteListener<TopicResponse> {
 
             override fun onRequestSuccess(data: TopicResponse) {
                 isLoadingLD.value = false

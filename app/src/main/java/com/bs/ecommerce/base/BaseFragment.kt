@@ -23,7 +23,7 @@ import com.bs.ecommerce.customViews.ContentLoadingDialog
 import com.bs.ecommerce.db.DbHelper
 import com.bs.ecommerce.more.barcode.BarCodeCaptureFragment
 import com.bs.ecommerce.networking.NetworkUtil
-import com.bs.ecommerce.product.model.data.ProductSummary
+import com.bs.ecommerce.catalog.common.ProductSummary
 import com.bs.ecommerce.utils.*
 import com.pnikosis.materialishprogress.ProgressWheel
 import kotlinx.android.synthetic.main.table_order_total.*

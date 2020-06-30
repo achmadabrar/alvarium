@@ -22,12 +22,12 @@ import com.bs.ecommerce.home.manufaturer.ManufacturerListFragment
 import com.bs.ecommerce.main.MainActivity
 import com.bs.ecommerce.main.MainViewModel
 import com.bs.ecommerce.more.topic.TopicFragment
-import com.bs.ecommerce.product.ProductDetailFragment
-import com.bs.ecommerce.product.ProductListFragment
-import com.bs.ecommerce.product.model.data.CategoryModel
-import com.bs.ecommerce.product.model.data.Manufacturer
-import com.bs.ecommerce.product.model.data.ProductSummary
-import com.bs.ecommerce.product.model.data.SubCategory
+import com.bs.ecommerce.catalog.product.ProductDetailFragment
+import com.bs.ecommerce.catalog.productList.ProductListFragment
+import com.bs.ecommerce.catalog.common.CategoryModel
+import com.bs.ecommerce.home.homepage.model.data.Manufacturer
+import com.bs.ecommerce.catalog.common.ProductSummary
+import com.bs.ecommerce.catalog.common.SubCategory
 import com.bs.ecommerce.utils.*
 import com.daimajia.slider.library.Indicators.PagerIndicator
 import com.daimajia.slider.library.SliderLayout
@@ -197,7 +197,8 @@ class HomeFragment : ToolbarLogoBaseFragment() {
             addedToWishListLD.observe(viewLifecycleOwner, Observer { action ->
 
                 action?.getContentIfNotHandled()?.let { product ->
-                    replaceFragmentSafely(ProductDetailFragment.newInstance(
+                    replaceFragmentSafely(
+                        ProductDetailFragment.newInstance(
                         product.id?.toLong() ?: -1L, product.name))
                 }
 
@@ -436,7 +437,8 @@ class HomeFragment : ToolbarLogoBaseFragment() {
             v.setOnClickListener {
                 bsDialog.hide()
 
-                replaceFragmentSafely(ProductListFragment.newInstance(
+                replaceFragmentSafely(
+                    ProductListFragment.newInstance(
                     item.name ?: "", item.id ?: -1, ProductListFragment.GetBy.CATEGORY
                 ))
             }

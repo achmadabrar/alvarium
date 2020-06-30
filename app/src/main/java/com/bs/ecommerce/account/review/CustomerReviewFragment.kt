@@ -15,8 +15,8 @@ import com.bs.ecommerce.base.BaseViewModel
 import com.bs.ecommerce.db.DbHelper
 import com.bs.ecommerce.account.review.model.ReviewModel
 import com.bs.ecommerce.account.review.model.ReviewModelImpl
-import com.bs.ecommerce.product.ProductDetailFragment
-import com.bs.ecommerce.product.model.data.ProductReview
+import com.bs.ecommerce.catalog.product.ProductDetailFragment
+import com.bs.ecommerce.account.review.model.data.ProductReview
 import com.bs.ecommerce.utils.Const
 import com.bs.ecommerce.utils.RecyclerViewMargin
 import com.bs.ecommerce.utils.replaceFragmentSafely
@@ -145,7 +145,8 @@ class CustomerReviewFragment : BaseFragment() {
 
                 setOnClickListener {
                     if (item.productId != null)
-                        replaceFragmentSafely(ProductDetailFragment.newInstance(
+                        replaceFragmentSafely(
+                            ProductDetailFragment.newInstance(
                             item.productId.toLong(), item.productName)
                         )
                 }

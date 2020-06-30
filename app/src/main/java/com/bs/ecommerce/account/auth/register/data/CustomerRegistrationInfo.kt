@@ -1,7 +1,7 @@
 package com.bs.ecommerce.account.auth.register.data
 
 import com.bs.ecommerce.networking.common.BaseResponse
-import com.bs.ecommerce.product.model.data.ProductAttribute
+import com.bs.ecommerce.catalog.common.ProductAttribute
 import com.google.gson.annotations.SerializedName
 
 class CustomerRegistrationInfo : CustomerInfo() {

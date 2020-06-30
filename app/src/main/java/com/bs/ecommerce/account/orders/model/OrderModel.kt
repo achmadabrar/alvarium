@@ -1,6 +1,6 @@
 package com.bs.ecommerce.account.orders.model
 
-import com.bs.ecommerce.common.RequestCompleteListener
+import com.bs.ecommerce.networking.common.RequestCompleteListener
 import com.bs.ecommerce.account.orders.model.data.OrderDetailsData
 import com.bs.ecommerce.account.orders.model.data.OrderHistoryData
 import com.bs.ecommerce.account.orders.model.data.ShipmentDetailsData

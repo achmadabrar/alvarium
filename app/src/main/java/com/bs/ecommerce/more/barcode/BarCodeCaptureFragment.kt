@@ -13,10 +13,10 @@ import com.bs.ecommerce.R
 import com.bs.ecommerce.base.BaseFragment
 import com.bs.ecommerce.base.BaseViewModel
 import com.bs.ecommerce.db.DbHelper
-import com.bs.ecommerce.product.ProductDetailFragment
-import com.bs.ecommerce.product.model.ProductDetailModel
-import com.bs.ecommerce.product.model.ProductDetailModelImpl
-import com.bs.ecommerce.product.viewModel.ProductDetailViewModel
+import com.bs.ecommerce.catalog.product.ProductDetailFragment
+import com.bs.ecommerce.catalog.product.model.ProductDetailModel
+import com.bs.ecommerce.catalog.product.model.ProductDetailModelImpl
+import com.bs.ecommerce.catalog.product.ProductDetailViewModel
 import com.bs.ecommerce.utils.Const
 import com.bs.ecommerce.utils.isNumeric
 import com.bs.ecommerce.utils.replaceFragmentSafely
@@ -38,7 +38,8 @@ class BarCodeCaptureFragment : BaseFragment()
 
     override fun getRootLayout(): RelativeLayout? = barcode_root_layout
 
-    override fun createViewModel(): BaseViewModel = ProductDetailViewModel()
+    override fun createViewModel(): BaseViewModel =
+        ProductDetailViewModel()
 
     private fun initViewModel()
     {

@@ -2,14 +2,14 @@ package com.bs.ecommerce.account.downloadableProducts
 
 import androidx.lifecycle.MutableLiveData
 import com.bs.ecommerce.base.BaseViewModel
-import com.bs.ecommerce.common.RequestCompleteListener
+import com.bs.ecommerce.networking.common.RequestCompleteListener
 import com.bs.ecommerce.db.DbHelper
 import com.bs.ecommerce.account.downloadableProducts.model.DownloadableProductListModel
 import com.bs.ecommerce.account.downloadableProducts.model.data.DownloadableProductList
 import com.bs.ecommerce.account.downloadableProducts.model.data.DownloadableProductListResponse
-import com.bs.ecommerce.product.model.data.SampleDownloadResponse
-import com.bs.ecommerce.product.model.data.UserAgreementData
-import com.bs.ecommerce.product.model.data.UserAgreementResponse
+import com.bs.ecommerce.catalog.common.SampleDownloadResponse
+import com.bs.ecommerce.account.downloadableProducts.model.data.UserAgreementData
+import com.bs.ecommerce.account.downloadableProducts.model.data.UserAgreementResponse
 import com.bs.ecommerce.utils.Const
 import com.bs.ecommerce.utils.OneTimeEvent
 import com.bs.ecommerce.utils.Utils
@@ -27,7 +27,8 @@ class DownloadableProductListViewModel: BaseViewModel() {
 
         isLoadingLD.value = true
 
-        model.getProductList(object : RequestCompleteListener<DownloadableProductListResponse> {
+        model.getProductList(object :
+            RequestCompleteListener<DownloadableProductListResponse> {
             override fun onRequestSuccess(data: DownloadableProductListResponse) {
                 isLoadingLD.value = false
 
@@ -45,7 +46,8 @@ class DownloadableProductListViewModel: BaseViewModel() {
     fun getUserAgreementData(guid: String, model: DownloadableProductListModel) {
         isLoadingLD.value = true
 
-        model.userAgreement(guid, object : RequestCompleteListener<UserAgreementResponse> {
+        model.userAgreement(guid, object :
+            RequestCompleteListener<UserAgreementResponse> {
 
             override fun onRequestSuccess(data: UserAgreementResponse) {
                 isLoadingLD.value = false
@@ -64,7 +66,8 @@ class DownloadableProductListViewModel: BaseViewModel() {
 
     fun downloadProduct(guid: String, consent: String, model: DownloadableProductListModel) {
 
-        model.downloadProduct(guid, consent, object: RequestCompleteListener<Response<ResponseBody>> {
+        model.downloadProduct(guid, consent, object:
+            RequestCompleteListener<Response<ResponseBody>> {
 
             override fun onRequestSuccess(data: Response<ResponseBody>) {
 

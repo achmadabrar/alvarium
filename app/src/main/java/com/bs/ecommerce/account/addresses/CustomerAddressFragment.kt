@@ -13,7 +13,7 @@ import com.bs.ecommerce.base.BaseViewModel
 import com.bs.ecommerce.db.DbHelper
 import com.bs.ecommerce.account.addresses.model.CustomerAddressModel
 import com.bs.ecommerce.account.addresses.model.CustomerAddressModelImpl
-import com.bs.ecommerce.product.model.data.AddressModel
+import com.bs.ecommerce.catalog.common.AddressModel
 import com.bs.ecommerce.utils.Const
 import com.bs.ecommerce.utils.ItemClickListener
 import com.bs.ecommerce.utils.RecyclerViewMargin

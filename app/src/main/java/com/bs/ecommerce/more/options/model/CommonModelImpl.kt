@@ -1,10 +1,10 @@
 package com.bs.ecommerce.more.options.model
 
-import com.bs.ecommerce.common.RequestCompleteListener
+import com.bs.ecommerce.networking.common.RequestCompleteListener
 import com.bs.ecommerce.networking.RetroClient
-import com.bs.ecommerce.product.model.data.ContactUsData
-import com.bs.ecommerce.product.model.data.ContactUsResponse
-import com.bs.ecommerce.product.model.data.ManufacturerResponse
+import com.bs.ecommerce.more.contactus.data.ContactUsData
+import com.bs.ecommerce.more.contactus.data.ContactUsResponse
+import com.bs.ecommerce.home.homepage.model.data.ManufacturerResponse
 import com.bs.ecommerce.utils.TextUtils
 import retrofit2.Call
 import retrofit2.Callback
@@ -16,7 +16,8 @@ class CommonModelImpl: CommonModel {
         userData: ContactUsData,
         callback: RequestCompleteListener<ContactUsResponse>
     ) {
-        val reqBody = ContactUsResponse(userData)
+        val reqBody =
+            ContactUsResponse(userData)
 
         RetroClient.api.contactUs(reqBody).enqueue(object : Callback<ContactUsResponse> {
 

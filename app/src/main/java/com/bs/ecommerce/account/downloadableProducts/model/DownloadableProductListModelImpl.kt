@@ -1,10 +1,10 @@
 package com.bs.ecommerce.account.downloadableProducts.model
 
-import com.bs.ecommerce.common.RequestCompleteListener
+import com.bs.ecommerce.networking.common.RequestCompleteListener
 import com.bs.ecommerce.db.DbHelper
 import com.bs.ecommerce.account.downloadableProducts.model.data.DownloadableProductListResponse
 import com.bs.ecommerce.networking.RetroClient
-import com.bs.ecommerce.product.model.data.UserAgreementResponse
+import com.bs.ecommerce.account.downloadableProducts.model.data.UserAgreementResponse
 import com.bs.ecommerce.utils.Const
 import com.bs.ecommerce.utils.TextUtils
 import com.bs.ecommerce.utils.showLog

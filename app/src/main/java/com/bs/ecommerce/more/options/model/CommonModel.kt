@@ -1,9 +1,9 @@
 package com.bs.ecommerce.more.options.model
 
-import com.bs.ecommerce.common.RequestCompleteListener
-import com.bs.ecommerce.product.model.data.ContactUsData
-import com.bs.ecommerce.product.model.data.ContactUsResponse
-import com.bs.ecommerce.product.model.data.ManufacturerResponse
+import com.bs.ecommerce.networking.common.RequestCompleteListener
+import com.bs.ecommerce.more.contactus.data.ContactUsData
+import com.bs.ecommerce.more.contactus.data.ContactUsResponse
+import com.bs.ecommerce.home.homepage.model.data.ManufacturerResponse
 
 interface CommonModel {
 

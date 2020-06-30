@@ -5,7 +5,7 @@ import com.bs.ecommerce.account.auth.register.data.KeyValuePair
 import com.bs.ecommerce.base.BaseViewModel
 import com.bs.ecommerce.checkout.model.CheckoutModel
 import com.bs.ecommerce.checkout.model.data.*
-import com.bs.ecommerce.common.RequestCompleteListener
+import com.bs.ecommerce.networking.common.RequestCompleteListener
 import com.bs.ecommerce.networking.common.Data
 import com.bs.ecommerce.networking.common.ExistingAddress
 import com.bs.ecommerce.networking.common.KeyValueFormData
@@ -38,7 +38,8 @@ open class CheckoutViewModel : BaseViewModel()
     {
         isLoadingLD.postValue(true)
 
-        model.getBillingForm(object : RequestCompleteListener<BillingAddressResponse>
+        model.getBillingForm(object :
+            RequestCompleteListener<BillingAddressResponse>
         {
             override fun onRequestSuccess(data: BillingAddressResponse)
             {
@@ -55,7 +56,8 @@ open class CheckoutViewModel : BaseViewModel()
     {
         isLoadingLD.postValue(true)
 
-        model.getStatesByCountryForm(countryCode, object : RequestCompleteListener<StateListResponse>
+        model.getStatesByCountryForm(countryCode, object :
+            RequestCompleteListener<StateListResponse>
         {
             override fun onRequestSuccess(data: StateListResponse)
             {
@@ -84,7 +86,8 @@ open class CheckoutViewModel : BaseViewModel()
 
         isLoadingLD.postValue(true)
 
-        model.saveNewBilling(saveBillingPostData, object : RequestCompleteListener<CheckoutSaveResponse>
+        model.saveNewBilling(saveBillingPostData, object :
+            RequestCompleteListener<CheckoutSaveResponse>
         {
             override fun onRequestSuccess(data: CheckoutSaveResponse) = saveCheckoutData(data)
 
@@ -101,7 +104,8 @@ open class CheckoutViewModel : BaseViewModel()
             formValues = listOf(getKeyValue("billing_address_id", addressId)),
             data = Data(shipToSameAddress = shipToSameAddress))
 
-        model.saveExistingBilling(existingAddress, object : RequestCompleteListener<CheckoutSaveResponse>
+        model.saveExistingBilling(existingAddress, object :
+            RequestCompleteListener<CheckoutSaveResponse>
         {
             override fun onRequestSuccess(data: CheckoutSaveResponse) = saveCheckoutData(data)
 
@@ -125,7 +129,8 @@ open class CheckoutViewModel : BaseViewModel()
 
         isLoadingLD.postValue(true)
 
-        model.saveNewShipping(saveShippingPostData, object : RequestCompleteListener<CheckoutSaveResponse>
+        model.saveNewShipping(saveShippingPostData, object :
+            RequestCompleteListener<CheckoutSaveResponse>
         {
             override fun onRequestSuccess(data: CheckoutSaveResponse) = saveCheckoutData(data)
 
@@ -169,7 +174,8 @@ open class CheckoutViewModel : BaseViewModel()
         isLoadingLD.postValue(true)
 
 
-        model.saveExistingShipping(existingAddress, object : RequestCompleteListener<CheckoutSaveResponse>
+        model.saveExistingShipping(existingAddress, object :
+            RequestCompleteListener<CheckoutSaveResponse>
         {
             override fun onRequestSuccess(data: CheckoutSaveResponse) = saveCheckoutData(data)
 
@@ -190,7 +196,8 @@ open class CheckoutViewModel : BaseViewModel()
 
         isLoadingLD.postValue(true)
 
-        model.saveShippingMethod(KeyValueFormData(formValues), object : RequestCompleteListener<CheckoutSaveResponse>
+        model.saveShippingMethod(KeyValueFormData(formValues), object :
+            RequestCompleteListener<CheckoutSaveResponse>
         {
             override fun onRequestSuccess(data: CheckoutSaveResponse) = saveCheckoutData(data)
 
@@ -217,7 +224,8 @@ open class CheckoutViewModel : BaseViewModel()
 
         isLoadingLD.postValue(true)
 
-        model.savePaymentMethod(KeyValueFormData(formValues), object : RequestCompleteListener<CheckoutSaveResponse>
+        model.savePaymentMethod(KeyValueFormData(formValues), object :
+            RequestCompleteListener<CheckoutSaveResponse>
         {
             override fun onRequestSuccess(data: CheckoutSaveResponse) = saveCheckoutData(data)
 
@@ -230,7 +238,8 @@ open class CheckoutViewModel : BaseViewModel()
     {
         isLoadingLD.postValue(true)
 
-        model.getCheckoutConfirmInformation(object : RequestCompleteListener<ConfirmOrderResponse>
+        model.getCheckoutConfirmInformation(object :
+            RequestCompleteListener<ConfirmOrderResponse>
         {
             override fun onRequestSuccess(data: ConfirmOrderResponse)
             {
@@ -247,7 +256,8 @@ open class CheckoutViewModel : BaseViewModel()
     {
         isLoadingLD.postValue(true)
 
-        model.submitConfirmOrder(object : RequestCompleteListener<CheckoutSaveResponse>
+        model.submitConfirmOrder(object :
+            RequestCompleteListener<CheckoutSaveResponse>
         {
             override fun onRequestSuccess(data: CheckoutSaveResponse) = saveCheckoutData(data)
 
@@ -258,7 +268,8 @@ open class CheckoutViewModel : BaseViewModel()
     {
         isLoadingLD.postValue(true)
 
-        model.completeOrder(object : RequestCompleteListener<CheckoutSaveResponse>
+        model.completeOrder(object :
+            RequestCompleteListener<CheckoutSaveResponse>
         {
             override fun onRequestSuccess(data: CheckoutSaveResponse) = saveCheckoutData(data)
 

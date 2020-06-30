@@ -9,9 +9,9 @@ import com.bs.ecommerce.R
 import com.bs.ecommerce.base.BaseFragment
 import com.bs.ecommerce.base.BaseViewModel
 import com.bs.ecommerce.db.DbHelper
-import com.bs.ecommerce.product.model.VendorModel
-import com.bs.ecommerce.product.model.VendorModelImpl
-import com.bs.ecommerce.product.model.data.ContactVendorModel
+import com.bs.ecommerce.more.vendor.model.VendorModel
+import com.bs.ecommerce.more.vendor.model.VendorModelImpl
+import com.bs.ecommerce.more.vendor.model.data.ContactVendorModel
 import com.bs.ecommerce.utils.Const
 import com.bs.ecommerce.utils.EditTextUtils
 import com.bs.ecommerce.utils.isEmailValid
