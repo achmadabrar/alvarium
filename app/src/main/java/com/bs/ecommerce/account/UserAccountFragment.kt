@@ -24,6 +24,7 @@ import com.bs.ecommerce.main.MainActivity
 import com.bs.ecommerce.main.MainViewModel
 import com.bs.ecommerce.main.model.MainModelImpl
 import com.bs.ecommerce.account.downloadableProducts.DownloadableProductListFragment
+import com.bs.ecommerce.account.returnRequests.ReturnRequestHistoryFragment
 import com.bs.ecommerce.account.review.CustomerReviewFragment
 import com.bs.ecommerce.account.rewardpoint.RewardPointFragment
 import com.bs.ecommerce.utils.Const
@@ -62,6 +63,9 @@ class UserAccountFragment: ToolbarLogoBaseFragment() {
             appSettingsLD.observe(viewLifecycleOwner, Observer { settings ->
 
                 settings.peekContent()?.let {
+
+                    if(it.hasReturnRequests)
+                        returnRequestLayout?.visibility = View.VISIBLE
 
                     if (updatingAppSettings) {
                         updatingAppSettings = false
@@ -115,6 +119,12 @@ class UserAccountFragment: ToolbarLogoBaseFragment() {
             ivOptionIcon.setImageResource(R.drawable.ic_my_order)
             tvOptionName.text = DbHelper.getString(Const.ACCOUNT_ORDERS)
             setOnClickListener { clickAction(OrderHistoryFragment()) }
+        }
+
+        returnRequestLayout.apply {
+            ivOptionIcon.setImageResource(R.drawable.ic_my_order)
+            tvOptionName.text = DbHelper.getString(Const.ACCOUNT_RETURN_REQUESTS)
+            setOnClickListener { clickAction(ReturnRequestHistoryFragment()) }
         }
 
         downloadableProductsLayout.apply {

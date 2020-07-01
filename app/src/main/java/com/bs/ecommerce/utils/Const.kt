@@ -96,6 +96,13 @@ class Const {
         const val ORDER_DATE_SHIPPED = "nopstation.webapi.order.dateshipped"
         const val ORDER_DATE_DELIVERED = "nopstation.webapi.order.datedelivered"
 
+        const val RETURN_ID = "nopstation.webapi.order.returnid"
+        const val RETURNED_ITEM = "nopstation.webapi.order.returneditem"
+        const val RETURN_REASON = "nopstation.webapi.order.returnreason"
+        const val RETURN_ACTION = "nopstation.webapi.order.returnaction"
+        const val RETURN_DATE_REQUESTED = "nopstation.webapi.order.daterequested"
+        const val RETURN_UPLOADED_FILE = "nopstation.webapi.order.uploadedfile"
+
         const val SKU = "nopstation.webapi.sku"
         const val ORDER_QUANTITY_SHIPPED = "nopstation.webapi.order.quantityshipped"
 
@@ -117,6 +124,7 @@ class Const {
         const val ACCOUNT_LOGOUT = "account.logout"
         const val ACCOUNT_LOGOUT_CONFIRM = "nopstation.webapi.account.logoutconfirmation"
         const val ACCOUNT_ORDERS = "account.customerorders"
+        const val ACCOUNT_RETURN_REQUESTS = "account.customerreturnrequests"
         const val ACCOUNT_DOWNLOADABLE_PRODUCTS = "account.downloadableproducts"
         const val ACCOUNT_WISHLIST = "wishlist"
 

@@ -38,12 +38,12 @@ class DownloadableProductListAdapter(
 
         val product = list[position]
 
-        holder.itemView.tv1.text = product.productName
+        holder.itemView.textView1.text = product.productName
 
         with(product)
         {
-            holder.itemView.tv2.text =
-                "${DbHelper.getString(Const.ORDER_NUMBER)}: $customOrderNumber\n" +
+            holder.itemView.textView2.text =
+                "${DbHelper.getString(Const.ORDER_NUMBER)} $customOrderNumber\n" +
                     "${DbHelper.getString(Const.ORDER_DATE)}: ${TextUtils().tzTimeConverter(
                         createdOn,
                         WeakReference(context)
@@ -58,11 +58,11 @@ class DownloadableProductListAdapter(
             clickListener.onClick(v, position, list[position])
         }
 
-        holder.itemView.tv1.setOnClickListener { v ->
+        holder.itemView.textView1.setOnClickListener { v ->
             clickListener.onClick(v, position, list[position])
         }
 
-        holder.itemView.tv2.setOnClickListener { v ->
+        holder.itemView.textView1.setOnClickListener { v ->
             clickListener.onClick(v, position, list[position])
         }
     }

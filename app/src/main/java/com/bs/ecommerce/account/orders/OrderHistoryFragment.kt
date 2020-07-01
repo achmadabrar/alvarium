@@ -67,15 +67,9 @@ class OrderHistoryFragment : BaseFragment() {
                     }
                 })
 
-            isLoadingLD.observe(
-                viewLifecycleOwner,
-                Observer { isShowLoader ->
-
-                    if (isShowLoader)
-                        showLoading()
-                    else
-                        hideLoading()
-                })
+            isLoadingLD.observe(viewLifecycleOwner, Observer {
+                    isShowLoader -> showHideLoader(isShowLoader)
+            })
         }
     }
 

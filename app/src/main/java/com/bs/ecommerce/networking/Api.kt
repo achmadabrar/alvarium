@@ -20,6 +20,7 @@ import com.bs.ecommerce.account.downloadableProducts.model.data.UserAgreementRes
 import com.bs.ecommerce.account.orders.model.data.OrderDetailsResponse
 import com.bs.ecommerce.account.orders.model.data.OrderHistoryResponse
 import com.bs.ecommerce.account.orders.model.data.ShipmentDetailsResponse
+import com.bs.ecommerce.account.returnRequests.model.data.ReturnRequestHistoryResponse
 import com.bs.ecommerce.account.review.model.data.MyReviewsResponse
 import com.bs.ecommerce.account.review.model.data.ProductReviewResponse
 import com.bs.ecommerce.account.rewardpoint.model.data.RewardPointResponse
@@ -268,6 +269,13 @@ interface Api {
 
     @GET("order/reorder/{orderId}")
     fun reorder(@Path("orderId") id: Int): Call<ResponseBody>
+
+
+    @GET("returnrequest/history")
+    fun getReturnRequestHistory(): Call<ReturnRequestHistoryResponse>
+
+    @GET("download/getfileupload/{guid}")
+    fun getReturnRequestDownloadFile(@Path("guid") guid: String): Observable<Response<ResponseBody>>
 
     // WishList
 

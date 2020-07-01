@@ -24,6 +24,7 @@ import com.bs.ecommerce.utils.RecyclerViewMargin
 import com.bs.ecommerce.utils.toast
 import kotlinx.android.synthetic.main.fragment_customer_address.tvNoData
 import kotlinx.android.synthetic.main.fragment_customer_downloadable_product_list.*
+import kotlinx.android.synthetic.main.item_downloadable_product.view.*
 
 class DownloadableProductListFragment : BaseFragment() {
 
@@ -143,11 +144,11 @@ class DownloadableProductListFragment : BaseFragment() {
                         )
                     }
 
-                    R.id.tv1 -> {
+                    R.id.textView1 -> {
                         addFragment(ProductDetailFragment.newInstance(productId = data.productId.toLong(), productName = data.productName))
                     }
 
-                    R.id.tv2 -> {
+                    R.id.textView2 -> {
                         addFragment(OrderDetailsFragment.newInstance(orderId = data.orderId))
                     }
                 }
