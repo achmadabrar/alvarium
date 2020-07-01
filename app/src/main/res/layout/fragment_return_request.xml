@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/returnRequestRoot"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:animateLayoutChanges="true">
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@id/btnSubmit">
+
+        <LinearLayout
+            android:id="@+id/llForm"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:visibility="gone"
+            tools:visibility="visible">
+
+            <TextView
+                android:id="@+id/tvWhichProduct"
+                style="@style/titleTextViewStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:text="@string/placeholder"
+                android:layout_marginStart="@dimen/fragment_margin"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="@dimen/fragment_margin" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rvProdList"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                tools:listitem="@layout/item_return_req"
+                tools:itemCount="3"/>
+
+            <TextView
+                android:id="@+id/tvWhy"
+                style="@style/titleTextViewStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:text="@string/placeholder"
+                android:layout_marginStart="@dimen/fragment_margin"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="@dimen/fragment_margin" />
+
+            <LinearLayout
+                style="@style/RoundedSpinner"
+                android:layout_marginTop="15dp"
+                android:layout_width="match_parent"
+                android:layout_marginStart="@dimen/fragment_margin"
+                android:layout_marginEnd="@dimen/fragment_margin"
+                android:layout_height="wrap_content">
+
+                <androidx.appcompat.widget.AppCompatSpinner
+                    android:id="@+id/spReason"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/checkout_spinner_bg"/>
+            </LinearLayout>
+
+            <LinearLayout
+                style="@style/RoundedSpinner"
+                android:layout_marginTop="15dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/fragment_margin"
+                android:layout_marginEnd="@dimen/fragment_margin">
+
+                <androidx.appcompat.widget.AppCompatSpinner
+                    android:id="@+id/spAction"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/checkout_spinner_bg"/>
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/tvUploadAction"
+                style="@style/titleTextViewStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:text="@string/placeholder"
+                android:layout_marginStart="@dimen/fragment_margin"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="@dimen/fragment_margin" />
+
+            <TextView
+                android:id="@+id/btnUpload"
+                style="@style/RectangularButtonRegular"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:text="@string/placeholder"
+                android:textSize="@dimen/tv_text_size_large"
+                android:padding="5dp"
+                android:layout_marginStart="@dimen/fragment_margin"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="@dimen/fragment_margin"/>
+
+            <EditText
+                android:id="@+id/etComments"
+                style="@style/RoundedEditText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/fragment_margin"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="@dimen/fragment_margin"
+                android:visibility="visible"
+                android:background="@drawable/rounded_background_slight"
+                android:drawableEnd="@drawable/ic_star_formular"
+                android:gravity="top"
+                tools:hint="@string/placeholder"
+                android:imeOptions="actionNext"
+                android:inputType="textMultiLine"
+                android:maxLines="10"
+                android:minLines="3" />
+
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+
+    <Button
+        android:id="@+id/btnSubmit"
+        style="@style/RectangularButtonRegular"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        tools:text="@string/submit"
+        android:visibility="gone"
+        tools:visibility="visible" />
+
+</RelativeLayout>

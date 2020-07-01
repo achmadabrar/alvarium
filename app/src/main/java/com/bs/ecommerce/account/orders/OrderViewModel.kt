@@ -2,16 +2,15 @@ package com.bs.ecommerce.account.orders
 
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
-import com.bs.ecommerce.base.BaseViewModel
-import com.bs.ecommerce.networking.common.RequestCompleteListener
-import com.bs.ecommerce.db.DbHelper
 import com.bs.ecommerce.account.orders.model.OrderModel
 import com.bs.ecommerce.account.orders.model.data.OrderDetailsData
 import com.bs.ecommerce.account.orders.model.data.OrderHistoryData
 import com.bs.ecommerce.account.orders.model.data.ShipmentDetailsData
+import com.bs.ecommerce.base.BaseViewModel
 import com.bs.ecommerce.catalog.common.SampleDownloadResponse
+import com.bs.ecommerce.db.DbHelper
+import com.bs.ecommerce.networking.common.RequestCompleteListener
 import com.bs.ecommerce.utils.Const
-import com.bs.ecommerce.utils.MyApplication
 import com.bs.ecommerce.utils.OneTimeEvent
 import com.bs.ecommerce.utils.Utils
 import com.google.gson.Gson
@@ -106,14 +105,12 @@ class OrderViewModel : BaseViewModel() {
 
             override fun onRequestSuccess(data: Response<ResponseBody>) {
 
-                MyApplication.mAppContext?.let {
-                    val done = Utils().writeResponseBodyToDisk("order_$orderId", data)
+                val done = Utils().writeResponseBodyToDisk("order_$orderId", data)
 
-                    if(done)
-                        toast(DbHelper.getString(Const.FILE_DOWNLOADED))
-                    else
-                        toast(DbHelper.getString(Const.COMMON_SOMETHING_WENT_WRONG))
-                }
+                if (done)
+                    toast(DbHelper.getString(Const.FILE_DOWNLOADED))
+                else
+                    toast(DbHelper.getString(Const.COMMON_SOMETHING_WENT_WRONG))
 
                 isLoadingLD.value = false
             }

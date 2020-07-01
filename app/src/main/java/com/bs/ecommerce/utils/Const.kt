@@ -87,8 +87,7 @@ class Const {
         const val ORDER_REORDER = "order.reorder"
         const val ORDER_PDF_INVOICE = "order.getpdfinvoice"
         const val ORDER_NOTES = "order.notes"
-
-
+        const val ORDER_RETURN_ITEMS = "order.returnitems"
 
         const val ORDER_SHIPMENT = "nopstation.webapi.order.shipment"
         const val ORDER_SHIPMENT_ID = "nopstation.webapi.order.shipmentid"
@@ -102,6 +101,17 @@ class Const {
         const val RETURN_ACTION = "nopstation.webapi.order.returnaction"
         const val RETURN_DATE_REQUESTED = "nopstation.webapi.order.daterequested"
         const val RETURN_UPLOADED_FILE = "nopstation.webapi.order.uploadedfile"
+
+        const val RETURN_REQ_UPLOAD = "returnrequests.uploadedfile"
+        const val RETURN_REQ_UPLOAD_FILE = "common.fileuploader.upload"
+        const val RETURN_REQ_SUBMIT = "returnrequests.submit"
+        const val RETURN_REQ_COMMENTS = "returnrequests.comments"
+        const val RETURN_REQ_REASON = "returnrequests.returnreason"
+        const val RETURN_REQ_ACTION = "returnrequests.returnaction"
+        const val RETURN_REQ_TITLE_WHY = "returnrequests.whyreturning"
+        const val RETURN_REQ_TITLE_WHICH_ITEM = "returnrequests.selectproduct(s)"
+        const val RETURN_REQ_RETURN_QTY = "returnrequests.products.quantity"
+//        const val RETURN_REQ_ =
 
         const val SKU = "nopstation.webapi.sku"
         const val ORDER_QUANTITY_SHIPPED = "nopstation.webapi.order.quantityshipped"

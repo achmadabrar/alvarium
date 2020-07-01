@@ -10,12 +10,12 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bs.ecommerce.R
-import com.bs.ecommerce.base.BaseFragment
-import com.bs.ecommerce.base.BaseViewModel
-import com.bs.ecommerce.db.DbHelper
 import com.bs.ecommerce.account.orders.model.OrderModel
 import com.bs.ecommerce.account.orders.model.OrderModelImpl
 import com.bs.ecommerce.account.orders.model.data.Order
+import com.bs.ecommerce.base.BaseFragment
+import com.bs.ecommerce.base.BaseViewModel
+import com.bs.ecommerce.db.DbHelper
 import com.bs.ecommerce.utils.Const
 import com.bs.ecommerce.utils.TextUtils
 import com.bs.ecommerce.utils.replaceFragmentSafely
@@ -102,25 +102,46 @@ class OrderHistoryFragment : BaseFragment() {
         override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
             val order = list[position]
 
-            holder.itemView.tvOrderNumber.text =
-                DbHelper.getString(Const.ORDER_NUMBER).plus(" ").plus(order.customOrderNumber)
+            holder.itemView.apply {
 
-            holder.itemView.tvOrderDate.text = DbHelper.getString(Const.ORDER_DATE).plus(" ").plus(
-                TextUtils().tzTimeConverter(
-                    order.createdOn,
-                    WeakReference(requireContext())
+                tvOrderNumber?.text =
+                    DbHelper.getString(Const.ORDER_NUMBER).plus(" ").plus(order.customOrderNumber)
+
+                tvOrderDate?.text = DbHelper.getString(Const.ORDER_DATE).plus(" ").plus(
+                    TextUtils().tzTimeConverter(
+                        order.createdOn,
+                        WeakReference(requireContext())
+                    )
                 )
-            )
 
-            holder.itemView.tvOrderStatus.text =
-                DbHelper.getString(Const.ORDER_STATUS).plus(" ").plus(order.orderStatus)
+                tvOrderStatus?.text =
+                    DbHelper.getString(Const.ORDER_STATUS).plus(" ").plus(order.orderStatus)
 
-            holder.itemView.tvOrderTotal.text =
-                DbHelper.getString(Const.ORDER_TOTAL).plus(" ").plus(order.orderTotal)
+                tvOrderTotal?.text =
+                    DbHelper.getString(Const.ORDER_TOTAL).plus(" ").plus(order.orderTotal)
 
-            holder.itemView.setOnClickListener {
-                if (order.id != null)
-                    replaceFragmentSafely(OrderDetailsFragment.newInstance(order.id))
+
+                setOnClickListener {
+                    if (order.id != null)
+                        replaceFragmentSafely(OrderDetailsFragment.newInstance(order.id))
+                }
+
+
+                // Return request action
+
+                if(order.isReturnRequestAllowed == true) {
+
+                    btnReqReturn?.visibility = View.VISIBLE
+
+                    btnReqReturn?.text = DbHelper.getString(Const.ORDER_RETURN_ITEMS)
+
+                    btnReqReturn.setOnClickListener {
+                        replaceFragmentSafely(ReturnRequestFragment.newInstance(order.id ?: -1))
+                    }
+                } else {
+                    btnReqReturn?.visibility = View.GONE
+                }
+
             }
         }
 

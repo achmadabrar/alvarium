@@ -64,6 +64,18 @@
         android:textSize="@dimen/tv_text_size_regular"
         tools:text="@string/placeholder" />
 
+    <TextView
+        android:id="@+id/btnReqReturn"
+        style="@style/RoundedButtonTiny_1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:text="@string/placeholder"
+        android:padding="5dp"
+        android:layout_below="@id/tvOrderTotal"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="10dp"
+        android:layout_toEndOf="@id/ivOptionIcon"/>
+
     <ImageView
         android:id="@+id/imageView2"
         android:layout_width="wrap_content"
