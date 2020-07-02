@@ -3,6 +3,7 @@ package com.bs.ecommerce.account.orders
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
+import android.provider.MediaStore
 import android.view.View
 import android.widget.ArrayAdapter
 import android.widget.RelativeLayout
@@ -59,7 +60,7 @@ class ReturnRequestFragment: BaseFragment() {
 
         if (resultCode == Activity.RESULT_OK) {
 
-            data?.data?.path?.let {
+            /*data?.data?.path?.let {
                 val src: String = data.data?.path ?: ""
 
                 val source = File(src)
@@ -73,9 +74,39 @@ class ReturnRequestFragment: BaseFragment() {
                     toast("File selection failed")
                 }
 
+            }*/
+
+            val projection = arrayOf(
+                MediaStore.MediaColumns.DATA,
+                MediaStore.Images.ImageColumns.ORIENTATION
+            )
+            val cursor = requireContext().contentResolver.query(
+                data!!.data!!, projection,
+                null, null, null
+            )
+
+            if (cursor != null) {
+                val column_index = cursor.getColumnIndexOrThrow(MediaStore.MediaColumns.DATA)
+                cursor.moveToFirst()
+                val path = cursor.getString(column_index)
+                if (File(path).exists()) {
+                    try {
+                        toast("File selection success")
+
+                        (viewModel as ReturnRequestViewModel)
+                            .uploadFile(File(path), model)
+                    } catch (e: Exception) {
+                        //FileLog.e(TAG, "ChatMessageType.IMAGE file not found", e)
+                        e.printStackTrace()
+                        toast("File selection failed 3 ")
+                    }
+                } else {
+                    toast("File selection failed 1 ")
+                }
+                cursor.close()
             }
         } else {
-            toast("File selection failed")
+            toast("File selection failed 2")
         }
     }
 
@@ -106,10 +137,16 @@ class ReturnRequestFragment: BaseFragment() {
         btnUpload?.setOnClickListener {
             // TODO FILE UPLOADER
 
-            var chooseFile = Intent(Intent.ACTION_GET_CONTENT)
-            chooseFile.type = "*/*"
-            chooseFile = Intent.createChooser(chooseFile, "Choose a file")
-            startActivityForResult(chooseFile, 123)
+//            var chooseFile = Intent(Intent.ACTION_GET_CONTENT)
+//            chooseFile.type = "*/*"
+//            chooseFile = Intent.createChooser(chooseFile, "Choose a file")
+//            startActivityForResult(chooseFile, 123)
+
+            val intent = Intent(
+                Intent.ACTION_PICK,
+                MediaStore.Images.Media.EXTERNAL_CONTENT_URI
+            )
+            startActivityForResult(intent, 123)
         }
 
         btnSubmit?.setOnClickListener {

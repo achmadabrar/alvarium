@@ -285,7 +285,7 @@ interface Api {
     fun postReturnReqFormData(@Path("orderId") id: Int): Call<ReturnReqFormResponse>
 
     @Multipart
-    @POST("api/returnrequest/uploadfile")
+    @POST("returnrequest/uploadfile")
     fun uploadFile(
         @Part file: MultipartBody.Part
     ): Call<UploadFileResponse>
