@@ -18,10 +18,7 @@ import com.bs.ecommerce.base.BaseFragment
 import com.bs.ecommerce.base.BaseViewModel
 import com.bs.ecommerce.catalog.product.ProductDetailFragment
 import com.bs.ecommerce.db.DbHelper
-import com.bs.ecommerce.utils.Const
-import com.bs.ecommerce.utils.ItemClickListener
-import com.bs.ecommerce.utils.RecyclerViewMargin
-import com.bs.ecommerce.utils.TextUtils
+import com.bs.ecommerce.utils.*
 import kotlinx.android.synthetic.main.fragment_customer_address.tvNoData
 import kotlinx.android.synthetic.main.fragment_customer_downloadable_product_list.*
 import kotlinx.android.synthetic.main.item_downloadable_product.view.*
@@ -74,18 +71,11 @@ class ReturnRequestHistoryFragment : BaseFragment() {
             })
 
             productDownloadLD.observe(viewLifecycleOwner,
-                Observer { sampleDownloadResp ->
+                Observer {
                     blockingLoader.hideDialog()
-
                 })
 
         }
-    }
-
-    private fun addFragment(fragment: androidx.fragment.app.Fragment)
-    {
-        requireActivity().supportFragmentManager
-            .beginTransaction().add(R.id.layoutFrame, fragment).addToBackStack(null).commit()
     }
 
 
@@ -108,7 +98,9 @@ class ReturnRequestHistoryFragment : BaseFragment() {
                         }
                     }
 
-                    else -> addFragment(ProductDetailFragment.newInstance(productId = data.productId.toLong(), productName = data.productName))
+                    else -> replaceFragmentSafely(
+                        ProductDetailFragment.newInstance(productId = data.productId.toLong(), productName = data.productName)
+                    )
 
                 }
             }

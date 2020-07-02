@@ -14,6 +14,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bs.ecommerce.R
+import com.bs.ecommerce.account.UserAccountFragment
 import com.bs.ecommerce.account.orders.model.ReturnReqModel
 import com.bs.ecommerce.account.orders.model.ReturnReqModelImpl
 import com.bs.ecommerce.account.orders.model.data.AvailableReturnAction
@@ -129,8 +130,21 @@ class ReturnRequestFragment : BaseFragment() {
                 } else {
                     toast(data.result)
 
-                    if(data.result.contains("success", ignoreCase = true))
-                        mainViewModel.updatingAppSettings = true
+                    if(data.result.contains("success", ignoreCase = true)) {
+
+                        try {
+                            for(fragment in requireActivity().supportFragmentManager.fragments) {
+                                if (fragment is UserAccountFragment) {
+                                    fragment.updateVisibility()
+                                    break
+                                }
+                            }
+                        } catch (e: Exception) {
+                            e.printStackTrace()
+                        }
+
+
+                    }
                 }
             })
 

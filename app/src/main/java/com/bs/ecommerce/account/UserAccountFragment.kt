@@ -9,12 +9,16 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.bs.ecommerce.R
 import com.bs.ecommerce.account.addresses.CustomerAddressFragment
-import com.bs.ecommerce.account.orders.OrderHistoryFragment
-import com.bs.ecommerce.account.wishlist.WishListFragment
 import com.bs.ecommerce.account.auth.AuthModelImpl
 import com.bs.ecommerce.account.auth.customerInfo.CustomerInfoFragment
 import com.bs.ecommerce.account.auth.login.LoginFragment
 import com.bs.ecommerce.account.auth.login.LoginViewModel
+import com.bs.ecommerce.account.downloadableProducts.DownloadableProductListFragment
+import com.bs.ecommerce.account.orders.OrderHistoryFragment
+import com.bs.ecommerce.account.returnRequests.ReturnRequestHistoryFragment
+import com.bs.ecommerce.account.review.CustomerReviewFragment
+import com.bs.ecommerce.account.rewardpoint.RewardPointFragment
+import com.bs.ecommerce.account.wishlist.WishListFragment
 import com.bs.ecommerce.base.BaseFragment
 import com.bs.ecommerce.base.BaseViewModel
 import com.bs.ecommerce.base.ToolbarLogoBaseFragment
@@ -23,13 +27,10 @@ import com.bs.ecommerce.db.DbHelper
 import com.bs.ecommerce.main.MainActivity
 import com.bs.ecommerce.main.MainViewModel
 import com.bs.ecommerce.main.model.MainModelImpl
-import com.bs.ecommerce.account.downloadableProducts.DownloadableProductListFragment
-import com.bs.ecommerce.account.returnRequests.ReturnRequestHistoryFragment
-import com.bs.ecommerce.account.review.CustomerReviewFragment
-import com.bs.ecommerce.account.rewardpoint.RewardPointFragment
 import com.bs.ecommerce.utils.Const
 import com.bs.ecommerce.utils.PrefSingleton
 import com.bs.ecommerce.utils.replaceFragmentSafely
+import com.bs.ecommerce.utils.showLog
 import kotlinx.android.synthetic.main.fragment_user_account.*
 import kotlinx.android.synthetic.main.item_user_account.view.*
 
@@ -65,7 +66,7 @@ class UserAccountFragment: ToolbarLogoBaseFragment() {
                 settings.peekContent()?.let {
 
                     if(it.hasReturnRequests)
-                        returnRequestLayout?.visibility = View.VISIBLE
+                        updateVisibility()
 
                     if (updatingAppSettings) {
                         updatingAppSettings = false
@@ -83,6 +84,15 @@ class UserAccountFragment: ToolbarLogoBaseFragment() {
             isLoadingLD.observe(viewLifecycleOwner, Observer { isShowLoader ->
                 if (!isShowLoader) blockingLoader.hideDialog()
             })
+        }
+    }
+
+    fun updateVisibility() {
+        try {
+            returnRequestLayout?.visibility = View.VISIBLE
+            "test~".showLog("Visibility changed")
+        } catch (e: Exception) {
+            e.printStackTrace()
         }
     }
 
