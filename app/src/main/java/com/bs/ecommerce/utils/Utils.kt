@@ -77,6 +77,7 @@ class Utils {
                 true
 
             } catch (e: IOException) {
+                "file".showLog(e.toString())
                 false
             } finally {
                 inputStream?.close()
