@@ -22,6 +22,7 @@ import com.bs.ecommerce.account.orders.model.data.ReturnReqFormData
 import com.bs.ecommerce.base.BaseFragment
 import com.bs.ecommerce.base.BaseViewModel
 import com.bs.ecommerce.db.DbHelper
+import com.bs.ecommerce.main.MainViewModel
 import com.bs.ecommerce.utils.Const
 import com.bs.ecommerce.utils.RecyclerViewMargin
 import com.bs.ecommerce.utils.toast
@@ -35,6 +36,8 @@ import java.io.OutputStream
 class ReturnRequestFragment : BaseFragment() {
 
     private lateinit var model: ReturnReqModel
+
+    private lateinit var mainViewModel: MainViewModel
 
     override fun getFragmentTitle() = DbHelper.getString(Const.ORDER_RETURN_ITEMS)
 
@@ -53,6 +56,8 @@ class ReturnRequestFragment : BaseFragment() {
             orderId?.let {
                 model = ReturnReqModelImpl()
                 viewModel = ViewModelProvider(this).get(ReturnRequestViewModel::class.java)
+
+                mainViewModel = ViewModelProvider(requireActivity()).get(MainViewModel::class.java)
 
                 (viewModel as ReturnRequestViewModel).getFormData(orderId, model)
             }
@@ -124,9 +129,8 @@ class ReturnRequestFragment : BaseFragment() {
                 } else {
                     toast(data.result)
 
-                    if(data.result.contains("success", ignoreCase = true)) {
-                        // TODO show "History" option
-                    }
+                    if(data.result.contains("success", ignoreCase = true))
+                        mainViewModel.updatingAppSettings = true
                 }
             })
 
