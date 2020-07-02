@@ -1,5 +1,6 @@
 package com.bs.ecommerce.account.orders.model
 
+import com.bs.ecommerce.account.auth.register.data.KeyValuePair
 import com.bs.ecommerce.account.orders.model.data.ReturnReqFormData
 import com.bs.ecommerce.account.orders.model.data.ReturnReqFormResponse
 import com.bs.ecommerce.account.orders.model.data.UploadFileData
@@ -46,7 +47,19 @@ class ReturnReqModelImpl: ReturnReqModel {
         reqBody: ReturnReqFormData,
         callback: RequestCompleteListener<ReturnReqFormData>
     ) {
-        RetroClient.api.postReturnReqFormData(orderId, ReturnReqFormResponse(reqBody, null, null)).enqueue(object :
+
+        val x = mutableListOf<KeyValuePair>()
+
+        for(i in reqBody.items ?: listOf()) {
+            x.add(KeyValuePair("quantity${i.id}", i.customerInput.toString()))
+        }
+
+        val tmp = ReturnReqFormResponse(reqBody)
+        tmp.formValues = x
+
+        // List<KeyValuePair>
+
+        RetroClient.api.postReturnReqFormData(orderId, tmp).enqueue(object :
             Callback<ReturnReqFormResponse> {
 
             override fun onFailure(call: Call<ReturnReqFormResponse>, t: Throwable) {

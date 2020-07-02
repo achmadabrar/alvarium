@@ -117,7 +117,16 @@ class ReturnRequestFragment : BaseFragment() {
         (viewModel as ReturnRequestViewModel).apply {
 
             returnReqLD.observe(viewLifecycleOwner, Observer { data ->
-                initView(data)
+
+                if(data.result.isNullOrEmpty()) {
+                    initView(data)
+                } else {
+                    toast(data.result)
+
+                    if(data.result.contains("success", ignoreCase = true)) {
+                        // TODO show "History" option
+                    }
+                }
             })
 
             isLoadingLD.observe(viewLifecycleOwner, Observer { showHideLoader(it) })

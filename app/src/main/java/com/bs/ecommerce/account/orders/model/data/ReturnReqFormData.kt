@@ -12,7 +12,7 @@ data class ReturnReqFormData(
     @SerializedName("AvailableReturnReasons")
     val availableReturnReasons: List<AvailableReturnReason>?,
     @SerializedName("Comments")
-    val comments: Any?,
+    val comments: String?,
     @SerializedName("CustomOrderNumber")
     val customOrderNumber: String?,
     @SerializedName("CustomProperties")
@@ -22,7 +22,7 @@ data class ReturnReqFormData(
     @SerializedName("OrderId")
     val orderId: Int?,
     @SerializedName("Result")
-    val result: Any?,
+    val result: String?,
     @SerializedName("ReturnRequestActionId")
     val returnRequestActionId: Int?,
     @SerializedName("ReturnRequestReasonId")
