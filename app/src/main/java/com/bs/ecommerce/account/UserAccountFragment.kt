@@ -122,7 +122,7 @@ class UserAccountFragment: ToolbarLogoBaseFragment() {
         }
 
         returnRequestLayout.apply {
-            ivOptionIcon.setImageResource(R.drawable.ic_my_order)
+            ivOptionIcon.setImageResource(R.drawable.ic_return_request)
             tvOptionName.text = DbHelper.getString(Const.ACCOUNT_RETURN_REQUESTS)
             setOnClickListener { clickAction(ReturnRequestHistoryFragment()) }
         }
