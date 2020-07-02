@@ -13,19 +13,19 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bs.ecommerce.R
+import com.bs.ecommerce.account.orders.model.OrderModel
+import com.bs.ecommerce.account.orders.model.OrderModelImpl
+import com.bs.ecommerce.account.orders.model.data.OrderDetailsData
+import com.bs.ecommerce.account.orders.model.data.OrderItem
+import com.bs.ecommerce.account.orders.model.data.OrderNotes
+import com.bs.ecommerce.account.orders.model.data.ShipmentItem
+import com.bs.ecommerce.account.orders.shipments.ShipmentListAdapter
 import com.bs.ecommerce.base.BaseActivity
 import com.bs.ecommerce.base.BaseFragment
 import com.bs.ecommerce.base.BaseViewModel
 import com.bs.ecommerce.cart.CartFragment
 import com.bs.ecommerce.cart.GiftCardAdapter
 import com.bs.ecommerce.db.DbHelper
-import com.bs.ecommerce.account.orders.model.OrderModel
-import com.bs.ecommerce.account.orders.model.OrderModelImpl
-import com.bs.ecommerce.account.orders.shipments.ShipmentListAdapter
-import com.bs.ecommerce.account.orders.model.data.OrderDetailsData
-import com.bs.ecommerce.account.orders.model.data.OrderItem
-import com.bs.ecommerce.account.orders.model.data.OrderNotes
-import com.bs.ecommerce.account.orders.model.data.ShipmentItem
 import com.bs.ecommerce.utils.*
 import kotlinx.android.synthetic.main.confirm_order_card.view.*
 import kotlinx.android.synthetic.main.fragment_customer_order_detail.*
@@ -200,7 +200,9 @@ class OrderDetailsFragment : BaseFragment() {
                         override fun onClick(view: View, position: Int, data: OrderNotes) {
                             blockingLoader.showDialog()
 
-                            (viewModel as OrderViewModel).downloadOrderNote(data.id ?: -1, model)
+                            if(hasDiskWritePermission()) {
+                                (viewModel as OrderViewModel).downloadOrderNote(data.id ?: -1, model)
+                            }
                         }
                     })
             }

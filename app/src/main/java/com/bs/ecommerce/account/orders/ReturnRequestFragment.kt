@@ -82,7 +82,7 @@ class ReturnRequestFragment : BaseFragment() {
 
                     returnCursor?.moveToFirst()
 
-                    val filename = nameIndex?.let { i -> returnCursor.getString(i) }
+                    var filename = nameIndex?.let { i -> returnCursor.getString(i) }
                     val fileSize = sizeIndex?.let { i -> returnCursor.getString(i) }
 
                     returnCursor?.close()
@@ -94,9 +94,10 @@ class ReturnRequestFragment : BaseFragment() {
                     val buffer = ByteArray(inputStream?.available() ?: 0)
                     inputStream?.read(buffer)
 
-                    //val tmp = filename?.substring(filename.lastIndexOf(".") + 1)
+                    val extension = filename?.substring(filename.lastIndexOf(".")) ?: "tmp"
+                    filename = filename?.replace(extension, "")
 
-                    val file: File = File.createTempFile(filename ?: "temp", "")
+                    val file: File = File.createTempFile(filename ?: "temp", extension)
                     val outStream: OutputStream = FileOutputStream(file)
                     outStream.write(buffer)
 
@@ -160,7 +161,8 @@ class ReturnRequestFragment : BaseFragment() {
 
             if(isValidForm()) {
 
-                val formData = ReturnReqFormData(data.allowFiles, null, null, etComments.text.toString(), data.customOrderNumber,
+                val formData = ReturnReqFormData(data.allowFiles, null, null,
+                    etComments.text.toString(), data.customOrderNumber,
                     null, data.items, data.orderId, data.result,
                     (spAction.selectedItem as AvailableReturnAction).id,
                     (spReason.selectedItem as AvailableReturnReason).id,
@@ -214,11 +216,11 @@ class ReturnRequestFragment : BaseFragment() {
 
     private fun isValidForm(): Boolean {
 
-        if(spAction.selectedItemPosition == 0) {
-            toast(DbHelper.getString(Const.RETURN_REQ_ACTION))
-            return false
-        } else if(spReason.selectedItemPosition == 0) {
+        if(spReason.selectedItemPosition == 0) {
             toast(DbHelper.getString(Const.RETURN_REQ_REASON))
+            return false
+        } else if(spAction.selectedItemPosition == 0) {
+            toast(DbHelper.getString(Const.RETURN_REQ_ACTION))
             return false
         }
 

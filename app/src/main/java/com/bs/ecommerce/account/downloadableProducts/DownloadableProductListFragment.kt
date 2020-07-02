@@ -9,22 +9,21 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bs.ecommerce.R
-import com.bs.ecommerce.base.BaseFragment
-import com.bs.ecommerce.base.BaseViewModel
-import com.bs.ecommerce.db.DbHelper
-import com.bs.ecommerce.account.orders.OrderDetailsFragment
 import com.bs.ecommerce.account.downloadableProducts.model.DownloadableProductListModel
 import com.bs.ecommerce.account.downloadableProducts.model.DownloadableProductListModelImpl
 import com.bs.ecommerce.account.downloadableProducts.model.data.DownloadableProductItem
-import com.bs.ecommerce.catalog.product.ProductDetailFragment
 import com.bs.ecommerce.account.downloadableProducts.model.data.UserAgreementData
+import com.bs.ecommerce.account.orders.OrderDetailsFragment
+import com.bs.ecommerce.base.BaseFragment
+import com.bs.ecommerce.base.BaseViewModel
+import com.bs.ecommerce.catalog.product.ProductDetailFragment
+import com.bs.ecommerce.db.DbHelper
 import com.bs.ecommerce.utils.Const
 import com.bs.ecommerce.utils.ItemClickListener
 import com.bs.ecommerce.utils.RecyclerViewMargin
 import com.bs.ecommerce.utils.toast
 import kotlinx.android.synthetic.main.fragment_customer_address.tvNoData
 import kotlinx.android.synthetic.main.fragment_customer_downloadable_product_list.*
-import kotlinx.android.synthetic.main.item_downloadable_product.view.*
 
 class DownloadableProductListFragment : BaseFragment() {
 
@@ -119,11 +118,13 @@ class DownloadableProductListFragment : BaseFragment() {
     }
     
     fun onUserAgreeClicked(data: UserAgreementData) {
-        blockingLoader.showDialog()
+        if(hasDiskWritePermission()) {
+            blockingLoader.showDialog()
 
-        (viewModel as DownloadableProductListViewModel).downloadProduct(
-            data.orderItemGuid ?: "", "true", model
-        )
+            (viewModel as DownloadableProductListViewModel).downloadProduct(
+                data.orderItemGuid ?: "", "true", model
+            )
+        }
     }
 
 

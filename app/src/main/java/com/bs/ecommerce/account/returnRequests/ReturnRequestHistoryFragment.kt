@@ -11,21 +11,19 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bs.ecommerce.R
-import com.bs.ecommerce.base.BaseFragment
-import com.bs.ecommerce.base.BaseViewModel
-import com.bs.ecommerce.db.DbHelper
-import com.bs.ecommerce.account.downloadableProducts.model.DownloadableProductListModel
-import com.bs.ecommerce.account.downloadableProducts.model.DownloadableProductListModelImpl
-import com.bs.ecommerce.account.downloadableProducts.model.data.DownloadableProductItem
 import com.bs.ecommerce.account.returnRequests.model.ReturnRequestModel
 import com.bs.ecommerce.account.returnRequests.model.ReturnRequestModelImpl
 import com.bs.ecommerce.account.returnRequests.model.data.ReturnRequestHistoryItem
+import com.bs.ecommerce.base.BaseFragment
+import com.bs.ecommerce.base.BaseViewModel
 import com.bs.ecommerce.catalog.product.ProductDetailFragment
-import com.bs.ecommerce.utils.*
+import com.bs.ecommerce.db.DbHelper
+import com.bs.ecommerce.utils.Const
+import com.bs.ecommerce.utils.ItemClickListener
+import com.bs.ecommerce.utils.RecyclerViewMargin
+import com.bs.ecommerce.utils.TextUtils
 import kotlinx.android.synthetic.main.fragment_customer_address.tvNoData
 import kotlinx.android.synthetic.main.fragment_customer_downloadable_product_list.*
-import kotlinx.android.synthetic.main.item_address.view.*
-import kotlinx.android.synthetic.main.item_downloadable_product.*
 import kotlinx.android.synthetic.main.item_downloadable_product.view.*
 import java.lang.ref.WeakReference
 
@@ -101,11 +99,13 @@ class ReturnRequestHistoryFragment : BaseFragment() {
                 when (view.id) {
 
                     R.id.icDownload -> {
-                        val currentGuid = data.uploadedFileGuid ?: ""
-                        blockingLoader.showDialog()
+                        if(hasDiskWritePermission()) {
+                            val currentGuid = data.uploadedFileGuid ?: ""
+                            blockingLoader.showDialog()
 
-                        (viewModel as ReturnRequestHistoryViewModel).downloadFile(
-                           currentGuid, model)
+                            (viewModel as ReturnRequestHistoryViewModel).downloadFile(
+                                currentGuid, model)
+                        }
                     }
 
                     else -> addFragment(ProductDetailFragment.newInstance(productId = data.productId.toLong(), productName = data.productName))
