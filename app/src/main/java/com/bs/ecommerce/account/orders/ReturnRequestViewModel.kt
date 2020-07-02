@@ -11,7 +11,9 @@ import java.io.File
 class ReturnRequestViewModel: BaseViewModel() {
 
     val returnReqLD = MutableLiveData<ReturnReqFormData>()
-    val uploadFileLD = MutableLiveData<UploadFileData>()
+    val uploadFileLD = MutableLiveData<UploadFileData?>()
+
+    var uploadedFileGuid: String = ""
 
     fun getFormData(orderId: Int, model: ReturnReqModel) {
 
@@ -32,19 +34,42 @@ class ReturnRequestViewModel: BaseViewModel() {
         })
     }
 
-    fun uploadFile(file: File, model: ReturnReqModel) {
+    fun postFormData(orderId: Int, req: ReturnReqFormData, model: ReturnReqModel) {
+
         isLoadingLD.value = true
 
-        model.uploadFile(file, object :
-            RequestCompleteListener<UploadFileData> {
+        model.postReturnReqFormData(orderId, req, object :
+            RequestCompleteListener<ReturnReqFormData> {
 
-            override fun onRequestSuccess(data: UploadFileData) {
+            override fun onRequestSuccess(data: ReturnReqFormData) {
                 isLoadingLD.value = false
-                uploadFileLD.value = data
+                returnReqLD.value = data
             }
 
             override fun onRequestFailed(errorMessage: String) {
                 isLoadingLD.value = false
+            }
+
+        })
+    }
+
+    fun uploadFile(
+        file: File,
+        mimeType: String?,
+        model: ReturnReqModel
+    ) {
+
+        model.uploadFile(file, mimeType, object :
+            RequestCompleteListener<UploadFileData> {
+
+            override fun onRequestSuccess(data: UploadFileData) {
+                uploadFileLD.value = data
+                uploadedFileGuid = data.downloadGuid ?: ""
+            }
+
+            override fun onRequestFailed(errorMessage: String) {
+                uploadFileLD.value = null
+                uploadedFileGuid = ""
             }
 
         })

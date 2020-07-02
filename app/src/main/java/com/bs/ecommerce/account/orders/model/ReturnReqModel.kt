@@ -12,8 +12,15 @@ interface ReturnReqModel {
         callback: RequestCompleteListener<ReturnReqFormData>
     )
 
+    fun postReturnReqFormData(
+        orderId: Int,
+        reqBody: ReturnReqFormData,
+        callback: RequestCompleteListener<ReturnReqFormData>
+    )
+
     fun uploadFile(
         file: File,
+        mimeType: String?,
         callback: RequestCompleteListener<UploadFileData>
     )
 }

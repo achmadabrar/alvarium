@@ -41,11 +41,40 @@ class ReturnReqModelImpl: ReturnReqModel {
         })
     }
 
+    override fun postReturnReqFormData(
+        orderId: Int,
+        reqBody: ReturnReqFormData,
+        callback: RequestCompleteListener<ReturnReqFormData>
+    ) {
+        RetroClient.api.postReturnReqFormData(orderId, ReturnReqFormResponse(reqBody, null, null)).enqueue(object :
+            Callback<ReturnReqFormResponse> {
 
-    override fun uploadFile(file: File, callback: RequestCompleteListener<UploadFileData>) {
+            override fun onFailure(call: Call<ReturnReqFormResponse>, t: Throwable) {
+                callback.onRequestFailed(t.localizedMessage ?: "Unknown")
+            }
+
+            override fun onResponse(
+                call: Call<ReturnReqFormResponse>,
+                response: Response<ReturnReqFormResponse>
+            ) {
+                if (response.body()?.data != null && response.code() == 200)
+                    callback.onRequestSuccess(response.body()?.data as ReturnReqFormData)
+                else
+                    callback.onRequestFailed(TextUtils.getErrorMessage(response))
+            }
+
+        })
+    }
+
+
+    override fun uploadFile(
+        file: File,
+        mimeType: String?,
+        callback: RequestCompleteListener<UploadFileData>
+    ) {
 
         val requestBody = ProgressRequestBody(
-            file, null, object: ProgressRequestBody.ProgressCallback {
+            file, mimeType, object: ProgressRequestBody.ProgressCallback {
                 override fun onProgress(progress: Long, total: Long) {
                     "upload_percent".showLog("$progress - $total")
                 }

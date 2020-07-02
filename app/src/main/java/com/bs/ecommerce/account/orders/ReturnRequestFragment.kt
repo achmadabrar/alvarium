@@ -1,9 +1,12 @@
 package com.bs.ecommerce.account.orders
 
 import android.app.Activity
+import android.content.ContentResolver
 import android.content.Intent
+import android.database.Cursor
+import android.net.Uri
 import android.os.Bundle
-import android.provider.MediaStore
+import android.provider.OpenableColumns
 import android.view.View
 import android.widget.ArrayAdapter
 import android.widget.RelativeLayout
@@ -24,9 +27,12 @@ import com.bs.ecommerce.utils.RecyclerViewMargin
 import com.bs.ecommerce.utils.toast
 import kotlinx.android.synthetic.main.fragment_return_request.*
 import java.io.File
+import java.io.FileOutputStream
+import java.io.InputStream
+import java.io.OutputStream
 
 
-class ReturnRequestFragment: BaseFragment() {
+class ReturnRequestFragment : BaseFragment() {
 
     private lateinit var model: ReturnReqModel
 
@@ -41,7 +47,7 @@ class ReturnRequestFragment: BaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        if(!viewCreated) {
+        if (!viewCreated) {
             val orderId = arguments?.getInt(ORDER_ID)
 
             orderId?.let {
@@ -60,53 +66,49 @@ class ReturnRequestFragment: BaseFragment() {
 
         if (resultCode == Activity.RESULT_OK) {
 
-            /*data?.data?.path?.let {
-                val src: String = data.data?.path ?: ""
+            data?.data?.let {
 
-                val source = File(src)
+                blockingLoader.showDialog()
 
-                if (source.isFile) {
+                try {
+                    val uri: Uri = it
+                    val contentResolver: ContentResolver = requireActivity().contentResolver
+
+                    val mimeType: String? = contentResolver.getType(uri)
+                    val returnCursor: Cursor? = contentResolver.query(uri, null, null, null, null)
+
+                    val nameIndex: Int? = returnCursor?.getColumnIndex(OpenableColumns.DISPLAY_NAME)
+                    val sizeIndex: Int? = returnCursor?.getColumnIndex(OpenableColumns.SIZE)
+
+                    returnCursor?.moveToFirst()
+
+                    val filename = nameIndex?.let { i -> returnCursor.getString(i) }
+                    val fileSize = sizeIndex?.let { i -> returnCursor.getString(i) }
+
+                    returnCursor?.close()
+
+
+                    // File Input Stream gets me file data
+                    val inputStream: InputStream? = contentResolver.openInputStream(uri)
+
+                    val buffer = ByteArray(inputStream?.available() ?: 0)
+                    inputStream?.read(buffer)
+
+                    //val tmp = filename?.substring(filename.lastIndexOf(".") + 1)
+
+                    val file: File = File.createTempFile(filename ?: "temp", "")
+                    val outStream: OutputStream = FileOutputStream(file)
+                    outStream.write(buffer)
+
                     (viewModel as ReturnRequestViewModel)
-                        .uploadFile(source, model)
-
-                    toast("File selection success")
-                } else {
-                    toast("File selection failed")
+                        .uploadFile(file, mimeType, model)
+                } catch (e: Exception) {
+                    e.printStackTrace()
                 }
-
-            }*/
-
-            val projection = arrayOf(
-                MediaStore.MediaColumns.DATA,
-                MediaStore.Images.ImageColumns.ORIENTATION
-            )
-            val cursor = requireContext().contentResolver.query(
-                data!!.data!!, projection,
-                null, null, null
-            )
-
-            if (cursor != null) {
-                val column_index = cursor.getColumnIndexOrThrow(MediaStore.MediaColumns.DATA)
-                cursor.moveToFirst()
-                val path = cursor.getString(column_index)
-                if (File(path).exists()) {
-                    try {
-                        toast("File selection success")
-
-                        (viewModel as ReturnRequestViewModel)
-                            .uploadFile(File(path), model)
-                    } catch (e: Exception) {
-                        //FileLog.e(TAG, "ChatMessageType.IMAGE file not found", e)
-                        e.printStackTrace()
-                        toast("File selection failed 3 ")
-                    }
-                } else {
-                    toast("File selection failed 1 ")
-                }
-                cursor.close()
             }
+
         } else {
-            toast("File selection failed 2")
+            toast("File selection failed")
         }
     }
 
@@ -114,11 +116,13 @@ class ReturnRequestFragment: BaseFragment() {
 
         (viewModel as ReturnRequestViewModel).apply {
 
-            returnReqLD.observe(viewLifecycleOwner, Observer { data->
+            returnReqLD.observe(viewLifecycleOwner, Observer { data ->
                 initView(data)
             })
 
             isLoadingLD.observe(viewLifecycleOwner, Observer { showHideLoader(it) })
+
+            uploadFileLD.observe(viewLifecycleOwner, Observer { blockingLoader.hideDialog() })
         }
     }
 
@@ -126,6 +130,7 @@ class ReturnRequestFragment: BaseFragment() {
 
         llForm?.visibility = View.VISIBLE
         btnSubmit?.visibility = View.VISIBLE
+        btnUpload?.isEnabled = data.allowFiles == true
 
         tvUploadAction?.text = DbHelper.getString(Const.RETURN_REQ_UPLOAD)
         tvWhichProduct?.text = DbHelper.getString(Const.RETURN_REQ_TITLE_WHICH_ITEM)
@@ -135,22 +140,25 @@ class ReturnRequestFragment: BaseFragment() {
         etComments?.hint = DbHelper.getString(Const.RETURN_REQ_COMMENTS)
 
         btnUpload?.setOnClickListener {
-            // TODO FILE UPLOADER
 
-//            var chooseFile = Intent(Intent.ACTION_GET_CONTENT)
-//            chooseFile.type = "*/*"
-//            chooseFile = Intent.createChooser(chooseFile, "Choose a file")
-//            startActivityForResult(chooseFile, 123)
-
-            val intent = Intent(
-                Intent.ACTION_PICK,
-                MediaStore.Images.Media.EXTERNAL_CONTENT_URI
-            )
-            startActivityForResult(intent, 123)
+            var chooseFile = Intent(Intent.ACTION_GET_CONTENT)
+            chooseFile.type = "*/*"
+            chooseFile = Intent.createChooser(chooseFile, "Choose a file")
+            startActivityForResult(chooseFile, 123)
         }
 
         btnSubmit?.setOnClickListener {
-            // TODO SUBMIT
+
+            if(isValidForm()) {
+
+                val formData = ReturnReqFormData(data.allowFiles, null, null, etComments.text.toString(), data.customOrderNumber,
+                    null, data.items, data.orderId, data.result,
+                    (spAction.selectedItem as AvailableReturnAction).id,
+                    (spReason.selectedItem as AvailableReturnReason).id,
+                    (viewModel as ReturnRequestViewModel).uploadedFileGuid)
+
+                (viewModel as ReturnRequestViewModel).postFormData(data.orderId ?: -1, formData, model)
+            }
         }
 
         populateSpinner(data)
@@ -193,6 +201,19 @@ class ReturnRequestFragment: BaseFragment() {
         actionAdapter.setDropDownViewResource(R.layout.simple_spinner_dropdown_item)
 
         spAction?.adapter = actionAdapter
+    }
+
+    private fun isValidForm(): Boolean {
+
+        if(spAction.selectedItemPosition == 0) {
+            toast(DbHelper.getString(Const.RETURN_REQ_ACTION))
+            return false
+        } else if(spReason.selectedItemPosition == 0) {
+            toast(DbHelper.getString(Const.RETURN_REQ_REASON))
+            return false
+        }
+
+        return true
     }
 
     companion object {

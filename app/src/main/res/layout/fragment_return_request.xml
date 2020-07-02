@@ -108,7 +108,6 @@
                 android:layout_marginEnd="@dimen/fragment_margin"
                 android:visibility="visible"
                 android:background="@drawable/rounded_background_slight"
-                android:drawableEnd="@drawable/ic_star_formular"
                 android:gravity="top"
                 tools:hint="@string/placeholder"
                 android:imeOptions="actionNext"

@@ -282,7 +282,10 @@ interface Api {
     fun getReturnReqFormData(@Path("orderId") id: Int): Call<ReturnReqFormResponse>
 
     @POST("returnrequest/returnrequest/{orderId}")
-    fun postReturnReqFormData(@Path("orderId") id: Int): Call<ReturnReqFormResponse>
+    fun postReturnReqFormData(
+        @Path("orderId") id: Int,
+        @Body reqBody: ReturnReqFormResponse
+    ): Call<ReturnReqFormResponse>
 
     @Multipart
     @POST("returnrequest/uploadfile")
