@@ -147,15 +147,15 @@ class ReturnRequestHistoryFragment : BaseFragment() {
 
             holder.itemView.textView2.text =
 
-                DbHelper.getString(Const.RETURNED_ITEM).plus(" : ").plus(data.productName).plus(" * ").plus(data.quantity)
+                DbHelper.getString(Const.RETURNED_ITEM).plus(" ").plus(data.productName).plus(" * ").plus(data.quantity)
                 .plus("\n")
-                .plus(DbHelper.getString(Const.RETURN_REASON).plus(" : ").plus(data.returnReason)
+                .plus(DbHelper.getString(Const.RETURN_REASON).plus(" ").plus(data.returnReason)
                 .plus("\n")
-                .plus(DbHelper.getString(Const.RETURN_ACTION).plus(" : ").plus(data.returnAction)
+                .plus(DbHelper.getString(Const.RETURN_ACTION).plus(": ").plus(data.returnAction)
                 .plus("\n"))
-                .plus(DbHelper.getString(Const.RETURN_DATE_REQUESTED).plus(" : ").plus( TextUtils().tzTimeConverter(data.createdOn, WeakReference(requireActivity()))
+                .plus(DbHelper.getString(Const.RETURN_DATE_REQUESTED).plus(" ").plus( TextUtils().tzTimeConverter(data.createdOn, WeakReference(requireActivity()))
                 .plus("\n"))))
-                /*.plus(DbHelper.getString(Const.RETURN_UPLOADED_FILE)).plus(" : ").plus("File")
+                /*.plus(DbHelper.getString(Const.RETURN_UPLOADED_FILE)).plus(" ").plus("File")
                     )))*/
 
 

@@ -87,7 +87,7 @@ class ShipmentDetailsFragment : BaseFragment() {
             .plus("\n"))
             .plus(DbHelper.getString(Const.ORDER_DATE_DELIVERED).plus(" : ").plus( TextUtils().tzTimeConverter(data.deliveryDate, WeakReference(requireActivity()))
             .plus("\n")
-            .plus(DbHelper.getString(Const.ORDER_TRACKING_NUMBER)).plus(" : ").plus(data.trackingNumber)
+            .plus(DbHelper.getString(Const.SHIPMENT_TRACKING_NUMBER)).plus(" : ").plus(data.trackingNumber)
             )))
 
         data.order?.shippingAddress?.let {

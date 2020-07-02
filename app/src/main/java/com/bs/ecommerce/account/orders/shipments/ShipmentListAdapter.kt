@@ -40,7 +40,7 @@ class ShipmentListAdapter(
 
             tvCardDetails2.visibility = View.VISIBLE
 
-            tvCardDetails2.text = DbHelper.getString(Const.ORDER_TRACKING_NUMBER).plus(" : ").plus(item.trackingNumber).plus("\n")
+            tvCardDetails2.text = DbHelper.getString(Const.SHIPMENT_TRACKING_NUMBER).plus(" : ").plus(item.trackingNumber).plus("\n")
             .plus(
                 DbHelper.getString(Const.ORDER_DATE_SHIPPED).plus(" : ").plus( TextUtils().tzTimeConverter(item.shippedDate, WeakReference(context)
             ).plus("\n"))

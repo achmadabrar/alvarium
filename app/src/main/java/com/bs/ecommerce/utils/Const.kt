@@ -91,9 +91,9 @@ class Const {
 
         const val ORDER_SHIPMENT = "order.shipments"
         const val ORDER_SHIPMENT_ID = "order.shipments.id"
-        const val ORDER_TRACKING_NUMBER = "order.shipments.order#"
         const val ORDER_DATE_SHIPPED = "order.shipments.shippeddate"
         const val ORDER_DATE_DELIVERED = "order.shipments.deliverydate"
+        const val SHIPMENT_TRACKING_NUMBER = "order.shipments.trackingnumber"
 
         const val RETURN_ID = "account.customerreturnrequests.title"
         const val RETURNED_ITEM = "account.customerreturnrequests.item"
