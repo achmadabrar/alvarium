@@ -143,13 +143,11 @@ class ReturnRequestHistoryFragment : BaseFragment() {
 
             val data = list[position]
 
-            holder.itemView.textView1.text = DbHelper.getString(Const.RETURN_ID).plus(" ").plus(data.id)
-                .plus(" - ").plus(data.returnRequestStatus)
-
+            holder.itemView.textView1.text = DbHelper.getStringWith2Number(Const.RETURN_ID, data.id.toString(), data.returnRequestStatus.toString())
 
             holder.itemView.textView2.text =
 
-            DbHelper.getString(Const.RETURNED_ITEM).plus(" : ").plus(data.productName).plus(" * ").plus(data.quantity)
+                DbHelper.getString(Const.RETURNED_ITEM).plus(" : ").plus(data.productName).plus(" * ").plus(data.quantity)
                 .plus("\n")
                 .plus(DbHelper.getString(Const.RETURN_REASON).plus(" : ").plus(data.returnReason)
                 .plus("\n")

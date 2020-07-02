@@ -29,6 +29,10 @@ class DbHelper {
 
         fun getStringWithNumber(key: String, number: String): String = getString(key).replace("{0}", number)
 
+        fun getStringWith2Number(key: String, number1: String, number2: String): String = getString(key)
+            .replace("{0}", number1)
+            .replace("{1}", number2)
+
         fun addLanguage(stringResources: List<StringResource>, id: Int) {
 
             val temp = mutableListOf<StrResource>()
