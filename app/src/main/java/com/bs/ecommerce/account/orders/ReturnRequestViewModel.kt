@@ -67,11 +67,15 @@ class ReturnRequestViewModel: BaseViewModel() {
             override fun onRequestSuccess(data: UploadFileData) {
                 uploadFileLD.value = data
                 uploadedFileGuid = data.downloadGuid ?: ""
+
+                try { file.delete() } catch (e: Exception) { e.printStackTrace() }
             }
 
             override fun onRequestFailed(errorMessage: String) {
                 uploadFileLD.value = null
                 uploadedFileGuid = ""
+
+                try { file.delete() } catch (e: Exception) { e.printStackTrace() }
             }
 
         })

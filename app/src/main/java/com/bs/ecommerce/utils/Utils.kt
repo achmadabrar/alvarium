@@ -1,8 +1,17 @@
 package com.bs.ecommerce.utils
 
+import android.app.NotificationChannel
+import android.app.NotificationManager
+import android.app.PendingIntent
 import android.content.Context
+import android.content.Intent
 import android.net.ConnectivityManager
+import android.net.Uri
 import android.os.Environment
+import androidx.core.app.NotificationCompat
+import androidx.core.content.FileProvider
+import com.bs.ecommerce.BuildConfig
+import com.bs.ecommerce.R
 import okhttp3.ResponseBody
 import retrofit2.Response
 import java.io.*
@@ -43,15 +52,11 @@ class Utils {
             }
 
             if(fileName == null) fileName = filenameHint
-            var myFile: File? = File(
+            val myFile: File? = File(
                 Environment.getExternalStorageDirectory(),
                 Environment.DIRECTORY_DOWNLOADS + File.separator + fileName
             )
 
-            /*val downLoadDir = ContextCompat.getExternalFilesDirs(ctx, null)
-
-            if(!downLoadDir.isNullOrEmpty())
-                myFile = File(downLoadDir[0], filename)*/
 
             var inputStream: InputStream? = null
             var outputStream: OutputStream? = null
@@ -74,17 +79,72 @@ class Utils {
                 }
 
                 outputStream.flush()
-                true
+                inputStream?.close()
+                outputStream.close()
+
+                val uri = FileProvider.getUriForFile(
+                    MyApplication.mAppContext!!,
+                    BuildConfig.APPLICATION_ID + ".provider",
+                    myFile!!
+                )
+
+                val mimeType: String = response.headers()?.get("content-type") ?: "*/*"
+
+                showDownloadCompleteNotification(uri, mimeType, fileName)
+
+                return true
 
             } catch (e: IOException) {
                 "file".showLog(e.toString())
-                false
-            } finally {
                 inputStream?.close()
                 outputStream?.close()
+
+                false
             }
         } catch (e: IOException) {
             false
         }
+    }
+
+    private fun showDownloadCompleteNotification(uri: Uri, mimeType: String, fileName: String)
+    {
+        val intent = Intent(Intent.ACTION_VIEW)
+        intent.setDataAndType(uri, mimeType)
+        intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+
+        val pendingIntent = PendingIntent.getActivity(
+            MyApplication.mAppContext,
+            123  ,
+            intent,
+            PendingIntent.FLAG_ONE_SHOT
+        )
+
+
+        val notificationBuilder = NotificationCompat.Builder(MyApplication.mAppContext!!, "123")
+        notificationBuilder.setSmallIcon(R.drawable.ic_notification)
+            .setContentTitle("$fileName downloaded")
+            .setAutoCancel(true)
+            .setContentIntent(pendingIntent)
+
+        val mNotificationManager = MyApplication.mAppContext?.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O)
+        {
+            var notificationChannel = mNotificationManager.getNotificationChannel("123")
+
+            if(notificationChannel == null)
+            {
+                val importance = NotificationManager.IMPORTANCE_HIGH
+                notificationChannel = NotificationChannel("123", "123", importance)
+
+                notificationChannel.enableVibration(true)
+                notificationBuilder.setChannelId("123")
+                mNotificationManager.createNotificationChannel(notificationChannel)
+            }
+
+        }
+
+        mNotificationManager.notify(123, notificationBuilder.build())
+
     }
 }
