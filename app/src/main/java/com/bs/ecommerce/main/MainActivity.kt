@@ -13,6 +13,7 @@ import androidx.core.view.GravityCompat
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.ViewModelProvider
+import com.bs.ecommerce.MyApplication
 import com.bs.ecommerce.R
 import com.bs.ecommerce.account.auth.customerInfo.CustomerInfoFragment
 import com.bs.ecommerce.account.auth.register.RegisterFragment
