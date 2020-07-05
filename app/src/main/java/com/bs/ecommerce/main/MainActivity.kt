@@ -437,8 +437,6 @@ class MainActivity : PrivacyPolicyDialogActivity(), View.OnClickListener
         false
     }
 
-    fun closeDrawer() =  drawerLayout.closeDrawers()
-
     private fun initHomeFragment()
     {
         val homeFragment = HomeFragment()

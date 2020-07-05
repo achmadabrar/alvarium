@@ -235,7 +235,7 @@ open class RegisterFragment : ToolbarLogoBaseFragment(), View.OnClickListener
             tvChangePassword?.visibility = if(this@RegisterFragment is CustomerInfoFragment)
                 View.VISIBLE else View.GONE
 
-            tvChangePassword.setOnClickListener {
+            tvChangePassword?.setOnClickListener {
                 replaceFragmentSafely(ChangePasswordFragment())
             }
 
