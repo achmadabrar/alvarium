@@ -13,7 +13,7 @@ import com.bs.ecommerce.main.model.MainModelImpl
 import com.bs.ecommerce.more.GenericErrorFragment
 import com.bs.ecommerce.more.UpdateAppFragment
 import com.bs.ecommerce.networking.NetworkUtil
-import com.bs.ecommerce.utils.MyApplication
+import com.bs.ecommerce.MyApplication
 import com.bs.ecommerce.utils.PrefSingleton
 import com.bs.ecommerce.utils.Utils
 import com.bs.ecommerce.utils.showLog

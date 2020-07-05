@@ -1,8 +1,7 @@
 package com.bs.ecommerce.networking
 
 import com.bs.ecommerce.BuildConfig
-import com.bs.ecommerce.utils.MyApplication
-import com.bs.ecommerce.utils.PrefSingleton
+import com.bs.ecommerce.MyApplication
 import io.jsonwebtoken.Jwts
 import io.jsonwebtoken.SignatureAlgorithm
 import java.io.UnsupportedEncodingException

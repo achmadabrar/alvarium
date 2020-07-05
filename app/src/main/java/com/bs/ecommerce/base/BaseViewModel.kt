@@ -13,7 +13,7 @@ import com.bs.ecommerce.catalog.product.model.ProductDetailModelImpl
 import com.bs.ecommerce.catalog.common.AddToWishListResponse
 import com.bs.ecommerce.catalog.common.ProductSummary
 import com.bs.ecommerce.utils.Const
-import com.bs.ecommerce.utils.MyApplication
+import com.bs.ecommerce.MyApplication
 import com.bs.ecommerce.utils.OneTimeEvent
 
 

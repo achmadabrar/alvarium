@@ -15,7 +15,7 @@ import com.bs.ecommerce.R
 import com.bs.ecommerce.main.MainActivity
 import com.bs.ecommerce.main.SplashScreenActivity
 import com.bs.ecommerce.utils.AcceptPolicyPreference
-import com.bs.ecommerce.utils.MyApplication
+import com.bs.ecommerce.MyApplication
 import com.bs.ecommerce.utils.PrefSingleton
 import com.bs.ecommerce.utils.showLog
 import com.google.firebase.messaging.FirebaseMessagingService

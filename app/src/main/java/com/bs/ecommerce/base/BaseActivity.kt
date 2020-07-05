@@ -19,6 +19,7 @@ import androidx.annotation.LayoutRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import com.afollestad.materialdialogs.MaterialDialog
+import com.bs.ecommerce.MyApplication
 import com.bs.ecommerce.R
 import com.bs.ecommerce.account.auth.login.LoginFragment
 import com.bs.ecommerce.cart.CartFragment

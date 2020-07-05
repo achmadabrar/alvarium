@@ -11,6 +11,7 @@ import android.os.Environment
 import androidx.core.app.NotificationCompat
 import androidx.core.content.FileProvider
 import com.bs.ecommerce.BuildConfig
+import com.bs.ecommerce.MyApplication
 import com.bs.ecommerce.R
 import okhttp3.ResponseBody
 import retrofit2.Response

@@ -14,7 +14,7 @@ import com.bs.ecommerce.customViews.CheckableLinearLayout
 import com.bs.ecommerce.customViews.MethodSelectionProcess
 import com.bs.ecommerce.db.DbHelper
 import com.bs.ecommerce.utils.Const
-import com.bs.ecommerce.utils.MyApplication
+import com.bs.ecommerce.MyApplication
 import kotlinx.android.synthetic.main.fragment_shipping_method.*
 
 class ShippingMethodFragment : BaseCheckoutNavigationFragment() {

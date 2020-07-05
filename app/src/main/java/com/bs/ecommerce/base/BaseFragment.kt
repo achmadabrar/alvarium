@@ -14,6 +14,7 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.bs.ecommerce.MyApplication
 import com.bs.ecommerce.R
 import com.bs.ecommerce.cart.GiftCardAdapter
 import com.bs.ecommerce.cart.model.CartModelImpl

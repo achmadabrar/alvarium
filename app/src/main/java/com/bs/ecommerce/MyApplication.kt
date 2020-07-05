@@ -1,4 +1,4 @@
-package com.bs.ecommerce.utils
+package com.bs.ecommerce
 
 import android.content.Context
 import android.content.ContextWrapper
@@ -62,6 +62,8 @@ class MyApplication : MultiDexApplication()
 
         var isJwtActive = false
         var isAnonymousCheckoutAllowed = false
+
+        var billingNewAddressSaved = false
     }
 
 }

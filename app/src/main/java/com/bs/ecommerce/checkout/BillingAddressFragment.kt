@@ -2,8 +2,10 @@ package com.bs.ecommerce.checkout
 
 import android.os.Bundle
 import android.view.View
+import androidx.lifecycle.Observer
 import com.bs.ecommerce.checkout.model.data.BillingAddressResponse
-import com.bs.ecommerce.utils.MyApplication
+import com.bs.ecommerce.MyApplication
+import com.bs.ecommerce.utils.showLog
 import kotlinx.android.synthetic.main.fragment_base_billing_adddress.*
 import kotlinx.android.synthetic.main.fragment_billing_address.*
 
@@ -17,7 +19,12 @@ class BillingAddressFragment : BaseCheckoutAddressFragment()
 
         addressTabLayout?.getTabAt(CheckoutConstants.BILLING_ADDRESS_TAB)?.select()
 
-        MyApplication.getBillingResponse?.data?.billingAddress?.billingNewAddress?.let { newAddress = it }
+
+        if(MyApplication.billingNewAddressSaved)
+            updateAddressWhenNewAdded()
+        else
+            populateAllData()
+
 
         btnContinue?.setOnClickListener {
 
@@ -31,8 +38,34 @@ class BillingAddressFragment : BaseCheckoutAddressFragment()
             else
                 (viewModel as CheckoutViewModel).saveExistingBillingVM(addressID, model, shipToSameAddressCheckBox.isChecked)
         }
+    }
 
+    private fun populateAllData()
+    {
+        MyApplication.getBillingResponse?.data?.billingAddress?.billingNewAddress?.let { newAddress = it }
         MyApplication.getBillingResponse?.let { showBillingAddressUI(it) }
+    }
+
+
+    private fun updateAddressWhenNewAdded()
+    {
+        if(MyApplication.billingNewAddressSaved)
+        {
+            MyApplication.getBillingResponse = null
+
+            MyApplication.billingNewAddressSaved = false
+
+            (viewModel as CheckoutViewModel).apply {
+
+                getBillingFormVM(model)
+
+                getBillingAddressLD.observe(viewLifecycleOwner, Observer { getBilling ->
+
+                    MyApplication.getBillingResponse = getBilling
+                    populateAllData()
+                })
+            }
+        }
     }
 
     private fun showBillingAddressUI(billingAddressResponse: BillingAddressResponse)

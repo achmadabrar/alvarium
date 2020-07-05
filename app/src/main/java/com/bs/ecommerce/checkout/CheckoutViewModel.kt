@@ -21,7 +21,6 @@ open class CheckoutViewModel : BaseViewModel()
 
     var getConfirmOrderLD = MutableLiveData<ConfirmOrderResponse>()
 
-
     private fun saveCheckoutData(data: CheckoutSaveResponse)
     {
         isLoadingLD.postValue(false)
