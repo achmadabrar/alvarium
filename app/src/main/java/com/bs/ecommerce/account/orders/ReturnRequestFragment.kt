@@ -99,7 +99,7 @@ class ReturnRequestFragment : BaseFragment() {
 
                     if(fileSizeInt > 2000000) {
                         blockingLoader.hideDialog()
-                        toast(DbHelper.getStringWithNumber(Const.COMMON_MAX_FILE_SIZE, "2 MB"))
+                        toast(DbHelper.getStringWithNumber(Const.COMMON_MAX_FILE_SIZE, "2000000"))
                         return
                     }
 
@@ -124,9 +124,6 @@ class ReturnRequestFragment : BaseFragment() {
                     blockingLoader.hideDialog()
                 }
             }
-
-        } else {
-            toast("File selection failed")
         }
     }
 

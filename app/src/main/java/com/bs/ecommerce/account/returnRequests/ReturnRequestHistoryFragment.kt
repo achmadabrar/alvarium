@@ -89,13 +89,18 @@ class ReturnRequestHistoryFragment : BaseFragment() {
                 when (view.id) {
 
                     R.id.icDownload -> {
-                        if(hasDiskWritePermission()) {
-                            val currentGuid = data.uploadedFileGuid ?: ""
-                            blockingLoader.showDialog()
 
-                            (viewModel as ReturnRequestHistoryViewModel).downloadFile(
-                                currentGuid, model)
-                        }
+                        checkDiskWritePermission(object : PermissionCallback {
+                            override fun onPermissionResponse(isGranted: Boolean) {
+                                if(isGranted) {
+                                    val currentGuid = data.uploadedFileGuid ?: ""
+                                    blockingLoader.showDialog()
+
+                                    (viewModel as ReturnRequestHistoryViewModel).downloadFile(
+                                        currentGuid, model)
+                                }
+                            }
+                        })
                     }
 
                     else -> replaceFragmentSafely(

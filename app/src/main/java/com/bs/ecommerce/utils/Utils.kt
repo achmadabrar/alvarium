@@ -125,6 +125,7 @@ class Utils {
         notificationBuilder.setSmallIcon(R.drawable.ic_notification)
             .setContentTitle("$fileName downloaded")
             .setAutoCancel(true)
+            .setVibrate(longArrayOf(0))
             .setContentIntent(pendingIntent)
 
         val mNotificationManager = MyApplication.mAppContext?.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
@@ -138,7 +139,7 @@ class Utils {
                 val importance = NotificationManager.IMPORTANCE_HIGH
                 notificationChannel = NotificationChannel("123", "123", importance)
 
-                notificationChannel.enableVibration(true)
+                notificationChannel.enableVibration(false)
                 notificationBuilder.setChannelId("123")
                 mNotificationManager.createNotificationChannel(notificationChannel)
             }

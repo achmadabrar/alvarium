@@ -200,18 +200,26 @@ class OrderDetailsFragment : BaseFragment() {
                         override fun onClick(view: View, position: Int, data: OrderNotes) {
                             blockingLoader.showDialog()
 
-                            if(hasDiskWritePermission()) {
-                                (viewModel as OrderViewModel).downloadOrderNote(data.id ?: -1, model)
-                            }
+                            checkDiskWritePermission(object : PermissionCallback {
+                                override fun onPermissionResponse(isGranted: Boolean) {
+                                    if(isGranted) {
+                                        (viewModel as OrderViewModel).downloadOrderNote(data.id ?: -1, model)
+                                    }
+                                }
+                            })
                         }
                     })
             }
         }
 
         fabPdfInvoice?.setOnClickListener {
-            if(hasDiskWritePermission()) {
-                data.id?.let { (viewModel as OrderViewModel).downloadPdfInvoice(it, model) }
-            }
+            checkDiskWritePermission(object : PermissionCallback {
+                override fun onPermissionResponse(isGranted: Boolean) {
+                    if(isGranted) {
+                        data.id?.let { (viewModel as OrderViewModel).downloadPdfInvoice(it, model) }
+                    }
+                }
+            })
         }
 
         btnReorder?.setOnClickListener {

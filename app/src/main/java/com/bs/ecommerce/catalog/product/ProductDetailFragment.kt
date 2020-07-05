@@ -16,20 +16,20 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bs.ecommerce.R
+import com.bs.ecommerce.account.review.ProductReviewFragment
 import com.bs.ecommerce.base.BaseActivity
 import com.bs.ecommerce.base.BaseFragment
 import com.bs.ecommerce.base.BaseViewModel
 import com.bs.ecommerce.cart.CartFragment
-import com.bs.ecommerce.db.DbHelper
-import com.bs.ecommerce.home.FeaturedProductAdapter
-import com.bs.ecommerce.account.review.ProductReviewFragment
-import com.bs.ecommerce.catalog.productList.ProductListFragment
-import com.bs.ecommerce.networking.Api
-import com.bs.ecommerce.networking.common.KeyValueFormData
-import com.bs.ecommerce.catalog.product.model.ProductDetailModel
-import com.bs.ecommerce.catalog.product.model.ProductDetailModelImpl
 import com.bs.ecommerce.catalog.common.ProductDetail
 import com.bs.ecommerce.catalog.common.ProductSummary
+import com.bs.ecommerce.catalog.product.model.ProductDetailModel
+import com.bs.ecommerce.catalog.product.model.ProductDetailModelImpl
+import com.bs.ecommerce.catalog.productList.ProductListFragment
+import com.bs.ecommerce.db.DbHelper
+import com.bs.ecommerce.home.FeaturedProductAdapter
+import com.bs.ecommerce.networking.Api
+import com.bs.ecommerce.networking.common.KeyValueFormData
 import com.bs.ecommerce.utils.*
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import kotlinx.android.synthetic.main.custom_attribute_bottom_sheet.view.*
@@ -342,13 +342,17 @@ class ProductDetailFragment : BaseFragment(), View.OnClickListener {
                                 it.visibility = View.VISIBLE
                                 it.setOnClickListener {
 
-                                    if(hasDiskWritePermission()) {
-                                        blockingLoader.showDialog()
+                                    checkDiskWritePermission(object : PermissionCallback {
+                                        override fun onPermissionResponse(isGranted: Boolean) {
+                                            if(isGranted) {
+                                                blockingLoader.showDialog()
 
-                                        (viewModel as ProductDetailViewModel).downloadSample(
-                                            product.id ?: -1, model
-                                        )
-                                    }
+                                                (viewModel as ProductDetailViewModel).downloadSample(
+                                                    product.id ?: -1, model
+                                                )
+                                            }
+                                        }
+                                    })
                                 }
                             }
                         }

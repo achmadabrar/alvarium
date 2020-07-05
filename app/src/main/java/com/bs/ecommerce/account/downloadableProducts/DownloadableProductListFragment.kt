@@ -18,10 +18,7 @@ import com.bs.ecommerce.base.BaseFragment
 import com.bs.ecommerce.base.BaseViewModel
 import com.bs.ecommerce.catalog.product.ProductDetailFragment
 import com.bs.ecommerce.db.DbHelper
-import com.bs.ecommerce.utils.Const
-import com.bs.ecommerce.utils.ItemClickListener
-import com.bs.ecommerce.utils.RecyclerViewMargin
-import com.bs.ecommerce.utils.toast
+import com.bs.ecommerce.utils.*
 import kotlinx.android.synthetic.main.fragment_customer_address.tvNoData
 import kotlinx.android.synthetic.main.fragment_customer_downloadable_product_list.*
 
@@ -118,13 +115,18 @@ class DownloadableProductListFragment : BaseFragment() {
     }
     
     fun onUserAgreeClicked(data: UserAgreementData) {
-        if(hasDiskWritePermission()) {
-            blockingLoader.showDialog()
+        checkDiskWritePermission(object : PermissionCallback {
 
-            (viewModel as DownloadableProductListViewModel).downloadProduct(
-                data.orderItemGuid ?: "", "true", model
-            )
-        }
+            override fun onPermissionResponse(isGranted: Boolean) {
+                if(isGranted) {
+                    blockingLoader.showDialog()
+
+                    (viewModel as DownloadableProductListViewModel).downloadProduct(
+                        data.orderItemGuid ?: "", "true", model
+                    )
+                }
+            }
+        })
     }
 
 
