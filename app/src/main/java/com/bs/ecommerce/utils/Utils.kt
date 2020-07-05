@@ -48,7 +48,7 @@ class Utils {
             val regexMatcher: Matcher = regex.matcher(response.headers()?.get("content-disposition") ?: "")
             if (regexMatcher.find()) {
                 fileName = regexMatcher.group()
-                fileName = fileName.replace("filename=", "")
+                fileName = fileName.replace("filename=", "").replace("\"", "")
             }
 
             if(fileName == null) fileName = filenameHint

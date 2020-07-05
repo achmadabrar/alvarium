@@ -216,6 +216,7 @@ class Const {
         const val COMMON_YES = "common.yes"
         const val COMMON_NO = "common.no"
         const val FILE_DOWNLOADED = "File downloaded to Download directory"
+        const val COMMON_MAX_FILE_SIZE = "shoppingcart.maximumuploadedfilesize"
 
         const val DOWNLOADABLE_I_AGREE = "downloadableproducts.iagree"
         const val DOWNLOADABLE_USER_AGREEMENT = "downloadableproducts.useragreement"

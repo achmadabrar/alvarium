@@ -26,6 +26,7 @@ import com.bs.ecommerce.db.DbHelper
 import com.bs.ecommerce.main.MainViewModel
 import com.bs.ecommerce.utils.Const
 import com.bs.ecommerce.utils.RecyclerViewMargin
+import com.bs.ecommerce.utils.isNumeric
 import com.bs.ecommerce.utils.toast
 import kotlinx.android.synthetic.main.fragment_return_request.*
 import java.io.File
@@ -93,6 +94,15 @@ class ReturnRequestFragment : BaseFragment() {
 
                     returnCursor?.close()
 
+                    val fileSizeInt = if(fileSize?.isNumeric() == true)
+                        fileSize.toInt() else 0
+
+                    if(fileSizeInt > 2000000) {
+                        blockingLoader.hideDialog()
+                        toast(DbHelper.getStringWithNumber(Const.COMMON_MAX_FILE_SIZE, "2 MB"))
+                        return
+                    }
+
 
                     // File Input Stream gets me file data
                     val inputStream: InputStream? = contentResolver.openInputStream(uri)
@@ -111,6 +121,7 @@ class ReturnRequestFragment : BaseFragment() {
                         .uploadFile(file, mimeType, model)
                 } catch (e: Exception) {
                     e.printStackTrace()
+                    blockingLoader.hideDialog()
                 }
             }
 
