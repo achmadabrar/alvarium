@@ -420,7 +420,11 @@ public class TouchImageViewJava extends AppCompatImageView {
         if(img != null)
         {
             PointF center = img.getScrollPosition();
-            setZoom(img.getCurrentZoom(), center.x, center.y, img.getScaleType());
+
+            float mX = 0f; if(center!=null) mX = center.x;
+            float mY = 0f; if(center!=null) mY = center.y;
+
+            setZoom(img.getCurrentZoom(), mX, mY, img.getScaleType());
         }
 
     }

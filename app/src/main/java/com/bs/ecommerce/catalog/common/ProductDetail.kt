@@ -1,5 +1,6 @@
 package com.bs.ecommerce.catalog.common
 
+import com.bs.ecommerce.product.model.data.ProductEstimateShipping
 import com.google.gson.annotations.SerializedName
 
 data class ProductDetail(
