@@ -1,7 +1,7 @@
 package com.bs.ecommerce.db
 
 import com.bs.ecommerce.main.model.data.AppLandingData
-import com.bs.ecommerce.product.model.data.StringResource
+import com.bs.ecommerce.main.model.data.StringResource
 
 class DbHelper {
 
@@ -28,6 +28,10 @@ class DbHelper {
         fun getStringWithNumber(key: String, number: Int): String = getString(key).replace("{0}", number.toString())
 
         fun getStringWithNumber(key: String, number: String): String = getString(key).replace("{0}", number)
+
+        fun getStringWith2Number(key: String, number1: String, number2: String): String = getString(key)
+            .replace("{0}", number1)
+            .replace("{1}", number2)
 
         fun addLanguage(stringResources: List<StringResource>, id: Int) {
 

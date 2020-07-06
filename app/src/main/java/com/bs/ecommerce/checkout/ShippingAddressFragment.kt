@@ -7,7 +7,7 @@ import com.bs.ecommerce.checkout.model.data.AddressModel
 import com.bs.ecommerce.checkout.model.data.CheckoutSaveResponse
 import com.bs.ecommerce.checkout.model.data.ShippingAddressModel
 import com.bs.ecommerce.checkout.model.data.Store
-import com.bs.ecommerce.utils.MyApplication
+import com.bs.ecommerce.MyApplication
 import kotlinx.android.synthetic.main.fragment_base_billing_adddress.*
 import kotlinx.android.synthetic.main.fragment_billing_address.*
 import kotlinx.android.synthetic.main.fragment_billing_address_store_layout.*

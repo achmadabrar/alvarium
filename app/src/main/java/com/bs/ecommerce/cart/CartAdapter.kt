@@ -11,7 +11,7 @@ import android.widget.TextView
 import androidx.fragment.app.FragmentActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.bs.ecommerce.R
-import com.bs.ecommerce.auth.register.data.KeyValuePair
+import com.bs.ecommerce.account.auth.register.data.KeyValuePair
 import com.bs.ecommerce.base.BaseViewModel
 import com.bs.ecommerce.cart.model.CartModel
 import com.bs.ecommerce.cart.model.data.CartProduct
@@ -87,7 +87,12 @@ open class CartAdapter(
     private fun updateCartItem(key: String, value: String) {
         val keyValuePairList = ArrayList<KeyValuePair>()
 
-        keyValuePairList.add(KeyValuePair(key = key, value = value))
+        keyValuePairList.add(
+            KeyValuePair(
+                key = key,
+                value = value
+            )
+        )
 
         (viewModel as CartViewModel).updateCartData(keyValuePairList, model!!)
     }
@@ -222,7 +227,7 @@ open class CartAdapter(
 
             tvAttribute1 = itemView.findViewById<View>(R.id.tvAttribute1) as WebView
             //itemView.tvAttribute1.text = "Color: Black"
-            itemView.tvAttribute2.text = "Size: XL"
+            itemView.sku.text = "Size: XL"
 /*
             itemView.tvOriginalPrice.text = "$100"
             itemView.tvOriginalPrice.paintFlags = Paint.STRIKE_THRU_TEXT_FLAG*/

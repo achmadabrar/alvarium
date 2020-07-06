@@ -45,6 +45,18 @@
                     android:id="@+id/paymentMethodCard"
                     layout="@layout/confirm_order_card" />
 
+                <TextView
+                    android:id="@+id/shipmentsTitle"
+                    style="@style/OrderDetailsTitleTextViewStyle"
+                    tools:text="@string/placeholder"
+                    android:visibility="gone"/>
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/shipmentsList"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:visibility="gone"
+                    tools:visibility="visible"/>
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -59,6 +71,29 @@
 
                     <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/checkoutProductList"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:nestedScrollingEnabled="false"
+                        tools:itemCount="2"
+                        tools:listitem="@layout/item_order_details" />
+                </LinearLayout>
+
+
+                <LinearLayout
+                    android:id="@+id/orderNotesLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:visibility="gone">
+
+                    <TextView
+                        style="@style/OrderDetailsTitleTextViewStyle"
+                        android:id="@+id/tvOrderNotes"
+                        android:text="@string/products" />
+
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/rvOrderNotes"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:nestedScrollingEnabled="false"

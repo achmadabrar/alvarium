@@ -24,6 +24,7 @@
             android:paddingBottom="5dp"
             android:paddingTop="5dp"
             tools:text="Advanced Search"
+            android:textColor="?attr/primaryTextColor"
             android:textAppearance="@style/TextAppearance.AppCompat.Medium"
             android:layout_gravity="center"
             android:visibility="visible"/>
@@ -52,6 +53,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
+            android:textColor="?attr/primaryTextColor"
             android:text="automatically_search_sub_categories" />
 
         <LinearLayout

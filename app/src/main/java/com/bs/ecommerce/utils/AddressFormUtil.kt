@@ -10,7 +10,7 @@ import com.bs.ecommerce.R
 import com.bs.ecommerce.checkout.model.data.AvailableCountry
 import com.bs.ecommerce.checkout.model.data.AvailableState
 import com.bs.ecommerce.db.DbHelper
-import com.bs.ecommerce.product.model.data.AddressModel
+import com.bs.ecommerce.catalog.common.AddressModel
 import kotlinx.android.synthetic.main.address_form.view.*
 
 class AddressFormUtil(private val form: View, private val context: Context) {

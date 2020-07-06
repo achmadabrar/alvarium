@@ -127,6 +127,7 @@ open class BaseCheckoutAddressFragment : BaseCheckoutNavigationFragment()
     {
         val addressList = mutableListOf<String>()
         addressList.addAll(existingAddresses.map { "${it.firstName}, ${it.lastName}, ${it.address1},${it.city},${it.countryName}" })
+        addressList.reverse()
         addressList.add(DbHelper.getString(Const.NEW_ADDRESS))
 
         existingAddressSpinner?.adapter = createSpinnerAdapter(addressList)

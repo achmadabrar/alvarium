@@ -9,9 +9,9 @@ import com.bs.ecommerce.R
 import com.bs.ecommerce.base.BaseFragment
 import com.bs.ecommerce.base.BaseViewModel
 import com.bs.ecommerce.db.DbHelper
-import com.bs.ecommerce.more.model.CommonModelImpl
-import com.bs.ecommerce.product.ProductListFragment
-import com.bs.ecommerce.product.model.data.Manufacturer
+import com.bs.ecommerce.more.options.model.CommonModelImpl
+import com.bs.ecommerce.catalog.productList.ProductListFragment
+import com.bs.ecommerce.home.homepage.model.data.Manufacturer
 import com.bs.ecommerce.utils.Const
 import com.bs.ecommerce.utils.ItemClickListener
 import com.bs.ecommerce.utils.calculateColumnsForGridLayout

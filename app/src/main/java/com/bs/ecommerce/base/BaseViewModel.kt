@@ -6,14 +6,14 @@ import androidx.lifecycle.ViewModel
 import com.bs.ecommerce.cart.model.CartModel
 import com.bs.ecommerce.cart.model.data.CartResponse
 import com.bs.ecommerce.cart.model.data.CartRootData
-import com.bs.ecommerce.common.RequestCompleteListener
+import com.bs.ecommerce.networking.common.RequestCompleteListener
 import com.bs.ecommerce.db.DbHelper
 import com.bs.ecommerce.networking.Api
-import com.bs.ecommerce.product.model.ProductDetailModelImpl
-import com.bs.ecommerce.product.model.data.AddToWishListResponse
-import com.bs.ecommerce.product.model.data.ProductSummary
+import com.bs.ecommerce.catalog.product.model.ProductDetailModelImpl
+import com.bs.ecommerce.catalog.common.AddToWishListResponse
+import com.bs.ecommerce.catalog.common.ProductSummary
 import com.bs.ecommerce.utils.Const
-import com.bs.ecommerce.utils.MyApplication
+import com.bs.ecommerce.MyApplication
 import com.bs.ecommerce.utils.OneTimeEvent
 
 
@@ -26,7 +26,8 @@ open class BaseViewModel : ViewModel() {
     fun getCartVM(model: CartModel) {
         isLoadingLD.value = true
 
-        model.getCartData(object : RequestCompleteListener<CartResponse> {
+        model.getCartData(object :
+            RequestCompleteListener<CartResponse> {
             override fun onRequestSuccess(data: CartResponse) {
                 isLoadingLD.value = false
 
@@ -41,10 +42,12 @@ open class BaseViewModel : ViewModel() {
 
     fun addToWishList(product: ProductSummary) {
 
-        val model = ProductDetailModelImpl()
+        val model =
+            ProductDetailModelImpl()
 
         model.addProductToWishList(product.id!!.toLong(), Api.typeWishList,
-            object : RequestCompleteListener<AddToWishListResponse> {
+            object :
+                RequestCompleteListener<AddToWishListResponse> {
 
                 override fun onRequestSuccess(data: AddToWishListResponse) {
 

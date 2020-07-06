@@ -1,7 +1,7 @@
 package com.bs.ecommerce.utils
 
 
-import com.bs.ecommerce.auth.register.data.CustomerInfo
+import com.bs.ecommerce.account.auth.register.data.CustomerInfo
 import com.bs.ecommerce.networking.Api
 import com.google.gson.Gson
 import com.pixplicity.easyprefs.library.Prefs

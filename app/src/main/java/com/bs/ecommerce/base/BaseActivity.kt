@@ -19,8 +19,9 @@ import androidx.annotation.LayoutRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import com.afollestad.materialdialogs.MaterialDialog
+import com.bs.ecommerce.MyApplication
 import com.bs.ecommerce.R
-import com.bs.ecommerce.auth.login.LoginFragment
+import com.bs.ecommerce.account.auth.login.LoginFragment
 import com.bs.ecommerce.cart.CartFragment
 import com.bs.ecommerce.db.DbHelper
 import com.bs.ecommerce.main.MainActivity
@@ -28,6 +29,7 @@ import com.bs.ecommerce.main.SplashScreenActivity
 import com.bs.ecommerce.main.model.data.AppLandingData
 import com.bs.ecommerce.networking.NetworkConstants
 import com.bs.ecommerce.utils.*
+import kotlinx.android.synthetic.main.activity_main.*
 import java.util.*
 
 
@@ -188,10 +190,14 @@ abstract class BaseActivity : AppCompatActivity(), ConnectivityReceiver.Connecti
 
     fun goMenuItemFragment(fragment: androidx.fragment.app.Fragment)
     {
+        closeDrawer()
+
         supportFragmentManager.popBackStack(null, androidx.fragment.app.FragmentManager.POP_BACK_STACK_INCLUSIVE)
         replaceFragment(fragment)
 
     }
+
+    fun closeDrawer() =  drawerLayout?.closeDrawers()
 
     fun goMenuItemIfLoggedIn(fragment: androidx.fragment.app.Fragment)
     {

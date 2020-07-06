@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?attr/fragmentBackGroundColor"
+        android:orientation="vertical">
+
+
+        <TextView
+            android:id="@+id/tvTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/pink"
+            android:gravity="center"
+            android:maxLines="1"
+            android:orientation="horizontal"
+            android:paddingStart="5dp"
+            android:paddingTop="8dp"
+            android:paddingEnd="5dp"
+            android:paddingBottom="8dp"
+            android:textColor="@color/white"
+            android:textSize="@dimen/tv_text_size_semi_large"
+            android:textStyle="bold"
+            tools:text="@string/placeholder" />
+
+
+        <TextView
+            android:id="@+id/tvAgreementText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="15dp"
+            android:layout_marginTop="12dp"
+            android:layout_marginEnd="15dp"
+            android:gravity="center"
+            android:textSize="@dimen/tv_text_size_semi_large"
+            android:textColor="?attr/primaryTextColor"
+            tools:text="@string/placeholder_long" />
+
+        <LinearLayout
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:orientation="vertical">
+
+
+            <CheckBox
+                android:id="@+id/cbAgree"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="12dp"
+                android:button="@drawable/custom_radio_button"
+                android:padding="5dp"
+                android:maxLines="1"
+                android:textColor="?attr/primaryTextColor"
+                android:textSize="@dimen/tv_text_size_regular"
+                tools:text="@string/placeholder" />
+
+            <Button
+                android:id="@+id/btnProceed"
+                style="@style/RoundedButtonRegular"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/slim_btn_height"
+                android:layout_gravity="center"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:paddingStart="25dp"
+                android:paddingEnd="25dp"
+                android:maxLines="1"
+                android:textAllCaps="false"
+                tools:text="@string/placeholder" />
+        </LinearLayout>
+
+
+    </LinearLayout>
+</androidx.core.widget.NestedScrollView>

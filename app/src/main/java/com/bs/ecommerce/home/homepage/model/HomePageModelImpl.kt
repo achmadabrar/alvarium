@@ -1,15 +1,15 @@
 package com.bs.ecommerce.home.homepage.model
 
 import android.content.Context
-import com.bs.ecommerce.common.RequestCompleteListener
+import com.bs.ecommerce.networking.common.RequestCompleteListener
 import com.bs.ecommerce.home.homepage.model.data.HomePageProductResponse
 import com.bs.ecommerce.home.homepage.model.data.SliderData
 import com.bs.ecommerce.home.homepage.model.data.SliderResponse
 import com.bs.ecommerce.networking.RetroClient
-import com.bs.ecommerce.product.model.data.CategoryModel
-import com.bs.ecommerce.product.model.data.HomePageCategoryResponse
-import com.bs.ecommerce.product.model.data.Manufacturer
-import com.bs.ecommerce.product.model.data.ManufacturerResponse
+import com.bs.ecommerce.catalog.common.CategoryModel
+import com.bs.ecommerce.home.homepage.model.data.HomePageCategoryResponse
+import com.bs.ecommerce.home.homepage.model.data.Manufacturer
+import com.bs.ecommerce.home.homepage.model.data.ManufacturerResponse
 import com.bs.ecommerce.utils.TextUtils
 import retrofit2.Call
 import retrofit2.Callback

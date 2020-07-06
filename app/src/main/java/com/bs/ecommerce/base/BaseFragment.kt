@@ -14,16 +14,17 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.bs.ecommerce.MyApplication
 import com.bs.ecommerce.R
 import com.bs.ecommerce.cart.GiftCardAdapter
 import com.bs.ecommerce.cart.model.CartModelImpl
 import com.bs.ecommerce.cart.model.data.CartProduct
 import com.bs.ecommerce.cart.model.data.OrderTotal
+import com.bs.ecommerce.catalog.common.ProductSummary
 import com.bs.ecommerce.customViews.ContentLoadingDialog
 import com.bs.ecommerce.db.DbHelper
 import com.bs.ecommerce.more.barcode.BarCodeCaptureFragment
 import com.bs.ecommerce.networking.NetworkUtil
-import com.bs.ecommerce.product.model.data.ProductSummary
 import com.bs.ecommerce.utils.*
 import com.pnikosis.materialishprogress.ProgressWheel
 import kotlinx.android.synthetic.main.table_order_total.*
@@ -31,6 +32,7 @@ import kotlinx.android.synthetic.main.table_order_total.*
 
 abstract class BaseFragment : Fragment()
 {
+    private var permissionCallback: PermissionCallback? = null
     private var progressWheel: ProgressWheel? = null
     protected open lateinit var viewModel: BaseViewModel
     protected val blockingLoader: ContentLoadingDialog by lazy { ContentLoadingDialog(requireContext()) }
@@ -170,6 +172,17 @@ abstract class BaseFragment : Fragment()
         }
     }
 
+
+    fun checkDiskWritePermission(callback: PermissionCallback) {
+
+        if (ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+            requestPermissions(arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE), WRITE_PERMISSION)
+            this.permissionCallback = callback
+        } else {
+            callback.onPermissionResponse(isGranted = true)
+        }
+    }
+
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>, grantResults: IntArray)
     {
         when (requestCode)
@@ -184,6 +197,14 @@ abstract class BaseFragment : Fragment()
                     toast("Please grant camera permission to use the Barcode Scanner")
 
                 return
+            }
+
+            WRITE_PERMISSION -> {
+                if(grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    permissionCallback?.onPermissionResponse(isGranted = true)
+                } else {
+                    permissionCallback?.onPermissionResponse(isGranted = false)
+                }
             }
         }
     }
@@ -294,5 +315,6 @@ abstract class BaseFragment : Fragment()
 
 
     private val BARCODE_CAMERA_PERMISSION = 1
+    private val WRITE_PERMISSION = 222
 
 }

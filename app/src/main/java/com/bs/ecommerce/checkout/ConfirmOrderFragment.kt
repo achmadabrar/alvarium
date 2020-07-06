@@ -91,7 +91,9 @@ class ConfirmOrderFragment : BaseCheckoutNavigationFragment() {
             setHasFixedSize(true)
             layoutManager =
                 LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
-            adapter = CartAdapter2(cartData?.items as MutableList<CartProduct>, null, isCheckout = true)
+
+            adapter = CartAdapter2(cartData?.items as MutableList<CartProduct>, null, isCheckout = true,
+                    showSku = cartData.showSku, isEditable = cartData.isEditable)
         }
     }
 

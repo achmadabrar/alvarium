@@ -1,7 +1,7 @@
 package com.bs.ecommerce.checkout.model.data
 
 import com.bs.ecommerce.networking.common.BaseResponse
-import com.bs.ecommerce.product.model.data.AddressAttribute
+import com.bs.ecommerce.catalog.common.AddressAttribute
 import com.google.gson.annotations.SerializedName
 
 

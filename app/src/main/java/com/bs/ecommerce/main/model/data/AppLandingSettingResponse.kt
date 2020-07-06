@@ -2,7 +2,6 @@ package com.bs.ecommerce.main.model.data
 import android.os.Parcel
 import android.os.Parcelable
 import com.bs.ecommerce.networking.common.BaseResponse
-import com.bs.ecommerce.product.model.data.StringResource
 import com.google.gson.annotations.SerializedName
 
 
@@ -32,6 +31,7 @@ data class AppLandingData(
     @SerializedName("TotalWishListProducts") val totalWishListProducts: Int = 0,
     @SerializedName("AnonymousCheckoutAllowed") val anonymousCheckoutAllowed: Boolean = false,
     @SerializedName("ShowChangeBaseUrlPanel") val showChangeBaseUrlPanel: Boolean = false,
+    @SerializedName("HasReturnRequests") val hasReturnRequests: Boolean = false,
     @SerializedName("StringResources") var stringResources: List<StringResource> = listOf()
 )
 

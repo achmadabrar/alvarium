@@ -14,7 +14,7 @@ import com.bs.ecommerce.main.MainViewModel
 import com.bs.ecommerce.main.model.MainModel
 import com.bs.ecommerce.main.model.MainModelImpl
 import com.bs.ecommerce.main.model.data.Category
-import com.bs.ecommerce.product.ProductListFragment
+import com.bs.ecommerce.catalog.productList.ProductListFragment
 import com.bs.ecommerce.utils.Const
 import com.bs.ecommerce.utils.ItemClickListener
 import com.bs.ecommerce.utils.LeftDrawerItem
@@ -38,7 +38,8 @@ class NavDrawerFragment : BaseFragment()
 
                 activity.supportFragmentManager.popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE)
 
-                replaceFragmentSafely(ProductListFragment.newInstance(data.name, data.id,
+                replaceFragmentSafely(
+                    ProductListFragment.newInstance(data.name, data.id,
                     ProductListFragment.GetBy.CATEGORY))
             }
         }

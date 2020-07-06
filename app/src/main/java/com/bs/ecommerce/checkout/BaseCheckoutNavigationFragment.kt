@@ -16,7 +16,7 @@ import com.bs.ecommerce.checkout.model.CheckoutModelImpl
 import com.bs.ecommerce.checkout.model.data.CheckoutSaveResponse
 import com.bs.ecommerce.db.DbHelper
 import com.bs.ecommerce.utils.Const
-import com.bs.ecommerce.utils.MyApplication
+import com.bs.ecommerce.MyApplication
 import com.bs.ecommerce.utils.toast
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayout.OnTabSelectedListener
@@ -69,6 +69,8 @@ abstract class BaseCheckoutNavigationFragment : ToolbarLogoBaseFragment()
             nextStepId = stepIdFromPaymentInfoPage
         else
             saveResponse?.data?.nextStep?.let { nextStepId = it }
+
+        MyApplication.billingNewAddressSaved = true
 
         when(nextStepId)
         {

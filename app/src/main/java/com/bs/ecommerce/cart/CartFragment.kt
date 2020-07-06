@@ -6,8 +6,9 @@ import android.widget.RelativeLayout
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.bs.ecommerce.MyApplication
 import com.bs.ecommerce.R
-import com.bs.ecommerce.auth.login.LoginFragment
+import com.bs.ecommerce.account.auth.login.LoginFragment
 import com.bs.ecommerce.base.BaseFragment
 import com.bs.ecommerce.base.BaseViewModel
 import com.bs.ecommerce.cart.model.CartModel
@@ -18,8 +19,8 @@ import com.bs.ecommerce.checkout.CheckoutStepFragment
 import com.bs.ecommerce.db.DbHelper
 import com.bs.ecommerce.networking.Api
 import com.bs.ecommerce.networking.common.KeyValueFormData
-import com.bs.ecommerce.product.ProductDetailFragment
-import com.bs.ecommerce.product.model.data.CheckoutAttribute
+import com.bs.ecommerce.catalog.product.ProductDetailFragment
+import com.bs.ecommerce.catalog.common.CheckoutAttribute
 import com.bs.ecommerce.utils.*
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import kotlinx.android.synthetic.main.custom_attribute_bottom_sheet.*
@@ -101,7 +102,7 @@ class CartFragment : BaseFragment() {
     {
         cartInfoLinearLayout?.visibility = View.VISIBLE
 
-        populateProductList(cartRootData.cart.items)
+        populateProductList(cartRootData.cart.items, cartRootData.cart.showSku, cartRootData.cart.isEditable)
 
         populateDiscountAndGiftCard(cartRootData)
 
@@ -127,7 +128,7 @@ class CartFragment : BaseFragment() {
         customAttributeManager?.attachAttributesToFragment()
     }
 
-    private fun populateProductList(items: List<CartProduct>)
+    private fun populateProductList(items: List<CartProduct>, showSku: Boolean = false, editable: Boolean = false)
     {
 
         val layoutManager = LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false)
@@ -135,7 +136,8 @@ class CartFragment : BaseFragment() {
         cartproductRecyclerList?.layoutManager = layoutManager
 
 //        val cartAdapter = CartAdapter(requireActivity(), items, clickListener, viewModel, model)
-        val cartAdapter = CartAdapter2(items as MutableList<CartProduct>, clickListener, isCheckout = false)
+        val cartAdapter = CartAdapter2(items as MutableList<CartProduct>, clickListener, isCheckout = false,
+            showSku = showSku, isEditable = editable)
 
         cartproductRecyclerList?.adapter = cartAdapter
     }

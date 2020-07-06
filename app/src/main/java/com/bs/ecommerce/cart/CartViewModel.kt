@@ -1,12 +1,12 @@
 package com.bs.ecommerce.cart
 
-import com.bs.ecommerce.auth.register.data.KeyValuePair
+import com.bs.ecommerce.account.auth.register.data.KeyValuePair
 import com.bs.ecommerce.base.BaseViewModel
 import com.bs.ecommerce.cart.model.CartModel
 import com.bs.ecommerce.cart.model.data.CartProduct
 import com.bs.ecommerce.cart.model.data.CartResponse
 import com.bs.ecommerce.cart.model.data.CartRootData
-import com.bs.ecommerce.common.RequestCompleteListener
+import com.bs.ecommerce.networking.common.RequestCompleteListener
 import com.bs.ecommerce.networking.Api
 import com.bs.ecommerce.networking.common.KeyValueFormData
 import java.util.*
@@ -26,7 +26,12 @@ class CartViewModel : BaseViewModel()
 
         productId?.let {
             val keyValuePairList = ArrayList<KeyValuePair>()
-            keyValuePairList.add(KeyValuePair(key = Api.removeFromCartOrWishList, value = it.toString()))
+            keyValuePairList.add(
+                KeyValuePair(
+                    key = Api.removeFromCartOrWishList,
+                    value = it.toString()
+                )
+            )
 
             updateCartData(keyValuePairList, model)
         }
@@ -38,7 +43,12 @@ class CartViewModel : BaseViewModel()
 
         product.id?.let {
             val keyValuePairList = ArrayList<KeyValuePair>()
-            keyValuePairList.add(KeyValuePair(key = Api.cartItemQuantity.plus(it), value = totalQuantity.toString()))
+            keyValuePairList.add(
+                KeyValuePair(
+                    key = Api.cartItemQuantity.plus(it),
+                    value = totalQuantity.toString()
+                )
+            )
 
             updateCartData(keyValuePairList, model)
         }
@@ -54,7 +64,8 @@ class CartViewModel : BaseViewModel()
 
         isLoadingLD.value = true
 
-        model.updateCartData(body, object : RequestCompleteListener<CartResponse>
+        model.updateCartData(body, object :
+            RequestCompleteListener<CartResponse>
         {
             override fun onRequestSuccess(data: CartResponse)
             {
@@ -75,7 +86,8 @@ class CartViewModel : BaseViewModel()
 
         isLoadingLD.value = true
 
-        model.applyCheckoutAttributes(keyValueFormData.formValues, object : RequestCompleteListener<CartRootData>
+        model.applyCheckoutAttributes(keyValueFormData.formValues, object :
+            RequestCompleteListener<CartRootData>
         {
             override fun onRequestSuccess(data: CartRootData)
             {
@@ -97,7 +109,13 @@ class CartViewModel : BaseViewModel()
     {
         isLoadingLD.value = true
 
-        model.applyCouponModel(KeyValueFormData(listOf(KeyValuePair(DISCOUNT_KEY, code))), object : RequestCompleteListener<CartResponse>
+        model.applyCouponModel(KeyValueFormData(listOf(
+            KeyValuePair(
+                DISCOUNT_KEY,
+                code
+            )
+        )), object :
+            RequestCompleteListener<CartResponse>
         {
             override fun onRequestSuccess(data: CartResponse)
             {
@@ -117,7 +135,13 @@ class CartViewModel : BaseViewModel()
     {
         isLoadingLD.value = true
 
-        model.removeCouponModel(KeyValueFormData(listOf(KeyValuePair("${REMOVE_DISCOUNT_KEY}$discountId", code))), object : RequestCompleteListener<CartResponse>
+        model.removeCouponModel(KeyValueFormData(listOf(
+            KeyValuePair(
+                "${REMOVE_DISCOUNT_KEY}$discountId",
+                code
+            )
+        )), object :
+            RequestCompleteListener<CartResponse>
         {
             override fun onRequestSuccess(data: CartResponse)
             {
@@ -138,7 +162,13 @@ class CartViewModel : BaseViewModel()
     {
         isLoadingLD.value = true
 
-        model.applyGiftCardModel(KeyValueFormData(listOf(KeyValuePair(GIFT_CARD_KEY, code))), object : RequestCompleteListener<CartResponse>
+        model.applyGiftCardModel(KeyValueFormData(listOf(
+            KeyValuePair(
+                GIFT_CARD_KEY,
+                code
+            )
+        )), object :
+            RequestCompleteListener<CartResponse>
         {
             override fun onRequestSuccess(data: CartResponse)
             {
@@ -157,7 +187,13 @@ class CartViewModel : BaseViewModel()
     {
         isLoadingLD.value = true
 
-        model.removeGiftCardModel(KeyValueFormData(listOf(KeyValuePair("${REMOVE_GIFT_CARD_KEY}$discountId", code))), object : RequestCompleteListener<CartResponse>
+        model.removeGiftCardModel(KeyValueFormData(listOf(
+            KeyValuePair(
+                "${REMOVE_GIFT_CARD_KEY}$discountId",
+                code
+            )
+        )), object :
+            RequestCompleteListener<CartResponse>
         {
             override fun onRequestSuccess(data: CartResponse)
             {

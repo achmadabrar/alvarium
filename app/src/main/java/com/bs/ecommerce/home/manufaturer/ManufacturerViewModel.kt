@@ -2,10 +2,10 @@ package com.bs.ecommerce.home.manufaturer
 
 import androidx.lifecycle.MutableLiveData
 import com.bs.ecommerce.base.BaseViewModel
-import com.bs.ecommerce.common.RequestCompleteListener
-import com.bs.ecommerce.more.model.CommonModel
-import com.bs.ecommerce.product.model.data.Manufacturer
-import com.bs.ecommerce.product.model.data.ManufacturerResponse
+import com.bs.ecommerce.networking.common.RequestCompleteListener
+import com.bs.ecommerce.more.options.model.CommonModel
+import com.bs.ecommerce.home.homepage.model.data.Manufacturer
+import com.bs.ecommerce.home.homepage.model.data.ManufacturerResponse
 
 class ManufacturerViewModel: BaseViewModel() {
 
@@ -15,7 +15,8 @@ class ManufacturerViewModel: BaseViewModel() {
 
         isLoadingLD.value = true
 
-        model.getAllManufacturers(object: RequestCompleteListener<ManufacturerResponse> {
+        model.getAllManufacturers(object:
+            RequestCompleteListener<ManufacturerResponse> {
 
             override fun onRequestSuccess(data: ManufacturerResponse) {
                 isLoadingLD.value = false

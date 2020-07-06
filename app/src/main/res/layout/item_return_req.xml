@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/rounded_background_slight"
+    android:backgroundTint="?attr/primaryListItemBg">
+
+    <TextView
+        android:id="@+id/tvProductName"
+        style="@style/rtlSupportedTextView"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:ellipsize="end"
+        android:maxLines="2"
+        android:textColor="?attr/primaryTextColor"
+        android:textSize="@dimen/tv_text_size_regular"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="@string/placeholder" />
+
+    <TextView
+        android:id="@+id/tvProductPrice"
+        style="@style/rtlSupportedTextView"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:ellipsize="end"
+        android:maxLines="2"
+        android:textColor="?attr/primaryTextColor"
+        android:textSize="@dimen/tv_text_size_regular"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvProductName"
+        tools:text="@string/placeholder" />
+
+    <TextView
+        android:id="@+id/tvTitle"
+        style="@style/rtlSupportedTextView"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:maxLines="1"
+        android:layout_marginTop="10dp"
+        android:textColor="?attr/primaryTextColor"
+        android:textSize="@dimen/tv_text_size_semi_large"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvProductPrice"
+        tools:text="@string/placeholder" />
+
+    <LinearLayout
+        android:id="@+id/btn_holder"
+        android:layout_width="0dp"
+        android:layout_height="35dp"
+        android:layout_marginTop="5dp"
+        android:orientation="horizontal"
+        app:layout_constraintTop_toBottomOf="@id/tvTitle"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <include layout="@layout/qunatity_button" />
+
+        <TextView
+            android:id="@+id/tvQuantity"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginStart="20dp"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:textColor="?attr/primaryTextColor"
+            android:visibility="visible"
+            tools:text="1" />
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

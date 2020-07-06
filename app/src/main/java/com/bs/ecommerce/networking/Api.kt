@@ -1,24 +1,44 @@
 package com.bs.ecommerce.networking
 
-import com.bs.ecommerce.auth.login.data.ChangePasswordModel
-import com.bs.ecommerce.auth.login.data.ForgotPasswordResponse
-import com.bs.ecommerce.auth.login.data.LoginPostData
-import com.bs.ecommerce.auth.login.data.LoginResponse
-import com.bs.ecommerce.auth.register.data.GetRegistrationResponse
+import com.bs.ecommerce.account.addresses.model.data.CustomerAddressResponse
+import com.bs.ecommerce.account.addresses.model.data.EditCustomerAddressResponse
+import com.bs.ecommerce.account.auth.login.data.ChangePasswordModel
+import com.bs.ecommerce.account.auth.login.data.ForgotPasswordResponse
+import com.bs.ecommerce.account.auth.login.data.LoginPostData
+import com.bs.ecommerce.account.auth.login.data.LoginResponse
+import com.bs.ecommerce.account.auth.register.data.GetRegistrationResponse
+import com.bs.ecommerce.account.downloadableProducts.model.data.DownloadableProductListResponse
+import com.bs.ecommerce.account.downloadableProducts.model.data.UserAgreementResponse
+import com.bs.ecommerce.account.orders.model.data.*
+import com.bs.ecommerce.account.returnRequests.model.data.ReturnRequestHistoryResponse
+import com.bs.ecommerce.account.review.model.data.MyReviewsResponse
+import com.bs.ecommerce.account.review.model.data.ProductReviewResponse
+import com.bs.ecommerce.account.rewardpoint.model.data.RewardPointResponse
+import com.bs.ecommerce.account.wishlist.model.data.WishListResponse
 import com.bs.ecommerce.cart.model.data.CartResponse
 import com.bs.ecommerce.cart.model.data.CartRootData
+import com.bs.ecommerce.catalog.common.*
 import com.bs.ecommerce.checkout.model.data.*
+import com.bs.ecommerce.home.homepage.model.data.HomePageCategoryResponse
 import com.bs.ecommerce.home.homepage.model.data.HomePageProductResponse
+import com.bs.ecommerce.home.homepage.model.data.ManufacturerResponse
 import com.bs.ecommerce.home.homepage.model.data.SliderResponse
 import com.bs.ecommerce.main.model.data.AppLandingSettingResponse
 import com.bs.ecommerce.main.model.data.AppStartRequest
 import com.bs.ecommerce.main.model.data.CategoryTreeResponse
+import com.bs.ecommerce.main.model.data.StringResourceResponse
+import com.bs.ecommerce.more.contactus.data.ContactUsResponse
+import com.bs.ecommerce.more.topic.model.data.TopicResponse
+import com.bs.ecommerce.more.vendor.model.data.GetAllVendorsResponse
+import com.bs.ecommerce.more.vendor.model.data.GetContactVendorResponse
 import com.bs.ecommerce.networking.common.BaseResponse
 import com.bs.ecommerce.networking.common.ExistingAddress
 import com.bs.ecommerce.networking.common.KeyValueFormData
-import com.bs.ecommerce.product.model.data.*
+import io.reactivex.Observable
+import okhttp3.MultipartBody
 import okhttp3.ResponseBody
 import retrofit2.Call
+import retrofit2.Response
 import retrofit2.http.*
 
 
@@ -204,8 +224,28 @@ interface Api {
         @QueryMap query: Map<String, String>
     ): Call<SearchResponse>
 
+    @GET("download/sample/{productId}")
+    fun sampleDownload(
+        @Path("productId") id: Long
+    ): Observable<Response<ResponseBody>>
+
     @GET("catalog/search")
     fun getModelsForAdvancedSearch(): Call<SearchResponse>
+
+    @GET("customer/downloadableproducts")
+    fun getDownloadableProducts(): Call<DownloadableProductListResponse>
+
+    @GET("download/getdownload/{guid}/{consent}")
+    fun downloadProduct(
+        @Path("guid") guid: String,
+        @Path("consent") consent: String?
+    ): Observable<Response<ResponseBody>>
+
+    @GET("customer/useragreement/{guid}")
+    fun userAgreement(
+        @Path("guid") guid: String
+    ): Call<UserAgreementResponse>
+
     // Order
 
     @GET("order/orderdetails/{id}")
@@ -214,11 +254,44 @@ interface Api {
     @GET("order/history")
     fun getOrderHistory(): Call<OrderHistoryResponse>
 
+    @Streaming
     @GET("order/orderdetails/pdf/{orderId}")
-    fun downloadPdfInvoice(@Path("orderId") id: Int): Call<OrderDetailsResponse>
+    fun downloadPdfInvoice(@Path("orderId") id: Int): Observable<Response<ResponseBody>>
+
+    @GET("download/ordernotefile/{noteId}")
+    fun orderNoteDownload(
+        @Path("noteId") id: Int
+    ): Observable<Response<ResponseBody>>
+
+    @GET("order/orderdetails/shipment/{id}")
+    fun getShipmentDetails(@Path("id") id: Int): Call<ShipmentDetailsResponse>
 
     @GET("order/reorder/{orderId}")
     fun reorder(@Path("orderId") id: Int): Call<ResponseBody>
+
+
+    @GET("returnrequest/history")
+    fun getReturnRequestHistory(): Call<ReturnRequestHistoryResponse>
+
+    @GET("download/getfileupload/{guid}")
+    fun getReturnRequestDownloadFile(@Path("guid") guid: String): Observable<Response<ResponseBody>>
+
+    // Return Request
+
+    @GET("returnrequest/returnrequest/{orderId}")
+    fun getReturnReqFormData(@Path("orderId") id: Int): Call<ReturnReqFormResponse>
+
+    @POST("returnrequest/returnrequest/{orderId}")
+    fun postReturnReqFormData(
+        @Path("orderId") id: Int,
+        @Body reqBody: ReturnReqFormResponse
+    ): Call<ReturnReqFormResponse>
+
+    @Multipart
+    @POST("returnrequest/uploadfile")
+    fun uploadFile(
+        @Part file: MultipartBody.Part
+    ): Call<UploadFileResponse>
 
     // WishList
 

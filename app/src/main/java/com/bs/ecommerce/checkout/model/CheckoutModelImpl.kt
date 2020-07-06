@@ -1,7 +1,7 @@
 package com.bs.ecommerce.checkout.model
 
 import com.bs.ecommerce.checkout.model.data.*
-import com.bs.ecommerce.common.RequestCompleteListener
+import com.bs.ecommerce.networking.common.RequestCompleteListener
 import com.bs.ecommerce.networking.RetroClient
 import com.bs.ecommerce.networking.common.ExistingAddress
 import com.bs.ecommerce.networking.common.KeyValueFormData

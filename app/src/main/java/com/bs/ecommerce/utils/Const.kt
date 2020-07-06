@@ -8,6 +8,7 @@ class Const {
         const val TITLE_REGISTER = "pagetitle.register"
         const val TITLE_REVIEW = "reviews"
         const val TITLE_ORDER_DETAILS = "pagetitle.orderdetails"
+        const val TITLE_ORDER_SHIPMENT_DETAILS = "pagetitle.shipmentdetails"
         const val TITLE_SEARCH = "pagetitle.search"
         const val TITLE_ACCOUNT = "pagetitle.account"
 
@@ -85,6 +86,35 @@ class Const {
         const val ORDER_TOTAL_ = "order.product(s).sku"
         const val ORDER_REORDER = "order.reorder"
         const val ORDER_PDF_INVOICE = "order.getpdfinvoice"
+        const val ORDER_NOTES = "order.notes"
+        const val ORDER_RETURN_ITEMS = "order.returnitems"
+
+        const val ORDER_SHIPMENT = "order.shipments"
+        const val ORDER_SHIPMENT_ID = "order.shipments.id"
+        const val ORDER_DATE_SHIPPED = "order.shipments.shippeddate"
+        const val ORDER_DATE_DELIVERED = "order.shipments.deliverydate"
+        const val SHIPMENT_TRACKING_NUMBER = "order.shipments.trackingnumber"
+
+        const val RETURN_ID = "account.customerreturnrequests.title"
+        const val RETURNED_ITEM = "account.customerreturnrequests.item"
+        const val RETURN_REASON = "account.customerreturnrequests.reason"
+        const val RETURN_ACTION = "returnrequests.returnaction"
+        const val RETURN_DATE_REQUESTED = "account.customerreturnrequests.date"
+        const val RETURN_UPLOADED_FILE = "account.customerreturnrequests.uploadedfile"
+
+        const val RETURN_REQ_UPLOAD = "returnrequests.uploadedfile"
+        const val RETURN_REQ_UPLOAD_FILE = "common.fileuploader.upload"
+        const val RETURN_REQ_SUBMIT = "returnrequests.submit"
+        const val RETURN_REQ_COMMENTS = "returnrequests.comments"
+        const val RETURN_REQ_REASON = "returnrequests.returnreason"
+        const val RETURN_REQ_ACTION = "returnrequests.returnaction"
+        const val RETURN_REQ_TITLE_WHY = "returnrequests.whyreturning"
+        const val RETURN_REQ_TITLE_WHICH_ITEM = "returnrequests.selectproduct(s)"
+        const val RETURN_REQ_RETURN_QTY = "returnrequests.products.quantity"
+//        const val RETURN_REQ_ =
+
+        const val SKU = "products.sku"
+        const val ORDER_QUANTITY_SHIPPED = "order.shipments.product(s).quantity"
 
         const val CATALOG_ITEMS_PER_PAGE = "catalog.pagesize.label"
         const val CATALOG_ORDER_BY = "catalog.orderby"
@@ -104,6 +134,8 @@ class Const {
         const val ACCOUNT_LOGOUT = "account.logout"
         const val ACCOUNT_LOGOUT_CONFIRM = "nopstation.webapi.account.logoutconfirmation"
         const val ACCOUNT_ORDERS = "account.customerorders"
+        const val ACCOUNT_RETURN_REQUESTS = "account.customerreturnrequests"
+        const val ACCOUNT_DOWNLOADABLE_PRODUCTS = "account.downloadableproducts"
         const val ACCOUNT_WISHLIST = "wishlist"
 
         const val CONTACT_US_FULLNAME = "contactus.fullname.hint"
@@ -183,6 +215,12 @@ class Const {
         const val COMMON_AGAIN_PRESS_TO_EXIT = "nopstation.webapi.home.pressagaintoexit"
         const val COMMON_YES = "common.yes"
         const val COMMON_NO = "common.no"
+        const val FILE_DOWNLOADED = "File downloaded to Download directory"
+        const val COMMON_MAX_FILE_SIZE = "shoppingcart.maximumuploadedfilesize"
+
+        const val DOWNLOADABLE_I_AGREE = "downloadableproducts.iagree"
+        const val DOWNLOADABLE_USER_AGREEMENT = "downloadableproducts.useragreement"
+        const val DOWNLOADABLE_USER_DOWNLOAD = "downloadableproducts.fields.download"
 
 
         //SHOPPING CART

@@ -5,8 +5,8 @@ import android.view.*
 import android.widget.LinearLayout
 import androidx.fragment.app.DialogFragment
 import com.bs.ecommerce.R
-import com.bs.ecommerce.auth.login.LoginFragment
-import com.bs.ecommerce.auth.register.RegisterFragment
+import com.bs.ecommerce.account.auth.login.LoginFragment
+import com.bs.ecommerce.account.auth.register.RegisterFragment
 import com.bs.ecommerce.base.BaseFragment
 import com.bs.ecommerce.checkout.CheckoutStepFragment
 import com.bs.ecommerce.db.DbHelper

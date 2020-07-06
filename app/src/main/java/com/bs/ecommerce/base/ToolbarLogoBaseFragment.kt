@@ -5,7 +5,7 @@ import android.view.View
 import androidx.lifecycle.ViewModelProvider
 import com.bs.ecommerce.main.MainActivity
 import com.bs.ecommerce.main.MainViewModel
-import com.bs.ecommerce.utils.MyApplication
+import com.bs.ecommerce.MyApplication
 import com.bs.ecommerce.utils.loadImg
 import kotlinx.android.synthetic.main.toolbar.*
 import kotlinx.android.synthetic.main.toolbar.view.*

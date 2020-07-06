@@ -14,7 +14,7 @@ import com.bs.ecommerce.checkout.model.CheckoutModel
 import com.bs.ecommerce.checkout.model.CheckoutModelImpl
 import com.bs.ecommerce.db.DbHelper
 import com.bs.ecommerce.utils.Const
-import com.bs.ecommerce.utils.MyApplication
+import com.bs.ecommerce.MyApplication
 import com.bs.ecommerce.utils.showLog
 import com.bs.ecommerce.utils.toast
 import kotlinx.android.synthetic.main.fragment_checkout_step.*
@@ -71,7 +71,6 @@ class CheckoutStepFragment : ToolbarLogoBaseFragment() {
                 goToBillingAddressPage()
 
             })
-
             isLoadingLD.observe(viewLifecycleOwner, Observer { isShowLoader -> showHideLoader(isShowLoader) })
         }
 
@@ -84,7 +83,6 @@ class CheckoutStepFragment : ToolbarLogoBaseFragment() {
                         return@setOnNavigationItemSelectedListener false
                     else
                         goToBillingAddressPage()
-
                 }
                 R.id.menu_shipping -> {
 

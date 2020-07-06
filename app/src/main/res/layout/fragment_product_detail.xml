@@ -71,6 +71,18 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="5dp" />
 
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/tierPriceList"
+                    android:scrollbars="horizontal"
+                    android:layout_marginStart="4dp"
+                    android:layout_marginEnd="4dp"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginBottom="16dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:visibility="gone"
+                    tools:visibility="visible"/>
+
                 <include
                     android:id="@+id/hd16"
                     layout="@layout/horizontal_divider"

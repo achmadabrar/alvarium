@@ -5,7 +5,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bs.ecommerce.R
-import com.bs.ecommerce.product.model.data.ProductSummary
+import com.bs.ecommerce.catalog.common.ProductSummary
 import com.bs.ecommerce.utils.ItemClickListener
 import com.bs.ecommerce.utils.loadImg
 import kotlinx.android.synthetic.main.item_product_for_linearlayout.view.*

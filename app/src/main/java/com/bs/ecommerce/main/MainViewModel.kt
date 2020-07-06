@@ -4,17 +4,21 @@ import android.content.Context
 import android.content.pm.PackageInfo
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
+import com.bs.ecommerce.catalog.common.CategoryModel
+import com.bs.ecommerce.catalog.common.ProductSummary
 import com.bs.ecommerce.checkout.CheckoutViewModel
-import com.bs.ecommerce.common.RequestCompleteListener
+import com.bs.ecommerce.networking.common.RequestCompleteListener
 import com.bs.ecommerce.db.DbHelper
 import com.bs.ecommerce.home.homepage.model.HomePageModel
 import com.bs.ecommerce.home.homepage.model.data.HomePageProductResponse
 import com.bs.ecommerce.home.homepage.model.data.SliderData
 import com.bs.ecommerce.main.model.MainModel
 import com.bs.ecommerce.main.model.data.*
-import com.bs.ecommerce.more.model.TopicModel
+import com.bs.ecommerce.more.topic.model.TopicModel
 import com.bs.ecommerce.networking.common.BaseResponse
-import com.bs.ecommerce.product.model.data.*
+import com.bs.ecommerce.home.homepage.model.data.Manufacturer
+import com.bs.ecommerce.more.topic.model.data.TopicData
+import com.bs.ecommerce.more.topic.model.data.TopicResponse
 import com.bs.ecommerce.utils.OneTimeEvent
 import com.bs.ecommerce.utils.showLog
 import java.util.concurrent.atomic.AtomicInteger
@@ -109,7 +113,8 @@ class MainViewModel : CheckoutViewModel() {
 
         isLoadingLD.value = true
 
-        model.getTopicBySystemName(sysName, object: RequestCompleteListener<TopicResponse> {
+        model.getTopicBySystemName(sysName, object:
+            RequestCompleteListener<TopicResponse> {
 
             override fun onRequestSuccess(data: TopicResponse) {
                 isLoadingLD.value = false
@@ -129,7 +134,8 @@ class MainViewModel : CheckoutViewModel() {
 
     fun getFeaturedProducts(model: HomePageModel) {
 
-        model.getFeaturedProducts(object : RequestCompleteListener<HomePageProductResponse> {
+        model.getFeaturedProducts(object :
+            RequestCompleteListener<HomePageProductResponse> {
             override fun onRequestSuccess(data: HomePageProductResponse) {
                 hideLoader()
                 featuredProductListLD.value = data.homePageProductList ?: listOf()
@@ -143,7 +149,8 @@ class MainViewModel : CheckoutViewModel() {
     }
 
     fun getCategoryListWithProducts(model: HomePageModel) {
-        model.fetchHomePageCategoryList(object : RequestCompleteListener<List<CategoryModel>> {
+        model.fetchHomePageCategoryList(object :
+            RequestCompleteListener<List<CategoryModel>> {
             override fun onRequestSuccess(data: List<CategoryModel>) {
                 featuredCategoryLD.value = data
                 hideLoader()
@@ -158,7 +165,8 @@ class MainViewModel : CheckoutViewModel() {
     }
 
     fun getBestSellingProducts(model: HomePageModel) {
-        model.fetchBestSellingProducts(object : RequestCompleteListener<HomePageProductResponse> {
+        model.fetchBestSellingProducts(object :
+            RequestCompleteListener<HomePageProductResponse> {
             override fun onRequestSuccess(data: HomePageProductResponse) {
                 hideLoader()
                 bestSellingProductLD.value = data.homePageProductList ?: listOf()
@@ -174,7 +182,8 @@ class MainViewModel : CheckoutViewModel() {
     }
 
     fun getManufactures(model: HomePageModel) {
-        model.fetchManufacturers(object : RequestCompleteListener<List<Manufacturer>> {
+        model.fetchManufacturers(object :
+            RequestCompleteListener<List<Manufacturer>> {
             override fun onRequestSuccess(data: List<Manufacturer>) {
                 hideLoader()
                 manufacturerListLD.value = data
@@ -189,7 +198,8 @@ class MainViewModel : CheckoutViewModel() {
     }
 
     fun getBannerImages(model: HomePageModel) {
-        model.fetchBannerImages(object : RequestCompleteListener<SliderData> {
+        model.fetchBannerImages(object :
+            RequestCompleteListener<SliderData> {
             override fun onRequestSuccess(data: SliderData) {
                 hideLoader()
                 imageBannerLD.value = data
@@ -207,7 +217,8 @@ class MainViewModel : CheckoutViewModel() {
         isLoadingLD.value = true
         testUrlSuccessLD.value = null
 
-        model.getLeftCategories(object : RequestCompleteListener<CategoryTreeResponse> {
+        model.getLeftCategories(object :
+            RequestCompleteListener<CategoryTreeResponse> {
             override fun onRequestSuccess(data: CategoryTreeResponse) {
                 isLoadingLD.value = false
 
@@ -235,7 +246,8 @@ class MainViewModel : CheckoutViewModel() {
         isLoadingLD.value = true
 
         model.getAppLandingSettings(
-            object : RequestCompleteListener<AppLandingSettingResponse> {
+            object :
+                RequestCompleteListener<AppLandingSettingResponse> {
 
                 override fun onRequestSuccess(data: AppLandingSettingResponse) {
 
@@ -270,7 +282,8 @@ class MainViewModel : CheckoutViewModel() {
 
         isLoadingLD.value = true
 
-        model.changeLanguage(languageId.toLong(), object : RequestCompleteListener<BaseResponse> {
+        model.changeLanguage(languageId.toLong(), object :
+            RequestCompleteListener<BaseResponse> {
             override fun onRequestSuccess(data: BaseResponse) {
                 isLoadingLD.value = false
 
@@ -289,7 +302,8 @@ class MainViewModel : CheckoutViewModel() {
 
         isLoadingLD.value = true
 
-        model.changeCurrency(currencyId.toLong(), object : RequestCompleteListener<BaseResponse> {
+        model.changeCurrency(currencyId.toLong(), object :
+            RequestCompleteListener<BaseResponse> {
             override fun onRequestSuccess(data: BaseResponse) {
                 isLoadingLD.value = false
 
@@ -340,7 +354,8 @@ class MainViewModel : CheckoutViewModel() {
 
         isLoadingLD.value = true
 
-        model.submitAppStart(AppStartRequest(appStartData), object : RequestCompleteListener<Any?> {
+        model.submitAppStart(AppStartRequest(appStartData), object :
+            RequestCompleteListener<Any?> {
             override fun onRequestSuccess(data: Any?) {
                 isLoadingLD.value = false
                 appStartResponseLD.postValue(true)
