@@ -60,7 +60,7 @@ class NavDrawerFragment : BaseFragment()
 
         if (!viewCreated)
         {
-            mainModel = MainModelImpl(activity?.applicationContext!!)
+            mainModel = MainModelImpl()
 
             mainViewModel = ViewModelProvider(requireActivity()).get(MainViewModel::class.java)
 

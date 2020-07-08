@@ -2,6 +2,7 @@ package com.bs.ecommerce.utils
 
 import android.app.DatePickerDialog
 import android.content.Context
+import android.content.Intent
 import android.content.res.ColorStateList
 import android.graphics.Color
 import android.text.Editable
@@ -14,8 +15,10 @@ import android.widget.*
 import androidx.appcompat.widget.AppCompatRadioButton
 import androidx.core.view.ViewCompat
 import androidx.core.view.children
+import androidx.fragment.app.FragmentActivity
 import com.bs.ecommerce.R
 import com.bs.ecommerce.account.auth.register.data.KeyValuePair
+import com.bs.ecommerce.base.BaseFragment
 import com.bs.ecommerce.db.DbHelper
 import com.bs.ecommerce.networking.common.KeyValueFormData
 import com.bs.ecommerce.catalog.common.AttributeControlValue
@@ -28,6 +31,7 @@ import java.util.*
 
 
 class CustomAttributeManager(
+    private val activity: FragmentActivity,
     private val attributes: List<CustomAttribute>,
     private val attributeViewHolder: LinearLayout,
     private val attributeValueHolder: LinearLayout,
@@ -62,6 +66,8 @@ class CustomAttributeManager(
                 AttributeControlType.TextBox, AttributeControlType.MultilineTextbox -> textInputAttr(attr)
 
                 AttributeControlType.Datepicker -> datePickerAttr(attr)
+
+                AttributeControlType.FileUpload -> fileUploadAttr(attr)
 
                 else -> genericAttributes(attr)
             }
@@ -240,6 +246,41 @@ class CustomAttributeManager(
 
         tvDatePicker.setOnClickListener{
             dialog.show()
+        }
+
+        inflatedViews[attr.id] = layout
+    }
+
+    private fun fileUploadAttr(attr: CustomAttribute) {
+
+        val layout = layoutInflater.inflate(R.layout.custom_attribute_file_upload, viewGroup)
+        layout.tag = attr.id
+
+
+        val tvName = layout.findViewById<TextView>(R.id.tvLayoutTitle)
+        val tvDesc = layout.findViewById<TextView>(R.id.tvLayoutSubTitle)
+        val tvSelectedAttr = layout.findViewById<TextView>(R.id.tvSelectedAttr)
+
+        if (attr.isRequired)
+            tvName?.setDrawableEnd(R.drawable.ic_star_formular)
+
+        tvName.text = attr.name
+        tvDesc.text = attr.description ?: DbHelper.getString(Const.COMMON_SELECT).plus(" ${attr.name}")
+        // preselect requied attributes
+        tvSelectedAttr.text =
+            attr.values.find { it.isPreSelected }?.name ?:
+                    if(attr.isRequired && !attr.values.isNullOrEmpty())
+                        attr.values[0].name
+                    else DbHelper.getString(Const.RETURN_REQ_UPLOAD_FILE)
+
+
+        tvSelectedAttr?.setOnClickListener {
+
+            var chooseFile = Intent(Intent.ACTION_GET_CONTENT)
+            chooseFile.type = "*/*"
+            chooseFile = Intent.createChooser(chooseFile, "Choose a file")
+
+            activity.startActivityForResult(chooseFile, BaseFragment.ATTRIBUTE_FILE_UPLOAD_REQUEST_CODE)
         }
 
         inflatedViews[attr.id] = layout

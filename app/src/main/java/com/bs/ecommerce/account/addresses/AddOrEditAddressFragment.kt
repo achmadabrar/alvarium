@@ -177,6 +177,7 @@ class AddOrEditAddressFragment : BaseFragment() {
         // setup product attributes
         customAttributeManager =
             CustomAttributeManager(
+                activity = requireActivity(),
                 attributes = address.customAddressAttributes ?: listOf(),
                 attributeViewHolder = addressForm.customAttributeViewHolder,
                 attributeValueHolder = bottomSheetLayoutCart.attributeValueHolder,

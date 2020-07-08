@@ -360,6 +360,7 @@ class ProductDetailFragment : BaseFragment(), View.OnClickListener {
                         // setup product attributes
                         customAttributeManager =
                             CustomAttributeManager(
+                                activity = requireActivity(),
                                 attributes = product.productAttributes,
                                 attributeViewHolder = attrViewHolder,
                                 attributeValueHolder = bottomSheetLayout.attributeValueHolder,

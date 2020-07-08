@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="5dp"
+    android:background="@drawable/rect_background_ripple"
+    android:clickable="true"
+    android:focusable="false"
+    android:backgroundTint="?attr/fragmentBackGroundColor">
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline_v_half"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.5" />
+
+    <include layout="@layout/horizontal_divider" />
+
+    <TextView
+        android:id="@+id/tvLayoutTitle"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:gravity="start"
+        android:maxLines="2"
+        android:textColor="?attr/primaryTextColor"
+        android:textSize="@dimen/tv_text_size_regular"
+        android:textStyle="bold"
+        android:ellipsize="end"
+        app:layout_constraintEnd_toStartOf="@id/guideline_v_half"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="@string/placeholder"
+        style="@style/rtlSupportedTextView"/>
+
+    <TextView
+        android:id="@id/tvLayoutSubTitle"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:gravity="start"
+        android:maxLines="2"
+        android:ellipsize="end"
+        android:textColor="@color/gray"
+        android:textSize="@dimen/tv_text_size_small"
+        app:layout_constraintEnd_toStartOf="@id/guideline_v_half"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvLayoutTitle"
+        tools:text="@string/placeholder"
+        style="@style/rtlSupportedTextView"/>
+
+    <TextView
+        android:id="@+id/tvSelectedAttr"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        style="@style/RoundedButtonRegular"
+        android:gravity="center"
+        android:maxLines="2"
+        android:ellipsize="end"
+        android:textSize="@dimen/tv_text_size_semi_large"
+        android:padding="5dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/guideline_v_half"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="NOKIA" />
+
+    <!-- DO NOT REMOVE. USED FROM BOTTOM MARGIN -->
+    <View
+        android:layout_width="1dp"
+        android:layout_height="1dp"
+        android:layout_marginTop="5dp"
+        app:layout_constraintStart_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvLayoutSubTitle"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

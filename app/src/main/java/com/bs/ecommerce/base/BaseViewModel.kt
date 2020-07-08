@@ -14,7 +14,10 @@ import com.bs.ecommerce.catalog.common.AddToWishListResponse
 import com.bs.ecommerce.catalog.common.ProductSummary
 import com.bs.ecommerce.utils.Const
 import com.bs.ecommerce.MyApplication
+import com.bs.ecommerce.account.orders.model.data.UploadFileData
+import com.bs.ecommerce.main.model.MainModelImpl
 import com.bs.ecommerce.utils.OneTimeEvent
+import java.io.File
 
 
 open class BaseViewModel : ViewModel() {
@@ -66,6 +69,32 @@ open class BaseViewModel : ViewModel() {
 
             })
     }
+
+    fun uploadFile(file: File, mimeType: String?) {
+
+        val model = MainModelImpl()
+
+        model.uploadFile(file, mimeType, object :
+            RequestCompleteListener<UploadFileData> {
+
+            override fun onRequestSuccess(data: UploadFileData) {
+/*                uploadFileLD.value = data
+                uploadedFileGuid = data.downloadGuid ?: ""*/
+
+                try { file.delete() } catch (e: Exception) { e.printStackTrace() }
+            }
+
+            override fun onRequestFailed(errorMessage: String) {
+/*                uploadFileLD.value = null
+                uploadedFileGuid = ""*/
+
+                try { file.delete() } catch (e: Exception) { e.printStackTrace() }
+            }
+
+        })
+    }
+
+
 
     protected fun toast(msg: String?) {
         if (MyApplication.mAppContext != null && msg != null)

@@ -48,7 +48,7 @@ class SettingsFragment: BaseUrlChangeFragment() {
 
         initView()
 
-        mainModel = MainModelImpl(requireContext())
+        mainModel = MainModelImpl()
 
         mainViewModel = ViewModelProvider(requireActivity()).get(MainViewModel::class.java)
         //languageViewModel = ViewModelProvider(this).get(LanguageLoaderViewModel::class.java)

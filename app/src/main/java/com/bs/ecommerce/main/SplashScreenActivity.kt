@@ -52,7 +52,7 @@ class SplashScreenActivity : BaseActivity() {
     }
 
     fun loadAppLandingData() {
-        (viewModel as MainViewModel).getAppSettings(MainModelImpl(applicationContext), true)
+        (viewModel as MainViewModel).getAppSettings(MainModelImpl(), true)
     }
 
     private fun observeLiveData() {

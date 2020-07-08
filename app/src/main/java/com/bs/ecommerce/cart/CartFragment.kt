@@ -119,6 +119,7 @@ class CartFragment : BaseFragment() {
         // setup product attributes
         customAttributeManager =
             CustomAttributeManager(
+                activity = requireActivity(),
                 attributes = checkoutAttributes,
                 attributeViewHolder = dynamicAttributeHolderCart,
                 attributeValueHolder = bottomSheetLayoutCart.attributeValueHolder,

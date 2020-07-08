@@ -98,6 +98,7 @@ open class BaseCheckoutAddressFragment : BaseCheckoutNavigationFragment()
         // setup product attributes
         customAttributeManager =
             CustomAttributeManager(
+                activity = requireActivity(),
                 attributes = address.customAddressAttributes,
                 attributeViewHolder = layoutCheckoutAddress.customAttributeViewHolder,
                 attributeValueHolder = bottomSheetLayoutCheckout.attributeValueHolder,
