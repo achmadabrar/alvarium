@@ -154,6 +154,8 @@ dependencies {
 
     implementation 'com.afollestad.material-dialogs:core:3.3.0'
 
+    implementation 'com.mindorks.android:prdownloader:0.6.0'
+
     //firebase
     implementation 'com.google.firebase:firebase-core:17.4.3'
     implementation 'com.google.firebase:firebase-messaging:20.2.0'

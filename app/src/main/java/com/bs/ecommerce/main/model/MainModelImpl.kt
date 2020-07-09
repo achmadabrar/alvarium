@@ -3,6 +3,7 @@ package com.bs.ecommerce.main.model
 import android.content.Context
 import com.bs.ecommerce.account.orders.model.data.UploadFileData
 import com.bs.ecommerce.account.orders.model.data.UploadFileResponse
+import com.bs.ecommerce.base.BaseFragment
 import com.bs.ecommerce.networking.common.RequestCompleteListener
 import com.bs.ecommerce.main.model.data.AppLandingSettingResponse
 import com.bs.ecommerce.main.model.data.AppStartRequest
@@ -122,7 +123,7 @@ class MainModelImpl: MainModel
         })
     }
 
-    override fun uploadFile(file: File, mimeType: String?, callback: RequestCompleteListener<UploadFileData>) {
+    override fun uploadFileCheckoutAttribute(file: File, mimeType: String?, callback: RequestCompleteListener<UploadFileResponse>) {
 
         val requestBody = ProgressRequestBody(
             file, mimeType, object: ProgressRequestBody.ProgressCallback {
@@ -135,7 +136,7 @@ class MainModelImpl: MainModel
             MultipartBody.Part.createFormData("file", file.name, requestBody)
 
 
-        RetroClient.api.uploadFile(body).enqueue(object :
+        RetroClient.api.uploadFileCheckoutAttribute(body, BaseFragment.fileUploadAttributeId).enqueue(object :
             Callback<UploadFileResponse> {
 
             override fun onFailure(call: Call<UploadFileResponse>, t: Throwable) {
@@ -147,7 +148,7 @@ class MainModelImpl: MainModel
                 response: Response<UploadFileResponse>
             ) {
                 if (response.body()?.data != null && response.code() == 200)
-                    callback.onRequestSuccess(response.body()?.data as UploadFileData)
+                    callback.onRequestSuccess(response.body() as UploadFileResponse)
                 else
                     callback.onRequestFailed(TextUtils.getErrorMessage(response))
             }

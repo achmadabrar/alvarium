@@ -11,9 +11,9 @@ import java.io.File
 class ReturnRequestViewModel: BaseViewModel() {
 
     val returnReqLD = MutableLiveData<ReturnReqFormData>()
-    val uploadFileLD = MutableLiveData<UploadFileData?>()
+    //val uploadFileLD = MutableLiveData<UploadFileData?>()
 
-    var uploadedFileGuid: String = ""
+    //var uploadedFileGuid: String = ""
 
     fun getFormData(orderId: Int, model: ReturnReqModel) {
 

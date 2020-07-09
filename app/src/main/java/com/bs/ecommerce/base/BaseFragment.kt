@@ -22,18 +22,21 @@ import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bs.ecommerce.MyApplication
 import com.bs.ecommerce.R
+import com.bs.ecommerce.cart.CartFragment
 import com.bs.ecommerce.cart.GiftCardAdapter
 import com.bs.ecommerce.cart.model.CartModelImpl
 import com.bs.ecommerce.cart.model.data.CartProduct
 import com.bs.ecommerce.cart.model.data.OrderTotal
 import com.bs.ecommerce.catalog.common.ProductSummary
+import com.bs.ecommerce.catalog.product.ProductDetailFragment
 import com.bs.ecommerce.customViews.ContentLoadingDialog
 import com.bs.ecommerce.db.DbHelper
 import com.bs.ecommerce.more.barcode.BarCodeCaptureFragment
 import com.bs.ecommerce.networking.NetworkUtil
 import com.bs.ecommerce.utils.*
-import com.facebook.GraphRequest
 import com.pnikosis.materialishprogress.ProgressWheel
+import kotlinx.android.synthetic.main.fragment_cart.*
+import kotlinx.android.synthetic.main.fragment_product_detail.*
 import kotlinx.android.synthetic.main.table_order_total.*
 import java.io.File
 import java.io.FileOutputStream
@@ -376,7 +379,6 @@ abstract class BaseFragment : Fragment()
 
                 fileWithMimeType = FileWithMimeType(file, mimeType)
 
-                blockingLoader.hideDialog()
 
             } catch (e: Exception) {
                 e.printStackTrace()
@@ -395,16 +397,42 @@ abstract class BaseFragment : Fragment()
 
             val fileInfo = fetchFileFromStorage(data)
 
-            viewModel.uploadFile(fileInfo.file, fileInfo.mimeType)
+
+            requireActivity().supportFragmentManager.findFragmentById(R.id.layoutFrame)?.let {
+
+                if (it is CartFragment)
+                    viewModel.uploadFileCheckoutAttribute(fileInfo)
+
+
+                viewModel.uploadFileLD.observe(viewLifecycleOwner, Observer { data ->
+
+                    blockingLoader.hideDialog()
+
+                    if (it is CartFragment)
+                    {
+                        fabDownloadFileCartPage?.visibility = View.VISIBLE
+                        fabDownloadFileCartPage?.setOnClickListener {     viewModel.downloadFile(data?.downloadUrl)    }
+                    }
+
+
+                    if (it is ProductDetailFragment)
+                    {
+                        fabDownloadFileProductPage?.visibility = View.VISIBLE
+                        fabDownloadFileProductPage?.setOnClickListener {     viewModel.downloadFile(data?.downloadUrl)    }
+                    }
+                })
+            }
         }
     }
 
 
-    private val BARCODE_CAMERA_PERMISSION = 1
-    private val WRITE_PERMISSION = 222
 
     companion object {
+
+        var fileUploadAttributeId = 0
         @JvmStatic val ATTRIBUTE_FILE_UPLOAD_REQUEST_CODE = 500
+        @JvmStatic private val BARCODE_CAMERA_PERMISSION = 1
+        @JvmStatic private val WRITE_PERMISSION = 222
     }
 
 

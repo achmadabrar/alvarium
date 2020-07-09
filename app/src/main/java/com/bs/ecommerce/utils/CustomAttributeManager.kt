@@ -280,6 +280,8 @@ class CustomAttributeManager(
             chooseFile.type = "*/*"
             chooseFile = Intent.createChooser(chooseFile, "Choose a file")
 
+            BaseFragment.fileUploadAttributeId = attr.id.toInt()
+
             activity.startActivityForResult(chooseFile, BaseFragment.ATTRIBUTE_FILE_UPLOAD_REQUEST_CODE)
         }
 
