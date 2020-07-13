@@ -242,6 +242,7 @@ open class RegisterFragment : ToolbarLogoBaseFragment(), View.OnClickListener
             // setup product attributes
             customAttributeManager =
                 CustomAttributeManager(
+                    activity = requireActivity(),
                     attributes = data.customerAttributes ?: listOf(),
                     attributeViewHolder = attrViewHolderRegisterPage,
                     attributeValueHolder = bottomSheetLayoutRegister.attributeValueHolder,

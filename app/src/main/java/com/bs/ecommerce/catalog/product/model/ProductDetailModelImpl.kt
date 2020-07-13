@@ -1,25 +1,31 @@
 package com.bs.ecommerce.catalog.product.model
 
 import com.bs.ecommerce.account.auth.register.data.KeyValuePair
-import com.bs.ecommerce.networking.common.RequestCompleteListener
+import com.bs.ecommerce.account.orders.model.data.UploadFileData
+import com.bs.ecommerce.account.orders.model.data.UploadFileResponse
+import com.bs.ecommerce.base.BaseFragment
+import com.bs.ecommerce.catalog.common.AddToCartResponse
+import com.bs.ecommerce.catalog.common.AddToWishListResponse
+import com.bs.ecommerce.catalog.common.ProductDetailResponse
 import com.bs.ecommerce.db.DbHelper
 import com.bs.ecommerce.home.homepage.model.data.HomePageProductResponse
 import com.bs.ecommerce.networking.RetroClient
 import com.bs.ecommerce.networking.common.KeyValueFormData
-import com.bs.ecommerce.catalog.common.AddToCartResponse
-import com.bs.ecommerce.catalog.common.AddToWishListResponse
-import com.bs.ecommerce.catalog.common.ProductDetailResponse
+import com.bs.ecommerce.networking.common.RequestCompleteListener
 import com.bs.ecommerce.utils.Const
+import com.bs.ecommerce.utils.ProgressRequestBody
 import com.bs.ecommerce.utils.TextUtils
 import com.bs.ecommerce.utils.showLog
 import com.google.gson.GsonBuilder
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.observers.DisposableObserver
 import io.reactivex.schedulers.Schedulers
+import okhttp3.MultipartBody
 import okhttp3.ResponseBody
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.io.File
 
 class ProductDetailModelImpl :
     ProductDetailModel {
@@ -135,6 +141,42 @@ class ProductDetailModelImpl :
                 }
 
             })
+    }
+
+    override fun uploadFile(
+        file: File,
+        mimeType: String?,
+        callback: RequestCompleteListener<UploadFileData>
+    ) {
+
+        val requestBody = ProgressRequestBody(
+            file, mimeType, object: ProgressRequestBody.ProgressCallback {
+                override fun onProgress(progress: Long, total: Long) {
+                    "upload_percent".showLog("$progress - $total")
+                }
+            })
+
+        val body: MultipartBody.Part =
+            MultipartBody.Part.createFormData("file", file.name, requestBody)
+
+        RetroClient.api.uploadFileProductAttribute(body, BaseFragment.fileUploadAttributeId).enqueue(object :
+            Callback<UploadFileResponse> {
+
+            override fun onFailure(call: Call<UploadFileResponse>, t: Throwable) {
+                callback.onRequestFailed(t.localizedMessage ?: "Unknown")
+            }
+
+            override fun onResponse(
+                call: Call<UploadFileResponse>,
+                response: Response<UploadFileResponse>
+            ) {
+                if (response.body()?.data != null && response.code() == 200)
+                    callback.onRequestSuccess(response.body()?.data as UploadFileData)
+                else
+                    callback.onRequestFailed(TextUtils.getErrorMessage(response))
+            }
+
+        })
     }
 
     override fun getRelatedProducts(

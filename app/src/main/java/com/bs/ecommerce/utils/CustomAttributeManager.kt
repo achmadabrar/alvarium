@@ -2,6 +2,7 @@ package com.bs.ecommerce.utils
 
 import android.app.DatePickerDialog
 import android.content.Context
+import android.content.Intent
 import android.content.res.ColorStateList
 import android.graphics.Color
 import android.text.Editable
@@ -14,13 +15,15 @@ import android.widget.*
 import androidx.appcompat.widget.AppCompatRadioButton
 import androidx.core.view.ViewCompat
 import androidx.core.view.children
+import androidx.fragment.app.FragmentActivity
 import com.bs.ecommerce.R
 import com.bs.ecommerce.account.auth.register.data.KeyValuePair
-import com.bs.ecommerce.db.DbHelper
-import com.bs.ecommerce.networking.common.KeyValueFormData
+import com.bs.ecommerce.base.BaseFragment
 import com.bs.ecommerce.catalog.common.AttributeControlValue
 import com.bs.ecommerce.catalog.common.CustomAttribute
 import com.bs.ecommerce.catalog.common.ProductPrice
+import com.bs.ecommerce.db.DbHelper
+import com.bs.ecommerce.networking.common.KeyValueFormData
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import kotlinx.android.synthetic.main.color_selection_layout.view.*
 import org.jetbrains.anko.layoutInflater
@@ -28,6 +31,7 @@ import java.util.*
 
 
 class CustomAttributeManager(
+    private val activity: FragmentActivity,
     private val attributes: List<CustomAttribute>,
     private val attributeViewHolder: LinearLayout,
     private val attributeValueHolder: LinearLayout,
@@ -62,6 +66,8 @@ class CustomAttributeManager(
                 AttributeControlType.TextBox, AttributeControlType.MultilineTextbox -> textInputAttr(attr)
 
                 AttributeControlType.Datepicker -> datePickerAttr(attr)
+
+                AttributeControlType.FileUpload -> fileUploadAttr(attr)
 
                 else -> genericAttributes(attr)
             }
@@ -245,6 +251,42 @@ class CustomAttributeManager(
         inflatedViews[attr.id] = layout
     }
 
+    private fun fileUploadAttr(attr: CustomAttribute) {
+
+        val layout = layoutInflater.inflate(R.layout.custom_attribute_file_upload, viewGroup)
+        layout.tag = attr.id
+
+
+        val tvName = layout.findViewById<TextView>(R.id.tvLayoutTitle)
+        val tvDesc = layout.findViewById<TextView>(R.id.tvLayoutSubTitle)
+        val btnUpload = layout.findViewById<TextView>(R.id.btnUpload)
+
+        if (attr.isRequired)
+            tvName?.setDrawableEnd(R.drawable.ic_star_formular)
+
+        tvName.text = attr.name
+        tvDesc.text = attr.textPrompt ?: DbHelper.getString(Const.COMMON_SELECT).plus(" ${attr.name}")
+        btnUpload.text = DbHelper.getString(Const.RETURN_REQ_UPLOAD_FILE)
+
+        btnUpload?.setOnClickListener {
+
+            var chooseFile = Intent(Intent.ACTION_GET_CONTENT)
+            chooseFile.type = "*/*"
+            chooseFile = Intent.createChooser(chooseFile, "Choose a file")
+
+            BaseFragment.fileUploadAttributeId = attr.id.toInt()
+
+            activity.startActivityForResult(chooseFile, BaseFragment.ATTRIBUTE_FILE_UPLOAD_REQUEST_CODE)
+
+            val value = AttributeControlValue()
+            value.id = -5
+
+            setAttrSelected(attr.id, value, isSelected = true, multipleSelection = false)
+        }
+
+        inflatedViews[attr.id] = layout
+    }
+
     private fun textInputAttr(attr: CustomAttribute) {
         val layout = layoutInflater.inflate(R.layout.custom_attribute_edittext, viewGroup)
         layout.tag = attr.id
@@ -417,6 +459,20 @@ class CustomAttributeManager(
         adjustProductPrice()
     }
 
+    fun updateSelectedAttr(id: Int, value: String) {
+
+        for ((_, valueList) in selectedAttributes) {
+            if (valueList.isNotEmpty()) {
+                for (attribute in valueList) {
+                    if(attribute.id == id) {
+                        attribute.name = value
+                        break
+                    }
+                }
+            }
+        }
+    }
+
     private fun updateUI() {
         for (i in selectedAttributes.keys) {
             val view = attributeViewHolder.findViewWithTag<View>(i)
@@ -503,7 +559,15 @@ class CustomAttributeManager(
                             )
                         )
 
-                    } else if (attribute.id == -1) { // -1 for textAttr & -2 for datePickerAttr
+                    } else if (attribute.id == -1) { // -1 for textAttr
+                        allKeyValueList.add(
+                            KeyValuePair(
+                                "${productAttributePrefix}_${key}",
+                                attribute.name ?: ""
+                            )
+                        )
+
+                    } else if (attribute.id == -5) { // file upload attribute
                         allKeyValueList.add(
                             KeyValuePair(
                                 "${productAttributePrefix}_${key}",

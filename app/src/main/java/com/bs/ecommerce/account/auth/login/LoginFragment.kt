@@ -128,7 +128,7 @@ class LoginFragment : BaseFragment()
 
                     // get appLandingSettings
                     mainViewModel.updatingAppSettings = true
-                    mainViewModel.getAppSettings(MainModelImpl(requireContext()))
+                    mainViewModel.getAppSettings(MainModelImpl())
                 }
             })
 

@@ -1,19 +1,18 @@
 package com.bs.ecommerce.main.model
 
-import android.content.Context
-import com.bs.ecommerce.networking.common.RequestCompleteListener
 import com.bs.ecommerce.main.model.data.AppLandingSettingResponse
 import com.bs.ecommerce.main.model.data.AppStartRequest
 import com.bs.ecommerce.main.model.data.CategoryTreeResponse
 import com.bs.ecommerce.networking.RetroClient
 import com.bs.ecommerce.networking.common.BaseResponse
+import com.bs.ecommerce.networking.common.RequestCompleteListener
 import com.bs.ecommerce.utils.TextUtils
 import okhttp3.ResponseBody
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class MainModelImpl(private val context: Context): MainModel
+class MainModelImpl: MainModel
 {
 
     override fun getLeftCategories(callback: RequestCompleteListener<CategoryTreeResponse>)

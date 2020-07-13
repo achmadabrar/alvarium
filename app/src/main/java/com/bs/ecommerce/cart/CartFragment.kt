@@ -1,5 +1,7 @@
 package com.bs.ecommerce.cart
 
+import android.app.Activity
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.RelativeLayout
@@ -15,12 +17,12 @@ import com.bs.ecommerce.cart.model.CartModel
 import com.bs.ecommerce.cart.model.CartModelImpl
 import com.bs.ecommerce.cart.model.data.CartProduct
 import com.bs.ecommerce.cart.model.data.CartRootData
+import com.bs.ecommerce.catalog.common.CheckoutAttribute
+import com.bs.ecommerce.catalog.product.ProductDetailFragment
 import com.bs.ecommerce.checkout.CheckoutStepFragment
 import com.bs.ecommerce.db.DbHelper
 import com.bs.ecommerce.networking.Api
 import com.bs.ecommerce.networking.common.KeyValueFormData
-import com.bs.ecommerce.catalog.product.ProductDetailFragment
-import com.bs.ecommerce.catalog.common.CheckoutAttribute
 import com.bs.ecommerce.utils.*
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import kotlinx.android.synthetic.main.custom_attribute_bottom_sheet.*
@@ -92,10 +94,42 @@ class CartFragment : BaseFragment() {
                     requireActivity().supportFragmentManager.popBackStackImmediate()
                 }
             })
+
             isLoadingLD.observe(viewLifecycleOwner, Observer { isShowLoader -> showHideLoader(isShowLoader) })
+
+            uploadFileLD.observe(viewLifecycleOwner, Observer { data ->
+                blockingLoader.hideDialog()
+
+                customAttributeManager?.updateSelectedAttr(-5, data?.downloadGuid ?: "")
+
+                //TODO download uploaded file not done
+                /*fabDownloadFileCartPage?.visibility = View.VISIBLE
+                fabDownloadFileCartPage?.setOnClickListener {
+                    viewModel.downloadFile(data?.downloadUrl)
+                }*/
+            })
         }
 
 
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+
+        if (requestCode == ATTRIBUTE_FILE_UPLOAD_REQUEST_CODE && resultCode == Activity.RESULT_OK) {
+
+            data?.data?.let {
+                blockingLoader.showDialog()
+
+                val fileWithMime = Utils().processFileForUploading(it, requireActivity())
+
+                if(fileWithMime != null) {
+                    (viewModel as CartViewModel)
+                        .uploadFile(fileWithMime.file, fileWithMime.mimeType, model)
+                } else {
+                    blockingLoader.hideDialog()
+                }
+            }
+        }
     }
 
     private fun setData(cartRootData: CartRootData)
@@ -119,6 +153,7 @@ class CartFragment : BaseFragment() {
         // setup product attributes
         customAttributeManager =
             CustomAttributeManager(
+                activity = requireActivity(),
                 attributes = checkoutAttributes,
                 attributeViewHolder = dynamicAttributeHolderCart,
                 attributeValueHolder = bottomSheetLayoutCart.attributeValueHolder,

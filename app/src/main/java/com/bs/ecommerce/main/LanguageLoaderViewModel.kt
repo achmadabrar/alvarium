@@ -31,7 +31,7 @@ class LanguageLoaderViewModel: BaseViewModel() {
 
     private fun getLanguageIdFromAppSettings() {
 
-        MainModelImpl(MyApplication.mAppContext!!).getAppLandingSettings(
+        MainModelImpl().getAppLandingSettings(
             object :
                 RequestCompleteListener<AppLandingSettingResponse> {
 

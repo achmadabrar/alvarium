@@ -1,12 +1,8 @@
 package com.bs.ecommerce.account.orders
 
 import android.app.Activity
-import android.content.ContentResolver
 import android.content.Intent
-import android.database.Cursor
-import android.net.Uri
 import android.os.Bundle
-import android.provider.OpenableColumns
 import android.view.View
 import android.widget.ArrayAdapter
 import android.widget.RelativeLayout
@@ -26,13 +22,9 @@ import com.bs.ecommerce.db.DbHelper
 import com.bs.ecommerce.main.MainViewModel
 import com.bs.ecommerce.utils.Const
 import com.bs.ecommerce.utils.RecyclerViewMargin
-import com.bs.ecommerce.utils.isNumeric
+import com.bs.ecommerce.utils.Utils
 import com.bs.ecommerce.utils.toast
 import kotlinx.android.synthetic.main.fragment_return_request.*
-import java.io.File
-import java.io.FileOutputStream
-import java.io.InputStream
-import java.io.OutputStream
 
 
 class ReturnRequestFragment : BaseFragment() {
@@ -69,58 +61,19 @@ class ReturnRequestFragment : BaseFragment() {
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
 
-        if (resultCode == Activity.RESULT_OK) {
+        if (resultCode == Activity.RESULT_OK && requestCode == 123) {
 
             data?.data?.let {
 
                 blockingLoader.showDialog()
 
-                try {
-                    val uri: Uri = it
-                    val contentResolver: ContentResolver = requireActivity().contentResolver
+                val fileWithMime = Utils().processFileForUploading(it, requireActivity())
 
-                    val mimeType: String? = contentResolver.getType(uri)
-                    val returnCursor: Cursor? = contentResolver.query(uri, null, null, null, null)
-
-                    val nameIndex: Int? = returnCursor?.getColumnIndex(OpenableColumns.DISPLAY_NAME)
-                    val sizeIndex: Int? = returnCursor?.getColumnIndex(OpenableColumns.SIZE)
-
-                    returnCursor?.moveToFirst()
-
-                    var filename = nameIndex?.let { i -> returnCursor.getString(i) }
-                    val fileSize = sizeIndex?.let { i -> returnCursor.getString(i) }
-
-                    returnCursor?.close()
-
-                    val fileSizeInt = if(fileSize?.isNumeric() == true)
-                        fileSize.toInt() else 0
-
-                    if(fileSizeInt > 2000000) {
-                        blockingLoader.hideDialog()
-                        toast(DbHelper.getStringWithNumber(Const.COMMON_MAX_FILE_SIZE, "2000000"))
-                        return
-                    }
-
-
-                    // File Input Stream gets me file data
-                    val inputStream: InputStream? = contentResolver.openInputStream(uri)
-
-                    val buffer = ByteArray(inputStream?.available() ?: 0)
-                    inputStream?.read(buffer)
-
-                    val extension = filename?.substring(filename.lastIndexOf(".")) ?: "tmp"
-                    filename = filename?.replace(extension, "")
-
-                    val file: File = File.createTempFile(filename ?: "temp", extension)
-                    val outStream: OutputStream = FileOutputStream(file)
-                    outStream.write(buffer)
-
+                if(fileWithMime != null) {
                     (viewModel as ReturnRequestViewModel)
-                        .uploadFile(file, mimeType, model)
-                } catch (e: Exception) {
-                    e.printStackTrace()
+                        .uploadFile(fileWithMime.file, fileWithMime.mimeType, model)
+                } else {
                     blockingLoader.hideDialog()
                 }
             }

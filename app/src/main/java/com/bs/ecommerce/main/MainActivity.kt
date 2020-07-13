@@ -67,7 +67,7 @@ class MainActivity : PrivacyPolicyDialogActivity(), View.OnClickListener
         // load access token from sharedPreferences to memory
         NetworkUtil.token = prefObject.getPrefs(prefObject.TOKEN_KEY)
 
-        mainModel = MainModelImpl(applicationContext)
+        mainModel = MainModelImpl()
 
         mainViewModel = ViewModelProvider(this).get(MainViewModel::class.java)
 

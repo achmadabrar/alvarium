@@ -60,7 +60,7 @@ class CategoryFragment : ToolbarLogoBaseFragment()
 
         if (!viewCreated)
         {
-            mainModel = MainModelImpl(activity?.applicationContext!!)
+            mainModel = MainModelImpl()
 
             mainViewModel = ViewModelProvider(requireActivity()).get(MainViewModel::class.java)
 

@@ -314,7 +314,14 @@ abstract class BaseFragment : Fragment()
     }
 
 
-    private val BARCODE_CAMERA_PERMISSION = 1
-    private val WRITE_PERMISSION = 222
+    companion object {
+
+        var fileUploadAttributeId = 0
+        @JvmStatic val ATTRIBUTE_FILE_UPLOAD_REQUEST_CODE = 500
+        @JvmStatic private val BARCODE_CAMERA_PERMISSION = 1
+        @JvmStatic private val WRITE_PERMISSION = 222
+    }
+
+
 
 }

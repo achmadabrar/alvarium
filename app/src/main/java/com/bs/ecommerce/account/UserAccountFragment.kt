@@ -184,7 +184,7 @@ class UserAccountFragment: ToolbarLogoBaseFragment() {
 
                         (viewModel as MainViewModel).apply {
                             updatingAppSettings = true
-                            getAppSettings(MainModelImpl(requireContext()))
+                            getAppSettings(MainModelImpl())
                         }
                     })
                 else

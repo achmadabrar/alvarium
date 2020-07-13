@@ -107,6 +107,18 @@
 
     </RelativeLayout>
 
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fabDownloadFileCartPage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_margin="5dp"
+        android:src="@drawable/ic_file_download"
+        android:visibility="gone"
+        app:backgroundTint="@color/gray"
+        app:fabCustomSize="50dp"
+        tools:visibility="visible" />
+
     <include
         android:id="@+id/bottomSheetLayoutCart"
         layout="@layout/custom_attribute_bottom_sheet"

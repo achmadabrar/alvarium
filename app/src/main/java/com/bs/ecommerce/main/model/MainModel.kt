@@ -1,10 +1,10 @@
 package com.bs.ecommerce.main.model
 
-import com.bs.ecommerce.networking.common.RequestCompleteListener
 import com.bs.ecommerce.main.model.data.AppLandingSettingResponse
 import com.bs.ecommerce.main.model.data.AppStartRequest
 import com.bs.ecommerce.main.model.data.CategoryTreeResponse
 import com.bs.ecommerce.networking.common.BaseResponse
+import com.bs.ecommerce.networking.common.RequestCompleteListener
 
 interface MainModel
 {

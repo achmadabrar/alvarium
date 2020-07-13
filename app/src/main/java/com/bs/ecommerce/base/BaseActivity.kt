@@ -353,4 +353,15 @@ abstract class BaseActivity : AppCompatActivity(), ConnectivityReceiver.Connecti
         }
     }
 
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?)
+    {
+        super.onActivityResult(requestCode, resultCode, data)
+
+        supportFragmentManager.findFragmentById(R.id.layoutFrame)?.let {
+
+            if (it is BaseFragment)
+                it.onActivityResult(requestCode, resultCode, data)
+        }
+    }
+
 }
