@@ -1,6 +1,7 @@
 package com.bs.ecommerce.catalog.product
 
 import android.annotation.SuppressLint
+import android.app.Activity
 import android.app.DatePickerDialog
 import android.content.Intent
 import android.graphics.Paint
@@ -483,6 +484,18 @@ class ProductDetailFragment : BaseFragment(), View.OnClickListener {
                 }
                 blockingLoader.hideDialog()
             })
+
+            uploadFileLD.observe(viewLifecycleOwner, Observer { data ->
+                blockingLoader.hideDialog()
+
+                customAttributeManager?.updateSelectedAttr(-5, data?.downloadGuid ?: "")
+
+                //TODO download uploaded file not done
+                /*fabDownloadFileProductPage?.visibility = View.VISIBLE
+                fabDownloadFileProductPage?.setOnClickListener {
+                    viewModel.downloadFile(data?.downloadUrl)
+                }*/
+            })
         }
 
     }
@@ -757,6 +770,25 @@ class ProductDetailFragment : BaseFragment(), View.OnClickListener {
             model,
             if(cart) Api.typeShoppingCart else Api.typeWishList
         )
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+
+        if (requestCode == ATTRIBUTE_FILE_UPLOAD_REQUEST_CODE && resultCode == Activity.RESULT_OK) {
+
+            data?.data?.let {
+                blockingLoader.showDialog()
+
+                val fileWithMime = Utils().processFileForUploading(it, requireActivity())
+
+                if(fileWithMime != null) {
+                    (viewModel as ProductDetailViewModel)
+                        .uploadFile(fileWithMime.file, fileWithMime.mimeType, model)
+                } else {
+                    blockingLoader.hideDialog()
+                }
+            }
+        }
     }
 
     override fun onClick(v: View) {

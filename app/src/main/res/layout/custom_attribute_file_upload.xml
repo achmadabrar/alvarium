@@ -52,7 +52,7 @@
         style="@style/rtlSupportedTextView"/>
 
     <TextView
-        android:id="@+id/tvSelectedAttr"
+        android:id="@+id/btnUpload"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         style="@style/RoundedButtonRegular"

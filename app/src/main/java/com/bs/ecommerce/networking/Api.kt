@@ -296,13 +296,15 @@ interface Api {
     @Multipart
     @POST("shoppingcart/uploadfileProductAttribute/{attributeId}")
     fun uploadFileProductAttribute(
-        @Part file: MultipartBody.Part, @Path("attributeId") id: Int
+        @Part file: MultipartBody.Part,
+        @Path("attributeId") id: Int
     ): Call<UploadFileResponse>
 
     @Multipart
     @POST("shoppingcart/uploadfileCheckoutAttribute/{attributeId}")
     fun uploadFileCheckoutAttribute(
-        @Part file: MultipartBody.Part, @Path("attributeId") id: Int
+        @Part file: MultipartBody.Part,
+        @Path("attributeId") id: Int
     ): Call<UploadFileResponse>
 
 

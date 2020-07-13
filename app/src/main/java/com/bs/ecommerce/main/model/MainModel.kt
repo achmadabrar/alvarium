@@ -1,13 +1,10 @@
 package com.bs.ecommerce.main.model
 
-import com.bs.ecommerce.account.orders.model.data.UploadFileData
-import com.bs.ecommerce.account.orders.model.data.UploadFileResponse
-import com.bs.ecommerce.networking.common.RequestCompleteListener
 import com.bs.ecommerce.main.model.data.AppLandingSettingResponse
 import com.bs.ecommerce.main.model.data.AppStartRequest
 import com.bs.ecommerce.main.model.data.CategoryTreeResponse
 import com.bs.ecommerce.networking.common.BaseResponse
-import java.io.File
+import com.bs.ecommerce.networking.common.RequestCompleteListener
 
 interface MainModel
 {
@@ -20,8 +17,4 @@ interface MainModel
     fun changeCurrency(currencyId : Long, callback: RequestCompleteListener<BaseResponse>)
 
     fun submitAppStart(appStartRequest: AppStartRequest, callback: RequestCompleteListener<Any?>)
-
-    //fun uploadFileProductAttribute(file: File, mimeType: String?, callback: RequestCompleteListener<UploadFileData>)
-
-    fun uploadFileCheckoutAttribute(file: File, mimeType: String?, callback: RequestCompleteListener<UploadFileResponse>)
 }

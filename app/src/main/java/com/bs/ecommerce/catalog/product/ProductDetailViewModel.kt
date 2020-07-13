@@ -3,18 +3,20 @@ package com.bs.ecommerce.catalog.product
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import com.bs.ecommerce.account.auth.register.data.KeyValuePair
+import com.bs.ecommerce.account.orders.model.data.UploadFileData
 import com.bs.ecommerce.base.BaseViewModel
 import com.bs.ecommerce.catalog.common.*
-import com.bs.ecommerce.networking.common.RequestCompleteListener
+import com.bs.ecommerce.catalog.product.model.ProductDetailModel
 import com.bs.ecommerce.db.DbHelper
 import com.bs.ecommerce.home.homepage.model.data.HomePageProductResponse
 import com.bs.ecommerce.networking.Api
 import com.bs.ecommerce.networking.common.KeyValueFormData
-import com.bs.ecommerce.catalog.product.model.ProductDetailModel
+import com.bs.ecommerce.networking.common.RequestCompleteListener
 import com.bs.ecommerce.utils.*
 import com.google.gson.Gson
 import okhttp3.ResponseBody
 import retrofit2.Response
+import java.io.File
 import java.util.*
 
 
@@ -32,6 +34,9 @@ class ProductDetailViewModel : BaseViewModel() {
     var gotoCartPage = false
     var rentDateFrom: Long? = null
     var rentDateTo: Long? = null
+
+    val uploadFileLD = MutableLiveData<UploadFileData?>()
+    var uploadedFileGuid: String = ""
 
     fun getProductDetail(prodId: Long, model: ProductDetailModel) {
         isLoadingLD.value = true
@@ -279,6 +284,28 @@ class ProductDetailViewModel : BaseViewModel() {
                 rentDateTo!!
             }
         }
+    }
+
+    fun uploadFile(file: File, mimeType: String?, model: ProductDetailModel) {
+
+        model.uploadFile(file, mimeType, object :
+            RequestCompleteListener<UploadFileData> {
+
+            override fun onRequestSuccess(data: UploadFileData) {
+                uploadedFileGuid = data.downloadGuid ?: ""
+                uploadFileLD.value = data
+
+                try { file.delete() } catch (e: Exception) { e.printStackTrace() }
+            }
+
+            override fun onRequestFailed(errorMessage: String) {
+                uploadFileLD.value = null
+                uploadedFileGuid = ""
+
+                try { file.delete() } catch (e: Exception) { e.printStackTrace() }
+            }
+
+        })
     }
 
 }

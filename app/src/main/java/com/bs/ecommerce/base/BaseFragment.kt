@@ -1,15 +1,9 @@
 package com.bs.ecommerce.base
 
 import android.Manifest
-import android.app.Activity
 import android.app.AlertDialog
-import android.content.ContentResolver
-import android.content.Intent
 import android.content.pm.PackageManager
-import android.database.Cursor
-import android.net.Uri
 import android.os.Bundle
-import android.provider.OpenableColumns
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -22,26 +16,18 @@ import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bs.ecommerce.MyApplication
 import com.bs.ecommerce.R
-import com.bs.ecommerce.cart.CartFragment
 import com.bs.ecommerce.cart.GiftCardAdapter
 import com.bs.ecommerce.cart.model.CartModelImpl
 import com.bs.ecommerce.cart.model.data.CartProduct
 import com.bs.ecommerce.cart.model.data.OrderTotal
 import com.bs.ecommerce.catalog.common.ProductSummary
-import com.bs.ecommerce.catalog.product.ProductDetailFragment
 import com.bs.ecommerce.customViews.ContentLoadingDialog
 import com.bs.ecommerce.db.DbHelper
 import com.bs.ecommerce.more.barcode.BarCodeCaptureFragment
 import com.bs.ecommerce.networking.NetworkUtil
 import com.bs.ecommerce.utils.*
 import com.pnikosis.materialishprogress.ProgressWheel
-import kotlinx.android.synthetic.main.fragment_cart.*
-import kotlinx.android.synthetic.main.fragment_product_detail.*
 import kotlinx.android.synthetic.main.table_order_total.*
-import java.io.File
-import java.io.FileOutputStream
-import java.io.InputStream
-import java.io.OutputStream
 
 
 abstract class BaseFragment : Fragment()
@@ -326,105 +312,6 @@ abstract class BaseFragment : Fragment()
                 pointsLayout?.visibility = View.GONE
         }
     }
-    
-    
-    protected fun fetchFileFromStorage(data: Intent?) : FileWithMimeType
-    {
-
-        var fileWithMimeType : FileWithMimeType? = null
-
-        data?.data?.let {
-
-            blockingLoader.showDialog()
-
-            try {
-                val uri: Uri = it
-                val contentResolver: ContentResolver = requireActivity().contentResolver
-
-                val mimeType = contentResolver.getType(uri)
-                val returnCursor: Cursor? = contentResolver.query(uri, null, null, null, null)
-
-                val nameIndex: Int? = returnCursor?.getColumnIndex(OpenableColumns.DISPLAY_NAME)
-                val sizeIndex: Int? = returnCursor?.getColumnIndex(OpenableColumns.SIZE)
-
-                returnCursor?.moveToFirst()
-
-                var filename = nameIndex?.let { i -> returnCursor.getString(i) }
-                val fileSize = sizeIndex?.let { i -> returnCursor.getString(i) }
-
-                returnCursor?.close()
-/*
-                val fileSizeInt = if(fileSize?.isNumeric() == true)
-                    fileSize.toInt() else 0
-
-                if(fileSizeInt > 2000000) {
-                    blockingLoader.hideDialog()
-                    toast(DbHelper.getStringWithNumber(Const.COMMON_MAX_FILE_SIZE, "2000000"))
-                    return
-                }*/
-
-
-                // File Input Stream gets me file data
-                val inputStream: InputStream? = contentResolver.openInputStream(uri)
-
-                val buffer = ByteArray(inputStream?.available() ?: 0)
-                inputStream?.read(buffer)
-
-                val extension = filename?.substring(filename.lastIndexOf(".")) ?: "tmp"
-                filename = filename?.replace(extension, "")
-
-                val file = File.createTempFile(filename ?: "temp", extension)
-                val outStream: OutputStream = FileOutputStream(file)
-                outStream.write(buffer)
-
-                fileWithMimeType = FileWithMimeType(file, mimeType)
-
-
-            } catch (e: Exception) {
-                e.printStackTrace()
-                blockingLoader.hideDialog()
-            }
-        }
-        
-        return fileWithMimeType!!
-    }
-
-
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-
-        if (requestCode == ATTRIBUTE_FILE_UPLOAD_REQUEST_CODE && resultCode == Activity.RESULT_OK) {
-
-            val fileInfo = fetchFileFromStorage(data)
-
-
-            requireActivity().supportFragmentManager.findFragmentById(R.id.layoutFrame)?.let {
-
-                if (it is CartFragment)
-                    viewModel.uploadFileCheckoutAttribute(fileInfo)
-
-
-                viewModel.uploadFileLD.observe(viewLifecycleOwner, Observer { data ->
-
-                    blockingLoader.hideDialog()
-
-                    if (it is CartFragment)
-                    {
-                        fabDownloadFileCartPage?.visibility = View.VISIBLE
-                        fabDownloadFileCartPage?.setOnClickListener {     viewModel.downloadFile(data?.downloadUrl)    }
-                    }
-
-
-                    if (it is ProductDetailFragment)
-                    {
-                        fabDownloadFileProductPage?.visibility = View.VISIBLE
-                        fabDownloadFileProductPage?.setOnClickListener {     viewModel.downloadFile(data?.downloadUrl)    }
-                    }
-                })
-            }
-        }
-    }
-
 
 
     companion object {
@@ -438,5 +325,3 @@ abstract class BaseFragment : Fragment()
 
 
 }
-
-data class FileWithMimeType(val file: File, val mimeType: String?)

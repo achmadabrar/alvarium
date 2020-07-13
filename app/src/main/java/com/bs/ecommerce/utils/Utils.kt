@@ -3,13 +3,17 @@ package com.bs.ecommerce.utils
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.app.PendingIntent
+import android.content.ContentResolver
 import android.content.Context
 import android.content.Intent
+import android.database.Cursor
 import android.net.ConnectivityManager
 import android.net.Uri
 import android.os.Environment
+import android.provider.OpenableColumns
 import androidx.core.app.NotificationCompat
 import androidx.core.content.FileProvider
+import androidx.fragment.app.FragmentActivity
 import com.bs.ecommerce.BuildConfig
 import com.bs.ecommerce.MyApplication
 import com.bs.ecommerce.R
@@ -148,5 +152,55 @@ class Utils {
 
         mNotificationManager.notify(123, notificationBuilder.build())
 
+    }
+
+    fun processFileForUploading(uri: Uri, activity: FragmentActivity): FileWithMimeType?{
+        try {
+            val contentResolver: ContentResolver = activity.contentResolver
+
+            val mimeType: String? = contentResolver.getType(uri)
+            val returnCursor: Cursor? = contentResolver.query(uri, null, null, null, null)
+
+            val nameIndex: Int? = returnCursor?.getColumnIndex(OpenableColumns.DISPLAY_NAME)
+            val sizeIndex: Int? = returnCursor?.getColumnIndex(OpenableColumns.SIZE)
+
+            returnCursor?.moveToFirst()
+
+            var filename = nameIndex?.let { i -> returnCursor.getString(i) }
+            val fileSize = sizeIndex?.let { i -> returnCursor.getString(i) }
+
+            returnCursor?.close()
+
+            val fileSizeInt = if(fileSize?.isNumeric() == true)
+                fileSize.toInt() else 0
+
+            /*if(fileSizeInt > 2000000) {
+                blockingLoader.hideDialog()
+                toast(DbHelper.getStringWithNumber(Const.COMMON_MAX_FILE_SIZE, "2000000"))
+                return
+            }*/
+
+
+            // File Input Stream gets me file data
+            val inputStream: InputStream? = contentResolver.openInputStream(uri)
+
+            val buffer = ByteArray(inputStream?.available() ?: 0)
+            inputStream?.read(buffer)
+
+            val extension = filename?.substring(filename.lastIndexOf(".")) ?: "tmp"
+            filename = filename?.replace(extension, "")
+
+            val file: File = File.createTempFile(filename ?: "temp", extension)
+            val outStream: OutputStream = FileOutputStream(file)
+            outStream.write(buffer)
+
+            inputStream?.close()
+            outStream.close()
+
+            return FileWithMimeType(file, mimeType)
+        } catch (e: Exception) {
+            e.printStackTrace()
+            return null
+        }
     }
 }

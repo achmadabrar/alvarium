@@ -1,14 +1,17 @@
 package com.bs.ecommerce.cart
 
+import androidx.lifecycle.MutableLiveData
 import com.bs.ecommerce.account.auth.register.data.KeyValuePair
+import com.bs.ecommerce.account.orders.model.data.UploadFileData
 import com.bs.ecommerce.base.BaseViewModel
 import com.bs.ecommerce.cart.model.CartModel
 import com.bs.ecommerce.cart.model.data.CartProduct
 import com.bs.ecommerce.cart.model.data.CartResponse
 import com.bs.ecommerce.cart.model.data.CartRootData
-import com.bs.ecommerce.networking.common.RequestCompleteListener
 import com.bs.ecommerce.networking.Api
 import com.bs.ecommerce.networking.common.KeyValueFormData
+import com.bs.ecommerce.networking.common.RequestCompleteListener
+import java.io.File
 import java.util.*
 
 class CartViewModel : BaseViewModel()
@@ -21,6 +24,9 @@ class CartViewModel : BaseViewModel()
 
     private var REMOVE_DISCOUNT_KEY = "removediscount-"
     private var REMOVE_GIFT_CARD_KEY = "removegiftcard-"
+
+    val uploadFileLD = MutableLiveData<UploadFileData?>()
+    var uploadedFileGuid: String = ""
 
     fun removeItemFromCart(productId: Int?, model: CartModel) {
 
@@ -206,6 +212,28 @@ class CartViewModel : BaseViewModel()
             {
                 isLoadingLD.value = false
             }
+        })
+    }
+
+    fun uploadFile(file: File, mimeType: String?, model: CartModel) {
+
+        model.uploadFile(file, mimeType, object :
+            RequestCompleteListener<UploadFileData> {
+
+            override fun onRequestSuccess(data: UploadFileData) {
+                uploadedFileGuid = data.downloadGuid ?: ""
+                uploadFileLD.value = data
+
+                try { file.delete() } catch (e: Exception) { e.printStackTrace() }
+            }
+
+            override fun onRequestFailed(errorMessage: String) {
+                uploadFileLD.value = null
+                uploadedFileGuid = ""
+
+                try { file.delete() } catch (e: Exception) { e.printStackTrace() }
+            }
+
         })
     }
 }
