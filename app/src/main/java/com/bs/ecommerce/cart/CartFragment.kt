@@ -17,9 +17,13 @@ import com.bs.ecommerce.cart.model.CartModel
 import com.bs.ecommerce.cart.model.CartModelImpl
 import com.bs.ecommerce.cart.model.data.CartProduct
 import com.bs.ecommerce.cart.model.data.CartRootData
+import com.bs.ecommerce.cart.model.data.EstimateShipping
 import com.bs.ecommerce.catalog.common.CheckoutAttribute
 import com.bs.ecommerce.catalog.product.ProductDetailFragment
 import com.bs.ecommerce.checkout.CheckoutStepFragment
+import com.bs.ecommerce.checkout.model.CheckoutModelImpl
+import com.bs.ecommerce.checkout.model.data.AvailableCountry
+import com.bs.ecommerce.checkout.model.data.AvailableState
 import com.bs.ecommerce.db.DbHelper
 import com.bs.ecommerce.networking.Api
 import com.bs.ecommerce.networking.common.KeyValueFormData
@@ -27,6 +31,7 @@ import com.bs.ecommerce.utils.*
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import kotlinx.android.synthetic.main.custom_attribute_bottom_sheet.*
 import kotlinx.android.synthetic.main.custom_attribute_bottom_sheet.view.*
+import kotlinx.android.synthetic.main.estimate_shipping_layout.view.*
 import kotlinx.android.synthetic.main.fragment_cart.*
 import kotlinx.android.synthetic.main.ll_cart_coupon.*
 import kotlinx.android.synthetic.main.ll_cart_gift_card.*
@@ -108,8 +113,33 @@ class CartFragment : BaseFragment() {
                     viewModel.downloadFile(data?.downloadUrl)
                 }*/
             })
-        }
 
+            stateListLD.observe(viewLifecycleOwner, Observer { statesList ->
+
+                EditTextUtils().populateStateSpinner(
+                    requireContext(),
+                    estimateShippingLayout.stateSpinner,
+                    -1,
+                    statesList
+                )
+            })
+
+            estimateShippingLD.observe(viewLifecycleOwner, Observer { data ->
+
+                val optionOne = if(data?.shippingOptions?.size ?: 0 > 0)
+                    data.shippingOptions?.get(0) else null
+
+                val optionTwo = if(data?.shippingOptions?.size ?: 0 > 1)
+                    data.shippingOptions?.get(1) else null
+
+                estimateShippingLayout?.tvResult?.text =
+                    optionOne?.name?.plus(" (")?.plus(optionOne.price)?.plus(" )")
+                        ?.plus("\n")
+                        ?.plus(optionTwo?.name)?.plus(" (")?.plus(optionTwo?.price)?.plus(" )")
+
+                estimateShippingLayout?.tvResult?.visibility = View.VISIBLE
+            })
+        }
 
     }
 
@@ -144,8 +174,62 @@ class CartFragment : BaseFragment() {
 
         populateDynamicAttributes(cartRootData.cart.checkoutAttributes)
 
+        populateEstimateShipping(cartRootData.estimateShipping)
+
         cartPageView?.visibility = View.VISIBLE
         btnCheckOut?.visibility = View.VISIBLE
+    }
+
+    private fun populateEstimateShipping(estimateShipping: EstimateShipping?) {
+
+        if(estimateShipping?.enabled == false) return
+
+        estimateShippingLayout?.apply {
+
+            tvSectionTitle?.text = DbHelper.getString(Const.CART_ESTIMATE_SHIPPING_TITLE)
+            tvSectionSubtitle?.text = DbHelper.getString(Const.CART_ESTIMATE_SHIPPING_SUBTITLE)
+            btnCalculate?.text = DbHelper.getString(Const.CART_ESTIMATE_SHIPPING_BTN)
+            etZipCode?.hint = DbHelper.getString(Const.CART_ESTIMATE_SHIPPING_ZIP)
+            etZipCode?.setDrawableEnd(R.drawable.ic_star_formular)
+
+            btnCalculate?.setOnClickListener {
+
+                estimateShipping?.let {
+                    it.countryId = (countrySpinner.selectedItem as AvailableCountry).value.toInt()
+                    it.stateProvinceId = (stateSpinner.selectedItem as AvailableState).id
+                    it.zipPostalCode = etZipCode?.text?.toString() ?: ""
+
+                    (viewModel as CartViewModel).estimateShippingCost( it, model)
+                }
+            }
+
+            EditTextUtils().populateCountrySpinner(
+                requireContext(),
+                countrySpinner,
+                estimateShipping?.availableCountries ?: listOf(),
+
+                object : ItemClickListener<AvailableCountry> {
+
+                    override fun onClick(view: View, position: Int, data: AvailableCountry) {
+
+                        // load states for selected country
+                        if (data.value != "0") {
+                            (viewModel as CartViewModel).getStatesByCountryVM(
+                                data.value, CheckoutModelImpl()
+                            )
+                        }
+                    }
+                }
+            )
+
+            EditTextUtils().populateStateSpinner(
+                requireContext(),
+                stateSpinner,
+                -1,
+                estimateShipping?.availableStates ?: listOf()
+            )
+        }
+
     }
 
     private fun populateDynamicAttributes(checkoutAttributes: List<CheckoutAttribute>) {

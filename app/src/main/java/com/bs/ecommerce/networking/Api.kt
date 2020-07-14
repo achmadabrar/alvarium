@@ -17,6 +17,8 @@ import com.bs.ecommerce.account.rewardpoint.model.data.RewardPointResponse
 import com.bs.ecommerce.account.wishlist.model.data.WishListResponse
 import com.bs.ecommerce.cart.model.data.CartResponse
 import com.bs.ecommerce.cart.model.data.CartRootData
+import com.bs.ecommerce.cart.model.data.EstimateShippingReqBody
+import com.bs.ecommerce.cart.model.data.EstimateShippingResponse
 import com.bs.ecommerce.catalog.common.*
 import com.bs.ecommerce.checkout.model.data.*
 import com.bs.ecommerce.home.homepage.model.data.HomePageCategoryResponse
@@ -93,6 +95,8 @@ interface Api {
     @POST("shoppingcart/removegiftcardcode")
     fun removeGiftCardCoupon(@Body request: KeyValueFormData): Call<CartResponse>
 
+    @POST("shoppingcart/cart/estimateshipping")
+    fun estimateShippingOnCart(@Body request: EstimateShippingReqBody): Call<EstimateShippingResponse>
 
     @POST("customer/login")
     fun postLoginAPI(@Body loginPostData: LoginPostData): Call<LoginResponse>
