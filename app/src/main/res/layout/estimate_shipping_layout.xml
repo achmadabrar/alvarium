@@ -3,19 +3,22 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:layout_marginStart="@dimen/fragment_margin"
+    android:layout_marginEnd="@dimen/fragment_margin">
+
+    <include layout="@layout/horizontal_divider" />
 
     <TextView
         android:id="@+id/tvSectionTitle"
-        style="@style/titleTextViewStyle"/>
+        style="@style/titleTextViewStyle"
+        android:layout_marginTop="5dp"/>
 
     <TextView
         android:id="@+id/tvSectionSubtitle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textColor="?attr/primaryTextColor"
-        android:textSize="@dimen/tv_text_size_semi_large"
-        tools:text="@string/placeholder" />
+        style="@style/titleTextViewStyle"
+        android:textStyle="normal"
+        android:maxLines="2"/>
 
     <LinearLayout
         style="@style/RoundedSpinner"
@@ -65,6 +68,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
         android:gravity="start"
         android:textColor="?attr/primaryTextColor"
         android:textSize="@dimen/tv_text_size_semi_large"

@@ -53,19 +53,21 @@
 
     <TextView
         android:id="@+id/btnUpload"
-        android:layout_width="0dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         style="@style/RoundedButtonRegular"
         android:gravity="center"
-        android:maxLines="2"
-        android:ellipsize="end"
-        android:textSize="@dimen/tv_text_size_semi_large"
-        android:padding="5dp"
+        android:maxLines="1"
+        android:textSize="@dimen/tv_text_size_regular"
+        android:paddingTop="5dp"
+        android:paddingBottom="5dp"
+        android:paddingStart="10dp"
+        android:paddingEnd="10dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/guideline_v_half"
         app:layout_constraintTop_toTopOf="parent"
-        tools:text="NOKIA" />
+        tools:text="@string/placeholder" />
 
     <!-- DO NOT REMOVE. USED FROM BOTTOM MARGIN -->
     <View
