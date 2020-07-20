@@ -20,18 +20,18 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bs.ecommerce.R
 import com.bs.ecommerce.base.BaseFragment
 import com.bs.ecommerce.base.BaseViewModel
-import com.bs.ecommerce.catalog.productList.ProductFilterFragment
-import com.bs.ecommerce.db.DbHelper
-import com.bs.ecommerce.main.MainActivity
-import com.bs.ecommerce.catalog.productList.ProductListAdapter
-import com.bs.ecommerce.catalog.search.model.SearchModel
-import com.bs.ecommerce.catalog.search.model.SearchModelImpl
 import com.bs.ecommerce.catalog.common.AdvancedSearch
 import com.bs.ecommerce.catalog.common.AvailableCategory
 import com.bs.ecommerce.catalog.common.PagingFilteringContext
 import com.bs.ecommerce.catalog.common.ProductSummary
 import com.bs.ecommerce.catalog.product.ProductDetailFragment
+import com.bs.ecommerce.catalog.productList.ProductFilterFragment
+import com.bs.ecommerce.catalog.productList.ProductListAdapter
 import com.bs.ecommerce.catalog.productList.ProductListViewModel
+import com.bs.ecommerce.catalog.search.model.SearchModel
+import com.bs.ecommerce.catalog.search.model.SearchModelImpl
+import com.bs.ecommerce.db.DbHelper
+import com.bs.ecommerce.main.MainActivity
 import com.bs.ecommerce.utils.*
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import kotlinx.android.synthetic.main.advanced_search_layout.view.*
@@ -411,7 +411,7 @@ class SearchFragment : BaseFragment() {
 
                     val viewWidth = rvProductList?.measuredWidth ?: 720
                     val cardViewWidth =
-                        requireContext().resources?.getDimension(R.dimen.product_item_size) ?: 330f
+                        requireContext().resources?.getDimension(R.dimen.product_item_size_grid) ?: 330f
 
                     val newSpanCount = floor((viewWidth / cardViewWidth).toDouble()).toInt()
 

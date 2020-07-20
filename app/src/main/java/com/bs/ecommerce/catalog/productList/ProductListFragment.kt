@@ -20,13 +20,13 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bs.ecommerce.R
 import com.bs.ecommerce.base.BaseFragment
 import com.bs.ecommerce.base.BaseViewModel
-import com.bs.ecommerce.db.DbHelper
-import com.bs.ecommerce.catalog.productList.model.ProductListModel
-import com.bs.ecommerce.catalog.productList.model.ProductListModelImpl
 import com.bs.ecommerce.catalog.common.PagingFilteringContext
 import com.bs.ecommerce.catalog.common.ProductSummary
 import com.bs.ecommerce.catalog.common.SubCategory
 import com.bs.ecommerce.catalog.product.ProductDetailFragment
+import com.bs.ecommerce.catalog.productList.model.ProductListModel
+import com.bs.ecommerce.catalog.productList.model.ProductListModelImpl
+import com.bs.ecommerce.db.DbHelper
 import com.bs.ecommerce.utils.Const
 import com.bs.ecommerce.utils.ItemClickListener
 import com.bs.ecommerce.utils.PrefSingleton
@@ -410,7 +410,7 @@ class ProductListFragment : BaseFragment() {
 
                     val viewWidth = rvProductList?.measuredWidth ?: 720
                     val cardViewWidth =
-                        requireContext().resources?.getDimension(R.dimen.product_item_size) ?: 330f
+                        requireContext().resources?.getDimension(R.dimen.product_item_size_grid) ?: 330f
 
                     val newSpanCount = floor((viewWidth / cardViewWidth).toDouble()).toInt()
 

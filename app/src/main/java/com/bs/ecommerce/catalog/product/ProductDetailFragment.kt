@@ -99,11 +99,11 @@ class ProductDetailFragment : BaseFragment(), View.OnClickListener {
                     getProductDetail(productId, model)
 
                     getRelatedProducts(
-                        productId, resources.getDimensionPixelSize(R.dimen.product_item_size), model
+                        productId, resources.getDimensionPixelSize(R.dimen.product_item_size_grid), model
                     )
 
                     getSimilarProducts(
-                        productId, resources.getDimensionPixelSize(R.dimen.product_item_size), model
+                        productId, resources.getDimensionPixelSize(R.dimen.product_item_size_grid), model
                     )
                 }
             }

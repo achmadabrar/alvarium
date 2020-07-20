@@ -367,7 +367,7 @@ fun RecyclerView.calculateColumnsForGridLayout() {
 
                 val viewWidth = measuredWidth
                 val cardViewWidth =
-                    resources?.getDimension(R.dimen.product_item_size)
+                    resources?.getDimension(R.dimen.product_item_size_grid)
 
                 val newSpanCount = floor((viewWidth / cardViewWidth!!).toDouble()).toInt()
 
