@@ -14,7 +14,7 @@ import com.bs.ecommerce.main.model.data.Category
 import com.bs.ecommerce.main.model.data.Subcategory
 import com.bs.ecommerce.utils.ItemClickListener
 import com.bs.ecommerce.utils.LeftDrawerItem
-import com.squareup.picasso.Picasso
+import com.bs.ecommerce.utils.loadImg
 
 /**
  * Created by bs206 on 3/16/18.
@@ -109,9 +109,7 @@ class CategoryListAdapterExpandable(
             )
         }
 
-        Picasso.with(parent.context).load(subCategory.iconUrl).fit().centerInside().into(logo)
-
-        logo.visibility = View.GONE
+        logo.loadImg(subCategory.iconUrl, roundedCorner = false)
 
         return convertView
     }

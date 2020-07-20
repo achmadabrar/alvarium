@@ -156,7 +156,7 @@ class ProductDetailFragment : BaseFragment(), View.OnClickListener {
                         imageSlider?.circle_indicator?.pageColor =
                             ContextCompat.getColor(requireContext(), R.color.white)
                         imageSlider?.circle_indicator?.fillColor =
-                            ContextCompat.getColor(requireContext(), R.color.darkOrGray)
+                            ContextCompat.getColor(requireContext(), R.color.red)
 
                         detailsSliderAdapter.setOnSliderClickListener(object :
                             DetailsSliderAdapter.OnSliderClickListener {

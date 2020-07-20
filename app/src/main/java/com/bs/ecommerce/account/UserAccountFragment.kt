@@ -144,7 +144,7 @@ class UserAccountFragment: ToolbarLogoBaseFragment() {
         }
 
         cartLayout.apply {
-            ivOptionIcon.setImageResource(R.drawable.app_icon_cart)
+            ivOptionIcon.setImageResource(R.drawable.ic_cart)
             tvOptionName.text = DbHelper.getString(Const.ACCOUNT_SHOPPING_CART)
             setOnClickListener { clickAction(CartFragment()) }
         }
