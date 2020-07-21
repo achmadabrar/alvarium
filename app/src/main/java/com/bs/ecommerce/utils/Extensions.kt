@@ -28,6 +28,7 @@ import com.bs.ecommerce.base.BaseActivity
 import com.bs.ecommerce.base.BaseFragment
 import com.bs.ecommerce.db.DbHelper
 import com.bs.ecommerce.main.MainActivity
+import com.google.android.material.textfield.TextInputLayout
 import com.squareup.picasso.Picasso
 import kotlin.math.floor
 
@@ -225,10 +226,12 @@ fun EditText?.showOrHideOrRequired(isEnabledParam: Boolean = false, isRequired: 
 {
     if(this != null)
     {
+        val view: Any? = if(this.parent.parent is TextInputLayout) this.parent.parent else null
+
         if (isEnabledParam)
-            this.visibility = View.VISIBLE
+            if(view is TextInputLayout) view.visibility = View.VISIBLE else this.visibility = View.VISIBLE
         else
-            this.visibility = View.GONE
+            if(view is TextInputLayout) view.visibility = View.GONE else this.visibility = View.GONE
 
         if(isRequired)
             this.setCompoundDrawablesRelativeWithIntrinsicBounds(0, 0, R.drawable.ic_star_formular, 0)
@@ -236,8 +239,12 @@ fun EditText?.showOrHideOrRequired(isEnabledParam: Boolean = false, isRequired: 
         if(value != null && value.isNotEmpty())
             this.setText(value)
 
-        if(hint != null)
-            this.hint = hintText
+        if(hintText != null) {
+            if(view is TextInputLayout)
+                view.hint = hintText
+            else
+                this.hint = hintText
+        }
     }
 
 

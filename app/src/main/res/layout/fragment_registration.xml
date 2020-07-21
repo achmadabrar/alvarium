@@ -53,106 +53,154 @@
 
                     <include layout="@layout/horizontal_divider" />
 
-                    <EditText
-                        android:id="@+id/customerFirstNameEditText"
-                        style="@style/RoundedEditText"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="20dp"
-                        android:hint="@string/reg_hint_first_name"
-                        android:imeOptions="actionNext"
-                        android:inputType="textPersonName" />
+                    <com.google.android.material.textfield.TextInputLayout
+                        style="@style/mTextInputLayout"
+                        tools:hint="@string/reg_hint_first_name">
 
-                    <EditText
-                        android:id="@+id/customerLastNameEditText"
-                        style="@style/RoundedEditText"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="15dp"
-                        android:hint="@string/reg_hint_last_name"
-                        android:imeOptions="actionNext"
-                        android:inputType="textPersonName"/>
+                        <EditText
+                            android:id="@+id/customerFirstNameEditText"
+                            style="@style/RoundedEditText"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:imeOptions="actionNext"
+                            android:inputType="textPersonName" />
+                    </com.google.android.material.textfield.TextInputLayout>
 
-                    <EditText
-                        android:id="@+id/usernameEditText"
-                        style="@style/RoundedEditText"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="15dp"
-                        android:hint="@string/reg_hint_username"
-                        android:imeOptions="actionNext"
-                        android:inputType="textPersonName"/>
 
-                    <EditText
-                        android:id="@+id/dateOfBirthTextView"
-                        style="@style/RoundedEditText"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="15dp"
-                        android:hint="@string/reg_hint_dd_mm_yy"
-                        android:imeOptions="actionNext"
-                        android:inputType="none"
-                        android:focusable="false"
-                        tools:ignore="TextFields" />
+                    <com.google.android.material.textfield.TextInputLayout
+                        style="@style/mTextInputLayout"
+                        tools:hint="@string/reg_hint_last_name">
 
-                    <EditText
-                        android:id="@+id/emailEditText"
-                        style="@style/RoundedEditText"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="15dp"
-                        android:hint="@string/reg_hint_email"
-                        android:imeOptions="actionNext"
-                        android:inputType="textEmailAddress"/>
+                        <EditText
+                            android:id="@+id/customerLastNameEditText"
+                            style="@style/RoundedEditText"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="15dp"
+                            android:imeOptions="actionNext"
+                            android:inputType="textPersonName"/>
+                    </com.google.android.material.textfield.TextInputLayout>
 
-                    <EditText
-                        android:id="@+id/phoneEditText"
-                        style="@style/RoundedEditText"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="15dp"
-                        android:hint="@string/reg_hint_phone"
-                        android:imeOptions="actionNext"
-                        android:inputType="phone" />
 
-                    <EditText
-                        android:id="@+id/faxEditText"
-                        style="@style/RoundedEditText"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="15dp"
-                        android:hint="@string/reg_hint_fax"
-                        android:imeOptions="actionNext"
-                        android:inputType="phone" />
-                    <EditText
-                        android:id="@+id/streetAddressEditText"
-                        style="@style/RoundedEditText"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="15dp"
-                        android:hint="@string/reg_hint_street_address"
-                        android:imeOptions="actionNext"
-                        android:inputType="textPersonName"/>
+                    <com.google.android.material.textfield.TextInputLayout
+                        style="@style/mTextInputLayout"
+                        tools:hint="@string/reg_hint_username">
 
-                    <EditText
-                        android:id="@+id/streetAddress2EditText"
-                        style="@style/RoundedEditText"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="15dp"
-                        android:hint="@string/reg_hint_street_address2"
-                        android:imeOptions="actionNext"
-                        android:inputType="textPersonName"/>
+                        <EditText
+                            android:id="@+id/usernameEditText"
+                            style="@style/RoundedEditText"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="15dp"
+                            android:imeOptions="actionNext"
+                            android:inputType="textPersonName"/>
+                    </com.google.android.material.textfield.TextInputLayout>
 
-                    <EditText
-                        android:id="@+id/zipOrPostalCodeEditText"
-                        style="@style/RoundedEditText"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="15dp"
-                        android:hint="@string/reg_hint_zip_or_postal_code"
-                        android:imeOptions="actionNext"
-                        android:inputType="textPersonName"/>
+                    <com.google.android.material.textfield.TextInputLayout
+                        style="@style/mTextInputLayout"
+                        tools:hint="@string/reg_hint_dd_mm_yy">
+
+                        <EditText
+                            android:id="@+id/dateOfBirthTextView"
+                            style="@style/RoundedEditText"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:focusable="false"
+                            android:imeOptions="actionNext"
+                            android:inputType="none"
+                            tools:ignore="TextFields" />
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        style="@style/mTextInputLayout"
+                        tools:hint="@string/reg_hint_email">
+
+                        <EditText
+                            android:id="@+id/emailEditText"
+                            style="@style/RoundedEditText"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="15dp"
+                            android:imeOptions="actionNext"
+                            android:inputType="textEmailAddress"/>
+                    </com.google.android.material.textfield.TextInputLayout>
+
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        style="@style/mTextInputLayout"
+                        tools:hint="@string/reg_hint_phone">
+
+                        <EditText
+                            android:id="@+id/phoneEditText"
+                            style="@style/RoundedEditText"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="15dp"
+                            android:imeOptions="actionNext"
+                            android:inputType="phone" />
+                    </com.google.android.material.textfield.TextInputLayout>
+
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        style="@style/mTextInputLayout"
+                        tools:hint="@string/reg_hint_fax">
+
+                        <EditText
+                            android:id="@+id/faxEditText"
+                            style="@style/RoundedEditText"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="15dp"
+                            android:imeOptions="actionNext"
+                            android:inputType="phone" />
+                    </com.google.android.material.textfield.TextInputLayout>
+
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        style="@style/mTextInputLayout"
+                        tools:hint="@string/reg_hint_street_address">
+
+                        <EditText
+                            android:id="@+id/streetAddressEditText"
+                            style="@style/RoundedEditText"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="15dp"
+                            android:imeOptions="actionNext"
+                            android:inputType="textPersonName"/>
+                    </com.google.android.material.textfield.TextInputLayout>
+
+
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        style="@style/mTextInputLayout"
+                        tools:hint="@string/reg_hint_street_address2">
+
+                        <EditText
+                            android:id="@+id/streetAddress2EditText"
+                            style="@style/RoundedEditText"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="15dp"
+                            android:imeOptions="actionNext"
+                            android:inputType="textPersonName"/>
+                    </com.google.android.material.textfield.TextInputLayout>
+
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        style="@style/mTextInputLayout"
+                        tools:hint="@string/reg_hint_zip_or_postal_code">
+
+                        <EditText
+                            android:id="@+id/zipOrPostalCodeEditText"
+                            style="@style/RoundedEditText"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="15dp"
+                            android:imeOptions="actionNext"
+                            android:inputType="textPersonName"/>
+                    </com.google.android.material.textfield.TextInputLayout>
+
 
                     <LinearLayout
                         android:id="@+id/countrySpinnerLayout"
@@ -185,22 +233,28 @@
                             android:background="@drawable/checkout_spinner_bg"/>
                     </LinearLayout>
 
-                    <EditText
-                        android:id="@+id/cityEditText"
-                        style="@style/RoundedEditText"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="15dp"
-                        android:hint="@string/reg_hint_city"
-                        android:imeOptions="actionNext"
-                        android:inputType="textPersonName"/>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        style="@style/mTextInputLayout"
+                        tools:hint="@string/reg_hint_city">
+
+                        <EditText
+                            android:id="@+id/cityEditText"
+                            style="@style/RoundedEditText"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="15dp"
+                            android:imeOptions="actionNext"
+                            android:inputType="textPersonName"/>
+
+                    </com.google.android.material.textfield.TextInputLayout>
 
 
                     <RadioGroup
                         android:id="@+id/genderLayout"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="20dp"
+                        android:layout_marginTop="15dp"
                         android:orientation="horizontal">
 
                         <TextView
@@ -218,7 +272,7 @@
                             android:checked="true"
                             android:text="@string/male"
                             android:textColor="?attr/primaryTextColor"
-                            android:textSize="18sp" />
+                            android:textSize="@dimen/tv_text_size_regular" />
 
                         <RadioButton
                             android:id="@+id/genderFemaleRadioButton"
@@ -227,27 +281,29 @@
                             android:button="@drawable/custom_radio_button"
                             android:text="@string/female"
                             android:textColor="?attr/primaryTextColor"
-                            android:textSize="18sp" />
+                            android:textSize="@dimen/tv_text_size_regular" />
                     </RadioGroup>
-
 
                     <LinearLayout
                         android:id="@+id/attrViewHolderRegisterPage"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="vertical"
-                        android:layout_marginTop="20dp"/>
-
-                    <EditText
-                        android:id="@+id/companyInfoEditText"
-                        style="@style/RoundedEditText"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
                         android:layout_marginTop="20dp"
-                        android:hint="@string/reg_hint_company_name"
-                        android:imeOptions="actionNext"
-                        android:inputType="textCapWords" />
+                        android:visibility="gone"/>
 
+                    <com.google.android.material.textfield.TextInputLayout
+                        style="@style/mTextInputLayout"
+                        tools:hint="@string/reg_hint_company_name">
+
+                        <EditText
+                            android:id="@+id/companyInfoEditText"
+                            style="@style/RoundedEditText"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:imeOptions="actionNext"
+                            android:inputType="textCapWords" />
+                    </com.google.android.material.textfield.TextInputLayout>
 
 
                     <LinearLayout
@@ -275,7 +331,7 @@
                             android:checked="true"
                             android:text="@string/newsletter"
                             android:textColor="?attr/primaryTextColor"
-                            android:textSize="18sp" />
+                            android:textSize="@dimen/tv_text_size_regular" />
 
                     </LinearLayout>
 
@@ -296,7 +352,7 @@
                             android:checked="true"
                             android:text="@string/newsletter"
                             android:textColor="?attr/primaryTextColor"
-                            android:textSize="18sp" />
+                            android:textSize="@dimen/tv_text_size_regular" />
 
                     </LinearLayout>
 
@@ -318,10 +374,8 @@
 
                         <com.google.android.material.textfield.TextInputLayout
                             android:id="@+id/register_password_layout"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
+                            style="@style/mTextInputLayout"
                             android:layout_marginTop="20dp"
-                            app:hintEnabled="false"
                             app:passwordToggleEnabled="false">
 
                             <com.google.android.material.textfield.TextInputEditText
@@ -336,10 +390,7 @@
 
                         <com.google.android.material.textfield.TextInputLayout
                             android:id="@+id/reg_confirm_password"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="15dp"
-                            app:hintEnabled="false"
+                            style="@style/mTextInputLayout"
                             app:passwordToggleEnabled="false">
 
                             <com.google.android.material.textfield.TextInputEditText

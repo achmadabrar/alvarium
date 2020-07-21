@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginBottom="8dp"
@@ -14,14 +13,16 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="4dp"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:layout_gravity="center_vertical">
 
         <EditText
             android:id="@+id/etGiftCode"
-            style="@style/RoundedEditText"
+            style="@style/RoundedEditText2"
             android:layout_width="0dp"
             android:layout_height="@dimen/btn_height"
             android:layout_marginEnd="3dp"
+            android:layout_marginBottom="2dp"
             android:layout_weight=".60"
             android:autofillHints="Username"
             android:layout_marginTop="0dp"
@@ -36,6 +37,7 @@
             android:layout_width="0dp"
             android:layout_height="@dimen/btn_height"
             android:layout_marginStart="3dp"
+            android:layout_marginBottom="2dp"
             android:layout_weight=".40"
             android:textSize="@dimen/tv_text_size_regular"
             android:text="@string/cart_add_gift_card"
@@ -61,7 +63,8 @@
             android:layout_marginStart="10dp"
             android:textColor="?attr/primaryTextColor"
             android:textSize="13sp"
-            android:layout_gravity="center"/>
+            android:layout_gravity="center"
+            tools:text="Remove"/>
 
         <ImageView
             android:id="@+id/removeGiftCardButton"

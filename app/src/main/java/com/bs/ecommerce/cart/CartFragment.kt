@@ -253,9 +253,9 @@ class CartFragment : BaseFragment() {
         val layoutManager = LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false)
         cartproductRecyclerList?.setHasFixedSize(true)
         cartproductRecyclerList?.layoutManager = layoutManager
+        cartproductRecyclerList?.addItemDecoration(RecyclerViewMargin(10, 1, true))
 
-//        val cartAdapter = CartAdapter(requireActivity(), items, clickListener, viewModel, model)
-        val cartAdapter = CartAdapter2(items as MutableList<CartProduct>, clickListener, isCheckout = false,
+        val cartAdapter = CartAdapter(items as MutableList<CartProduct>, clickListener, isCheckout = false,
             showSku = showSku, isEditable = editable)
 
         cartproductRecyclerList?.adapter = cartAdapter

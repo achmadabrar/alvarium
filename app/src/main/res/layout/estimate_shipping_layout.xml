@@ -12,11 +12,13 @@
     <TextView
         android:id="@+id/tvSectionTitle"
         style="@style/titleTextViewStyle"
-        android:layout_marginTop="5dp"/>
+        android:textSize="@dimen/tv_text_size_regular"
+        android:layout_marginTop="10dp"/>
 
     <TextView
         android:id="@+id/tvSectionSubtitle"
         style="@style/titleTextViewStyle"
+        android:textSize="@dimen/tv_text_size_small"
         android:textStyle="normal"
         android:maxLines="2"/>
 

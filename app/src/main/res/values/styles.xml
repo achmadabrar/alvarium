@@ -29,7 +29,7 @@
     </style>
 
     <style name="RoundedSpinner">
-        <item name="android:background">@drawable/rounded_background</item>
+        <item name="android:background">@drawable/rounded_background_slight</item>
         <item name="android:backgroundTint">?attr/editTextStyle1BG</item>
         <item name="android:paddingStart">8dp</item>
         <item name="android:paddingTop">10dp</item>
@@ -40,9 +40,14 @@
         <item name="android:maxLines">1</item>
     </style>
 
+    <style name="mTextInputLayout">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColorHint">?attr/editTextStyle1Hint</item>
+        <item name="android:layout_marginTop">15dp</item>
+    </style>
+
     <style name="RoundedEditText">
-        <item name="android:background">@drawable/rounded_background</item>
-        <item name="android:backgroundTint">?attr/editTextStyle1BG</item>
         <item name="android:paddingStart">15dp</item>
         <item name="android:paddingTop">10dp</item>
         <item name="android:paddingEnd">15dp</item>
@@ -57,6 +62,10 @@
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_marginTop">15dp</item>
         <item name="android:imeOptions">actionNext</item>
+    </style>
+
+    <style name="RoundedEditText2" parent="RoundedEditText">
+        <item name="android:background">@drawable/tiny_btn_background</item>
     </style>
 
     <style name="OrderDetailsTitleTextViewStyle" parent="rtlSupportedTextView">

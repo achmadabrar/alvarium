@@ -1,113 +1,157 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="?attr/fragmentBackGroundColor"
     android:animateLayoutChanges="true"
+    android:background="?attr/fragmentBackGroundColor"
     android:orientation="vertical">
 
-    <EditText
-        android:id="@+id/etFirstName"
-        style="@style/RoundedEditText"
-        android:hint="@string/reg_hint_first_name"
-        android:inputType="textPersonName" />
+    <com.google.android.material.textfield.TextInputLayout
+        style="@style/mTextInputLayout"
+        tools:hint="@string/reg_hint_first_name">
 
-    <EditText
-        android:id="@+id/etLastName"
-        style="@style/RoundedEditText"
-        android:hint="@string/reg_hint_last_name"
-        android:inputType="textPersonName" />
+        <EditText
+            android:id="@+id/etFirstName"
+            style="@style/RoundedEditText"
+            android:inputType="textPersonName" />
+    </com.google.android.material.textfield.TextInputLayout>
 
-    <EditText
-        android:id="@+id/etEmail"
-        style="@style/RoundedEditText"
-        android:hint="@string/reg_hint_email"
-        android:inputType="textEmailAddress" />
+    <com.google.android.material.textfield.TextInputLayout
+        style="@style/mTextInputLayout"
+        tools:hint="@string/reg_hint_last_name">
+
+        <EditText
+            android:id="@+id/etLastName"
+            style="@style/RoundedEditText"
+            android:inputType="textPersonName" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        style="@style/mTextInputLayout"
+        tools:hint="@string/reg_hint_email">
+
+        <EditText
+            android:id="@+id/etEmail"
+            style="@style/RoundedEditText"
+            android:inputType="textEmailAddress" />
+    </com.google.android.material.textfield.TextInputLayout>
 
     <LinearLayout
         style="@style/RoundedSpinner"
-        android:layout_marginTop="15dp"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp">
 
         <androidx.appcompat.widget.AppCompatSpinner
             android:id="@+id/countrySpinner"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/checkout_spinner_bg"/>
+            android:background="@drawable/checkout_spinner_bg" />
     </LinearLayout>
 
     <LinearLayout
         android:id="@+id/stateSpinnerLayout"
         style="@style/RoundedSpinner"
-        android:layout_marginTop="15dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
         android:visibility="gone">
 
         <androidx.appcompat.widget.AppCompatSpinner
             android:id="@+id/stateSpinner"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/checkout_spinner_bg"/>
+            android:background="@drawable/checkout_spinner_bg" />
     </LinearLayout>
 
-    <EditText
-        android:id="@+id/etCompanyName"
-        style="@style/RoundedEditText"
-        android:hint="@string/reg_hint_company_name"
-        android:inputType="textCapWords" />
+    <com.google.android.material.textfield.TextInputLayout
+        style="@style/mTextInputLayout"
+        tools:hint="@string/reg_hint_company_name">
 
-    <EditText
-        android:id="@+id/etStateProvince"
-        style="@style/RoundedEditText"
-        android:hint="@string/reg_hint_state"
-        android:inputType="textCapWords"
-        android:visibility="gone"/>
+        <EditText
+            android:id="@+id/etCompanyName"
+            style="@style/RoundedEditText"
+            android:inputType="textCapWords" />
+    </com.google.android.material.textfield.TextInputLayout>
 
-    <EditText
-        android:id="@+id/etCity"
-        style="@style/RoundedEditText"
-        android:hint="@string/city"
-        android:inputType="textCapWords" />
+    <com.google.android.material.textfield.TextInputLayout
+        style="@style/mTextInputLayout"
+        android:visibility="gone"
+        tools:hint="@string/reg_hint_state">
 
+        <EditText
+            android:id="@+id/etStateProvince"
+            style="@style/RoundedEditText"
+            android:inputType="textCapWords" />
+    </com.google.android.material.textfield.TextInputLayout>
 
-    <EditText
-        android:id="@+id/etStreetAddress"
-        style="@style/RoundedEditText"
-        android:hint="@string/reg_hint_street_address"
-        android:inputType="text" />
+    <com.google.android.material.textfield.TextInputLayout
+        style="@style/mTextInputLayout"
+        tools:hint="@string/city">
 
-    <EditText
-        android:id="@+id/etStreetAddress2"
-        style="@style/RoundedEditText"
-        android:hint="@string/reg_hint_street_address2"
-        android:inputType="text" />
+        <EditText
+            android:id="@+id/etCity"
+            style="@style/RoundedEditText"
+            android:inputType="textCapWords" />
+    </com.google.android.material.textfield.TextInputLayout>
 
-    <EditText
-        android:id="@+id/etZipCode"
-        style="@style/RoundedEditText"
-        android:hint="@string/zip_code"
-        android:inputType="number" />
+    <com.google.android.material.textfield.TextInputLayout
+        style="@style/mTextInputLayout"
+        tools:hint="@string/reg_hint_street_address">
 
-    <EditText
-        android:id="@+id/etPhone"
-        style="@style/RoundedEditText"
-        android:hint="@string/reg_hint_phone"
-        android:inputType="phone" />
+        <EditText
+            android:id="@+id/etStreetAddress"
+            style="@style/RoundedEditText"
+            android:inputType="text" />
+    </com.google.android.material.textfield.TextInputLayout>
 
-    <EditText
-        android:id="@+id/etFax"
-        style="@style/RoundedEditText"
-        android:hint="@string/fax"
-        android:imeOptions="actionDone"
-        android:inputType="phone" />
+    <com.google.android.material.textfield.TextInputLayout
+        style="@style/mTextInputLayout"
+        tools:hint="@string/reg_hint_street_address2">
+
+        <EditText
+            android:id="@+id/etStreetAddress2"
+            style="@style/RoundedEditText"
+            android:inputType="text" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        style="@style/mTextInputLayout"
+        tools:hint="@string/zip_code">
+
+        <EditText
+            android:id="@+id/etZipCode"
+            style="@style/RoundedEditText"
+            android:inputType="number" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        style="@style/mTextInputLayout"
+        tools:hint="@string/reg_hint_phone">
+
+        <EditText
+            android:id="@+id/etPhone"
+            style="@style/RoundedEditText"
+            android:inputType="phone" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        style="@style/mTextInputLayout"
+        tools:hint="@string/fax">
+
+        <EditText
+            android:id="@+id/etFax"
+            style="@style/RoundedEditText"
+            android:imeOptions="actionDone"
+            android:inputType="phone" />
+    </com.google.android.material.textfield.TextInputLayout>
 
     <LinearLayout
         android:id="@+id/customAttributeViewHolder"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:layout_marginTop="5dp"/>
+        android:layout_marginTop="5dp"
+        android:orientation="vertical" />
 
 </LinearLayout>

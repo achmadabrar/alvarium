@@ -111,7 +111,6 @@
                 android:layout_marginTop="10dp"
                 android:layout_marginEnd="@dimen/fragment_margin"
                 android:visibility="visible"
-                android:background="@drawable/rounded_background_slight"
                 android:gravity="top"
                 tools:hint="@string/placeholder"
                 android:imeOptions="actionNext"

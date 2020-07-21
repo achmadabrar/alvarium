@@ -1,248 +1,104 @@
 package com.bs.ecommerce.cart
 
-import android.content.Context
-import android.graphics.Paint
-import android.view.*
-import android.webkit.WebView
-import android.widget.Button
-import android.widget.ImageView
-import android.widget.LinearLayout
-import android.widget.TextView
-import androidx.fragment.app.FragmentActivity
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.bs.ecommerce.R
-import com.bs.ecommerce.account.auth.register.data.KeyValuePair
-import com.bs.ecommerce.base.BaseViewModel
-import com.bs.ecommerce.cart.model.CartModel
 import com.bs.ecommerce.cart.model.data.CartProduct
 import com.bs.ecommerce.db.DbHelper
-import com.bs.ecommerce.utils.*
+import com.bs.ecommerce.utils.Const
+import com.bs.ecommerce.utils.ItemClickListener
+import com.bs.ecommerce.utils.loadImg
+import com.bs.ecommerce.utils.show
 import kotlinx.android.synthetic.main.cart_list_item.view.*
 import kotlinx.android.synthetic.main.product_price_layout_for_list.view.*
-import java.util.*
+import kotlinx.android.synthetic.main.qunatity_button.view.*
 
 
-open class CartAdapter(
-    val context: FragmentActivity,
-    productsList: List<CartProduct>,
+class CartAdapter (
+    private val list: MutableList<CartProduct> = mutableListOf(),
     private val clickListener: ItemClickListener<CartProduct>?,
-    val viewModel: BaseViewModel,
-    val model: CartModel? = null,
-    var isCheckout: Boolean = false
-)
-
-    : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
-
-    lateinit var products: List<CartProduct>
-    protected var mItemClickListener: OnItemClickListener? = null
-
-    var holder: ProductSummaryHolder? = null// = (ProductSummaryHolder) bindViewHolder;
-    lateinit var productModel: CartProduct
-
-    init {
-        try {
-            this.products = ArrayList()
-            (this.products as ArrayList<CartProduct>).addAll(productsList)
-
-        } catch (ex: Exception) {
-            ex.printStackTrace()
-        }
-
-    }
-
+    private val isCheckout: Boolean,
+    private val showSku: Boolean,
+    private val isEditable: Boolean
+) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-        val itemView = LayoutInflater.from(parent.context).inflate(R.layout.cart_list_item, parent, false)
-        return ProductSummaryHolder(itemView)
+        val itemView =
+            LayoutInflater.from(parent.context)
+                .inflate(R.layout.cart_list_item, parent, false)
+        return object : RecyclerView.ViewHolder(itemView) {}
     }
 
-    override fun getItemViewType(position: Int) = 0
+    override fun getItemCount(): Int = list.size
 
-    private fun setTouchListener(holder: ProductSummaryHolder, productModel: CartProduct) {
+    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
 
-        val editText = holder.productQuantity
+        val item = list[position]
 
-        holder.qunatityUpImageView.setOnClickListener { updateQuntity(1, editText, productModel) }
+        with(holder.itemView) {
 
-        holder.qunatityDownImageView.setOnClickListener {
-            updateQuntity(
-                -1,
-                editText,
-                productModel
-            )
-        }
-    }
+            id = R.id.itemView
+            setOnClickListener { clickListener?.onClick(it, position, item) }
 
-    private fun updateQuntity(quantity: Int, textView: TextView, productModel: CartProduct)
-    {
-        val previousQuantity = Integer.parseInt(textView.text.toString())
-        val totalQuntity = previousQuantity + quantity
+            tvProductName?.text = item.productName
+            productPriceLayout?.tvTotalPrice?.text = DbHelper.getString(Const.TOTAL).plus(": ").plus(item.subTotal)
+            productPriceLayout?.tvDiscountPrice?.text = DbHelper.getString(Const.PRICE).plus(": ").plus(item.unitPrice)
 
-        if (totalQuntity > 0)
-            updateCartItem("itemquantity" + productModel.id, "" + totalQuntity)
+            ivProductThumb?.loadImg(item.picture?.imageUrl)
 
 
-    }
+            icRemoveItem?.visibility = if (isCheckout) View.GONE else View.VISIBLE
+            btn_holder?.visibility = if (isCheckout) View.GONE else View.VISIBLE
 
-    private fun updateCartItem(key: String, value: String) {
-        val keyValuePairList = ArrayList<KeyValuePair>()
+            quantityForCheckout?.visibility = if (isCheckout) View.VISIBLE else View.GONE
+            quantityForCheckout?.text =
+                DbHelper.getString(Const.QUANTITY).plus(": ").plus(item.quantity)
 
-        keyValuePairList.add(
-            KeyValuePair(
-                key = key,
-                value = value
-            )
-        )
+            tvItemQuantity?.text = if (isCheckout) "" else item.quantity.toString()
 
-        (viewModel as CartViewModel).updateCartData(keyValuePairList, model!!)
-    }
-
-    override fun onBindViewHolder(
-        bindViewHolder: RecyclerView.ViewHolder,
-        position: Int
-    ) {
-        try {
-            if (bindViewHolder is ProductSummaryHolder) {
-
-                productModel = products[position]
-                holder = bindViewHolder
-
-                holder?.itemView?.id = R.id.itemView
-                holder?.itemView?.setOnClickListener { clickListener?.onClick(it, position, products[position]) }
-
-                holder?.productName?.text = productModel.productName
-
-                holder?.productTotalPrice?.text = "${DbHelper.getString(Const.TOTAL)}:  ${productModel.subTotal}"
-                holder?.productPrice?.text = "${DbHelper.getString(Const.PRICE)}:  ${productModel.unitPrice}"
+            sku?.text = DbHelper.getString(Const.SKU).plus(": ").plus(item.sku)
+            sku?.visibility = if (showSku) View.VISIBLE else View.GONE
 
 
-                holder?.productImage?.loadImg(productModel.picture?.imageUrl)
 
 
-                if(isCheckout)
-                {
-                    holder?.removeItem?.visibility = View.GONE
-                    holder?.quantityLayout?.visibility = View.GONE
+            if (item.attributeInfo.isNotEmpty()) {
+                tvAttribute1?.visibility = View.VISIBLE
+                tvAttribute1?.show(item.attributeInfo, R.color.list_item_bg)
+            } else
+                tvAttribute1?.visibility = View.GONE
 
-                    holder?.quantityForCheckout?.visibility = View.VISIBLE
-                    holder?.quantityForCheckout?.text = "${DbHelper.getString(Const.QUANTITY)}:  ${productModel.quantity}"
-                }
-                else
-                    holder?.productQuantity!!.text = productModel.quantity.toString()
-
-                if(productModel.attributeInfo.isNotEmpty())
-                {
-                    holder?.tvAttribute1?.visibility = View.VISIBLE
-                    holder?.tvAttribute1?.show(productModel.attributeInfo, R.color.list_item_bg)
-                }
-                else
-                    holder?.tvAttribute1?.visibility =View.GONE
-
-                productModel.warnings?.let {
-                    if(it.isNotEmpty())
-                        context.toast(it[0])
-                }
-
-
-                OntrashClicked(holder!!.removeItem, position)
-
-                setTouchListener(holder!!, productModel)
+            item.warnings?.let {
+                if(it.isNotEmpty())
+                    Toast.makeText(holder.itemView.context, it[0], Toast.LENGTH_SHORT).show()
             }
 
+            icRemoveItem?.setOnClickListener { v ->
+                clickListener?.onClick(v, position, item)
+            }
 
-        } catch (ex: ClassCastException) {
-        }
+            btn_holder?.btnPlus?.setOnClickListener { v ->
+                clickListener?.onClick(v, position, item)
+            }
 
-
-    }
-
-    private fun disableTextBoxSelection(productQuantity: TextView) {
-        productQuantity.customSelectionActionModeCallback = object : ActionMode.Callback {
-
-            override fun onPrepareActionMode(mode: ActionMode, menu: Menu): Boolean = false
-
-            override fun onDestroyActionMode(mode: ActionMode) = Unit
-
-            override fun onCreateActionMode(mode: ActionMode, menu: Menu): Boolean = false
-
-            override fun onActionItemClicked(mode: ActionMode, item: MenuItem): Boolean = false
+            btn_holder?.btnMinus?.setOnClickListener { v ->
+                clickListener?.onClick(v, position, item)
+            }
         }
     }
 
-    private fun OntrashClicked(itemview: ImageView, position: Int) {
-        itemview.setOnClickListener { updateCartItem("removefromcart", "" + products[position].id) }
-    }
+    fun addData(items: List<CartProduct>?) {
 
+        list.clear()
 
-    override fun getItemCount(): Int = products.size ?: 0
-
-
-    interface OnItemClickListener {
-        fun onItemClick(view: View, position: Int)
-    }
-
-    fun SetOnItemClickListener(mItemClickListener: OnItemClickListener) {
-        this.mItemClickListener = mItemClickListener
-    }
-
-
-    inner class ProductSummaryHolder(itemView: View) :
-        RecyclerView.ViewHolder(itemView), View.OnClickListener {
-        var productImage: ImageView
-        var productTotalPrice: TextView
-        var productPrice: TextView
-        var productName: TextView
-
-        var quantityLayout : LinearLayout
-
-        var productQuantity: TextView
-        var quantityForCheckout: TextView
-
-
-        var removeItem: ImageView
-
-
-        var qunatityUpImageView: Button
-        var qunatityDownImageView: Button
-
-        var tvAttribute1: WebView
-
-
-        init {
-
-            quantityLayout = itemView.findViewById<View>(R.id.ll_quantity) as LinearLayout
-            productImage = itemView.findViewById<View>(R.id.ivProductThumb) as ImageView
-            productTotalPrice = itemView.findViewById<View>(R.id.tvTotalPrice) as TextView
-            productPrice = itemView.findViewById<View>(R.id.tvDiscountPrice) as TextView
-            productName = itemView.findViewById<View>(R.id.tvProductName) as TextView
-            // productShortdescription = itemView.findViewById<View>(R.id.tv_product_short_descrption) as TextView
-            productQuantity = itemView.findViewById<View>(R.id.tvItemQuantity) as TextView
-            quantityForCheckout = itemView.findViewById<View>(R.id.quantityForCheckout) as TextView
-            // fav = itemView.findViewById<View>(R.id.fav) as CheckBox
-            removeItem = itemView.findViewById<View>(R.id.icRemoveItem) as ImageView
-            //swipeLayout=(SwipeLayout)itemView.findViewById(R.id.swipe);
-            //trash = (itemView.findViewById<View>(R.id.trash) as ImageView?)
-            qunatityUpImageView = itemView.findViewById<View>(R.id.btnPlus) as Button
-            qunatityDownImageView = itemView.findViewById<View>(R.id.btnMinus) as Button
-
-            tvAttribute1 = itemView.findViewById<View>(R.id.tvAttribute1) as WebView
-            //itemView.tvAttribute1.text = "Color: Black"
-            itemView.sku.text = "Size: XL"
-/*
-            itemView.tvOriginalPrice.text = "$100"
-            itemView.tvOriginalPrice.paintFlags = Paint.STRIKE_THRU_TEXT_FLAG*/
-
-            removeItem.setOnClickListener(this)
-            //swipeLayout.getSurfaceView().setOnClickListener(this);
-
-            itemView.setOnClickListener(this)
-
+        if(!items.isNullOrEmpty()) {
+            list.addAll(items)
         }
 
-
-        override fun onClick(v: View) {
-            mItemClickListener?.onItemClick(v, adapterPosition)
-        }
-
+        notifyDataSetChanged()
     }
+
 }
