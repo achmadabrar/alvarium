@@ -11,7 +11,7 @@
         android:id="@+id/ivOptionIcon"
         android:layout_width="30dp"
         android:layout_height="30dp"
-        android:tint="@color/blue"
+        android:tint="?attr/secondaryIconTint"
         tools:src="@drawable/ic_settings"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"/>

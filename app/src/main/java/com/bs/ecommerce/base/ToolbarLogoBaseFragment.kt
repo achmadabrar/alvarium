@@ -3,9 +3,9 @@ package com.bs.ecommerce.base
 import android.os.Bundle
 import android.view.View
 import androidx.lifecycle.ViewModelProvider
+import com.bs.ecommerce.MyApplication
 import com.bs.ecommerce.main.MainActivity
 import com.bs.ecommerce.main.MainViewModel
-import com.bs.ecommerce.MyApplication
 import com.bs.ecommerce.utils.loadImg
 import kotlinx.android.synthetic.main.toolbar.*
 import kotlinx.android.synthetic.main.toolbar.view.*
@@ -43,7 +43,7 @@ abstract class ToolbarLogoBaseFragment : BaseFragment()
     protected fun showTopLogo() {
         activity?.title = ""
         (activity as MainActivity).topLogoLayout?.visibility = View.VISIBLE
-        (activity as MainActivity).topLogoLayout?.topLogo?.loadImg(logoUrl, null)
+        (activity as MainActivity).topLogoLayout?.topLogo?.loadImg(logoUrl, null, roundedCorner = false)
     }
 
 }

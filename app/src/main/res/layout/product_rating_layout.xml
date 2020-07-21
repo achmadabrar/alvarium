@@ -44,7 +44,7 @@
         android:paddingEnd="5dp"
         android:src="@drawable/ic_file_download"
         android:alpha="1"
-        android:tint="@color/green"
+        android:tint="?attr/primaryIconTint"
         android:visibility="gone"
         tools:visibility="visible"
         app:layout_constraintEnd_toEndOf="parent"

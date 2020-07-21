@@ -3,18 +3,16 @@ package com.bs.ecommerce.cart
 import androidx.lifecycle.MutableLiveData
 import com.bs.ecommerce.account.auth.register.data.KeyValuePair
 import com.bs.ecommerce.account.orders.model.data.UploadFileData
-import com.bs.ecommerce.base.BaseViewModel
 import com.bs.ecommerce.cart.model.CartModel
-import com.bs.ecommerce.cart.model.data.CartProduct
-import com.bs.ecommerce.cart.model.data.CartResponse
-import com.bs.ecommerce.cart.model.data.CartRootData
+import com.bs.ecommerce.cart.model.data.*
+import com.bs.ecommerce.checkout.CheckoutViewModel
 import com.bs.ecommerce.networking.Api
 import com.bs.ecommerce.networking.common.KeyValueFormData
 import com.bs.ecommerce.networking.common.RequestCompleteListener
 import java.io.File
 import java.util.*
 
-class CartViewModel : BaseViewModel()
+class CartViewModel : CheckoutViewModel()
 {
 
     private var dynamicAttributeUpdated = false
@@ -25,6 +23,7 @@ class CartViewModel : BaseViewModel()
     private var REMOVE_DISCOUNT_KEY = "removediscount-"
     private var REMOVE_GIFT_CARD_KEY = "removegiftcard-"
 
+    var estimateShippingLD = MutableLiveData<EstimateShippingData>()
     val uploadFileLD = MutableLiveData<UploadFileData?>()
     var uploadedFileGuid: String = ""
 
@@ -232,6 +231,25 @@ class CartViewModel : BaseViewModel()
                 uploadedFileGuid = ""
 
                 try { file.delete() } catch (e: Exception) { e.printStackTrace() }
+            }
+
+        })
+    }
+
+    fun estimateShippingCost(body: EstimateShipping, model: CartModel) {
+
+        isLoadingLD.value = true
+
+        model.estimateShipping(body, object : RequestCompleteListener<EstimateShippingData> {
+
+            override fun onRequestSuccess(data: EstimateShippingData) {
+                isLoadingLD.value = false
+                estimateShippingLD.value = data
+            }
+
+            override fun onRequestFailed(errorMessage: String) {
+                isLoadingLD.value = false
+                toast(errorMessage)
             }
 
         })

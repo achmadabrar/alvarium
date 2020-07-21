@@ -5,7 +5,7 @@
     android:id="@+id/settingsFragmentRootLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/settings_fragment_bg"
+    android:background="?attr/fragmentBackGroundColor"
     android:animateLayoutChanges="true">
 
     <!--focusStealer, to avoid EditTexts grabbing focus-->
@@ -31,7 +31,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="15dp"
-                app:cardBackgroundColor="@color/settings_card_bg"
+                app:cardBackgroundColor="?attr/primaryListItemBg"
                 app:cardCornerRadius="5dp">
 
                 <LinearLayout
@@ -93,7 +93,7 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/cardBaseUrlChange"
                 android:layout_marginTop="15dp"
-                app:cardBackgroundColor="@color/settings_card_bg"
+                app:cardBackgroundColor="?attr/primaryListItemBg"
                 app:cardCornerRadius="5dp"
                 android:visibility="gone"
                 tools:visibility="visible">
@@ -116,7 +116,7 @@
                     <androidx.appcompat.widget.AppCompatSpinner
                         android:id="@+id/changeLanguageSpinner"
                         android:layout_marginTop="8dp"
-                        android:background="@drawable/settings_spinner_bg"
+
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:textColor="@color/white" />
@@ -130,7 +130,7 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/languageCardView"
                 android:layout_marginTop="15dp"
-                app:cardBackgroundColor="@color/settings_card_bg"
+                app:cardBackgroundColor="?attr/primaryListItemBg"
                 app:cardCornerRadius="5dp"
                 android:visibility="gone"
                 tools:visibility="visible">
@@ -155,7 +155,6 @@
                         android:id="@+id/changeCurrencySpinner"
                         android:layout_width="match_parent"
                         android:layout_marginTop="8dp"
-                        android:background="@drawable/settings_spinner_bg"
                         android:layout_height="wrap_content"
                         android:textColor="@color/white" />
 
@@ -169,7 +168,7 @@
                 android:layout_below="@+id/currencyCardView"
                 android:layout_marginTop="15dp"
                 android:layout_marginBottom="10dp"
-                app:cardBackgroundColor="@color/settings_card_bg"
+                app:cardBackgroundColor="?attr/primaryListItemBg"
                 app:cardCornerRadius="5dp"
                 android:visibility="gone"
                 tools:visibility="visible">

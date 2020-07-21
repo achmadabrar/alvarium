@@ -30,7 +30,7 @@ class RoundedCornersTransform: Transformation {
         paint.shader = shader
         paint.isAntiAlias = true
 
-        val r = size / 20f // change this value to change corner radius. Higher value means lower corner radius
+        val r = size / 25f // change this value to change corner radius. Higher value means lower corner radius
         canvas.drawRoundRect(
             RectF(
                 0f, 0f,

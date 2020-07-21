@@ -5,6 +5,7 @@
     android:layout_height="match_parent"
     android:background="?attr/fragmentBackGroundColor"
     android:orientation="vertical"
+    android:layout_marginTop="10dp"
     android:descendantFocusability="blocksDescendants"
     android:nestedScrollingEnabled="true">
 

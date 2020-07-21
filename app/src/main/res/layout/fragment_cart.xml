@@ -87,6 +87,15 @@
                     android:layout_marginEnd="@dimen/fragment_margin" />
 
                 <include
+                    android:id="@+id/estimateShippingLayout"
+                    layout="@layout/estimate_shipping_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/fragment_margin"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="@dimen/fragment_margin"/>
+
+                <include
                     layout="@layout/table_order_total"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"

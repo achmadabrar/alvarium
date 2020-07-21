@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:layout_marginStart="@dimen/fragment_margin"
+    android:layout_marginEnd="@dimen/fragment_margin">
+
+    <include layout="@layout/horizontal_divider" />
+
+    <TextView
+        android:id="@+id/tvSectionTitle"
+        style="@style/titleTextViewStyle"
+        android:layout_marginTop="5dp"/>
+
+    <TextView
+        android:id="@+id/tvSectionSubtitle"
+        style="@style/titleTextViewStyle"
+        android:textStyle="normal"
+        android:maxLines="2"/>
+
+    <LinearLayout
+        style="@style/RoundedSpinner"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp">
+
+        <androidx.appcompat.widget.AppCompatSpinner
+            android:id="@+id/countrySpinner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/checkout_spinner_bg" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/stateSpinnerLayout"
+        style="@style/RoundedSpinner"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp">
+
+        <androidx.appcompat.widget.AppCompatSpinner
+            android:id="@+id/stateSpinner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/checkout_spinner_bg" />
+    </LinearLayout>
+
+    <EditText
+        android:id="@+id/etZipCode"
+        style="@style/RoundedEditText"
+        tools:hint="@string/placeholder"
+        android:inputType="number"
+        android:imeOptions="actionDone"/>
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btnCalculate"
+        style="@style/RoundedButtonRegular"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/btn_height"
+        android:layout_marginTop="10dp"
+        tools:text="@string/placeholder"
+        android:maxLines="1"/>
+
+    <TextView
+        android:id="@+id/tvResult"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        android:gravity="start"
+        android:textColor="?attr/primaryTextColor"
+        android:textSize="@dimen/tv_text_size_semi_large"
+        tools:text="@string/placeholder"
+        android:visibility="gone"
+        tools:visibility="visible" />
+
+</LinearLayout>

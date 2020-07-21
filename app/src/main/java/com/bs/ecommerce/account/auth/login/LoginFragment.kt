@@ -64,8 +64,8 @@ class LoginFragment : BaseFragment()
     }
 
     private fun initView() {
-        loginUsernameEditText.hint = DbHelper.getString(Const.LOGIN_EMAIL)
-        loginPasswordEditText.hint = DbHelper.getString(Const.LOGIN_PASS)
+        tilUsername.hint = DbHelper.getString(Const.LOGIN_EMAIL)
+        tilPassword.hint = DbHelper.getString(Const.LOGIN_PASS)
         loginButton.text = DbHelper.getString(Const.LOGIN_LOGIN_BTN)
 
         tvNewCustomer.text = DbHelper.getString(Const.LOGIN_NEW_CUSTOMER)

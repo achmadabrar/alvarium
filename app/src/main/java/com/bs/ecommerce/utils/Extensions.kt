@@ -157,15 +157,23 @@ fun ViewGroup.inflate(layoutId: Int, attachToRoot: Boolean = false): View =
     LayoutInflater.from(context).inflate(layoutId, this, attachToRoot)
 
 
-fun ImageView.loadImg(imageUrl: String?, placeHolder: Int? = R.drawable.ic_placeholder) {
+fun ImageView.loadImg(
+    imageUrl: String?,
+    placeHolder: Int? = R.drawable.ic_placeholder,
+    roundedCorner: Boolean = true
+) {
     if (imageUrl.isNullOrEmpty()) {
         if(placeHolder!=null) Picasso.with(context).load(placeHolder).into(this)
     } else {
 
         if(placeHolder!=null) {
-            Picasso.with(context)
+            val reqCreator = Picasso.with(context)
                 .load(imageUrl)
-                //.transform(RoundedCornersTransform())
+
+            if(roundedCorner)
+                reqCreator.transform(RoundedCornersTransform())
+
+            reqCreator
                 .placeholder(R.drawable.ic_placeholder)
                 .error(R.drawable.ic_placeholder)
                 .fit()
@@ -359,7 +367,7 @@ fun RecyclerView.calculateColumnsForGridLayout() {
 
                 val viewWidth = measuredWidth
                 val cardViewWidth =
-                    resources?.getDimension(R.dimen.product_item_size)
+                    resources?.getDimension(R.dimen.product_item_size_grid)
 
                 val newSpanCount = floor((viewWidth / cardViewWidth!!).toDouble()).toInt()
 

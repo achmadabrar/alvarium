@@ -4,8 +4,7 @@ import com.bs.ecommerce.account.auth.register.data.KeyValuePair
 import com.bs.ecommerce.account.orders.model.data.UploadFileData
 import com.bs.ecommerce.account.orders.model.data.UploadFileResponse
 import com.bs.ecommerce.base.BaseFragment
-import com.bs.ecommerce.cart.model.data.CartResponse
-import com.bs.ecommerce.cart.model.data.CartRootData
+import com.bs.ecommerce.cart.model.data.*
 import com.bs.ecommerce.db.DbHelper
 import com.bs.ecommerce.networking.RetroClient
 import com.bs.ecommerce.networking.common.KeyValueFormData
@@ -153,6 +152,28 @@ class CartModelImpl: CartModel
 
 
             override fun onFailure(call: Call<CartRootData>, t: Throwable) {
+                callback.onRequestFailed(t.localizedMessage ?: DbHelper.getString(Const.COMMON_SOMETHING_WENT_WRONG))
+            }
+        })
+    }
+
+    override fun estimateShipping(
+        body: EstimateShipping,
+        callback: RequestCompleteListener<EstimateShippingData>
+    ) {
+
+        RetroClient.api.estimateShippingOnCart(EstimateShippingReqBody(body)).enqueue(object : Callback<EstimateShippingResponse> {
+
+            override fun onResponse(call: Call<EstimateShippingResponse>, response: Response<EstimateShippingResponse>) {
+
+                if (response.body() != null && response.code() == 200)
+                    callback.onRequestSuccess(response.body()?.data as EstimateShippingData)
+                else
+                    callback.onRequestFailed(TextUtils.getErrorMessage(response))
+            }
+
+
+            override fun onFailure(call: Call<EstimateShippingResponse>, t: Throwable) {
                 callback.onRequestFailed(t.localizedMessage ?: DbHelper.getString(Const.COMMON_SOMETHING_WENT_WRONG))
             }
         })

@@ -99,11 +99,11 @@ class ProductDetailFragment : BaseFragment(), View.OnClickListener {
                     getProductDetail(productId, model)
 
                     getRelatedProducts(
-                        productId, resources.getDimensionPixelSize(R.dimen.product_item_size), model
+                        productId, resources.getDimensionPixelSize(R.dimen.product_item_size_grid), model
                     )
 
                     getSimilarProducts(
-                        productId, resources.getDimensionPixelSize(R.dimen.product_item_size), model
+                        productId, resources.getDimensionPixelSize(R.dimen.product_item_size_grid), model
                     )
                 }
             }
@@ -156,7 +156,7 @@ class ProductDetailFragment : BaseFragment(), View.OnClickListener {
                         imageSlider?.circle_indicator?.pageColor =
                             ContextCompat.getColor(requireContext(), R.color.white)
                         imageSlider?.circle_indicator?.fillColor =
-                            ContextCompat.getColor(requireContext(), R.color.darkOrGray)
+                            ContextCompat.getColor(requireContext(), R.color.red)
 
                         detailsSliderAdapter.setOnSliderClickListener(object :
                             DetailsSliderAdapter.OnSliderClickListener {

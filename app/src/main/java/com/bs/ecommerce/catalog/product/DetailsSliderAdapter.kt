@@ -32,7 +32,7 @@ class DetailsSliderAdapter(private val context: Context, private var imageUrl: L
         val imageView = view.findViewById<View>(R.id.image_view) as ImageView
         val linearLayout = view.findViewById<View>(R.id.layout) as LinearLayout
 
-        imageView.loadImg(imageUrl?.get(pos)?.imageUrl)
+        imageView.loadImg(imageUrl?.get(pos)?.imageUrl, roundedCorner = false)
         container.addView(view)
 
         linearLayout.setOnClickListener { v ->

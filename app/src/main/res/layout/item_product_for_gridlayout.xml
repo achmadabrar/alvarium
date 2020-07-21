@@ -9,7 +9,7 @@
     <ImageView
         android:id="@+id/ivProductThumb"
         android:layout_width="0dp"
-        android:layout_height="@dimen/product_item_size"
+        android:layout_height="@dimen/product_item_size_grid"
         android:scaleType="centerCrop"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -43,7 +43,7 @@
         android:layout_marginStart="3dp"
         android:maxLines="1"
         android:ellipsize="end"
-        android:textColor="@color/red"
+        android:textColor="@color/pink"
         android:textSize="11sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toStartOf="@id/ivAddToFav"
@@ -90,7 +90,7 @@
         android:layout_alignParentBottom="true"
         android:layout_marginEnd="5dp"
         android:src="@drawable/ic_heart"
-        android:tint="@color/grayOrDark"
+        android:tint="@color/gray"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         android:contentDescription="@string/placeholder" />

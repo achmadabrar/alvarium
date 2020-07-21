@@ -31,18 +31,21 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:orientation="vertical"
-            app:layout_constraintGuide_percent="0.1" />
+            app:layout_constraintGuide_percent="0.07" />
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/guideline_v_end"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:orientation="vertical"
-            app:layout_constraintGuide_percent="0.9" />
+            app:layout_constraintGuide_percent="0.93" />
 
         <androidx.core.widget.NestedScrollView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:background="@drawable/login_field_border"
+            android:paddingStart="10dp"
+            android:paddingEnd="10dp"
             app:layout_constraintEnd_toStartOf="@id/guideline_v_end"
             app:layout_constraintStart_toEndOf="@id/guideline_v_start"
             app:layout_constraintTop_toBottomOf="@id/guideline_h_top">
@@ -50,17 +53,17 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginBottom="50dp">
+                android:layout_marginTop="25dp"
+                android:layout_marginBottom="25dp">
 
                 <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/login_username_layout"
+                    android:id="@+id/tilUsername"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    app:hintEnabled="false">
+                    tools:hint="@string/login_usrname">
 
                     <EditText
                         android:id="@+id/loginUsernameEditText"
-                        style="@style/RoundedEditText"
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/btn_height"
                         android:autofillHints="Username"
@@ -68,29 +71,27 @@
                         android:textDirection="locale"
                         android:textAlignment="viewStart"
                         android:drawableEnd="@drawable/ic_user"
-                        tools:hint="@string/login_usrname"
+                        android:paddingEnd="15dp"
                         android:imeOptions="actionNext"
                         android:inputType="textEmailAddress|text" />
 
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/login_password_layout"
+                    android:id="@+id/tilPassword"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_below="@id/login_username_layout"
+                    android:layout_below="@id/tilUsername"
                     android:layout_marginTop="20dp"
-                    app:hintEnabled="false"
+                    tools:hint="@string/login_password"
                     app:passwordToggleDrawable="@drawable/password_toggle_drawable"
                     app:passwordToggleEnabled="true"
                     app:passwordToggleTint="?attr/editTextStyle1Drawable">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/loginPasswordEditText"
-                        style="@style/RoundedEditText"
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/btn_height"
-                        tools:hint="@string/login_password"
                         android:textDirection="locale"
                         android:textAlignment="viewStart"
                         android:imeOptions="actionDone"
@@ -102,7 +103,7 @@
                     style="@style/RoundedButtonRegular"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/btn_height"
-                    android:layout_below="@id/login_password_layout"
+                    android:layout_below="@id/tilPassword"
                     android:layout_marginTop="20dp"
                     android:text="@string/login" />
 
@@ -112,11 +113,12 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@id/loginButton"
                     android:layout_alignParentStart="true"
-                    android:layout_marginStart="10dp"
+                    android:layout_marginStart="5dp"
                     android:layout_marginTop="10dp"
                     android:text="@string/login_new_customer"
-                    android:textColor="@color/white"
-                    android:textSize="14sp" />
+                    android:textColor="@color/gray"
+                    android:textStyle="bold"
+                    android:textSize="@dimen/tv_text_size_regular" />
 
                 <TextView
                     android:id="@+id/tvForgotPassword"
@@ -125,10 +127,11 @@
                     android:layout_below="@id/loginButton"
                     android:layout_alignParentEnd="true"
                     android:layout_marginTop="10dp"
-                    android:layout_marginEnd="10dp"
+                    android:layout_marginEnd="5dp"
                     android:text="@string/login_forgot_password"
-                    android:textColor="@color/white"
-                    android:textSize="14sp" />
+                    android:textColor="@color/gray"
+                    android:textStyle="bold"
+                    android:textSize="@dimen/tv_text_size_regular" />
 
                 <TextView
                     android:id="@+id/tvLoginOr"
