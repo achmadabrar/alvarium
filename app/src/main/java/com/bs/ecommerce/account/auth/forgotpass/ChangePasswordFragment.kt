@@ -46,9 +46,9 @@ class ChangePasswordFragment : BaseFragment() {
     }
 
     private fun initView() {
-        etOldPassword.hint = DbHelper.getString(Const.CHANGE_PASS_OLD)
-        etNewPassword.hint = DbHelper.getString(Const.CHANGE_PASS_NEW)
-        etConfirmPassword.hint = DbHelper.getString(Const.CHANGE_PASS_CONFIRM)
+        tilOldPass.hint = DbHelper.getString(Const.CHANGE_PASS_OLD)
+        tilNewPass.hint = DbHelper.getString(Const.CHANGE_PASS_NEW)
+        tilConfirmPass.hint = DbHelper.getString(Const.CHANGE_PASS_CONFIRM)
         btnDone.text = DbHelper.getString(Const.CHANGE_PASS_BTN)
     }
 

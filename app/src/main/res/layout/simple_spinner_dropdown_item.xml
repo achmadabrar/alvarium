@@ -7,7 +7,7 @@
     android:background="@color/tab_background_selected"
     android:padding="6dp"
     android:singleLine="true"
-    android:textSize="@dimen/et_text_size"
+    android:textSize="@dimen/tv_text_size_regular"
     android:text="@string/placeholder"
     android:textColor="?attr/primaryTextColor"
     android:textDirection="locale"

@@ -250,7 +250,8 @@ open class RegisterFragment : ToolbarLogoBaseFragment(), View.OnClickListener
                 )
 
             customAttributeManager?.attachAttributesToFragment()
-
+            attrViewHolderRegisterPage?.visibility = if(data.customerAttributes?.isNullOrEmpty() == true)
+                View.GONE else View.VISIBLE
         }
 
 

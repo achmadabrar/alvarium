@@ -7,7 +7,7 @@ import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bs.ecommerce.R
 import com.bs.ecommerce.base.BaseViewModel
-import com.bs.ecommerce.cart.CartAdapter2
+import com.bs.ecommerce.cart.CartAdapter
 import com.bs.ecommerce.cart.model.data.CartInfoData
 import com.bs.ecommerce.cart.model.data.CartProduct
 import com.bs.ecommerce.cart.model.data.OrderReviewAddressModel
@@ -92,7 +92,7 @@ class ConfirmOrderFragment : BaseCheckoutNavigationFragment() {
             layoutManager =
                 LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
 
-            adapter = CartAdapter2(cartData?.items as MutableList<CartProduct>, null, isCheckout = true,
+            adapter = CartAdapter(cartData?.items as MutableList<CartProduct>, null, isCheckout = true,
                     showSku = cartData.showSku, isEditable = cartData.isEditable)
         }
     }

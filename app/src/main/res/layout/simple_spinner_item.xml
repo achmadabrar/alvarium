@@ -7,7 +7,7 @@
     android:ellipsize="marquee"
     android:singleLine="true"
     tools:text="@string/placeholder"
-    android:textSize="@dimen/et_text_size"
+    android:textSize="@dimen/tv_text_size_regular"
     android:textColor="?attr/primaryTextColor"
     android:textDirection="locale"
     android:textAlignment="gravity"/>

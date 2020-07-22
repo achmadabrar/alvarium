@@ -38,7 +38,7 @@
     <color name="register_title_text">#000000</color>
     <color name="radiobutton_text">#000000</color>
 
-    <color name="cart_title_bg">#DFDFDF</color>
+    <color name="cart_title_bg">#F4F4F4</color>
 
     <color name="tab_background_selected">#D2D1D7</color>
     <color name="tab_background_unselected">#F3F2F8</color>

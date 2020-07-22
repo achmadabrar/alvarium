@@ -44,7 +44,7 @@ class ForgotPasswordFragment : BaseFragment() {
     }
 
     private fun setupView() {
-        etEmail.hint = DbHelper.getString(Const.FORGOT_PASS_EMAIL)
+        tilEmail.hint = DbHelper.getString(Const.FORGOT_PASS_EMAIL)
         btnSendEmail.text = DbHelper.getString(Const.FORGOT_PASS_BTN)
 
         btnSendEmail.setOnClickListener {
