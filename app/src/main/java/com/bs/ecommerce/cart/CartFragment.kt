@@ -250,11 +250,6 @@ class CartFragment : BaseFragment() {
     private fun populateProductList(items: List<CartProduct>, showSku: Boolean = false, editable: Boolean = false)
     {
 
-        val layoutManager = LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false)
-        cartproductRecyclerList?.setHasFixedSize(true)
-        cartproductRecyclerList?.layoutManager = layoutManager
-        cartproductRecyclerList?.addItemDecoration(RecyclerViewMargin(10, 1, true))
-
         val cartAdapter = CartAdapter(items as MutableList<CartProduct>, clickListener, isCheckout = false,
             showSku = showSku, isEditable = editable)
 
@@ -346,6 +341,11 @@ class CartFragment : BaseFragment() {
         setLanguageStrings()
 
         focusStealerCart?.requestFocus()
+
+        val layoutManager = LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false)
+        cartproductRecyclerList?.setHasFixedSize(true)
+        cartproductRecyclerList?.layoutManager = layoutManager
+        cartproductRecyclerList?.addItemDecoration(RecyclerViewMargin(10, 1, true))
 
         bsBehavior = BottomSheetBehavior.from(bottomSheetLayoutCart)
         bsBehavior.addBottomSheetCallback(object : BottomSheetBehavior.BottomSheetCallback() {
