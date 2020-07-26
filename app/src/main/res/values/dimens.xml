@@ -15,6 +15,7 @@
     <dimen name="product_item_size_grid">165dp</dimen>
     <dimen name="product_item_size">125dp</dimen>
     <dimen name="cross_icon_size">23dp</dimen>
+    <dimen name="item_shadow">2.5dp</dimen>
 
     <dimen name="tv_text_size_large">17sp</dimen>
     <dimen name="tv_text_size_semi_large">15.5sp</dimen>

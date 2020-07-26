@@ -51,7 +51,7 @@
     <color name="whiteOrGray">#E3E3E3</color>
     <color name="grayOrDark">#313437</color>
     <color name="darkOrGray">#C5C5C5</color>
-    <color name="list_item_bg">#EAE8EA</color>
+    <color name="list_item_bg">#FFFFFF</color> <!-- #EAE8EA-->
     <color name="checkbox_bg">#F2F2F2</color>
     <color name="confirm_order_card_title_bg">#f2f2f7</color>
     <color name="confirm_order_card_desc_bg">#333333</color>

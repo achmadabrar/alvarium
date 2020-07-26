@@ -1,111 +1,95 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
-        android:layout_width="match_parent"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="5dp"
+    android:background="@drawable/rounded_background_slight"
+    android:backgroundTint="?attr/primaryListItemBg"
+    android:elevation="@dimen/item_shadow"
+    android:paddingStart="5dp"
+    android:paddingTop="8dp"
+    android:paddingEnd="5dp"
+    android:paddingBottom="8dp">
+
+    <ImageView
+        android:id="@+id/ivProductThumb"
+        android:layout_width="@dimen/product_thumbnail_cart"
+        android:layout_height="@dimen/product_thumbnail_cart"
+        android:layout_marginEnd="10dp"
+        android:contentDescription="@string/placeholder"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:src="@tools:sample/avatars" />
+
+    <View
+        android:id="@+id/referenceView"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="5dp"
+        app:layout_constraintStart_toEndOf="@id/ivProductThumb"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tvProductName"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:background="@drawable/rounded_background_slight"
-        android:backgroundTint="?attr/primaryListItemBg"
-        android:layout_marginBottom="5dp"
-        android:paddingStart="5dp"
-        android:paddingTop="8dp"
-        android:paddingEnd="5dp"
-        android:paddingBottom="8dp">
+        android:ellipsize="end"
+        android:maxLines="2"
+        android:minLines="1"
+        android:textColor="?attr/primaryTextColor"
+        android:textSize="@dimen/tv_text_size_regular"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/referenceView"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="@string/placeholder" />
 
-        <ImageView
-            android:id="@+id/ivProductThumb"
-            android:layout_width="@dimen/product_thumbnail_cart"
-            android:layout_height="@dimen/product_thumbnail_cart"
-            android:layout_marginEnd="10dp"
-            android:contentDescription="@string/placeholder"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:src="@tools:sample/avatars" />
+    <include
+        android:id="@+id/productPriceLayout"
+        layout="@layout/product_price_layout_for_list"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/referenceView"
+        app:layout_constraintTop_toBottomOf="@id/tvProductName" />
 
-        <View
-            android:id="@+id/referenceView"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_marginStart="5dp"
-            app:layout_constraintStart_toEndOf="@id/ivProductThumb"
-            app:layout_constraintTop_toTopOf="parent" />
+    <include
+        android:id="@+id/btn_holder"
+        layout="@layout/qunatity_button"
+        android:layout_width="wrap_content"
+        android:layout_height="35dp"
+        android:layout_marginTop="5dp"
+        app:layout_constraintStart_toEndOf="@id/referenceView"
+        app:layout_constraintTop_toBottomOf="@id/productPriceLayout" />
 
-        <TextView
-            android:id="@+id/tvProductName"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:ellipsize="end"
-            android:minLines="1"
-            android:maxLines="2"
-            android:textColor="?attr/primaryTextColor"
-            android:textSize="@dimen/tv_text_size_regular"
-            android:textStyle="bold"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@id/referenceView"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:text="@string/placeholder" />
+    <ImageView
+        android:id="@+id/ivAddToWishList"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:layout_marginEnd="5dp"
+        android:contentDescription="@string/placeholder"
+        android:src="@drawable/ic_heart"
+        android:tint="@color/grayOrDark"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
 
-        <include
-            android:id="@+id/productPriceLayout"
-            layout="@layout/product_price_layout_for_list"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@id/referenceView"
-            app:layout_constraintTop_toBottomOf="@id/tvProductName" />
+    <ImageView
+        android:id="@+id/ivAddToCart"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="10dp"
+        android:contentDescription="@string/placeholder"
+        android:src="@drawable/ic_cart"
+        android:tint="@color/grayOrDark"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/ivAddToWishList" />
 
-
-        <LinearLayout
-            android:id="@+id/btn_holder"
-            android:layout_width="0dp"
-            android:layout_height="35dp"
-            android:layout_marginTop="5dp"
-            android:orientation="horizontal"
-            app:layout_constraintStart_toEndOf="@id/referenceView"
-            app:layout_constraintTop_toBottomOf="@id/productPriceLayout">
-
-            <include layout="@layout/qunatity_button" />
-
-            <TextView
-                android:id="@+id/tvItemQuantity"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:layout_marginStart="20dp"
-                android:ellipsize="end"
-                android:maxLines="1"
-                android:textColor="?attr/primaryTextColor"
-                android:visibility="visible"
-                tools:text="1" />
-        </LinearLayout>
-
-        <ImageView
-            android:id="@+id/ivAddToWishList"
-            android:layout_width="25dp"
-            android:layout_height="25dp"
-            android:layout_marginEnd="5dp"
-            android:src="@drawable/ic_heart"
-            android:tint="@color/grayOrDark"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            android:contentDescription="@string/placeholder" />
-
-        <ImageView
-            android:id="@+id/ivAddToCart"
-            android:layout_width="25dp"
-            android:layout_height="25dp"
-            android:layout_marginTop="5dp"
-            android:src="@drawable/ic_cart"
-            android:layout_marginEnd="10dp"
-            android:tint="@color/grayOrDark"
-            app:layout_constraintEnd_toStartOf="@id/ivAddToWishList"
-            app:layout_constraintBottom_toBottomOf="parent"
-            android:contentDescription="@string/placeholder" />
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
 

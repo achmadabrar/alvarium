@@ -57,7 +57,7 @@ class CartAdapter (
             quantityForCheckout?.text =
                 DbHelper.getString(Const.QUANTITY).plus(": ").plus(item.quantity)
 
-            tvItemQuantity?.text = if (isCheckout) "" else item.quantity.toString()
+            btn_holder?.tvItemQuantity?.text = if (isCheckout) "" else item.quantity.toString()
 
             sku?.text = DbHelper.getString(Const.SKU).plus(": ").plus(item.sku)
             sku?.visibility = if (showSku) View.VISIBLE else View.GONE

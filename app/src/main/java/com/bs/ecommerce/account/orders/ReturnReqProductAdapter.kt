@@ -36,13 +36,13 @@ class ReturnReqProductAdapter(
             tvProductName?.text = product.productName
             tvProductPrice?.text = product.unitPrice
             tvTitle?.text = DbHelper.getString(Const.RETURN_REQ_RETURN_QTY)
-            btn_holder?.tvQuantity?.text = product.customerInput.toString()
+            btn_holder?.tvItemQuantity?.text = product.customerInput.toString()
 
             btn_holder?.btnPlus?.setOnClickListener { v ->
 
                 if(product.customerInput < product.quantity ?: 11111) {
                     product.customerInput++
-                    btn_holder?.tvQuantity?.text = product.customerInput.toString()
+                    btn_holder?.tvItemQuantity?.text = product.customerInput.toString()
                 }
             }
 
@@ -50,7 +50,7 @@ class ReturnReqProductAdapter(
 
                 if(product.customerInput > 0) {
                     product.customerInput--
-                    btn_holder?.tvQuantity?.text = product.customerInput.toString()
+                    btn_holder?.tvItemQuantity?.text = product.customerInput.toString()
                 }
             }
         }

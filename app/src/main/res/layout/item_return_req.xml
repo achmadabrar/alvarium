@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@drawable/rounded_background_slight"
+    android:elevation="@dimen/item_shadow"
     android:backgroundTint="?attr/primaryListItemBg">
 
     <TextView
@@ -47,28 +48,13 @@
         app:layout_constraintTop_toBottomOf="@id/tvProductPrice"
         tools:text="@string/placeholder" />
 
-    <LinearLayout
+    <include
         android:id="@+id/btn_holder"
-        android:layout_width="0dp"
+        layout="@layout/qunatity_button"
+        android:layout_width="wrap_content"
         android:layout_height="35dp"
         android:layout_marginTop="5dp"
-        android:orientation="horizontal"
         app:layout_constraintTop_toBottomOf="@id/tvTitle"
-        app:layout_constraintStart_toStartOf="parent">
-
-        <include layout="@layout/qunatity_button" />
-
-        <TextView
-            android:id="@+id/tvQuantity"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:layout_marginStart="20dp"
-            android:ellipsize="end"
-            android:maxLines="1"
-            android:textColor="?attr/primaryTextColor"
-            android:visibility="visible"
-            tools:text="1" />
-    </LinearLayout>
+        app:layout_constraintStart_toStartOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
