@@ -53,16 +53,12 @@
     <!--  inactive star color:  android:progressBackgroundTint="@color/gray" -->
     <RatingBar
         android:id="@+id/ratingBar"
-        style="?android:attr/ratingBarStyleSmall"
+        style="@style/RatingBarStyle"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_below="@id/tvProductPrice"
         android:layout_alignParentStart="true"
         android:layout_marginBottom="2dp"
-        android:numStars="5"
-        android:progressTint="?attr/ratingStarColor"
-        android:rating="3"
-        android:stepSize="1"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tvProductPrice" />
 
