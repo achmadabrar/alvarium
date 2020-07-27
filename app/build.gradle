@@ -6,7 +6,7 @@ apply plugin: 'kotlin-kapt'
 android {
 
     Properties keystoreProperties = new Properties();
-    keystoreProperties.load(new FileInputStream(file(rootProject.file("keystore.properties"))))
+    keystoreProperties.load(new FileInputStream(file(rootProject.file("local.properties"))))
 
     signingConfigs {
 
