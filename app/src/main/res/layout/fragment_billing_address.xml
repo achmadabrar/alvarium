@@ -32,8 +32,8 @@
                 android:layout_gravity="center"
                 android:button="@drawable/custom_radio_button"
                 android:checked="false"
-                android:text="Ship to Same Address"
-                android:textColor="@color/radiobutton_text"
+                tools:text="Ship to Same Address"
+                android:textColor="?attr/primaryTextColor"
                 android:textSize="18sp"
                 android:visibility="gone"/>
 

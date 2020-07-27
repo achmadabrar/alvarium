@@ -122,7 +122,7 @@
         android:orientation="horizontal"
         android:paddingTop="8dp"
         android:paddingBottom="8dp"
-        android:background="@color/cart_title_bg"
+        android:background="@color/fragment_background_dark"
         android:weightSum="1">
 
         <TextView

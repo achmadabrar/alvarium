@@ -6,6 +6,7 @@
         <item name="fontFamily">@font/montserrat_regular</item>
         <item name="android:fontFamily">@font/montserrat_regular</item>
         <item name="autoCompleteTextViewStyle">@style/SearchAutoCompleteTextView</item>
+        <item name="android:windowTranslucentStatus">true</item>
     </style>
 
     <style name="SearchAutoCompleteTextView" parent="Widget.AppCompat.Light.AutoCompleteTextView">
@@ -20,6 +21,7 @@
         <item name="android:windowActionBar">false</item>
         <item name="android:windowFullscreen">true</item>
         <item name="android:windowContentOverlay">@null</item>
+        <item name="android:windowTranslucentStatus">true</item>
     </style>
 
 
@@ -71,7 +73,7 @@
     <style name="OrderDetailsTitleTextViewStyle" parent="rtlSupportedTextView">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:background">@color/confirm_order_card_title_bg</item>
+        <item name="android:background">@color/fragment_background_dark</item>
         <item name="android:padding">10dp</item>
         <item name="android:textColor">?attr/primaryTextColor</item>
         <item name="android:textSize">@dimen/tv_text_size_regular</item>
@@ -80,15 +82,15 @@
 
     <style name="RoundedButtonRegular">
         <item name="android:background">@drawable/rounded_background_ripple</item>
-        <item name="android:backgroundTint">@color/btnStyle1_background</item>
-        <item name="android:textColor">@color/btnStyle1_text</item>
+        <item name="android:backgroundTint">@color/themePrimary</item>
+        <item name="android:textColor">@color/white</item>
         <item name="android:textSize">@dimen/button_text_size</item>
     </style>
 
     <style name="RectangularButtonRegular">
         <item name="android:background">@drawable/rect_background_ripple</item>
-        <item name="android:backgroundTint">@color/btnStyle1_background</item>
-        <item name="android:textColor">@color/btnStyle1_text</item>
+        <item name="android:backgroundTint">@color/themePrimary</item>
+        <item name="android:textColor">@color/white</item>
         <item name="android:textSize">@dimen/button_text_size</item>
     </style>
 
@@ -96,7 +98,7 @@
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">25dp</item>
         <item name="android:background">@drawable/tiny_btn_background</item>
-        <item name="android:textColor">@color/pink</item>
+        <item name="android:textColor">@color/themePrimary</item>
         <item name="android:textSize">@dimen/tv_text_size_tiny</item>
         <item name="android:textStyle">bold</item>
         <item name="android:gravity">center_vertical</item>
@@ -148,7 +150,7 @@
         <item name="android:layout_marginEnd">16dp</item>
         <item name="android:gravity">end</item>
         <item name="android:maxLines">1</item>
-        <item name="android:textColor">@color/pink</item>
+        <item name="android:textColor">@color/themePrimary</item>
         <item name="android:textSize">16sp</item>
         <item name="android:textStyle">bold</item>
         <item name="android:text">@string/placeholder_price</item>

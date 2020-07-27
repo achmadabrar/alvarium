@@ -52,25 +52,20 @@
 
                     <EditText
                         android:id="@+id/newBaseUrlEditTextFromSettings"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                        style="@style/RoundedEditText"
                         android:layout_marginTop="10dp"
-                        android:backgroundTint="@color/gray"
                         android:gravity="start"
                         android:singleLine="true"
                         android:imeOptions="actionDone"
                         android:textDirection="ltr"
-                        android:hint="@string/sample_base_url"
-                        android:textColor="?attr/primaryTextColor"
-                        android:textColorHint="@color/grayOrDark"
-                        android:textSize="@dimen/tv_text_size_regular" />
+                        android:hint="@string/sample_base_url" />
 
 
                     <Button
                         android:id="@+id/testUrlBtnFromSettings"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:backgroundTint="@color/settings_btn_bg"
+                        android:backgroundTint="@color/themePrimary"
                         tools:text="@string/test"
                         android:textColor="@color/white" />
 
@@ -79,7 +74,7 @@
                         android:id="@+id/mainUrlBtnFromSettings"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:backgroundTint="@color/settings_btn_bg"
+                        android:backgroundTint="@color/themePrimary"
                         tools:text="@string/set_default"
                         android:textAllCaps="true"
                         android:textColor="@color/white" />

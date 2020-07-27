@@ -350,7 +350,7 @@ fun TextView?.showTextPendingCalculationOnCheckout()
     this?.text = DbHelper.getString(Const.CALCULATED_DURING_CHECKOUT)
     this?.textSize = 13F
     this?.maxLines = 2
-    this?.setTextColor(ContextCompat.getColor(context, R.color.pink))
+    this?.setTextColor(ContextCompat.getColor(context, R.color.themePrimary))
 }
 
 fun TextView.setDrawableEnd(resId: Int) {

@@ -21,7 +21,7 @@
         android:paddingEnd="10dp"
         android:paddingBottom="5dp"
         android:text="@string/done"
-        android:textColor="@color/pink"
+        android:textColor="@color/themePrimary"
         android:textSize="@dimen/tv_text_size_regular"
         android:textStyle="bold" />
 

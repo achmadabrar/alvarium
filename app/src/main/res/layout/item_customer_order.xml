@@ -14,7 +14,7 @@
         android:layout_alignParentStart="true"
         android:layout_centerVertical="true"
         android:src="@drawable/ic_payment"
-        android:tint="@color/pink"/>
+        android:tint="?attr/primaryIconTint"/>
 
     <TextView
         android:id="@+id/tvOrderNumber"
@@ -83,7 +83,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
         android:layout_centerVertical="true"
-        android:tint="@color/co_list_item_divider"
+        android:tint="@color/gray"
         app:srcCompat="@drawable/ic_chevron_right" />
 
 </RelativeLayout>

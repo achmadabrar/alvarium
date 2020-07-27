@@ -1,45 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="colorPrimary">#FFFFFF</color>
-    <color name="colorPrimaryDark">@color/gray</color>
-    <color name="colorAccent">#989898</color>
+    <color name="colorPrimaryDark">@color/themeSecondary</color>
+    <color name="colorAccent">@color/themePrimary</color>
+
+    <color name="themePrimary">#FF476E</color>
+    <color name="themeSecondary">#83868C</color>
+
+    <color name="toolbar_color">#f7f6f6</color>
+    <color name="fragment_background">#FFF</color>
+    <color name="list_item_bg">#FFFFFF</color>
+    <color name="fragment_background_dark">#F4F4F4</color>
 
     <color name="black">#000</color>
     <color name="white">#FFF</color>
-    <color name="pink">#FF476E</color>
-    <color name="gray">#989898</color>
+    <color name="gray">@color/themeSecondary</color>
     <color name="green">#10CB3C</color>
     <color name="red">#E91E2F</color>
     <color name="golden">#FFBA49</color>
-    <color name="blue">#2196F3</color>
+    <color name="blue">#2136F3</color>
 
     <!-- EditText Style1 -->
     <color name="etStyle1_hint">#A5A5A5</color>
     <color name="etStyle1_drawable">#A5A5A5</color>
     <color name="etStyle1_background">#F2F2F2</color>
 
-    <!-- Spinner -->
-<!--    <color name="spinner_text">#A5A5A5</color>-->
-
-    <!-- Button Style 1  (pink button) -->
-    <color name="btnStyle1_text">#F2F2F2</color>
-    <color name="btnStyle1_background">#FF476E</color>
-
-
-    <!--    Different in dark/light theme   -->
-
-    <color name="icon_tint_active">@color/pink</color>
-    <color name="icon_tint_inactive">@color/whiteOrBlack</color>
-    <color name="nav_item_bg">#f7f6f6</color>
-
-    <color name="toolbar_color">#f7f6f6</color>
-    <color name="fragment_background">#FFF</color>
-
-    <color name="register_title_text">#000000</color>
-    <color name="radiobutton_text">#000000</color>
-
-    <color name="cart_title_bg">#F4F4F4</color>
-
+    <!-- Checkout Tab -->
     <color name="tab_background_selected">#D2D1D7</color>
     <color name="tab_background_unselected">#F3F2F8</color>
     <color name="tab_indicator_color">@android:color/transparent</color>
@@ -51,19 +37,6 @@
     <color name="whiteOrGray">#E3E3E3</color>
     <color name="grayOrDark">#313437</color>
     <color name="darkOrGray">#C5C5C5</color>
-    <color name="list_item_bg">#FFFFFF</color> <!-- #EAE8EA-->
-    <color name="checkbox_bg">#F2F2F2</color>
-    <color name="confirm_order_card_title_bg">#f2f2f7</color>
-    <color name="confirm_order_card_desc_bg">#333333</color>
-    <color name="product_list_btn_bg">#EEEEEE</color>
 
-    <!-- Settings -->
-    <color name="settings_btn_bg">#ffaa66cc</color>
-    <color name="settings_fragment_bg">#989898</color>
-    <color name="settings_card_bg">#FFFFFF</color>
-
-    <!-- Customer Order -->
-    <color name="co_list_item_divider">#CBC9CB</color>
-    <color name="co_fragment_bg">#f2f2f7</color>
-
+    <!-- <color name="settings_btn_bg">#ffaa66cc</color>-->
 </resources>

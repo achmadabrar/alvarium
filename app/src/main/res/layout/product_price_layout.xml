@@ -24,7 +24,7 @@
         android:id="@+id/tvDiscountPrice"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textColor="@color/pink"
+        android:textColor="@color/themePrimary"
         android:textSize="@dimen/tv_text_size_regular"
         android:ellipsize="end"
         android:maxLines="1"

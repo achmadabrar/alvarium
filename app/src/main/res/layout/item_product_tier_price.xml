@@ -38,7 +38,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             tools:text="@string/placeholder"
-            android:textColor="@color/pink"
+            android:textColor="@color/themePrimary"
             android:textStyle="bold"
             android:textSize="14sp"
             style="@style/rtlSupportedTextView"/>

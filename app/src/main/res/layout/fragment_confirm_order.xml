@@ -62,14 +62,8 @@
 
                     <TextView
                         android:id="@+id/tvProductsTitle"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:background="@color/confirm_order_card_title_bg"
-                        android:padding="10dp"
-                        android:textStyle="bold"
-                        android:text="@string/products"
-                        android:textColor="?attr/primaryTextColor"
-                        style="@style/rtlSupportedTextView"/>
+                        style="@style/OrderDetailsTitleTextViewStyle"
+                        tools:text="@string/products" />
 
 
                     <androidx.recyclerview.widget.RecyclerView
@@ -99,14 +93,8 @@
 
                     <TextView
                         android:id="@+id/tvOrderCalculation"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:background="@color/confirm_order_card_title_bg"
-                        android:padding="10dp"
-                        android:textStyle="bold"
-                        android:text="@string/invoice"
-                        android:textColor="?attr/primaryTextColor"
-                        style="@style/rtlSupportedTextView"/>
+                        style="@style/OrderDetailsTitleTextViewStyle"
+                        android:text="@string/invoice" />
 
                     <include
                         layout="@layout/table_order_total"
