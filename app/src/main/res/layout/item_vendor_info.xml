@@ -49,12 +49,9 @@
         android:paddingStart="10dp"
         android:paddingEnd="10dp"
         android:textAllCaps="false"
-        android:textSize="14sp"
         android:layout_marginBottom="5dp"
-        android:tint="@color/co_list_item_divider"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toEndOf="@id/ivVendorThumb"
-        app:srcCompat="@drawable/ic_chevron_right"
         tools:text="@string/placeholder" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

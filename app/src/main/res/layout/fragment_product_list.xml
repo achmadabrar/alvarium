@@ -70,7 +70,7 @@
             <LinearLayout
                 android:id="@+id/btnSortBy"
                 android:background="@drawable/rect_background_ripple"
-                android:backgroundTint="@color/product_list_btn_bg"
+                android:backgroundTint="@color/fragment_background_dark"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_gravity="center"
@@ -103,7 +103,7 @@
             <LinearLayout
                 android:id="@+id/btnFilter"
                 android:background="@drawable/rect_background_ripple"
-                android:backgroundTint="@color/product_list_btn_bg"
+                android:backgroundTint="@color/fragment_background_dark"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_gravity="center"

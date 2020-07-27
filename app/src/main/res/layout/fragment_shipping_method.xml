@@ -27,7 +27,7 @@
                 android:layout_gravity="center"
                 android:gravity="center"
                 android:checked="false"
-                android:textColor="@color/radiobutton_text"
+                android:textColor="?attr/primaryTextColor"
                 android:visibility="gone"
                 tools:visibility="visible"/>
 

@@ -9,7 +9,7 @@
 
     <item android:left="55dp">
         <shape>
-            <solid android:color="@color/co_list_item_divider" />
+            <solid android:color="?attr/horizontalDividerBg" />
         </shape>
     </item>
 

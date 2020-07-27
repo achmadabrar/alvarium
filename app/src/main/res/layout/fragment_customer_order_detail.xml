@@ -10,7 +10,7 @@
         android:id="@+id/customerOrderRootLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/co_fragment_bg">
+        android:background="?attr/fragmentBackGroundColor">
 
         <androidx.core.widget.NestedScrollView
             android:id="@+id/orderDetailsScrollView"

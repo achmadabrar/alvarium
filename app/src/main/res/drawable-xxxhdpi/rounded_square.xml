@@ -4,6 +4,6 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:shape="rectangle">
     <corners android:radius="28dp" />
-    <solid android:color="@color/pink" />
-    <stroke android:color="@color/pink" android:width="2dp"/>
+    <solid android:color="@color/themePrimary" />
+    <stroke android:color="@color/themePrimary" android:width="2dp"/>
 </shape>

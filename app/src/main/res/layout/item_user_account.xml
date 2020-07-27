@@ -34,7 +34,7 @@
         android:id="@+id/imageView2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:tint="@color/co_list_item_divider"
+        android:tint="@color/gray"
         app:srcCompat="@drawable/ic_chevron_right"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintEnd_toEndOf="parent"/>

@@ -112,7 +112,8 @@
             android:layout_alignParentBottom="true"
             android:text="@string/cart_proceed_to_checkout"
             android:visibility="gone"
-            tools:visibility="visible" />
+            tools:visibility="visible"
+            android:elevation="3dp"/>
 
     </RelativeLayout>
 

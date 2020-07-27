@@ -13,7 +13,7 @@
         android:button="@drawable/custom_radio_button"
         android:checked="false"
         android:text="@string/store"
-        android:textColor="@color/radiobutton_text"
+        android:textColor="?attr/primaryTextColor"
         android:textSize="18sp" />
 
     <TextView
@@ -21,8 +21,8 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
         android:gravity="center"
-        android:text="Select Store or Shipping address"
-        android:textColor="@color/radiobutton_text"
+        tools:text="Select Store or Shipping address"
+        android:textColor="?attr/primaryTextColor"
         android:textSize="18sp" />
 
     <LinearLayout

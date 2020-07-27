@@ -138,7 +138,7 @@ class UserAccountFragment: ToolbarLogoBaseFragment() {
         }
 
         downloadableProductsLayout.apply {
-            ivOptionIcon.setImageResource(R.drawable.ic_my_order)
+            ivOptionIcon.setImageResource(R.drawable.ic_download)
             tvOptionName.text = DbHelper.getString(Const.ACCOUNT_DOWNLOADABLE_PRODUCTS)
             setOnClickListener { clickAction(DownloadableProductListFragment()) }
         }

@@ -15,12 +15,12 @@
         <item name="horizontalDividerBg">@color/gray</item>
         <item name="ratingStarColor">@color/golden</item>
 
-        <item name="bottomNavBg">@color/nav_item_bg</item>
+        <item name="bottomNavBg">@color/toolbar_color</item>
 
         <item name="primaryTextColor">@color/whiteOrBlack</item>
         <item name="secondaryTextColor">@color/grayOrDark</item>
         <item name="primaryIconTint">@color/whiteOrBlack</item>
-        <item name="secondaryIconTint">@color/pink</item>
+        <item name="secondaryIconTint">@color/themePrimary</item>
 
         <item name="editTextStyle1Drawable">@color/etStyle1_drawable</item>
         <item name="editTextStyle1Hint">@color/etStyle1_hint</item>
