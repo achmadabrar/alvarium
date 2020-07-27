@@ -5,8 +5,12 @@ package com.bs.ecommerce.utils
 import android.app.Activity
 import android.content.Context
 import android.content.res.Configuration
+import android.graphics.Color
+import android.graphics.LinearGradient
 import android.graphics.Rect
+import android.graphics.Shader
 import android.os.Build
+import android.text.TextPaint
 import android.util.Log
 import android.util.Patterns
 import android.view.LayoutInflater
@@ -361,6 +365,22 @@ fun TextView.setDrawableEnd(resId: Int) {
     } else {
         setCompoundDrawablesWithIntrinsicBounds(0, 0, resId, 0)
     }
+}
+
+fun TextView.setGradient() {
+    val paint: TextPaint = this.paint
+    val width: Float = paint.measureText(this.text.toString())
+
+    val textShader: Shader = LinearGradient(
+        0f, 0f, width, this.textSize, intArrayOf(
+            Color.parseColor("#F97C3C"),
+            Color.parseColor("#FDB54E"),
+            Color.parseColor("#64B678"),
+            Color.parseColor("#478AEA"),
+            Color.parseColor("#8446CC")
+        ), null, Shader.TileMode.CLAMP
+    )
+    this.paint.shader = textShader
 }
 
 fun RecyclerView.calculateColumnsForGridLayout() {
