@@ -5,12 +5,16 @@ apply plugin: 'kotlin-kapt'
 
 android {
 
+    Properties keystoreProperties = new Properties();
+    keystoreProperties.load(new FileInputStream(file(rootProject.file("keystore.properties"))))
+
     signingConfigs {
-        nopstation {
-            keyAlias 'nopStation'
-            keyPassword '159753246'
-            storeFile file('/Users/rarahat/Desktop/NopStation Projects/NopStation_MVVM/app/playstore_info/nopstation_cart_keystore.jks')
-            storePassword '159753246'
+
+        release {
+            storeFile file(keystoreProperties["storeFile"])
+            keyAlias keystoreProperties["keyAlias"]
+            keyPassword keystoreProperties["keyPassword"]
+            storePassword keystoreProperties["storePassword"]
         }
     }
 
@@ -31,10 +35,12 @@ android {
         buildConfigField "String", "NST_SECRET",  getSecret()
 
     }
+
     buildTypes {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.release
         }
     }
 
@@ -55,7 +61,7 @@ android {
             versionCode 1000005
             versionName "4.2.5"
             dimension "app"
-            signingConfig signingConfigs.nopstation
+            signingConfig signingConfigs.release
         }
     }
 
