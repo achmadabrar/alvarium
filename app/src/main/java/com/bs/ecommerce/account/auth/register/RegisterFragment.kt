@@ -186,6 +186,9 @@ open class RegisterFragment : ToolbarLogoBaseFragment(), View.OnClickListener
             emailEditText?.showOrHideOrRequired(isEnabledParam = true, isRequired =   true, value = email,
                 hintText = DbHelper.getString(Const.EMAIL))
 
+            confirmEmailEditText?.showOrHideOrRequired(isEnabledParam = enteringEmailTwice, isRequired =   true, value = email,
+                hintText = DbHelper.getString(Const.CONFIRM_EMAIL))
+
             enterPasswordEditText?.showOrHideOrRequired(isEnabledParam = showPasswordField, isRequired =   showPasswordField,
                 hintText = DbHelper.getString(Const.ENTER_PASSWORD))
 
@@ -382,6 +385,9 @@ open class RegisterFragment : ToolbarLogoBaseFragment(), View.OnClickListener
                 val input = it.text?.trim().toString(); if(input.isNotEmpty()  && input.isEmailValid()) email = input else {showValidation(it, true)}
             }
 
+            confirmEmailEditText?.let {
+                val input = it.text?.trim().toString(); if(input.isNotEmpty()  && input.isEmailValid()) confirmEmail = input else {showValidation(it, true)}
+            }
 
             myCalendar?.get(Calendar.YEAR)?.also { dateOfBirthYear = it }
             myCalendar?.get(Calendar.MONTH)?.also { dateOfBirthMonth = it + 1 }

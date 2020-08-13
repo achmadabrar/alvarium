@@ -55,6 +55,8 @@
 
                     <com.google.android.material.textfield.TextInputLayout
                         style="@style/mTextInputLayout"
+                        tools:visibility="visible"
+                        android:visibility="gone"
                         tools:hint="@string/reg_hint_first_name">
 
                         <EditText
@@ -69,6 +71,8 @@
 
                     <com.google.android.material.textfield.TextInputLayout
                         style="@style/mTextInputLayout"
+                        tools:visibility="visible"
+                        android:visibility="gone"
                         tools:hint="@string/reg_hint_last_name">
 
                         <EditText
@@ -84,6 +88,8 @@
 
                     <com.google.android.material.textfield.TextInputLayout
                         style="@style/mTextInputLayout"
+                        tools:visibility="visible"
+                        android:visibility="gone"
                         tools:hint="@string/reg_hint_username">
 
                         <EditText
@@ -98,6 +104,8 @@
 
                     <com.google.android.material.textfield.TextInputLayout
                         style="@style/mTextInputLayout"
+                        tools:visibility="visible"
+                        android:visibility="gone"
                         tools:hint="@string/reg_hint_dd_mm_yy">
 
                         <EditText
@@ -113,6 +121,8 @@
 
                     <com.google.android.material.textfield.TextInputLayout
                         style="@style/mTextInputLayout"
+                        tools:visibility="visible"
+                        android:visibility="gone"
                         tools:hint="@string/reg_hint_email">
 
                         <EditText
@@ -125,9 +135,27 @@
                             android:inputType="textEmailAddress"/>
                     </com.google.android.material.textfield.TextInputLayout>
 
+                    <com.google.android.material.textfield.TextInputLayout
+                        style="@style/mTextInputLayout"
+                        tools:visibility="visible"
+                        android:visibility="gone"
+                        tools:hint="@string/reg_hint_confirm_email">
+
+                        <EditText
+                            android:id="@+id/confirmEmailEditText"
+                            style="@style/RoundedEditText"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="15dp"
+                            android:imeOptions="actionNext"
+                            android:inputType="textEmailAddress"/>
+                    </com.google.android.material.textfield.TextInputLayout>
+
 
                     <com.google.android.material.textfield.TextInputLayout
                         style="@style/mTextInputLayout"
+                        tools:visibility="visible"
+                        android:visibility="gone"
                         tools:hint="@string/reg_hint_phone">
 
                         <EditText
@@ -143,6 +171,8 @@
 
                     <com.google.android.material.textfield.TextInputLayout
                         style="@style/mTextInputLayout"
+                        tools:visibility="visible"
+                        android:visibility="gone"
                         tools:hint="@string/reg_hint_fax">
 
                         <EditText
@@ -158,6 +188,8 @@
 
                     <com.google.android.material.textfield.TextInputLayout
                         style="@style/mTextInputLayout"
+                        tools:visibility="visible"
+                        android:visibility="gone"
                         tools:hint="@string/reg_hint_street_address">
 
                         <EditText
@@ -174,6 +206,8 @@
 
                     <com.google.android.material.textfield.TextInputLayout
                         style="@style/mTextInputLayout"
+                        tools:visibility="visible"
+                        android:visibility="gone"
                         tools:hint="@string/reg_hint_street_address2">
 
                         <EditText
@@ -189,6 +223,7 @@
 
                     <com.google.android.material.textfield.TextInputLayout
                         style="@style/mTextInputLayout"
+                        tools:visibility="visible"
                         tools:hint="@string/reg_hint_zip_or_postal_code">
 
                         <EditText
@@ -236,6 +271,8 @@
 
                     <com.google.android.material.textfield.TextInputLayout
                         style="@style/mTextInputLayout"
+                        tools:visibility="visible"
+                        android:visibility="gone"
                         tools:hint="@string/reg_hint_city">
 
                         <EditText
@@ -294,6 +331,8 @@
 
                     <com.google.android.material.textfield.TextInputLayout
                         style="@style/mTextInputLayout"
+                        tools:visibility="visible"
+                        android:visibility="gone"
                         tools:hint="@string/reg_hint_company_name">
 
                         <EditText

@@ -295,7 +295,7 @@ class Const {
         const val ADDRESS_1 = "address.fields.address1"
         const val ADDRESS_2 = "address.fields.address2"
         const val EMAIL = "address.fields.email"
-
+        const val CONFIRM_EMAIL = "account.fields.confirmemail"
 
         const val REGISTRATION_PERSONAL_DETAILS = "account.yourpersonaldetails"
         const val REGISTRATION_PASSWORD = "account.yourpassword"
