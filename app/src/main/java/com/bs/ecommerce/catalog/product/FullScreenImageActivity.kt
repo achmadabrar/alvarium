@@ -7,8 +7,8 @@ import android.widget.RelativeLayout
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import com.bs.ecommerce.R
-import com.bs.ecommerce.customViews.TouchImageViewJava
 import com.bs.ecommerce.catalog.common.ImageModel
+import com.bs.ecommerce.customViews.TouchImageViewJava
 import com.bs.ecommerce.utils.loadImg
 import kotlinx.android.synthetic.main.activity_full_screen_image.*
 
@@ -46,7 +46,7 @@ class FullScreenImageActivity : AppCompatActivity() {
 
             img.maxZoom = 4F
 
-            img.loadImg(pictureModels?.get(position)?.fullSizeImageUrl)
+            img.loadImg(pictureModels?.get(position)?.fullSizeImageUrl, roundedCorner = false)
 
             container.addView(
                 img

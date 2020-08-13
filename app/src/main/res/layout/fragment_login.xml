@@ -7,9 +7,12 @@
     android:layout_height="match_parent">
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/loginFormLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".LoginFragment">
+        tools:context=".LoginFragment"
+        android:visibility="gone"
+        tools:visibility="visible">
 
         <ImageView
             android:id="@+id/backgroundImageView"
@@ -72,14 +75,35 @@
                         android:drawableEnd="@drawable/ic_user"
                         android:paddingEnd="15dp"
                         android:imeOptions="actionNext"
-                        android:inputType="textEmailAddress|text" />
+                        android:inputType="text" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/tilEmail"
+                    style="@style/mTextInputLayout"
+                    android:layout_below="@id/tilUsername"
+                    tools:hint="@string/login_usrname">
+
+                    <EditText
+                        android:id="@+id/loginEmailEditText"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/btn_height"
+                        android:autofillHints="Username"
+                        android:layout_gravity="start"
+                        android:textDirection="locale"
+                        android:textAlignment="viewStart"
+                        android:drawableEnd="@drawable/ic_user"
+                        android:paddingEnd="15dp"
+                        android:imeOptions="actionNext"
+                        android:inputType="textEmailAddress" />
 
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/tilPassword"
                     style="@style/mTextInputLayout"
-                    android:layout_below="@id/tilUsername"
+                    android:layout_below="@id/tilEmail"
                     android:layout_marginTop="20dp"
                     tools:hint="@string/login_password"
                     app:passwordToggleDrawable="@drawable/password_toggle_drawable"

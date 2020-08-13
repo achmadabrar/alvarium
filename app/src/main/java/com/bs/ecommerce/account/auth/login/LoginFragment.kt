@@ -50,21 +50,23 @@ class LoginFragment : BaseFragment()
     {
         super.onViewCreated(view, savedInstanceState)
 
-        model = AuthModelImpl()
+        if(!viewCreated) {
+            model = AuthModelImpl()
 
-        viewModel  = ViewModelProvider(this).get(LoginViewModel::class.java)
-        mainViewModel = ViewModelProvider(requireActivity()).get(MainViewModel::class.java)
+            viewModel = ViewModelProvider(this).get(LoginViewModel::class.java)
+            mainViewModel = ViewModelProvider(requireActivity()).get(MainViewModel::class.java)
 
-        initView()
-        initFacebookSdk()
+            (viewModel as LoginViewModel).getLoginModel(model)
 
-        setButtonClickListeners()
+            initFacebookSdk()
+        }
 
         setLiveDataListeners()
     }
 
-    private fun initView() {
-        tilUsername.hint = DbHelper.getString(Const.LOGIN_EMAIL)
+    private fun setupView(formData: LoginPostData) {
+        tilUsername.hint = DbHelper.getString(Const.USERNAME)
+        tilEmail.hint = DbHelper.getString(Const.LOGIN_EMAIL)
         tilPassword.hint = DbHelper.getString(Const.LOGIN_PASS)
         loginButton.text = DbHelper.getString(Const.LOGIN_LOGIN_BTN)
 
@@ -72,6 +74,22 @@ class LoginFragment : BaseFragment()
         tvForgotPassword.text = DbHelper.getString(Const.LOGIN_FORGOT_PASS)
         tvLoginOr.text = DbHelper.getString(Const.LOGIN_OR)
         fbLoginButton.text = DbHelper.getString(Const.LOGIN_LOGIN_WITH_FB)
+
+        setButtonClickListeners()
+
+        if(formData.data.usernamesEnabled) {
+            tilUsername.visibility = View.VISIBLE
+            tilEmail.visibility = View.GONE
+
+            (viewModel as LoginViewModel).isUsernameEnabled = true
+        } else {
+            tilUsername.visibility = View.GONE
+            tilEmail.visibility = View.VISIBLE
+
+            (viewModel as LoginViewModel).isUsernameEnabled = false
+        }
+
+        loginFormLayout.visibility = View.VISIBLE
     }
 
     private fun setButtonClickListeners()
@@ -85,24 +103,43 @@ class LoginFragment : BaseFragment()
 
     private fun sendLogInData()
     {
-        if (loginUsernameEditText?.text?.isNotEmpty() == true && loginPasswordEditText?.text?.isNotEmpty() == true)
-        {
-            if(loginUsernameEditText?.text.isEmailValid())
-                (viewModel as LoginViewModel).postLoginVM(
-                    LoginPostData(
-                        LoginData(
-                            email = loginUsernameEditText?.text.toString(),
-                            password = loginPasswordEditText?.text?.toString().toString()
-                        )
-                    ), model)
-            else
-                toast(DbHelper.getString(Const.ENTER_VALID_EMAIL))
+        val usernameEnabled = (viewModel as LoginViewModel).isUsernameEnabled
+
+        if(usernameEnabled && loginUsernameEditText?.text?.isNotEmpty() == false) {
+
+            toast(DbHelper.getString(Const.USERNAME))
+            return
         }
-        else
-        {
+
+        if(!usernameEnabled && loginEmailEditText?.text?.isNotEmpty() == false) {
+
             toast(DbHelper.getString(Const.LOGIN_EMAIL_REQ))
-            toast(DbHelper.getString(Const.LOGIN_PASS_REQ))
+            return
         }
+
+        if(loginPasswordEditText?.text?.isNotEmpty() == false) {
+
+            toast(DbHelper.getString(Const.LOGIN_PASS_REQ))
+            return
+        }
+
+
+        if (!usernameEnabled && !loginEmailEditText?.text.isEmailValid()) {
+            toast(DbHelper.getString(Const.ENTER_VALID_EMAIL))
+            return
+        }
+
+
+        (viewModel as LoginViewModel).postLoginVM(
+            LoginPostData(
+                LoginData(
+                    username = if (usernameEnabled) loginUsernameEditText?.text.toString() else "",
+                    email = if (usernameEnabled) "" else loginEmailEditText?.text.toString(),
+                    password = loginPasswordEditText?.text?.toString().toString()
+                )
+            ), model
+        )
+                
     }
 
     private fun setLiveDataListeners()
@@ -130,6 +167,10 @@ class LoginFragment : BaseFragment()
                     mainViewModel.updatingAppSettings = true
                     mainViewModel.getAppSettings(MainModelImpl())
                 }
+            })
+
+            loginFormDataLD.observe(viewLifecycleOwner, Observer { formData ->
+                setupView(formData)
             })
 
             isLoadingLD.observe(viewLifecycleOwner, Observer { isShowLoader ->

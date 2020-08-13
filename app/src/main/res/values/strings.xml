@@ -300,5 +300,6 @@
     <string name="hint_your_name">Your Name</string>
     <string name="hint_message">Message</string>
     <string name="items_per_page">Display items per page</string>
+    <string name="reg_hint_confirm_email">Confirm Email</string>
 
 </resources>
