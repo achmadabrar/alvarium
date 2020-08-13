@@ -10,9 +10,30 @@ import com.bs.ecommerce.networking.common.RequestCompleteListener
 
 class LoginViewModel  : BaseViewModel()
 {
-
+    val loginFormDataLD = MutableLiveData<LoginPostData>()
     var loginResponseLD = MutableLiveData<LoginResponse>()
     var logoutResponseLD = MutableLiveData<Boolean>()
+
+    var isUsernameEnabled = false
+
+    fun getLoginModel(model: AuthModel) {
+        isLoadingLD.value = true
+
+        model.getLoginModel(object :
+            RequestCompleteListener<LoginPostData> {
+            override fun onRequestSuccess(data: LoginPostData)
+            {
+                isLoadingLD.value = false
+                loginFormDataLD.value = data
+            }
+
+            override fun onRequestFailed(errorMessage: String)
+            {
+                isLoadingLD.value = false
+                toast(errorMessage)
+            }
+        })
+    }
 
     fun postLoginVM(loginPostData : LoginPostData, model: AuthModel)
     {

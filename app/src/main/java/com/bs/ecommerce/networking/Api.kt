@@ -101,6 +101,9 @@ interface Api {
     @POST("customer/login")
     fun postLoginAPI(@Body loginPostData: LoginPostData): Call<LoginResponse>
 
+    @GET("customer/login")
+    fun getLoginModel(): Call<LoginPostData>
+
     @GET("customer/logout")
     fun logout(): Call<ResponseBody>
 

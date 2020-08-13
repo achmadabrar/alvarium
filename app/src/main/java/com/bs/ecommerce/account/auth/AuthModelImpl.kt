@@ -2,9 +2,9 @@ package com.bs.ecommerce.account.auth
 
 import com.bs.ecommerce.account.auth.login.data.*
 import com.bs.ecommerce.account.auth.register.data.GetRegistrationResponse
-import com.bs.ecommerce.networking.common.RequestCompleteListener
 import com.bs.ecommerce.db.DbHelper
 import com.bs.ecommerce.networking.RetroClient
+import com.bs.ecommerce.networking.common.RequestCompleteListener
 import com.bs.ecommerce.utils.Const
 import com.bs.ecommerce.utils.TextUtils
 import okhttp3.ResponseBody
@@ -76,6 +76,26 @@ class AuthModelImpl: AuthModel
 
 
             override fun onFailure(call: Call<LoginResponse>, t: Throwable) {
+                callback.onRequestFailed(t.localizedMessage ?: DbHelper.getString(Const.COMMON_SOMETHING_WENT_WRONG))
+            }
+        })
+    }
+
+    override fun getLoginModel(callback: RequestCompleteListener<LoginPostData>) {
+
+        RetroClient.api.getLoginModel().enqueue(object : Callback<LoginPostData>
+        {
+            override fun onResponse(call: Call<LoginPostData>, response: Response<LoginPostData>)
+            {
+
+                if (response.body() != null && response.code() == 200)
+                    callback.onRequestSuccess(response.body() as LoginPostData)
+                else
+                    callback.onRequestFailed(TextUtils.getErrorMessage(response))
+            }
+
+
+            override fun onFailure(call: Call<LoginPostData>, t: Throwable) {
                 callback.onRequestFailed(t.localizedMessage ?: DbHelper.getString(Const.COMMON_SOMETHING_WENT_WRONG))
             }
         })

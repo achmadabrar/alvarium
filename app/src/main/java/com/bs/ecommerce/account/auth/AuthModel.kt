@@ -20,6 +20,10 @@ interface AuthModel
         callback: RequestCompleteListener<LoginResponse>
     )
 
+    fun getLoginModel(
+        callback: RequestCompleteListener<LoginPostData>
+    )
+
     fun logout(
         callback: RequestCompleteListener<Boolean>
     )
