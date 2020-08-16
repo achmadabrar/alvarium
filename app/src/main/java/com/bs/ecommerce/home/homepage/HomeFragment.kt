@@ -13,22 +13,22 @@ import com.bs.ecommerce.MyApplication
 import com.bs.ecommerce.R
 import com.bs.ecommerce.base.BaseViewModel
 import com.bs.ecommerce.base.ToolbarLogoBaseFragment
+import com.bs.ecommerce.catalog.common.CategoryModel
+import com.bs.ecommerce.catalog.common.ProductSummary
+import com.bs.ecommerce.catalog.common.SubCategory
+import com.bs.ecommerce.catalog.product.ProductDetailFragment
+import com.bs.ecommerce.catalog.productList.ProductListFragment
 import com.bs.ecommerce.db.DbHelper
 import com.bs.ecommerce.home.FeaturedProductAdapter
 import com.bs.ecommerce.home.homepage.model.HomePageModel
 import com.bs.ecommerce.home.homepage.model.HomePageModelImpl
+import com.bs.ecommerce.home.homepage.model.data.Manufacturer
 import com.bs.ecommerce.home.homepage.model.data.SliderData
 import com.bs.ecommerce.home.manufaturer.ManufacturerListAdapter
 import com.bs.ecommerce.home.manufaturer.ManufacturerListFragment
 import com.bs.ecommerce.main.MainActivity
 import com.bs.ecommerce.main.MainViewModel
 import com.bs.ecommerce.more.topic.TopicFragment
-import com.bs.ecommerce.catalog.product.ProductDetailFragment
-import com.bs.ecommerce.catalog.productList.ProductListFragment
-import com.bs.ecommerce.catalog.common.CategoryModel
-import com.bs.ecommerce.home.homepage.model.data.Manufacturer
-import com.bs.ecommerce.catalog.common.ProductSummary
-import com.bs.ecommerce.catalog.common.SubCategory
 import com.bs.ecommerce.utils.*
 import com.daimajia.slider.library.Indicators.PagerIndicator
 import com.daimajia.slider.library.SliderLayout
@@ -233,7 +233,7 @@ class HomeFragment : ToolbarLogoBaseFragment() {
             val textSliderView = DefaultSliderView(requireContext())
 
             textSliderView.image(sliderModel.imageUrl).scaleType =
-                BaseSliderView.ScaleType.CenterInside
+                BaseSliderView.ScaleType.CenterCrop // Previously set to: CenterInside
 
             textSliderView.setOnSliderClickListener {
 
