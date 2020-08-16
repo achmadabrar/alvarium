@@ -126,17 +126,14 @@ class CartFragment : BaseFragment() {
 
             estimateShippingLD.observe(viewLifecycleOwner, Observer { data ->
 
-                val optionOne = if(data?.shippingOptions?.size ?: 0 > 0)
-                    data.shippingOptions?.get(0) else null
+                val resultText = StringBuilder("")
+                val optionsList = data?.shippingOptions ?: listOf()
 
-                val optionTwo = if(data?.shippingOptions?.size ?: 0 > 1)
-                    data.shippingOptions?.get(1) else null
+                for (option in optionsList) {
+                    resultText.append(option.name).append(" (").append(option.price).append(" )").append("\n")
+                }
 
-                estimateShippingLayout?.tvResult?.text =
-                    optionOne?.name?.plus(" (")?.plus(optionOne.price)?.plus(" )")
-                        ?.plus("\n")
-                        ?.plus(optionTwo?.name)?.plus(" (")?.plus(optionTwo?.price)?.plus(" )")
-
+                estimateShippingLayout?.tvResult?.text = resultText.trim()
                 estimateShippingLayout?.tvResult?.visibility = View.VISIBLE
             })
         }
