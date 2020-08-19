@@ -386,7 +386,7 @@ open class RegisterFragment : ToolbarLogoBaseFragment(), View.OnClickListener
             }
 
             confirmEmailEditText?.let {
-                val input = it.text?.trim().toString(); if(input.isNotEmpty()  && input.isEmailValid()) confirmEmail = input else {showValidation(it, true)}
+                val input = it.text?.trim().toString(); if(input.isNotEmpty()  && input.isEmailValid()) confirmEmail = input else {showValidation(it, enteringEmailTwice)}
             }
 
             myCalendar?.get(Calendar.YEAR)?.also { dateOfBirthYear = it }
