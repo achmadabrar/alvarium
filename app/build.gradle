@@ -6,7 +6,7 @@ apply plugin: 'kotlin-kapt'
 android {
 
     Properties keystoreProperties = new Properties();
-    keystoreProperties.load(new FileInputStream(file(rootProject.file("local.properties"))))
+    keystoreProperties.load(new FileInputStream(file(rootProject.file("app.secret"))))
 
     signingConfigs {
 
@@ -27,9 +27,6 @@ android {
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-
-
-        buildConfigField "String", "BASE_URL", "\"" + getBaseUrl() + "\""
 
         buildConfigField "String", "NST_KEY", getNstKey()
         buildConfigField "String", "NST_SECRET",  getSecret()
@@ -177,21 +174,13 @@ apply plugin: 'com.google.firebase.crashlytics'
 
 def getNstKey() {
     Properties properties = new Properties()
-    properties.load(project.rootProject.file('local.properties').newDataInputStream())
+    properties.load(project.rootProject.file('app.secret').newDataInputStream())
     String nst = properties.getProperty("NST_KEY")
     return nst
 }
 def getSecret() {
     Properties properties = new Properties()
-    properties.load(project.rootProject.file('local.properties').newDataInputStream())
+    properties.load(project.rootProject.file('app.secret').newDataInputStream())
     String secret = properties.getProperty("NST_SECRET")
     return secret
-}
-
-
-def getBaseUrl() {
-    Properties properties = new Properties()
-    properties.load(project.rootProject.file('local.properties').newDataInputStream())
-    String baseUrl = properties.getProperty("base_url")
-    return baseUrl
 }

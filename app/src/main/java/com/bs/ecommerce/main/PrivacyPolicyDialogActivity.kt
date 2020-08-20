@@ -4,6 +4,7 @@ import android.webkit.WebView
 import androidx.lifecycle.Observer
 import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.customview.customView
+import com.bs.ecommerce.MyApplication
 import com.bs.ecommerce.base.BaseActivity
 import com.bs.ecommerce.db.DbHelper
 import com.bs.ecommerce.main.model.MainModelImpl
@@ -59,7 +60,7 @@ abstract class PrivacyPolicyDialogActivity : BaseActivity()
         if (prefManager.isNotAccepted && !isDialogAlreadyShowed)
             checkPrivacyPolicyAndSendAppStartToken()
         
-        else if(prefManager.fcmTokenChanged)
+        else if(prefManager.fcmTokenChanged || !MyApplication.appStartCalled)
             sendAppStartDataToServer()
     }
 
@@ -106,6 +107,7 @@ abstract class PrivacyPolicyDialogActivity : BaseActivity()
             PrefSingleton.setPrefs(PrefSingleton.SENT_TOKEN_TO_SERVER, appStartResponse)
             TAG.showLog("Token Sent Successful")
             prefManager.fcmTokenChanged = false
+            MyApplication.appStartCalled = true
         })
     }
 
