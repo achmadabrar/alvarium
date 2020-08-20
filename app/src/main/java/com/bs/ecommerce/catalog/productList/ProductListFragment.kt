@@ -329,7 +329,7 @@ class ProductListFragment : BaseFragment() {
             } else {
                 // to turn off slide open drawer
                 btnFilter.visibility = View.GONE
-                llButtonHolder.visibility = View.INVISIBLE
+                llButtonHolder.visibility = View.GONE // View.INVISIBLE
                 drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED)
             }
         })
