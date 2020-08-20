@@ -42,7 +42,7 @@ class MyApplication : MultiDexApplication()
 
 
     companion object {
-
+        var appStartCalled = false
         var navigateFromCheckoutCompleteToHomePage = false
 
         var myCartCounter: Int = 0
