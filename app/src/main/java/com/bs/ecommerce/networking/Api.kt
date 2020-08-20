@@ -414,14 +414,9 @@ interface Api {
 
     companion object
     {
-        val thumbnailImageSize = 320
-        val manufactureImageSize = "800"
-        const val queryString = "thumbPictureSize"
-        val qs_price = "price"
-        val qs_page_number = "PageNumber"
-        val qs_page_size = "PageSize"
-        val qs_order_by = "orderby"
-        val qs_spec = "specs"
+        const val qs_page_number = "PageNumber"
+        const val qs_page_size = "PageSize"
+        const val qs_order_by = "orderby"
 
         const val removeFromCartOrWishList: String = "removefromcart"
         const val addToCart: String = "addtocart"
