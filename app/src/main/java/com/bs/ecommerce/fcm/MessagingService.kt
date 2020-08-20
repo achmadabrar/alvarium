@@ -11,11 +11,11 @@ import android.media.RingtoneManager
 import android.os.Bundle
 import androidx.core.app.NotificationCompat
 import androidx.core.app.TaskStackBuilder
+import com.bs.ecommerce.MyApplication
 import com.bs.ecommerce.R
 import com.bs.ecommerce.main.MainActivity
 import com.bs.ecommerce.main.SplashScreenActivity
 import com.bs.ecommerce.utils.AcceptPolicyPreference
-import com.bs.ecommerce.MyApplication
 import com.bs.ecommerce.utils.PrefSingleton
 import com.bs.ecommerce.utils.showLog
 import com.google.firebase.messaging.FirebaseMessagingService
@@ -105,7 +105,7 @@ class MessagingService : FirebaseMessagingService() {
                 notificationChannel.lightColor = Color.RED
                 notificationChannel.enableVibration(true)
                 notificationChannel.vibrationPattern = longArrayOf(100, 200, 300, 400, 500, 400, 300, 200, 400)
-                assert(mNotificationManager != null)
+
                 notificationBuilder.setChannelId(NOTIFICATION_CHANNEL_ID)
                 mNotificationManager?.createNotificationChannel(notificationChannel)
             }
@@ -130,7 +130,9 @@ class MessagingService : FirebaseMessagingService() {
             style.bigPicture(bitmap)
             notificationBuilder.setStyle(style)
         }
-        mNotificationManager?.notify(NOTIFICATION_ID, notificationBuilder.build())
+
+        val randomNotificationId = NOTIFICATION_ID.plus((1..99999999).random())
+        mNotificationManager?.notify(randomNotificationId, notificationBuilder.build())
 
     }
 
@@ -138,7 +140,7 @@ class MessagingService : FirebaseMessagingService() {
     {
         val TAG = "fcm"
         val REQUEST_CODE = 0
-        val NOTIFICATION_ID = 1
+        val NOTIFICATION_ID: Int = 1971
 
         val TITLE = "title"
         val BODY = "body"
