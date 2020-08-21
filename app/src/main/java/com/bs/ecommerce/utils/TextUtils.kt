@@ -4,9 +4,9 @@ import android.content.Context
 import android.os.Build
 import android.text.Html
 import android.text.Spanned
+import com.bs.ecommerce.catalog.common.AddressModel
 import com.bs.ecommerce.db.DbHelper
 import com.bs.ecommerce.networking.common.BaseResponse
-import com.bs.ecommerce.catalog.common.AddressModel
 import com.google.gson.Gson
 import com.google.gson.JsonSyntaxException
 import retrofit2.Response
@@ -85,22 +85,31 @@ class TextUtils {
 
         return StringBuilder().apply {
             append(DbHelper.getString(Const.ADDRESS_EMAIL)).append(": ").append(address.email)
-                .append("\n")
 
-            append(DbHelper.getString(Const.ADDRESS_PHONE)).append(": ").append(address.phoneNumber)
-                .append("\n")
+
+            if (address.phoneNumber?.isNotEmpty() == true)
+                append("\n")
+                    .append(DbHelper.getString(Const.ADDRESS_PHONE)).append(": ").append(address.phoneNumber)
 
             if (address.faxNumber?.isNotEmpty() == true)
-                append(DbHelper.getString(Const.ADDRESS_FAX)).append(": ").append(address.faxNumber)
-                    .append("\n")
+                append("\n")
+                    .append(DbHelper.getString(Const.ADDRESS_FAX)).append(": ").append(address.faxNumber)
 
             if (address.company?.isNotEmpty() == true)
-                append(DbHelper.getString(Const.ADDRESS_COMPANY_NAME)).append(": ")
-                    .append(address.company).append("\n")
+                append("\n").append(DbHelper.getString(Const.ADDRESS_COMPANY_NAME)).append(": ")
+                    .append(address.company)
 
-            append(address.address1).append("\n")
-            append(address.city).append(" ").append(address.zipPostalCode).append("\n")
-            append(address.countryName)
+            if (address.address1?.isNotEmpty() == true)
+                append("\n").append(address.address1)
+
+            if (address.city?.isNotEmpty() == true)
+                append("\n").append(address.city).append(" ")
+
+            if (address.zipPostalCode?.isNotEmpty() == true)
+                append("\n").append(address.zipPostalCode)
+
+            if (address.countryName?.isNotEmpty() == true)
+                append("\n").append(address.countryName)
 
         }.toString()
     }

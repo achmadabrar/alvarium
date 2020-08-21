@@ -248,6 +248,8 @@ fun EditText?.showOrHideOrRequired(isEnabledParam: Boolean = false, isRequired: 
                 view.hint = hintText
             else
                 this.hint = hintText
+
+            this.tag = hintText
         }
     }
 

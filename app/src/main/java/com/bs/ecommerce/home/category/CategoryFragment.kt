@@ -2,24 +2,25 @@ package com.bs.ecommerce.home.category
 
 import android.os.Bundle
 import android.view.View
+import android.widget.ExpandableListView
+import android.widget.ImageView
 import android.widget.RelativeLayout
-import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.bs.ecommerce.R
 import com.bs.ecommerce.base.ToolbarLogoBaseFragment
+import com.bs.ecommerce.catalog.productList.ProductListFragment
 import com.bs.ecommerce.db.DbHelper
 import com.bs.ecommerce.main.MainActivity
 import com.bs.ecommerce.main.MainViewModel
 import com.bs.ecommerce.main.model.MainModel
 import com.bs.ecommerce.main.model.MainModelImpl
 import com.bs.ecommerce.main.model.data.Category
-import com.bs.ecommerce.catalog.productList.ProductListFragment
 import com.bs.ecommerce.utils.Const
 import com.bs.ecommerce.utils.ItemClickListener
 import com.bs.ecommerce.utils.LeftDrawerItem
 import com.bs.ecommerce.utils.replaceFragmentSafely
-import kotlinx.android.synthetic.main.category_left.*
+import kotlinx.android.synthetic.main.fragment_category.*
 
 
 class CategoryFragment : ToolbarLogoBaseFragment()
@@ -34,10 +35,6 @@ class CategoryFragment : ToolbarLogoBaseFragment()
             val activity = requireActivity()
 
             if(activity is MainActivity) {
-                activity.closeDrawer()
-
-                activity.supportFragmentManager.popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE)
-
                 replaceFragmentSafely(
                     ProductListFragment.newInstance(data.name, data.id,
                     ProductListFragment.GetBy.CATEGORY))
@@ -47,7 +44,7 @@ class CategoryFragment : ToolbarLogoBaseFragment()
 
     override fun getFragmentTitle() = DbHelper.getString(Const.HOME_NAV_CATEGORY)
 
-    override fun getLayoutId(): Int = R.layout.category_left
+    override fun getLayoutId(): Int = R.layout.fragment_category
 
     override fun getRootLayout(): RelativeLayout? = categoryRootLayout
 
@@ -90,21 +87,26 @@ class CategoryFragment : ToolbarLogoBaseFragment()
             Observer { isShowLoader -> if(!isShowLoader) showHideLoader(toShow = false) })
     }
 
-    private fun showList(categoryList: List<Category>)
-    {
-        /*expandList?.layoutManager = LinearLayoutManager(activity)
-        expandList?.adapter = CategoryListAdapter(activity!!, categoryList, this)*/
+    private fun showList(categoryList: List<Category>) {
 
-        expandList?.setAdapter(CategoryListAdapterExpandable(categoryList, itemClickListener))
-        expandList?.setGroupIndicator(null)
+        val expandableListView: ExpandableListView = expandList
+        val adapter = FirstLevelAdapter(requireContext(), categoryList, itemClickListener)
+        expandableListView.setAdapter(adapter)
+        expandableListView.setOnGroupClickListener { parent, v, groupPosition, _ ->
 
-        // code for collapse all group except selected one
-        var lastExpandedPosition = -1
-        expandList?.setOnGroupExpandListener { groupPosition ->
-            if (lastExpandedPosition != -1 && groupPosition != lastExpandedPosition) {
-                expandList.collapseGroup(lastExpandedPosition)
+            val groupIndicator = v.findViewById(R.id.ivExpand) as ImageView
+
+            if (parent.isGroupExpanded(groupPosition)) {
+                parent.collapseGroup(groupPosition)
+                groupIndicator.setImageResource(R.drawable.ic_plus)
+            } else {
+                parent.expandGroup(groupPosition)
+                groupIndicator.setImageResource(R.drawable.ic_minus)
             }
-            lastExpandedPosition = groupPosition
+
+            adapter.notifyDataSetChanged()
+            true
         }
+
     }
 }

@@ -111,7 +111,8 @@ open class BaseCheckoutAddressFragment : BaseCheckoutNavigationFragment()
 
         val countryNameList = address.availableCountries?.map { it.text }
 
-        countryNameList?.let {  populateCountrySpinner(countryNameList, address.availableCountries)  }
+        if(address.countryEnabled)
+            countryNameList?.let {  populateCountrySpinner(countryNameList, address.availableCountries)  }
 
         android.os.Handler().post {  newAddressLayout?.visibility = View.VISIBLE    }
 
@@ -127,7 +128,13 @@ open class BaseCheckoutAddressFragment : BaseCheckoutNavigationFragment()
     protected fun createAddressDropdown(existingAddresses: List<AddressModel>)
     {
         val addressList = mutableListOf<String>()
-        addressList.addAll(existingAddresses.map { "${it.firstName}, ${it.lastName}, ${it.address1},${it.city},${it.countryName}" })
+        addressList.addAll(existingAddresses.map {
+            "${it.firstName}, ${it.lastName}"
+                .plus(if(it.address1!=null) ", ${it.address1}" else "")
+                .plus(if(it.city!=null) ", ${it.city}" else "")
+                .plus(if(it.countryName!=null) ", ${it.countryName}" else "")
+        })
+
         addressList.reverse()
         addressList.add(DbHelper.getString(Const.NEW_ADDRESS))
 
@@ -174,6 +181,7 @@ open class BaseCheckoutAddressFragment : BaseCheckoutNavigationFragment()
 
     private fun populateCountrySpinner(countryNameList: List<String>, availableCountries: List<AvailableCountry>?)
     {
+        countrySpinnerLayout?.visibility = View.VISIBLE
 
         countrySpinner?.adapter = createSpinnerAdapter(countryNameList)
         countrySpinner?.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
@@ -240,7 +248,9 @@ open class BaseCheckoutAddressFragment : BaseCheckoutNavigationFragment()
         if(isRequired)
         {
             isValidInfo = false
-            toast("${editText.hint} ${DbHelper.getString(Const.IS_REQUIRED)}" )
+            val hint = editText.hint ?: editText.tag
+
+            toast("$hint ${DbHelper.getString(Const.IS_REQUIRED)}" )
         }
         else
             isValidInfo = true
