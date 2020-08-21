@@ -309,6 +309,7 @@ class Const {
         const val OPTIONS = "account.options"
         const val CHANGE_PASSWORD = "account.changepassword"
         const val NEWSLETTER = "account.fields.newsletter"
+        const val ACCEPT_PRIVACY_POLICY = "account.fields.acceptprivacypolicy"
 
         const val DATE_OF_BIRTH = "account.fields.dateofbirth"
 

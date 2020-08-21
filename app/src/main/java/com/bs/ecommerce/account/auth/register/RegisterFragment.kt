@@ -166,6 +166,7 @@ open class RegisterFragment : ToolbarLogoBaseFragment(), View.OnClickListener
     private fun setViewsInitially(data: GetRegisterData)
     {
         cbNewsletter?.text = DbHelper.getString(Const.NEWSLETTER)
+        privacyPolicyCheckbox?.text = DbHelper.getString(Const.ACCEPT_PRIVACY_POLICY)
         tvChangePassword?.text = DbHelper.getString(Const.CHANGE_PASSWORD)
         tvOptions?.text = DbHelper.getString(Const.OPTIONS)
         tvPassword?.text = DbHelper.getString(Const.REGISTRATION_PASSWORD)
@@ -177,16 +178,16 @@ open class RegisterFragment : ToolbarLogoBaseFragment(), View.OnClickListener
         with(data)
         {
 
-            customerFirstNameEditText?.showOrHideOrRequired(isEnabledParam = true, isRequired =   false, value = firstName,
+            customerFirstNameEditText?.showOrHideOrRequired(isEnabledParam = true, isRequired = true, value = firstName,
                 hintText = DbHelper.getString(Const.FIRST_NAME))
 
-            customerLastNameEditText?.showOrHideOrRequired(isEnabledParam = true, isRequired =   false, value = lastName,
+            customerLastNameEditText?.showOrHideOrRequired(isEnabledParam = true, isRequired = true, value = lastName,
                 hintText = DbHelper.getString(Const.LAST_NAME))
 
             emailEditText?.showOrHideOrRequired(isEnabledParam = true, isRequired =   true, value = email,
                 hintText = DbHelper.getString(Const.EMAIL))
 
-            confirmEmailEditText?.showOrHideOrRequired(isEnabledParam = enteringEmailTwice, isRequired =   true, value = email,
+            confirmEmailEditText?.showOrHideOrRequired(isEnabledParam = enteringEmailTwice, isRequired = enteringEmailTwice, value = email,
                 hintText = DbHelper.getString(Const.CONFIRM_EMAIL))
 
             enterPasswordEditText?.showOrHideOrRequired(isEnabledParam = showPasswordField, isRequired =   showPasswordField,
@@ -198,7 +199,7 @@ open class RegisterFragment : ToolbarLogoBaseFragment(), View.OnClickListener
             dateOfBirthTextView?.showOrHideOrRequired(isEnabledParam = dateOfBirthEnabled, isRequired =   dateOfBirthRequired,
                 value = TextUtils().getFormattedDate(dateOfBirthDay, dateOfBirthMonth, dateOfBirthYear), hintText = DbHelper.getString(Const.DATE_OF_BIRTH))
 
-            usernameEditText?.showOrHideOrRequired(isEnabledParam = usernamesEnabled, isRequired =   false, value = username,
+            usernameEditText?.showOrHideOrRequired(isEnabledParam = usernamesEnabled, isRequired = usernamesEnabled, value = username,
                 hintText = DbHelper.getString(Const.USERNAME))
 
             companyInfoEditText?.showOrHideOrRequired(isEnabledParam = companyEnabled, isRequired =   companyRequired, value = company,
@@ -311,7 +312,9 @@ open class RegisterFragment : ToolbarLogoBaseFragment(), View.OnClickListener
         if(isRequired)
         {
             isValidInfo = false
-            toast("${editText.hint} ${DbHelper.getString(Const.IS_REQUIRED)}" )
+            val hint = editText.hint ?: editText.tag
+
+            toast("$hint ${DbHelper.getString(Const.IS_REQUIRED)}" )
         }
 
     }
@@ -341,7 +344,7 @@ open class RegisterFragment : ToolbarLogoBaseFragment(), View.OnClickListener
             }
 
             usernameEditText?.let {
-                val input = it.text?.trim().toString(); if(input.isNotEmpty()) username = input else { showValidation(it, false)}
+                val input = it.text?.trim().toString(); if(input.isNotEmpty()) username = input else { showValidation(it, usernamesEnabled)}
             }
 
             streetAddressEditText?.let {

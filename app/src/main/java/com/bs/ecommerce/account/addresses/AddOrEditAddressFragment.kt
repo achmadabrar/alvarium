@@ -7,16 +7,16 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.bs.ecommerce.R
+import com.bs.ecommerce.account.addresses.model.CustomerAddressModel
+import com.bs.ecommerce.account.addresses.model.CustomerAddressModelImpl
 import com.bs.ecommerce.base.BaseFragment
 import com.bs.ecommerce.base.BaseViewModel
+import com.bs.ecommerce.catalog.common.AddressModel
 import com.bs.ecommerce.checkout.model.CheckoutModelImpl
 import com.bs.ecommerce.checkout.model.data.AvailableCountry
 import com.bs.ecommerce.db.DbHelper
-import com.bs.ecommerce.account.addresses.model.CustomerAddressModel
-import com.bs.ecommerce.account.addresses.model.CustomerAddressModelImpl
 import com.bs.ecommerce.networking.Api
 import com.bs.ecommerce.networking.common.KeyValueFormData
-import com.bs.ecommerce.catalog.common.AddressModel
 import com.bs.ecommerce.utils.*
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import kotlinx.android.synthetic.main.address_form.view.*
@@ -166,10 +166,12 @@ class AddOrEditAddressFragment : BaseFragment() {
 
         formUtil.apply {
 
-            populateCountrySpinner(
-                address.availableCountries ?: listOf(),
-                countrySelectListener
-            )
+            if (address.countryEnabled == true) {
+                populateCountrySpinner(
+                    address.availableCountries ?: listOf(),
+                    countrySelectListener
+                )
+            }
 
             prepareEditText(address)
         }

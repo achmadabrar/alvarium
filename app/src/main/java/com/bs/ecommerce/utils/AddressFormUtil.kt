@@ -7,10 +7,10 @@ import android.widget.ArrayAdapter
 import android.widget.EditText
 import android.widget.Toast
 import com.bs.ecommerce.R
+import com.bs.ecommerce.catalog.common.AddressModel
 import com.bs.ecommerce.checkout.model.data.AvailableCountry
 import com.bs.ecommerce.checkout.model.data.AvailableState
 import com.bs.ecommerce.db.DbHelper
-import com.bs.ecommerce.catalog.common.AddressModel
 import kotlinx.android.synthetic.main.address_form.view.*
 
 class AddressFormUtil(private val form: View, private val context: Context) {
@@ -23,6 +23,7 @@ class AddressFormUtil(private val form: View, private val context: Context) {
         availableCountries: List<AvailableCountry>,
         itemClickListener: ItemClickListener<AvailableCountry>
     ) {
+        form.countrySpinnerLayout?.visibility = View.VISIBLE
 
         val countryAdapter: ArrayAdapter<AvailableCountry> =
             ArrayAdapter<AvailableCountry>(context, R.layout.simple_spinner_item, availableCountries)
@@ -54,14 +55,14 @@ class AddressFormUtil(private val form: View, private val context: Context) {
         {
             form.etFirstName?.showOrHideOrRequired(
                 isEnabledParam = true,
-                isRequired = false,
+                isRequired = true,
                 value = firstName,
                 hintText = DbHelper.getString(Const.FIRST_NAME)
             )
 
             form.etLastName?.showOrHideOrRequired(
                 isEnabledParam = true,
-                isRequired = false,
+                isRequired = true,
                 value = lastName,
                 hintText = DbHelper.getString(Const.LAST_NAME)
             )
@@ -228,7 +229,8 @@ class AddressFormUtil(private val form: View, private val context: Context) {
     private fun showValidation(editText: EditText, isRequired: Boolean?) {
         if (isRequired == true) {
             isValidForm = false
-            val toastMsg = "${editText.hint} ${DbHelper.getString(Const.IS_REQUIRED)}"
+            val hint = editText.hint ?: editText.tag
+            val toastMsg = "$hint ${DbHelper.getString(Const.IS_REQUIRED)}"
 
             Toast.makeText(context, toastMsg, Toast.LENGTH_SHORT).show()
         } else {
