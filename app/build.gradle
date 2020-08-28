@@ -150,8 +150,6 @@ dependencies {
         exclude group: 'org.json', module: 'json'
     }
 
-    implementation 'com.pnikosis:materialish-progress:1.7'
-
     //barcode
     implementation 'com.journeyapps:zxing-android-embedded:4.0.0'
 
