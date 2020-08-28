@@ -73,7 +73,7 @@ abstract class BaseActivity : AppCompatActivity(), ConnectivityReceiver.Connecti
             window.decorView.layoutDirection = View.LAYOUT_DIRECTION_LTR
 
         setLocale(false)
-
+        getBaseUrl()
     }
 
     override fun onNetworkConnectionChanged(isConnected: Boolean) {
