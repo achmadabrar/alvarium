@@ -247,7 +247,7 @@ class SearchFragment : BaseFragment() {
         val item = menu.findItem(R.id.action_search)
 
         try {
-            searchView = SearchView((activity as MainActivity).supportActionBar?.themedContext)
+            searchView = SearchView((activity as MainActivity).supportActionBar?.themedContext ?: requireContext())
 
             MenuItemCompat.setShowAsAction(
                 item,
