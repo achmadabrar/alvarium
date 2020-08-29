@@ -5,6 +5,7 @@ import android.os.Bundle
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.bs.ecommerce.BuildConfig
+import com.bs.ecommerce.MyApplication
 import com.bs.ecommerce.R
 import com.bs.ecommerce.base.BaseActivity
 import com.bs.ecommerce.base.BaseViewModel
@@ -13,7 +14,6 @@ import com.bs.ecommerce.main.model.MainModelImpl
 import com.bs.ecommerce.more.GenericErrorFragment
 import com.bs.ecommerce.more.UpdateAppFragment
 import com.bs.ecommerce.networking.NetworkUtil
-import com.bs.ecommerce.MyApplication
 import com.bs.ecommerce.utils.PrefSingleton
 import com.bs.ecommerce.utils.Utils
 import com.bs.ecommerce.utils.showLog
@@ -37,6 +37,7 @@ class SplashScreenActivity : BaseActivity() {
     override fun createViewModel(): BaseViewModel? = MainViewModel()
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        configDayNightTheme()
         super.onCreate(savedInstanceState)
 
         initializeJwt()

@@ -57,11 +57,6 @@ abstract class BaseActivity : AppCompatActivity(), ConnectivityReceiver.Connecti
         connectivityReceiver = ConnectivityReceiver()
         registerReceiver(connectivityReceiver, IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION))
 
-        setTheme(R.style.Nop_Theme_Dark)
-
-        if(savedInstanceState == null)
-            resetAppTheme()
-
         setContentView(getLayoutId())
 
         viewModel = createViewModel()
@@ -167,7 +162,7 @@ abstract class BaseActivity : AppCompatActivity(), ConnectivityReceiver.Connecti
         updateBadgeCount(MyApplication.myCartCounter)
     }
 
-    fun resetAppTheme() {
+    fun configDayNightTheme() {
         if (PrefSingleton.getPrefsBoolValue(PrefSingleton.IS_DARK_THEME))
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
         else

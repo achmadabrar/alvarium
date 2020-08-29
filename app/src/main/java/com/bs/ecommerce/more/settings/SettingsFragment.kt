@@ -326,7 +326,7 @@ class SettingsFragment: BaseUrlChangeFragment() {
 
             // Switch Theme
             //requireActivity().recreate()
-            (requireActivity() as MainActivity).resetAppTheme()
+            (requireActivity() as MainActivity).configDayNightTheme()
         }
     }
 
