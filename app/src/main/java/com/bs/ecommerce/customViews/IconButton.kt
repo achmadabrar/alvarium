@@ -17,15 +17,15 @@ import androidx.appcompat.widget.AppCompatButton
  *
  */
 class DrawableAlignedButton : AppCompatButton {
-    constructor(context: Context?, attrs: AttributeSet?) : super(
+    constructor(context: Context, attrs: AttributeSet?) : super(
         context,
         attrs
     ) {
     }
 
-    constructor(context: Context?) : super(context) {}
+    constructor(context: Context) : super(context) {}
     constructor(
-        context: Context?,
+        context: Context,
         attrs: AttributeSet?,
         style: Int
     ) : super(context, attrs, style) {
