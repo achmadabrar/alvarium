@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ProgressBar
 import android.widget.RelativeLayout
 import androidx.annotation.LayoutRes
 import androidx.core.app.ActivityCompat
@@ -26,14 +27,13 @@ import com.bs.ecommerce.db.DbHelper
 import com.bs.ecommerce.more.barcode.BarCodeCaptureFragment
 import com.bs.ecommerce.networking.NetworkUtil
 import com.bs.ecommerce.utils.*
-import com.pnikosis.materialishprogress.ProgressWheel
 import kotlinx.android.synthetic.main.table_order_total.*
 
 
 abstract class BaseFragment : Fragment()
 {
     private var permissionCallback: PermissionCallback? = null
-    private var progressWheel: ProgressWheel? = null
+    private var progressWheel: ProgressBar? = null
     protected open lateinit var viewModel: BaseViewModel
     protected val blockingLoader: ContentLoadingDialog by lazy { ContentLoadingDialog(requireContext()) }
 
@@ -144,9 +144,9 @@ abstract class BaseFragment : Fragment()
         params.addRule(RelativeLayout.CENTER_IN_PARENT, RelativeLayout.TRUE)
 
         if(progressWheel == null)
-            progressWheel = activity?.layoutInflater?.inflate(R.layout.materialish_progressbar, null) as ProgressWheel?
+            progressWheel = activity?.layoutInflater?.inflate(R.layout.materialish_progressbar, null) as ProgressBar?
 
-        progressWheel?.spin()
+        progressWheel?.visibility = View.VISIBLE
 
         try {
             getRootLayout()?.addView(progressWheel, params)
@@ -155,7 +155,7 @@ abstract class BaseFragment : Fragment()
         }
     }
 
-    protected fun hideLoading() = progressWheel?.stopSpinning()
+    protected fun hideLoading() { progressWheel?.visibility = View.GONE }
 
 
 
