@@ -17,6 +17,9 @@
         android:fitsSystemWindows="true"
         app:theme="@style/Toolbar_Popup"
         app:popupTheme="@style/Toolbar_Popup"
+        app:contentInsetLeft="0dp"
+        app:contentInsetStart="0dp"
+        app:contentInsetStartWithNavigation="0dp"
         app:layout_scrollFlags="scroll|enterAlways">
 
 
