@@ -2,13 +2,13 @@ package com.bs.ecommerce.customViews
 
 import android.app.Dialog
 import android.content.Context
+import android.view.LayoutInflater
 import android.view.View
 import android.view.Window
 import com.bs.ecommerce.R
 import com.bs.ecommerce.db.DbHelper
 import com.bs.ecommerce.utils.Const
 import kotlinx.android.synthetic.main.custom_loading_layout.view.*
-import org.jetbrains.anko.layoutInflater
 
 
 class ContentLoadingDialog(private val context: Context) {
@@ -16,8 +16,10 @@ class ContentLoadingDialog(private val context: Context) {
     var dialog: Dialog? = null
 
     fun showDialog() {
+        val inflater = context
+            .getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
 
-        val view: View = context.layoutInflater.inflate(R.layout.custom_loading_layout, null, false)
+        val view: View = inflater.inflate(R.layout.custom_loading_layout, null, false)
         view.tvPleaseWait?.text = DbHelper.getString(Const.COMMON_PLEASE_WAIT)
 
         dialog = Dialog(context)

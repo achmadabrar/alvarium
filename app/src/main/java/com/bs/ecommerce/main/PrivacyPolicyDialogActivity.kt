@@ -12,7 +12,10 @@ import com.bs.ecommerce.main.model.data.AppStartData
 import com.bs.ecommerce.more.topic.model.TopicModel
 import com.bs.ecommerce.more.topic.model.TopicModelImpl
 import com.bs.ecommerce.networking.Api
-import com.bs.ecommerce.utils.*
+import com.bs.ecommerce.utils.AcceptPolicyPreference
+import com.bs.ecommerce.utils.Const
+import com.bs.ecommerce.utils.PrefSingleton
+import com.bs.ecommerce.utils.showLog
 
 abstract class PrivacyPolicyDialogActivity : BaseActivity()
 {
@@ -70,7 +73,7 @@ abstract class PrivacyPolicyDialogActivity : BaseActivity()
         val webViewDialog = WebView(this)
         webViewDialog.settings.defaultFontSize = 10
 
-        webViewDialog.loadDataWithBaseURL("", mHtmlString,
+        webViewDialog.loadDataWithBaseURL("", mHtmlString ?: "",
                 "text/html",
                 "UTF-8",
                 "")
