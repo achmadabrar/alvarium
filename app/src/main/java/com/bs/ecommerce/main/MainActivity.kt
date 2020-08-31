@@ -15,10 +15,15 @@ import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.ViewModelProvider
 import com.bs.ecommerce.MyApplication
 import com.bs.ecommerce.R
+import com.bs.ecommerce.account.UserAccountFragment
 import com.bs.ecommerce.account.auth.customerInfo.CustomerInfoFragment
 import com.bs.ecommerce.account.auth.register.RegisterFragment
+import com.bs.ecommerce.account.orders.OrderDetailsFragment
 import com.bs.ecommerce.base.BaseFragment
 import com.bs.ecommerce.cart.CartFragment
+import com.bs.ecommerce.catalog.product.ProductDetailFragment
+import com.bs.ecommerce.catalog.productList.ProductListFragment
+import com.bs.ecommerce.catalog.search.SearchFragment
 import com.bs.ecommerce.checkout.BaseCheckoutNavigationFragment
 import com.bs.ecommerce.checkout.CheckoutStepFragment
 import com.bs.ecommerce.db.DbHelper
@@ -28,20 +33,14 @@ import com.bs.ecommerce.home.category.NavDrawerFragment
 import com.bs.ecommerce.home.homepage.HomeFragment
 import com.bs.ecommerce.main.model.MainModelImpl
 import com.bs.ecommerce.more.options.OptionsFragment
-import com.bs.ecommerce.account.orders.OrderDetailsFragment
 import com.bs.ecommerce.more.topic.TopicFragment
-import com.bs.ecommerce.account.UserAccountFragment
 import com.bs.ecommerce.networking.NetworkUtil
-import com.bs.ecommerce.catalog.product.ProductDetailFragment
-import com.bs.ecommerce.catalog.productList.ProductListFragment
-import com.bs.ecommerce.catalog.search.SearchFragment
 import com.bs.ecommerce.utils.*
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.messaging.FirebaseMessaging
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.toolbar.*
 import kotlinx.android.synthetic.main.toolbar.view.*
-import org.jetbrains.anko.toast
 
 
 class MainActivity : PrivacyPolicyDialogActivity(), View.OnClickListener

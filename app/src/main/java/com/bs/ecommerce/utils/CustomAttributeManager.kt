@@ -26,7 +26,6 @@ import com.bs.ecommerce.db.DbHelper
 import com.bs.ecommerce.networking.common.KeyValueFormData
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import kotlinx.android.synthetic.main.color_selection_layout.view.*
-import org.jetbrains.anko.layoutInflater
 import java.util.*
 
 
@@ -47,7 +46,8 @@ class CustomAttributeManager(
     private var priceModel: ProductPrice? = null
 
     private var viewGroup: ViewGroup? = null
-    private var layoutInflater: LayoutInflater = attributeViewHolder.context.layoutInflater
+    private var layoutInflater: LayoutInflater = attributeViewHolder.context
+        .getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
     private val context: Context = attributeViewHolder.context
 
     private val inflatedViews: MutableMap<Long, View> = mutableMapOf()
