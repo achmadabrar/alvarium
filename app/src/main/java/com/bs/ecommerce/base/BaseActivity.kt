@@ -7,13 +7,11 @@ import android.content.IntentFilter
 import android.net.ConnectivityManager
 import android.os.Build
 import android.os.Bundle
-import android.os.Handler
 import android.provider.Settings
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.view.WindowManager
-import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.annotation.LayoutRes
 import androidx.appcompat.app.AppCompatActivity
@@ -72,8 +70,19 @@ abstract class BaseActivity : AppCompatActivity(), ConnectivityReceiver.Connecti
     }
 
     override fun onNetworkConnectionChanged(isConnected: Boolean) {
-        if(!isConnected)
+
+        if(!isConnected) {
             showInternetDisconnectedDialog()
+        } else {
+            if(connectivityErrorDialog?.isShowing() == true) {
+                connectivityErrorDialog?.dismiss()
+
+                startActivity(Intent(applicationContext, SplashScreenActivity::class.java))
+                finish()
+            }
+        }
+
+        "conn_".showLog("Data connected: $isConnected")
     }
 
     override fun onResume() {
@@ -93,7 +102,7 @@ abstract class BaseActivity : AppCompatActivity(), ConnectivityReceiver.Connecti
         connectivityErrorDialog?.window?.setLayout(
             WindowManager.LayoutParams.MATCH_PARENT,
             WindowManager.LayoutParams.MATCH_PARENT)
-
+        connectivityErrorDialog?.setCancelable(false)
 
         val tvNoInternet = connectivityErrorDialog?.findViewById<View>(R.id.tvNoInternet) as TextView
 
@@ -105,30 +114,9 @@ abstract class BaseActivity : AppCompatActivity(), ConnectivityReceiver.Connecti
         if(Const.SETTINGS != DbHelper.getString(Const.SETTINGS))
             buttonSetting.text = DbHelper.getString(Const.SETTINGS)
 
-        val buttonTryAgain = connectivityErrorDialog?.findViewById<View>(R.id.btnTryAgain) as TextView
-
-        if(Const.TRY_AGAIN != DbHelper.getString(Const.TRY_AGAIN))
-            buttonTryAgain.text = DbHelper.getString(Const.TRY_AGAIN)
-
-        val tryAgainLayout = connectivityErrorDialog?.findViewById<View>(R.id.linearTryAgain) as LinearLayout
-
-        buttonSetting.setOnClickListener { sentWifiSettings(this) }
-
-        tryAgainLayout.setOnClickListener {
-
-            connectivityErrorDialog?.dismiss()
-            // set delay for smooth animation
-            val handler = Handler()
-            handler.postDelayed({
-                startActivity(Intent(applicationContext, SplashScreenActivity::class.java))
-                finish()
-            }, 500)
-        }
+        buttonSetting.setOnClickListener { startActivity(Intent(Settings.ACTION_WIRELESS_SETTINGS)) }
 
         connectivityErrorDialog?.show()
-    }
-    private fun sentWifiSettings(context: Context?) {
-        context?.startActivity(Intent(Settings.ACTION_WIFI_SETTINGS))
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean
@@ -178,7 +166,7 @@ abstract class BaseActivity : AppCompatActivity(), ConnectivityReceiver.Connecti
             else
             {
                 counterText?.visibility = View.VISIBLE
-                counterText?.text = java.lang.Long.toString(badgeCount.toLong())
+                counterText?.text = String.format("%d", badgeCount)
             }
         }
     }
