@@ -29,6 +29,7 @@ class GenericErrorFragment: BaseFragment() {
         btnTryAgain.setOnClickListener {
 
             if(requireActivity() is SplashScreenActivity) {
+                progress_bar.visibility = View.VISIBLE
                 (requireActivity() as SplashScreenActivity).loadAppLandingData()
             }
         }

@@ -1,40 +1,81 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:id="@+id/rootLayout"
     android:background="?attr/fragmentBackGroundColor">
 
-    <RelativeLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true">
+        android:layout_height="match_parent"
+        android:background="?attr/fragmentBackGroundColor"
+        android:orientation="vertical">
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline_h_mid"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.5"/>
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline_h_2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.45"/>
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline_h_3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.55"/>
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_error"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/guideline_h_2"/>
 
         <TextView
             android:id="@+id/tvErrorMessage"
-            style="@style/titleTextViewStyle"
-            android:layout_centerHorizontal="true"
-            android:padding="16dp"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:gravity="center"
             android:text="Something Went Wrong"
-            android:textStyle="normal"
-            android:textSize="18sp" />
+            android:textColor="?attr/primaryTextColor"
+            android:textSize="18sp"
+            app:layout_constraintBottom_toBottomOf="@id/guideline_h_mid"
+            app:layout_constraintTop_toTopOf="@id/guideline_h_mid"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            tools:ignore="HardcodedText" />
 
         <TextView
             android:id="@+id/btnTryAgain"
+            style="@style/RoundedButtonTiny_2"
+            android:text="Try Again"
+            app:layout_constraintTop_toBottomOf="@id/guideline_h_3"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            tools:ignore="HardcodedText" />
+
+        <include
+            android:id="@+id/progress_bar"
+            layout="@layout/materialish_progressbar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:paddingTop="3dp"
-            android:paddingBottom="3dp"
-            android:paddingStart="8dp"
-            android:paddingEnd="8dp"
             android:layout_marginTop="10dp"
-            android:layout_below="@id/tvErrorMessage"
-            android:background="@drawable/rounded_background"
-            android:backgroundTint="@color/red"
-            android:layout_marginEnd="5dp"
-            android:textColor="@color/white"
-            android:text="Try Again" />
+            app:layout_constraintTop_toBottomOf="@id/btnTryAgain"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:visibility="gone"/>
 
-    </RelativeLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
 </RelativeLayout>
