@@ -215,25 +215,25 @@ open class BaseCheckoutAddressFragment : BaseCheckoutNavigationFragment()
             etEmail?.showOrHideOrRequired(isEnabledParam = true, isRequired =   true, value = email,
                 hintText = DbHelper.getString(Const.EMAIL))
 
-            etCompanyName?.showOrHideOrRequired(isEnabledParam = companyEnabled, isRequired =   companyRequired,
+            etCompanyName?.showOrHideOrRequired(isEnabledParam = companyEnabled, isRequired =  companyEnabled && companyRequired,
                 hintText = DbHelper.getString(Const.COMPANY))
 
-            etCity?.showOrHideOrRequired(isEnabledParam = cityEnabled, isRequired =   cityRequired,
+            etCity?.showOrHideOrRequired(isEnabledParam = cityEnabled, isRequired =  cityEnabled && cityRequired,
                 hintText = DbHelper.getString(Const.CITY))
 
-            etStreetAddress?.showOrHideOrRequired(isEnabledParam = streetAddressEnabled, isRequired =   streetAddressRequired,
+            etStreetAddress?.showOrHideOrRequired(isEnabledParam = streetAddressEnabled, isRequired = streetAddressEnabled && streetAddressRequired,
                 hintText = DbHelper.getString(Const.STREET_ADDRESS))
 
-            etStreetAddress2?.showOrHideOrRequired(isEnabledParam = streetAddress2Enabled, isRequired =   streetAddress2Required,
+            etStreetAddress2?.showOrHideOrRequired(isEnabledParam = streetAddress2Enabled, isRequired = streetAddress2Enabled && streetAddress2Required,
                 hintText = DbHelper.getString(Const.STREET_ADDRESS_2))
 
-            etZipCode?.showOrHideOrRequired(isEnabledParam = zipPostalCodeEnabled, isRequired =   zipPostalCodeRequired,
+            etZipCode?.showOrHideOrRequired(isEnabledParam = zipPostalCodeEnabled, isRequired = zipPostalCodeEnabled && zipPostalCodeRequired,
                 hintText = DbHelper.getString(Const.ZIP_CODE))
 
-            etPhone?.showOrHideOrRequired(isEnabledParam = phoneEnabled, isRequired =   phoneRequired,
+            etPhone?.showOrHideOrRequired(isEnabledParam = phoneEnabled, isRequired = phoneEnabled && phoneRequired,
                 hintText = DbHelper.getString(Const.PHONE))
 
-            etFax?.showOrHideOrRequired(isEnabledParam = faxEnabled, isRequired =   faxRequired,
+            etFax?.showOrHideOrRequired(isEnabledParam = faxEnabled, isRequired = faxEnabled && faxRequired,
                 hintText = DbHelper.getString(Const.FAX))
 
         }
@@ -252,34 +252,34 @@ open class BaseCheckoutAddressFragment : BaseCheckoutNavigationFragment()
 
             toast("$hint ${DbHelper.getString(Const.IS_REQUIRED)}" )
         }
-        else
-            isValidInfo = true
 
     }
 
 
     protected fun getAddressWithValidation(address: AddressModel?) : AddressModel?
     {
+        isValidInfo = true
+
         address?.apply {
 
             etCompanyName?.let {
-                val input = it.text?.trim().toString(); if(input.isNotEmpty()) company = input else { showValidation(it, companyRequired)}
+                val input = it.text?.trim().toString(); if(input.isNotEmpty()) company = input else { showValidation(it, companyEnabled && companyRequired)}
             }
 
             etStreetAddress?.let {
-                val input = it.text?.trim().toString(); if(input.isNotEmpty()) address1 = input else { showValidation(it, streetAddressRequired) }
+                val input = it.text?.trim().toString(); if(input.isNotEmpty()) address1 = input else { showValidation(it, streetAddressEnabled && streetAddressRequired) }
             }
 
             etStreetAddress2?.let {
-                val input = it.text?.trim().toString(); if(input.isNotEmpty()) address2 = input else { showValidation(it, streetAddress2Required) }
+                val input = it.text?.trim().toString(); if(input.isNotEmpty()) address2 = input else { showValidation(it, streetAddress2Enabled && streetAddress2Required) }
             }
 
             etZipCode?.let {
-                val input = it.text?.trim().toString(); if(input.isNotEmpty()) zipPostalCode = input else { showValidation(it, zipPostalCodeRequired)}
+                val input = it.text?.trim().toString(); if(input.isNotEmpty()) zipPostalCode = input else { showValidation(it, zipPostalCodeEnabled && zipPostalCodeRequired)}
             }
 
             etCity?.let {
-                val input = it.text?.trim().toString(); if(input.isNotEmpty()) city = input else { showValidation(it, cityRequired) }
+                val input = it.text?.trim().toString(); if(input.isNotEmpty()) city = input else { showValidation(it, cityEnabled && cityRequired) }
             }
 
 
@@ -297,7 +297,7 @@ open class BaseCheckoutAddressFragment : BaseCheckoutNavigationFragment()
 
 
             etPhone?.let {
-                val input = it.text?.trim().toString(); if(input.isNotEmpty()) phoneNumber = input else { showValidation(it, phoneRequired)}
+                val input = it.text?.trim().toString(); if(input.isNotEmpty()) phoneNumber = input else { showValidation(it, phoneEnabled && phoneRequired)}
             }
 
             etEmail?.let {

@@ -196,31 +196,31 @@ open class RegisterFragment : ToolbarLogoBaseFragment(), View.OnClickListener
             confirmPasswordEditText?.showOrHideOrRequired(isEnabledParam = showPasswordField, isRequired =   showPasswordField,
                 hintText = DbHelper.getString(Const.CONFIRM_PASSWORD))
 
-            dateOfBirthTextView?.showOrHideOrRequired(isEnabledParam = dateOfBirthEnabled, isRequired =   dateOfBirthRequired,
+            dateOfBirthTextView?.showOrHideOrRequired(isEnabledParam = dateOfBirthEnabled, isRequired =  dateOfBirthEnabled && dateOfBirthRequired,
                 value = TextUtils().getFormattedDate(dateOfBirthDay, dateOfBirthMonth, dateOfBirthYear), hintText = DbHelper.getString(Const.DATE_OF_BIRTH))
 
             usernameEditText?.showOrHideOrRequired(isEnabledParam = usernamesEnabled, isRequired = usernamesEnabled, value = username,
                 hintText = DbHelper.getString(Const.USERNAME))
 
-            companyInfoEditText?.showOrHideOrRequired(isEnabledParam = companyEnabled, isRequired =   companyRequired, value = company,
+            companyInfoEditText?.showOrHideOrRequired(isEnabledParam = companyEnabled, isRequired =  companyEnabled && companyRequired, value = company,
                  hintText = DbHelper.getString(Const.COMPANY))
 
-            streetAddressEditText?.showOrHideOrRequired(isEnabledParam = streetAddressEnabled, isRequired =   streetAddressRequired, value = streetAddress,
+            streetAddressEditText?.showOrHideOrRequired(isEnabledParam = streetAddressEnabled, isRequired =  streetAddressEnabled && streetAddressRequired, value = streetAddress,
                 hintText = DbHelper.getString(Const.STREET_ADDRESS))
 
-            streetAddress2EditText?.showOrHideOrRequired(isEnabledParam = streetAddress2Enabled, isRequired =   streetAddress2Required, value = streetAddress2,
+            streetAddress2EditText?.showOrHideOrRequired(isEnabledParam = streetAddress2Enabled, isRequired =  streetAddress2Enabled && streetAddress2Required, value = streetAddress2,
                 hintText = DbHelper.getString(Const.STREET_ADDRESS_2))
 
-            zipOrPostalCodeEditText?.showOrHideOrRequired(isEnabledParam = zipPostalCodeEnabled, isRequired =   zipPostalCodeRequired, value = zipPostalCode,
+            zipOrPostalCodeEditText?.showOrHideOrRequired(isEnabledParam = zipPostalCodeEnabled, isRequired = zipPostalCodeEnabled && zipPostalCodeRequired, value = zipPostalCode,
                 hintText = DbHelper.getString(Const.ZIP_CODE))
 
-            cityEditText?.showOrHideOrRequired(isEnabledParam = cityEnabled, isRequired =   cityRequired, value = city,
+            cityEditText?.showOrHideOrRequired(isEnabledParam = cityEnabled, isRequired =  cityEnabled && cityRequired, value = city,
                 hintText = DbHelper.getString(Const.CITY))
 
-            phoneEditText?.showOrHideOrRequired(isEnabledParam = phoneEnabled, isRequired =   phoneRequired, value = phone,
+            phoneEditText?.showOrHideOrRequired(isEnabledParam = phoneEnabled, isRequired = phoneEnabled && phoneRequired, value = phone,
                 hintText = DbHelper.getString(Const.PHONE))
 
-            faxEditText?.showOrHideOrRequired(isEnabledParam = faxEnabled, isRequired =   faxRequired, value = fax,
+            faxEditText?.showOrHideOrRequired(isEnabledParam = faxEnabled, isRequired =  faxEnabled && faxRequired, value = fax,
                 hintText = DbHelper.getString(Const.FAX))
 
             if(countryEnabled) {
@@ -336,11 +336,11 @@ open class RegisterFragment : ToolbarLogoBaseFragment(), View.OnClickListener
             }
 
             dateOfBirthTextView?.let {
-                val input = it.text?.trim().toString(); if(input.isEmpty()) { showValidation(it, dateOfBirthRequired) }
+                val input = it.text?.trim().toString(); if(input.isEmpty()) { showValidation(it, dateOfBirthEnabled && dateOfBirthRequired) }
             }
 
             companyInfoEditText?.let {
-                val input = it.text?.trim().toString(); if(input.isNotEmpty()) company = input else { showValidation(it, companyRequired)}
+                val input = it.text?.trim().toString(); if(input.isNotEmpty()) company = input else { showValidation(it, companyEnabled && companyRequired)}
             }
 
             usernameEditText?.let {
@@ -348,19 +348,19 @@ open class RegisterFragment : ToolbarLogoBaseFragment(), View.OnClickListener
             }
 
             streetAddressEditText?.let {
-                val input = it.text?.trim().toString(); if(input.isNotEmpty()) streetAddress = input else { showValidation(it, streetAddressRequired) }
+                val input = it.text?.trim().toString(); if(input.isNotEmpty()) streetAddress = input else { showValidation(it, streetAddressEnabled && streetAddressRequired) }
             }
 
             streetAddress2EditText?.let {
-                val input = it.text?.trim().toString(); if(input.isNotEmpty()) streetAddress2 = input else { showValidation(it, streetAddress2Required) }
+                val input = it.text?.trim().toString(); if(input.isNotEmpty()) streetAddress2 = input else { showValidation(it, streetAddress2Enabled && streetAddress2Required) }
             }
 
             zipOrPostalCodeEditText?.let {
-                val input = it.text?.trim().toString(); if(input.isNotEmpty()) zipPostalCode = input else { showValidation(it, zipPostalCodeRequired)}
+                val input = it.text?.trim().toString(); if(input.isNotEmpty()) zipPostalCode = input else { showValidation(it, zipPostalCodeEnabled && zipPostalCodeRequired)}
             }
 
             cityEditText?.let {
-                val input = it.text?.trim().toString(); if(input.isNotEmpty()) city = input else { showValidation(it, cityRequired) }
+                val input = it.text?.trim().toString(); if(input.isNotEmpty()) city = input else { showValidation(it, cityEnabled && cityRequired) }
             }
 
             var selectedCountryId = 0
@@ -381,7 +381,7 @@ open class RegisterFragment : ToolbarLogoBaseFragment(), View.OnClickListener
 
 
             phoneEditText?.let {
-                val input = it.text?.trim().toString(); if(input.isNotEmpty()) phone = input else { showValidation(it, phoneRequired)}
+                val input = it.text?.trim().toString(); if(input.isNotEmpty()) phone = input else { showValidation(it, phoneEnabled && phoneRequired)}
             }
 
             emailEditText?.let {

@@ -76,7 +76,7 @@ class AddressFormUtil(private val form: View, private val context: Context) {
 
             form.etCompanyName?.showOrHideOrRequired(
                 isEnabledParam = companyEnabled == true,
-                isRequired = companyRequired == true,
+                isRequired = companyEnabled == true && companyRequired == true,
                 value = company,
                 hintText = DbHelper.getString(Const.COMPANY)
             )
@@ -89,42 +89,42 @@ class AddressFormUtil(private val form: View, private val context: Context) {
 
             form.etCity?.showOrHideOrRequired(
                 isEnabledParam = cityEnabled == true,
-                isRequired = cityRequired == true,
+                isRequired = cityEnabled == true && cityRequired == true,
                 value = city,
                 hintText = DbHelper.getString(Const.CITY)
             )
 
             form.etStreetAddress?.showOrHideOrRequired(
                 isEnabledParam = streetAddressEnabled == true,
-                isRequired = streetAddressRequired == true,
+                isRequired = streetAddressEnabled == true && streetAddressRequired == true,
                 value = address1,
                 hintText = DbHelper.getString(Const.STREET_ADDRESS)
             )
 
             form.etStreetAddress2?.showOrHideOrRequired(
                 isEnabledParam = streetAddress2Enabled == true,
-                isRequired = streetAddress2Required == true,
+                isRequired = streetAddress2Enabled == true && streetAddress2Required == true,
                 value = address2,
                 hintText = DbHelper.getString(Const.STREET_ADDRESS_2)
             )
 
             form.etZipCode?.showOrHideOrRequired(
                 isEnabledParam = zipPostalCodeEnabled == true,
-                isRequired = zipPostalCodeRequired == true,
+                isRequired = zipPostalCodeEnabled == true && zipPostalCodeRequired == true,
                 value = zipPostalCode,
                 hintText = DbHelper.getString(Const.ZIP_CODE)
             )
 
             form.etPhone?.showOrHideOrRequired(
                 isEnabledParam = phoneEnabled == true,
-                isRequired = phoneRequired == true,
+                isRequired = phoneEnabled == true && phoneRequired == true,
                 value = phoneNumber,
                 hintText = DbHelper.getString(Const.PHONE)
             )
 
             form.etFax?.showOrHideOrRequired(
                 isEnabledParam = faxEnabled == true,
-                isRequired = faxRequired == true,
+                isRequired = faxEnabled == true && faxRequired == true,
                 value = faxNumber,
                 hintText = DbHelper.getString(Const.FAX)
             )
@@ -137,40 +137,42 @@ class AddressFormUtil(private val form: View, private val context: Context) {
      * @return Address object with form data, which will be used as RequestBody of SaveAddress api
      */
     fun isFormDataValid(address: AddressModel): Boolean {
+        isValidForm = true
+
         with(address)
         {
 
             form.etCompanyName?.let {
                 val input = it.text?.trim().toString(); if (input.isNotEmpty()) company =
                 input else {
-                showValidation(it, companyRequired)
+                showValidation(it, companyEnabled == true && companyRequired == true)
             }
             }
 
             form.etStreetAddress?.let {
                 val input = it.text?.trim().toString(); if (input.isNotEmpty()) address1 =
                 input else {
-                showValidation(it, streetAddressRequired)
+                showValidation(it, streetAddressEnabled == true && streetAddressRequired==true)
             }
             }
 
             form.etStreetAddress2?.let {
                 val input = it.text?.trim().toString(); if (input.isNotEmpty()) address2 =
                 input else {
-                showValidation(it, streetAddress2Required)
+                showValidation(it, streetAddress2Enabled == true && streetAddress2Required == true)
             }
             }
 
             form.etZipCode?.let {
                 val input = it.text?.trim().toString(); if (input.isNotEmpty()) zipPostalCode =
                 input else {
-                showValidation(it, zipPostalCodeRequired)
+                showValidation(it, zipPostalCodeEnabled==true && zipPostalCodeRequired==true)
             }
             }
 
             form.etCity?.let {
                 val input = it.text?.trim().toString(); if (input.isNotEmpty()) city = input else {
-                showValidation(it, cityRequired)
+                showValidation(it, cityEnabled==true && cityRequired==true)
             }
             }
 
@@ -194,7 +196,7 @@ class AddressFormUtil(private val form: View, private val context: Context) {
             form.etPhone?.let {
                 val input = it.text?.trim().toString(); if (input.isNotEmpty()) phoneNumber =
                 input else {
-                showValidation(it, phoneRequired)
+                showValidation(it, phoneEnabled == true && phoneRequired == true)
             }
             }
 
@@ -219,6 +221,13 @@ class AddressFormUtil(private val form: View, private val context: Context) {
                 showValidation(it, true)
             }
             }
+
+            form.etFax?.let {
+                val input = it.text?.trim().toString(); if (input.isNotEmpty()) faxNumber =
+                input else {
+                showValidation(it, faxEnabled == true && faxRequired == true)
+            }
+            }
         }
 
         validAddress = address
@@ -233,8 +242,6 @@ class AddressFormUtil(private val form: View, private val context: Context) {
             val toastMsg = "$hint ${DbHelper.getString(Const.IS_REQUIRED)}"
 
             Toast.makeText(context, toastMsg, Toast.LENGTH_SHORT).show()
-        } else {
-            isValidForm = true
         }
     }
 
