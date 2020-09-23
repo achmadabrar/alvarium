@@ -162,6 +162,31 @@ fun ViewGroup.inflate(layoutId: Int, attachToRoot: Boolean = false): View =
     LayoutInflater.from(context).inflate(layoutId, this, attachToRoot)
 
 
+fun ImageView.loadJustImg(
+    imageUrl: String?,
+    showPlaceholder: Boolean = true
+) {
+    if (imageUrl.isNullOrEmpty()) {
+        if (showPlaceholder)
+            Picasso.with(context)
+                .load(R.drawable.ic_placeholder)
+                .into(this)
+    } else {
+        if (showPlaceholder) {
+            Picasso.with(context)
+                .load(imageUrl)
+                .placeholder(R.drawable.ic_placeholder)
+                .error(R.drawable.ic_placeholder)
+                .into(this)
+        } else {
+            Picasso.with(context)
+                .load(imageUrl)
+                .into(this)
+        }
+    }
+}
+
+
 fun ImageView.loadImg(
     imageUrl: String?,
     placeHolder: Int? = R.drawable.ic_placeholder,

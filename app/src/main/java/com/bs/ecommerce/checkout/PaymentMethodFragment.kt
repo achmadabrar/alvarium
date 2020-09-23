@@ -9,6 +9,7 @@ import android.widget.RelativeLayout
 import android.widget.TextView
 import androidx.appcompat.widget.AppCompatRadioButton
 import androidx.lifecycle.ViewModelProvider
+import com.bs.ecommerce.MyApplication
 import com.bs.ecommerce.R
 import com.bs.ecommerce.base.BaseViewModel
 import com.bs.ecommerce.checkout.model.data.PaymentMethod
@@ -17,8 +18,7 @@ import com.bs.ecommerce.customViews.MethodSelectionProcess
 import com.bs.ecommerce.db.DbHelper
 import com.bs.ecommerce.main.MainViewModel
 import com.bs.ecommerce.utils.Const
-import com.bs.ecommerce.MyApplication
-import com.bs.ecommerce.utils.loadImg
+import com.bs.ecommerce.utils.loadJustImg
 import kotlinx.android.synthetic.main.fragment_shipping_method.*
 
 class PaymentMethodFragment : BaseCheckoutNavigationFragment() {
@@ -99,7 +99,7 @@ class PaymentMethodFragment : BaseCheckoutNavigationFragment() {
         val radioButton = eachCheckLayout.findViewById<View>(R.id.rb_paymentChoice) as AppCompatRadioButton
 
         val logo = eachCheckLayout.findViewById<View>(R.id.iv_paymentMethodImage) as ImageView
-        logo.loadImg(method.logoUrl)
+        logo.loadJustImg(method.logoUrl)
 
         description.text = method.description
 
