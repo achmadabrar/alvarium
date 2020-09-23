@@ -1,8 +1,13 @@
 package com.bs.ecommerce.catalog.productList
 
+import android.text.Spannable
+import android.text.SpannableString
+import android.text.style.ForegroundColorSpan
+import android.text.style.StrikethroughSpan
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.bs.ecommerce.R
 import com.bs.ecommerce.catalog.common.ProductSummary
@@ -31,9 +36,31 @@ class ProductListAdapter(
 
         holder.itemView.apply {
             tvProductName?.text = product.name
-            tvProductPrice?.text = product.productPrice?.price
 
-            ratingBar?.rating = (product.reviewOverviewModel?.ratingSum ?: 0).toFloat()
+            val currentPrice: Spannable = SpannableString(product.productPrice?.price ?: "")
+            val oldPrice: Spannable = SpannableString(product.productPrice?.oldPrice ?: "")
+
+            try {
+                currentPrice.setSpan(
+                    ForegroundColorSpan(ContextCompat.getColor(context, R.color.themePrimary)), 0, currentPrice.length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+                )
+                tvProductPrice.text = currentPrice
+
+                oldPrice.setSpan(
+                    StrikethroughSpan(), 0, oldPrice.length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+                )
+                tvProductPrice.append(" ")
+                tvProductPrice.append(oldPrice)
+            } catch (e: Exception) {
+                tvProductPrice.text = currentPrice
+            }
+
+            if(product.reviewOverviewModel?.allowCustomerReviews == true) {
+                ratingBar?.visibility = View.VISIBLE
+                ratingBar?.rating = (product.reviewOverviewModel.ratingSum ?: 0).toFloat()
+            } else {
+                ratingBar?.visibility = View.GONE
+            }
 
             ivProductThumb?.loadImg(
                 product.defaultPictureModel?.imageUrl

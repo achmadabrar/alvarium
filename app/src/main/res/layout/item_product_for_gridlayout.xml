@@ -43,10 +43,10 @@
         android:layout_marginStart="3dp"
         android:maxLines="1"
         android:ellipsize="end"
-        android:textColor="@color/themePrimary"
+        android:textColor="@color/gray"
         android:textSize="11sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toStartOf="@id/ivAddToFav"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tvProductName"
         tools:text="@string/placeholder_price" />
 
@@ -67,7 +67,6 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_below="@id/tvProductPrice"
-        android:layout_marginStart="3dp"
         android:layout_toEndOf="@id/ratingBar"
         android:maxLines="1"
         android:paddingTop="2dp"
@@ -87,6 +86,7 @@
         android:layout_marginEnd="5dp"
         android:src="@drawable/ic_heart"
         android:tint="@color/gray"
+        app:layout_constraintTop_toBottomOf="@id/tvProductPrice"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         android:contentDescription="@string/placeholder" />

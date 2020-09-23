@@ -4,9 +4,11 @@ import android.annotation.SuppressLint
 import android.app.Activity
 import android.app.DatePickerDialog
 import android.content.Intent
-import android.graphics.Paint
 import android.net.Uri
 import android.os.Bundle
+import android.text.Spannable
+import android.text.SpannableString
+import android.text.style.StrikethroughSpan
 import android.view.View
 import android.webkit.WebViewClient
 import android.widget.RelativeLayout
@@ -178,20 +180,21 @@ class ProductDetailFragment : BaseFragment(), View.OnClickListener {
                         }
 
                         // product rating & review section
-                        productRatingLayout.ratingBar.rating =
-                            (product.productReviewOverview?.ratingSum ?: 0).toFloat()
+                        if (product.productReviewOverview?.allowCustomerReviews == true) {
+                            productRatingLayout?.visibility = View.VISIBLE
 
-                        productRatingLayout.tvReviewCount.text = (product.productReviewOverview?.totalReviews ?: 0)
-                            .toString().plus(" ")
-                            .plus(DbHelper.getString(Const.TITLE_REVIEW))
+                            productRatingLayout?.ratingBar?.rating =
+                                (product.productReviewOverview.ratingSum ?: 0).toFloat()
 
-                        productRatingLayout.setOnClickListener {
+                            productRatingLayout?.tvReviewCount?.text = (product.productReviewOverview.totalReviews ?: 0)
+                                .toString().plus(" ")
+                                .plus(DbHelper.getString(Const.TITLE_REVIEW))
 
-                            if(product.productReviewOverview?.allowCustomerReviews == true) {
-                                product.id?.let {
-                                    replaceFragmentSafely(ProductReviewFragment.newInstance(it))
-                                }
+                            productRatingLayout?.setOnClickListener {
+                                product.id?.let { replaceFragmentSafely(ProductReviewFragment.newInstance(it)) }
                             }
+                        } else {
+                            productRatingLayout?.visibility = View.GONE
                         }
 
 
@@ -200,8 +203,12 @@ class ProductDetailFragment : BaseFragment(), View.OnClickListener {
                             if (product.productPrice?.oldPrice == null) {
                                 visibility = View.GONE
                             } else {
-                                text = product.productPrice.oldPrice
-                                paintFlags = Paint.STRIKE_THRU_TEXT_FLAG
+                                visibility = View.VISIBLE
+                                val oldPrice: Spannable = SpannableString(product.productPrice.oldPrice)
+                                oldPrice.setSpan(
+                                    StrikethroughSpan(), 0, oldPrice.length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+                                )
+                                text = oldPrice
                             }
                         }
 

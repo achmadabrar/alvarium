@@ -5,7 +5,7 @@ import com.google.gson.annotations.SerializedName
 
 data class AddToCart(
     @SerializedName("AllowedQuantities")
-    val allowedQuantities: List<Int>?,
+    val allowedQuantities: List<Any>?,
     @SerializedName("AvailableForPreOrder")
     val availableForPreOrder: Boolean?,
     @SerializedName("CustomProperties")
