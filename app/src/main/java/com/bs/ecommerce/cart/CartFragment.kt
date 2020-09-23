@@ -179,9 +179,13 @@ class CartFragment : BaseFragment() {
 
     private fun populateEstimateShipping(estimateShipping: EstimateShipping?) {
 
-        if(estimateShipping?.enabled == false) return
+        if(estimateShipping?.enabled == false) {
+            estimateShippingLayout?.visibility = View.GONE
+            return
+        }
 
         estimateShippingLayout?.apply {
+            estimateShippingLayout?.visibility = View.VISIBLE
 
             tvSectionTitle?.text = DbHelper.getString(Const.CART_ESTIMATE_SHIPPING_TITLE)
             tvSectionSubtitle?.text = DbHelper.getString(Const.CART_ESTIMATE_SHIPPING_SUBTITLE)
