@@ -12,7 +12,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bs.ecommerce.R
 import com.bs.ecommerce.catalog.common.ProductSummary
 import com.bs.ecommerce.utils.ItemClickListener
-import com.bs.ecommerce.utils.loadImg
+import com.bs.ecommerce.utils.showThumbnail
 import kotlinx.android.synthetic.main.item_product_for_linearlayout.view.*
 
 class FeaturedProductAdapter(
@@ -61,7 +61,7 @@ class FeaturedProductAdapter(
                 ratingBar?.visibility = View.GONE
             }
 
-            ivProductThumb?.loadImg(
+            ivProductThumb?.showThumbnail(
                 product.defaultPictureModel?.imageUrl
             )
 

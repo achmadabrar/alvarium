@@ -219,6 +219,25 @@ fun ImageView.loadImg(
     }
 }
 
+/**
+ * Center crop image. Otherwise rounded corners will be cut off
+ */
+fun ImageView.showThumbnail(imageUrl: String?) {
+    if (imageUrl.isNullOrEmpty()) {
+        Picasso.with(context).load(R.drawable.ic_placeholder).into(this)
+    } else {
+        Picasso.with(context)
+            .load(imageUrl)
+            .transform(RoundedCornersTransform())
+            .placeholder(R.drawable.ic_placeholder)
+            .error(R.drawable.ic_placeholder)
+            .fit()
+            .centerCrop()
+            .into(this)
+    }
+}
+
+
 fun <T> androidLazy(initializer: () -> T): Lazy<T> = lazy(LazyThreadSafetyMode.NONE, initializer)
 
 
