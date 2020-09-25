@@ -10,8 +10,7 @@
     <item>
         <bitmap
             android:gravity="center"
-            android:src="@drawable/app_logo"
-            android:tint="@color/whiteOrBlack"/>
+            android:src="@drawable/app_logo"/>
     </item>
 
 </layer-list>
