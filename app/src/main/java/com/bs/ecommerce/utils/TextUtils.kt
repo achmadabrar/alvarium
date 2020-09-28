@@ -25,10 +25,12 @@ class TextUtils {
     }
 
     fun getHtmlFormattedText(htmlText: String?) : Spanned {
+        val text = htmlText ?: ""
+
         return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            Html.fromHtml(htmlText, Html.FROM_HTML_MODE_COMPACT)
+            Html.fromHtml(text, Html.FROM_HTML_MODE_COMPACT)
         } else {
-            Html.fromHtml(htmlText)
+            Html.fromHtml(text)
         }
     }
 
