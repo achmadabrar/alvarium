@@ -137,7 +137,7 @@ class CheckoutStepFragment : ToolbarLogoBaseFragment() {
 
     private fun goToBillingAddressPage()
     {
-        if(!MyApplication.getBillingResponse?.data?.disableBillingAddressCheckoutStep!!)
+        // if(!MyApplication.getBillingResponse?.data?.disableBillingAddressCheckoutStep!!)
             replaceFragment(BillingAddressFragment())
     }
 
