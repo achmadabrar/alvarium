@@ -246,10 +246,11 @@ class Const {
 
         const val CART_EMPTY = "shoppingcart.cartisempty"
         const val CHECKOUT = "checkout.button"
-        const val CART_ESTIMATE_SHIPPING_TITLE = "shoppingcart.estimateshipping"
-        const val CART_ESTIMATE_SHIPPING_SUBTITLE = "shoppingcart.estimateshipping.tooltip"
+        const val CART_ESTIMATE_SHIPPING_TITLE = "shoppingcart.estimateshipping.button"
+        const val CART_ESTIMATE_SHIPPING_SUBTITLE = "shipping.estimateshippingpopup.shiptotitle"
         const val CART_ESTIMATE_SHIPPING_BTN = "shoppingcart.estimateshipping.button"
-        const val CART_ESTIMATE_SHIPPING_ZIP = "shoppingcart.estimateshipping.zippostalcode"
+        const val CART_ESTIMATE_SHIPPING_ZIP = "shipping.estimateshippingpopup.zippostalcode"
+        const val CART_ESTIMATE_SHIPPING_BTN_APPLY = "Shipping.EstimateShippingPopUp.SelectShippingOption.Button"
 
 
 

@@ -4,6 +4,8 @@ import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import android.widget.RadioButton
+import android.widget.RadioGroup
 import android.widget.RelativeLayout
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -18,6 +20,7 @@ import com.bs.ecommerce.cart.model.CartModelImpl
 import com.bs.ecommerce.cart.model.data.CartProduct
 import com.bs.ecommerce.cart.model.data.CartRootData
 import com.bs.ecommerce.cart.model.data.EstimateShipping
+import com.bs.ecommerce.cart.model.data.ShippingOption
 import com.bs.ecommerce.catalog.common.CheckoutAttribute
 import com.bs.ecommerce.catalog.product.ProductDetailFragment
 import com.bs.ecommerce.checkout.CheckoutStepFragment
@@ -126,15 +129,34 @@ class CartFragment : BaseFragment() {
 
             estimateShippingLD.observe(viewLifecycleOwner, Observer { data ->
 
-                val resultText = StringBuilder("")
                 val optionsList = data?.shippingOptions ?: listOf()
 
+                estimateShippingLayout?.tvResult?.removeAllViews()
+                val radioGroup = RadioGroup(context)
+                radioGroup.removeAllViews()
+                radioGroup.setOnCheckedChangeListener(null)
+
                 for (option in optionsList) {
-                    resultText.append(option.name).append(" (").append(option.price).append(" )").append("\n")
+
+                    val rb = layoutInflater.inflate(
+                        R.layout.custom_attribute_radiobutton, null
+                    ) as RadioButton
+                    rb.text = option.name.plus(" (").plus(option.price).plus(" )")
+                    rb.tag = option
+
+                    radioGroup.addView(rb)
+                    rb.isChecked = option.selected ?: false
                 }
 
-                estimateShippingLayout?.tvResult?.text = resultText.trim()
+                radioGroup.setOnCheckedChangeListener { v, checkedId ->
+                    val rb: RadioButton =
+                        v.findViewById(checkedId) ?: return@setOnCheckedChangeListener
+                    (viewModel as CartViewModel).selectedEstimateShippingOption = ( rb.tag as ShippingOption )
+                }
+
                 estimateShippingLayout?.tvResult?.visibility = View.VISIBLE
+                // estimateShippingLayout?.btnApplyEstimateShipping?.visibility = View.VISIBLE
+                estimateShippingLayout?.tvResult?.addView(radioGroup)
             })
         }
 
@@ -190,6 +212,7 @@ class CartFragment : BaseFragment() {
             tvSectionTitle?.text = DbHelper.getString(Const.CART_ESTIMATE_SHIPPING_TITLE)
             tvSectionSubtitle?.text = DbHelper.getString(Const.CART_ESTIMATE_SHIPPING_SUBTITLE)
             btnCalculate?.text = DbHelper.getString(Const.CART_ESTIMATE_SHIPPING_BTN)
+            btnApplyEstimateShipping?.text = DbHelper.getString(Const.CART_ESTIMATE_SHIPPING_BTN_APPLY)
             etZipCode?.hint = DbHelper.getString(Const.CART_ESTIMATE_SHIPPING_ZIP)
             etZipCode?.setDrawableEnd(R.drawable.ic_star_formular)
 
@@ -202,6 +225,11 @@ class CartFragment : BaseFragment() {
 
                     (viewModel as CartViewModel).estimateShippingCost( it, model)
                 }
+            }
+
+            btnApplyEstimateShipping?.setOnClickListener {
+                // TODO api call here
+                toast((viewModel as CartViewModel).selectedEstimateShippingOption?.name)
             }
 
             EditTextUtils().populateCountrySpinner(

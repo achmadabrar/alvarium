@@ -65,17 +65,26 @@
         tools:text="@string/placeholder"
         android:maxLines="1"/>
 
-    <TextView
+    <LinearLayout
         android:id="@+id/tvResult"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         android:layout_marginBottom="10dp"
         android:gravity="start"
-        android:textColor="?attr/primaryTextColor"
-        android:textSize="@dimen/tv_text_size_semi_large"
-        tools:text="@string/placeholder"
+        android:orientation="vertical"
         android:visibility="gone"
         tools:visibility="visible" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btnApplyEstimateShipping"
+        style="@style/RoundedButtonRegular"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/btn_height"
+        android:layout_marginTop="10dp"
+        tools:text="@string/placeholder"
+        android:visibility="gone"
+        tools:visibility="visible"
+        android:maxLines="1"/>
 
 </LinearLayout>

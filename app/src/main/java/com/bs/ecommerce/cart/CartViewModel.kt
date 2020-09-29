@@ -26,6 +26,7 @@ class CartViewModel : CheckoutViewModel()
     var estimateShippingLD = MutableLiveData<EstimateShippingData>()
     val uploadFileLD = MutableLiveData<UploadFileData?>()
     var uploadedFileGuid: String = ""
+    var selectedEstimateShippingOption: ShippingOption? = null
 
     fun removeItemFromCart(productId: Int?, model: CartModel) {
 
