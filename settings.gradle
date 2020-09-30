@@ -1,2 +1,2 @@
 include ':app'
-rootProject.name='NopStation MVVM'
+rootProject.name='Alvarium'
