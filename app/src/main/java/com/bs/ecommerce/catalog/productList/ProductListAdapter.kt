@@ -55,12 +55,8 @@ class ProductListAdapter(
                 tvProductPrice.text = currentPrice
             }
 
-            if(product.reviewOverviewModel?.allowCustomerReviews == true) {
-                ratingBar?.visibility = View.VISIBLE
-                ratingBar?.rating = (product.reviewOverviewModel.ratingSum ?: 0).toFloat()
-            } else {
-                ratingBar?.visibility = View.GONE
-            }
+            ratingBar?.visibility = View.VISIBLE
+            ratingBar?.rating = (product.reviewOverviewModel?.ratingSum ?: 0).toFloat()
 
             ivProductThumb?.showThumbnail(
                 product.defaultPictureModel?.imageUrl

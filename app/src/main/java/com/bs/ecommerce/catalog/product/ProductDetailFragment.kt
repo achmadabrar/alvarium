@@ -180,12 +180,12 @@ class ProductDetailFragment : BaseFragment(), View.OnClickListener {
                         }
 
                         // product rating & review section
+                        productRatingLayout?.visibility = View.VISIBLE
+
+                        productRatingLayout?.ratingBar?.rating =
+                            (product.productReviewOverview?.ratingSum ?: 0).toFloat()
+
                         if (product.productReviewOverview?.allowCustomerReviews == true) {
-                            productRatingLayout?.visibility = View.VISIBLE
-
-                            productRatingLayout?.ratingBar?.rating =
-                                (product.productReviewOverview.ratingSum ?: 0).toFloat()
-
                             productRatingLayout?.tvReviewCount?.text = (product.productReviewOverview.totalReviews ?: 0)
                                 .toString().plus(" ")
                                 .plus(DbHelper.getString(Const.TITLE_REVIEW))
@@ -194,7 +194,7 @@ class ProductDetailFragment : BaseFragment(), View.OnClickListener {
                                 product.id?.let { replaceFragmentSafely(ProductReviewFragment.newInstance(it)) }
                             }
                         } else {
-                            productRatingLayout?.visibility = View.GONE
+                            productRatingLayout?.tvReviewCount?.text = ""
                         }
 
 
