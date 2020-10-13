@@ -249,6 +249,21 @@ class CustomAttributeManager(
         }
 
         inflatedViews[attr.id] = layout
+
+        if (attr.selectedDay != null && attr.selectedMonth != null && attr.selectedYear != null) {
+            tvDatePicker.text = TextUtils().getFormattedDate(attr.selectedDay,attr.selectedMonth,attr.selectedYear)
+
+            val value =
+                AttributeControlValue()
+            value.id = -1 * attr.attributeControlType!!
+
+            value.name = "${attr.selectedDay}-${attr.selectedMonth}-${attr.selectedYear}"
+            setAttrSelected(
+                attr.id, value,
+                isSelected = true,
+                multipleSelection = false
+            )
+        }
     }
 
     private fun fileUploadAttr(attr: CustomAttribute) {
@@ -322,6 +337,14 @@ class CustomAttributeManager(
         })
 
         inflatedViews[attr.id] = layout
+
+        attr.defaultValue?.let {
+            value.name = it
+            setAttrSelected(attr.id, value,
+                isSelected = true,
+                multipleSelection = false
+            )
+        }
     }
 
     private fun colorSelectionAttr(attr: CustomAttribute) {
@@ -522,7 +545,14 @@ class CustomAttributeManager(
     }
 
 
-    fun getFormData(productAttributePrefix: String): KeyValueFormData {
+    fun getFormData(productAttributePrefix: String): KeyValueFormData? {
+
+        for(attribute in attributes) {
+            if(attribute.isRequired && selectedAttributes[attribute.id]?.isNotEmpty() == false) {
+                Toast.makeText(context, "${attribute.name} ${DbHelper.getString(Const.IS_REQUIRED)}", Toast.LENGTH_SHORT).show()
+                return null
+            }
+        }
 
         val allKeyValueList = ArrayList<KeyValuePair>()
 

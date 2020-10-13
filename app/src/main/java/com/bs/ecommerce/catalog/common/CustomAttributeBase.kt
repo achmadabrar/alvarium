@@ -37,13 +37,13 @@ open class CustomAttribute {
     val productId: Long? = null
 
     @SerializedName("SelectedDay")
-    val selectedDay: Any? = null
+    val selectedDay: Int? = null
 
     @SerializedName("SelectedMonth")
-    val selectedMonth: Any? = null
+    val selectedMonth: Int? = null
 
     @SerializedName("SelectedYear")
-    val selectedYear: Any? = null
+    val selectedYear: Int? = null
 
     @SerializedName("TextPrompt")
     val textPrompt: String? = null

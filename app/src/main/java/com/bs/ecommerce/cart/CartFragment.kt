@@ -390,6 +390,7 @@ class CartFragment : BaseFragment() {
         })
 
         btnCheckOut.setOnClickListener {
+            customAttributeManager?.getFormData(Api.checkOutAttributePrefix) ?: return@setOnClickListener
 
             submitCheckoutAttributes()
 
