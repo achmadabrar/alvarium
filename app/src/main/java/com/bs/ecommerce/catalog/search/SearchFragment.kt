@@ -126,7 +126,16 @@ class SearchFragment : BaseFragment() {
 
                 if (data.id == null) return
 
-                replaceFragmentSafely(ProductDetailFragment.newInstance(data.id.toLong(), data.name))
+                when(view.id) {
+
+                    R.id.itemView ->
+                        replaceFragmentSafely(
+                            ProductDetailFragment.newInstance(
+                                data.id.toLong(), data.name))
+
+                    R.id.ivAddToFav ->
+                        addProductToCart(data)
+                }
             }
         }
 
@@ -228,6 +237,19 @@ class SearchFragment : BaseFragment() {
                     }
 
                 }
+
+                addToCartLD.observe(viewLifecycleOwner, Observer { action ->
+                    action?.getContentIfNotHandled()?.let { product ->
+                        replaceFragmentSafely(
+                            ProductDetailFragment.newInstance(
+                                product.id?.toLong() ?: -1L, product.name))
+                    }
+                    blockingLoader.hideDialog()
+                })
+
+                cartCountLD.observe(viewLifecycleOwner, Observer {
+                    updateTopCart(it?.getContentIfNotHandled() ?: 0)
+                })
             })
         }
     }

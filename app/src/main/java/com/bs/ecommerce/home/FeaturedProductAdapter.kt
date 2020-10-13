@@ -74,7 +74,7 @@ class FeaturedProductAdapter(
                 listener.onClick(v, position, product)
             }
 
-            ivAddToFav?.visibility = if(product.productPrice?.disableWishlistButton == true)
+            ivAddToFav?.visibility = if(product.productPrice?.disableBuyButton == true)
                 View.INVISIBLE else View.VISIBLE
         }
     }

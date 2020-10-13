@@ -154,7 +154,7 @@ class ProductListFragment : BaseFragment() {
                             data.id.toLong(), data.name))
 
                     R.id.ivAddToFav ->
-                        addProductToWishList(data)
+                        addProductToCart(data)
                 }
             }
         }
@@ -334,13 +334,17 @@ class ProductListFragment : BaseFragment() {
             }
         })
 
-        viewModel.addedToWishListLD.observe(viewLifecycleOwner, Observer { action ->
+        viewModel.addToCartLD.observe(viewLifecycleOwner, Observer { action ->
             action?.getContentIfNotHandled()?.let { product ->
                 replaceFragmentSafely(
                     ProductDetailFragment.newInstance(
                     product.id?.toLong() ?: -1L, product.name))
             }
             blockingLoader.hideDialog()
+        })
+
+        viewModel.cartCountLD.observe(viewLifecycleOwner, Observer {
+            updateTopCart(it?.getContentIfNotHandled() ?: 0)
         })
     }
 

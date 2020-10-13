@@ -20,6 +20,8 @@ import com.bs.ecommerce.utils.OneTimeEvent
 open class BaseViewModel : ViewModel() {
     var isLoadingLD = MutableLiveData<Boolean>()
     var addedToWishListLD = MutableLiveData<OneTimeEvent<ProductSummary>?>()
+    var addToCartLD = MutableLiveData<OneTimeEvent<ProductSummary>?>()
+    var cartCountLD = MutableLiveData<OneTimeEvent<Int>>()
 
     var cartLD = MutableLiveData<CartRootData>()
 
@@ -41,28 +43,44 @@ open class BaseViewModel : ViewModel() {
         })
     }
 
-    fun addToWishList(product: ProductSummary) {
+    fun addToWishList(product: ProductSummary, cart: Boolean = false) {
 
-        val model =
-            ProductDetailModelImpl()
+        val model = ProductDetailModelImpl()
 
-        model.addProductToWishList(product.id!!.toLong(), Api.typeWishList,
+        model.addProductToWishList(product.id!!.toLong(), if(cart) Api.typeShoppingCart else Api.typeWishList,
             object :
                 RequestCompleteListener<AddToWishListResponse> {
 
                 override fun onRequestSuccess(data: AddToWishListResponse) {
 
+                    val cartCount = data.redirectionModel?.totalShoppingCartProducts ?: 0
+                    cartCountLD.value = OneTimeEvent(cartCount)
+
                     if (data.redirectionModel?.redirectToDetailsPage == true) {
-                        addedToWishListLD.value = OneTimeEvent(product) // goto product details page
+
+                        if(cart) {
+                            addToCartLD.value = OneTimeEvent(product) // goto product details page
+                        } else {
+                            addedToWishListLD.value = OneTimeEvent(product) // goto product details page
+                        }
                     } else {
-                        toast(DbHelper.getString(Const.PRODUCT_ADDED_TO_WISHLIST))
-                        addedToWishListLD.value = null // success. do nothing
+                        if(cart) {
+                            toast(DbHelper.getString(Const.PRODUCT_ADDED_TO_CART))
+                            addToCartLD.value = null // success. do nothing
+                        } else {
+                            toast(DbHelper.getString(Const.PRODUCT_ADDED_TO_WISHLIST))
+                            addedToWishListLD.value = null // success. do nothing
+                        }
                     }
                 }
 
                 override fun onRequestFailed(errorMessage: String) {
                     toast(errorMessage)
-                    addedToWishListLD.value = null // error. do nothing
+
+                    if(cart)
+                        addToCartLD.value = null // error. do nothing
+                    else
+                        addedToWishListLD.value = null // error. do nothing
                 }
 
             })

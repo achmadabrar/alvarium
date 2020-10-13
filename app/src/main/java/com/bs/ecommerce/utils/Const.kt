@@ -187,6 +187,7 @@ class Const {
         const val PRODUCT_BTN_ADDTOCART = "shoppingcart.addtocart"
         const val PRODUCT_BTN_ADDTO_WISHLIST = "shoppingcart.addtowishlist"
         const val PRODUCT_ADDED_TO_WISHLIST = "products.producthasbeenaddedtothewishlist"
+        const val PRODUCT_ADDED_TO_CART = "products.producthasbeenaddedtothecart"
         const val PRODUCT_ALSO_PURCHASED = "products.alsopurchased"
         const val PRODUCT_DESCRIPTION = "account.vendorinfo.description"
         const val PRODUCT_RELATED_PRODUCT = "products.relatedproducts"

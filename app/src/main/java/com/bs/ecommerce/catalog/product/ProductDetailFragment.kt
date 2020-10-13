@@ -480,7 +480,7 @@ class ProductDetailFragment : BaseFragment(), View.OnClickListener {
                     }
                 })
 
-            viewModel.addedToWishListLD.observe(viewLifecycleOwner, Observer { action ->
+            viewModel.addToCartLD.observe(viewLifecycleOwner, Observer { action ->
                 action?.getContentIfNotHandled()?.let { product ->
                     replaceFragmentSafely(
                         newInstance(
@@ -491,6 +491,8 @@ class ProductDetailFragment : BaseFragment(), View.OnClickListener {
                 }
                 blockingLoader.hideDialog()
             })
+
+            cartCountLD.observe(viewLifecycleOwner, Observer { updateTopCart(it?.getContentIfNotHandled() ?: 0) })
 
             uploadFileLD.observe(viewLifecycleOwner, Observer { data ->
                 blockingLoader.hideDialog()
@@ -705,7 +707,7 @@ class ProductDetailFragment : BaseFragment(), View.OnClickListener {
                         )
 
                     R.id.ivAddToFav ->
-                        addProductToWishList(data)
+                        addProductToCart(data)
                 }
             }
         }

@@ -134,7 +134,15 @@ abstract class BaseFragment : Fragment()
         if (product.id == null) return
 
         blockingLoader.showDialog()
-        viewModel.addToWishList(product)
+        viewModel.addToWishList(product, cart = false)
+    }
+
+    open fun addProductToCart(product: ProductSummary) {
+
+        if (product.id == null) return
+
+        blockingLoader.showDialog()
+        viewModel.addToWishList(product, cart = true)
     }
 
 

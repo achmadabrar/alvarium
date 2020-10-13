@@ -119,7 +119,7 @@ class HomeFragment : ToolbarLogoBaseFragment() {
                         replaceFragmentSafely(ProductDetailFragment.newInstance(data.id.toLong(), data.name))
 
                     R.id.ivAddToFav ->
-                        addProductToWishList(data)
+                        addProductToCart(data)
                 }
             }
         }
@@ -195,7 +195,7 @@ class HomeFragment : ToolbarLogoBaseFragment() {
 
             homePageLoader.observe(viewLifecycleOwner, Observer { isShowLoader -> showHideLoader(isShowLoader) })
 
-            addedToWishListLD.observe(viewLifecycleOwner, Observer { action ->
+            addToCartLD.observe(viewLifecycleOwner, Observer { action ->
 
                 action?.getContentIfNotHandled()?.let { product ->
                     replaceFragmentSafely(
@@ -205,6 +205,8 @@ class HomeFragment : ToolbarLogoBaseFragment() {
 
                 blockingLoader.hideDialog()
             })
+
+            cartCountLD.observe(viewLifecycleOwner, Observer { updateTopCart(it?.getContentIfNotHandled() ?: 0) })
         }
 
         "freeze_".showLog("setLiveData - end")
