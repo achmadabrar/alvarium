@@ -25,7 +25,9 @@
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:textColor="?attr/primaryTextColor"
-        android:textSize="18sp"
+        android:textSize="16.5sp"
+        android:maxLines="1"
+        android:ellipsize="end"
         tools:text="@string/placeholder" />
 
     <androidx.appcompat.widget.AppCompatImageView
