@@ -42,6 +42,7 @@
             android:id="@+id/advanceSearchButton"
             style="@style/RoundedButtonTiny_1"
             android:layout_marginTop="3dp"
+            android:layout_marginBottom="3dp"
             android:layout_alignParentTop="true"
             tools:text="Advanced Search"
             android:gravity="center"

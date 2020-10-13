@@ -325,13 +325,19 @@ class ProductListFragment : BaseFragment() {
             if(show) {
                 drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED)
                 btnFilter.visibility = View.VISIBLE
-                llButtonHolder.visibility = View.VISIBLE
             } else {
                 // to turn off slide open drawer
                 btnFilter.visibility = View.GONE
-                llButtonHolder.visibility = View.GONE // View.INVISIBLE
                 drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED)
             }
+        })
+
+        viewModel.sortOptionVisibilityLD.observe(viewLifecycleOwner, Observer { show ->
+            btnSortBy.visibility = if (show) View.VISIBLE else View.GONE
+        })
+
+        viewModel.buttonHolderVisibility.observe(viewLifecycleOwner, Observer { show ->
+            llButtonHolder.visibility = if (show) View.VISIBLE else View.GONE
         })
 
         viewModel.addToCartLD.observe(viewLifecycleOwner, Observer { action ->

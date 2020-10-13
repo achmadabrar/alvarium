@@ -25,6 +25,8 @@ class ProductListViewModel : BaseViewModel() {
     var priceRangeLD = MutableLiveData<PriceRangeFilter?>()
 
     var filterVisibilityLD = MutableLiveData<Boolean>()
+    var sortOptionVisibilityLD = MutableLiveData<Boolean>()
+    var buttonHolderVisibility = MutableLiveData<Boolean>()
 
     private var pageNumber = 0
     var shouldAppend = false
@@ -463,5 +465,7 @@ class ProductListViewModel : BaseViewModel() {
             !filterInfo?.specificationFilter?.alreadyFilteredItems.isNullOrEmpty()
 
         filterVisibilityLD.value = hasPrice || hasFilter || hasAlreadyFiltered
+        sortOptionVisibilityLD.value = filterInfo?.allowProductSorting ?: false
+        buttonHolderVisibility.value = (filterVisibilityLD.value ?: false) || (sortOptionVisibilityLD.value ?: false)
     }
 }
