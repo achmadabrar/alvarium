@@ -190,11 +190,12 @@ open class BaseCheckoutAddressFragment : BaseCheckoutNavigationFragment()
         countrySpinner?.adapter = createSpinnerAdapter(countryNameList)
         countrySpinner?.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(parent: AdapterView<*>, view: View, position: Int, id: Long) {
-                if (position != 0 && stateProvinceEnabled) {
+                if (position != 0) {
                     stateProvinceIdByForm = ""
                     countryIdByForm = availableCountries?.get(position)?.value ?: ""
 
-                    (viewModel as CheckoutViewModel).getStatesByCountryVM(countryIdByForm, model)
+                    if(stateProvinceEnabled)
+                        (viewModel as CheckoutViewModel).getStatesByCountryVM(countryIdByForm, model)
                 }
             }
 
