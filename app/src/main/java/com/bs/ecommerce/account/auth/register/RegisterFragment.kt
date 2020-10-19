@@ -224,10 +224,18 @@ open class RegisterFragment : ToolbarLogoBaseFragment(), View.OnClickListener
                 hintText = DbHelper.getString(Const.FAX))
 
             if(countryEnabled) {
-                populateCountrySpinner(availableCountries)
+                populateCountrySpinner(availableCountries, stateProvinceEnabled)
             }
 
-            genderLayout?.showOrHide(genderEnabled)
+            genderLayout?.let {
+                it.showOrHide(genderEnabled)
+                if (genderEnabled) {
+                    it.check(
+                        if (gender == "F") R.id.genderFemaleRadioButton
+                        else R.id.genderMaleRadioButton
+                    )
+                }
+            }
 
             newsletterLayout?.showOrHide(newsletterEnabled)
 
@@ -301,7 +309,12 @@ open class RegisterFragment : ToolbarLogoBaseFragment(), View.OnClickListener
             val formValue = customAttributeManager
                 ?.getFormData(Api.customerAttributePrefix) ?: KeyValueFormData()
 
-            customerInfo.formValues = formValue.formValues
+            customerInfo.apply {
+                formValues = formValue.formValues
+                data.availableCountries = listOf()
+                data.availableStates = listOf()
+                data.availableTimeZones = listOf()
+            }
 
             (viewModel as RegistrationViewModel).postRegisterVM(customerInfo, model)
         }
@@ -435,10 +448,10 @@ open class RegisterFragment : ToolbarLogoBaseFragment(), View.OnClickListener
         }
     }
 
-    private fun populateCountrySpinner(availableCountries: List<AvailableCountry>) {
+    private fun populateCountrySpinner(availableCountries: List<AvailableCountry>, stateEnabled: Boolean) {
 
         val countryAdapter: ArrayAdapter<AvailableCountry> =
-            ArrayAdapter<AvailableCountry>(requireContext(), R.layout.simple_spinner_item, availableCountries)
+            ArrayAdapter(requireContext(), R.layout.simple_spinner_item, availableCountries)
 
         countryAdapter.setDropDownViewResource(R.layout.simple_spinner_dropdown_item)
 
@@ -454,7 +467,7 @@ open class RegisterFragment : ToolbarLogoBaseFragment(), View.OnClickListener
                 id: Long
             ) {
                 // load states for selected country
-                if (availableCountries[position].value != "0") {
+                if (availableCountries[position].value != "0" && stateEnabled) {
                     (viewModel as CheckoutViewModel).getStatesByCountryVM(
                         availableCountries[position].value, CheckoutModelImpl()
                     )
@@ -474,7 +487,7 @@ open class RegisterFragment : ToolbarLogoBaseFragment(), View.OnClickListener
     private fun populateStateSpinner(selectedStateId: Int?, states: List<AvailableState>) {
 
         val spinnerAdapter: ArrayAdapter<AvailableState> =
-            ArrayAdapter<AvailableState>(requireContext(), R.layout.simple_spinner_item, states)
+            ArrayAdapter(requireContext(), R.layout.simple_spinner_item, states)
 
         spinnerAdapter.setDropDownViewResource(R.layout.simple_spinner_dropdown_item)
 

@@ -21,12 +21,13 @@ class AddressFormUtil(private val form: View, private val context: Context) {
 
     fun populateCountrySpinner(
         availableCountries: List<AvailableCountry>,
-        itemClickListener: ItemClickListener<AvailableCountry>
+        itemClickListener: ItemClickListener<AvailableCountry>,
+        stateEnabled: Boolean
     ) {
         form.countrySpinnerLayout?.visibility = View.VISIBLE
 
         val countryAdapter: ArrayAdapter<AvailableCountry> =
-            ArrayAdapter<AvailableCountry>(context, R.layout.simple_spinner_item, availableCountries)
+            ArrayAdapter(context, R.layout.simple_spinner_item, availableCountries)
 
         countryAdapter.setDropDownViewResource(R.layout.simple_spinner_dropdown_item)
 
@@ -38,7 +39,10 @@ class AddressFormUtil(private val form: View, private val context: Context) {
                 view: View,
                 position: Int,
                 id: Long
-            ) = itemClickListener.onClick(view, position, availableCountries[position])
+            ) {
+                if(stateEnabled)
+                    itemClickListener.onClick(view, position, availableCountries[position])
+            }
 
 
             override fun onNothingSelected(parent: AdapterView<*>) {}

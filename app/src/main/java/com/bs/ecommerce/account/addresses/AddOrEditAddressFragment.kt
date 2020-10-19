@@ -169,7 +169,8 @@ class AddOrEditAddressFragment : BaseFragment() {
             if (address.countryEnabled == true) {
                 populateCountrySpinner(
                     address.availableCountries ?: listOf(),
-                    countrySelectListener
+                    countrySelectListener,
+                    address.stateProvinceEnabled ?: false
                 )
             }
 

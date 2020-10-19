@@ -112,7 +112,7 @@ open class BaseCheckoutAddressFragment : BaseCheckoutNavigationFragment()
         val countryNameList = address.availableCountries?.map { it.text }
 
         if(address.countryEnabled)
-            countryNameList?.let {  populateCountrySpinner(countryNameList, address.availableCountries)  }
+            countryNameList?.let {  populateCountrySpinner(countryNameList, address.availableCountries, address.stateProvinceEnabled)  }
 
         android.os.Handler().post {  newAddressLayout?.visibility = View.VISIBLE    }
 
@@ -179,14 +179,18 @@ open class BaseCheckoutAddressFragment : BaseCheckoutNavigationFragment()
         return dataAdapter
     }
 
-    private fun populateCountrySpinner(countryNameList: List<String>, availableCountries: List<AvailableCountry>?)
+    private fun populateCountrySpinner(
+        countryNameList: List<String>,
+        availableCountries: List<AvailableCountry>?,
+        stateProvinceEnabled: Boolean
+    )
     {
         countrySpinnerLayout?.visibility = View.VISIBLE
 
         countrySpinner?.adapter = createSpinnerAdapter(countryNameList)
         countrySpinner?.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(parent: AdapterView<*>, view: View, position: Int, id: Long) {
-                if (position != 0) {
+                if (position != 0 && stateProvinceEnabled) {
                     stateProvinceIdByForm = ""
                     countryIdByForm = availableCountries?.get(position)?.value ?: ""
 

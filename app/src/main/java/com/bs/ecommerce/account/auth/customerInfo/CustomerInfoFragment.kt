@@ -34,7 +34,12 @@ class CustomerInfoFragment : RegisterFragment() {
             val formValue = customAttributeManager
                 ?.getFormData(Api.customerAttributePrefix) ?: KeyValueFormData()
 
-            customerInfo.formValues = formValue.formValues
+            customerInfo.apply {
+                formValues = formValue.formValues
+                data.availableCountries = listOf()
+                data.availableStates = listOf()
+                data.availableTimeZones = listOf()
+            }
 
             (viewModel as RegistrationViewModel).apply {
                 customerInfoUpdate = true
