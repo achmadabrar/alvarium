@@ -41,5 +41,5 @@ data class WishListItem(
     @SerializedName("UnitPrice")
     val unitPrice: String?,
     @SerializedName("Warnings")
-    val warnings: List<Any>?
+    val warnings: List<String>?
 )

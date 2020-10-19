@@ -86,11 +86,23 @@
             tools:text="@string/placeholder_long" />
 
         <TextView
+            android:id="@+id/tvWarningMsg"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:textColor="@color/red"
+            android:textSize="@dimen/tv_text_size_small"
+            android:visibility="gone"
+            android:padding="5dp"
+            app:layout_constraintStart_toEndOf="@id/ivProductThumb"
+            app:layout_constraintTop_toBottomOf="@id/tvCustomAttribute"
+            tools:text="Warning!!" />
+
+        <TextView
             android:id="@+id/btnAddToCart"
             style="@style/RoundedButtonTiny_1"
             android:layout_marginStart="5dp"
             tools:text="@string/add_to_cart"
-            app:layout_constraintTop_toBottomOf="@id/tvCustomAttribute"
+            app:layout_constraintTop_toBottomOf="@id/tvWarningMsg"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toEndOf="@id/ivProductThumb" />
 

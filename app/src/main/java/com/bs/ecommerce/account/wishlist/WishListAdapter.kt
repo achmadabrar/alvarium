@@ -1,6 +1,7 @@
 package com.bs.ecommerce.account.wishlist
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bs.ecommerce.R
@@ -52,6 +53,13 @@ class WishListAdapter(
 
             icRemoveItem.setOnClickListener { v ->
                 clickListener.onClick(v, position, item)
+            }
+
+            item.warnings?.let {
+                if(it.isNotEmpty()) {
+                    tvWarningMsg?.visibility = View.VISIBLE
+                    for (msg in it) tvWarningMsg.append(msg.plus(". "))
+                }
             }
         }
     }

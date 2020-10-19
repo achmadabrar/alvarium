@@ -21,7 +21,7 @@ data class CartInfoData(
     @SerializedName("TermsOfServiceOnOrderConfirmPage") var termsOfServiceOnOrderConfirmPage: Boolean = false,
     @SerializedName("TermsOfServiceOnShoppingCartPage") var termsOfServiceOnShoppingCartPage: Boolean = false,
     @SerializedName("TermsOfServicePopup") var termsOfServicePopup: Boolean = false,
-    @SerializedName("Warnings") var warnings: List<Any> = listOf()
+    @SerializedName("Warnings") var warnings: List<String> = listOf()
 )
 
 

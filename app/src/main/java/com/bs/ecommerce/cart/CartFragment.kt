@@ -95,6 +95,17 @@ class CartFragment : BaseFragment() {
                     } catch (e: Exception) {
                         e.printStackTrace()
                     }
+
+                    // Show warning as toast
+                    cartRootData.cart.warnings.let {
+                        if (it.isNotEmpty()) {
+                            var warningMsg = ""
+                            for( msg in it) {
+                                warningMsg = warningMsg.plus(msg).plus("\n ")
+                            }
+                            toast(warningMsg.trim())
+                        }
+                    }
                 }
                 else
                 {
@@ -196,7 +207,8 @@ class CartFragment : BaseFragment() {
         populateEstimateShipping(cartRootData.estimateShipping)
 
         cartPageView?.visibility = View.VISIBLE
-        btnCheckOut?.visibility = View.VISIBLE
+        btnCheckOut?.visibility =
+            if (cartRootData.cart.hideCheckoutButton) View.GONE else View.VISIBLE
     }
 
     private fun populateEstimateShipping(estimateShipping: EstimateShipping?) {
@@ -390,6 +402,30 @@ class CartFragment : BaseFragment() {
         })
 
         btnCheckOut.setOnClickListener {
+
+            // don't proceed to checkout if there is any warning
+            var warningMsg = ""
+            (viewModel as CartViewModel).cartLD.value?.cart?.let {
+                if(it.warnings.isNotEmpty()) {
+                    for(msg in it.warnings) {
+                        warningMsg = warningMsg.plus(msg).plus("\n ")
+                    }
+                } else {
+                    for(item in it.items) {
+                        if(item.warnings?.isNotEmpty() == true) {
+                            for(msg in item.warnings ?: listOf()) {
+                                warningMsg = warningMsg.plus(msg).plus("\n ")
+                            }
+                        }
+                    }
+                }
+            }
+
+            if(warningMsg.trim().isNotEmpty()) {
+                toast(warningMsg.trim())
+                return@setOnClickListener
+            }
+
             customAttributeManager?.getFormData(Api.checkOutAttributePrefix) ?: return@setOnClickListener
 
             submitCheckoutAttributes()

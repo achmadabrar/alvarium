@@ -8,6 +8,7 @@ import com.bs.ecommerce.networking.RetroClient
 import com.bs.ecommerce.networking.common.BaseResponse
 import com.bs.ecommerce.networking.common.KeyValueFormData
 import com.bs.ecommerce.account.wishlist.model.data.WishListResponse
+import com.bs.ecommerce.utils.TextUtils
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -21,7 +22,7 @@ class WishListModelImpl : WishListModel {
                 if (response.body() != null)
                     callback.onRequestSuccess(response.body() as WishListResponse)
                 else
-                    callback.onRequestFailed(response.message())
+                    callback.onRequestFailed(TextUtils.getErrorMessage(response))
             }
 
 
@@ -42,7 +43,7 @@ class WishListModelImpl : WishListModel {
                 if (response.body() != null)
                     callback.onRequestSuccess(response.body() as WishListResponse)
                 else
-                    callback.onRequestFailed(response.message())
+                    callback.onRequestFailed(TextUtils.getErrorMessage(response))
             }
 
             override fun onFailure(call: Call<WishListResponse>, t: Throwable) {
@@ -63,7 +64,7 @@ class WishListModelImpl : WishListModel {
                 if (response.body() != null)
                     callback.onRequestSuccess(response.body() as WishListResponse)
                 else
-                    callback.onRequestFailed(response.message())
+                    callback.onRequestFailed(TextUtils.getErrorMessage(response))
             }
 
             override fun onFailure(call: Call<WishListResponse>, t: Throwable) {

@@ -62,7 +62,12 @@ class CartAdapter (
             sku?.text = DbHelper.getString(Const.SKU).plus(": ").plus(item.sku)
             sku?.visibility = if (showSku) View.VISIBLE else View.GONE
 
-
+            item.warnings?.let {
+                if(it.isNotEmpty()) {
+                    tvWarningMsg?.visibility = View.VISIBLE
+                    for (msg in it) tvWarningMsg.append(msg.plus(". "))
+                }
+            }
 
 
             if (item.attributeInfo.isNotEmpty()) {
@@ -70,11 +75,6 @@ class CartAdapter (
                 tvAttribute1?.show(item.attributeInfo, R.color.list_item_bg)
             } else
                 tvAttribute1?.visibility = View.GONE
-
-            item.warnings?.let {
-                if(it.isNotEmpty())
-                    Toast.makeText(holder.itemView.context, it[0], Toast.LENGTH_SHORT).show()
-            }
 
             icRemoveItem?.setOnClickListener { v ->
                 clickListener?.onClick(v, position, item)

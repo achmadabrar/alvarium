@@ -42,7 +42,7 @@
             android:contentDescription="@string/placeholder"
             android:padding="5dp"
             android:src="@drawable/ic_cross"
-            android:tint="?attr/primaryIconTint"
+            app:tint="?attr/primaryIconTint"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -114,6 +114,17 @@
             android:layout_marginTop="5dp"
             app:layout_constraintStart_toEndOf="@id/referenceView"
             app:layout_constraintTop_toBottomOf="@id/sku" />
+
+        <TextView
+            android:id="@+id/tvWarningMsg"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:textColor="@color/red"
+            android:textSize="@dimen/tv_text_size_small"
+            android:visibility="gone"
+            app:layout_constraintStart_toStartOf="@id/referenceView"
+            app:layout_constraintTop_toBottomOf="@id/btn_holder"
+            tools:text="Warning!!" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
