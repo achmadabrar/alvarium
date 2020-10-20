@@ -99,18 +99,17 @@ class ConfirmOrderFragment : BaseCheckoutNavigationFragment() {
 
     private fun getDetailAddress(address: OrderReviewAddressModel) : String
     {
-        with(address)
-        {
-            var address2show = ""
-            address2?.let {  address2show  = "${it}\n" }
+        address.apply {
+            var formattedAddress = ""
 
-            var cityShow = ""
-            city?.let {  cityShow  = "${it}\n" }
+            if(email!=null) formattedAddress += "${DbHelper.getString(Const.EMAIL)}: $email\n"
+            if(phoneNumber!=null) formattedAddress += "${DbHelper.getString(Const.PHONE)}: $phoneNumber\n"
+            if(address1!=null) formattedAddress += "$address1\n"
+            if(address2!=null) formattedAddress += "$address2\n"
+            if(city!=null) formattedAddress += "$city\n"
+            if(countryName!=null) formattedAddress += "$countryName"
 
-            var countryShow = ""
-            countryName?.let {  countryShow  = "${it}\n" }
-
-            return "${DbHelper.getString(Const.EMAIL)}: $email\n${DbHelper.getString(Const.PHONE)}: $phoneNumber\n$address1\n$address2show$cityShow$countryShow"
+            return formattedAddress
         }
     }
 
@@ -128,7 +127,7 @@ class ConfirmOrderFragment : BaseCheckoutNavigationFragment() {
                 billingAddressCard.ivCardThumb.visibility = View.GONE
             }
 
-            if(orderReviewData.isShippable)
+            if(orderReviewData.isShippable && !orderReviewData.selectedPickupInStore)
             {
                 with(orderReviewData.shippingAddress)
                 {
@@ -144,10 +143,10 @@ class ConfirmOrderFragment : BaseCheckoutNavigationFragment() {
 
             if(orderReviewData.selectedPickupInStore)
             {
-                with(orderReviewData.shippingAddress)
+                with(orderReviewData.pickupAddress)
                 {
                     pickupStoreCard.tvCardTitle.text = DbHelper.getString(Const.PICK_UP_POINT_ADDRESS)
-                    pickupStoreCard.tvCardDetails.text = firstName?.plus(" ")?.plus(lastName)
+                    pickupStoreCard.tvCardDetails.visibility = View.GONE
 
                     pickupStoreCard.tvCardDetails2.text = getDetailAddress(this)
                     pickupStoreCard.ivCardThumb.visibility = View.GONE

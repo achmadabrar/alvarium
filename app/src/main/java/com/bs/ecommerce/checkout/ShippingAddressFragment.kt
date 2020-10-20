@@ -46,7 +46,7 @@ class ShippingAddressFragment : BaseCheckoutAddressFragment()
     private fun saveStoreData()
     {
         (viewModel as CheckoutViewModel)
-            .saveShippingFromExistingAddressVM(type = CheckoutConstants.StorePickUp, addressId = addressID, model = model)
+            .saveShippingFromExistingAddressVM(type = CheckoutConstants.StorePickUp, addressId = storeId, model = model)
     }
 
     private fun initShippingLayout(saveResponse: CheckoutSaveResponse)
