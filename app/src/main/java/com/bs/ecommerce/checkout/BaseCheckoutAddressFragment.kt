@@ -305,6 +305,10 @@ open class BaseCheckoutAddressFragment : BaseCheckoutNavigationFragment()
                 val input = it.text?.trim().toString(); if(input.isNotEmpty()) phoneNumber = input else { showValidation(it, phoneEnabled && phoneRequired)}
             }
 
+            etFax?.let {
+                val input = it.text?.trim().toString(); if(input.isNotEmpty()) faxNumber = input else { showValidation(it, faxEnabled && faxRequired)}
+            }
+
             etEmail?.let {
                 val input = it.text?.trim().toString(); if(input.isNotEmpty()  && input.isEmailValid()) email = input else {showValidation(it, true)}
             }

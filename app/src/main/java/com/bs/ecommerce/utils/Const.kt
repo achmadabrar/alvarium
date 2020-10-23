@@ -293,7 +293,7 @@ class Const {
         const val COMPANY = "address.fields.company"
         const val CITY = "address.fields.city"
         const val PHONE = "address.fields.phonenumber"
-        const val FAX = "address.fields.fax"
+        const val FAX = "account.fields.fax"
         const val ADDRESS_1 = "address.fields.address1"
         const val ADDRESS_2 = "address.fields.address2"
         const val EMAIL = "address.fields.email"

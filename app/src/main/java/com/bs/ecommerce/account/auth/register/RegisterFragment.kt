@@ -397,6 +397,10 @@ open class RegisterFragment : ToolbarLogoBaseFragment(), View.OnClickListener
                 val input = it.text?.trim().toString(); if(input.isNotEmpty()) phone = input else { showValidation(it, phoneEnabled && phoneRequired)}
             }
 
+            faxEditText?.let {
+                val input = it.text?.trim().toString(); if(input.isNotEmpty()) fax = input else { showValidation(it, faxEnabled && faxRequired)}
+            }
+
             emailEditText?.let {
                 val input = it.text?.trim().toString(); if(input.isNotEmpty()  && input.isEmailValid()) email = input else {showValidation(it, true)}
             }
