@@ -147,7 +147,7 @@ class ProductDetailViewModel : BaseViewModel() {
                                 keyValueFormData: KeyValueFormData): KeyValueFormData {
 
 
-        val formValues = keyValueFormData.formValues as MutableList
+        val formValues = if (keyValueFormData.formValues.isNotEmpty()) keyValueFormData.formValues as MutableList else mutableListOf()
 
         val keyPrefix = "addtocart_$productId."
 

@@ -307,7 +307,7 @@ open class RegisterFragment : ToolbarLogoBaseFragment(), View.OnClickListener
         if(isValidInfo) {
             // custom attribute fields value
             val formValue = customAttributeManager
-                ?.getFormData(Api.customerAttributePrefix) ?: KeyValueFormData()
+                ?.getFormData(Api.customerAttributePrefix) ?: return
 
             customerInfo.apply {
                 formValues = formValue.formValues

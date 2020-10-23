@@ -91,7 +91,7 @@ class AddOrEditAddressFragment : BaseFragment() {
 
                     // custom attribute fields value
                     val formValue = customAttributeManager
-                        ?.getFormData(Api.addressAttributePrefix) ?: KeyValueFormData()
+                        ?.getFormData(Api.addressAttributePrefix) ?: return@setOnClickListener
 
                     formUtil.validAddress?.let {
                         if (isEditMode) {

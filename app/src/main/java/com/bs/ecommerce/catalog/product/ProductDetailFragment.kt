@@ -775,7 +775,7 @@ class ProductDetailFragment : BaseFragment(), View.OnClickListener {
         (viewModel as ProductDetailViewModel).addProductToCartModel(
             productId,
             quantity,
-            customAttributeManager?.getFormData(Api.productAttributePrefix) ?: KeyValueFormData(),
+            customAttributeManager?.getFormData(Api.productAttributePrefix) ?: return,
             model,
             if(cart) Api.typeShoppingCart else Api.typeWishList
         )

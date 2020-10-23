@@ -34,8 +34,8 @@ class ShippingAddressFragment : BaseCheckoutAddressFragment()
             {
                 val newAddress: AddressModel? = getAddressWithValidation(newAddress)
 
-                if(isValidInfo && newAddress!=null)
-                    (viewModel as CheckoutViewModel).saveNewShippingVM(newAddress, getCustomAttributeValues(), model)
+                if(isValidInfo && newAddress!=null && getCustomAttributeValues()!=null)
+                    (viewModel as CheckoutViewModel).saveNewShippingVM(newAddress, getCustomAttributeValues()!!, model)
             }
             else
                 (viewModel as CheckoutViewModel)

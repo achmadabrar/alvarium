@@ -32,8 +32,8 @@ class BillingAddressFragment : BaseCheckoutAddressFragment()
             {
                 val newAddress = getAddressWithValidation(newAddress)
 
-                if(isValidInfo && newAddress!=null)
-                    (viewModel as CheckoutViewModel).saveNewBillingVM(newAddress, getCustomAttributeValues(), model)
+                if(isValidInfo && newAddress!=null && getCustomAttributeValues()!=null)
+                    (viewModel as CheckoutViewModel).saveNewBillingVM(newAddress, getCustomAttributeValues()!!, model)
             }
             else
                 (viewModel as CheckoutViewModel).saveExistingBillingVM(addressID, model, shipToSameAddressCheckBox.isChecked)

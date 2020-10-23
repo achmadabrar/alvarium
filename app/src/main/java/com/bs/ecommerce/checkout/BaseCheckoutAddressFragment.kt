@@ -118,10 +118,10 @@ open class BaseCheckoutAddressFragment : BaseCheckoutNavigationFragment()
 
     }
 
-    protected fun getCustomAttributeValues(): KeyValueFormData {
+    protected fun getCustomAttributeValues(): KeyValueFormData? {
 
         return customAttributeManager
-            ?.getFormData(Api.addressAttributePrefix) ?: KeyValueFormData()
+            ?.getFormData(Api.addressAttributePrefix)
     }
 
 

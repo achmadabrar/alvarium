@@ -32,7 +32,7 @@ class CustomerInfoFragment : RegisterFragment() {
         if(isValidInfo) {
 
             val formValue = customAttributeManager
-                ?.getFormData(Api.customerAttributePrefix) ?: KeyValueFormData()
+                ?.getFormData(Api.customerAttributePrefix) ?: return
 
             customerInfo.apply {
                 formValues = formValue.formValues
