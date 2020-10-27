@@ -178,10 +178,10 @@ open class RegisterFragment : ToolbarLogoBaseFragment(), View.OnClickListener
         with(data)
         {
 
-            customerFirstNameEditText?.showOrHideOrRequired(isEnabledParam = true, isRequired = true, value = firstName,
+            customerFirstNameEditText?.showOrHideOrRequired(isEnabledParam = firstNameEnabled, isRequired = firstNameEnabled && firstNameRequired, value = firstName,
                 hintText = DbHelper.getString(Const.FIRST_NAME))
 
-            customerLastNameEditText?.showOrHideOrRequired(isEnabledParam = true, isRequired = true, value = lastName,
+            customerLastNameEditText?.showOrHideOrRequired(isEnabledParam = lastNameEnabled, isRequired = lastNameEnabled && lastNameRequired, value = lastName,
                 hintText = DbHelper.getString(Const.LAST_NAME))
 
             emailEditText?.showOrHideOrRequired(isEnabledParam = true, isRequired =   true, value = email,
