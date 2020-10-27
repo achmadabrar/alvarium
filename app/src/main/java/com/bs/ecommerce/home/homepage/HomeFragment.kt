@@ -1,5 +1,6 @@
 package com.bs.ecommerce.home.homepage
 
+import android.graphics.BitmapFactory
 import android.os.Bundle
 import android.view.View
 import android.view.ViewGroup
@@ -39,6 +40,8 @@ import kotlinx.android.synthetic.main.featured_list_layout.view.*
 import kotlinx.android.synthetic.main.fragment_home.*
 import kotlinx.android.synthetic.main.home_fragment_bottomsheet.view.*
 import kotlinx.android.synthetic.main.home_page_banner.view.*
+import org.jetbrains.anko.doAsync
+import java.net.URL
 
 
 class HomeFragment : ToolbarLogoBaseFragment() {
@@ -228,14 +231,32 @@ class HomeFragment : ToolbarLogoBaseFragment() {
             }
         }
 
+        var biggestImageAR = 100000F
+
         for ((i, sliderModel) in sliderData.sliders.withIndex()) {
+
+            doAsync {
+                try {
+                    //Execute all the lon running tasks here
+                    val url = URL(sliderModel.imageUrl)
+                    val bitmap = BitmapFactory.decodeStream(url.openConnection().getInputStream())
+
+                    val thisImageAR = (bitmap?.width!!.toFloat() / bitmap.height.toFloat())
+
+                    if(thisImageAR < biggestImageAR)
+                        biggestImageAR = thisImageAR
+
+                    banner?.aspectRatioView?.setmAspectRatio(thisImageAR)
+                    "aspectRatio".showLog(thisImageAR.toString())
+                } catch (e: java.lang.Exception) {}
+            }
 
             "freeze_".showLog("Populating banner $i")
 
             val textSliderView = DefaultSliderView(requireContext())
 
             textSliderView.image(sliderModel.imageUrl).scaleType =
-                BaseSliderView.ScaleType.CenterCrop // Previously set to: CenterInside
+                BaseSliderView.ScaleType.CenterInside
 
             textSliderView.setOnSliderClickListener {
 
@@ -286,8 +307,6 @@ class HomeFragment : ToolbarLogoBaseFragment() {
 
             banner?.view_pager_slider1?.addSlider(textSliderView)
         }
-
-        banner?.aspectRatioView?.setmAspectRatio(2.3f)
     }
 
     private fun populateFeaturedCategoryList(list: List<CategoryModel>) {

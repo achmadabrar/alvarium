@@ -152,12 +152,7 @@ dependencies {
     implementation 'com.google.firebase:firebase-messaging:20.2.4'
     implementation 'com.google.firebase:firebase-crashlytics:17.2.1'
 
-    // Unused libraries. Remove after thorough testing
-    // implementation 'com.orhanobut:logger:2.2.0'
-    // implementation 'androidx.exifinterface:exifinterface:1.2.0'
-    // implementation 'androidx.vectordrawable:vectordrawable-animated:1.1.0'
-    // implementation "org.jetbrains.anko:anko:$anko_version"
-    // implementation 'com.github.tbruyelle:rxpermissions:0.10.2'
+    implementation "org.jetbrains.anko:anko:$anko_version"
 }
 
 apply plugin: 'com.google.gms.google-services'
