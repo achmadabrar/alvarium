@@ -554,6 +554,9 @@ class CustomAttributeManager(
             }
         }
 
+        var requiredTextAttributeEmpty = false
+        var attributeName = "";
+
         val allKeyValueList = ArrayList<KeyValuePair>()
 
         for ((key, valueList) in selectedAttributes)
@@ -597,6 +600,15 @@ class CustomAttributeManager(
                             )
                         )
 
+                        // Invalidate form if text attribute value is empty
+                        val attributeDetails = attributes.find { it.id == key }
+                        if(attributeDetails?.isRequired == true && attribute.name.isNullOrEmpty()) {
+                            requiredTextAttributeEmpty = true
+                            attributeName = attributeDetails.name ?: ""
+
+                            break
+                        }
+
                     } else if (attribute.id == -5) { // file upload attribute
                         allKeyValueList.add(
                             KeyValuePair(
@@ -606,8 +618,7 @@ class CustomAttributeManager(
                         )
 
                     } else {
-                        val keyValuePair =
-                            KeyValuePair()
+                        val keyValuePair = KeyValuePair()
 
                         keyValuePair.key = "${productAttributePrefix}_${key}"
                         keyValuePair.value = attribute.id.toString()
@@ -618,6 +629,12 @@ class CustomAttributeManager(
             }
         }
 
-        return KeyValueFormData( allKeyValueList )
+        return if (requiredTextAttributeEmpty) {
+            Toast.makeText(context, "$attributeName ${DbHelper.getString(Const.IS_REQUIRED)}", Toast.LENGTH_SHORT).show()
+            null
+        } else {
+            KeyValueFormData(allKeyValueList)
+        }
+
     }
 }
