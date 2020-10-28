@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.Gravity
 import android.view.View
 import android.widget.RelativeLayout
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.bs.ecommerce.R
@@ -122,7 +123,7 @@ class UserAccountFragment: ToolbarLogoBaseFragment() {
         wishListLayout.apply {
             ivOptionIcon.setImageResource(R.drawable.ic_heart)
             tvOptionName.text = DbHelper.getString(Const.ACCOUNT_WISHLIST)
-            setOnClickListener { clickAction(WishListFragment()) }
+            setOnClickListener { clickAction(WishListFragment(), loginRequired = false) }
         }
 
         orderLayout.apply {
@@ -170,7 +171,7 @@ class UserAccountFragment: ToolbarLogoBaseFragment() {
                 DbHelper.getString(Const.ACCOUNT_LOGIN)
 
             tvOptionName.gravity = Gravity.CENTER
-            tvOptionName.setTextColor(resources.getColor(R.color.red))
+            tvOptionName.setTextColor(ContextCompat.getColor(requireContext(), R.color.red))
 
             setOnClickListener {
                 if (prefObject.getPrefsBoolValue(PrefSingleton.IS_LOGGED_IN))
@@ -193,8 +194,8 @@ class UserAccountFragment: ToolbarLogoBaseFragment() {
         }
     }
 
-    private fun clickAction(baseFragment: BaseFragment) {
-        if (prefObject.getPrefsBoolValue(PrefSingleton.IS_LOGGED_IN))
+    private fun clickAction(baseFragment: BaseFragment, loginRequired: Boolean = true) {
+        if (!loginRequired || prefObject.getPrefsBoolValue(PrefSingleton.IS_LOGGED_IN))
             replaceFragmentSafely(baseFragment)
         else
             replaceFragmentSafely(LoginFragment())
