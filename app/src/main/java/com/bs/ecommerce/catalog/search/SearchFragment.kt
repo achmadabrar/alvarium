@@ -182,6 +182,10 @@ class SearchFragment : BaseFragment() {
                 tvNoProduct.visibility =
                     if (searchResult.noResults == true && !shouldAppend) View.VISIBLE else View.GONE
 
+                searchResult?.warning?.let {
+                    if(it.isNotEmpty()) toast(it);
+                }
+
                 populateSortOptions(searchResult.pagingFilteringContext)
             })
 
@@ -372,7 +376,7 @@ class SearchFragment : BaseFragment() {
 
             query = it.query.toString()
 
-            if (query.length > 2) {
+            if (query.isNotEmpty()) {
                 observeLiveDataChange = true
                 (viewModel as ProductListViewModel).searchProduct(advancedSearchData, true, model)
             } else
