@@ -61,20 +61,26 @@ abstract class BaseUrlChangeFragment : BaseFragment()
         mainViewModel.testUrlSuccessLD.observe(viewLifecycleOwner, Observer { success ->
 
             success?.let {
-                if (it) {
+                if (it == "--") {
                     changeBaseUrl()
-                    //toast(DbHelper.getString(Const.SETTINGS_BASE_URL_CHANGE_SUCCESS))
                     forceRunApp()
                 } else {
-                    toast(DbHelper.getString(Const.SETTINGS_BASE_URL_CHANGE_FAIL))
+                    toast(
+                        if (it.isNotEmpty())
+                            it
+                        else DbHelper.getString(Const.SETTINGS_BASE_URL_CHANGE_FAIL)
+                    )
+                    NetworkConstants.BASE_URL = NetworkConstants.DEFAULT_URL
                 }
             }
+            mainViewModel.testUrlSuccessLD.removeObservers(this)
         })
 
 
         mainViewModel.isLoadingLD.observe(viewLifecycleOwner, Observer { isShowLoader ->
 
             showHideLoader(isShowLoader)
+            mainViewModel.isLoadingLD.removeObservers(this)
         })
 
     }

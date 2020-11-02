@@ -7,18 +7,18 @@ import androidx.lifecycle.MutableLiveData
 import com.bs.ecommerce.catalog.common.CategoryModel
 import com.bs.ecommerce.catalog.common.ProductSummary
 import com.bs.ecommerce.checkout.CheckoutViewModel
-import com.bs.ecommerce.networking.common.RequestCompleteListener
 import com.bs.ecommerce.db.DbHelper
 import com.bs.ecommerce.home.homepage.model.HomePageModel
 import com.bs.ecommerce.home.homepage.model.data.HomePageProductResponse
+import com.bs.ecommerce.home.homepage.model.data.Manufacturer
 import com.bs.ecommerce.home.homepage.model.data.SliderData
 import com.bs.ecommerce.main.model.MainModel
 import com.bs.ecommerce.main.model.data.*
 import com.bs.ecommerce.more.topic.model.TopicModel
-import com.bs.ecommerce.networking.common.BaseResponse
-import com.bs.ecommerce.home.homepage.model.data.Manufacturer
 import com.bs.ecommerce.more.topic.model.data.TopicData
 import com.bs.ecommerce.more.topic.model.data.TopicResponse
+import com.bs.ecommerce.networking.common.BaseResponse
+import com.bs.ecommerce.networking.common.RequestCompleteListener
 import com.bs.ecommerce.utils.OneTimeEvent
 import com.bs.ecommerce.utils.showLog
 import java.util.concurrent.atomic.AtomicInteger
@@ -39,7 +39,7 @@ class MainViewModel : CheckoutViewModel() {
     var appStartResponseLD = MutableLiveData<Boolean>()
     var showLoader = MutableLiveData<OneTimeEvent<Boolean>>()
 
-    var testUrlSuccessLD = MutableLiveData<Boolean?>()
+    var testUrlSuccessLD = MutableLiveData<String?>()
 
     var languageChangeSuccessLD = MutableLiveData<Boolean>()
     var currencyChangeSuccessLD = MutableLiveData<Boolean>()
@@ -125,7 +125,7 @@ class MainViewModel : CheckoutViewModel() {
 
             override fun onRequestFailed(errorMessage: String) {
                 isLoadingLD.value = false
-                toast(errorMessage)
+                // toast(errorMessage)
             }
 
         })
@@ -224,7 +224,7 @@ class MainViewModel : CheckoutViewModel() {
 
                 navDrawerCategoriesLD.value = data.categoryList
 
-                testUrlSuccessLD.value = true
+                testUrlSuccessLD.value = "--"
             }
 
             override fun onRequestFailed(errorMessage: String) {
@@ -232,7 +232,7 @@ class MainViewModel : CheckoutViewModel() {
 
                 allCategoriesFailureLD.value = listOf()
 
-                testUrlSuccessLD.value = false
+                testUrlSuccessLD.value = errorMessage
             }
         })
     }
