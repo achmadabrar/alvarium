@@ -1,0 +1,306 @@
+Index: app/src/main/res/values/strings.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><resources>\n    <string name=\"app_name\">Alvarium</string>\n\n    <string name=\"placeholder\">Placeholder</string>\n    <string name=\"placeholder_price\">$12,345.00</string>\n    <string name=\"placeholder_long\">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\\'s standard dummy text ever since the 1500s, when an unknown</string>\n\n    <!-- Fragment  Titles-->\n    <string name=\"title_home_page\">Home</string>\n    <string name=\"title_product\">Product</string>\n    <string name=\"title_category\">Categories</string>\n    <string name=\"title_shopping_cart\">Shopping Cart</string>\n    <string name=\"title_forgot_password\">Forgot Password</string>\n    <string name=\"title_change_password\">Change Password</string>\n    <string name=\"title_login\">Login</string>\n    <string name=\"title_register\">Register</string>\n    <string name=\"title_scan_barcode\">Scan Barcode</string>\n    <string name=\"title_customer_info\">My Account</string>\n    <string name=\"title_orders\">Orders</string>\n    <string name=\"title_order_details\">Order Details</string>\n    <string name=\"title_search\">Search Products</string>\n    <string name=\"title_more\">More</string>\n    <string name=\"title_settings\">Settings</string>\n    <string name=\"title_privacy_policy\">Privacy Policy</string>\n    <string name=\"title_checkout\">Checkout</string>\n    <string name=\"title_wishlist\">Wish List</string>\n    <string name=\"title_addresses\">Addresses</string>\n    <string name=\"title_about_us\">About Us</string>\n    <string name=\"title_contact_us\">Contact Us</string>\n    <string name=\"title_my_addresses\">My Addresses</string>\n    <string name=\"title_my_reviews\">My Reviews</string>\n    <string name=\"title_Add_review\">Add Review</string>\n    <string name=\"title_reviews\">Product Review</string>\n    <string name=\"title_reward_points\">Reward Points</string>\n\n    <!-- Bottom Navigation Menu  -->\n    <string name=\"home_nav_home\">Home</string>\n    <string name=\"home_nav_categories\">Categories</string>\n    <string name=\"home_nav_search\">Search</string>\n    <string name=\"home_nav_more\">More</string>\n    <string name=\"home_nav_account\">Account</string>\n\n    <!-- Barcode Fragment  -->\n    <string name=\"place_barcode_in_camera\">Put barcode here to Scan instantly</string>\n    <string name=\"invalid_barcode\">Invalid Product code </string>\n\n    <!-- Login Fragment  -->\n    <string name=\"login_password\">Password</string>\n    <string name=\"login_usrname\">Username or Email</string>\n    <string name=\"login\">Login</string>\n    <string name=\"login_new_customer\">New Customer?</string>\n    <string name=\"login_forgot_password\">Forgot Password</string>\n    <string name=\"login_tv_or\">Or</string>\n\n    <string name=\"username_password_not_match\">Username and password didn\\'t match</string>\n    <string name=\"username_password_require\">Username and password are required</string>\n    <string name=\"login_successful\">Login successful</string>\n    <string name=\"email_permission_require\">Email permission is required.</string>\n    <string name=\"enter_valid_email\">Please Enter Valid Email</string>\n\n\n\n    <string name=\"are_you_sure_logout\">Are you sure you want to logout?</string>\n    <string name=\"log_out\">Logout</string>\n    <string name=\"yes\">Yes</string>\n    <string name=\"no\">No</string>\n\n    <!-- Register Fragment  -->\n    <string name=\"reg_title_your_personal_details\">Personal Details</string>\n    <string name=\"reg_title_company_details\">Company Details</string>\n    <string name=\"reg_title_options\">Options</string>\n    <string name=\"reg_title_your_password\">Password</string>\n    <string name=\"reg_btn_register\">Register</string>\n    <string name=\"reg_hint_first_name\">First name:</string>\n    <string name=\"reg_hint_last_name\">Last name:</string>\n    <string name=\"reg_hint_dd_mm_yy\">Date of Birth</string>\n    <string name=\"reg_hint_email\">Email</string>\n    <string name=\"reg_hint_phone\">Phone</string>\n    <string name=\"reg_gender\">Gender:</string>\n    <string name=\"male\">\"Male\"</string>\n    <string name=\"female\">\"Female\"</string>\n    <string name=\"newsletter\">\"Newsletter\"</string>\n    <string name=\"reg_hint_company_name\">Company name</string>\n    <string name=\"reg_hint_password\">Password</string>\n    <string name=\"reg_hint_confirm_password\">Confirm password</string>\n    <string name=\"reg_hint_is_required\"> Is Required</string>\n\n    <string name=\"save\">Save</string>\n\n\n    <string name=\"reg_hint_username\">Username:</string>\n    <string name=\"reg_hint_fax\">Fax</string>\n    <string name=\"reg_hint_street_address\">Street Address:</string>\n    <string name=\"reg_hint_street_address2\">Street Address 2:</string>\n    <string name=\"reg_hint_zip_or_postal_code\">Zip Or PostalCode:</string>\n    <string name=\"reg_hint_country\">Country:</string>\n    <string name=\"reg_hint_city\">City:</string>\n    <string name=\"reg_hint_state\">State:</string>\n\n    <string name=\"register_new\">Register</string>\n    <string name=\"fill_required_fields\">Please fill all required fields</string>\n    <string name=\"register\">Register</string>\n\n\n    <!-- Cart Fragment  -->\n    <string name=\"cart_total_item\">%s item</string>\n    <string name=\"cart_enter_your_coupon_here\">Enter your coupon</string>\n    <string name=\"cart_apply_coupon\">Apply Coupon</string>\n    <string name=\"cart_enter_gift_card_code\">Enter Gift Card code</string>\n    <string name=\"cart_add_gift_card\">Add Gift Card</string>\n    <string name=\"cart_proceed_to_checkout\">Proceed to checkout</string>\n    <string name=\"sub_total\">Sub-Total</string>\n    <string name=\"shipping\">Shipping</string>\n    <string name=\"discount\">Discount</string>\n    <string name=\"entered_code\">Entered Coupon Code -</string>\n    <string name=\"tax\">Tax</string>\n    <string name=\"you_will_earn\">You will earn</string>\n    <string name=\"gift_card\">Gift Card</string>\n    <string name=\"total\">Total</string>\n    <string name=\"cart_empty\">Cart Is Empty</string>\n    <string name=\"cart_items_count\">%d Items</string>\n    <string name=\"calculated_during_checkout\">Calculated During Checkout</string>\n    <string name=\"succcessfully_added_to_wishlist\">Successfully added to wish list</string>\n\n    <!-- Checkout Dialog  -->\n    <string name=\"checkout_msg_long\">By creating an account on our website, you will be able to shop faster, be up to date on an orders status, and keep track of the orders you have previously made.</string>\n    <string name=\"checkout_msg_short\">Register and save time</string>\n    <string name=\"returning_customer\">Returning Customer?</string>\n    <string name=\"checkout_title\">Checkout as a Guest or Register</string>\n    <string name=\"checkout_as_guest\">Checkout as Guest</string>\n\n\n\n    <!--Checkout-->\n\n    <string name=\"new_address\">New Address</string>\n    <string name=\"address\">Address</string>\n    <string name=\"step_shipping\">Shipping</string>\n    <string name=\"payment\">Payment</string>\n    <string name=\"confirm_order\">Confirm Order</string>\n    <string name=\"text_continue\">Continue</string>\n    <string name=\"city\">City</string>\n    <string name=\"address_1\">Address 1</string>\n    <string name=\"address_2\">Address 2</string>\n    <string name=\"zip_code\">Zip Code</string>\n    <string name=\"fax\">Fax</string>\n    <string name=\"billing_address\">Billing Address</string>\n    <string name=\"shipping_address\">Shipping Address</string>\n    <string name=\"store_pick_up\">Store/Pickup</string>\n    <string name=\"store\">Store</string>\n    <string name=\"confirm\">Confirm</string>\n    <string name=\"products\">Products</string>\n    <string name=\"pickup_point_address\">Pickup point address</string>\n    <string name=\"invoice\">Order Calculation</string>\n\n    <string name=\"please_complete_previous_step\">Please complete previous step</string>\n\n\n\n\n\n\n    <!--Confirm Order Dialog-->\n    <string name=\"order_number_is\">Order Number is</string>\n    <string name=\"your_order_is_confirm\">Your Order is Confirmed</string>\n    <string name=\"ok\">OK</string>\n\n    <!-- ProductDetails Fragment -->\n    <string name=\"quantity\">Quantity</string>\n    <string name=\"select_quantity\">Select Quantity</string>\n    <string name=\"text_minus\">-</string>\n    <string name=\"text_plus\">+</string>\n    <string name=\"see_all\">See All</string>\n    <string name=\"featured_products\">Featured Products</string>\n    <string name=\"availability\">Availability</string>\n    <string name=\"add_to_cart\">Add To Cart</string>\n    <string name=\"add_to_wishlist\">Add To WishList</string>\n    <string name=\"add_to_cart_plus\">+ Add To Cart</string>\n    <string name=\"buy_now\">Buy Now!</string>\n    <string name=\"size\">Size</string>\n    <string name=\"select_size\">Select your size</string>\n    <string name=\"color\">Color</string>\n    <string name=\"select_color\">Select your color</string>\n    <string name=\"done\">Done</string>\n    <string name=\"select\">Select</string>\n    <string name=\"featured_manufacturer\">Featured Manufacturers</string>\n    <string name=\"free_delivery\">Free Delivery</string>\n\n    <string name=\"email_address\">Email Address</string>\n    <string name=\"send\">Send</string>\n    <string name=\"back_button_click_msg\">Press again to exit</string>\n    <string name=\"best_selling\">Best Selling</string>\n    <string name=\"privacy_policy\">Privacy Policy</string>\n    <string name=\"my_orders\">My Orders</string>\n    <string name=\"settings\">Settings</string>\n    <string name=\"scan_barcode\">@string/title_scan_barcode</string>\n\n    <string name=\"test_your_api\">Your nopCommerce URL</string>\n    <string name=\"test\">Test</string>\n    <string name=\"set_default\">Set default URL</string>\n    <string name=\"sample_base_url\">Ex: http://app.nop-station.com</string>\n    <string name=\"select_language\">Select Language</string>\n    <string name=\"select_currency\">Select Currency</string>\n    <string name=\"select_theme\">Dark Theme</string>\n\n    <!-- Settings Fragment  -->\n\n    <string name=\"change_language\">Change Language</string>\n    <string name=\"change_currency\">Change Currency</string>\n    <string name=\"language\">Language</string>\n\n    <string name=\"url_is_required\">Url is Required</string>\n\n    <string-array name=\"spinner_dummy_data\">\n        <item>Dummy Spinner Item</item>\n        <item>Item 2</item>\n        <item>Item 3</item>\n    </string-array>\n\n    <string name=\"search_limit\">Search term minimum length is 3 characters</string>\n\n\n\n    <string name=\"facebook_app_id\">207124103908002</string>\n    <string name=\"fb_login_protocol_scheme\">207124103908002</string>\n    <string name=\"sort_by\">Sort By</string>\n    <string name=\"filter\">Filter</string>\n    <string name=\"filter_by_price\">Filter By Price</string>\n    <string name=\"filter_by_attr\">Filter By %s</string>\n    <string name=\"currently_shopping_by\">Currently Shopping By</string>\n    <string name=\"remove_filter\">Remove Filter</string>\n    <string name=\"no_product_found\">No Product Found</string>\n    <string name=\"no_data_found\">No Data Found</string>\n    <string name=\"order_number\">Order Number:\\u0020</string>\n    <string name=\"order_date\">Order Date:\\u0020</string>\n    <string name=\"order_total\">Order Total:\\u0020</string>\n    <string name=\"order_status\">Order Status:\\u0020</string>\n    <string name=\"shipping_method\">Shipping Method</string>\n    <string name=\"payment_method\">Payment Method</string>\n    <string name=\"order_details\">Order Details</string>\n\n    <string name=\"price\">Price</string>\n    <string name=\"remaining\">remaining</string>\n    <string name=\"description\">Description</string>\n    <string name=\"related_products\">Related Products</string>\n    <string name=\"people_also_purchase\">People Also Purchase</string>\n    <string name=\"add_all_items_to_cart\">Add All Items to Cart</string>\n    <string name=\"adding_to_wish_list\">Adding to WishList…</string>\n    <string name=\"please_wait\">Please Wait…</string>\n    <string name=\"remove\">Remove</string>\n    <string name=\"invalid_id\">Invalid ID</string>\n    <string name=\"no_items_in_your_wishlist\">No Items in Your Wish List</string>\n\n\n    <!-- Address   -->\n    <string name=\"no_reward_points\">There is no balance history yet</string>\n    <string name=\"reward_summary\">Current balance is %.2f (%s)\\nMinimum balance allowed to use is %.2f (%s)</string>\n    <string name=\"history_underlined\"><u>History</u></string>\n\n    <!-- Address   -->\n    <string name=\"add_new\">Add New Address</string>\n    <string name=\"text_save\">Save</string>\n    <string name=\"address_saved\">Address Saved Successfully</string>\n    <string name=\"address_update_succss\">Address Updated Successfully</string>\n    <string name=\"confirm_address_delete\">Do you want to delete this address?</string>\n    <string name=\"delete_address\">Delete Address</string>\n    <string name=\"loading\">Loading…</string>\n    <string name=\"my_account\">Account</string>\n    <string name=\"account_info\">Account Info</string>\n    <string name=\"shopping_cart\">Shopping Cart</string>\n\n    <!-- Contact Us  -->\n    <string name=\"submit\">Submit</string>\n    <string name=\"hint_name\">Your Name</string>\n    <string name=\"hint_email\">Your Email</string>\n    <string name=\"hint_enquiry\">Your Enquiry</string>\n    <string name=\"validation_toast\">Enter %s</string>\n    <string name=\"enquiry_success_msg\">Your enquiry has successfully sent to the store owner</string>\n    <string name=\"associated_product\">Associated Products</string>\n    <string name=\"start_date\">Start Date</string>\n    <string name=\"end_date\">End Date</string>\n    <string name=\"rent_now\">Rent Now!</string>\n    <string name=\"n_reviews\">%d review(s)</string>\n    <string name=\"was_this_review_helpful\">Was this review helpful?</string>string>\n    <string name=\"write_your_own_review\">Write your own review</string>\n    <string name=\"review_title\">Review Title</string>\n    <string name=\"review_text\">Review Text</string>\n    <string name=\"your_rating\"> Your Rating</string>\n\n    <!-- Change Password  -->\n    <string name=\"confirm_new_password\">Confirm New Password</string>\n    <string name=\"new_password\">New Password</string>\n    <string name=\"current_password\">Current Password</string>\n    <string name=\"password_mismatch\">New passwords mismatched</string>\n    <string name=\"change_password_underlined\"><u>Change Password</u></string>\n    <string name=\"customer_info_updated\">Successfully Updated</string>\n    <string name=\"please_enter_your_price\">Please enter your price</string>\n    <string name=\"continue_with_facebook\">Continue with Facebook</string>\n    <string name=\"hint_recipient_name\">Recipient\\'s Name</string>\n    <string name=\"hint_your_name\">Your Name</string>\n    <string name=\"hint_message\">Message</string>\n    <string name=\"items_per_page\">Display items per page</string>\n    <string name=\"reg_hint_confirm_email\">Confirm Email</string>\n\n</resources>\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/res/values/strings.xml	(revision 5973a9ec8d9f4162c0c2ab73bb1a7f9920d572d7)
++++ app/src/main/res/values/strings.xml	(date 1609605464000)
+@@ -59,7 +59,6 @@
+     <string name="enter_valid_email">Please Enter Valid Email</string>
+ 
+ 
+-
+     <string name="are_you_sure_logout">Are you sure you want to logout?</string>
+     <string name="log_out">Logout</string>
+     <string name="yes">Yes</string>
+@@ -130,7 +129,6 @@
+     <string name="checkout_as_guest">Checkout as Guest</string>
+ 
+ 
+-
+     <!--Checkout-->
+ 
+     <string name="new_address">New Address</string>
+@@ -156,10 +154,6 @@
+     <string name="please_complete_previous_step">Please complete previous step</string>
+ 
+ 
+-
+-
+-
+-
+     <!--Confirm Order Dialog-->
+     <string name="order_number_is">Order Number is</string>
+     <string name="your_order_is_confirm">Your Order is Confirmed</string>
+@@ -220,7 +214,6 @@
+     <string name="search_limit">Search term minimum length is 3 characters</string>
+ 
+ 
+-
+     <string name="facebook_app_id">207124103908002</string>
+     <string name="fb_login_protocol_scheme">207124103908002</string>
+     <string name="sort_by">Sort By</string>
+Index: .idea/compiler.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- .idea/compiler.xml	(date 1608697611000)
++++ .idea/compiler.xml	(date 1608697611000)
+@@ -0,0 +1,6 @@
++<?xml version="1.0" encoding="UTF-8"?>
++<project version="4">
++  <component name="CompilerConfiguration">
++    <bytecodeTargetLevel target="1.8" />
++  </component>
++</project>
+\ No newline at end of file
+Index: app/src/main/java/com/bs/ecommerce/checkout/CheckoutConstants.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.bs.ecommerce.checkout\n\nimport com.bs.ecommerce.networking.NetworkConstants\n\n/**\n * Created by bs-110 on 1/19/2016.\n */\nobject CheckoutConstants\n{\n\n\n    @JvmStatic val PaymentInfoUrl = \"${NetworkConstants.SITE_URL}/nopstationcheckout/paymentinfo\"\n    @JvmStatic val RedirectUrl = \"${NetworkConstants.SITE_URL}/nopstationcheckout/redirect\"\n\n    @JvmStatic val BILLING_ADDRESS_TAB = 0\n    @JvmStatic val SHIPPING_ADDRESS_TAB = 1\n\n\n    @JvmStatic val ADDRESS_TAB = 0\n    @JvmStatic val SHIPPING_TAB = 1\n    @JvmStatic val PAYMENT_TAB = 2\n    @JvmStatic val CONFIRM_TAB = 3\n\n\n    @JvmStatic val CartPage = 0\n    @JvmStatic val BillingAddress = 1\n    @JvmStatic val ShippingAddress = 2\n    @JvmStatic val StorePickUp = 15\n    @JvmStatic val ShippingMethod = 3\n    @JvmStatic val PaymentMethod = 4\n    @JvmStatic val PaymentInfo = 5\n    @JvmStatic val ConfirmOrder = 6\n    @JvmStatic val RedirectToGateway = 7\n    @JvmStatic val Completed = 8\n\n\n    var PAYMENT_INFO_RESULT = 1\n    var NEXT_STEP_AFTER_PAYMENT_INFO = \"NEXT_STEP_AFTER_PAYMENT_INFO\"\n    var PAYMENT_INFO_NAME = \"PAYMENT_INFO_NAME\"\n\n    var CHECKOUT_STEP = \"CHECKOUT_STEP\"\n    var ORDER_ID = \"ORDER_ID\"\n}\n\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/java/com/bs/ecommerce/checkout/CheckoutConstants.kt	(revision 5973a9ec8d9f4162c0c2ab73bb1a7f9920d572d7)
++++ app/src/main/java/com/bs/ecommerce/checkout/CheckoutConstants.kt	(date 1609608704000)
+@@ -9,7 +9,7 @@
+ {
+ 
+ 
+-    @JvmStatic val PaymentInfoUrl = "${NetworkConstants.SITE_URL}/nopstationcheckout/paymentinfo"
++    @JvmStatic val PaymentInfoUrl = "${NetworkConstants.SITE_URL}/checkout/paymentinfo"
+     @JvmStatic val RedirectUrl = "${NetworkConstants.SITE_URL}/nopstationcheckout/redirect"
+ 
+     @JvmStatic val BILLING_ADDRESS_TAB = 0
+Index: .idea/gradle.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<project version=\"4\">\n  <component name=\"GradleMigrationSettings\" migrationVersion=\"1\" />\n  <component name=\"GradleSettings\">\n    <option name=\"linkedExternalProjectsSettings\">\n      <GradleProjectSettings>\n        <option name=\"delegatedBuild\" value=\"false\" />\n        <option name=\"testRunner\" value=\"PLATFORM\" />\n        <option name=\"distributionType\" value=\"DEFAULT_WRAPPED\" />\n        <option name=\"externalProjectPath\" value=\"$PROJECT_DIR$\" />\n        <option name=\"modules\">\n          <set>\n            <option value=\"$PROJECT_DIR$\" />\n            <option value=\"$PROJECT_DIR$/app\" />\n          </set>\n        </option>\n        <option name=\"resolveModulePerSourceSet\" value=\"false\" />\n      </GradleProjectSettings>\n    </option>\n  </component>\n</project>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- .idea/gradle.xml	(revision 5973a9ec8d9f4162c0c2ab73bb1a7f9920d572d7)
++++ .idea/gradle.xml	(date 1608697611000)
+@@ -15,6 +15,7 @@
+           </set>
+         </option>
+         <option name="resolveModulePerSourceSet" value="false" />
++        <option name="useQualifiedModuleNames" value="true" />
+       </GradleProjectSettings>
+     </option>
+   </component>
+Index: .idea/misc.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<project version=\"4\">\n  <component name=\"ProjectRootManager\" version=\"2\" languageLevel=\"JDK_1_8\" project-jdk-name=\"1.8\" project-jdk-type=\"JavaSDK\">\n    <output url=\"file://$PROJECT_DIR$/build/classes\" />\n  </component>\n  <component name=\"ProjectType\">\n    <option name=\"id\" value=\"Android\" />\n  </component>\n</project>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- .idea/misc.xml	(revision 5973a9ec8d9f4162c0c2ab73bb1a7f9920d572d7)
++++ .idea/misc.xml	(date 1608697611000)
+@@ -1,6 +1,6 @@
+ <?xml version="1.0" encoding="UTF-8"?>
+ <project version="4">
+-  <component name="ProjectRootManager" version="2" languageLevel="JDK_1_8" project-jdk-name="1.8" project-jdk-type="JavaSDK">
++  <component name="ProjectRootManager" version="2" languageLevel="JDK_1_8" default="true" project-jdk-name="1.8" project-jdk-type="JavaSDK">
+     <output url="file://$PROJECT_DIR$/build/classes" />
+   </component>
+   <component name="ProjectType">
+Index: app/src/main/java/com/bs/ecommerce/checkout/PaymentMethodFragment.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.bs.ecommerce.checkout\n\nimport android.os.Bundle\nimport android.os.Handler\nimport android.text.Html\nimport android.view.View\nimport android.widget.ImageView\nimport android.widget.RelativeLayout\nimport android.widget.TextView\nimport androidx.appcompat.widget.AppCompatRadioButton\nimport androidx.lifecycle.ViewModelProvider\nimport com.bs.ecommerce.MyApplication\nimport com.bs.ecommerce.R\nimport com.bs.ecommerce.base.BaseViewModel\nimport com.bs.ecommerce.checkout.model.data.PaymentMethod\nimport com.bs.ecommerce.customViews.CheckableLinearLayout\nimport com.bs.ecommerce.customViews.MethodSelectionProcess\nimport com.bs.ecommerce.db.DbHelper\nimport com.bs.ecommerce.main.MainViewModel\nimport com.bs.ecommerce.utils.Const\nimport com.bs.ecommerce.utils.loadJustImg\nimport kotlinx.android.synthetic.main.fragment_shipping_method.*\n\nclass PaymentMethodFragment : BaseCheckoutNavigationFragment() {\n\n\n    private lateinit var methodSelectionProcess: MethodSelectionProcess\n    private var paymentMethodValue = \"\"\n\n    override fun getFragmentTitle() = DbHelper.getString(Const.SHOPPING_CART_TITLE)\n\n    override fun getLayoutId(): Int = R.layout.fragment_shipping_method\n\n    override fun getRootLayout(): RelativeLayout = shippingMethodRootLayout\n\n    override fun createViewModel(): BaseViewModel = CheckoutViewModel()\n\n    override fun onViewCreated(view: View, savedInstanceState: Bundle?)\n    {\n        super.onViewCreated(view, savedInstanceState)\n\n        MyApplication.checkoutSaveResponse?.data?.paymentMethodModel?.let {\n\n            // saving appLandingData to memory to reload after order is placed\n            val mainViewModel = ViewModelProvider(requireActivity()).get(MainViewModel::class.java)\n            DbHelper.memCache = mainViewModel.appSettingsLD.value?.peekContent()\n\n            with(it)\n            {\n                if(displayRewardPoints)\n                {\n                    rewardPointCheckBox.visibility = View.VISIBLE\n\n                    rewardPointCheckBox.text = DbHelper.getString(Const.USE_REWARD_POINTS)\n                        .replace(\"{0}\", it.rewardPointsBalance.toString())\n                        .replace(\"{1}\", it.rewardPointsAmount.toString())\n\n                }\n\n                addMethodRadioGroup(paymentMethods)\n\n                btnContinue?.setOnClickListener {\n                    (viewModel as CheckoutViewModel).savePaymentMethodVM(paymentMethodValue, rewardPointCheckBox.isChecked, model)\n\n                    for(i in paymentMethods.indices)\n                    {\n                        paymentMethods[i].selected = paymentMethods[i].name == methodName\n                    }\n                }\n            }\n        }\n\n\n    }\n\n    private fun addMethodRadioGroup(paymentMethods: List<PaymentMethod>?)\n    {\n        methodSelectionProcess = MethodSelectionProcess(radioGridGroup!!)\n\n        if (paymentMethods != null)\n        {\n            for (method in paymentMethods)\n                generateRadioButton(method)\n        }\n    }\n\n    private fun setMethodValue(method: PaymentMethod)\n    {\n        paymentMethodValue = method.paymentMethodSystemName\n        methodName = method.name\n    }\n\n    private fun generateRadioButton(method: PaymentMethod)\n    {\n        val eachCheckLayout = layoutInflater.inflate(R.layout.item_payment_method, radioGridGroup, false) as CheckableLinearLayout\n\n        val description = eachCheckLayout.findViewById<View>(R.id.tv_paymentMethodDescription) as TextView\n\n        val radioButton = eachCheckLayout.findViewById<View>(R.id.rb_paymentChoice) as AppCompatRadioButton\n\n        val logo = eachCheckLayout.findViewById<View>(R.id.iv_paymentMethodImage) as ImageView\n        logo.loadJustImg(method.logoUrl)\n\n        description.text = method.description\n\n        radioButton.text = method.name\n        radioButton.id = View.generateViewId()\n\n        if (isPreselected(method))\n        {\n            radioButton.isChecked = true\n            setMethodValue(method)\n        }\n        else\n            radioButton.isChecked = false\n\n        method.description?.let {  description.text = Html.fromHtml(it) }\n\n        radioGridGroup.addView(eachCheckLayout)\n\n        radioButton.setOnCheckedChangeListener { buttonView, isChecked ->\n            if (isChecked)\n            {\n                paymentMethodValue = method.paymentMethodSystemName\n                Handler().post {\n                    methodSelectionProcess.resetRadioButton(buttonView.id)\n                    setMethodValue(method)\n                }\n            }\n        }\n\n        eachCheckLayout.setOnCheckedChangeListener(object : CheckableLinearLayout.OnCheckedChangeListener\n        {\n            override fun onCheckedChanged(checkableView: View, isChecked: Boolean)\n            {\n                if (isChecked)\n                    radioButton.isChecked = true\n\n            }\n        })\n    }\n    private fun isPreselected(paymentMethod: PaymentMethod): Boolean = paymentMethod.selected\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/java/com/bs/ecommerce/checkout/PaymentMethodFragment.kt	(revision 5973a9ec8d9f4162c0c2ab73bb1a7f9920d572d7)
++++ app/src/main/java/com/bs/ecommerce/checkout/PaymentMethodFragment.kt	(date 1609737540000)
+@@ -94,14 +94,14 @@
+     {
+         val eachCheckLayout = layoutInflater.inflate(R.layout.item_payment_method, radioGridGroup, false) as CheckableLinearLayout
+ 
+-        val description = eachCheckLayout.findViewById<View>(R.id.tv_paymentMethodDescription) as TextView
++        //val description = eachCheckLayout.findViewById<View>(R.id.tv_paymentMethodDescription) as TextView
+ 
+         val radioButton = eachCheckLayout.findViewById<View>(R.id.rb_paymentChoice) as AppCompatRadioButton
+ 
+         val logo = eachCheckLayout.findViewById<View>(R.id.iv_paymentMethodImage) as ImageView
+         logo.loadJustImg(method.logoUrl)
+ 
+-        description.text = method.description
++        //description.text = method.description
+ 
+         radioButton.text = method.name
+         radioButton.id = View.generateViewId()
+@@ -114,7 +114,7 @@
+         else
+             radioButton.isChecked = false
+ 
+-        method.description?.let {  description.text = Html.fromHtml(it) }
++       // method.description?.let {  description.text = Html.fromHtml(it) }
+ 
+         radioGridGroup.addView(eachCheckLayout)
+ 
+Index: app/src/test/java/com/bs/ecommerce/ExampleUnitTest.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.bs.ecommerce\n\nimport org.junit.Test\n\nimport org.junit.Assert.*\n\n/**\n * Example local unit test, which will execute on the development machine (host).\n *\n * See [testing documentation](http://d.android.com/tools/testing).\n */\nclass ExampleUnitTest {\n    @Test\n    fun addition_isCorrect() {\n        assertEquals(4, 2 + 2)\n    }\n}\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/test/java/com/bs/ecommerce/ExampleUnitTest.kt	(revision 5973a9ec8d9f4162c0c2ab73bb1a7f9920d572d7)
++++ app/src/test/java/com/bs/ecommerce/ExampleUnitTest.kt	(date 1608819988000)
+@@ -1,9 +1,8 @@
+ package com.bs.ecommerce
+ 
++import org.junit.Assert.assertEquals
+ import org.junit.Test
+ 
+-import org.junit.Assert.*
+-
+ /**
+  * Example local unit test, which will execute on the development machine (host).
+  *
+@@ -14,4 +13,33 @@
+     fun addition_isCorrect() {
+         assertEquals(4, 2 + 2)
+     }
++
++    private fun minimumBribes(arr: IntArray) {
++        var swapCount = 0
++        for (i in arr.indices.reversed()) {
++            if (arr[i] != i + 1) { // filter cases, when you do not bribe, be at the ith position wherever you are
++                if (i - 1 >= 0 && arr[i - 1] == i + 1) { // 1)Being at initial ith position, valid current
++                    // position after given bribe can be (i-1)th position
++                    swapCount++
++                    swap(arr, i, i - 1)
++                } else if (i - 2 >= 0 && arr[i - 2] == i + 1) { // 2)Being at initial ith position, valid current
++                    // position after given bribes can be (i-2)th
++                    // position
++                    swapCount += 2
++                    swap(arr, i - 2, i - 1)
++                    swap(arr, i - 1, i)
++                } else { // 3)Too chaotic (trying to bribe more than 2 people which is ahead of you)
++                    println("Too chaotic")
++                    return
++                }
++            }
++        }
++        println(swapCount)
++    }
++
++    private fun swap(arr: IntArray, a: Int, b: Int) {
++        val temp = arr[a]
++        arr[a] = arr[b]
++        arr[b] = temp
++    }
+ }
+Index: app/src/main/AndroidManifest.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"utf-8\"?>\n<manifest xmlns:android=\"http://schemas.android.com/apk/res/android\"\n    xmlns:tools=\"http://schemas.android.com/tools\"\n    package=\"com.bs.ecommerce\">\n\n    <uses-permission android:name=\"android.permission.INTERNET\" />\n    <uses-permission android:name=\"android.permission.VIBRATE\"/>\n    <uses-permission android:name=\"android.permission.READ_EXTERNAL_STORAGE\" />\n    <uses-permission android:name=\"android.permission.ACCESS_NETWORK_STATE\" />\n    <uses-permission android:name=\"android.permission.WAKE_LOCK\" />\n\n    <uses-sdk tools:overrideLibrary=\"com.google.zxing.client.android\" />\n\n    <application\n        android:name=\".MyApplication\"\n        android:allowBackup=\"false\"\n        android:fullBackupContent=\"false\"\n        tools:replace=\"android:allowBackup\"\n        android:icon=\"@mipmap/ic_launcher\"\n        android:label=\"@string/app_name\"\n        android:resizeableActivity=\"false\"\n        android:roundIcon=\"@mipmap/ic_launcher_round\"\n        android:supportsRtl=\"true\"\n        android:theme=\"@style/AppTheme\"\n        android:requestLegacyExternalStorage=\"true\"\n        android:usesCleartextTraffic=\"true\">\n\n        <activity android:name=\".main.SplashScreenActivity\"\n            android:theme=\"@style/AppTheme.Launcher\">\n            <intent-filter>\n                <action android:name=\"android.intent.action.MAIN\" />\n                <category android:name=\"android.intent.category.LAUNCHER\" />\n            </intent-filter>\n        </activity>\n\n        <activity android:name=\".main.MainActivity\"\n            android:launchMode=\"singleTop\"\n            android:windowSoftInputMode=\"adjustResize\"/>\n        <activity android:name=\".catalog.product.FullScreenImageActivity\"/>\n\n\n        <meta-data android:name=\"com.facebook.sdk.ApplicationId\" android:value=\"@string/facebook_app_id\"/>\n\n        <activity android:name=\"com.facebook.FacebookActivity\"\n            android:configChanges=\"keyboard|keyboardHidden|screenLayout|screenSize|orientation\"\n            android:label=\"@string/app_name\" />\n        <activity android:name=\".checkout.WebViewPaymentActivity\"\n            android:parentActivityName=\".main.MainActivity\"/>\n        <activity android:name=\".checkout.ResultActivity\" />\n\n        <service\n            android:name=\".fcm.MessagingService\"\n            android:enabled=\"true\"\n            android:exported=\"true\">\n            <intent-filter>\n                <action android:name=\"com.google.firebase.MESSAGING_EVENT\"/>\n            </intent-filter>\n        </service>\n\n        <provider\n            android:name=\"androidx.core.content.FileProvider\"\n            android:authorities=\"${applicationId}.provider\"\n            android:exported=\"false\"\n            android:grantUriPermissions=\"true\">\n            <meta-data\n                android:name=\"android.support.FILE_PROVIDER_PATHS\"\n                android:resource=\"@xml/provider_paths\"/>\n        </provider>\n\n        <meta-data\n            android:name=\"firebase_analytics_collection_deactivated\"\n            android:value=\"false\" />\n\n    </application>\n\n</manifest>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/AndroidManifest.xml	(revision 5973a9ec8d9f4162c0c2ab73bb1a7f9920d572d7)
++++ app/src/main/AndroidManifest.xml	(date 1609605464000)
+@@ -3,49 +3,54 @@
+     xmlns:tools="http://schemas.android.com/tools"
+     package="com.bs.ecommerce">
+ 
++    <uses-sdk tools:overrideLibrary="com.google.zxing.client.android" />
++
+     <uses-permission android:name="android.permission.INTERNET" />
+-    <uses-permission android:name="android.permission.VIBRATE"/>
++    <uses-permission android:name="android.permission.VIBRATE" />
+     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+     <uses-permission android:name="android.permission.WAKE_LOCK" />
+ 
+-    <uses-sdk tools:overrideLibrary="com.google.zxing.client.android" />
+-
+     <application
+         android:name=".MyApplication"
+         android:allowBackup="false"
+         android:fullBackupContent="false"
+-        tools:replace="android:allowBackup"
+         android:icon="@mipmap/ic_launcher"
+         android:label="@string/app_name"
++        android:requestLegacyExternalStorage="true"
+         android:resizeableActivity="false"
+         android:roundIcon="@mipmap/ic_launcher_round"
+         android:supportsRtl="true"
+         android:theme="@style/AppTheme"
+-        android:requestLegacyExternalStorage="true"
+-        android:usesCleartextTraffic="true">
+-
+-        <activity android:name=".main.SplashScreenActivity"
++        android:usesCleartextTraffic="true"
++        tools:replace="android:allowBackup">
++        <activity android:name=".checkout.NewCheckoutActivity"></activity>
++        <activity
++            android:name=".main.SplashScreenActivity"
+             android:theme="@style/AppTheme.Launcher">
+             <intent-filter>
+                 <action android:name="android.intent.action.MAIN" />
++
+                 <category android:name="android.intent.category.LAUNCHER" />
+             </intent-filter>
+         </activity>
+-
+-        <activity android:name=".main.MainActivity"
++        <activity
++            android:name=".main.MainActivity"
+             android:launchMode="singleTop"
+-            android:windowSoftInputMode="adjustResize"/>
+-        <activity android:name=".catalog.product.FullScreenImageActivity"/>
++            android:windowSoftInputMode="adjustResize" />
++        <activity android:name=".catalog.product.FullScreenImageActivity" />
+ 
++        <meta-data
++            android:name="com.facebook.sdk.ApplicationId"
++            android:value="@string/facebook_app_id" />
+ 
+-        <meta-data android:name="com.facebook.sdk.ApplicationId" android:value="@string/facebook_app_id"/>
+-
+-        <activity android:name="com.facebook.FacebookActivity"
++        <activity
++            android:name="com.facebook.FacebookActivity"
+             android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"
+             android:label="@string/app_name" />
+-        <activity android:name=".checkout.WebViewPaymentActivity"
+-            android:parentActivityName=".main.MainActivity"/>
++        <activity
++            android:name=".checkout.WebViewPaymentActivity"
++            android:parentActivityName=".main.MainActivity" />
+         <activity android:name=".checkout.ResultActivity" />
+ 
+         <service
+@@ -53,7 +58,7 @@
+             android:enabled="true"
+             android:exported="true">
+             <intent-filter>
+-                <action android:name="com.google.firebase.MESSAGING_EVENT"/>
++                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+             </intent-filter>
+         </service>
+ 
+@@ -64,13 +69,12 @@
+             android:grantUriPermissions="true">
+             <meta-data
+                 android:name="android.support.FILE_PROVIDER_PATHS"
+-                android:resource="@xml/provider_paths"/>
++                android:resource="@xml/provider_paths" />
+         </provider>
+ 
+         <meta-data
+             android:name="firebase_analytics_collection_deactivated"
+             android:value="false" />
+-
+     </application>
+ 
+ </manifest>
+\ No newline at end of file
