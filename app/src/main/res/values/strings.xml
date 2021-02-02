@@ -59,7 +59,6 @@
     <string name="enter_valid_email">Please Enter Valid Email</string>
 
 
-
     <string name="are_you_sure_logout">Are you sure you want to logout?</string>
     <string name="log_out">Logout</string>
     <string name="yes">Yes</string>
@@ -130,7 +129,6 @@
     <string name="checkout_as_guest">Checkout as Guest</string>
 
 
-
     <!--Checkout-->
 
     <string name="new_address">New Address</string>
@@ -154,10 +152,6 @@
     <string name="invoice">Order Calculation</string>
 
     <string name="please_complete_previous_step">Please complete previous step</string>
-
-
-
-
 
 
     <!--Confirm Order Dialog-->
@@ -218,7 +212,6 @@
     </string-array>
 
     <string name="search_limit">Search term minimum length is 3 characters</string>
-
 
 
     <string name="facebook_app_id">207124103908002</string>

@@ -9,7 +9,7 @@ object CheckoutConstants
 {
 
 
-    @JvmStatic val PaymentInfoUrl = "${NetworkConstants.SITE_URL}/nopstationcheckout/paymentinfo"
+    @JvmStatic val PaymentInfoUrl = "${NetworkConstants.SITE_URL}/checkout/paymentinfo"
     @JvmStatic val RedirectUrl = "${NetworkConstants.SITE_URL}/nopstationcheckout/redirect"
 
     @JvmStatic val BILLING_ADDRESS_TAB = 0

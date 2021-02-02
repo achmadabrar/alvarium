@@ -94,14 +94,14 @@ class PaymentMethodFragment : BaseCheckoutNavigationFragment() {
     {
         val eachCheckLayout = layoutInflater.inflate(R.layout.item_payment_method, radioGridGroup, false) as CheckableLinearLayout
 
-        val description = eachCheckLayout.findViewById<View>(R.id.tv_paymentMethodDescription) as TextView
+        //val description = eachCheckLayout.findViewById<View>(R.id.tv_paymentMethodDescription) as TextView
 
         val radioButton = eachCheckLayout.findViewById<View>(R.id.rb_paymentChoice) as AppCompatRadioButton
 
         val logo = eachCheckLayout.findViewById<View>(R.id.iv_paymentMethodImage) as ImageView
         logo.loadJustImg(method.logoUrl)
 
-        description.text = method.description
+        //description.text = method.description
 
         radioButton.text = method.name
         radioButton.id = View.generateViewId()
@@ -114,7 +114,7 @@ class PaymentMethodFragment : BaseCheckoutNavigationFragment() {
         else
             radioButton.isChecked = false
 
-        method.description?.let {  description.text = Html.fromHtml(it) }
+       // method.description?.let {  description.text = Html.fromHtml(it) }
 
         radioGridGroup.addView(eachCheckLayout)
 
